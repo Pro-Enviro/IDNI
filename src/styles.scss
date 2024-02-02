@@ -190,3 +190,12 @@ footer{
     }
   }
 }
+.footer-links{
+  color: $headerColor;
+  padding-bottom:10px;
+  text-decoration: none;
+  &:hover{
+    color:$darkColor;
+    font-weight: 700;
+  }
+}
