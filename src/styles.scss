@@ -94,34 +94,44 @@
   }
 }
 
-//Partners
+//---------------------------------------------PARTNERS SECTION---------------------------------------------------------
  .partner-img{
-   //border-radius: 20px;
-   //padding:10px;
-   //max-width:50%;
-   height:75px;
+   max-height: 70px;
  }
+
 
 //--------------------------------------------------FAQS----------------------------------------------------------------
   .page-img{
     max-width:110%;
   }
-  .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
-    background: $primeColor;
-    border-color: #e5e7eb;
-    color: #283938;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+
+  .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button
+  {
+    background-color: $primeColor;
+    width:1rem;
+    height:1rem;
+    border-radius: 50%;
   }
 
-  .p-accordion .p-accordion-header .p-accordion-header-link {
-    padding: 1.25rem;
-    border: 1px solid #e5e7eb;
-    color: #43605D;
-    background: #F3F9F8;
-    font-weight: 700;
-    border-radius: 6px;
-    transition: box-shadow 0.2s;
+  .p-carousel .p-carousel-indicators .p-carousel-indicator button
+  {
+    background-color: #9ca3af;
+    width:1rem;
+    height:1rem;
+    border-radius: 50%;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  }
+
+  .p-carousel .p-carousel-content .p-carousel-next:hover
+  {
+    color: white;
+    background-color: $primeColor;
+  }
+
+  .p-carousel .p-carousel-content .p-carousel-prev:hover
+  {
+    color: white;
+    background-color: $primeColor;
   }
 
 //footer
