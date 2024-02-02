@@ -91,8 +91,7 @@
   background-repeat: no-repeat;
   background-size: 40rem;
   h2{
-    color: #0D1313;
-    padding-left: 2rem;
+    padding-left: 3.5rem;
   }
 }
 .blue-curve-right{
@@ -103,7 +102,7 @@
   h2{
     text-align: end;
     color: black;
-    padding-right: 5rem;
+    padding-right: 3.5rem;
   }
 }
 
@@ -151,7 +150,7 @@ h4{
 
 .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
   background: $primeColor;
-  border-color: #e5e7eb;
+  border-color: #2e5757;
   color: $headerColor;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
