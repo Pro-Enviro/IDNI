@@ -7,17 +7,28 @@
     padding-top: 3rem;
     padding-bottom: 10rem;
   }
+
   $primeColor: #85bfba;
+  $darkColor:#356c6b;
+  $headerColor:#253b3c;
 
   h2{
     color: $primeColor;
     font-size: 2rem;
   }
 
+  .header-style{
+    color:#253b3c;
+  }
+
  .btn-style{
    background-color: $primeColor;
    border:$primeColor;
    color:#283938;
+   &:hover{
+     background-color:$darkColor;
+     color:white;
+   }
  }
 
 
@@ -141,7 +152,7 @@ h4{
 .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
   background: $primeColor;
   border-color: #e5e7eb;
-  color: #283938;
+  color: $headerColor;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -149,7 +160,7 @@ h4{
 .p-accordion .p-accordion-header .p-accordion-header-link {
   padding: 1.25rem;
   border: 1px solid #e5e7eb;
-  color: #43605D;
+  color: $headerColor;
   background: #F3F9F8;
   font-weight: 700;
   border-radius: 6px;
