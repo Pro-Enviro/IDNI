@@ -1,20 +1,34 @@
-<div class="testimonial-card">
-  <p-carousel [value]="partners" [circular]="false"  class="carousel-style" [numScroll]="4" [numVisible]="3" [responsiveOptions]="responsiveOptions">
-    <ng-template let-partners pTemplate="testimonial">
-      <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
-        <div class="col-6">
-          <p-image [src]="partners.image"
-                   alt="Image"
-                   styleClass="partner-img"
-                   itemprop="image"
-          >
-          </p-image>
-        </div>
-        <div class="col-6">
-          <h4>{{partners.title}}</h4>
-          <p>{{partners.content}}</p>
+<!--<div class="">-->
+<!--  <p-carousel [value]="partners" [circular]="false"  class="carousel-style" [numScroll]="4" [numVisible]="3" [responsiveOptions]="responsiveOptions">-->
+<!--    <ng-template let-partners pTemplate="testimonial">-->
+<!--      <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">-->
+<!--        <div class="col-6">-->
+<!--          <p-image [src]="partners.image"-->
+<!--                   alt="Image"-->
+<!--                   styleClass="partner-img"-->
+<!--                   itemprop="image"-->
+<!--          >-->
+<!--          </p-image>-->
+<!--        </div>-->
+<!--        <div class="col-6">-->
+<!--          <h4>{{partners.title}}</h4>-->
+<!--          <p>{{partners.content}}</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </ng-template>-->
+<!--  </p-carousel>-->
+<!--</div>-->
+
+<p-carousel [value]="partners" [numVisible]="3" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions">
+  <ng-template let-partners pTemplate="item">
+    <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+      <div class="mb-3">
+        <img src="{{ partners.image }}" [alt]="partners.title" class="w-6 shadow-2" />
+      </div>
+      <div>
+        <h4 class="mb-1">{{ partners.title}}</h4>
+        <p>{{partners.content}}</p>
         </div>
       </div>
-    </ng-template>
-  </p-carousel>
-</div>
+  </ng-template>
+</p-carousel>
