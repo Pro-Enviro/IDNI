@@ -170,6 +170,30 @@
   transition: box-shadow 0.2s;
 }
 
+
+//-------------------------------------------------NEWS-----------------------------------------------------------------
+.news-card{
+  position: relative;
+  padding:20px;
+  text-align: center;
+  width:350px;
+  .toolkit-icon{
+    color:pink;
+    font-size:15rem;
+  }
+  .card-footer{
+    position:absolute;
+    bottom:0;
+    height:3%;
+  }
+  .card-body{
+    padding-bottom:2rem;
+    padding-top:2rem;
+  }
+}
+.news-img{
+  max-width:350px;
+}
 //------------------------------------------------FOOTER----------------------------------------------------------------
 footer{
   ul{

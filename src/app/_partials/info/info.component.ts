@@ -6,6 +6,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {CarouselTplComponent} from "../carousel-tpl/carousel-tpl.component";
 import {AccordionTplComponent} from "../accordion-tpl/accordion-tpl.component";
 import {FooterComponent} from "../footer/footer.component";
+import {NewsCardsTplComponent} from "../news-cards-tpl/news-cards-tpl.component";
 
 @Component({
   selector: 'app-info',
@@ -16,7 +17,8 @@ import {FooterComponent} from "../footer/footer.component";
     InputTextModule,
     CarouselTplComponent,
     AccordionTplComponent,
-    FooterComponent
+    FooterComponent,
+    NewsCardsTplComponent
   ],
   animations: [
     trigger('openClose', [
