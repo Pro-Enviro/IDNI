@@ -107,12 +107,16 @@
 }
 
 //---------------------------------------------PARTNERS SECTION---------------------------------------------------------
- .partner-img{
-   max-height: 70px;
- }
-h4{
 
-}
+  .img-container{
+    display:block;
+    .partner-img{
+      max-height: 90px;
+      margin: auto;
+    }
+  }
+
+
 .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button
 {
   background-color: $primeColor;

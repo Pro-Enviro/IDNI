@@ -2,12 +2,12 @@
 <p-carousel [value]="partners" [numVisible]="3" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions">
   <ng-template let-partners pTemplate="item">
     <div class="m-2 text-center py-5 px-3">
-      <div class="mb-3">
+      <div class="img-container">
         <img src="{{ partners.image }}" [alt]="partners.title" class="partner-img"/>
       </div>
-      <div>
-        <h4 class="mb-1 text-xl text-center header-style">{{ partners.title}}</h4>
-        <p>{{partners.content}}</p>
+      <div class="mt-7">
+        <h4 class="mb-5 text-2xl text-center header-style">{{ partners.title}}</h4>
+        <p class="text-center p-3">{{partners.content}}</p>
         </div>
       </div>
   </ng-template>
