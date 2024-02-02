@@ -1,17 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
-//Global
 
 @import "primeicons/primeicons.css";
-body{
-  margin: 0;
-}
-section, footer{
-  padding-top: 3rem;
-  padding-bottom: 10rem;
-}
-h2{
-  color: blue;
-}
+  body{
+    margin: 0;
+  }
+  section, footer{
+    padding-top: 3rem;
+    padding-bottom: 10rem;
+  }
+  $primeColor: #85bfba;
+
+  h2{
+    color: $primeColor;
+    font-size: 2rem;
+  }
+
+//h3{
+//  color: $primeColor;
+//  font-size: 2rem;
+//}
+
+  //CONTAINER
+  .container { margin-left: auto; margin-right: auto; }
+  @media only screen and (max-width: 767px) { .container { max-width: 100%; } }
+  @media only screen and (min-width: 768px) { .container { max-width: 740px; } }
+  @media only screen and (min-width: 992px) { .container { max-width: 980px; } }
+  @media only screen and (min-width: 1200px) { .container { max-width: 1140px; } }
+  @media only screen and (min-width: 1400px) { .container { max-width: 1320px; } }
 
 //Menu
 .p-megamenu{
