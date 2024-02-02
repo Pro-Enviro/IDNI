@@ -56,7 +56,7 @@
   }
 
 
-  //HERO
+//----------------------------------------------------------HERO--------------------------------------------------------
   .hero{
     background-size: cover;
     .bg-arrow{
@@ -167,14 +167,10 @@ h4{
   transition: box-shadow 0.2s;
 }
 
-//footer
+//------------------------------------------------FOOTER----------------------------------------------------------------
 footer{
   ul{
     list-style: none;
-  }
-  i{
-    font-size: 2em;
-    padding: 10px 20px
   }
   padding-bottom: 1rem;
   hr{
@@ -183,5 +179,14 @@ footer{
   }
   .p-light{
     color: #aaa
+  }
+  .icon-style{
+    font-size: 2em;
+    padding: 10px 10px;
+    color:#356c6b;
+    &:hover{
+      color:#b5dad6;
+      transform:scale(1.5);
+    }
   }
 }
