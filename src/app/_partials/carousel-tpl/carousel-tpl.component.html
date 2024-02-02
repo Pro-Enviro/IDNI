@@ -1,12 +1,12 @@
 
 <p-carousel [value]="partners" [numVisible]="3" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions">
   <ng-template let-partners pTemplate="item">
-    <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+    <div class="m-2 text-center py-5 px-3">
       <div class="mb-3">
         <img src="{{ partners.image }}" [alt]="partners.title" class="partner-img"/>
       </div>
       <div>
-        <h4 class="mb-1">{{ partners.title}}</h4>
+        <h4 class="mb-1 text-gray-800 text-xl text-center">{{ partners.title}}</h4>
         <p>{{partners.content}}</p>
         </div>
       </div>
