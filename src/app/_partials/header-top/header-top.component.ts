@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import {DbService} from "../../_services/db.service";
 import {MegaMenuItem} from "primeng/api";
 import {MegaMenuModule} from "primeng/megamenu";
+import {ButtonModule} from "primeng/button";
 
 @Component({
   selector: 'app-header-top',
   standalone: true,
   imports: [
-    MegaMenuModule
+    MegaMenuModule,
+    ButtonModule
   ],
   templateUrl: './header-top.component.html',
   styleUrl: './header-top.component.scss'

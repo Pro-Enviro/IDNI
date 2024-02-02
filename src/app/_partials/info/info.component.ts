@@ -3,6 +3,11 @@ import {AccordionModule} from "primeng/accordion";
 import {ButtonModule} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {CarouselTplComponent} from "../carousel-tpl/carousel-tpl.component";
+import {AccordionTplComponent} from "../accordion-tpl/accordion-tpl.component";
+import {FooterComponent} from "../footer/footer.component";
+import {NewsCardsTplComponent} from "../news-cards-tpl/news-cards-tpl.component";
+import {HomeTechnologyTplComponent} from "../home-technology-tpl/home-technology-tpl.component";
 
 @Component({
   selector: 'app-info',
@@ -10,7 +15,12 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   imports: [
     AccordionModule,
     ButtonModule,
-    InputTextModule
+    InputTextModule,
+    CarouselTplComponent,
+    AccordionTplComponent,
+    FooterComponent,
+    NewsCardsTplComponent,
+    HomeTechnologyTplComponent
   ],
   animations: [
     trigger('openClose', [
