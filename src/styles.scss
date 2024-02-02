@@ -27,17 +27,23 @@
   @media only screen and (min-width: 1200px) { .container { max-width: 1140px; } }
   @media only screen and (min-width: 1400px) { .container { max-width: 1320px; } }
 
-//Menu
-.p-megamenu{
-  border: none;
-  background-color: white;
-  .p-megamenu-start{
-    flex-grow: 1;
+  //MENU
+  .p-megamenu{
+    border: none;
+    background-color: white;
+    .p-megamenu-start{
+      flex-grow: 1;
+    }
   }
-}
+  .p-megamenu.p-megamenu-horizontal .p-megamenu-root-list > .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover
+  {
+    color: #4b5563;
+    font-weight:500;
+    background:$primeColor;
+  }
 
 
-  //hero
+  //HERO
   .hero{
     background-size: cover;
     .bg-arrow{
