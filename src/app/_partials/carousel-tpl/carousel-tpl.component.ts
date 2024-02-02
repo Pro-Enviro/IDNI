@@ -21,13 +21,13 @@ partners = [
   {
    title: 'InvestNI',
     content: 'We are part of the Department for the Economy and provide strong government support for business by effectively delivering the Government’s economic development strategies.',
-    image:'../../../assets/logos/invest-NI.jpg'
+    image:'../../../assets/logos/invest-NI-png.png'
   },
   {
     title: 'Camirus Ltd',
     content: 'Camirus specialises in developing and delivering collaborative projects in clean growth and economic development. ' +
       'We have particular expertise in energy, and ways to link investments in energy infrastructure to economic opportunities for firms, sectors and localities.',
-    image:'../../../assets/logos/Camirus logo new (2).png'
+    image:'../../../assets/logos/camirus-png-logo.png'
   },
   {
     title: 'Pro Enviro Ltd',
@@ -38,7 +38,7 @@ partners = [
     title: 'Manufacturing Northern Ireland',
     content: 'Manufacturing NI is a campaigning organisation which works with member companies, workforce representatives, ' +
       'policymakers and regulators to challenge and encourage change in areas which impact on the cost of doing business, specifically rates, energy, labour, Brexit and challenges such as Covid-19.',
-    image:'../../../assets/logos/Manufacturing NI Logo New.jpg'
+    image:'../../../assets/logos/man-ni-logo-png.png'
   },
   {
     title: 'Queen’s University of Belfast',
@@ -63,13 +63,13 @@ partners = [
     title: 'University of Ulster',
     content: 'Ulster University has a national and international reputation for excellence, innovation and ' +
       'regional engagement and continues to make a major contribution to the economic, social and cultural development of Northern Ireland.',
-    image:'../../../assets/logos/Ulster.png'
+    image:'../../../assets/logos/ulster-png.png'
   },
   {
     title: 'MPA ',
     content: 'MPA is the trade association for the aggregates, asphalt, cement, concrete, dimension stone, lime, mortar and industrial sand industries.' +
       'MPA represents the interests of its members and the wider industry with all levels of Government, regulators and a wide range of other stakeholders.',
-    image:'../../../assets/logos/mpa-logo.jpg'
+    image:'../../../assets/logos/mpa-logo-png.png'
   }
 ]
   // ngOnInit() {
