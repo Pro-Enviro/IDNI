@@ -4,6 +4,7 @@ import {ButtonModule} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {CarouselTplComponent} from "../carousel-tpl/carousel-tpl.component";
+import {AccordionTplComponent} from "../accordion-tpl/accordion-tpl.component";
 
 @Component({
   selector: 'app-info',
@@ -12,7 +13,8 @@ import {CarouselTplComponent} from "../carousel-tpl/carousel-tpl.component";
     AccordionModule,
     ButtonModule,
     InputTextModule,
-    CarouselTplComponent
+    CarouselTplComponent,
+    AccordionTplComponent
   ],
   animations: [
     trigger('openClose', [
