@@ -32,14 +32,16 @@ h2{
     background-image: url("assets/img/arrow.svg");
     background-repeat: no-repeat;
     .content{
-      padding-left: 10rem;
-      width: 70%;
+      //padding-left: 10rem;
+      //width: 70%;
+      padding:25px;
       h1{
-        font-size: 6rem;
+        font-size: 3.3rem;
       }
       p{
         font-size: 1.5rem;
         line-height: 1.5;
+        width: 50%;
       }
     }
   }
