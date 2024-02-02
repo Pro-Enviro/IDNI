@@ -1,1 +1,93 @@
 /* You can add global styles to this file, and also import other style files */
+//Global
+
+@import "primeicons/primeicons.css";
+body{
+  margin: 0;
+}
+section, footer{
+  padding-top: 3rem;
+  padding-bottom: 10rem;
+}
+h2{
+  color: blue;
+}
+
+//Menu
+.p-megamenu{
+  border: none;
+  background-color: white;
+  .p-megamenu-start{
+    flex-grow: 1;
+  }
+}
+
+
+//hero
+.hero{
+  background-size: cover;
+  .bg-arrow{
+    color: white;
+    height: 90vh;
+    background-image: url("assets/img/arrow.svg");
+    background-repeat: no-repeat;
+    .content{
+      padding-left: 10rem;
+      width: 70%;
+      h1{
+        font-size: 6rem;
+      }
+      p{
+        font-size: 1.5rem;
+        line-height: 1.5;
+      }
+    }
+  }
+}
+
+//sections
+.faq-bg{
+  background-size: cover;
+}
+.blue-curve-left{
+  background-color: #f2f2f2;
+  background-image: url("assets/img/curve-bottom.svg");
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-size: 40rem;
+  h2{
+    color: black;
+    padding-left: 5rem;
+  }
+}
+.blue-curve-right{
+  background-image: url("assets/img/curve-bottom-right.svg");
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-size: 40rem;
+  h2{
+    text-align: end;
+    color: black;
+    padding-right: 5rem;
+  }
+}
+
+
+//footer
+footer{
+  ul{
+    list-style: none;
+  }
+  i{
+    font-size: 2em;
+    padding: 10px 20px
+  }
+  padding-bottom: 1rem;
+  hr{
+    color: white !important;
+    background-color: white;
+  }
+  .p-light{
+    color: #aaa
+  }
+}
