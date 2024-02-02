@@ -94,11 +94,27 @@
   }
 }
 
-.page-img{
-  max-width:110%;
-  //max-height:17%;
-  //height:53vh;
-}
+//--------------------------------------------------FAQS----------------------------------------------------------------
+  .page-img{
+    max-width:110%;
+  }
+  .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+    background: $primeColor;
+    border-color: #e5e7eb;
+    color: #283938;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .p-accordion .p-accordion-header .p-accordion-header-link {
+    padding: 1.25rem;
+    border: 1px solid #e5e7eb;
+    color: #43605D;
+    background: #F3F9F8;
+    font-weight: 700;
+    border-radius: 6px;
+    transition: box-shadow 0.2s;
+  }
 
 //footer
 footer{
