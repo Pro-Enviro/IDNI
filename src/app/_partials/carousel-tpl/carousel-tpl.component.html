@@ -1,1 +1,20 @@
-<p>carousel-tpl works!</p>
+<div class="testimonial-card">
+  <p-carousel [value]="partners" [circular]="false"  class="carousel-style" [numScroll]="4" [numVisible]="3" [responsiveOptions]="responsiveOptions">
+    <ng-template let-partners pTemplate="testimonial">
+      <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+        <div class="col-6">
+          <p-image [src]="partners.image"
+                   alt="Image"
+                   styleClass="partner-img"
+                   itemprop="image"
+          >
+          </p-image>
+        </div>
+        <div class="col-6">
+          <h4>{{partners.title}}</h4>
+          <p>{{partners.content}}</p>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>
