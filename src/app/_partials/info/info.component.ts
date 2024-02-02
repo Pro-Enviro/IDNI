@@ -61,3 +61,10 @@ export class InfoComponent implements AfterViewInit{
 
 
 }
+
+
+/*
+
+./assets/logo/name-logo.extention
+
+ */
