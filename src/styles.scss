@@ -31,6 +31,17 @@
    }
  }
 
+ .btn-outline{
+   background-color: #f4f9f8;
+   border:1px solid #2e5757;
+   color:#2e5757;
+   &:hover{
+     background-color:$primeColor;
+     border:1px solid $darkColor;
+     color:#f4f9f8;
+   }
+ }
+
 
   //CONTAINER
   .container { margin-left: auto; margin-right: auto; }
@@ -40,7 +51,7 @@
   @media only screen and (min-width: 1200px) { .container { max-width: 1140px; } }
   @media only screen and (min-width: 1400px) { .container { max-width: 1320px; } }
 
-  //MENU
+  //----------------------------------------------------MENU------------------------------------------------------------
   .p-megamenu{
     border: none;
     background-color: white;
@@ -51,7 +62,6 @@
   .p-megamenu.p-megamenu-horizontal .p-megamenu-root-list > .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover
   {
     color: #4b5563;
-    font-weight:500;
     background:$primeColor;
   }
 
