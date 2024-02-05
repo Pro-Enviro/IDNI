@@ -1,7 +1,8 @@
-<p-megaMenu [model]="menuItems" styleClass="flex">
+<p-megaMenu [model]="menuItems" styleClass="flex" target="_blank">
   <ng-template pTemplate="start">
     <img src="assets/img/idni-logo.svg" height="80" class="mr-2 ml-2"/>
   </ng-template>
   <a href="" target="_blank" class="pr-3"><p-button label="Login" icon="pi pi-user" styleClass="btn-outline" [rounded]="true"></p-button></a>
-  <a href="" target="_blank" class="pr-3"><p-button label="PET" icon="pi pi-cog" styleClass="btn-style" [rounded]="true"></p-button></a>
+ <p-button label="PET" routerLink="pet" icon="pi pi-cog"  styleClass="btn-style" [rounded]="true"></p-button>
+
 </p-megaMenu>
