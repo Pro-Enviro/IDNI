@@ -21,6 +21,10 @@
     color:#253b3c;
   }
 
+  hr.hr-style {
+    border-top: 1px solid $primeColor;
+  }
+
  .btn-style{
    background-color: $primeColor;
    border:$primeColor;
@@ -28,6 +32,17 @@
    &:hover{
      background-color:$darkColor;
      color:white;
+   }
+ }
+
+ .btn-outline{
+   background-color: #f4f9f8;
+   border:1px solid #2e5757;
+   color:#2e5757;
+   &:hover{
+     background-color:$primeColor;
+     border:1px solid $darkColor;
+     color:#f4f9f8;
    }
  }
 
@@ -40,7 +55,7 @@
   @media only screen and (min-width: 1200px) { .container { max-width: 1140px; } }
   @media only screen and (min-width: 1400px) { .container { max-width: 1320px; } }
 
-  //MENU
+  //----------------------------------------------------MENU------------------------------------------------------------
   .p-megamenu{
     border: none;
     background-color: white;
@@ -51,7 +66,6 @@
   .p-megamenu.p-megamenu-horizontal .p-megamenu-root-list > .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover
   {
     color: #4b5563;
-    font-weight:500;
     background:$primeColor;
   }
 
@@ -65,7 +79,7 @@
       background-image: url("assets/img/arrow.svg");
       background-repeat: no-repeat;
       .content{
-        padding-left: 3rem;
+        padding-left: 2rem;
         //width: 70%;
         h1{
           //font-size: 6rem;
@@ -105,6 +119,7 @@
     padding-right: 3.5rem;
   }
 }
+
 
 //---------------------------------------------PARTNERS SECTION---------------------------------------------------------
 
@@ -174,27 +189,55 @@
 //-------------------------------------------------NEWS-----------------------------------------------------------------
 .news-card{
   position: relative;
-  padding:20px;
+  //padding:20px;
   text-align: center;
-  width:350px;
+  //width:350px;
+  background-color: #f2f2f2;
+
   .toolkit-icon{
     color:pink;
     font-size:15rem;
   }
   .card-footer{
-    position:absolute;
-    bottom:0;
-    height:3%;
+    //position:absolute;
+    //bottom:0;
+    //height:3%;
+    padding:35px;
   }
   .card-body{
-    padding-bottom:2rem;
-    padding-top:2rem;
+   padding:30px;
+  }
+  .card-head{
+    display: block;
+    position: relative;
+    &:after{
+      content: " ";
+      background-image: url("assets/img/curve-top.svg");
+      background-position: bottom;
+      background-size: contain;
+      background-repeat: no-repeat;
+      position: absolute;
+      top:0;
+      bottom:4px;
+      left:1px;
+      right:0;
+    }
+    .news-img{
+      max-width:100%;
+      margin: auto;
+    }
+     h4{
+       position:absolute;
+       top:70%;
+       left:62%;
+       z-index:1;
+       font-size: 1.25rem;
+     }
   }
 }
-.news-img{
-  //max-width:350px;
-  max-width:100%;
-}
+
+
+
 //------------------------------------------------FOOTER----------------------------------------------------------------
 footer{
   ul{

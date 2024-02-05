@@ -25,12 +25,14 @@ export class HeaderTopComponent {
     label: 'Events'
   },{
     label: 'COSI\'s'
-  },{
+  }, {
     label: 'Funding'
-  },{
-    label: 'Login',
-    url: 'https://my.proenviro.co.uk'
-  }];
+  }
+  // },{
+  //   label: 'Login',
+  //   url: 'https://my.proenviro.co.uk'
+  // }
+  ];
   constructor(/*db: DbService*/) {
    /* db.getMenu().subscribe({
       next: (res: any) => this.menuItems = res.map((item: any) => {
