@@ -9,11 +9,12 @@ import {HeroComponent} from "./_partials/hero/hero.component";
 import {InfoComponent} from "./_partials/info/info.component";
 import {LandingPageComponent} from "./pages/landing-page/landing-page.component";
 import {PetComponent} from "./pages/pet/pet.component";
+import {FooterComponent} from "./_partials/footer/footer.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderTopComponent, HeroComponent, InfoComponent, LandingPageComponent, PetComponent],
+  imports: [CommonModule, RouterOutlet, HeaderTopComponent, HeroComponent, InfoComponent, LandingPageComponent, PetComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

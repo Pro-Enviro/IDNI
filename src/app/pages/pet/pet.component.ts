@@ -9,6 +9,7 @@ import {TableModule} from "primeng/table";
 import {InputNumberModule} from "primeng/inputnumber";
 import {ButtonModule} from "primeng/button";
 import {CarouselTplComponent} from "../../_partials/carousel-tpl/carousel-tpl.component";
+import {FooterComponent} from "../../_partials/footer/footer.component";
 
 const rowNames: string[] = ['Cost of Energy', 'Transportation Costs', 'Cost of Water', 'Cost of Waste', 'Cost of Raw Materials', 'Cost of Bought in Goods - Consumables and bought in parts', 'Consultancy Cost', 'Sub Contracting Cost', 'Other External Costs (Legal, rental, accounting etc)']
 const energyNames: string[] = ['Oil', 'Gas', 'LPG', 'Electricity', 'Diesel', 'Kerosene', 'Other']
@@ -25,7 +26,7 @@ class TableRow {
 @Component({
   selector: 'app-pet',
   standalone: true,
-    imports: [FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CarouselTplComponent],
+  imports: [FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CarouselTplComponent, FooterComponent],
   templateUrl: './pet.component.html',
   styleUrl: './pet.component.scss'
 })
