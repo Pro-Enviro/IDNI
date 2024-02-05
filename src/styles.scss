@@ -21,6 +21,10 @@
     color:#253b3c;
   }
 
+  hr.hr-style {
+    border-top: 1px solid $primeColor;
+  }
+
  .btn-style{
    background-color: $primeColor;
    border:$primeColor;
