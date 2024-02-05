@@ -70,6 +70,8 @@
   }
 
 
+
+
 //----------------------------------------------------------HERO--------------------------------------------------------
   .hero{
     background-size: cover;
@@ -237,6 +239,37 @@
 }
 
 
+//------------------------------------------------TABLE-----------------------------------------------------------------
+.section-curve-left{
+  background-color: #f2f2f2;
+  background-image: url("assets/img/curve-bottom.svg");
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-size: 40rem;
+  h2{
+    padding-left:35px;
+  }
+}
+
+  .p-datatable .p-datatable-thead > tr > th {
+    text-align: left;
+    padding: 1rem 1rem;
+    font-weight: 700;
+    color: #374151;
+    background: #f4f9f8;
+    transition: box-shadow 0.2s;
+  }
+
+  .p-datatable .p-datatable-tbody > tr {
+    background: #f4f9f8;
+    font-weight:500;
+  }
+
+  .p-datatable .p-datatable-tfoot > tr > td {
+    text-align: left;
+    color: #374151;
+    background: #f4f9f8;
+  }
 
 //------------------------------------------------FOOTER----------------------------------------------------------------
 footer{
