@@ -19,17 +19,22 @@ import {MenubarModule} from "primeng/menubar";
 export class HeaderTopComponent {
   menuItems: MenuItem[] = [{
     label: 'Home',
+    routerLink: '/'
   },{
-    label: 'Project Information'
+    label: 'Project Information',
+    routerLink: 'coming-soon'
   },{
-    label: 'News'
+    label: 'News',
+    routerLink: 'coming-soon'
   },{
-    label: 'Events'
+    label: 'Events',
+    routerLink: 'coming-soon'
   },{
-    label: 'COSI\'s'
+    label: 'COSI\'s',
+    routerLink: 'coming-soon'
   }, {
-    label: 'Funding'
-  },{
+    label: 'Funding',
+    routerLink: 'coming-soon'
   }
   // },{
   //   label: 'Login',
