@@ -7,13 +7,26 @@
 <!--  </p-megaMenu>-->
 
 
+
+<!--<div class="flex justify-content-between flex-wrap navbar-wrapper">-->
+<!--  <div class="p-3">-->
+<!--    <img src="assets/img/idni-logo.svg" class="nav-logo"/>-->
+<!--  </div>-->
+<!--  <div class="navbar-container">-->
+<!--    <p-megaMenu [model]="menuItems"  target="_blank"></p-megaMenu>-->
+<!--    <a href="" target="_blank" class="p-1"><p-button label="Login" icon="pi pi-user" styleClass="btn-outline" [rounded]="true"></p-button></a>-->
+<!--    <p-button label="PET" routerLink="pet" icon="pi pi-cog"  styleClass="btn-style pet-btn" [rounded]="true"></p-button>-->
+<!--  </div>-->
+<!--</div>-->
+
 <div class="flex justify-content-between flex-wrap navbar-wrapper">
   <div class="p-3">
     <img src="assets/img/idni-logo.svg" class="nav-logo"/>
   </div>
   <div class="navbar-container">
-    <p-megaMenu [model]="menuItems"  target="_blank"></p-megaMenu>
-    <a href="" target="_blank" class="p-1"><p-button label="Login" icon="pi pi-user" styleClass="btn-outline" [rounded]="true"></p-button></a>
-    <p-button label="PET" routerLink="pet" icon="pi pi-cog"  styleClass="btn-style pet-btn" [rounded]="true"></p-button>
+    <p-menubar [model]="menuItems"  target="_blank">
+      <a href="" target="_blank" class="p-1 ml-2"><p-button label="Login" icon="pi pi-user" styleClass="btn-outline" [rounded]="true"></p-button></a>
+      <p-button label="PET" routerLink="pet" icon="pi pi-cog"  styleClass="btn-style pet-btn" [rounded]="true"></p-button>
+    </p-menubar>
   </div>
 </div>
