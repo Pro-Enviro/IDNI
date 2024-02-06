@@ -75,14 +75,27 @@
 //----------------------------------------------------------HERO--------------------------------------------------------
   .hero{
     background-size: cover;
+    background-repeat: no-repeat;
+    height: 90vh;
+    position: relative;
+    color:white;
     .bg-arrow{
       color: white;
       height: 90vh;
+      width:50vw;
       background-image: url("assets/img/arrow.svg");
       background-repeat: no-repeat;
+      background-size: cover;
       .content{
-        padding-left: 2rem;
-        //width: 70%;
+        padding-left: 3rem;
+        color: white;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        //padding:40px;
         h1{
           //font-size: 6rem;
         }
@@ -95,6 +108,14 @@
       }
     }
   }
+
+@media screen and (max-width: 700px) and (min-width: 200px){
+  .hero{
+    .bg-arrow{
+      width:100vw;
+    }
+  }
+}
 
 //sections
 .faq-bg{
@@ -124,14 +145,20 @@
 
 
 //---------------------------------------------PARTNERS SECTION---------------------------------------------------------
-
+.carousel-container{
+  margin-top:5rem;
+}
   .img-container{
-    display:block;
-    .partner-img{
-      max-height: 90px;
-      margin: auto;
-    }
+    //display:block;
+    //width: 363px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+.partner-img{
+  //max-width:150px;
+  max-height:80px;
+}
 
 
 .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button
@@ -166,7 +193,7 @@
 
 //--------------------------------------------------FAQS----------------------------------------------------------------
   .page-img{
-    max-width:110%;
+    max-width:100%;
   }
 
 .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
@@ -187,19 +214,18 @@
   transition: box-shadow 0.2s;
 }
 
+//----------------------------------------------TECHNOLOGY--------------------------------------------------------------
+.techno-img{
+  max-height:300px;
+}
 
 //-------------------------------------------------NEWS-----------------------------------------------------------------
 .news-card{
   position: relative;
-  //padding:20px;
+  margin:20px;
   text-align: center;
   //width:350px;
   background-color: #f2f2f2;
-
-  .toolkit-icon{
-    color:pink;
-    font-size:15rem;
-  }
   .card-footer{
     //position:absolute;
     //bottom:0;
@@ -207,7 +233,7 @@
     padding:35px;
   }
   .card-body{
-   padding:30px;
+   padding:45px;
   }
   .card-head{
     display: block;
@@ -220,8 +246,8 @@
       background-repeat: no-repeat;
       position: absolute;
       top:0;
-      bottom:4px;
-      left:1px;
+      bottom:3px;
+      left:5px;
       right:0;
     }
     .news-img{
@@ -249,6 +275,10 @@
   h2{
     padding-left:35px;
   }
+}
+
+.p-datatable{
+  margin:20px;
 }
 
   .p-datatable .p-datatable-thead > tr > th {
@@ -303,3 +333,75 @@ footer{
     font-weight: 700;
   }
 }
+
+//---------------------------------------------------NAVBAR-HEADER------------------------------------------------------
+.navbar-container{
+  padding: 2rem;
+  display:flex;
+  flex-direction:row;
+}
+
+.pet-btn{
+  margin:3px;
+}
+
+.nav-logo{
+  height:80px;
+  margin-left:0.5rem;
+  margin-right:0.5rem;
+}
+
+.p-menubar
+{
+  padding: 0.5rem;
+  background: none;
+  color: #4b5563;
+  border: none;
+  border-radius: 0px;
+}
+
+//----------------------------------------------------MEDIA QUERY-------------------------------------------------------
+
+  //---------------CAROUSEL------------------
+  @media only screen and (max-width: 576px) {
+    .partner-img{
+      max-height:60px;
+    }
+    .carousel-container{
+      margin-top:10rem;
+    }
+  }
+
+  @media only screen and (max-width: 860px) {
+    .carousel-container{
+      margin-top:10.3rem;
+    }
+  }
+
+  @media only screen and (max-width: 1090px) {
+    .carousel-container{
+      margin-top:10.4rem;
+    }
+  }
+  ///---------------------------NAVBAR-----------------------------
+  @media only screen and (min-width: 300px) and (max-width: 930px){
+    .navbar-wrapper{
+      display:flex;
+      flex-direction:column;
+    }
+    .navbar-container{
+      display:flex;
+    }
+    .p-megamenu-horizontal .p-megamenu-root-list {
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+    }
+
+  }
+
+
+
+
+
+
