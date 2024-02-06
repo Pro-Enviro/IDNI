@@ -124,14 +124,20 @@
 
 
 //---------------------------------------------PARTNERS SECTION---------------------------------------------------------
-
+.carousel-container{
+  margin-top:5rem;
+}
   .img-container{
-    display:block;
-    .partner-img{
-      max-height: 90px;
-      margin: auto;
-    }
+    //display:block;
+    //width: 363px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+.partner-img{
+  //max-width:150px;
+  max-height:80px;
+}
 
 
 .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button
@@ -300,5 +306,28 @@ footer{
   &:hover{
     color:$darkColor;
     font-weight: 700;
+  }
+}
+
+
+//----------------------------------------------------MEDIA QUERY-------------------------------------------------------
+@media only screen and (max-width: 576px) {
+  .partner-img{
+    max-height:60px;
+  }
+  .carousel-container{
+    margin-top:10rem;
+  }
+}
+
+@media only screen and (max-width: 860px) {
+  .carousel-container{
+    margin-top:10.3rem;
+  }
+}
+
+@media only screen and (max-width: 1090px) {
+  .carousel-container{
+    margin-top:10.4rem;
   }
 }

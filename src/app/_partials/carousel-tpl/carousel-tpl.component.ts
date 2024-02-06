@@ -72,23 +72,33 @@ partners = [
     image:'../../../assets/logos/mpa-logo-png.png'
   }
 ]
-  // ngOnInit() {
-  //   this.responsiveOptions = [
-  //     {
-  //       breakpoint: '1199px',
-  //       numVisible: 1,
-  //       numScroll: 1
-  //     },
-  //     {
-  //       breakpoint: '991px',
-  //       numVisible: 2,
-  //       numScroll: 1
-  //     },
-  //     {
-  //       breakpoint: '767px',
-  //       numVisible: 1,
-  //       numScroll: 1
-  //     }
-  //   ];
-  // }
+  ngOnInit() {
+    this.responsiveOptions = [
+      {
+        breakpoint: '1080px',
+        numVisible: 2,
+        numScroll: 2
+      },
+      {
+        breakpoint: '915px',
+        numVisible: 1,
+        numScroll: 1
+      },
+      {
+        breakpoint: '812px',
+        numVisible: 1,
+        numScroll: 1
+      },
+      {
+        breakpoint: '768px',
+        numVisible: 1,
+        numScroll: 1
+      },
+      {
+        breakpoint: '576px',
+        numVisible: 1,
+        numScroll: 1
+      }
+    ];
+  }
 }
