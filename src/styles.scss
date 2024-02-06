@@ -195,15 +195,10 @@
 //-------------------------------------------------NEWS-----------------------------------------------------------------
 .news-card{
   position: relative;
-  //padding:20px;
+  margin:20px;
   text-align: center;
   //width:350px;
   background-color: #f2f2f2;
-
-  .toolkit-icon{
-    color:pink;
-    font-size:15rem;
-  }
   .card-footer{
     //position:absolute;
     //bottom:0;
@@ -211,7 +206,7 @@
     padding:35px;
   }
   .card-body{
-   padding:30px;
+   padding:45px;
   }
   .card-head{
     display: block;
@@ -224,8 +219,8 @@
       background-repeat: no-repeat;
       position: absolute;
       top:0;
-      bottom:4px;
-      left:1px;
+      bottom:3px;
+      left:5px;
       right:0;
     }
     .news-img{
