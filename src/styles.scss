@@ -75,14 +75,27 @@
 //----------------------------------------------------------HERO--------------------------------------------------------
   .hero{
     background-size: cover;
+    background-repeat: no-repeat;
+    height: 90vh;
+    position: relative;
+    color:white;
     .bg-arrow{
       color: white;
       height: 90vh;
+      width:50vw;
       background-image: url("assets/img/arrow.svg");
       background-repeat: no-repeat;
+      background-size: cover;
       .content{
-        padding-left: 2rem;
-        //width: 70%;
+        padding-left: 3rem;
+        color: white;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        //padding:40px;
         h1{
           //font-size: 6rem;
         }
@@ -95,6 +108,14 @@
       }
     }
   }
+
+@media screen and (max-width: 700px) and (min-width: 200px){
+  .hero{
+    .bg-arrow{
+      width:100vw;
+    }
+  }
+}
 
 //sections
 .faq-bg{
