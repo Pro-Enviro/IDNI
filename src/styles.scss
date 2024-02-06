@@ -309,25 +309,62 @@ footer{
   }
 }
 
+//---------------------------------------------------NAVBAR-HEADER------------------------------------------------------
+.navbar-container{
+  padding: 2rem;
+  display:flex;
+  flex-direction:row;
+}
+
+.pet-btn{
+  margin:3px;
+}
+
+.nav-logo{
+  height:80px;
+  margin-left:0.5rem;
+  margin-right:0.5rem;
+}
 
 //----------------------------------------------------MEDIA QUERY-------------------------------------------------------
-@media only screen and (max-width: 576px) {
-  .partner-img{
-    max-height:60px;
-  }
-  .carousel-container{
-    margin-top:10rem;
-  }
-}
 
-@media only screen and (max-width: 860px) {
-  .carousel-container{
-    margin-top:10.3rem;
+  //---------------CAROUSEL------------------
+  @media only screen and (max-width: 576px) {
+    .partner-img{
+      max-height:60px;
+    }
+    .carousel-container{
+      margin-top:10rem;
+    }
   }
-}
 
-@media only screen and (max-width: 1090px) {
-  .carousel-container{
-    margin-top:10.4rem;
+  @media only screen and (max-width: 860px) {
+    .carousel-container{
+      margin-top:10.3rem;
+    }
   }
-}
+
+  @media only screen and (max-width: 1090px) {
+    .carousel-container{
+      margin-top:10.4rem;
+    }
+  }
+  ///---------------------------NAVBAR-----------------------------
+  @media only screen and (min-width: 300px) and (max-width: 930px){
+    .navbar-wrapper{
+      display:flex;
+      flex-direction:column;
+    }
+    .navbar-container{
+      display:flex;
+      flex-direction:column;
+    }
+    .p-megamenu-horizontal .p-megamenu-root-list {
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+    }
+  }
+
+
+
