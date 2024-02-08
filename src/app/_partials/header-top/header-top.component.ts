@@ -17,12 +17,15 @@ import {MenubarModule} from "primeng/menubar";
   styleUrl: './header-top.component.scss'
 })
 export class HeaderTopComponent {
-  menuItems: MenuItem[] = [{
+  menuItems: MegaMenuItem[] = [{
     label: 'Home',
     routerLink: '/'
   },{
     label: 'Project Information',
     routerLink: 'coming-soon'
+  },{
+    label: 'Local Decarbonisation',
+    routerLink: 'local-decarbonisation'
   },{
     label: 'News',
     routerLink: 'coming-soon'

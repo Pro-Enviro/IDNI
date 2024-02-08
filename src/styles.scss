@@ -69,7 +69,30 @@
     background:$primeColor;
   }
 
+  .navbar-container{
+    padding: 2rem;
+    display:flex;
+    flex-direction:row;
+  }
 
+  .pet-btn{
+    margin:3px;
+  }
+
+  .nav-logo{
+    height:80px;
+    margin-left:0.5rem;
+    margin-right:0.5rem;
+  }
+
+  .p-menubar
+  {
+    padding: 0.5rem;
+    background: none;
+    color: #4b5563;
+    border: none;
+    border-radius: 0px;
+  }
 
 
 //----------------------------------------------------------HERO--------------------------------------------------------
@@ -109,13 +132,6 @@
     }
   }
 
-@media screen and (max-width: 700px) and (min-width: 200px){
-  .hero{
-    .bg-arrow{
-      width:100vw;
-    }
-  }
-}
 
 //sections
 .faq-bg{
@@ -334,31 +350,23 @@ footer{
   }
 }
 
-//---------------------------------------------------NAVBAR-HEADER------------------------------------------------------
-.navbar-container{
-  padding: 2rem;
-  display:flex;
-  flex-direction:row;
-}
+//----------------------------------------------------TOP IMAGE---------------------------------------------------------
 
-.pet-btn{
-  margin:3px;
-}
-
-.nav-logo{
-  height:80px;
-  margin-left:0.5rem;
-  margin-right:0.5rem;
-}
-
-.p-menubar
-{
-  padding: 0.5rem;
-  background: none;
-  color: #4b5563;
-  border: none;
-  border-radius: 0px;
-}
+ .top-image{
+   background-size: cover;
+   background-repeat: no-repeat;
+   height: 30vh;
+   position: relative;
+   .top-image-line{
+     color: white;
+     height: 45vh;
+     background-image: url("assets/img/line-topimage.svg");
+     background-repeat: no-repeat;
+     background-size: contain;
+     bottom: 32%;
+     position: relative;
+   }
+ }
 
 //----------------------------------------------------MEDIA QUERY-------------------------------------------------------
 
@@ -399,8 +407,14 @@ footer{
     }
 
   }
-
-
+//--------------------------HERO----------------------------
+@media screen and (max-width: 700px) and (min-width: 200px){
+  .hero{
+    .bg-arrow{
+      width:100vw;
+    }
+  }
+}
 
 
 
