@@ -39,6 +39,7 @@
    background-color: #f4f9f8;
    border:1px solid #2e5757;
    color:#2e5757;
+   margin-right: 5px;
    &:hover{
      background-color:$primeColor;
      border:1px solid $darkColor;
@@ -55,6 +56,20 @@
   @media only screen and (min-width: 1200px) { .container { max-width: 1140px; } }
   @media only screen and (min-width: 1400px) { .container { max-width: 1320px; } }
 
+
+  //-----------------------------------------------LOGIN----------------------------------------------------------------
+
+.surface-card{
+  background-color: #fefefe !important;
+  a{
+    color:$primeColor;
+    font-weight:700;
+  }
+}
+
+.gradient-bck{
+  background-image: linear-gradient(to right, rgba(244,249,248,0), rgba(218,237,234,1));
+}
   //----------------------------------------------------MENU------------------------------------------------------------
   .p-megamenu{
     border: none;
