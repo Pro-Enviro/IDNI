@@ -8,6 +8,7 @@ import {AccordionTplComponent} from "../accordion-tpl/accordion-tpl.component";
 import {FooterComponent} from "../footer/footer.component";
 import {NewsCardsTplComponent} from "../news-cards-tpl/news-cards-tpl.component";
 import {HomeTechnologyTplComponent} from "../home-technology-tpl/home-technology-tpl.component";
+import {RegistrationFormTplComponent} from "../registration-form-tpl/registration-form-tpl.component";
 
 @Component({
   selector: 'app-info',
@@ -20,7 +21,8 @@ import {HomeTechnologyTplComponent} from "../home-technology-tpl/home-technology
     AccordionTplComponent,
     FooterComponent,
     NewsCardsTplComponent,
-    HomeTechnologyTplComponent
+    HomeTechnologyTplComponent,
+    RegistrationFormTplComponent
   ],
   animations: [
     trigger('openClose', [
