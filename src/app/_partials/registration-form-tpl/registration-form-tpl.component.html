@@ -1,102 +1,110 @@
 <section>
-  <div class="container">
-    <p-panel header="User Information">
-      <div class="field flex flex-column">
-        <label>Name<span style="color:#006633;padding-left:5px">*</span></label>
-        <input type="text"  name="contact_name" pInputText class="text-base">
-      </div>
-      <div class="formgrid grid">
-        <div class="field col">
-          <label>Email<span style="color:#006633;padding-left:5px">*</span></label>
-          <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+  <div class="container p-3">
+   <h2 class="header-style">Registration Form</h2>
+    <p>Fields marked with <span style="color:#006633">*</span> are mandatory</p>
+  </div>
+    <div class="container p-3">
+      <p-panel header="User Information">
+        <div class="field flex flex-column">
+          <label>Name<span style="color:#85bfba;padding-left:5px">*</span></label>
+          <input type="text"  name="contact_name" pInputText class="text-base">
         </div>
-        <div class="field col">
-          <label>Phone<span style="color:#006633;padding-left:5px">*</span></label>
-          <input id="lastname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <div class="formgrid grid">
+          <div class="field col">
+            <label>Email<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          </div>
+          <div class="field col">
+            <label>Phone<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <input id="lastname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          </div>
         </div>
-      </div>
-      <div class="field flex flex-column">
-        <label>Password<span style="color:#006633;padding-left:5px">*</span></label>
-        <input type="text"  name="contact_name" pInputText class="text-base">
-      </div>
-      <div class="field flex flex-column">
-        <label>Confirm Password<span style="color:#006633;padding-left:5px">*</span></label>
-        <input type="text"  name="contact_name" pInputText class="text-base">
-      </div>
-    </p-panel>
-    <p-panel header="Company Information">
-      <div class="field flex flex-column">
-        <label>Company Name<span style="color:#006633;padding-left:5px">*</span></label>
-        <input type="text" name="company_name"  pInputText class="text-base">
-      </div>
-      <div class="formgrid grid">
-        <div class="field col">
-          <label>Address<span style="color:#006633;padding-left:5px">*</span></label>
-          <input id="fff" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <div class="field flex flex-column">
+          <label>Password<span style="color:#85bfba;padding-left:5px">*</span></label>
+          <input type="text"  name="contact_name" pInputText class="text-base">
         </div>
-        <div class="field col">
-          <label>Postcode<span style="color:#006633;padding-left:5px">*</span></label>
-          <input id="eee" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <div class="field flex flex-column">
+          <label>Confirm Password<span style="color:#85bfba;padding-left:5px">*</span></label>
+          <input type="text"  name="contact_name" pInputText class="text-base">
         </div>
-      </div>
-      <div class="field flex flex-column">
-        <label>Unique Property Reference Number (UPRN)</label>
-        <small><i>if known</i></small>
-        <input type="text"  name="uprn" pInputText  class="text-base">
-      </div>
-      <div class="formgrid grid">
-        <div class="field col">
-          <label>To which local authority do you pay your business rates?<span style="color:#006633;padding-left:5px">*</span></label>
-          <input id="la" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+      </p-panel>
+    </div>
+    <div class="container p-3">
+      <p-panel header="Company Information">
+        <div class="field flex flex-column">
+          <label>Company Name<span style="color:#85bfba;padding-left:5px">*</span></label>
+          <input type="text" name="company_name"  pInputText class="text-base">
         </div>
-        <div class="field col">
-          <label>Business established year<span style="color:#006633;padding-left:5px">*</span></label>
-          <input id="year" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <div class="formgrid grid">
+          <div class="field col">
+            <label>Address<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <input id="fff" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          </div>
+          <div class="field col">
+            <label>Postcode<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <input id="eee" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          </div>
         </div>
-      </div>
-      <div class="formgrid grid">
-        <div class="field col">
-          <label>Total number of people employed by your business?<span style="color:#006633;padding-left:5px">*</span></label>
-          <input id="number" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <div class="field flex flex-column">
+          <label>Unique Property Reference Number (UPRN)</label>
+          <small><i>if known</i></small>
+          <input type="text"  name="uprn" pInputText  class="text-base">
         </div>
-        <div class="field col">
+        <div class="formgrid grid">
+          <div class="field col">
+            <label>To which local authority do you pay your business rates?<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <input id="la" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          </div>
+          <div class="field col">
+            <label>Business established year<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <input id="year" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          </div>
+        </div>
+        <div class="formgrid grid">
+          <div class="field col">
+            <label>Total number of people employed by your business?<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <input id="number" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          </div>
+          <div class="field col">
             <label>Please,provide your most recent annual turnover figure (£)</label>
             <p-inputNumber  name="turnover" class="text-base"></p-inputNumber>
+          </div>
         </div>
-      </div>
-      <div class="formgrid grid">
-        <div class="field col">
-          <label>Sector</label>
-          <input id="sector" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        <div class="formgrid grid">
+          <div class="field col">
+            <label>Sector</label>
+            <input id="sector" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          </div>
+          <div class="field col">
+            <label>Sic Code</label>
+            <input id="sic-code" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          </div>
         </div>
-        <div class="field col">
-          <label>Sic Code</label>
-          <input id="sic-code" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-        </div>
-      </div>
-      <div class="field flex flex-column">
-        <label>Website</label>
-        <p-inputGroup>
-          <p-inputGroupAddon>
-            <i class="pi pi-globe"></i>
-          </p-inputGroupAddon>
-          <input type="text" pInputText placeholder="Website" />
-        </p-inputGroup>
+        <div class="field flex flex-column">
+          <label>Website</label>
+          <p-inputGroup>
+            <p-inputGroupAddon>
+              <i class="pi pi-globe"></i>
+            </p-inputGroupAddon>
+            <input type="text" pInputText placeholder="Website" />
+          </p-inputGroup>
 
-      </div>
-      <div class="field flex flex-column">
-        <label>Describe the primary business activity?</label>
-        <textarea rows="5" cols="30" pInputTextarea [autoResize]="true"></textarea>
-      </div>
-    </p-panel>
+        </div>
+        <div class="field flex flex-column">
+          <label>Describe the primary business activity?</label>
+          <textarea rows="5" cols="30" pInputTextarea [autoResize]="true"></textarea>
+        </div>
+      </p-panel>
+    </div>
 
-    <p-panel header="Privacy Notice">
+    <div class="container">
+      <h4 class="header-style">Privacy</h4>
       <div class="pb-3">
         <p-checkbox [binary]="true" inputId="binary" name="future_participation"></p-checkbox>
         <label class="pl-2">I agree with the terms and conditions<span style="color:#006633;padding-left:5px">*</span></label>
       </div>
-      <p><small>Please read the <a href="" style="color:#006633">Data Privacy Policy</a> for full information.</small></p>
-    </p-panel>
-    <p-button styleClass="btn-style" label="Submit"></p-button>
-  </div>
+      <p><small>Please read the <a href="" style="color:#85bfba">Data Privacy Policy</a> for full information.</small></p>
+      <p-button styleClass="btn-style" label="Submit"></p-button>
+    </div>
+
 </section>

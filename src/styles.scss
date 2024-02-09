@@ -59,17 +59,28 @@
 
   //-----------------------------------------------LOGIN----------------------------------------------------------------
 
-.surface-card{
-  background-color: #fefefe !important;
-  a{
-    color:$primeColor;
-    font-weight:700;
+  .surface-card{
+    background-color: #fefefe !important;
+    a{
+      color:$primeColor;
+      font-weight:700;
+    }
   }
-}
+  .gradient-bck{
+    background-image: linear-gradient(to right, rgba(244,249,248,0), rgba(218,237,234,1));
+  }
 
-.gradient-bck{
-  background-image: linear-gradient(to right, rgba(244,249,248,0), rgba(218,237,234,1));
-}
+  //---------------------------------------------------FORM-------------------------------------------------------------
+  .p-panel .p-panel-header
+  {
+    border: 1px solid #e5e7eb;
+    padding: 1.25rem;
+    background: $primeColor;
+    color: $headerColor;
+   font-weight: 700;
+    font-size: 1.125rem;
+  }
+
   //----------------------------------------------------MENU------------------------------------------------------------
   .p-megamenu{
     border: none;
