@@ -86,6 +86,27 @@
     color: $darkColor;
     background-color: $lightColor-100;
   }
+
+  .date-btn{
+    .p-datepicker table td.p-datepicker-today > span
+    {
+      background: $primeColor;
+      color: white;
+      border-color: $primeColor;
+    }
+    .p-button
+    {
+      background: $lightColor-100;
+      color: $darkColor;
+      border: 1px solid $darkColor;
+    }
+    .p-button:not(:disabled):hover
+    {
+      background: $lightColor-100;
+      color: $darkColor;
+      border-color: $darkColor;
+    }
+  }
   //----------------------------------------------------MENU------------------------------------------------------------
   .p-megamenu{
     border: none;
