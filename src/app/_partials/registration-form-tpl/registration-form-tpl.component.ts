@@ -10,6 +10,8 @@ import {InputGroupModule} from "primeng/inputgroup";
 import {FormsModule} from "@angular/forms";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {PasswordModule} from "primeng/password";
+import {CalendarModule} from "primeng/calendar";
+import {ChipsModule} from "primeng/chips";
 
 
 @Component({
@@ -27,7 +29,9 @@ import {PasswordModule} from "primeng/password";
     FormsModule,
     FormsModule,
     InputTextareaModule,
-    PasswordModule
+    PasswordModule,
+    CalendarModule,
+    ChipsModule
   ],
   templateUrl: './registration-form-tpl.component.html',
   styleUrl: './registration-form-tpl.component.scss'
@@ -35,5 +39,9 @@ import {PasswordModule} from "primeng/password";
 export class RegistrationFormTplComponent {
 password?:string;
 cPassword?:string;
+est_year?: Date;
+employees?:string;
+turnover?:string;
+sic_code?:string;
 
 }

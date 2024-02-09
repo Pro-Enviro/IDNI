@@ -65,23 +65,27 @@
           <input type="text"  name="uprn" pInputText  class="text-base">
         </div>
         <div class="formgrid grid">
-          <div class="field col">
+          <div class="field col-6">
             <label>To which local authority do you pay your business rates?<span style="color:#85bfba;padding-left:5px">*</span></label>
             <input id="la" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
           </div>
-          <div class="field col">
-            <label>Business established year<span style="color:#85bfba;padding-left:5px">*</span></label>
-            <input id="year" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          <div class="field col-6">
+            <div class="flex flex-column">
+              <label>Business established year</label>
+              <p-calendar [(ngModel)]="est_year" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+            </div>
+
+
           </div>
         </div>
         <div class="formgrid grid">
           <div class="field col">
-            <label>Total number of people employed by your business?<span style="color:#85bfba;padding-left:5px">*</span></label>
-            <input id="number" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <label>Total number of people employed by your business?</label>
+            <p-inputNumber inputId="integeronly" [(ngModel)]="employees"></p-inputNumber>
           </div>
           <div class="field col">
             <label>Please,provide your most recent annual turnover figure (£)</label>
-            <p-inputNumber  name="turnover" class="text-base"></p-inputNumber>
+            <p-inputNumber [(ngModel)]="turnover" inputId="currency-gbp" mode="currency" currency="GBP"> </p-inputNumber>
           </div>
         </div>
         <div class="formgrid grid">
@@ -89,9 +93,9 @@
             <label>Sector</label>
             <input id="sector" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
           </div>
-          <div class="field col">
+          <div class="field col flex flex-column">
             <label>Sic Code</label>
-            <input id="sic-code" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <p-chips [(ngModel)]="sic_code"></p-chips>
           </div>
         </div>
         <div class="field flex flex-column">
@@ -111,14 +115,14 @@
       </p-panel>
     </div>
 
-    <div class="container">
+    <div class="container p-3">
       <h4 class="header-style">Privacy</h4>
-      <div class="pb-3">
+      <div class="">
         <p-checkbox [binary]="true" inputId="binary" name="future_participation"></p-checkbox>
         <label class="pl-2">I agree with the terms and conditions<span style="color:#006633;padding-left:5px">*</span></label>
       </div>
       <p><small>Please read the <a href="" style="color:#85bfba">Data Privacy Policy</a> for full information.</small></p>
-      <p-button styleClass="btn-style" label="Submit"></p-button>
+      <p-button styleClass="btn-style" label="Register"></p-button>
     </div>
 
 </section>
