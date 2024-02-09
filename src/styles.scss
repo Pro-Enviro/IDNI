@@ -11,6 +11,7 @@
   $primeColor: #85bfba;
   $darkColor:#356c6b;
   $headerColor:#253b3c;
+  $lightColor-100: #daedea;
 
   h2{
     color: $primeColor;
@@ -59,17 +60,63 @@
 
   //-----------------------------------------------LOGIN----------------------------------------------------------------
 
-.surface-card{
-  background-color: #fefefe !important;
-  a{
-    color:$primeColor;
-    font-weight:700;
+  .surface-card{
+    background-color: #fefefe !important;
+    a{
+      color:$primeColor;
+      font-weight:700;
+    }
   }
-}
+  .gradient-bck{
+    background-image: linear-gradient(to right, rgba(244,249,248,0), rgba(218,237,234,1));
+  }
 
-.gradient-bck{
-  background-image: linear-gradient(to right, rgba(244,249,248,0), rgba(218,237,234,1));
-}
+  //---------------------------------------------------FORM-------------------------------------------------------------
+  .p-panel .p-panel-header
+  {
+    border: 1px solid #e5e7eb;
+    padding: 1.25rem;
+    background: $primeColor;
+    color: $headerColor;
+   font-weight: 700;
+    font-size: 1.125rem;
+  }
+  .p-inputgroup-addon
+  {
+    color: $darkColor;
+    background-color: $lightColor-100;
+  }
+
+  .date-btn{
+    .p-datepicker table td.p-datepicker-today > span
+    {
+      background: $primeColor;
+      color: white;
+      border-color: $primeColor;
+    }
+    .p-button
+    {
+      background: $lightColor-100;
+      color: $darkColor;
+      border: 1px solid $darkColor;
+    }
+    .p-button:not(:disabled):hover
+    {
+      background: $lightColor-100;
+      color: $darkColor;
+      border-color: $darkColor;
+    }
+  }
+
+    .p-checkbox .p-checkbox-box .p-icon {
+      background-color: $primeColor;
+      border: 1px solid $primeColor;
+    }
+    .p-checkbox .p-checkbox-box.p-highlight {
+      border-color: $primeColor;
+      background: $primeColor;
+    }
+
   //----------------------------------------------------MENU------------------------------------------------------------
   .p-megamenu{
     border: none;

@@ -5,6 +5,7 @@ import {ConstructionComponent} from "./_partials/construction/construction.compo
 import {LocalDecarbonisationComponent} from "./pages/local-decarbonisation/local-decarbonisation.component";
 import {LocalDecabSingleTplComponent} from "./_partials/local-decab-single-tpl/local-decab-single-tpl.component";
 import {LogInTplComponent} from "./_partials/log-in-tpl/log-in-tpl.component";
+import {RegistrationFormComponent} from "./pages/registration-form/registration-form.component";
 
 export const routes: Routes = [
   {path: '', component: LandingPageComponent},

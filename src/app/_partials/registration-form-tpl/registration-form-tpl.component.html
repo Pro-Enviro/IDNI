@@ -1,0 +1,128 @@
+
+    <div class="container p-3">
+      <p-panel header="User Information">
+        <div class="field flex flex-column">
+          <label>Name<span style="color:#85bfba;padding-left:5px">*</span></label>
+          <input type="text" name="name" pInputText class="text-base" [(ngModel)]="name">
+        </div>
+        <div class="formgrid grid">
+          <div class="field col">
+            <label>Email<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <p-inputGroup>
+              <p-inputGroupAddon>
+                <i class="pi pi-envelope"></i>
+              </p-inputGroupAddon>
+              <input type="text" name="email" pInputText [(ngModel)]="email"/>
+            </p-inputGroup>
+          </div>
+          <div class="field col">
+            <label>Phone<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <p-inputGroup>
+              <p-inputGroupAddon>
+                <i class="pi pi-phone"></i>
+              </p-inputGroupAddon>
+              <input pInputText type="text" name="phone_number" [(ngModel)]="phone_number"/>
+            </p-inputGroup>
+          </div>
+        </div>
+
+        <div class="grid mt-2">
+          <div class="col-6">
+            <div class="field flex flex-column pr-3">
+              <label>Password<span style="color:#85bfba;padding-left:5px">*</span></label>
+              <p-password [(ngModel)]="password" [feedback]="false"></p-password>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="field field flex flex-column">
+              <label>Confirm Password<span style="color:#85bfba;padding-left:5px">*</span></label>
+              <p-password [(ngModel)]="confirm_password" [feedback]="false"></p-password>
+            </div>
+          </div>
+        </div>
+      </p-panel>
+    </div>
+
+    <div class="container p-3">
+      <p-panel header="Company Information">
+        <div class="field flex flex-column p-2">
+          <label>Company Name<span style="color:#85bfba;padding-left:5px">*</span></label>
+          <input type="text" name="company_name" pInputText class="text-base" [(ngModel)]="company_name">
+        </div>
+        <div class="formgrid grid p-2">
+          <div class="field col flex flex-column">
+            <label>Address<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <input id="address" name="address" type="text" pInputText  [(ngModel)]="address">
+          </div>
+          <div class="field col flex flex-column">
+            <label>Postcode<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <input id="postcode" name="postcode" pInputText type="text" [(ngModel)]="postcode">
+          </div>
+        </div>
+        <div class="field flex flex-column p-2">
+          <label>Unique Property Reference Number (UPRN)</label>
+          <small><i>if known</i></small>
+          <input id="uprn" type="text" name="uprn" pInputText [(ngModel)]="uprn">
+        </div>
+
+        <div class="formgrid grid p-2">
+          <div class="field col-6">
+            <label>To which local authority do you pay your business rates?</label>
+            <input id="local_auth" type="text" name="local_auth" pInputText [(ngModel)]="local_auth">
+          </div>
+          <div class="field col-6">
+            <div class="flex flex-column">
+              <label>Business established year</label>
+              <p-calendar [(ngModel)]="est_year" [showIcon]="true" dateFormat="dd/mm/yy" styleClass="date-btn"></p-calendar>
+            </div>
+          </div>
+        </div>
+
+        <div class="formgrid grid p-2">
+          <div class="field col">
+            <label>Total number of people employed by your business?</label>
+            <p-inputNumber name="employees" inputId="integeronly" [(ngModel)]="employees"></p-inputNumber>
+          </div>
+          <div class="field col">
+            <label>Please,provide your most recent annual turnover figure (£)</label>
+            <p-inputNumber [(ngModel)]="turnover" inputId="currency-gbp" mode="currency" currency="GBP" name="turnover"></p-inputNumber>
+          </div>
+        </div>
+
+        <div class="formgrid grid p-2">
+          <div class="field col flex flex-column">
+            <label>Sector</label>
+            <input id="sector" type="text" name="sector" [(ngModel)]="sector" pInputText>
+          </div>
+          <div class="field col flex flex-column">
+            <label>Sic Code</label>
+            <p-chips [(ngModel)]="sic_code"></p-chips>
+          </div>
+        </div>
+        <div class="field flex flex-column p-2">
+          <label>Website</label>
+          <p-inputGroup>
+            <p-inputGroupAddon>
+              <i class="pi pi-globe"></i>
+            </p-inputGroupAddon>
+            <input type="text" pInputText name="website_url" [(ngModel)]="website_url"/>
+          </p-inputGroup>
+
+        </div>
+        <div class="field flex flex-column p-2">
+          <label>Describe the primary business activity?</label>
+          <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" [(ngModel)]="company_description"></textarea>
+        </div>
+      </p-panel>
+    </div>
+
+    <div class="container p-3">
+      <h3 class="header-style">Privacy</h3>
+      <div class="">
+        <p-checkbox [binary]="true" inputId="binary" name="policy" [(ngModel)]="policy"></p-checkbox>
+        <label class="pl-2">I agree with the terms and conditions<span style="color:#006633;padding-left:5px">*</span></label>
+      </div>
+      <p><small>Please read the <a href="" style="color:#85bfba">Data Privacy Policy</a> for full information.</small></p>
+      <p-button styleClass="btn-style" label="Register" icon="pi pi-users"></p-button>
+    </div>
+
