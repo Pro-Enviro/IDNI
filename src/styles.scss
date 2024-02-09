@@ -59,10 +59,15 @@
   //-----------------------------------------------LOGIN----------------------------------------------------------------
 
 .surface-card{
+  background-color: #fefefe !important;
   a{
     color:$primeColor;
     font-weight:700;
   }
+}
+
+.gradient-bck{
+  background-image: linear-gradient(to right, rgba(244,249,248,0), rgba(218,237,234,1));
 }
   //----------------------------------------------------MENU------------------------------------------------------------
   .p-megamenu{
