@@ -107,6 +107,16 @@
       border-color: $darkColor;
     }
   }
+
+    .p-checkbox .p-checkbox-box .p-icon {
+      background-color: $primeColor;
+      border: 1px solid $primeColor;
+    }
+    .p-checkbox .p-checkbox-box.p-highlight {
+      border-color: $primeColor;
+      background: $primeColor;
+    }
+
   //----------------------------------------------------MENU------------------------------------------------------------
   .p-megamenu{
     border: none;

@@ -9,6 +9,7 @@ import {FooterComponent} from "../footer/footer.component";
 import {NewsCardsTplComponent} from "../news-cards-tpl/news-cards-tpl.component";
 import {HomeTechnologyTplComponent} from "../home-technology-tpl/home-technology-tpl.component";
 import {RegistrationFormTplComponent} from "../registration-form-tpl/registration-form-tpl.component";
+import {RegistrationFormComponent} from "../../pages/registration-form/registration-form.component";
 
 @Component({
   selector: 'app-info',
@@ -22,7 +23,8 @@ import {RegistrationFormTplComponent} from "../registration-form-tpl/registratio
     FooterComponent,
     NewsCardsTplComponent,
     HomeTechnologyTplComponent,
-    RegistrationFormTplComponent
+    RegistrationFormTplComponent,
+    RegistrationFormComponent
   ],
   animations: [
     trigger('openClose', [

@@ -1,8 +1,4 @@
-<section>
-  <div class="container p-3">
-   <h2 class="header-style">Registration Form</h2>
-    <p>Fields marked with <span style="color:#006633">*</span> are mandatory</p>
-  </div>
+
     <div class="container p-3">
       <p-panel header="User Information">
         <div class="field flex flex-column">
@@ -49,11 +45,11 @@
 
     <div class="container p-3">
       <p-panel header="Company Information">
-        <div class="field flex flex-column">
+        <div class="field flex flex-column p-2">
           <label>Company Name<span style="color:#85bfba;padding-left:5px">*</span></label>
           <input type="text" name="company_name" pInputText class="text-base" [(ngModel)]="company_name">
         </div>
-        <div class="formgrid grid">
+        <div class="formgrid grid p-2">
           <div class="field col flex flex-column">
             <label>Address<span style="color:#85bfba;padding-left:5px">*</span></label>
             <input id="address" name="address" type="text" pInputText  [(ngModel)]="address">
@@ -63,13 +59,13 @@
             <input id="postcode" name="postcode" pInputText type="text" [(ngModel)]="postcode">
           </div>
         </div>
-        <div class="field flex flex-column">
+        <div class="field flex flex-column p-2">
           <label>Unique Property Reference Number (UPRN)</label>
           <small><i>if known</i></small>
           <input id="uprn" type="text" name="uprn" pInputText [(ngModel)]="uprn">
         </div>
 
-        <div class="formgrid grid">
+        <div class="formgrid grid p-2">
           <div class="field col-6">
             <label>To which local authority do you pay your business rates?</label>
             <input id="local_auth" type="text" name="local_auth" pInputText [(ngModel)]="local_auth">
@@ -82,7 +78,7 @@
           </div>
         </div>
 
-        <div class="formgrid grid">
+        <div class="formgrid grid p-2">
           <div class="field col">
             <label>Total number of people employed by your business?</label>
             <p-inputNumber name="employees" inputId="integeronly" [(ngModel)]="employees"></p-inputNumber>
@@ -93,7 +89,7 @@
           </div>
         </div>
 
-        <div class="formgrid grid">
+        <div class="formgrid grid p-2">
           <div class="field col flex flex-column">
             <label>Sector</label>
             <input id="sector" type="text" name="sector" [(ngModel)]="sector" pInputText>
@@ -103,7 +99,7 @@
             <p-chips [(ngModel)]="sic_code"></p-chips>
           </div>
         </div>
-        <div class="field flex flex-column">
+        <div class="field flex flex-column p-2">
           <label>Website</label>
           <p-inputGroup>
             <p-inputGroupAddon>
@@ -113,7 +109,7 @@
           </p-inputGroup>
 
         </div>
-        <div class="field flex flex-column">
+        <div class="field flex flex-column p-2">
           <label>Describe the primary business activity?</label>
           <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" [(ngModel)]="company_description"></textarea>
         </div>
@@ -121,7 +117,7 @@
     </div>
 
     <div class="container p-3">
-      <h4 class="header-style">Privacy</h4>
+      <h3 class="header-style">Privacy</h3>
       <div class="">
         <p-checkbox [binary]="true" inputId="binary" name="policy" [(ngModel)]="policy"></p-checkbox>
         <label class="pl-2">I agree with the terms and conditions<span style="color:#006633;padding-left:5px">*</span></label>
@@ -130,4 +126,3 @@
       <p-button styleClass="btn-style" label="Register" icon="pi pi-users"></p-button>
     </div>
 
-</section>
