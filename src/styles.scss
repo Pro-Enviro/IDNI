@@ -55,6 +55,15 @@
   @media only screen and (min-width: 1200px) { .container { max-width: 1140px; } }
   @media only screen and (min-width: 1400px) { .container { max-width: 1320px; } }
 
+
+  //-----------------------------------------------LOGIN----------------------------------------------------------------
+
+.surface-card{
+  a{
+    color:$primeColor;
+    font-weight:700;
+  }
+}
   //----------------------------------------------------MENU------------------------------------------------------------
   .p-megamenu{
     border: none;
