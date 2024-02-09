@@ -11,6 +11,7 @@
   $primeColor: #85bfba;
   $darkColor:#356c6b;
   $headerColor:#253b3c;
+  $lightColor-100: #daedea;
 
   h2{
     color: $primeColor;
@@ -80,7 +81,11 @@
    font-weight: 700;
     font-size: 1.125rem;
   }
-
+  .p-inputgroup-addon
+  {
+    color: $darkColor;
+    background-color: $lightColor-100;
+  }
   //----------------------------------------------------MENU------------------------------------------------------------
   .p-megamenu{
     border: none;

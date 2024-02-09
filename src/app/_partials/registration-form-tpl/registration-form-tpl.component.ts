@@ -37,11 +37,23 @@ import {ChipsModule} from "primeng/chips";
   styleUrl: './registration-form-tpl.component.scss'
 })
 export class RegistrationFormTplComponent {
-password?:string;
-cPassword?:string;
-est_year?: Date;
-employees?:string;
-turnover?:string;
-sic_code?:string;
+  name?:string;
+  email?:string;
+  phone_number?:string;
+  password?:string;
+  confirm_password?:string;
+  company_name?:string;
+  address?:string;
+  postcode?:string;
+  uprn?:string;
+  local_auth?:string;
+  est_year?: Date;
+  employees?:string;
+  turnover?:string;
+  sector?:string;
+  sic_code?:string;
+  website_url?:string;
+  company_description?:string;
+  policy?:boolean;
 
 }
