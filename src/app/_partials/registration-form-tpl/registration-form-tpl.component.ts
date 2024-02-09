@@ -9,6 +9,7 @@ import {InputGroupAddonModule} from "primeng/inputgroupaddon";
 import {InputGroupModule} from "primeng/inputgroup";
 import {FormsModule} from "@angular/forms";
 import {InputTextareaModule} from "primeng/inputtextarea";
+import {PasswordModule} from "primeng/password";
 
 
 @Component({
@@ -25,11 +26,14 @@ import {InputTextareaModule} from "primeng/inputtextarea";
     InputGroupModule,
     FormsModule,
     FormsModule,
-    InputTextareaModule
+    InputTextareaModule,
+    PasswordModule
   ],
   templateUrl: './registration-form-tpl.component.html',
   styleUrl: './registration-form-tpl.component.scss'
 })
 export class RegistrationFormTplComponent {
-text?:string;
+password?:string;
+cPassword?:string;
+
 }

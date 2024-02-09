@@ -12,21 +12,35 @@
         <div class="formgrid grid">
           <div class="field col">
             <label>Email<span style="color:#85bfba;padding-left:5px">*</span></label>
-            <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <p-inputGroup>
+              <p-inputGroupAddon>
+                <i class="pi pi-envelope"></i>
+              </p-inputGroupAddon>
+              <input pInputText/>
+            </p-inputGroup>
           </div>
           <div class="field col">
             <label>Phone<span style="color:#85bfba;padding-left:5px">*</span></label>
-            <input id="lastname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            <p-inputGroup>
+              <p-inputGroupAddon>
+                <i class="pi pi-phone"></i>
+              </p-inputGroupAddon>
+              <input pInputText/>
+            </p-inputGroup>
           </div>
         </div>
-        <div class="field flex flex-column">
-          <label>Password<span style="color:#85bfba;padding-left:5px">*</span></label>
-          <input type="text"  name="contact_name" pInputText class="text-base">
+
+        <div class="flex flex-row mt-2">
+          <div class="field flex flex-column pr-3">
+            <label>Password<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <p-password [(ngModel)]="password" [feedback]="false"></p-password>
+          </div>
+          <div class="field field flex flex-column">
+            <label>Confirm Password<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <p-password [(ngModel)]="cPassword" [feedback]="false"></p-password>
+          </div>
         </div>
-        <div class="field flex flex-column">
-          <label>Confirm Password<span style="color:#85bfba;padding-left:5px">*</span></label>
-          <input type="text"  name="contact_name" pInputText class="text-base">
-        </div>
+
       </p-panel>
     </div>
     <div class="container p-3">
