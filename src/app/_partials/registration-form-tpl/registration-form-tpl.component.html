@@ -5,14 +5,14 @@
         <label>Name<span style="color:#006633;padding-left:5px">*</span></label>
         <input type="text"  name="contact_name" pInputText class="text-base">
       </div>
-      <div>
-        <div class="field flex flex-column">
+      <div class="formgrid grid">
+        <div class="field col">
           <label>Email<span style="color:#006633;padding-left:5px">*</span></label>
-          <input type="text"  name="contact_name" pInputText class="text-base">
+          <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         </div>
-        <div class="field flex flex-column">
+        <div class="field col">
           <label>Phone<span style="color:#006633;padding-left:5px">*</span></label>
-          <input type="text"  name="contact_name" pInputText class="text-base">
+          <input id="lastname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         </div>
       </div>
       <div class="field flex flex-column">
@@ -29,52 +29,64 @@
         <label>Company Name<span style="color:#006633;padding-left:5px">*</span></label>
         <input type="text" name="company_name"  pInputText class="text-base">
       </div>
-      <div class="field flex flex-column">
-        <label>Address<span style="color:#006633;padding-left:5px">*</span></label>
-        <input type="text"  name="address" pInputText class="text-base">
-      </div>
-      <div class="field flex flex-column">
-        <label>Postcode<span style="color:#006633;padding-left:5px">*</span></label>
-        <input type="text"  name="postcode" pInputText  class="text-base">
+      <div class="formgrid grid">
+        <div class="field col">
+          <label>Address<span style="color:#006633;padding-left:5px">*</span></label>
+          <input id="fff" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col">
+          <label>Postcode<span style="color:#006633;padding-left:5px">*</span></label>
+          <input id="eee" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
       </div>
       <div class="field flex flex-column">
         <label>Unique Property Reference Number (UPRN)</label>
         <small><i>if known</i></small>
         <input type="text"  name="uprn" pInputText  class="text-base">
       </div>
-      <div class="field flex flex-column">
-        <label>To which local authority do you pay your business rates?<span style="color:#006633;padding-left:5px">*</span></label>
-        <input type="text"  name="local_authority" pInputText class="text-base">
+      <div class="formgrid grid">
+        <div class="field col">
+          <label>To which local authority do you pay your business rates?<span style="color:#006633;padding-left:5px">*</span></label>
+          <input id="la" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col">
+          <label>Business established year<span style="color:#006633;padding-left:5px">*</span></label>
+          <input id="year" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
       </div>
-      <div class="field flex flex-column">
-        <label>Business established year</label>
-        <p-inputNumber  name="year" class="text-base"></p-inputNumber>
+      <div class="formgrid grid">
+        <div class="field col">
+          <label>Total number of people employed by your business?<span style="color:#006633;padding-left:5px">*</span></label>
+          <input id="number" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col">
+            <label>Please,provide your most recent annual turnover figure (£)</label>
+            <p-inputNumber  name="turnover" class="text-base"></p-inputNumber>
+        </div>
       </div>
-
-      <div class="field flex flex-column">
-        <label>Total number of people employed by your business?</label>
-        <p-inputNumber  name="employees" class="text-base"></p-inputNumber>
-      </div>
-
-      <div class="field flex flex-column">
-        <label>Describe the primary business activity?</label>
-        <input type="text"  name="business_activity" pInputText class="text-base">
-      </div>
-      <div class="field flex flex-column">
-        <label>Please,provide your most recent annual turnover figure (£)</label>
-        <p-inputNumber  name="turnover" class="text-base"></p-inputNumber>
-      </div>
-      <div class="field flex flex-column">
-        <label>Sector</label>
-        <input type="text"  name="business_activity" pInputText class="text-base">
-      </div>
-      <div class="field flex flex-column">
-        <label>Sic Code</label>
-        <input type="text"  name="business_activity" pInputText class="text-base">
+      <div class="formgrid grid">
+        <div class="field col">
+          <label>Sector</label>
+          <input id="sector" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col">
+          <label>Sic Code</label>
+          <input id="sic-code" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
       </div>
       <div class="field flex flex-column">
         <label>Website</label>
-        <input type="text"  name="business_activity" pInputText class="text-base">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-globe"></i>
+          </p-inputGroupAddon>
+          <input type="text" pInputText placeholder="Website" />
+        </p-inputGroup>
+
+      </div>
+      <div class="field flex flex-column">
+        <label>Describe the primary business activity?</label>
+        <textarea rows="5" cols="30" pInputTextarea [autoResize]="true"></textarea>
       </div>
     </p-panel>
 
