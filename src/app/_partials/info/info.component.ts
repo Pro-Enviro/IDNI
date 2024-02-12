@@ -10,6 +10,7 @@ import {NewsCardsTplComponent} from "../news-cards-tpl/news-cards-tpl.component"
 import {HomeTechnologyTplComponent} from "../home-technology-tpl/home-technology-tpl.component";
 import {RegistrationFormTplComponent} from "../registration-form-tpl/registration-form-tpl.component";
 import {RegistrationFormComponent} from "../../pages/registration-form/registration-form.component";
+import {ChatDialogTplComponent} from "../chat-dialog-tpl/chat-dialog-tpl.component";
 
 @Component({
   selector: 'app-info',
@@ -24,7 +25,8 @@ import {RegistrationFormComponent} from "../../pages/registration-form/registrat
     NewsCardsTplComponent,
     HomeTechnologyTplComponent,
     RegistrationFormTplComponent,
-    RegistrationFormComponent
+    RegistrationFormComponent,
+    ChatDialogTplComponent
   ],
   animations: [
     trigger('openClose', [
