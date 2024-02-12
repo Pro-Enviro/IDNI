@@ -16,16 +16,15 @@
         <div class="user-text-container">
           <p>Hello, I need help !</p>
           <p>I have few question about the programme?</p>
-<!--          <p>{{userText}}</p>-->
           <span class="text-xs text-gray-500 pl-2">10:30am</span>
         </div>
       </div>
       <div class="">
-        <span class="typing-text">{{typing}}</span>
+        <span #timeBox></span>
       </div>
       <div class="message-container">
         <div class="message-input">
-          <input type="text" class="inputText" placeholder="Write your message" #inputBox (keyup)="onKey($event)"/>
+          <input type="text" class="inputText" placeholder="Write your message" #inputBox (keyup.enter)="onKey($event)"/>
         </div>
         <span class="message-icon pr-4">
           <p-button icon="pi pi-send" [rounded]="true" styleClass="chat-btn" (onClick)="sendMessage()"></p-button>

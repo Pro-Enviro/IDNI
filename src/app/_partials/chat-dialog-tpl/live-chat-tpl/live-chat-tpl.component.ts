@@ -1,5 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ButtonModule} from "primeng/button";
+import {interval, map} from "rxjs";
 
 @Component({
   selector: 'app-live-chat-tpl',
@@ -12,31 +13,42 @@ import {ButtonModule} from "primeng/button";
 })
 export class LiveChatTplComponent {
   @ViewChild('inputBox') inputBoxRef?:ElementRef;
+  @ViewChild('timeBox') timeBoxRef?:ElementRef;
+  //@ViewChild('typing') typingRef?:ElementRef;
 typing:string ='';
 // userText = '';
 chat?:any;
 inputBox?:any
 
-assistantPhrases ?:any = [
+  date?: Date = new Date();
+
+
+  assistantPhrases ?:any = [
   "Welcome !",
   "How can I help today ?",
-  "Good morning",
+  "IDNI assistant is here to help you",
   "Good afternoon",
-  "Thank you",
+  "Chat Intelligence is here to help you !",
   "Call us on +1234 567 890",
   "For more information send us a letter by the post"
   ]
 
+
+
   sendMessage= () => {
+    console.log(this.date);
   let randomPhrase = Math.floor(Math.random()* this.assistantPhrases.length);
   let assistantMessagetext = this.assistantPhrases[randomPhrase];
   const userDiv = document.createElement("div");
    userDiv.classList.add("user-container");
    const userP= document.createElement("p");
+   const timeBox = document.createElement('span');
+   timeBox.classList.add("time-style");
    this.chat = document.querySelector(".chat-container");
    this.inputBox = document.querySelector(".inputText");
    userP.innerHTML = this.inputBox.value;
    userP.classList.add("userMsg");
+   userDiv.append(timeBox);
    userDiv.append(userP);
    this.chat.appendChild(userDiv);
    this.inputBox.value = "";
@@ -46,17 +58,21 @@ assistantPhrases ?:any = [
    typing.innerHTML = "Assistant is typing ...";
    typing.classList.add("typing-text");
    setTimeout(()=>{
+     let assistDiv = document.createElement("div");
      let assistP = document.createElement("p");
      assistP.innerHTML = assistantMessagetext;
      assistP.classList.add("assistantMsg");
-     this.chat.appendChild(assistP);
+     assistDiv.classList.add("assistant-container");
+     assistDiv.append(assistP);
+     this.chat.appendChild(assistDiv);
+     console.log(typing)
      this.chat.scrollTop = this.chat.scrollHeight;
      this.chat.removeChild(typing);
+
 
    },2000)
   }
   onKey = (event: any) => {
-    // this.userText = event.target.value;
     if (event === "Enter") {
     let random = Math.floor(Math.random()*this.assistantPhrases.length);
     let assistantTextBox = this.assistantPhrases[random];
@@ -78,7 +94,7 @@ assistantPhrases ?:any = [
       assistantMessage.classList.add("assistantMsg");
       this.chat.appendChild(assistantMessage);
       this.chat.scrollTop = this.chat.scrollHeight;
-      this.chat.removeChild(type);
+      this.chat.remove(type);
 
     },2000)
   }
