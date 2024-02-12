@@ -180,9 +180,18 @@
         background-color: $lightColor-50;
       }
     }
-    .chat-icon{
-      color:$primeColor;
-      font-size:2rem;
+  }
+
+  .chat-icon{
+    background-color: $primeColor;
+    border:$primeColor;
+    color:#283938;
+    .pi {
+      font-size: 1.25rem;
+    }
+    &:hover{
+      background-color:$darkColor;
+      color:white;
     }
   }
 
