@@ -13,7 +13,7 @@ import {ButtonModule} from "primeng/button";
 export class LiveChatTplComponent {
   @ViewChild('inputBox') inputBoxRef?:ElementRef;
 typing:string ='';
-userText = '';
+// userText = '';
 chat?:any;
 inputBox?:any
 
@@ -30,13 +30,15 @@ assistantPhrases ?:any = [
   sendMessage= () => {
   let randomPhrase = Math.floor(Math.random()* this.assistantPhrases.length);
   let assistantMessagetext = this.assistantPhrases[randomPhrase];
+  const userDiv = document.createElement("div");
+   userDiv.classList.add("user-container");
    const userP= document.createElement("p");
    this.chat = document.querySelector(".chat-container");
    this.inputBox = document.querySelector(".inputText");
-   console.log(this.inputBoxRef)
    userP.innerHTML = this.inputBox.value;
-   userP.classList.add("userMessage");
-   this.chat.appendChild(userP);
+   userP.classList.add("userMsg");
+   userDiv.append(userP);
+   this.chat.appendChild(userDiv);
    this.inputBox.value = "";
    this.chat.scrollTop = this.chat.scrollHeight;
 
@@ -54,7 +56,7 @@ assistantPhrases ?:any = [
    },2000)
   }
   onKey = (event: any) => {
-    this.userText = event.target.value;
+    // this.userText = event.target.value;
     if (event === "Enter") {
     let random = Math.floor(Math.random()*this.assistantPhrases.length);
     let assistantTextBox = this.assistantPhrases[random];
