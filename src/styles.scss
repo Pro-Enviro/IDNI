@@ -12,6 +12,7 @@
   $darkColor:#356c6b;
   $headerColor:#253b3c;
   $lightColor-100: #daedea;
+  $lightColor-50:#f4f9f8;
 
   h2{
     color: $primeColor;
@@ -118,8 +119,71 @@
     }
 
   .p-panel .p-panel-content {
-    background: #f4f9f8;
+    background: $lightColor-50;
+  }
 
+//--------------------------------------------------------CHAT SYSTEM---------------------------------------------------
+
+  .chat-container{
+    background-color:white;
+    border:2px solid $darkColor;
+    padding:30px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+  .message-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    border:1px solid $darkColor;
+    background-color:$lightColor-50;
+    border-radius: 30px;
+    margin-top:2rem;
+    .message-input {
+      width: 100%;
+      .inputText {
+        border-radius: 30px;
+        border:1px solid $lightColor-50;
+        padding:30px;
+        width: 100%;
+        font-size: 1.25rem;
+        color:grey;
+        outline: none;
+        background-color: $lightColor-50;
+      }
+    }
+    .chat-icon{
+      color:$primeColor;
+      font-size:2rem;
+    }
+  }
+
+  .assistant-container{
+    display: flex;
+    justify-content: start;
+    .assistant-text-container>p{
+      background-color: #b5dad6;
+      border-radius: 30px;
+      color:black;
+      font-size:1rem;
+      padding: 1.3rem;
+      width: fit-content;
+    }
+  }
+
+  .user-container{
+    display:flex;
+    justify-content: end;
+    .user-text-container>p{
+      background-color: #daedea;
+      border-radius: 30px;
+      color:black;
+      font-size:1rem;
+      padding: 1.3rem;
+      width: fit-content;
+    }
   }
 
   //----------------------------------------------------MENU------------------------------------------------------------
