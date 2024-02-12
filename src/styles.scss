@@ -123,35 +123,31 @@
   }
 
 //--------------------------------------------------------CHAT SYSTEM---------------------------------------------------
-.chat-top {
-  background-color: $lightColor-50;
-  color: black;
-  padding: 2.5rem;
-  border-radius: 30px;
-  margin-bottom:30px;
-  &:after{
-    content: " ";
-    background-image: url("assets/img/chat-box-line.svg");
-    background-position: bottom;
-    background-size: contain;
-    background-repeat: no-repeat;
-    position: absolute;
-    top:0;
-    bottom:64.5%;
-    left: 0;
-    right:30px;
-  }
-  h2{
-    z-index: 1;
-    position: relative;
-    text-align: right;
+  .chatbox-nav {
+    background-color: $lightColor-50;
+    color: black;
+    padding: 2.5rem;
+    border-radius: 30px;
+    margin-bottom:30px;
+    &:after{
+      content: " ";
+      background-image: url("assets/img/chat-box-line.svg");
+      background-position: bottom;
+      background-size: contain;
+      background-repeat: no-repeat;
+      position: absolute;
+      top:0;
+      bottom:64.5%;
+      left: 0;
+      right:30px;
+    }
+    h2{
+      z-index: 1;
+      position: relative;
+      text-align: right;
+    }
   }
 
-}
-.logo-chatbox{
-  display: flex;
-  justify-content:start;
-}
   .chat-container{
     background-color:white;
     border:2px solid $darkColor;
