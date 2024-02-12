@@ -16,7 +16,6 @@
            <input name="email" type="text" pInputText class="">
          </div>
          <div class="">
-<!--           <p-button label="Start Chat" styleClass="btn-style"></p-button>-->
            <button pButton pRipple label="Start Chat" class="btn-style w-full"></button>
          </div>
        </div>
@@ -24,35 +23,6 @@
   </div>
 </section>
 
-<section>
-  <div class="container relative">
-    <div class="chat-container">
-      <div class="chatbox-nav">
-          <img src="assets/img/idni-logo.svg" height="90px">
-          <h2 class="header-style">IDNI Virtual Assistant</h2>
-      </div>
-      <div class="assistant-container">
-        <div class="assistant-text-container">
-          <p>Welcome to IDNI Virtual Assistant !</p>
-          <p>How can I help you today ?</p>
-          <span class="text-xs text-gray-500 pl-2">10:20am</span>
-        </div>
-      </div>
-      <div class="user-container">
-        <div class="user-text-container">
-          <p>Hello, I need help !</p>
-          <p>I have few question about the programme?</p>
-          <span class="text-xs text-gray-500 pl-2">10:30am</span>
-        </div>
-      </div>
-      <div class="message-container">
-        <div class="message-input">
-          <input type="text" class="inputText" placeholder="Write your message"/>
-        </div>
-        <span class="message-icon pr-4">
-          <p-button icon="pi pi-send" [rounded]="true" styleClass="chat-icon"></p-button>
-        </span>
-      </div>
-    </div>
-  </div>
-</section>
+<app-live-chat-tpl></app-live-chat-tpl>
+
+

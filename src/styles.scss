@@ -188,7 +188,7 @@
     }
   }
 
-  .chat-icon{
+  .chat-btn{
     background-color: $primeColor;
     border:$primeColor;
     color:#283938;
@@ -225,6 +225,30 @@
       padding: 1.3rem;
       width: fit-content;
     }
+  }
+
+  .userMsg{
+    background-color: #daedea;
+    border-radius: 30px;
+    color:black;
+    font-size:1rem;
+    padding: 1.3rem;
+    width: fit-content;
+  }
+
+  .assistantMsg{
+    background-color: #b5dad6;
+    border-radius: 30px;
+    color:black;
+    font-size:1rem;
+    padding: 1.3rem;
+    width: fit-content;
+  }
+
+  .typing-text{
+    font-size: .75rem;
+    padding-left:0.5rem;
+    color: var(--gray-500) !important;
   }
 
   //----------------------------------------------------MENU------------------------------------------------------------
