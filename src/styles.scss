@@ -124,7 +124,6 @@
 
 //--------------------------------------------------------CHAT SYSTEM---------------------------------------------------
   .chatbox-nav {
-    background-color: $lightColor-50;
     color: black;
     padding: 2.5rem;
     border-radius: 30px;
@@ -137,9 +136,9 @@
       background-repeat: no-repeat;
       position: absolute;
       top:0;
-      bottom:64.5%;
+      bottom:71.7%;
       left: 0;
-      right:30px;
+      right:12px;
     }
     h2{
       z-index: 1;
@@ -149,12 +148,16 @@
   }
 
   .chat-container{
-    background-color:white;
+    background-color: $lightColor-50;
     border:2px solid $darkColor;
     padding:30px;
     border-radius: 30px;
     display: flex;
     flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    max-width: calc(100% - 1vw);
+    margin: 0px auto;
   }
 
 
@@ -162,11 +165,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
     border:1px solid $darkColor;
-    background-color:$lightColor-50;
+    background-color:#F6FAF9;
     border-radius: 30px;
     margin-top:2rem;
+    position: absolute;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
     .message-input {
       width: 100%;
       .inputText {
@@ -177,7 +183,7 @@
         font-size: 1.25rem;
         color:grey;
         outline: none;
-        background-color: $lightColor-50;
+        background-color: #F6FAF9;
       }
     }
   }
