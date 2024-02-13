@@ -11,9 +11,9 @@ export const routes: Routes = [
   {path: '', component: LandingPageComponent},
   {path: 'pet', component: PetComponent},
   {path: 'coming-soon', component: ConstructionComponent},
-  {path:'local-decarbonisation', component:LocalDecarbonisationComponent,children:[
-      {path:'local-decarb-single',component:LocalDecabSingleTplComponent}
-    ]},
+  {path:'local-decarbonisation', component:LocalDecarbonisationComponent},
+  {path:'local-decarb-single',component:LocalDecabSingleTplComponent},
   {path:'login',component:LogInTplComponent},
+  {path:'registration',component:RegistrationFormComponent},
   {path: '**', redirectTo: ''}
 ];

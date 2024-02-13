@@ -1,0 +1,34 @@
+<section>
+  <div class="container relative" style="padding:15px">
+    <div class="chat-container">
+      <div class="chatbox-nav">
+        <img src="assets/img/idni-logo.svg" height="100px" class="p-2">
+        <h3 class="header-style text-4xl">IDNI Virtual Assistant</h3>
+      </div>
+      <div class="chat">
+        <div class="assistant-container">
+          <div class="assistant-text-container">
+            <p>Welcome to IDNI Virtual Assistant !</p>
+            <p>How can I help you today ?</p>
+            <span class="text-xs text-gray-500 pl-2">10:20am</span>
+          </div>
+        </div>
+        <div class="user-container">
+          <div class="user-text-container">
+            <p>Hello, I need help !</p>
+            <p>I have few question about the programme?</p>
+            <span class="text-xs text-gray-500 pl-2">10:30am</span>
+          </div>
+        </div>
+      </div>
+      <div class="message-container">
+        <div class="message-input">
+          <input type="text" class="inputText" placeholder="Write your message" #inputBox (keyup.enter)="onKey($event)"/>
+        </div>
+        <span class="message-icon pr-4">
+          <p-button icon="pi pi-send" [rounded]="true" styleClass="chat-btn" (onClick)="sendMessage()"></p-button>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
