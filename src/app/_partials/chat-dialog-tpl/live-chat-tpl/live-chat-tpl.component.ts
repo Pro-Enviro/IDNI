@@ -32,6 +32,7 @@ export class LiveChatTplComponent {
   ]
 
   sendMessage= () => {
+    const day = new Date();
     console.log(this.date);
   let randomPhrase = Math.floor(Math.random()* this.assistantPhrases.length);
   let assistantMessageText = this.assistantPhrases[randomPhrase];
@@ -44,15 +45,16 @@ export class LiveChatTplComponent {
    const userP= document.createElement("p");
 
    //TIME P TAG
-   const timeBox = document.createElement('p');
+   const timeBox = document.createElement('span');
    timeBox.classList.add("time-style");
+   timeBox.innerHTML = this.date?.toLocaleString("en-US") || '';
 
    this.chat = document.querySelector(".chat-container");
    this.inputBox = document.querySelector(".inputText");
    userP.innerHTML = this.inputBox.value;
    userP.classList.add("userMsg");
-   userDiv.append(timeBox);
    userDiv.append(userP);
+    userDiv.append(timeBox);
    this.chat.appendChild(userDiv);
    this.inputBox.value = "";
    this.chat.scrollTop = this.chat.scrollHeight;
@@ -73,20 +75,25 @@ export class LiveChatTplComponent {
      this.chat.removeChild(typing);
    },2000)
   }
+
+
   onKey = (event: any) => {
     if (event === "Enter") {
     let random = Math.floor(Math.random()*this.assistantPhrases.length);
     let assistantTextBox = this.assistantPhrases[random];
 
+    const userDiv2 = document.createElement("div");
+    userDiv2.classList.add("user-container");
     let userP2 = document.createElement("p");
     userP2.innerHTML = this.inputBox.value;
     userP2.classList.add("userMsg");
-    this.chat.appendChild(userP2);
+    userDiv2.append(userP2)
+    this.chat.appendChild(userDiv2);
     this.inputBox.value = "";
     this.chat.scrollTop = this.chat.scrollHeight;
 
-    let type = document.createElement("span");
-    type.innerHTML = "Assistant/User is typing";
+    let type = document.createElement("p");
+    type.innerHTML = "Assistant is typing...";
     type.classList.add("typing-text");
     this.chat.appendChild(type);
     setTimeout(() => {
