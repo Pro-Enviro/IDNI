@@ -123,28 +123,39 @@
   }
 
 //--------------------------------------------------------CHAT SYSTEM---------------------------------------------------
+
   .chatbox-nav {
     color: black;
     padding: 2.5rem;
     border-radius: 30px;
     margin-bottom:30px;
-    &:after{
-      content: " ";
-      background-image: url("assets/img/chat-box-line.svg");
-      background-position: bottom;
-      background-size: contain;
-      background-repeat: no-repeat;
-      position: absolute;
-      top:0;
-      bottom:71.7%;
-      left: 0;
-      right:12px;
-    }
+    background-image: url("assets/img/chat-box-line.svg");
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 90rem;
     h2{
       z-index: 1;
       position: relative;
       text-align: right;
     }
+  }
+
+  .chat{
+    //display: flex;
+    //flex-direction: column;
+    //width: 100vw;
+    //min-height: 100vh;
+    //max-width: calc(100% - 1vw);
+    //margin: 0px auto;
+
+    font-size: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-height: 100vh;
+    overflow: hidden;
+
+
   }
 
   .chat-container{
@@ -154,10 +165,9 @@
     border-radius: 30px;
     display: flex;
     flex-direction: column;
-    width: 100vw;
-    min-height: 100vh;
-    max-width: calc(100% - 1vw);
-    margin: 0px auto;
+    //width: 100vw;
+    //min-height: 100vh;
+   //max-width: calc(100% - 1vw);
   }
 
 
@@ -205,6 +215,7 @@
     display: flex;
     justify-content: start;
     flex-direction: column;
+    padding:10px;
     .assistant-text-container>p{
       background-color: #b5dad6;
       border-radius: 30px;
@@ -218,6 +229,7 @@
   .user-container{
     display:flex;
     justify-content: end;
+    padding:10px;
     .user-text-container>p{
       background-color: #daedea;
       border-radius: 30px;

@@ -15,7 +15,6 @@ import {DatePipe} from "@angular/common";
 export class LiveChatTplComponent {
   @ViewChild('inputBox') inputBoxRef?:ElementRef;
   @ViewChild('timeBox') timeBoxRef?:ElementRef;
-  //@ViewChild('typing') typingRef?:ElementRef;
   chat?:any;
   inputBox?:any
   date?: Date = new Date();
@@ -52,11 +51,12 @@ export class LiveChatTplComponent {
     //timeBox.innerHTML = this.date?.toLocaleString("en-US") || '';
 
 
-   this.chat = document.querySelector(".chat-container");
+   this.chat = document.querySelector(".chat");
    this.inputBox = document.querySelector(".inputText");
    userP.innerHTML = this.inputBox.value;
    userP.classList.add("userMsg");
    userDiv.append(userP);
+   userDiv.append(timeBox);
    this.chat.appendChild(userDiv);
    this.inputBox.value = "";
    this.chat.scrollTop = this.chat.scrollHeight;
