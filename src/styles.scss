@@ -124,46 +124,49 @@
 
 //--------------------------------------------------------CHAT SYSTEM---------------------------------------------------
 
-  .chatbox-nav {
-    //color: black;
-    padding: 2.5rem;
-    //border-radius: 30px;
-    margin-bottom:30px;
-    background-image: url("assets/img/chat-box-line.svg");
-    background-position: right;
-    background-repeat: no-repeat;
-    background-size: contain;
-    h2{
-      z-index: 1;
-      position: relative;
-      text-align: right;
-    }
-  }
-
-  .chat{
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    //min-height: 100vh;
-    max-width: calc(100% - 1vw);
-    font-size: 1.6rem;
-    gap: 1.5rem;
-    //overflow: hidden;
-    padding:20px;
-    overflow: scroll;
-  }
-
 
   .chat-container{
     background-color: $lightColor-50;
     border:2px solid $darkColor;
-    //padding:30px;
     border-radius: 30px;
     display: flex;
     flex-direction: column;
-    //width: 100vw;
-    //min-height: 100vh;
-   //max-width: calc(100% - 1vw);
+    .chatbox-nav {
+      padding: 2.5rem;
+      margin-bottom:30px;
+      background-image: url("assets/img/chat-box-line.svg");
+      background-position: right;
+      background-repeat: no-repeat;
+      background-size: contain;
+      h2{
+        z-index: 1;
+        position: relative;
+        text-align: right;
+      }
+    }
+    .chat{
+      display: flex;
+      flex-direction: column;
+      max-height: 60vh;
+      //width: 100vw;
+      //max-width: calc(100% - 1vw);
+      font-size: 1.6rem;
+      gap: 1.5rem;
+      overflow: hidden;
+      padding:20px;
+      &:hover{
+        overflow: hidden;
+        overflow-y: scroll;
+      }
+    }
+    .chat::-webkit-scrollbar {
+      width: 0 !important;
+    }
+
+    .chat {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
   }
 
 
