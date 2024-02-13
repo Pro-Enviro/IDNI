@@ -15,13 +15,11 @@ export class LiveChatTplComponent {
   @ViewChild('inputBox') inputBoxRef?:ElementRef;
   @ViewChild('timeBox') timeBoxRef?:ElementRef;
   //@ViewChild('typing') typingRef?:ElementRef;
-typing:string ='';
-// userText = '';
-chat?:any;
-inputBox?:any
-
+  typing:string ='';
+  chat?:any;
+  inputBox?:any
   date?: Date = new Date();
-
+  //today: number = Date.now();
 
   assistantPhrases ?:any = [
   "Welcome !",
@@ -33,17 +31,22 @@ inputBox?:any
   "For more information send us a letter by the post"
   ]
 
-
-
   sendMessage= () => {
     console.log(this.date);
   let randomPhrase = Math.floor(Math.random()* this.assistantPhrases.length);
-  let assistantMessagetext = this.assistantPhrases[randomPhrase];
+  let assistantMessageText = this.assistantPhrases[randomPhrase];
+
+  // Creating a DIV
   const userDiv = document.createElement("div");
    userDiv.classList.add("user-container");
+
+   //USER P TAG
    const userP= document.createElement("p");
-   const timeBox = document.createElement('span');
+
+   //TIME P TAG
+   const timeBox = document.createElement('p');
    timeBox.classList.add("time-style");
+
    this.chat = document.querySelector(".chat-container");
    this.inputBox = document.querySelector(".inputText");
    userP.innerHTML = this.inputBox.value;
@@ -54,22 +57,20 @@ inputBox?:any
    this.inputBox.value = "";
    this.chat.scrollTop = this.chat.scrollHeight;
 
-   let typing = document.createElement("span");
+   let typing = document.createElement("p");
    typing.innerHTML = "Assistant is typing ...";
    typing.classList.add("typing-text");
+   this.chat.appendChild(typing);
    setTimeout(()=>{
      let assistDiv = document.createElement("div");
      let assistP = document.createElement("p");
-     assistP.innerHTML = assistantMessagetext;
+     assistP.innerHTML = assistantMessageText;
      assistP.classList.add("assistantMsg");
      assistDiv.classList.add("assistant-container");
      assistDiv.append(assistP);
      this.chat.appendChild(assistDiv);
-     console.log(typing)
      this.chat.scrollTop = this.chat.scrollHeight;
      this.chat.removeChild(typing);
-
-
    },2000)
   }
   onKey = (event: any) => {
