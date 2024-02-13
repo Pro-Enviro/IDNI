@@ -15,5 +15,6 @@ export const routes: Routes = [
       {path:'local-decarb-single',component:LocalDecabSingleTplComponent}
     ]},
   {path:'login',component:LogInTplComponent},
+  {path:'registration',component:RegistrationFormComponent},
   {path: '**', redirectTo: ''}
 ];
