@@ -1,6 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {interval, map} from "rxjs";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-live-chat-tpl',
@@ -15,11 +16,9 @@ export class LiveChatTplComponent {
   @ViewChild('inputBox') inputBoxRef?:ElementRef;
   @ViewChild('timeBox') timeBoxRef?:ElementRef;
   //@ViewChild('typing') typingRef?:ElementRef;
-  typing:string ='';
   chat?:any;
   inputBox?:any
   date?: Date = new Date();
-  //today: number = Date.now();
 
   assistantPhrases ?:any = [
   "Welcome !",
@@ -47,14 +46,17 @@ export class LiveChatTplComponent {
    //TIME P TAG
    const timeBox = document.createElement('span');
    timeBox.classList.add("time-style");
-   timeBox.innerHTML = this.date?.toLocaleString("en-US") || '';
+   //TIME FORMAT
+    //timeBox.innerHTML = <string>(new DatePipe('en-US').transform(new Date(), 'dd-MM-yyyy hh:mm:ss'));
+    timeBox.innerHTML = <string>(new DatePipe('en-US').transform(new Date(), 'hh:mm:ss'));
+    //timeBox.innerHTML = this.date?.toLocaleString("en-US") || '';
+
 
    this.chat = document.querySelector(".chat-container");
    this.inputBox = document.querySelector(".inputText");
    userP.innerHTML = this.inputBox.value;
    userP.classList.add("userMsg");
    userDiv.append(userP);
-    userDiv.append(timeBox);
    this.chat.appendChild(userDiv);
    this.inputBox.value = "";
    this.chat.scrollTop = this.chat.scrollHeight;
@@ -66,10 +68,15 @@ export class LiveChatTplComponent {
    setTimeout(()=>{
      let assistDiv = document.createElement("div");
      let assistP = document.createElement("p");
+     //TIME P TAG
+     const timeBox = document.createElement('span');
+     timeBox.classList.add("time-style");
+     timeBox.innerHTML = <string>(new DatePipe('en-US').transform(new Date(), 'hh:mm:ss'));
      assistP.innerHTML = assistantMessageText;
      assistP.classList.add("assistantMsg");
      assistDiv.classList.add("assistant-container");
      assistDiv.append(assistP);
+     assistDiv.append(timeBox);
      this.chat.appendChild(assistDiv);
      this.chat.scrollTop = this.chat.scrollHeight;
      this.chat.removeChild(typing);
@@ -81,13 +88,12 @@ export class LiveChatTplComponent {
     if (event === "Enter") {
     let random = Math.floor(Math.random()*this.assistantPhrases.length);
     let assistantTextBox = this.assistantPhrases[random];
-
     const userDiv2 = document.createElement("div");
     userDiv2.classList.add("user-container");
     let userP2 = document.createElement("p");
     userP2.innerHTML = this.inputBox.value;
     userP2.classList.add("userMsg");
-    userDiv2.append(userP2)
+    userDiv2.append(userP2);
     this.chat.appendChild(userDiv2);
     this.inputBox.value = "";
     this.chat.scrollTop = this.chat.scrollHeight;

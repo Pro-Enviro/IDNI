@@ -204,6 +204,7 @@
   .assistant-container{
     display: flex;
     justify-content: start;
+    flex-direction: column;
     .assistant-text-container>p{
       background-color: #b5dad6;
       border-radius: 30px;
