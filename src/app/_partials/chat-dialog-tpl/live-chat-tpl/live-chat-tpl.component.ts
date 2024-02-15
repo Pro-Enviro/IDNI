@@ -28,7 +28,7 @@ export class LiveChatTplComponent {
   messages: chat[] = [];
   send: boolean = true;
   //dateTime?: Date = new Date();
-  //message?: any;
+  message?: any;
   private chat: any;
   private inputBox?: any;
 
@@ -41,11 +41,11 @@ export class LiveChatTplComponent {
     if (this.inputBox.value.trim() !== '') {
       const newMessage = {
         message: this.inputBox.value,
-        name: this.chat.name,
-        email:this.chat.email,
-        company: this.chat.company,
+        name: this.message.name,
+        email:this.message.email,
+        company: this.message.company,
         dateTime: this.getCurrentTime(),
-        status: this.chat.status
+        status: this.message.status
       };
 
       // this.messages.push(newMessage);
@@ -53,6 +53,7 @@ export class LiveChatTplComponent {
       this.inputBox.value = '';
     }
   }
+
 
   getCurrentTime(): any {
     const currentDate = new Date();
@@ -62,9 +63,8 @@ export class LiveChatTplComponent {
   }
 
   onKey = (event:any) => {
-    console.log(this.chat)
-    // console.log(this.message)
-    // this.message += event.target.value + ' | ';
+    console.log(this.message)
+    this.message += event.target.value + ' | ';
   }
 
 
