@@ -1,12 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {EChartsOption} from "echarts";
-import {AdminService} from "../../../../_services/admin.service";
 import moment from "moment";
+import {PanelModule} from "primeng/panel";
+import {NgxEchartsDirective} from "ngx-echarts";
 
 @Component({
   selector: 'app-envirotrack-day-line',
+  standalone: true,
   templateUrl: './envirotrack-day-line.component.html',
+  imports: [
+    PanelModule,
+    NgxEchartsDirective
+  ],
   styleUrls: ['./envirotrack-day-line.component.scss']
 })
 export class EnvirotrackDayLineComponent implements OnInit{
@@ -18,7 +24,6 @@ export class EnvirotrackDayLineComponent implements OnInit{
   nonProductivePercent: number = 0;
   constructor(
     private dialog: DynamicDialogConfig,
-    private admin: AdminService
   ) {
   }
 
@@ -121,16 +126,16 @@ export class EnvirotrackDayLineComponent implements OnInit{
 
   // API call to fetch necessary data and on success, initialize chart with it
   getTimes = (id: number, date: string) => {
-    this.admin.fnGetCompanyDetails(id, [
-      `${moment(date).format('dddd').toLowerCase()}_start_time`,
-      `${moment(date).format('dddd').toLowerCase()}_end_time`
-    ]).subscribe({
-      next: (res: any) => {
-
-        this.getLoads(this.data, date, res)
-        this.initChart(res[`${moment(date).format('dddd').toLowerCase()}_start_time`], res[`${moment(date).format('dddd').toLowerCase()}_end_time`], moment(date).format('dddd DD/MM/YYYY'))
-      }
-    })
+    // this.admin.fnGetCompanyDetails(id, [
+    //   `${moment(date).format('dddd').toLowerCase()}_start_time`,
+    //   `${moment(date).format('dddd').toLowerCase()}_end_time`
+    // ]).subscribe({
+    //   next: (res: any) => {
+    //
+    //     this.getLoads(this.data, date, res)
+    //     this.initChart(res[`${moment(date).format('dddd').toLowerCase()}_start_time`], res[`${moment(date).format('dddd').toLowerCase()}_end_time`], moment(date).format('dddd DD/MM/YYYY'))
+    //   }
+    // })
   }
 
   //Function to find and split productive and non-productive loads

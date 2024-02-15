@@ -1,11 +1,27 @@
 import { Component } from '@angular/core';
 import moment from "moment";
 import * as echarts from "echarts";
-import {EnvirotrackService} from "../../../../_services/envirotrack/envirotrack.service";
-import {GlobalService} from "../../../../_services/global.service";
+import {EnvirotrackService} from "../../envirotrack.service";
+import {PanelModule} from "primeng/panel";
+import {SelectButtonModule} from "primeng/selectbutton";
+import {CalendarModule} from "primeng/calendar";
+import {NgxEchartsDirective} from "ngx-echarts";
+import {CommonModule} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {SharedModules} from "../../../../shared-module";
 
 @Component({
   selector: 'app-envirotrack-report-bar',
+  standalone: true,
+  imports: [
+    PanelModule,
+    SelectButtonModule,
+    CalendarModule,
+    CommonModule,
+    FormsModule,
+    SharedModules
+  ],
+
   templateUrl: './envirotrack-report-bar.component.html',
   styleUrls: ['./envirotrack-report-bar.component.scss']
 })
@@ -43,7 +59,6 @@ export class EnvirotrackReportBarComponent {
 
   constructor(
     private track: EnvirotrackService,
-    private global: GlobalService
   ) {}
 
   saveChartAsBase64 = () => {
@@ -158,7 +173,7 @@ export class EnvirotrackReportBarComponent {
   }
 
   onSelectCompany = () => {
-    this.global.updateSelectedMpan(this.selectedMpan)
+    // this.global.updateSelectedMpan(this.selectedMpan)
     this.getData(this.selectedCompany)
   }
 
@@ -182,11 +197,11 @@ export class EnvirotrackReportBarComponent {
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
 
-          if (this.global.selectedMpan?.value) {
-            this.selectedMpan = this.global.selectedMpan.value
-          } else {
+          // if (this.global.selectedMpan?.value) {
+          //   this.selectedMpan = this.global.selectedMpan.value
+          // } else {
             this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
-          }
+          // }
 
           this.data = res
           this.getTimes()
@@ -235,7 +250,7 @@ export class EnvirotrackReportBarComponent {
   }
 
   ngOnInit() {
-    this.getCompanies();
+    // this.getCompanies();
     this.screenWidth = window.innerWidth
   }
 }

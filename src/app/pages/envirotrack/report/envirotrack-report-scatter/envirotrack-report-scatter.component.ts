@@ -1,15 +1,34 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import moment from "moment";
 import * as echarts from "echarts";
-import {EnvirotrackService} from "../../../../_services/envirotrack/envirotrack.service";
-import {GlobalService} from "../../../../_services/global.service";
+import {EnvirotrackService} from "../../envirotrack.service";
+import {PanelModule} from "primeng/panel";
+import {SelectButtonModule} from "primeng/selectbutton";
+import {CalendarModule} from "primeng/calendar";
+import {CommonModule} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {DialogService} from "primeng/dynamicdialog";
+import {SharedModules} from "../../../../shared-module";
+
 
 @Component({
   selector: 'app-envirotrack-report-scatter',
+  standalone: true,
+  providers: [
+    DialogService,
+  ],
+  imports: [
+    PanelModule,
+    SelectButtonModule,
+    CalendarModule,
+    CommonModule,
+    FormsModule,
+    SharedModules
+  ],
   templateUrl: './envirotrack-report-scatter.component.html',
   styleUrls: ['./envirotrack-report-scatter.component.scss']
 })
-export class EnvirotrackReportScatterComponent {
+export class EnvirotrackReportScatterComponent implements OnInit {
   data: any;
   months: string[] = [];
   filteredData: any;
@@ -46,7 +65,6 @@ export class EnvirotrackReportScatterComponent {
 
   constructor(
     private track: EnvirotrackService,
-    private global: GlobalService
   ) {}
 
 
@@ -162,7 +180,7 @@ export class EnvirotrackReportScatterComponent {
   }
 
   onSelectCompany = () => {
-    this.global.updateSelectedMpan(this.selectedMpan)
+    // this.global.updateSelectedMpan(this.selectedMpan)
     this.getData(this.selectedCompany)
   }
 
@@ -189,11 +207,11 @@ export class EnvirotrackReportScatterComponent {
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan):  null;
           })
 
-          if (this.global.selectedMpan?.value) {
-            this.selectedMpan = this.global.selectedMpan.value
-          } else {
+          // if (this.global.selectedMpan?.value) {
+          //   this.selectedMpan = this.global.selectedMpan.value
+          // } else {
             this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
-          }
+          // }
 
           this.data = res
           this.getTimes()
@@ -353,7 +371,7 @@ export class EnvirotrackReportScatterComponent {
   }
 
   ngOnInit() {
-    this.getCompanies();
+    // this.getCompanies();
     this.screenWidth = window.innerWidth
   }
 }

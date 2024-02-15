@@ -1,13 +1,20 @@
 import { Component, OnInit} from '@angular/core';
 
 import {MenuItem} from "primeng/api";
-import {EnvirotrackService} from "../../../../_services/envirotrack/envirotrack.service";
-import {GlobalService} from "../../../../_services/global.service";
+import {EnvirotrackService} from "../../envirotrack.service";
+import {PanelModule} from "primeng/panel";
+import {MenuModule} from "primeng/menu";
 
 @Component({
   selector: 'app-envirotrack-report',
+  standalone: true,
   templateUrl: './envirotrack-report.component.html',
+  imports: [
+    PanelModule,
+    MenuModule
+  ],
   styleUrls: ['./envirotrack-report.component.scss']
+
 })
 export class EnvirotrackReportComponent implements OnInit{
 
@@ -51,7 +58,7 @@ export class EnvirotrackReportComponent implements OnInit{
     }
   ];
 
-  constructor(private track: EnvirotrackService, private global:GlobalService) {
+  constructor(private track: EnvirotrackService) {
     this.getCompanies()
   }
 

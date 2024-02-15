@@ -1,17 +1,36 @@
 import {Component, OnInit} from '@angular/core';
 import * as echarts from "echarts";
-import {EnvirotrackService} from "../../../../_services/envirotrack/envirotrack.service";
+import {EnvirotrackService} from "../../envirotrack.service";
 import moment from "moment/moment";
-import {AuthService} from "../../../../_services/auth.service";
-import {PlotlyService} from "angular-plotly.js";
+import {PlotlyService, PlotlySharedModule} from "angular-plotly.js";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {EnvirotrackDayLineComponent} from "../envirotrack-day-line/envirotrack-day-line.component";
-import {GlobalService} from "../../../../_services/global.service";
+import {PanelModule} from "primeng/panel";
+import {SelectButtonModule} from "primeng/selectbutton";
+import {ToggleButtonModule} from "primeng/togglebutton";
+import {CalendarModule} from "primeng/calendar";
+import {CommonModule} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {SharedModules} from "../../../../shared-module";
 
 
 @Component({
   selector: 'app-envirotrack-report-heatmap',
+  standalone: true,
   templateUrl: './envirotrack-report-heatmap.component.html',
+  providers: [
+    DialogService
+  ],
+  imports: [
+    PanelModule,
+    SelectButtonModule,
+    ToggleButtonModule,
+    CalendarModule,
+    CommonModule,
+    FormsModule,
+    PlotlySharedModule,
+    SharedModules
+  ],
   styleUrls: ['./envirotrack-report-heatmap.component.scss']
 })
 export class EnvirotrackReportHeatmapComponent implements OnInit {
@@ -64,12 +83,10 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
 
   constructor(
     private track: EnvirotrackService,
-    private auth: AuthService,
     public plotlyService: PlotlyService,
     private dialog: DialogService,
-    private global: GlobalService
   ) {
-    this.isAdmin = this.auth.isAdmin()
+    // this.isAdmin = this.auth.isAdmin()
   }
 
   onPlotClick = (event: any) => {
@@ -325,7 +342,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
 
   onSelectCompany = () => {
     this.chartData = [];
-    this.global.updateSelectedMpan(this.selectedMpan)
+    // this.global.updateSelectedMpan(this.selectedMpan)
     this.getData(this.selectedCompany)
   }
 
@@ -350,11 +367,11 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
           })
 
           // Changing companies should also change mpan
-          if (this.global.selectedMpan.value) {
-            this.selectedMpan = this.global.selectedMpan.value
-          } else {
+          // if (this.global.selectedMpan.value) {
+          //   this.selectedMpan = this.global.selectedMpan.value
+          // } else {
             this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
-          }
+          // }
 
           this.data = res
           this.getTimes()
