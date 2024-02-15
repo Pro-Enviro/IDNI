@@ -14,11 +14,8 @@ import {SharedModules} from "../../../../shared-module";
   selector: 'app-envirotrack-report-bar',
   standalone: true,
   imports: [
-    PanelModule,
     SelectButtonModule,
     CalendarModule,
-    CommonModule,
-    FormsModule,
     SharedModules
   ],
 

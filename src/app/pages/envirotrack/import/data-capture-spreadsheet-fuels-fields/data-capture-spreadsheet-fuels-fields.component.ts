@@ -20,6 +20,7 @@ import {PanelModule} from "primeng/panel";
 import {DragDropModule} from "primeng/dragdrop";
 import {InputTextModule} from "primeng/inputtext";
 import {CommonModule} from "@angular/common";
+import {SharedModules} from "../../../../shared-module";
 
 
 
@@ -29,18 +30,15 @@ import {CommonModule} from "@angular/common";
     templateUrl: './data-capture-spreadsheet-fuels-fields.component.html',
     styleUrls: ['./data-capture-spreadsheet-fuels-fields.component.scss'],
   imports: [
-    FormsModule,
-    TableModule,
+    SharedModules,
     AutoCompleteModule,
     OrderListModule,
     CardModule,
     CheckboxModule,
     DropdownModule,
     ButtonModule,
-    PanelModule,
     DragDropModule,
     InputTextModule,
-    CommonModule
   ]
 })
 

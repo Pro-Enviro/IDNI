@@ -14,6 +14,7 @@ import {DragDropModule} from "primeng/dragdrop";
 import {TableModule} from "primeng/table";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {SharedModules} from "../../../../shared-module";
 
 interface Sheet {
   name: string;
@@ -33,14 +34,10 @@ interface DraggedCell {
   templateUrl: './data-capture-import-spreadsheet.component.html',
   styleUrls: ['./data-capture-import-spreadsheet.component.scss'],
   imports: [
-    PanelModule,
     FileUploadModule,
     SelectButtonModule,
     DragDropModule,
-    TableModule,
-    CommonModule,
-    FormsModule,
-
+    SharedModules
   ]
 })
 export class DataCaptureImportSpreadsheetComponent implements OnInit {

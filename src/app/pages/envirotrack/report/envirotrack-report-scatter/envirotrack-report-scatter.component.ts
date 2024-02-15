@@ -18,11 +18,8 @@ import {SharedModules} from "../../../../shared-module";
     DialogService,
   ],
   imports: [
-    PanelModule,
     SelectButtonModule,
     CalendarModule,
-    CommonModule,
-    FormsModule,
     SharedModules
   ],
   templateUrl: './envirotrack-report-scatter.component.html',

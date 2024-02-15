@@ -1,18 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {DynamicDialogConfig} from "primeng/dynamicdialog";
 import {EChartsOption} from "echarts";
 import moment from "moment";
-import {PanelModule} from "primeng/panel";
-import {NgxEchartsDirective} from "ngx-echarts";
+import {SharedModules} from "../../../../shared-module";
 
 @Component({
   selector: 'app-envirotrack-day-line',
   standalone: true,
   templateUrl: './envirotrack-day-line.component.html',
-  imports: [
-    PanelModule,
-    NgxEchartsDirective
-  ],
+  imports: [SharedModules],
   styleUrls: ['./envirotrack-day-line.component.scss']
 })
 export class EnvirotrackDayLineComponent implements OnInit{

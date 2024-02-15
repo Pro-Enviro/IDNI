@@ -16,6 +16,7 @@ import {CommonModule} from "@angular/common";
 import {DragDropModule} from "primeng/dragdrop";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {MessageModule} from "primeng/message";
+import {SharedModules} from "../../../../shared-module";
 
 
 interface Sheet {
@@ -43,15 +44,10 @@ interface HDDData {
   templateUrl: './import-envirotrack.component.html',
   styleUrl: './import-envirotrack.component.scss',
   imports: [
-    RouterLink,
-    RouterLinkActive,
-    CommonModule,
-    FormsModule,
-    PanelModule,
+    SharedModules,
     SelectButtonModule,
     FileUploadModule,
     ToggleButtonModule,
-    TableModule,
     DragDropModule,
     MessageModule
   ]
