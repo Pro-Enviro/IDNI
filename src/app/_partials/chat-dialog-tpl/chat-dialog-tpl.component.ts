@@ -6,6 +6,12 @@ import {RippleModule} from "primeng/ripple";
 import {LiveChatTplComponent} from "./live-chat-tpl/live-chat-tpl.component";
 import {FormsModule} from "@angular/forms";
 
+
+export interface formChat{
+  name?: string;
+  company_name?: string;
+  email?: string;
+}
 @Component({
   selector: 'app-chat-dialog-tpl',
   standalone: true,
@@ -21,13 +27,23 @@ import {FormsModule} from "@angular/forms";
   styleUrl: './chat-dialog-tpl.component.scss'
 })
 export class ChatDialogTplComponent {
- name?:any;
- company_name?:any;
- email?:any;
+  name?: string;
+  company_name?: string;
+  email?: string;
 
+  messages: formChat[] = [];
 
-  startChat= () => {
-    console.log('start')
-
+  startChat() {
+    if (!this.name || !this.company_name || !this.email) {
+      this.messages.push({
+        name: 'User\'s Name',
+        email: 'User\'s Email',
+        company_name: 'User\'s Company',
+      })
+      return;
+    }
+    this.name = '';
+    this.company_name = '';
+    this.email = '';
   }
 }
