@@ -28,6 +28,7 @@ import {MessageModule} from "primeng/message";
 import {RippleModule} from "primeng/ripple";
 import {DragDropModule} from "primeng/dragdrop";
 import {DropdownModule} from "primeng/dropdown";
+import {RouterLink, RouterLinkActive} from "@angular/router";
 
 export class Fields {
   type: string = '';
@@ -41,7 +42,10 @@ export class Fields {
   standalone: true,
   templateUrl: './data-capture-spreadsheet-fuels.component.html',
   styleUrl: './data-capture-spreadsheet-fuels.component.scss',
+  providers:[DialogService, ConfirmationService],
   imports: [
+    RouterLink,
+    RouterLinkActive,
     CommonModule,
     PanelModule,
     FormsModule,
@@ -57,7 +61,7 @@ export class Fields {
     MessageModule,
     RippleModule,
     DragDropModule,
-    DropdownModule
+    DropdownModule,
   ]
 })
 export class DataCaptureSpreadsheetFuelsComponent {
