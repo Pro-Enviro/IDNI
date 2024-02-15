@@ -1,7 +1,15 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ButtonModule} from "primeng/button";
-import {interval, map} from "rxjs";
 import {DatePipe} from "@angular/common";
+
+export interface chat{
+  name: string;
+  email: string;
+  company: string;
+  dateTime: Date;
+  message: string;
+  status: string; //send or recieve
+}
 
 @Component({
   selector: 'app-live-chat-tpl',
@@ -18,6 +26,9 @@ export class LiveChatTplComponent {
   chat?:any;
   inputBox?:any
   date?: Date = new Date();
+
+  messages: chat[] = [];
+
 
   assistantPhrases ?:any = [
   "Welcome !",

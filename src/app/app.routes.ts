@@ -8,6 +8,7 @@ import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 import {LoginComponent} from "./users/login/login.component";
 import {authGuard} from "./_helpers/auth.guard";
 import {RegisterComponent} from "./users/register/register.component";
+import {RegistrationFormComponent} from "./users/register/registration-form/registration-form.component";
 
 export const routes: Routes = [
   {path: '', component: LandingPageComponent},
@@ -16,7 +17,7 @@ export const routes: Routes = [
   {path:'local-decarbonisation', component:LocalDecarbonisationComponent},
   {path:'local-decarb-single',component:LocalDecabSingleTplComponent},
   {path:'login',component: LoginComponent},
-  {path:'registration',component:RegisterComponent},
+  {path:'registration',component:RegistrationFormComponent},
   {path: 'dashboard', canActivate: [authGuard], children:[
       {path: '', component: DashboardComponent}
     ]
