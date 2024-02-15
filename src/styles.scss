@@ -64,9 +64,10 @@
    color:white;
  }
 
-.p-fileupload-content{
-  .button{
-    background-color:red;
+.btn-dropdown{
+  .p-autocomplete-dd .p-autocomplete-dropdown {
+    background-color: $primeColor;
+    border: none;
   }
 }
 

@@ -1,7 +1,8 @@
 <p-autoComplete [dropdown]="true" [(ngModel)]="selectedFuelType" [suggestions]="filteredFuelTypes"
                 (completeMethod)="searchFuelTypes($event)" [style]="{marginLeft: '6rem'}"
                 (onSelect)="changeSelectedFuelType()"
-                *ngIf="!editMode" class="btn-dropdown dropdown-height"
+                *ngIf="!editMode" class="btn-dropdown" scrollHeight="370px"
+
 >
 </p-autoComplete>
 
@@ -64,14 +65,16 @@
           <p-checkbox *ngIf="col.type === 'number' && col.name !== 'Total'" [style]="{marginLeft: '2rem'}"
                       [(ngModel)]="col.total"
                       [binary]="true" inputId="binary"></p-checkbox>
-          <p *ngIf="col.type === 'number' && col.name !== 'Total'" style="margin-left: 0.3rem">{{ col.name }} </p>
+          <p *ngIf="col.type === 'number' && col.name !== 'Total'" class="ml-1">{{ col.name }} </p>
         </ng-container>
       </div>
     </p-panel>
 
     <p-panel header="Data Team Admin" [style]="{marginTop: '0.5rem'}" class="col-5">
-      <label>Choose a custom Conversion Factor</label>
-      <p-dropdown appendTo="body" [options]="fuelTypes" [(ngModel)]="customConversionFactor" ></p-dropdown>
+     <div class="flex flex-column">
+       <label>Choose a custom Conversion Factor</label>
+       <p-dropdown appendTo="body" [options]="fuelTypes" [(ngModel)]="customConversionFactor" ></p-dropdown>
+     </div>
     </p-panel>
   </div>
 
