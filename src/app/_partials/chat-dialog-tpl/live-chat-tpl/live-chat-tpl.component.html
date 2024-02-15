@@ -64,8 +64,30 @@
         <h3 class="header-style text-4xl">IDNI Q&A</h3>
       </div>
       <div class="chat">
+        <pre>{{messages | json}}</pre>
+
+        @for (message of messages; track message){
+          @if(message.status == 'send'){
+            <div class="assistant-container">
+              <div class="assistant-text-container">
+                <p>{{message.message}}</p>
+                <div class="flex flex-row">
+                  <span class="span-style">{{message.name}}</span>
+                  <span class="span-style">{{message.company}}</span>
+                </div>
+                <div class="flex flex-row">
+                  <span class="span-style">{{message.dateTime}}</span>
+                  <span class="span-style">{{message.status}}</span>
+                </div>
+              </div>
+            </div>
+          }
+        }
+
+
         <ng-template *ngFor="let message of messages">
-          <div *ngIf="send; else receive">
+          <pre>{{message | json}}</pre>
+          <div *ngIf="message.status == 'send'">
             <div class="assistant-container">
               <div class="assistant-text-container">
                 <p>Welcome to IDNI Virtual Assistant !</p>
@@ -108,7 +130,7 @@
 
       <div class="message-container">
         <div class="message-input">
-          <input type="text" class="inputText" placeholder="Write your message" #inputBox (keyup.enter)="onKey($event)"/>
+          <input type="text" class="inputText" placeholder="Write your message" [(ngModel)]="text" #inputBox (keyup.enter)="onKey($event)"/>
         </div>
         <span class="message-icon pr-4">
           <p-button icon="pi pi-send" [rounded]="true" styleClass="chat-btn" (onClick)="sendMessage()"></p-button>

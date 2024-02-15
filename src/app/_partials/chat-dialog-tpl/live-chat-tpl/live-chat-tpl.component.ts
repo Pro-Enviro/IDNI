@@ -1,15 +1,16 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ButtonModule} from "primeng/button";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {DatePipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {tap} from "rxjs";
+import {FormsModule} from "@angular/forms";
 
 export interface chat{
-  name: string;
-  email: string;
-  company: string;
-  dateTime: Date;
-  message: string;
-  status: string; //send or recieve
+  name?: string;
+  email?: string;
+  company?: string;
+  dateTime?: Date;
+  message?: string;
+  status?: string; //send or recieve
 }
 
 @Component({
@@ -18,7 +19,9 @@ export interface chat{
   imports: [
     ButtonModule,
     NgIf,
-    NgForOf
+    NgForOf,
+    FormsModule,
+    JsonPipe
   ],
   templateUrl: './live-chat-tpl.component.html',
   styleUrl: './live-chat-tpl.component.scss'
@@ -26,34 +29,21 @@ export interface chat{
 export class LiveChatTplComponent {
   //NEW CODE
   messages: chat[] = [];
-  send: boolean = true;
   //dateTime?: Date = new Date();
-  message?: any;
+  text: string | undefined;
   private chat: any;
   private inputBox?: any;
 
   sendMessage= () => {
-    console.log(this.chat);
-    //this.message.dateTime = (new DatePipe('en-US').transform(new Date(), 'hh:mm:ss'));
-
-    this.inputBox = document.querySelector('.inputText');
-
-    if (this.inputBox.value.trim() !== '') {
-      const newMessage = [
-        {
-        message: this.inputBox.value,
-        name: this.message.name,
-        email:this.message.email,
-        company: this.message.company,
-        dateTime: this.getCurrentTime(),
-        status: this.message.status
-      }
-      ];
-
-      // this.messages.push(newMessage);
-      this.message.push("newMessage")
-      this.inputBox.value = '';
-    }
+    this.messages.push({
+      message: this.text,
+      dateTime: this.getCurrentTime(),
+      name: 'Name of user',
+      email: 'email of user',
+      status: 'send',
+      company: 'company of user'
+    })
+    console.log(this.messages)
   }
 
 
@@ -65,8 +55,7 @@ export class LiveChatTplComponent {
   }
 
   onKey = (event:any) => {
-    console.log(this.message)
-    this.message += event.target.value + ' | ';
+    this.sendMessage()
   }
 
 
@@ -173,5 +162,7 @@ export class LiveChatTplComponent {
   //   },2000)
   // }
   // }
+  message: any;
+
 
 }
