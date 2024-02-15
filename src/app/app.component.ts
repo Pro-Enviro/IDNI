@@ -10,10 +10,12 @@ import {InfoComponent} from "./_partials/info/info.component";
 import {LandingPageComponent} from "./pages/landing-page/landing-page.component";
 import {PetComponent} from "./pages/pet/pet.component";
 import {FooterComponent} from "./_partials/footer/footer.component";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-root',
   standalone: true,
+  providers: [MessageService],
   imports: [CommonModule, RouterOutlet, HeaderTopComponent, HeroComponent, InfoComponent, LandingPageComponent, PetComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

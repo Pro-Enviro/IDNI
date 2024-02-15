@@ -8,6 +8,11 @@ import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 import {LoginComponent} from "./users/login/login.component";
 import {authGuard} from "./_helpers/auth.guard";
 import {RegisterComponent} from "./users/register/register.component";
+import {ImportEnvirotrackComponent} from "./pages/envirotrack/import/import-envirotrack/import-envirotrack.component";
+import {
+  DataCaptureSpreadsheetFuelsComponent
+} from "./pages/envirotrack/import/data-capture-spreadsheet-fuels/data-capture-spreadsheet-fuels.component";
+
 
 export const routes: Routes = [
   {path: '', component: LandingPageComponent},
@@ -17,6 +22,21 @@ export const routes: Routes = [
   {path:'local-decarb-single',component:LocalDecabSingleTplComponent},
   {path:'login',component: LoginComponent},
   {path:'registration',component:RegisterComponent},
+
+  { path: 'envirotrack', children: [
+      { path: 'import', component: ImportEnvirotrackComponent },
+      { path: 'gas-data', component: DataCaptureSpreadsheetFuelsComponent },
+      // { path: 'report', component: EnvirotrackReportComponent , children: [
+      //     { path: 'heatmap', component: EnvirotrackReportHeatmapComponent },
+      //     { path: 'scatter', component: EnvirotrackReportScatterComponent },
+      //     { path: 'bar', component: EnvirotrackReportBarComponent },
+      //     { path: 'pie', component: EnvirotrackReportPieComponent },
+      //     { path: 'base1', component: EnvirotrackReportBase1Component },
+      //     { path: 'avg', component: EnvirotrackReportAvgComponent },
+      //     { path: 'demand', component: EnvirotrackReportDemandComponent },
+      //     { path: 'fieldspertype', component: EnvirotrackReportFieldsComponent }
+      //   ]},
+    ] },
   {path: 'dashboard', canActivate: [authGuard], children:[
       {path: '', component: DashboardComponent}
     ]

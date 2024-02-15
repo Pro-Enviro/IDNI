@@ -1,0 +1,14 @@
+.demand-chart {
+
+
+  @media screen and (max-width: 1440px) {
+
+  }
+  @media screen and (max-width: 1280px) {
+
+    .demand-chart-buttons {
+      width: 100%;
+      display: flex;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+<div class="flex">
+  <div class="flex-1">
+    <p-panel header="Select Company">
+      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+    </p-panel>
+  </div>
+  <div class="flex-1" *ngIf="mpan.length">
+    <p-panel header="Select Mpan">
+      <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+    </p-panel>
+  </div>
+</div>
+<p-panel>
+  <div style="display: flex; margin-bottom: 3rem;">
+  <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select"></p-selectButton>
+  <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" class="btn-date"></p-calendar>
+  </div>
+  <div echarts  [options]="chartOptions" style="max-height: 60vh; height: 800px"></div>
+</p-panel>
