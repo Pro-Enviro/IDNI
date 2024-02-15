@@ -46,16 +46,6 @@
 <!--  </div>-->
 <!--</section>-->
 
-<!--@for(let mesage of messages){-->
-<!--@if(chat.send === 'send'){-->
-<!--&lt;!&ndash; html for messages that is send &ndash;&gt;-->
-<!--<p>message</p>-->
-<!--} @else {-->
-<!--&lt;!&ndash;html for message recieved&ndash;&gt;-->
-<!--<p>message</p>-->
-<!--}-->
-<!--  }-->
-
 <section>
   <div class="container relative" style="padding:15px">
     <div class="chat-container">
@@ -69,65 +59,39 @@
         @for (message of messages; track message){
           @if(message.status == 'send'){
             <div class="assistant-container">
+              <div class="flex flex-row">
+                <span class="span-style">{{message.name}}</span>
+                <span class="span-style">{{message.company}}</span>
+              </div>
               <div class="assistant-text-container">
                 <p>{{message.message}}</p>
-                <div class="flex flex-row">
-                  <span class="span-style">{{message.name}}</span>
-                  <span class="span-style">{{message.company}}</span>
-                </div>
                 <div class="flex flex-row">
                   <span class="span-style">{{message.dateTime}}</span>
                   <span class="span-style">{{message.status}}</span>
                 </div>
               </div>
             </div>
-          }
-        }
-
-
-        <ng-template *ngFor="let message of messages">
-          <pre>{{message | json}}</pre>
-          <div *ngIf="message.status == 'send'">
-            <div class="assistant-container">
-              <div class="assistant-text-container">
-                <p>Welcome to IDNI Virtual Assistant !</p>
-                <p>{{message.message}}</p>
-                <div class="flex flex-row">
-                  <span class="span-style">Assistant's Name</span>
-                  <span class="span-style">{{message.name}}</span>
-                </div>
-                <div class="flex flex-row">
-                  <span class="span-style">10:20am</span>
-                  <span class="span-style">{{message.dateTime}}</span>
-                  <span class="span-style">send</span>
-                  <span class="span-style">{{message.status}}</span>
-                </div>
+          } @else {
+          <div class="user-container" >
+            <div class="user-text-container">
+              <p>{{message.message}}</p>
+              <div class="flex flex-row justify-content-end">
+                <span class="span-style">User's Name</span>
+                <span class="span-style">{{message.name}}</span>
+                <span class="span-style">User's Company</span>
+                <span class="span-style">{{message.company}}</span>
+              </div>
+              <div class="flex flex-row justify-content-end">
+                <span class="span-style">10:30am</span>
+                <span class="span-style">{{message.dateTime}}</span>
+                <span class="span-style">received</span>
+                <span class="span-style">{{message.status}}</span>
               </div>
             </div>
           </div>
-          <ng-template #receive>
-            <div class="user-container" >
-              <div class="user-text-container">
-                <p>Hello, I need help !</p>
-                <p>{{message.message}}</p>
-                <div class="flex flex-row justify-content-end">
-                  <span class="span-style">User's Name</span>
-                  <span class="span-style">{{message.name}}</span>
-                  <span class="span-style">User's Company</span>
-                  <span class="span-style">{{message.company}}</span>
-                </div>
-                <div class="flex flex-row justify-content-end">
-                  <span class="span-style">10:30am</span>
-                  <span class="span-style">{{message.dateTime}}</span>
-                  <span class="span-style">received</span>
-                  <span class="span-style">{{message.status}}</span>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </ng-template>
+          }
+        }
       </div>
-
       <div class="message-container">
         <div class="message-input">
           <input type="text" class="inputText" placeholder="Write your message" [(ngModel)]="text" #inputBox (keyup.enter)="onKey($event)"/>
