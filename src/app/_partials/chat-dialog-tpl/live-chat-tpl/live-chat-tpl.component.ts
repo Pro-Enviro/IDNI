@@ -1,6 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {tap} from "rxjs";
 
 export interface chat{
   name: string;
@@ -9,7 +10,6 @@ export interface chat{
   dateTime: Date;
   message: string;
   status: string; //send or recieve
-
 }
 
 @Component({
@@ -27,13 +27,59 @@ export class LiveChatTplComponent {
   //NEW CODE
   messages: chat[] = [];
   send: boolean = true;
-  dateTime?: Date = new Date();
-  private message: any;
+  //dateTime?: Date = new Date();
+  //message?: any;
+  private chat: any;
+  private inputBox?: any;
+
+
+  ngOnInit() {
+
+
+  }
 
   sendMessage= () => {
-    console.log('magic');
-    this.message.dateTime = <string>(new DatePipe('en-US').transform(new Date(), 'hh:mm:ss'));
+    console.log(this.chat);
+    //this.message.dateTime = (new DatePipe('en-US').transform(new Date(), 'hh:mm:ss'));
+
+   // const message = this.message.value;
+   // this.chat.sendMessage(message).pipe(
+   //   tap(()=>{
+   //     this.chat.reset();
+   //   })
+   // )
+   //   .subscribe();
+
+    this.inputBox = document.querySelector('.inputText');
+
+    if (this.inputBox.value.trim() !== '') {
+      const newMessage = {
+        message: this.inputBox.value,
+        name: this.chat.name,
+        email:this.chat.email,
+        company: this.chat.company,
+        dateTime: this.getCurrentTime(),
+        status: this.chat.status
+      };
+
+      // this.messages.push(newMessage);
+      this.chat.push(newMessage)
+      this.inputBox.value = '';
+    }
   }
+
+  getCurrentTime(): any {
+    const currentDate = new Date();
+    const hours = currentDate.getHours();
+    const minutes = currentDate.getMinutes();
+    return `${hours}:${minutes}`;
+  }
+
+  onKey = (event:any) => {
+    // console.log(this.message)
+    // this.message += event.target.value + ' | ';
+  }
+
 
 
 

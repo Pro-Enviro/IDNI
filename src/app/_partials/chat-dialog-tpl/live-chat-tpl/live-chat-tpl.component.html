@@ -10,14 +10,27 @@
 <!--          <div class="assistant-text-container">-->
 <!--            <p>Welcome to IDNI Virtual Assistant !</p>-->
 <!--            <p>How can I help you today ?</p>-->
-<!--            <span class="text-xs text-gray-500 pl-2">10:20am</span>-->
+<!--            <div class="flex flex-row">-->
+<!--              <span class="span-style">Assistant's Name</span>-->
+<!--            </div>-->
+<!--            <div class="flex flex-row">-->
+<!--              <span class="span-style">10:20am</span>-->
+<!--              <span class="span-style">send</span>-->
+<!--            </div>-->
 <!--          </div>-->
 <!--        </div>-->
 <!--        <div class="user-container">-->
 <!--          <div class="user-text-container">-->
 <!--            <p>Hello, I need help !</p>-->
 <!--            <p>I have few question about the programme?</p>-->
-<!--            <span class="text-xs text-gray-500 pl-2">10:30am</span>-->
+<!--            <div class="flex flex-row">-->
+<!--              <span class="span-style">User's Name</span>-->
+<!--              <span class="span-style">User's Company</span>-->
+<!--            </div>-->
+<!--            <div class="flex flex-row">-->
+<!--              <span class="span-style">10:30am</span>-->
+<!--              <span class="span-style">recieved</span>-->
+<!--            </div>-->
 <!--          </div>-->
 <!--        </div>-->
 <!--      </div>-->
@@ -51,7 +64,7 @@
         <h3 class="header-style text-4xl">IDNI Q&A</h3>
       </div>
       <div class="chat">
-        <ng-template ngFor let-message [ngForOf]="messages">
+        <ng-template *ngFor="let message of messages">
           <div *ngIf="send; else receive">
             <div class="assistant-container">
               <div class="assistant-text-container">
@@ -95,7 +108,7 @@
 
       <div class="message-container">
         <div class="message-input">
-          <input type="text" class="inputText" placeholder="Write your message" #inputBox/>
+          <input type="text" class="inputText" placeholder="Write your message" #inputBox (keyup.enter)="onKey($event)"/>
         </div>
         <span class="message-icon pr-4">
           <p-button icon="pi pi-send" [rounded]="true" styleClass="chat-btn" (onClick)="sendMessage()"></p-button>
