@@ -39,17 +39,19 @@ export class LiveChatTplComponent {
     this.inputBox = document.querySelector('.inputText');
 
     if (this.inputBox.value.trim() !== '') {
-      const newMessage = {
+      const newMessage = [
+        {
         message: this.inputBox.value,
         name: this.message.name,
         email:this.message.email,
         company: this.message.company,
         dateTime: this.getCurrentTime(),
         status: this.message.status
-      };
+      }
+      ];
 
       // this.messages.push(newMessage);
-      this.message.push(newMessage)
+      this.message.push("newMessage")
       this.inputBox.value = '';
     }
   }
