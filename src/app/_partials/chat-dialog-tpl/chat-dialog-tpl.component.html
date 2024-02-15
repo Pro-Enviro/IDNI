@@ -16,7 +16,7 @@
           <input [(ngModel)]="email" name="email" type="text" pInputText class="">
         </div>
         <div class="pt-3 flex justify-content-center">
-          <button pButton pRipple label="Start Chat" class="btn-style"></button>
+          <p-button label="Start Chat" styleClass="btn-style" (onClick)="startChat()"></p-button>
         </div>
       </div>
     </p-panel>

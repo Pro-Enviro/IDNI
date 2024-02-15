@@ -24,4 +24,10 @@ export class ChatDialogTplComponent {
  name?:any;
  company_name?:any;
  email?:any;
+
+
+  startChat= () => {
+    console.log('start')
+
+  }
 }
