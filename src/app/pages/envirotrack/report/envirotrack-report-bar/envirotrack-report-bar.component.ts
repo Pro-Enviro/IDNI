@@ -2,21 +2,15 @@ import { Component } from '@angular/core';
 import moment from "moment";
 import * as echarts from "echarts";
 import {EnvirotrackService} from "../../envirotrack.service";
-import {PanelModule} from "primeng/panel";
-import {SelectButtonModule} from "primeng/selectbutton";
-import {CalendarModule} from "primeng/calendar";
-import {NgxEchartsDirective} from "ngx-echarts";
-import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
 import {SharedModules} from "../../../../shared-module";
+import {SharedComponents} from "../../shared-components";
 
 @Component({
   selector: 'app-envirotrack-report-bar',
   standalone: true,
   imports: [
-    SelectButtonModule,
-    CalendarModule,
-    SharedModules
+    SharedModules,
+    SharedComponents
   ],
 
   templateUrl: './envirotrack-report-bar.component.html',

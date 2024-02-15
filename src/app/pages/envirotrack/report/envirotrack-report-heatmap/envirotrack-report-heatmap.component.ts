@@ -5,13 +5,8 @@ import moment from "moment/moment";
 import {PlotlyService, PlotlySharedModule} from "angular-plotly.js";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {EnvirotrackDayLineComponent} from "../envirotrack-day-line/envirotrack-day-line.component";
-import {PanelModule} from "primeng/panel";
-import {SelectButtonModule} from "primeng/selectbutton";
-import {ToggleButtonModule} from "primeng/togglebutton";
-import {CalendarModule} from "primeng/calendar";
-import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
 import {SharedModules} from "../../../../shared-module";
+import {SharedComponents} from "../../shared-components";
 
 
 @Component({
@@ -23,9 +18,7 @@ import {SharedModules} from "../../../../shared-module";
   ],
   imports: [
     SharedModules,
-    SelectButtonModule,
-    ToggleButtonModule,
-    CalendarModule,
+    SharedComponents,
     PlotlySharedModule,
   ],
   styleUrls: ['./envirotrack-report-heatmap.component.scss']

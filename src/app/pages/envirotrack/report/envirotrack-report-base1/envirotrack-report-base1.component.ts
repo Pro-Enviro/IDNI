@@ -6,11 +6,12 @@ import {MessageService} from "primeng/api";
 import * as echarts from "echarts";
 import {SharedModules} from "../../../../shared-module";
 import {SelectButtonModule} from "primeng/selectbutton";
+import {SharedComponents} from "../../shared-components";
 
 @Component({
   selector: 'app-envirotrack-report-base1',
   standalone: true,
-  imports: [SharedModules, SelectButtonModule],
+  imports: [SharedModules, SharedComponents],
   templateUrl: './envirotrack-report-base1.component.html',
   styleUrls: ['./envirotrack-report-base1.component.scss']
 })

@@ -7,7 +7,7 @@ import {map} from "rxjs/operators";
 })
 export class EnvirotrackService {
   url: any = `https://ecp.proenviro.co.uk` // TODO: .env this?
-  companyId: number = 773 // TODO: Get correct company ID
+  companyId: number = 773 // TODO: Get correct company ID (currently Capital DEV)
   constructor(
     private http: HttpClient,
   ) {

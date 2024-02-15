@@ -6,17 +6,8 @@ import moment from "moment";
 import 'moment/locale/en-gb';
 import {lastValueFrom} from "rxjs";
 import {EnvirotrackService} from "../../envirotrack.service";
-import {PanelModule} from "primeng/panel";
-import {SelectButtonModule} from "primeng/selectbutton";
-import {FileUploadModule} from "primeng/fileupload";
-import {ToggleButtonModule} from "primeng/togglebutton";
-import {TableModule} from "primeng/table";
-import {FormsModule} from "@angular/forms";
-import {CommonModule} from "@angular/common";
-import {DragDropModule} from "primeng/dragdrop";
-import {RouterLink, RouterLinkActive} from "@angular/router";
-import {MessageModule} from "primeng/message";
 import {SharedModules} from "../../../../shared-module";
+import {SharedComponents} from "../../shared-components";
 
 
 interface Sheet {
@@ -45,11 +36,7 @@ interface HDDData {
   styleUrl: './import-envirotrack.component.scss',
   imports: [
     SharedModules,
-    SelectButtonModule,
-    FileUploadModule,
-    ToggleButtonModule,
-    DragDropModule,
-    MessageModule
+    SharedComponents
   ]
 })
 

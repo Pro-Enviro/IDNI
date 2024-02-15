@@ -7,20 +7,10 @@ import {
     GasRequired, GenericOptional, GenericRequired,
     OptionalElectric, PropaneOptional, PropaneRequired
 } from "../../fuel-data";
-import {AutoCompleteCompleteEvent, AutoCompleteModule} from "primeng/autocomplete";
+import {AutoCompleteCompleteEvent} from "primeng/autocomplete";
 import {MessageService} from "primeng/api";
-import {FormsModule} from "@angular/forms";
-import {TableModule} from "primeng/table";
-import {OrderListModule} from "primeng/orderlist";
-import {CardModule} from "primeng/card";
-import {CheckboxModule} from "primeng/checkbox";
-import {DropdownModule} from "primeng/dropdown";
-import {ButtonModule} from "primeng/button";
-import {PanelModule} from "primeng/panel";
-import {DragDropModule} from "primeng/dragdrop";
-import {InputTextModule} from "primeng/inputtext";
-import {CommonModule} from "@angular/common";
 import {SharedModules} from "../../../../shared-module";
+import {SharedComponents} from "../../shared-components";
 
 
 
@@ -31,14 +21,7 @@ import {SharedModules} from "../../../../shared-module";
     styleUrls: ['./data-capture-spreadsheet-fuels-fields.component.scss'],
   imports: [
     SharedModules,
-    AutoCompleteModule,
-    OrderListModule,
-    CardModule,
-    CheckboxModule,
-    DropdownModule,
-    ButtonModule,
-    DragDropModule,
-    InputTextModule,
+    SharedComponents,
   ]
 })
 

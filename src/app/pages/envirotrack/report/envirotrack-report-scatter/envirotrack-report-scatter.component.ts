@@ -2,13 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import moment from "moment";
 import * as echarts from "echarts";
 import {EnvirotrackService} from "../../envirotrack.service";
-import {PanelModule} from "primeng/panel";
-import {SelectButtonModule} from "primeng/selectbutton";
-import {CalendarModule} from "primeng/calendar";
-import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
 import {DialogService} from "primeng/dynamicdialog";
 import {SharedModules} from "../../../../shared-module";
+import {SharedComponents} from "../../shared-components";
 
 
 @Component({
@@ -18,8 +14,7 @@ import {SharedModules} from "../../../../shared-module";
     DialogService,
   ],
   imports: [
-    SelectButtonModule,
-    CalendarModule,
+    SharedComponents,
     SharedModules
   ],
   templateUrl: './envirotrack-report-scatter.component.html',

@@ -2,16 +2,14 @@ import { Component, OnInit} from '@angular/core';
 
 import {MenuItem} from "primeng/api";
 import {EnvirotrackService} from "../../envirotrack.service";
-import {PanelModule} from "primeng/panel";
-import {MenuModule} from "primeng/menu";
+import {SharedComponents} from "../../shared-components";
 
 @Component({
   selector: 'app-envirotrack-report',
   standalone: true,
   templateUrl: './envirotrack-report.component.html',
   imports: [
-    PanelModule,
-    MenuModule
+    SharedComponents
   ],
   styleUrls: ['./envirotrack-report.component.scss']
 

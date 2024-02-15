@@ -3,18 +3,15 @@ import { Component } from '@angular/core';
 import moment from "moment";
 import * as echarts from "echarts";
 import {EnvirotrackService} from "../../envirotrack.service";
-import {EChartsOption} from "echarts";
 import {SharedModules} from "../../../../shared-module";
-import {SelectButtonModule} from "primeng/selectbutton";
-import {ToggleButtonModule} from "primeng/togglebutton";
+import {SharedComponents} from "../../shared-components";
 
 @Component({
   selector: 'app-envirotrack-report-avg',
   standalone: true,
   imports: [
     SharedModules,
-    SelectButtonModule,
-    ToggleButtonModule,
+    SharedComponents
   ],
   templateUrl: './envirotrack-report-avg.component.html',
   styleUrls: ['./envirotrack-report-avg.component.scss']

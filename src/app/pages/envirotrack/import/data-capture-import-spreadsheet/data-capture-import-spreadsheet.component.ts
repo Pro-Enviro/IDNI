@@ -7,14 +7,8 @@ import moment from "moment";
 import 'moment/locale/en-gb';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import _ from 'lodash'
-import {PanelModule} from "primeng/panel";
-import {FileUploadModule} from "primeng/fileupload";
-import {SelectButtonModule} from "primeng/selectbutton";
-import {DragDropModule} from "primeng/dragdrop";
-import {TableModule} from "primeng/table";
-import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
 import {SharedModules} from "../../../../shared-module";
+import {SharedComponents} from "../../shared-components";
 
 interface Sheet {
   name: string;
@@ -34,10 +28,8 @@ interface DraggedCell {
   templateUrl: './data-capture-import-spreadsheet.component.html',
   styleUrls: ['./data-capture-import-spreadsheet.component.scss'],
   imports: [
-    FileUploadModule,
-    SelectButtonModule,
-    DragDropModule,
-    SharedModules
+    SharedModules,
+    SharedComponents
   ]
 })
 export class DataCaptureImportSpreadsheetComponent implements OnInit {

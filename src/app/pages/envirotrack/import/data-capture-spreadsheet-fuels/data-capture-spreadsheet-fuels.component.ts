@@ -5,31 +5,14 @@ import {
 } from "../data-capture-spreadsheet-fuels-fields/data-capture-spreadsheet-fuels-fields.component";
 import {ConfirmationService, MessageService} from "primeng/api";
 import moment from "moment/moment";
-// import {GlobalService} from "../../../../_services/global.service";
-// import {AdminService} from "../../../../_services/admin.service";
 import _ from 'lodash'
 import {
   DataCaptureImportSpreadsheetComponent
 } from "../data-capture-import-spreadsheet/data-capture-import-spreadsheet.component";
 import FileSaver from "file-saver";
-import {PanelModule} from "primeng/panel";
-import {FormsModule} from "@angular/forms";
-import {TabViewModule} from "primeng/tabview";
-import {ButtonModule} from "primeng/button";
-import {ToastModule} from "primeng/toast";
-import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {TableModule} from "primeng/table";
-import {TooltipModule} from "primeng/tooltip";
-import {CalendarModule} from "primeng/calendar";
-import {InputNumberModule} from "primeng/inputnumber";
-import {CommonModule} from "@angular/common";
-import {InputTextModule} from "primeng/inputtext";
-import {MessageModule} from "primeng/message";
-import {RippleModule} from "primeng/ripple";
-import {DragDropModule} from "primeng/dragdrop";
-import {DropdownModule} from "primeng/dropdown";
-import {RouterLink, RouterLinkActive} from "@angular/router";
+
 import {SharedModules} from "../../../../shared-module";
+import {SharedComponents} from "../../shared-components";
 
 export class Fields {
   type: string = '';
@@ -46,18 +29,7 @@ export class Fields {
   providers: [DialogService, ConfirmationService],
   imports: [
     SharedModules,
-    TabViewModule,
-    ButtonModule,
-    ToastModule,
-    ConfirmDialogModule,
-    TooltipModule,
-    CalendarModule,
-    InputNumberModule,
-    InputTextModule,
-    MessageModule,
-    RippleModule,
-    DragDropModule,
-    DropdownModule,
+    SharedComponents,
   ]
 })
 export class DataCaptureSpreadsheetFuelsComponent {

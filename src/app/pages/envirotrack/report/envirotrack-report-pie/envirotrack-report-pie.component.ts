@@ -5,13 +5,12 @@ import {EnvirotrackService} from "../../envirotrack.service";
 import {EChartsOption} from "echarts";
 import * as echarts from "echarts";
 import {SharedModules} from "../../../../shared-module";
-import {SelectButtonModule} from "primeng/selectbutton";
-import {CalendarModule} from "primeng/calendar";
+import {SharedComponents} from "../../shared-components";
 
 @Component({
   selector: 'app-envirotrack-report-pie',
   standalone: true,
-  imports: [SharedModules, SelectButtonModule, CalendarModule],
+  imports: [SharedModules, SharedComponents],
   templateUrl: './envirotrack-report-pie.component.html',
   styleUrls: ['./envirotrack-report-pie.component.scss']
 })
