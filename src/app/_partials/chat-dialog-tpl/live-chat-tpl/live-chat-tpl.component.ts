@@ -32,23 +32,9 @@ export class LiveChatTplComponent {
   private chat: any;
   private inputBox?: any;
 
-
-  ngOnInit() {
-
-
-  }
-
   sendMessage= () => {
     console.log(this.chat);
     //this.message.dateTime = (new DatePipe('en-US').transform(new Date(), 'hh:mm:ss'));
-
-   // const message = this.message.value;
-   // this.chat.sendMessage(message).pipe(
-   //   tap(()=>{
-   //     this.chat.reset();
-   //   })
-   // )
-   //   .subscribe();
 
     this.inputBox = document.querySelector('.inputText');
 
@@ -76,6 +62,7 @@ export class LiveChatTplComponent {
   }
 
   onKey = (event:any) => {
+    console.log(this.chat)
     // console.log(this.message)
     // this.message += event.target.value + ' | ';
   }
