@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import moment from "moment";
 import * as echarts from "echarts";
-import {EnvirotrackService} from "../../../../_services/envirotrack/envirotrack.service";
-import {AdminService} from "../../../../_services/admin.service";
-import {GlobalService} from "../../../../_services/global.service";
+import {EnvirotrackService} from "../../envirotrack.service";
+import {SharedModules} from "../../../../shared-module";
+import {SelectButtonModule} from "primeng/selectbutton";
+import {CalendarModule} from "primeng/calendar";
 @Component({
   selector: 'app-envirotrack-report-demand',
+  standalone: true,
+  imports: [SharedModules, SelectButtonModule, CalendarModule],
   templateUrl: './envirotrack-report-demand.component.html',
   styleUrls: ['./envirotrack-report-demand.component.scss']
 })
@@ -45,8 +48,6 @@ export class EnvirotrackReportDemandComponent {
 
   constructor(
     private track: EnvirotrackService,
-    private admin: AdminService,
-    private global: GlobalService
   ) {}
 
   saveChartAsBase64 = () => {
@@ -173,7 +174,7 @@ export class EnvirotrackReportDemandComponent {
   }
 
   onSelectCompany = () => {
-    this.global.updateSelectedMpan(this.selectedMpan)
+    // this.global.updateSelectedMpan(this.selectedMpan)
     this.getData(this.selectedCompany)
   }
 
@@ -185,26 +186,26 @@ export class EnvirotrackReportDemandComponent {
 
   getAsc = (startDate: any, endDate: any) => {
     this.asc = [];
-    this.admin.fnGet(`items/energy_supply_info?filter[mpan][_eq]=${this.selectedMpan}`).subscribe({
-      next: (res: any) => {
-        this.supply = res.data
-        if(!this.supply.length) {
-          this.initChart()
-          return
-        }
-
-        this.supply.forEach((row:any) => {
-          row.start_date = moment(row.start_date)
-          row.end_date = !row.end_date ?  moment(this.months[this.months.length-1],'DD/MM/YYYY') : moment(row.end_date);
-        })
-        this.supply = this.supply.sort((a:any, b:any) => a.start_date.unix() - b.start_date.unix())
-        this.supply.forEach((row:any) => {
-          this.asc.push([row.start_date.isBefore(moment(startDate, 'DD/MM/YYYY')) ? startDate : row.start_date.format('DD/MM/YYYY'), row.asc], [row.end_date.format('DD/MM/YYYY'), row.asc])
-        })
-        this.asc[this.asc.length-1][0] = endDate
-        this.initChart()
-      }
-    })
+    // this.admin.fnGet(`items/energy_supply_info?filter[mpan][_eq]=${this.selectedMpan}`).subscribe({
+    //   next: (res: any) => {
+    //     this.supply = res.data
+    //     if(!this.supply.length) {
+    //       this.initChart()
+    //       return
+    //     }
+    //
+    //     this.supply.forEach((row:any) => {
+    //       row.start_date = moment(row.start_date)
+    //       row.end_date = !row.end_date ?  moment(this.months[this.months.length-1],'DD/MM/YYYY') : moment(row.end_date);
+    //     })
+    //     this.supply = this.supply.sort((a:any, b:any) => a.start_date.unix() - b.start_date.unix())
+    //     this.supply.forEach((row:any) => {
+    //       this.asc.push([row.start_date.isBefore(moment(startDate, 'DD/MM/YYYY')) ? startDate : row.start_date.format('DD/MM/YYYY'), row.asc], [row.end_date.format('DD/MM/YYYY'), row.asc])
+    //     })
+    //     this.asc[this.asc.length-1][0] = endDate
+    //     this.initChart()
+    //   }
+    // })
   }
 
   getData = (id: number) => {
@@ -221,11 +222,11 @@ export class EnvirotrackReportDemandComponent {
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
 
-          if (this.global.selectedMpan?.value) {
-            this.selectedMpan = this.global.selectedMpan.value
-          } else {
+          // if (this.global.selectedMpan?.value) {
+          //   this.selectedMpan = this.global.selectedMpan.value
+          // } else {
             this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
-          }
+          // }
 
           this.data = res
           this.getTimes()

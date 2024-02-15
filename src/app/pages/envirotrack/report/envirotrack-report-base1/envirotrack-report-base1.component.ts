@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
 import moment from "moment";
-import {EnvirotrackService} from "../../../../_services/envirotrack/envirotrack.service";
+import {EnvirotrackService} from "../../envirotrack.service";
 import {EChartsOption} from "echarts";
 import {MessageService} from "primeng/api";
-import {GlobalService} from "../../../../_services/global.service";
 import * as echarts from "echarts";
+import {SharedModules} from "../../../../shared-module";
+import {SelectButtonModule} from "primeng/selectbutton";
 
 @Component({
   selector: 'app-envirotrack-report-base1',
+  standalone: true,
+  imports: [SharedModules, SelectButtonModule],
   templateUrl: './envirotrack-report-base1.component.html',
   styleUrls: ['./envirotrack-report-base1.component.scss']
 })
@@ -37,7 +40,6 @@ export class EnvirotrackReportBase1Component {
   constructor(
     private track: EnvirotrackService,
     private msg: MessageService,
-    private global: GlobalService
   ) {}
 
   initChart = () => {
@@ -144,7 +146,7 @@ export class EnvirotrackReportBase1Component {
   }
 
   onSelectCompany = () => {
-    this.global.updateSelectedMpan(this.selectedMpan)
+    // this.global.updateSelectedMpan(this.selectedMpan)
     this.getData(this.selectedCompany)
   }
 
@@ -172,11 +174,12 @@ export class EnvirotrackReportBase1Component {
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan):  null;
           })
 
-          if (this.global.selectedMpan?.value) {
-            this.selectedMpan = this.global.selectedMpan.value
-          } else {
+          // if (this.global.selectedMpan?.value) {
+          //   this.selectedMpan = this.global.selectedMpan.value
+          // } else {
             this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
-          }
+          // }
+
           this.data = res.filter((x:any) => x.total)
           this.getTimes()
           this.months.sort();

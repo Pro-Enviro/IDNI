@@ -51,11 +51,11 @@ export class EnvirotrackReportComponent implements OnInit{
     escape: false,
     routerLink: 'demand'
   },
-    {
-      label:'<span class="material-symbols-outlined material-icon">bar_chart</span> Fuel Usage',
-      escape: false,
-      routerLink: 'fieldspertype'
-    }
+    // {
+    //   label:'<span class="material-symbols-outlined material-icon">bar_chart</span> Fuel Usage',
+    //   escape: false,
+    //   routerLink: 'fieldspertype'
+    // }
   ];
 
   constructor(private track: EnvirotrackService) {

@@ -22,14 +22,11 @@ import {SharedModules} from "../../../../shared-module";
     DialogService
   ],
   imports: [
-    PanelModule,
+    SharedModules,
     SelectButtonModule,
     ToggleButtonModule,
     CalendarModule,
-    CommonModule,
-    FormsModule,
     PlotlySharedModule,
-    SharedModules
   ],
   styleUrls: ['./envirotrack-report-heatmap.component.scss']
 })
