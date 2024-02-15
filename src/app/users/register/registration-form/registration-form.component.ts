@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import {RegistrationFormTplComponent} from "../../_partials/registration-form-tpl/registration-form-tpl.component";
-import {TopPageImgTplComponent} from "../../_partials/top-page-img-tpl/top-page-img-tpl.component";
+import {TopPageImgTplComponent} from "../../../_partials/top-page-img-tpl/top-page-img-tpl.component";
+import {RegisterComponent} from "../register.component";
 
 @Component({
   selector: 'app-registration-form',
   standalone: true,
   imports: [
-    RegistrationFormTplComponent,
+    RegisterComponent,
     TopPageImgTplComponent
   ],
   templateUrl: './registration-form.component.html',
