@@ -8,6 +8,7 @@ import {lastValueFrom} from "rxjs";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
+import {TopPageImgTplComponent} from "../../../../_partials/top-page-img-tpl/top-page-img-tpl.component";
 
 
 interface Sheet {
@@ -36,7 +37,8 @@ interface HDDData {
   styleUrl: './import-envirotrack.component.scss',
   imports: [
     SharedModules,
-    SharedComponents
+    SharedComponents,
+    TopPageImgTplComponent
   ]
 })
 
