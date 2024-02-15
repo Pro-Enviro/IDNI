@@ -49,7 +49,7 @@ export class LiveChatTplComponent {
       };
 
       // this.messages.push(newMessage);
-      this.chat.push(newMessage)
+      this.message.push(newMessage)
       this.inputBox.value = '';
     }
   }
