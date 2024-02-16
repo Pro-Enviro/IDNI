@@ -22,11 +22,11 @@ interface DraggedCell {
     col: number;
 }
 
-interface HDDData {
+interface HHDData {
     company_id: number;
     mpan: string;
     date: moment.Moment;
-    hdd: (number | string)[];
+    hh: (number | string)[];
     reactive_data: boolean;
 }
 
@@ -51,7 +51,7 @@ export class ImportEnvirotrackComponent {
   selectedDataStart: any;
   uploadedFiles: any[] = [];
   fileContent: any;
-  hdd: any[] = [];
+  hhd: any[] = [];
   dates: any[] = [];
   mpan: string | undefined;
   isXlsx = false;
@@ -60,7 +60,7 @@ export class ImportEnvirotrackComponent {
   }, {
     label: 'Date Column'
   }, {
-    label: 'HDD Start'
+    label: 'HHD Start'
   }]
   reactiveData = false;
   selectedSheet: string | undefined;
@@ -237,24 +237,25 @@ export class ImportEnvirotrackComponent {
           date = moment(row[this.selectedStartDate.col], 'DD/MM/YYYY')
         }
         if (date.isValid()) {
-          this.hdd.push({
+          this.hhd.push({
             company_id: this.selectedCompany,
             mpan: parseInt(this.selectedMpan.name).toString(),
             date: date,
-            hdd: row.slice(this.selectedDataStart.col, (this.selectedDataStart.col + 1 + 47)).map((x: number | string) => typeof x === 'string' ? parseFloat(x) : x),
+            hhd: row.slice(this.selectedDataStart.col, (this.selectedDataStart.col + 1 + 47)).map((x: number | string) => typeof x === 'string' ? parseFloat(x) : x),
             reactive_data: this.reactiveData
           })
         }
       }
     }
     //TODO change Post request to be bulk
-    let newHdd: any[] = [];
+    let newHhd: any[] = [];
     let skippedRows: number = 0;
-    for (const [index, row] of this.hdd.entries()) {
+    for (const [index, row] of this.hhd.entries()) {
       try {
-        row.hdd = JSON.stringify(row.hdd)
+        row.hhd = JSON.stringify(row.hhd)
         let newRow = omit('company_id', row)
         newRow.company = this.selectedCompany;
+
         const res:any = await lastValueFrom(this.track.lookup(row.mpan, row.date.format('YYYY-MM-DD'), newRow.company));
         if(!res || !res.data.length){
           await lastValueFrom(this.track.uploadData([newRow], this.selectedCompany!));
@@ -274,8 +275,8 @@ export class ImportEnvirotrackComponent {
           detail: err.error.errors[0].message
         });
       }
-      if (index === this.hdd.length - 1) {
-        if (!newHdd.length) {
+      if (index === this.hhd.length - 1) {
+        if (!newHhd.length) {
           /*this.msg.add({
             severity: 'error',
             summary: 'No Data to add',
@@ -286,7 +287,7 @@ export class ImportEnvirotrackComponent {
       }
     }
     try {
-      //await lastValueFrom(this.track.uploadData(newHdd, this.selectedCompany!));
+      await lastValueFrom(this.track.uploadData(newHhd, this.selectedCompany!));
       this.msg.add({
         severity: 'success',
         detail: 'Data saved to database'

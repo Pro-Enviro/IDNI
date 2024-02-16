@@ -23,7 +23,7 @@ export class EnvirotrackService {
   }
 
   getData = (id: number) => {
-    return this.http.get(`${this.url}/items/envirotrack?filter[company][_eq]=${id}&limit=-1&fields=date,mpan,hdd`).pipe(
+    return this.http.get(`${this.url}/items/envirotrack?filter[company][_eq]=${id}&limit=-1&fields=date,mpan,hhd`).pipe(
       map((res: any) => res.data)
     )
   }

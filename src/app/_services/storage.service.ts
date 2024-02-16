@@ -23,9 +23,8 @@ export class StorageService {
 
 
   save = (name: string, token: string) => {
-    console.log('saving')
     // localStorage.setItem(name, this.encryption.encrypt(JSON.stringify(token)));
-    localStorage.setItem(name, JSON.stringify(token));
+    localStorage.setItem(name, token);
   }
 
   get = (name: string) => {
