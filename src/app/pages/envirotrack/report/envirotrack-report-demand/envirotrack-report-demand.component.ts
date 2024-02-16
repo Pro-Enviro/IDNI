@@ -49,24 +49,24 @@ export class EnvirotrackReportDemandComponent implements OnInit {
     private track: EnvirotrackService,
   ) {}
 
-  saveChartAsBase64 = () => {
-    if (!this.chartOptions) return;
-
-    // Create temporary chart that uses echarts.instanceOf
-    const div = document.createElement('div')
-    div.style.width = '1200px'
-    div.style.height = '1200px'
-
-    const temporaryChart = echarts.init(div)
-
-    temporaryChart.setOption({...this.chartOptions, animation: false})
-
-    const data = temporaryChart.getDataURL({
-      backgroundColor: '#fff',
-      pixelRatio: 4
-    })
-    return data;
-  }
+  // saveChartAsBase64 = () => {
+  //   if (!this.chartOptions) return;
+  //
+  //   // Create temporary chart that uses echarts.instanceOf
+  //   const div = document.createElement('div')
+  //   div.style.width = '1200px'
+  //   div.style.height = '1200px'
+  //
+  //   const temporaryChart = echarts.init(div)
+  //
+  //   temporaryChart.setOption({...this.chartOptions, animation: false})
+  //
+  //   const data = temporaryChart.getDataURL({
+  //     backgroundColor: '#fff',
+  //     pixelRatio: 4
+  //   })
+  //   return data;
+  // }
 
   initChart = () => {
     this.chartOptions = {
@@ -172,6 +172,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
+    this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
   }
 
@@ -276,6 +277,12 @@ export class EnvirotrackReportDemandComponent implements OnInit {
 
   ngOnInit() {
     this.getCompanies();
+
+    if (this.track.selectedCompany.value) {
+      this.selectedCompany = this.track.selectedCompany.value
+      this.getData(this.selectedCompany)
+    }
+
     this.screenWidth = window.innerWidth
   }
 }

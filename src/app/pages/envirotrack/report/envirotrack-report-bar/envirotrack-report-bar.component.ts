@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import moment from "moment";
 import * as echarts from "echarts";
 import {EnvirotrackService} from "../../envirotrack.service";
@@ -16,7 +16,7 @@ import {SharedComponents} from "../../shared-components";
   templateUrl: './envirotrack-report-bar.component.html',
   styleUrls: ['./envirotrack-report-bar.component.scss']
 })
-export class EnvirotrackReportBarComponent {
+export class EnvirotrackReportBarComponent implements OnInit {
   data: any;
   months: string[] = [];
   filteredData: any;
@@ -52,26 +52,26 @@ export class EnvirotrackReportBarComponent {
     private track: EnvirotrackService,
   ) {}
 
-  saveChartAsBase64 = () => {
-    console.log('saving as base 64');
-    if (!this.chartOptions) return;
-
-    // Create temporary chart that uses echarts.instanceOf
-    const div = document.createElement('div')
-    div.style.width = '1200px'
-    div.style.height = '1200px'
-
-    const temporaryChart = echarts.init(div)
-
-    temporaryChart.setOption({...this.chartOptions, animation: false})
-
-    const data = temporaryChart.getDataURL({
-      backgroundColor: '#fff',
-      pixelRatio: 2
-    })
-    console.log(data);
-    return data;
-  }
+  // saveChartAsBase64 = () => {
+  //   console.log('saving as base 64');
+  //   if (!this.chartOptions) return;
+  //
+  //   // Create temporary chart that uses echarts.instanceOf
+  //   const div = document.createElement('div')
+  //   div.style.width = '1200px'
+  //   div.style.height = '1200px'
+  //
+  //   const temporaryChart = echarts.init(div)
+  //
+  //   temporaryChart.setOption({...this.chartOptions, animation: false})
+  //
+  //   const data = temporaryChart.getDataURL({
+  //     backgroundColor: '#fff',
+  //     pixelRatio: 2
+  //   })
+  //   console.log(data);
+  //   return data;
+  // }
   initChart = () => {
     this.chartOptions = {
       legend: {
@@ -163,6 +163,7 @@ export class EnvirotrackReportBarComponent {
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
+    this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
   }
 
@@ -240,6 +241,12 @@ export class EnvirotrackReportBarComponent {
 
   ngOnInit() {
     this.getCompanies();
+
+    if (this.track.selectedCompany.value) {
+      this.selectedCompany = this.track.selectedCompany.value
+      this.getData(this.selectedCompany)
+    }
+
     this.screenWidth = window.innerWidth
   }
 }

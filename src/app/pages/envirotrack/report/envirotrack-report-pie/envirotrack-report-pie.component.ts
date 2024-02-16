@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import moment from "moment";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {EChartsOption} from "echarts";
@@ -14,7 +14,7 @@ import {SharedComponents} from "../../shared-components";
   templateUrl: './envirotrack-report-pie.component.html',
   styleUrls: ['./envirotrack-report-pie.component.scss']
 })
-export class EnvirotrackReportPieComponent {
+export class EnvirotrackReportPieComponent implements OnInit {
   data: any;
   months: string[] = [];
   filteredData: any;
@@ -163,10 +163,11 @@ export class EnvirotrackReportPieComponent {
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
+    this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
   }
 
-  getTimes = () =>{
+  getTimes = () => {
     for(let i = 0; i < 48; i++){
       this.chartY.push(moment('00:00', 'HH:mm').add(i*30, 'minutes').format('HH:mm'))
     }
@@ -284,6 +285,12 @@ export class EnvirotrackReportPieComponent {
 
   ngOnInit() {
     this.getCompanies();
+
+    if (this.track.selectedCompany.value) {
+        this.selectedCompany = this.track.selectedCompany.value
+        this.getData(this.selectedCompany)
+    }
+
     this.screenWidth = window.innerWidth;
   }
 }

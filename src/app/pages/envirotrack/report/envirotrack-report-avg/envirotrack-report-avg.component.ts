@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import moment from "moment";
 import * as echarts from "echarts";
 import {EnvirotrackService} from "../../envirotrack.service";
@@ -16,7 +16,7 @@ import {SharedComponents} from "../../shared-components";
   templateUrl: './envirotrack-report-avg.component.html',
   styleUrls: ['./envirotrack-report-avg.component.scss']
 })
-export class EnvirotrackReportAvgComponent {
+export class EnvirotrackReportAvgComponent implements OnInit {
   data: any;
   months: string[] = [];
   filteredData: any;
@@ -167,6 +167,7 @@ export class EnvirotrackReportAvgComponent {
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
+    this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
   }
 
@@ -429,6 +430,12 @@ export class EnvirotrackReportAvgComponent {
 
   ngOnInit() {
     this.getCompanies();
+
+    if (this.track.selectedCompany.value) {
+      this.selectedCompany = this.track.selectedCompany.value
+      this.getData(this.selectedCompany)
+    }
+
     this.screenWidth = window.innerWidth;
     this.screenHeight = window.innerHeight;
 

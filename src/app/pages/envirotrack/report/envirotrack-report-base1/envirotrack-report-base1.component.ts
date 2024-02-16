@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import moment from "moment";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {EChartsOption} from "echarts";
@@ -16,7 +16,7 @@ import {SharedComponents} from "../../shared-components";
   styleUrls: ['./envirotrack-report-base1.component.scss']
 })
 
-export class EnvirotrackReportBase1Component {
+export class EnvirotrackReportBase1Component implements OnInit {
   data: any;
   months: string[] = [];
   filteredData: any;
@@ -146,6 +146,7 @@ export class EnvirotrackReportBase1Component {
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
+    this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
   }
 
@@ -255,6 +256,12 @@ export class EnvirotrackReportBase1Component {
 
   ngOnInit() {
     this.getCompanies();
+
+    if (this.track.selectedCompany.value) {
+      this.selectedCompany = this.track.selectedCompany.value
+      this.getData(this.selectedCompany)
+    }
+
     this.screenWidth = window.innerWidth;
   }
 }
