@@ -2890,6 +2890,11 @@ domutils@^3.0.1:
     domelementtype "^2.3.0"
     domhandler "^5.0.3"
 
+dotenv@^8.2.0:
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.6.0.tgz#061af664d19f7f4d8fc6e4ff9b584ce237adcb8b"
+  integrity sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==
+
 eastasianwidth@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/eastasianwidth/-/eastasianwidth-0.2.0.tgz#696ce2ec0aa0e6ea93a397ffcf24aa7840c827cb"
@@ -2939,6 +2944,13 @@ encoding@^0.1.13:
   integrity sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==
   dependencies:
     iconv-lite "^0.6.2"
+
+encrypt-decrypt-library@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/encrypt-decrypt-library/-/encrypt-decrypt-library-1.0.5.tgz#1bec1cd508f40a51d9840ea79fe33733e651e0f7"
+  integrity sha512-iKBOgzEBETOmKZfl4UNxM0etdYjIBkxPZ774CT8ffsr9c/fm7FS4p2FJFpHhbO6Org9jLQ98DCzPi03r+NEv+w==
+  dependencies:
+    dotenv "^8.2.0"
 
 engine.io-parser@~5.2.1:
   version "5.2.1"

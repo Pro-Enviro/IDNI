@@ -28,6 +28,7 @@
     "file-saver": "^2.0.5",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
+    "encrypt-decrypt-library": "^1.0.5",
     "ngx-animations": "^5.0.4",
     "ngx-echarts": "^17.1.0",
     "ngx-papaparse": "8",
