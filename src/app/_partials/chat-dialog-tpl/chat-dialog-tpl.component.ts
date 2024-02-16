@@ -5,6 +5,8 @@ import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {LiveChatTplComponent} from "./live-chat-tpl/live-chat-tpl.component";
 import {FormsModule} from "@angular/forms";
+import {AuthService} from "../../_services/users/auth.service";
+import {Router, RouterLink} from "@angular/router";
 
 
 export interface formChat{
@@ -21,29 +23,35 @@ export interface formChat{
     ButtonModule,
     RippleModule,
     LiveChatTplComponent,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './chat-dialog-tpl.component.html',
   styleUrl: './chat-dialog-tpl.component.scss'
 })
 export class ChatDialogTplComponent {
+
+
+
   name?: string;
   company_name?: string;
   email?: string;
 
-  messages: formChat[] = [];
+  form: formChat[] = [];
 
   startChat() {
     if (!this.name || !this.company_name || !this.email) {
-      this.messages.push({
-        name: 'User\'s Name',
-        email: 'User\'s Email',
-        company_name: 'User\'s Company',
+      this.form.push({
+        name: '',
+        email: '',
+        company_name: '',
       })
       return;
     }
     this.name = '';
     this.company_name = '';
     this.email = '';
+
+
   }
 }
