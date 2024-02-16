@@ -32,22 +32,14 @@ export class LiveChatTplComponent {
   text: string | undefined;
   private chat: any;
   message: any;
-
-  // user = [
-  //   {
-  //     id:'',
-  //     name:'',
-  //     company:''
-  //   }
-  // ]
+  private userMessage: any;
 
   constructor() {
-    // @ts-ignore
-    // @ts-ignore
     this.messages = [
       { name: 'Assistant', company: 'IDNI', message: 'Hello! How can I help you?', dateTime:this.getCurrentTime(),status: 'send' },
-      { name: 'User', company: 'User Company', message: 'Hi there! I have a question.', dateTime:this.getCurrentTime(),status: 'received' },
+      { name: 'User', company: 'User Company', message: 'Hi there! I have a question.', dateTime:this.getCurrentTime(),status: 'received'},
     ];
+
   }
 
   sendMessage= () => {
@@ -62,9 +54,14 @@ export class LiveChatTplComponent {
     // })
     // this.text = '';
 
+    //Scroll Top
+    this.chat = document.querySelector(".chat");
+    setTimeout(() => {
+      this.chat.scrollTop += 500;
+    },500)
+
 
     //USERS FUNCTION
-
     const userMessage = {
       name: 'User',
       company: 'User Company',
@@ -81,9 +78,10 @@ export class LiveChatTplComponent {
       dateTime: this.getCurrentTime(),
       status: 'received',
     };
-
     this.messages.push(userMessage, assistantReply);
     this.text = '';
+
+
   }
 
   getCurrentTime(): any {
