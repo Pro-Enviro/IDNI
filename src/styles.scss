@@ -170,7 +170,6 @@
     }
   }
 
-
   .message-container {
     display: flex;
     justify-content: space-between;
@@ -222,6 +221,10 @@
       border-radius: 15px;
       border-bottom-left-radius: 0;
     }
+    .assist-logo{
+      background-color:#458785;
+      color:white
+    }
   }
   .user-container{
     display:flex;
@@ -236,6 +239,10 @@
       max-width: 450px;
       border-radius: 15px;
       border-bottom-right-radius: 0;
+    }
+    .user-logo{
+      background-color:#85bfba;
+      color:white;
     }
   }
 

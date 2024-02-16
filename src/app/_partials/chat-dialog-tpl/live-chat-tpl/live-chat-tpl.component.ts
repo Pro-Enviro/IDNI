@@ -3,6 +3,7 @@ import {ButtonModule} from "primeng/button";
 import {DatePipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {elementAt, tap} from "rxjs";
 import {FormsModule} from "@angular/forms";
+import {AvatarModule} from "primeng/avatar";
 
 
 export interface chat{
@@ -13,6 +14,7 @@ export interface chat{
   message?: string;
   status?: string; //send or received
   userId?:string;
+  logo?:any;
 }
 
 @Component({
@@ -23,7 +25,8 @@ export interface chat{
     NgIf,
     NgForOf,
     FormsModule,
-    JsonPipe
+    JsonPipe,
+    AvatarModule
   ],
   templateUrl: './live-chat-tpl.component.html',
   styleUrl: './live-chat-tpl.component.scss'
@@ -35,13 +38,17 @@ export class LiveChatTplComponent {
   private chat: any;
   message: any;
   private userId: any;
+  logo ?:any;
+
 
   constructor() {
     this.messages = [
-      { name: 'Assistant', company: 'IDNI', message: 'Hello! How can I help you?', dateTime:this.getCurrentTime(),status: 'send', userId:'0' },
-      { name: 'User', company: 'User Company', message: 'Hi there! I have a question.', dateTime:this.getCurrentTime(),status: 'received',userId:'1'},
+      { name: 'A', company: 'IDNI', message: 'Hello! How can I help you?', dateTime:this.getCurrentTime(),status: 'send', userId:'0'},
+      { name: 'U', company: 'User Company', message: 'Hi there! I have a question.', dateTime:this.getCurrentTime(),status: 'received',userId:'1'},
     ];
   }
+
+
 
   sendMessage= () => {
     //Rian's Code Don't delete
@@ -55,7 +62,6 @@ export class LiveChatTplComponent {
     // })
     // this.text = '';
 
-
     //Scroll Top
     this.chat = document.querySelector(".chat");
     setTimeout(() => {
@@ -65,13 +71,18 @@ export class LiveChatTplComponent {
 
     //USERS FUNCTION
     const userMessage = {
-      name: 'User',
+      name: 'U',
       company: 'User Company',
       message: this.text,
       dateTime: this.getCurrentTime(),
       status: 'send',
-      userId:'1'
+      userId:'1',
+      logo: 'this.name'.substring(0,1)
+
     };
+
+    var logo = 'this.name';
+    var label:string = logo.substring(0,1)
 
     // const assistantReply = {
     //   name: 'Assistant',
@@ -82,6 +93,7 @@ export class LiveChatTplComponent {
     //   userId:'0'
     // };
     //this.messages.push(userMessage,assistantReply)
+
     this.messages.push(userMessage)
     this.text = '';
     this.changeUser();
@@ -102,13 +114,13 @@ export class LiveChatTplComponent {
     const assistantReply = {
       name: 'Assistant',
       company: 'IDNI',
-      message: 'Hello, I am assistant',
+      message: 'Hello I am assistant',
       dateTime: this.getCurrentTime(),
       status: 'received',
       userId:'0'
     };
     this.messages.push(assistantReply)
-    this.text = '';
+    this.message = '';
 
   }
 
@@ -116,5 +128,5 @@ export class LiveChatTplComponent {
     this.changeUser()
   }
 
-
+  protected readonly name = name;
 }

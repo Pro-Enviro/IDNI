@@ -59,31 +59,36 @@
         @for (message of messages; track $index){
         @if(message.userId == '0'){
             <div class="assistant-container">
+<!--              <p-avatar *ngIf="!name.logo" [label]="name.substring(0,1)" shape="circle"></p-avatar>-->
               <div class="flex flex-row">
                 <span class="span-style">{{message.name}}</span>
                 <span class="span-style">{{message.company}}</span>
               </div>
-              <div class="assistant-text-container">
+              <div class="assistant-text-container flex flex-row">
+                <p-avatar class="pt-5 pr-2" size="normal" [label]="message.name" styleClass="assist-logo"></p-avatar>
                 <p>{{message.message}}</p>
-                <div class="flex flex-row">
-                  <span class="span-style">{{message.dateTime}}</span>
-                  <span class="span-style">{{message.status}}</span>
-                </div>
               </div>
-            </div>
-          } @else{
-          <div class="user-container">
-            <div class="user-text-container">
-              <div class="flex flex-row justify-content-end">
-                <span class="span-style">{{message.name}}</span>
-                <span class="span-style">{{message.company}}</span>
-              </div>
-              <p>{{message.message}}</p>
-              <div class="flex flex-row justify-content-end">
+              <div class="flex flex-row">
                 <span class="span-style">{{message.dateTime}}</span>
                 <span class="span-style">{{message.status}}</span>
               </div>
             </div>
+          } @else{
+          <div class="user-container">
+           <div class="flex flex-column">
+             <div class="flex flex-row justify-content-end">
+               <span class="span-style">{{message.name}}</span>
+               <span class="span-style">{{message.company}}</span>
+             </div>
+             <div class="user-text-container flex flex-row">
+               <p>{{message.message}}</p>
+               <p-avatar class="pt-5 pl-2" size="normal" [label]="message.name" styleClass="user-logo"></p-avatar>
+             </div>
+             <div class="flex flex-row justify-content-end">
+               <span class="span-style">{{message.dateTime}}</span>
+               <span class="span-style">{{message.status}}</span>
+             </div>
+           </div>
           </div>
           }
         }
@@ -96,7 +101,7 @@
           <p-button icon="pi pi-send" [rounded]="true" styleClass="chat-btn" (onClick)="sendMessage()"></p-button>
         </span>
       </div>
-      <!--Assistant message container test-->
+<!--      Assistant message container test-->
 <!--      <div class="message-container">-->
 <!--        <div class="message-input">-->
 <!--          <input type="text" class="inputText" placeholder="Assistant writes message" [(ngModel)]="message" #inputBox (keyup.enter)="onEnter($event)"/>-->
