@@ -5,15 +5,15 @@
       <div class="container p-5 flex flex-column lg:w-6 sm:w-12">
         <div class="field flex flex-column">
           <label>Name</label>
-          <input [(ngModel)]="name" name="name" type="text" pInputText class="">
+          <input [(ngModel)]="name" name="name" type="text" pInputText required>
         </div>
         <div class="field flex flex-column">
           <label>Company Name</label>
-          <input [(ngModel)]="company_name" name="company_name" pInputText type="text" class="">
+          <input [(ngModel)]="company_name" name="company_name" pInputText type="text" required>
         </div>
         <div class="field flex flex-column">
           <label>Email</label>
-          <input [(ngModel)]="email" name="email" type="text" pInputText class="">
+          <input [(ngModel)]="email" name="email" type="text" pInputText required pattern="[^ @]*@[^ @]*" emailDomain>
         </div>
         <div class="pt-3 flex justify-content-center">
           <p-button label="Start Chat" styleClass="btn-style" (onClick)="startChat()" routerLink="live-chat"></p-button>
