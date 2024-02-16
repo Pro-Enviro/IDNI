@@ -8,9 +8,9 @@ import Encryption from "encrypt-decrypt-library";
 })
 export class StorageService {
   config = {
-    algorithm: '',
-    encryptionKey: '',
-    salt: ''
+    algorithm: 'test',
+    encryptionKey: 'des-ede3',
+    salt: 'salt'
   }
 
   encryption = new Encryption(this.config);
@@ -18,9 +18,12 @@ export class StorageService {
   constructor(
     private msg: MessageService,
     private route: Router
-  ) { }
+  ) {}
+
+
 
   save = (name: string, token: string) => {
+    console.log('saving')
     localStorage.setItem(name,this.encryption.encrypt(JSON.stringify(token)));
   }
 
@@ -33,7 +36,7 @@ export class StorageService {
         detail: 'The requested information could not be received. Please login again'
       })
 
-      this.route.navigate(['login']);
+      this.route.navigate(['login']).then(r => console.log('Navigating'));
       return
     }
     return this.encryption.decrypt(item)
