@@ -7,13 +7,13 @@ import Encryption from "encrypt-decrypt-library";
   providedIn: 'root'
 })
 export class StorageService {
-  config = {
-    algorithm: 'test',
-    encryptionKey: 'des-ede3',
-    salt: 'salt'
-  }
+  // config = {
+  //   algorithm: 'AAAAAAAA',
+  //   encryptionKey: '',
+  //   salt: ''
+  // }
 
-  encryption = new Encryption(this.config);
+  // encryption = new Encryption(this.config);
 
   constructor(
     private msg: MessageService,
@@ -24,7 +24,8 @@ export class StorageService {
 
   save = (name: string, token: string) => {
     console.log('saving')
-    localStorage.setItem(name,this.encryption.encrypt(JSON.stringify(token)));
+    // localStorage.setItem(name, this.encryption.encrypt(JSON.stringify(token)));
+    localStorage.setItem(name, JSON.stringify(token));
   }
 
   get = (name: string) => {
@@ -39,6 +40,7 @@ export class StorageService {
       this.route.navigate(['login']).then(r => console.log('Navigating'));
       return
     }
-    return this.encryption.decrypt(item)
+    return item;
+    // return this.encryption.decrypt(item)
   }
 }

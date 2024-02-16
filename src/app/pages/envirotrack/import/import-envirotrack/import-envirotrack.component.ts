@@ -186,8 +186,11 @@ export class ImportEnvirotrackComponent {
   getCompanies = () => {
     this.companies = []
     this.track.getCompanies().subscribe({
-      next: (res) => {
-        console.log(res)
+      next: (res: any) => {
+        if (res?.data?.length) {
+          this.companies = res.data
+        }
+
       },
       error: (err) => console.log(err)
     })
