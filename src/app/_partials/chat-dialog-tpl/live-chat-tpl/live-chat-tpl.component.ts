@@ -33,15 +33,56 @@ export class LiveChatTplComponent {
   private chat: any;
   message: any;
 
+  // user = [
+  //   {
+  //     id:'',
+  //     name:'',
+  //     company:''
+  //   }
+  // ]
+
+  constructor() {
+    // @ts-ignore
+    // @ts-ignore
+    this.messages = [
+      { name: 'Assistant', company: 'IDNI', message: 'Hello! How can I help you?', dateTime:this.getCurrentTime(),status: 'send' },
+      { name: 'User', company: 'User Company', message: 'Hi there! I have a question.', dateTime:this.getCurrentTime(),status: 'received' },
+    ];
+  }
+
   sendMessage= () => {
-    this.messages.push({
+    //Rian's Code Don't delete
+    // this.messages.push({
+    //   message: this.text,
+    //   dateTime: this.getCurrentTime(),
+    //   name: 'User\'s Name',
+    //   email: 'User\'s Email',
+    //   company: 'User\'s Company',
+    //   status: 'send',
+    // })
+    // this.text = '';
+
+
+    //USERS FUNCTION
+
+    const userMessage = {
+      name: 'User',
+      company: 'User Company',
       message: this.text,
       dateTime: this.getCurrentTime(),
-      name: 'User\'s Name',
-      email: 'User\'s Email',
-      company: 'User\'s Company',
       status: 'send',
-    })
+    };
+
+
+    const assistantReply = {
+      name: 'Assistant',
+      company: 'IDNI',
+      message: this.text,
+      dateTime: this.getCurrentTime(),
+      status: 'received',
+    };
+
+    this.messages.push(userMessage, assistantReply);
     this.text = '';
   }
 
