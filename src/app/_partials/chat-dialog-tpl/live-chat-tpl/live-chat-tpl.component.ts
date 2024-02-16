@@ -1,7 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {DatePipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
-import {tap} from "rxjs";
+import {elementAt, tap} from "rxjs";
 import {FormsModule} from "@angular/forms";
 
 export interface chat{
@@ -10,7 +10,8 @@ export interface chat{
   company?: string;
   dateTime?: Date;
   message?: string;
-  status?: string; //send or recieve
+  status?: string; //send or received
+  userId?:string;
 }
 
 @Component({
@@ -32,14 +33,13 @@ export class LiveChatTplComponent {
   text: string | undefined;
   private chat: any;
   message: any;
-  private userMessage: any;
+  private userId: any;
 
   constructor() {
     this.messages = [
-      { name: 'Assistant', company: 'IDNI', message: 'Hello! How can I help you?', dateTime:this.getCurrentTime(),status: 'send' },
-      { name: 'User', company: 'User Company', message: 'Hi there! I have a question.', dateTime:this.getCurrentTime(),status: 'received'},
+      { name: 'Assistant', company: 'IDNI', message: 'Hello! How can I help you?', dateTime:this.getCurrentTime(),status: 'send', userId:'0' },
+      { name: 'User', company: 'User Company', message: 'Hi there! I have a question.', dateTime:this.getCurrentTime(),status: 'received',userId:'1'},
     ];
-
   }
 
   sendMessage= () => {
@@ -53,6 +53,7 @@ export class LiveChatTplComponent {
     //   status: 'send',
     // })
     // this.text = '';
+
 
     //Scroll Top
     this.chat = document.querySelector(".chat");
@@ -68,20 +69,21 @@ export class LiveChatTplComponent {
       message: this.text,
       dateTime: this.getCurrentTime(),
       status: 'send',
+      userId:'1'
     };
 
-
-    const assistantReply = {
-      name: 'Assistant',
-      company: 'IDNI',
-      message: this.text,
-      dateTime: this.getCurrentTime(),
-      status: 'received',
-    };
-    this.messages.push(userMessage, assistantReply);
+    // const assistantReply = {
+    //   name: 'Assistant',
+    //   company: 'IDNI',
+    //   message: this.text,
+    //   dateTime: this.getCurrentTime(),
+    //   status: 'received',
+    //   userId:'0'
+    // };
+    //this.messages.push(userMessage,assistantReply)
+    this.messages.push(userMessage)
     this.text = '';
-
-
+    this.changeUser();
   }
 
   getCurrentTime(): any {
@@ -93,6 +95,19 @@ export class LiveChatTplComponent {
 
   onKey = (event:any) => {
     this.sendMessage()
+  }
+
+  changeUser(){
+    const assistantReply = {
+      name: 'Assistant',
+      company: 'IDNI',
+      message: 'Hello! How can I help you?',
+      dateTime: this.getCurrentTime(),
+      status: 'received',
+      userId:'0'
+    };
+    this.messages.push(assistantReply)
+    this.text = '';
   }
 
 
