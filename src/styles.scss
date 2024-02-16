@@ -214,25 +214,28 @@
     padding:10px;
     .assistant-text-container>p{
       background-color: #b5dad6;
-      border-radius: 30px;
       color:black;
       font-size:1rem;
       padding: 1.3rem;
       width: fit-content;
+      max-width: 450px;
+      border-radius: 15px;
+      border-bottom-left-radius: 0;
     }
   }
-
   .user-container{
     display:flex;
     justify-content: end;
     padding:10px;
     .user-text-container>p{
       background-color: #daedea;
-      border-radius: 30px;
       color:black;
       font-size:1rem;
       padding: 1.3rem;
       width: fit-content;
+      max-width: 450px;
+      border-radius: 15px;
+      border-bottom-right-radius: 0;
     }
   }
 

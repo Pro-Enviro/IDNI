@@ -102,15 +102,19 @@ export class LiveChatTplComponent {
     const assistantReply = {
       name: 'Assistant',
       company: 'IDNI',
-      message: 'Hello! How can I help you?',
+      message: 'Hello, I am assistant',
       dateTime: this.getCurrentTime(),
       status: 'received',
       userId:'0'
     };
     this.messages.push(assistantReply)
     this.text = '';
+
   }
 
+  onEnter = (event:any) => {
+    this.changeUser()
+  }
 
 
 }
