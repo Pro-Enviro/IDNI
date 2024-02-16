@@ -197,11 +197,11 @@ export class DataCaptureImportSpreadsheetComponent implements OnInit {
   }
 
   getCompanies = () => {
-    this.track.getCompanies().subscribe({
-      next: (res) => {
-        this.companies = res;
-      }
-    })
+    // this.track.getCompanies().subscribe({
+    //   next: (res) => {
+    //     this.companies = res;
+    //   }
+    // })
   }
 
   processData = async () => {

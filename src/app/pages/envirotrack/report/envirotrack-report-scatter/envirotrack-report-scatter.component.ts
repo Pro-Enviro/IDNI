@@ -162,13 +162,13 @@ export class EnvirotrackReportScatterComponent implements OnInit {
   }
 
   getCompanies = () =>{
-    this.track.getCompanies().subscribe({
-      next: (res)=>{
-        this.selectedCompany = res[0].id
-        this.companies = res;
-        this.getData(this.selectedCompany)
-      }
-    })
+    // this.track.getCompanies().subscribe({
+    //   next: (res)=>{
+    //     this.selectedCompany = res[0].id
+    //     this.companies = res;
+    //     this.getData(this.selectedCompany)
+    //   }
+    // })
   }
 
   onSelectCompany = () => {

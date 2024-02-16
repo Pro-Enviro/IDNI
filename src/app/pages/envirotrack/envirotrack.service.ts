@@ -6,8 +6,7 @@ import {map} from "rxjs/operators";
   providedIn: 'root'
 })
 export class EnvirotrackService {
-  url: any = `https://ecp.proenviro.co.uk` // TODO: .env this?
-  companyId: number = 773 // TODO: Get correct company ID (currently Capital DEV)
+  url: any = `https://app.idni.eco`
   constructor(
     private http: HttpClient,
   ) {
@@ -15,8 +14,7 @@ export class EnvirotrackService {
   }
 
   getCompanies = () => {
-    return this.http.get(`${this.url}/items/organisation/${this.companyId}?fields=companies.companies_id.id,companies.companies_id.name,companies.companies_id.friday_end_time,companies.companies_id.friday_start_time,companies.companies_id.monday_end_time,companies.companies_id.monday_start_time,companies.companies_id.saturday_end_time,companies.companies_id.saturday_start_time,companies.companies_id.sunday_end_time,companies.companies_id.sunday_start_time,companies.companies_id.thursday_end_time,companies.companies_id.thursday_start_time,companies.companies_id.tuesday_end_time,companies.companies_id.tuesday_start_time,companies.companies_id.wednesday_end_time,companies.companies_id.wednesday_start_time`).pipe(
-      map((res: any)=> res.data.companies.map((x:any)=> x.companies_id)))
+    return this.http.get(`${this.url}/items/companies`)
   }
 
   uploadData = (data: any, company: number) => {

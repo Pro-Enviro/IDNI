@@ -62,12 +62,12 @@ export class EnvirotrackReportComponent implements OnInit{
 
 
   getCompanies = () =>{
-    this.track.getCompanies().subscribe({
-      next: (res)=>{
-        let selectedCompany = res[0].id
-        this.getData(selectedCompany)
-      }
-    })
+    // this.track.getCompanies().subscribe({
+    //   next: (res)=>{
+    //     let selectedCompany = res[0].id
+    //     this.getData(selectedCompany)
+    //   }
+    // })
   }
 
   getData = (id: number) => {
