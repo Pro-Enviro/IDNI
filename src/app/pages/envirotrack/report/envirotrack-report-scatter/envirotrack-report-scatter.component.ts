@@ -60,26 +60,26 @@ export class EnvirotrackReportScatterComponent implements OnInit {
   ) {}
 
 
-  saveChartAsBase64 = () => {
-
-    if (!this.chartOptions) return;
-
-    // Create temporary chart that uses echarts.instanceOf
-    const div = document.createElement('div')
-    div.style.width = '1200px'
-    div.style.height = '1200px'
-
-    const temporaryChart = echarts.init(div)
-
-    temporaryChart.setOption({...this.chartOptions, animation: false})
-
-    const data = temporaryChart.getDataURL({
-      backgroundColor: '#fff',
-      pixelRatio: 4
-    })
-
-    return data;
-  }
+  // saveChartAsBase64 = () => {
+  //
+  //   if (!this.chartOptions) return;
+  //
+  //   // Create temporary chart that uses echarts.instanceOf
+  //   const div = document.createElement('div')
+  //   div.style.width = '1200px'
+  //   div.style.height = '1200px'
+  //
+  //   const temporaryChart = echarts.init(div)
+  //
+  //   temporaryChart.setOption({...this.chartOptions, animation: false})
+  //
+  //   const data = temporaryChart.getDataURL({
+  //     backgroundColor: '#fff',
+  //     pixelRatio: 4
+  //   })
+  //
+  //   return data;
+  // }
 
   initChart = () => {
     this.chartOptions = {
@@ -162,13 +162,11 @@ export class EnvirotrackReportScatterComponent implements OnInit {
   }
 
   getCompanies = () =>{
-    // this.track.getCompanies().subscribe({
-    //   next: (res)=>{
-    //     this.selectedCompany = res[0].id
-    //     this.companies = res;
-    //     this.getData(this.selectedCompany)
-    //   }
-    // })
+    this.track.getCompanies().subscribe({
+      next: (res: any) => {
+        this.companies = res.data;
+      }
+    })
   }
 
   onSelectCompany = () => {
@@ -192,9 +190,9 @@ export class EnvirotrackReportScatterComponent implements OnInit {
     this.chartY = [];
     this.track.getData(id).subscribe({
 
-        next: (res) => {;
+        next: (res) => {
           res.forEach((row: any) => {
-            row.hdd = JSON.parse(row.hdd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
+            row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
             this.months.push(row.date)
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan):  null;
           })
@@ -220,7 +218,6 @@ export class EnvirotrackReportScatterComponent implements OnInit {
 
 
   filterData = () =>{
-
     if(this.dateRange != undefined && this.dateRange[1]){
       this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
       this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
@@ -244,33 +241,33 @@ export class EnvirotrackReportScatterComponent implements OnInit {
     let sunday: any[] = [];
     this.filteredData = this.filteredData.filter((x:any) => x.mpan === this.selectedMpan)
     this.filteredData.forEach((row: any) => {
-      row.hdd.forEach((hh: any, i:number) => {
+      row.hhd.forEach((hh: any, i:number) => {
         hh = hh ? hh : 0;
-        row.hdd[i] = !isNaN(parseInt(hh.toString())) ? hh : 0
+        row.hhd[i] = !isNaN(parseInt(hh.toString())) ? hh : 0
       })
 
-      if(row.hdd.length){
+      if(row.hhd.length){
         switch (moment(row.date).format('dddd')) {
           case 'Monday':
-            monday.push([row.date, row.hdd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
+            monday.push([row.date, row.hhd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
             break;
           case 'Tuesday':
-            tuesday.push([row.date, row.hdd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
+            tuesday.push([row.date, row.hhd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
             break;
           case 'Wednesday':
-            wednesday.push([row.date, row.hdd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
+            wednesday.push([row.date, row.hhd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
             break;
           case 'Thursday':
-            thursday.push([row.date, row.hdd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
+            thursday.push([row.date, row.hhd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
             break;
           case 'Friday':
-            friday.push([row.date, row.hdd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
+            friday.push([row.date, row.hhd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
             break;
           case 'Saturday':
-            saturday.push([row.date, row.hdd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
+            saturday.push([row.date, row.hhd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
             break;
           case 'Sunday':
-            sunday.push([row.date, row.hdd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
+            sunday.push([row.date, row.hhd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
             break;
           default: break;
         }
@@ -363,7 +360,7 @@ export class EnvirotrackReportScatterComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.getCompanies();
+    this.getCompanies();
     this.screenWidth = window.innerWidth
   }
 }

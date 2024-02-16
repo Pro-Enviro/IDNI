@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as echarts from "echarts";
 import {EnvirotrackService} from "../../envirotrack.service";
 import moment from "moment/moment";
-import {PlotlyModule, PlotlyService, PlotlySharedModule, PlotlyViaCDNModule} from "angular-plotly.js";
+import { PlotlyService, PlotlySharedModule, PlotlyViaCDNModule} from "angular-plotly.js";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {EnvirotrackDayLineComponent} from "../envirotrack-day-line/envirotrack-day-line.component";
 import {SharedModules} from "../../../../shared-module";

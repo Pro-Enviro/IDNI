@@ -53,25 +53,25 @@ export class EnvirotrackReportPieComponent {
     private track: EnvirotrackService,
   ) {}
 
-  saveChartAsBase64 = () => {
-
-    if (!this.chartOptions) return;
-
-    // Create temporary chart that uses echarts.instanceOf
-    const div = document.createElement('div')
-    div.style.width = '1200px'
-    div.style.height = '1200px'
-
-    const temporaryChart = echarts.init(div)
-
-    temporaryChart.setOption({...this.chartOptions, animation: false})
-
-    const data = temporaryChart.getDataURL({
-      backgroundColor: '#fff',
-      pixelRatio: 4
-    })
-    return data;
-  }
+  // saveChartAsBase64 = () => {
+  //
+  //   if (!this.chartOptions) return;
+  //
+  //   // Create temporary chart that uses echarts.instanceOf
+  //   const div = document.createElement('div')
+  //   div.style.width = '1200px'
+  //   div.style.height = '1200px'
+  //
+  //   const temporaryChart = echarts.init(div)
+  //
+  //   temporaryChart.setOption({...this.chartOptions, animation: false})
+  //
+  //   const data = temporaryChart.getDataURL({
+  //     backgroundColor: '#fff',
+  //     pixelRatio: 4
+  //   })
+  //   return data;
+  // }
 
   initChart = () => {
     this.chartOptions = {
@@ -152,13 +152,13 @@ export class EnvirotrackReportPieComponent {
   }
 
   getCompanies = () =>{
-    // this.track.getCompanies().subscribe({
-    //   next: (res)=>{
-    //     this.selectedCompany = res[0].id
-    //     this.companies = res;
-    //     this.getData(this.selectedCompany)
-    //   }
-    // })
+    this.track.getCompanies().subscribe({
+      next: (res: any)=>{
+        if (res.data) {
+          this.companies = res.data
+        }
+      }
+    })
   }
 
   onSelectCompany = () => {
@@ -181,7 +181,7 @@ export class EnvirotrackReportPieComponent {
     this.track.getData(id).subscribe({
         next: (res) => {;
           res.forEach((row: any) => {
-            row.hdd = JSON.parse(row.hdd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
+            row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
             this.months.push(row.date)
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan):  null;
           })
@@ -234,32 +234,32 @@ export class EnvirotrackReportPieComponent {
 
 
     this.filteredData.forEach((row: any) => {
-      row.hdd.forEach((hh: any, i:number) => {
+      row.hhd.forEach((hh: any, i:number) => {
         hh = hh ? hh : 0;
-        row.hdd[i] = !isNaN(parseInt(hh.toString())) ? hh : 0
+        row.hhd[i] = !isNaN(parseInt(hh.toString())) ? hh : 0
       })
-      if(row.hdd.length) {
+      if(row.hhd.length) {
         switch (moment(row.date).format('dddd')) {
           case 'Monday':
-            monday.push(row.hdd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
+            monday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
             break;
           case 'Tuesday':
-            tuesday.push(row.hdd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
+            tuesday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
             break;
           case 'Wednesday':
-            wednesday.push(row.hdd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
+            wednesday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
             break;
           case 'Thursday':
-            thursday.push(row.hdd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
+            thursday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
             break;
           case 'Friday':
-            friday.push(row.hdd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
+            friday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
             break;
           case 'Saturday':
-            saturday.push(row.hdd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
+            saturday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
             break;
           case 'Sunday':
-            sunday.push(row.hdd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
+            sunday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
             break;
           default:
             break;

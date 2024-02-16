@@ -154,13 +154,11 @@ export class EnvirotrackReportBarComponent {
   }
 
   getCompanies = () =>{
-    // this.track.getCompanies().subscribe({
-    //   next: (res)=>{
-    //     this.selectedCompany = res[0].id
-    //     this.companies = res;
-    //     this.getData(this.selectedCompany)
-    //   }
-    // })
+    this.track.getCompanies().subscribe({
+      next: (res: any) => {
+        this.companies = res.data;
+      }
+    })
   }
 
   onSelectCompany = () => {
@@ -181,9 +179,9 @@ export class EnvirotrackReportBarComponent {
     this.chartX = [];
     this.chartY = [];
     this.track.getData(id).subscribe({
-        next: (res) => {;
+        next: (res) => {
           res.forEach((row: any) => {
-            row.hdd = JSON.parse(row.hdd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
+            row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
             this.months.push(row.date)
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
@@ -225,12 +223,12 @@ export class EnvirotrackReportBarComponent {
     }
     this.filteredData = this.filteredData.filter((x:any) => x.mpan === this.selectedMpan)
     this.filteredData.forEach((row: any) => {
-      row.hdd.forEach((hh: any, i:number) => {
+      row.hhd.forEach((hh: any, i:number) => {
         hh = hh ? hh : 0;
-        row.hdd[i] = !isNaN(parseInt(hh.toString())) ? hh : 0
+        row.hhd[i] = !isNaN(parseInt(hh.toString())) ? hh : 0
       })
-      if(row.hdd.length){
-        this.chartData.push([row.date, row.hdd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
+      if(row.hhd.length){
+        this.chartData.push([row.date, row.hhd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
       }
 
     })
@@ -241,7 +239,7 @@ export class EnvirotrackReportBarComponent {
   }
 
   ngOnInit() {
-    // this.getCompanies();
+    this.getCompanies();
     this.screenWidth = window.innerWidth
   }
 }
