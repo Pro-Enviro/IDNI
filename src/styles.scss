@@ -27,6 +27,15 @@
     border-top: 1px solid $primeColor;
   }
 
+  //----------------------------------------------------BUTTON----------------------------------------------------------
+
+.btn-select{
+  .p-selectbutton .p-button.p-highlight{
+    background-color: $primeColor;
+    border:none;
+  }
+}
+
  .btn-style{
    background-color: $primeColor;
    border:$primeColor;
@@ -49,6 +58,18 @@
    }
  }
 
+ .btn-dark{
+   background-color: $darkColor;
+   border:$darkColor;
+   color:white;
+ }
+
+.btn-dropdown{
+  .p-autocomplete-dd .p-autocomplete-dropdown {
+    background-color: $primeColor;
+    border: none;
+  }
+}
 
   //CONTAINER
   .container { margin-left: auto; margin-right: auto; }

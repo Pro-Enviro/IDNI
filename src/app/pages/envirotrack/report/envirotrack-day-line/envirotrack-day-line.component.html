@@ -1,0 +1,32 @@
+<div class="flex">
+  <div class="flex-1">
+    <div echarts [options]="chartOptions" style="max-height: 80vh; height: 80vh; width: 80vw"></div>
+  </div>
+  <div class="flex-end flex-middle">
+    <div>
+      <p-panel header="Productive vs Non Productive Loads">
+        <table>
+          <tr>
+            <th>Load</th>
+            <th>kWh</th>
+            <th>%</th>
+          </tr>
+          <tr>
+            <td>Productive Load</td>
+            <td>{{productiveLoad.toFixed(2)}} kWh</td>
+            <td>{{productivePercent}}%</td>
+          </tr>
+          <tr>
+            <td>Non Productive Load</td>
+            <td>{{nonProductiveLoad.toFixed(2)}} kWh</td>
+            <td>{{nonProductivePercent}} %</td>
+          </tr>
+          <tr>
+            <td colspan="2">Total usage</td>
+            <td>{{(productiveLoad + nonProductiveLoad).toFixed(2)}} kWh</td>
+          </tr>
+        </table>
+      </p-panel>
+    </div>
+  </div>
+</div>

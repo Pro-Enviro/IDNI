@@ -1,0 +1,62 @@
+<p-panel header="File Upload" *ngIf="!fileContent">
+  <p-fileUpload name="file[]" [customUpload]="true"
+                (onSelect)="getFileType($event)"
+                (uploadHandler)="onUpload($event)"
+                [multiple]="false"
+                chooseStyleClass="btn"
+                cancelStyleClass="btn-dark"
+                uploadStyleClass="btn">
+    <ng-template pTemplate="content">
+      <ul *ngIf="uploadedFiles.length">
+        <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+      </ul>
+    </ng-template>
+  </p-fileUpload>
+</p-panel>
+<p-panel *ngIf="isXlsx" header="Select the sheet to import">
+  <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()"
+                  class="btn-select"></p-selectButton>
+</p-panel>
+<ng-container *ngIf="fileContent">
+  <p-panel #table header="Data">
+    <div class="flex flex-wrap">
+      <ng-container *ngFor="let column of fuelColumns">
+        <div  pDroppable (onDrop)="dropColumnTitle(column)">
+          <p-panel class="dropbox-panel" header="{{column.name}}" [style]="{height: '100%',  marginBottom: '0.5rem', marginLeft: '0.5rem', width: '10rem'}">
+            <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="column.draggedCell">
+              <li class="p-2 border-round shadow-1" (click)="removeCell(column)" style="cursor: pointer; overflow: hidden">
+                {{column.draggedCell.name}}
+              </li>
+            </ul>
+          </p-panel>
+        </div>
+      </ng-container>
+    </div>
+
+    <p-table [value]="fileContent.slice(0,10)" [tableStyle]="{ 'min-width': '50rem', width: '100%' }">
+      <ng-template pTemplate="body" let-row let-r="rowIndex">
+        <tr *ngIf="r === 0">
+          <td *ngFor="let cell of row.slice(0,30); index as c" >
+            <div pDraggable (onDragStart)="dragStart(cell, r, c)" (onDragEnd)="dragEnd()" style="font-weight: 600; cursor: pointer">{{ cell }}</div>
+          </td>
+        </tr>
+        <tr *ngIf="r !== 0">
+          <td *ngFor="let cell of row.slice(0,30); index as c" >
+            <div pDraggable (onDragStart)="dragStart(cell, r, c)" (onDragEnd)="dragEnd()">{{ cell }}</div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <div class="mt-2">
+      <button pButton class="btn" icon="pi pi-cog" label="Process" (click)="processData()"></button>
+      <button pButton label="Save & Close" icon="pi pi-save" class="btn" (click)="close()" [disabled]="!processed"
+              style=" margin-left: 1rem"></button>
+    </div>
+  </p-panel>
+
+</ng-container>
+
+
+
+

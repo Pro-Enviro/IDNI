@@ -1,0 +1,13 @@
+.avg-chart {
+
+  @media screen and (max-width: 1440px) {
+    display: flex;
+
+    .toggle-buttons {
+      display: flex !important;
+      flex-direction: column;
+
+
+    }
+  }
+}
