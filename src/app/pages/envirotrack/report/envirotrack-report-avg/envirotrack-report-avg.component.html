@@ -2,7 +2,8 @@
   <div class="flex">
     <div class="flex-1">
       <p-panel header="Select Company">
-        <p-selectButton class="btn-select" [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"></p-selectButton>
+<!--        <p-selectButton class="btn-select" [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"></p-selectButton>-->
+        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"></p-dropdown>
       </p-panel>
     </div>
     <div class="flex-1" *ngIf="mpan.length">

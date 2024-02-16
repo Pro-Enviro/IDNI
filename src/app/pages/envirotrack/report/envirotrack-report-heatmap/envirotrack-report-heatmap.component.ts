@@ -333,8 +333,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
 
   onSelectCompany = () => {
     this.chartData = [];
-    // this.global.updateSelectedMpan(this.selectedMpan)
-
+    this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
   }
 
@@ -522,6 +521,11 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
 
   ngOnInit() {
     this.getCompanies();
+
+    if (this.track.selectedCompany.value) {
+      this.selectedCompany = this.track.selectedCompany.value
+      this.getData(this.selectedCompany)
+    }
     this.screenWidth = window.innerWidth
   }
 }

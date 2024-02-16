@@ -171,6 +171,7 @@ export class EnvirotrackReportScatterComponent implements OnInit {
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
+    this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
   }
 
@@ -361,6 +362,12 @@ export class EnvirotrackReportScatterComponent implements OnInit {
 
   ngOnInit() {
     this.getCompanies();
+
+    if (this.track.selectedCompany.value) {
+      this.selectedCompany = this.track.selectedCompany.value
+      this.getData(this.selectedCompany)
+    }
+
     this.screenWidth = window.innerWidth
   }
 }

@@ -137,34 +137,32 @@ export class EnvirotrackReportAvgComponent {
     }
   }
 
-  saveChartAsBase64 = () => {
-    if (!this.chartOptions) return;
-
-    // Create temporary chart that uses echarts.instanceOf
-    const div = document.createElement('div')
-    div.style.width = '1200px'
-    div.style.height = '1200px'
-
-    const temporaryChart = echarts.init(div)
-
-    temporaryChart.setOption({...this.chartOptions, animation: false})
-
-    const data = temporaryChart.getDataURL({
-      backgroundColor: '#fff',
-      pixelRatio: 4
-    })
-    return data;
-  }
+  // saveChartAsBase64 = () => {
+  //   if (!this.chartOptions) return;
+  //
+  //   // Create temporary chart that uses echarts.instanceOf
+  //   const div = document.createElement('div')
+  //   div.style.width = '1200px'
+  //   div.style.height = '1200px'
+  //
+  //   const temporaryChart = echarts.init(div)
+  //
+  //   temporaryChart.setOption({...this.chartOptions, animation: false})
+  //
+  //   const data = temporaryChart.getDataURL({
+  //     backgroundColor: '#fff',
+  //     pixelRatio: 4
+  //   })
+  //   return data;
+  // }
 
 
   getCompanies = () =>{
-    // this.track.getCompanies().subscribe({
-    //   next: (res)=>{
-    //     this.selectedCompany = res[0].id
-    //     this.companies = res;
-    //     this.getData(this.selectedCompany)
-    //   }
-    // })
+    this.track.getCompanies().subscribe({
+      next: (res: any)=>{
+        this.companies = res.data;
+      }
+    })
   }
 
   onSelectCompany = () => {
@@ -187,7 +185,7 @@ export class EnvirotrackReportAvgComponent {
     this.track.getData(id).subscribe({
         next: (res) => {
           res.forEach((row: any) => {
-            row.hdd = JSON.parse(row.hdd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
+            row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
             this.months.push(row.date)
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan):  null;
           })
@@ -255,25 +253,25 @@ export class EnvirotrackReportAvgComponent {
 
       switch (moment(row.date).format('dddd')) {
         case 'Monday':
-          monday.push([row.date, row.hdd])
+          monday.push([row.date, row.hhd])
           break;
         case 'Tuesday':
-          tuesday.push([row.date, row.hdd])
+          tuesday.push([row.date, row.hhd])
           break;
         case 'Wednesday':
-          wednesday.push([row.date, row.hdd])
+          wednesday.push([row.date, row.hhd])
           break;
         case 'Thursday':
-          thursday.push([row.date, row.hdd])
+          thursday.push([row.date, row.hhd])
           break;
         case 'Friday':
-          friday.push([row.date, row.hdd])
+          friday.push([row.date, row.hhd])
           break;
         case 'Saturday':
-          saturday.push([row.date, row.hdd])
+          saturday.push([row.date, row.hhd])
           break;
         case 'Sunday':
-          sunday.push([row.date, row.hdd])
+          sunday.push([row.date, row.hhd])
           break;
         default: break;
       }

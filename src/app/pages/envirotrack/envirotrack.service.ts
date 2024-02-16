@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnvirotrackService {
   url: any = `https://app.idni.eco`
+  selectedCompany: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   constructor(
     private http: HttpClient,
-  ) {
+  ) {}
 
-  }
+  updateSelectedCompany = (company: number) => this.selectedCompany.next(company)
 
   getCompanies = () => {
     return this.http.get(`${this.url}/items/companies`)

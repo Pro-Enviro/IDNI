@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import moment from "moment";
 import * as echarts from "echarts";
 import {EnvirotrackService} from "../../envirotrack.service";
@@ -11,7 +11,7 @@ import {SharedComponents} from "../../shared-components";
   templateUrl: './envirotrack-report-demand.component.html',
   styleUrls: ['./envirotrack-report-demand.component.scss']
 })
-export class EnvirotrackReportDemandComponent {
+export class EnvirotrackReportDemandComponent implements OnInit {
   data: any;
   months: string[] = [];
   filteredData: any;
@@ -163,13 +163,11 @@ export class EnvirotrackReportDemandComponent {
   }
 
   getCompanies = () =>{
-    // this.track.getCompanies().subscribe({
-    //   next: (res)=>{
-    //     this.selectedCompany = res[0].id
-    //     this.companies = res;
-    //     this.getData(this.selectedCompany)
-    //   }
-    // })
+    this.track.getCompanies().subscribe({
+      next: (res: any)=>{
+        this.companies = res.data;
+      }
+    })
   }
 
   onSelectCompany = () => {
@@ -216,7 +214,7 @@ export class EnvirotrackReportDemandComponent {
     this.track.getData(id).subscribe({
         next: (res) => {
           res.forEach((row: any) => {
-            row.hdd = JSON.parse(row.hdd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
+            row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
             this.months.push(moment(row.date).format('DD/MM/YYYY'))
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
@@ -260,10 +258,10 @@ export class EnvirotrackReportDemandComponent {
     this.filteredData = this.filteredData.filter((x:any) => x.mpan === this.selectedMpan)
     this.chartX = [];
     this.filteredData.forEach((row: any) => {
-      row.hdd.forEach((hh: any, i:number) => {
-        hh ? row.hdd[i] = !isNaN(parseInt(hh.toString())) ? hh : 0: 0
+      row.hhd.forEach((hh: any, i:number) => {
+        hh ? row.hhd[i] = !isNaN(parseInt(hh.toString())) ? hh : 0: 0
       })
-      this.chartData.push([moment(row.date).format('DD/MM/YYYY'), (Math.max(...row.hdd)*2 )])
+      this.chartData.push([moment(row.date).format('DD/MM/YYYY'), (Math.max(...row.hhd)*2 )])
 
     })
     // @ts-ignore
@@ -274,9 +272,6 @@ export class EnvirotrackReportDemandComponent {
     this.getAsc(this.chartX[0], this.chartX[this.chartX.length - 1])
     let arr: number[] = this.chartData.map((x:any) => x[2])
     this.max = Math.max(...arr)
-
-
-
   }
 
   ngOnInit() {
