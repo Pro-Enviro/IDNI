@@ -85,7 +85,7 @@ export class LiveChatTplComponent {
     const userMessage = {
       name: 'User',
       company: 'User Company',
-      message: this.text,
+      message: this.message,
       dateTime: this.getCurrentTime(),
       status: 'send',
       userId:'1'

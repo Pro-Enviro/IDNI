@@ -2,7 +2,7 @@
 <section>
   <div class="container relative" style="padding:15px">
     <div class="chat-container">
-      <div class="flex justify-content-end p-4">
+      <div class="flex justify-content-end p-3">
         <p-toast></p-toast>
         <p-confirmDialog #confirmDialog>
           <ng-template pTemplate="headless" let-dialog>
@@ -19,7 +19,7 @@
             </div>
           </ng-template>
         </p-confirmDialog>
-        <p-button icon="pi pi-times" [rounded]="true" [text]="true" size="large" styleClass="close-btn" (click)="confirm($event)"></p-button>
+        <p-button icon="pi pi-times" iconPos="right" [rounded]="true" size="large" styleClass="close-btn" label="End Chat" (click)="confirm($event)"></p-button>
       </div>
       <div class="chatbox-nav">
         <img src="assets/img/idni-logo.svg" height="100px" class="ml-2">
@@ -72,7 +72,7 @@
       </div>
       <div class="message-container">
         <div class="message-input">
-          <input type="text" class="inputText" placeholder="Write Your Message" [(ngModel)]="text" #inputBox (keyup.enter)="onKey($event)"/>
+          <input type="text" class="inputText" placeholder="Type your message here" [(ngModel)]="message" #inputBox (keyup.enter)="onKey($event)"/>
         </div>
         <span class="message-icon pr-4">
           <p-button icon="pi pi-send" [rounded]="true" styleClass="chat-btn" (onClick)="sendMessage()"></p-button>
