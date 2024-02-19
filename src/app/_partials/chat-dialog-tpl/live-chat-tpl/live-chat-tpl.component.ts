@@ -1,11 +1,14 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {DatePipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
-import {elementAt, tap} from "rxjs";
 import {FormsModule} from "@angular/forms";
 import {AvatarModule} from "primeng/avatar";
 import {ChipModule} from "primeng/chip";
 import {RouterLink} from "@angular/router";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ToastModule} from "primeng/toast";
+import {PrimeNGConfig} from "primeng/api";
+import {ConfirmationService,MessageService,ConfirmEventType} from "primeng/api";
 
 
 export interface chat{
@@ -31,10 +34,13 @@ export interface chat{
     AvatarModule,
     DatePipe,
     ChipModule,
-    RouterLink
+    RouterLink,
+    ConfirmDialogModule,
+    ToastModule
   ],
   templateUrl: './live-chat-tpl.component.html',
-  styleUrl: './live-chat-tpl.component.scss'
+  styleUrl: './live-chat-tpl.component.scss',
+  providers: [ConfirmationService,MessageService]
 })
 export class LiveChatTplComponent {
   @ViewChild('chat') chatBoxRef ?: ElementRef;
@@ -46,12 +52,15 @@ export class LiveChatTplComponent {
   private userId: any;
   currentDate = new Date();
 
-  constructor() {
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {
     this.messages = [
       { name: 'Assistant', company: 'IDNI', message: 'Hello! How can I help you?', dateTime:this.getCurrentTime(),status: 'send', userId:'0'},
       { name: 'User', company: 'User Company', message: 'Hi there! I have a question.', dateTime:this.getCurrentTime(),status: 'received',userId:'1'},
     ];
   }
+
+
+
 
   sendMessage= () => {
     //Rian's Code Don't delete
@@ -125,6 +134,17 @@ export class LiveChatTplComponent {
   }
 
 
-
+  confirm(event: Event) {
+    this.confirmationService.confirm({
+      header: 'Are you sure you want to end this chat?',
+      message: 'Please confirm to proceed.',
+      accept: () => {
+        this.messageService.add({ severity: 'warn', summary: 'Agree', detail: 'You close the chat, to start new chat fill the form !', life: 3000 });
+      },
+      reject: () => {
+        this.messageService.add({ severity: 'info', summary: 'Cancel', detail: 'You have rejected to close the chat !', life: 3000 });
+      }
+    });
+  }
 
 }

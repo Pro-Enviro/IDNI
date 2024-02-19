@@ -13,6 +13,7 @@
   $headerColor:#253b3c;
   $lightColor-100: #daedea;
   $lightColor-50:#f4f9f8;
+  $darkColor-900:#112122;
 
   h2{
     color: $primeColor;
@@ -43,8 +44,8 @@
    color:#2e5757;
    margin-right: 5px;
    &:hover{
-     background-color:$primeColor;
-     border:1px solid $darkColor;
+     background-color:$darkColor;
+     border:2px solid $lightColor-50;
      color:#f4f9f8;
    }
  }
@@ -285,6 +286,16 @@
     color: var(--gray-500) !important;
   }
 
+  .confirm-dialog-icon{
+    margin-top:-5rem;
+    width:6rem;
+    height:6rem;
+    background-color:$primeColor;
+    color:$darkColor-900;
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+  }
   //----------------------------------------------------MENU------------------------------------------------------------
   .p-megamenu{
     border: none;
