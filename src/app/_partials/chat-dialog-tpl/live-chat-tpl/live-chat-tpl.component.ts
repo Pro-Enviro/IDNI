@@ -136,10 +136,10 @@ export class LiveChatTplComponent {
 
   confirm(event: Event) {
     this.confirmationService.confirm({
-      header: 'Are you sure you want to end this chat?',
+      header: 'Are you sure you want to close the chat?',
       message: 'Please confirm to proceed.',
       accept: () => {
-        this.messageService.add({ severity: 'warn', summary: 'Agree', detail: 'You close the chat, to start new chat fill the form !', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Agree', detail: 'To start a new chat, please fill the form again !', life: 3000 });
       },
       reject: () => {
         this.messageService.add({ severity: 'info', summary: 'Cancel', detail: 'You have rejected to close the chat !', life: 3000 });
