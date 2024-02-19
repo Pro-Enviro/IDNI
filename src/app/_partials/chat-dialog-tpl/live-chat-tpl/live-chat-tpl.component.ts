@@ -32,6 +32,7 @@ export interface chat{
   styleUrl: './live-chat-tpl.component.scss'
 })
 export class LiveChatTplComponent {
+  @ViewChild('chat') chatBoxRef ?: ElementRef;
   //NEW CODE
   messages: chat[] = [];
   text: string | undefined;
@@ -49,8 +50,8 @@ export class LiveChatTplComponent {
   }
 
 
-
   sendMessage= () => {
+
     //Rian's Code Don't delete
     // this.messages.push({
     //   message: this.text,
@@ -77,12 +78,9 @@ export class LiveChatTplComponent {
       dateTime: this.getCurrentTime(),
       status: 'send',
       userId:'1',
-      logo: 'this.name'.substring(0,1)
-
+      //logo: this.getLogoName()
     };
 
-    var logo = 'this.name';
-    var label:string = logo.substring(0,1)
 
     // const assistantReply = {
     //   name: 'Assistant',
@@ -106,18 +104,24 @@ export class LiveChatTplComponent {
     return `${hours}:${minutes}`;
   }
 
+  getLogoName():any{
+    const logo = this.name;
+    const logoName = this.logo.substring(0,1)
+  }
+
   onKey = (event:any) => {
     this.sendMessage()
   }
 
   changeUser(){
     const assistantReply = {
-      name: 'Assistant',
+      name: 'A',
       company: 'IDNI',
       message: 'Hello I am assistant',
       dateTime: this.getCurrentTime(),
       status: 'received',
-      userId:'0'
+      userId:'0',
+      //logo:this.getLogoName()
     };
     this.messages.push(assistantReply)
     this.message = '';
