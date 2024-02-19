@@ -14,7 +14,6 @@ export interface chat{
   message?: string;
   status?: string; //send or received
   userId?:string;
-  logo?:any;
 }
 
 @Component({
@@ -39,8 +38,6 @@ export class LiveChatTplComponent {
   private chat: any;
   message: any;
   private userId: any;
-  logo ?:any;
-
 
   constructor() {
     this.messages = [
@@ -76,7 +73,6 @@ export class LiveChatTplComponent {
       dateTime: this.getCurrentTime(),
       status: 'send',
       userId:'1',
-      //logo: this.getLogoName()
     };
 
 
@@ -102,11 +98,6 @@ export class LiveChatTplComponent {
     return `${hours}:${minutes}`;
   }
 
-  // getLogoName():any{
-  //   const logo = this.name;
-  //   const logoName = this.logo.substring(0,1)
-  // }
-
   onKey = (event:any) => {
     this.sendMessage()
   }
@@ -119,13 +110,10 @@ export class LiveChatTplComponent {
       dateTime: this.getCurrentTime(),
       status: 'received',
       userId:'0',
-      //logo:this.getLogoName()
     };
     this.messages.push(assistantReply)
     this.message = '';
-
   }
-
   onEnter = (event:any) => {
     this.changeUser()
   }
