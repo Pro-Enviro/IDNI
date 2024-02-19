@@ -49,7 +49,6 @@ export class LiveChatTplComponent {
     ];
   }
 
-
   sendMessage= () => {
 
     //Rian's Code Don't delete
@@ -64,9 +63,9 @@ export class LiveChatTplComponent {
     // this.text = '';
 
     //Scroll Top
-    this.chat = document.querySelector(".chat");
     setTimeout(() => {
-      this.chat.scrollTop += 500;
+      let chatScroll = this.chatBoxRef?.nativeElement;
+      chatScroll.scrollTop +=500;
     },500)
 
 
