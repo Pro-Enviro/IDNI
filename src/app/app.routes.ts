@@ -10,9 +10,12 @@ import {authGuard} from "./_helpers/auth.guard";
 import {RegisterComponent} from "./users/register/register.component";
 import {RegistrationFormComponent} from "./users/register/registration-form/registration-form.component";
 import {LiveChatTplComponent} from "./_partials/chat-dialog-tpl/live-chat-tpl/live-chat-tpl.component";
+import {ChatDialogTplComponent} from "./_partials/chat-dialog-tpl/chat-dialog-tpl.component";
+import {HeroComponent} from "./_partials/hero/hero.component";
 
 export const routes: Routes = [
   {path: '', component: LandingPageComponent},
+  {path:'home',component:HeroComponent},
   {path: 'pet', component: PetComponent},
   {path: 'coming-soon', component: ConstructionComponent},
   {path:'local-decarbonisation', component:LocalDecarbonisationComponent},

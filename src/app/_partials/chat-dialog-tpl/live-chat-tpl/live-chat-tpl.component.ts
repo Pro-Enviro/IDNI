@@ -4,6 +4,8 @@ import {DatePipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {elementAt, tap} from "rxjs";
 import {FormsModule} from "@angular/forms";
 import {AvatarModule} from "primeng/avatar";
+import {ChipModule} from "primeng/chip";
+import {RouterLink} from "@angular/router";
 
 
 export interface chat{
@@ -27,7 +29,9 @@ export interface chat{
     FormsModule,
     JsonPipe,
     AvatarModule,
-    DatePipe
+    DatePipe,
+    ChipModule,
+    RouterLink
   ],
   templateUrl: './live-chat-tpl.component.html',
   styleUrl: './live-chat-tpl.component.scss'
