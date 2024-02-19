@@ -44,13 +44,12 @@ export class LiveChatTplComponent {
 
   constructor() {
     this.messages = [
-      { name: 'A', company: 'IDNI', message: 'Hello! How can I help you?', dateTime:this.getCurrentTime(),status: 'send', userId:'0'},
-      { name: 'U', company: 'User Company', message: 'Hi there! I have a question.', dateTime:this.getCurrentTime(),status: 'received',userId:'1'},
+      { name: 'Assistant', company: 'IDNI', message: 'Hello! How can I help you?', dateTime:this.getCurrentTime(),status: 'send', userId:'0'},
+      { name: 'User', company: 'User Company', message: 'Hi there! I have a question.', dateTime:this.getCurrentTime(),status: 'received',userId:'1'},
     ];
   }
 
   sendMessage= () => {
-
     //Rian's Code Don't delete
     // this.messages.push({
     //   message: this.text,
@@ -71,7 +70,7 @@ export class LiveChatTplComponent {
 
     //USERS FUNCTION
     const userMessage = {
-      name: 'U',
+      name: 'User',
       company: 'User Company',
       message: this.text,
       dateTime: this.getCurrentTime(),
@@ -103,10 +102,10 @@ export class LiveChatTplComponent {
     return `${hours}:${minutes}`;
   }
 
-  getLogoName():any{
-    const logo = this.name;
-    const logoName = this.logo.substring(0,1)
-  }
+  // getLogoName():any{
+  //   const logo = this.name;
+  //   const logoName = this.logo.substring(0,1)
+  // }
 
   onKey = (event:any) => {
     this.sendMessage()
@@ -114,7 +113,7 @@ export class LiveChatTplComponent {
 
   changeUser(){
     const assistantReply = {
-      name: 'A',
+      name: 'Assistant',
       company: 'IDNI',
       message: 'Hello I am assistant',
       dateTime: this.getCurrentTime(),
@@ -131,5 +130,7 @@ export class LiveChatTplComponent {
     this.changeUser()
   }
 
-  protected readonly name = name;
+
+
+
 }
