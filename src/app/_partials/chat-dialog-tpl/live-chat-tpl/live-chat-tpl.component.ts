@@ -11,6 +11,7 @@ export interface chat{
   email?: string;
   company?: string;
   dateTime?: Date;
+  fullDate?:Date;
   message?: string;
   status?: string; //send or received
   userId?:string;
@@ -25,7 +26,8 @@ export interface chat{
     NgForOf,
     FormsModule,
     JsonPipe,
-    AvatarModule
+    AvatarModule,
+    DatePipe
   ],
   templateUrl: './live-chat-tpl.component.html',
   styleUrl: './live-chat-tpl.component.scss'
@@ -38,6 +40,7 @@ export class LiveChatTplComponent {
   private chat: any;
   message: any;
   private userId: any;
+  currentDate = new Date();
 
   constructor() {
     this.messages = [
@@ -72,9 +75,8 @@ export class LiveChatTplComponent {
       message: this.text,
       dateTime: this.getCurrentTime(),
       status: 'send',
-      userId:'1',
+      userId:'1'
     };
-
 
     // const assistantReply = {
     //   name: 'Assistant',
