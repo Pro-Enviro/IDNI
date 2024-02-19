@@ -587,21 +587,24 @@ footer{
 
 //----------------------------------------------------TOP IMAGE---------------------------------------------------------
 
- .top-image{
-   background-size: cover;
-   background-repeat: no-repeat;
-   height: 30vh;
-   position: relative;
-   .top-image-line{
-     color: white;
-     height: 45vh;
-     background-image: url("assets/img/line-topimage.svg");
+  .top-image-wrapper{
+    position: relative;
+    display:inline-block;
+  }
+
+   .top-image img{
+     //height: 30vh;
      background-repeat: no-repeat;
-     background-size: contain;
-     bottom: 32%;
+     background-size: cover;
+     max-width:100%;
      position: relative;
    }
- }
+
+  .top-image-wrapper svg {
+    position: absolute;
+    bottom:0;
+    top:15%;
+  }
 
 //----------------------------------------------------MEDIA QUERY-------------------------------------------------------
 
