@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {DatePipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
@@ -42,7 +42,7 @@ export interface chat{
   styleUrl: './live-chat-tpl.component.scss',
   providers: [ConfirmationService,MessageService]
 })
-export class LiveChatTplComponent {
+export class LiveChatTplComponent implements OnInit  {
   @ViewChild('chat') chatBoxRef ?: ElementRef;
   //NEW CODE
   messages: chat[] = [];
@@ -65,7 +65,17 @@ export class LiveChatTplComponent {
 
   getMessages = ()=> {
     this.chatService.receive().subscribe({
-      next: (res:chat[]) => this.messages = res
+      next: (res:chat[]) => {
+        console.log(res)
+        return this.messages = res.filter(message => {
+          const messageDate = new Date();
+          const oneDayAgo = new Date();
+
+          oneDayAgo.setDate(oneDayAgo.getDate() - 1);
+          return messageDate > oneDayAgo;
+        });
+      }
+
     })
   }
 
@@ -110,28 +120,7 @@ export class LiveChatTplComponent {
   ngOnInit(): void {
     const currentDate = new Date();
     this.chat = '';
-    this.clearChatAfterOneDay();
   }
 
-  ngOnDestroy() {
-    this.clearTimer();
-  }
-  clearChatAfterOneDay() {
-    this.timer = setInterval(() => {
-      this.messages = this.messages.filter(message => {
-        const messageDate = new Date(this.currentDate);
-        const oneDayAgo = new Date();
 
-        oneDayAgo.setDate(oneDayAgo.getDate() - 1);
-        return messageDate > oneDayAgo;
-      });
-    }, 24 * 60 * 60 * 1000);
-  // }, 86400000);
-  }
-
-  clearTimer() {
-    if (this.timer) {
-      clearInterval(this.timer);
-    }
-  }
 }
