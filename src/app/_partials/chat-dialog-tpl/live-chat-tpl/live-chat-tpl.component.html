@@ -44,7 +44,7 @@
                 <p>{{message.message}}</p>
               </div>
               <div class="flex flex-row">
-                <span class="span-style">{{message.dateTime}}</span>
+                <span class="span-style">{{message.dateTime | date:'hh:mm'}}</span>
                 <span class="span-style">{{message.status}}</span>
               </div>
             </div>
@@ -62,7 +62,7 @@
                }
              </div>
              <div class="flex flex-row justify-content-end">
-               <span class="span-style">{{message.dateTime}}</span>
+               <span class="span-style">{{message.dateTime | date:'hh:mm'}}</span>
                <span class="span-style">{{message.status}}</span>
              </div>
            </div>
@@ -78,15 +78,6 @@
           <p-button icon="pi pi-send" [rounded]="true" styleClass="chat-btn" (onClick)="sendMessage()"></p-button>
         </span>
       </div>
-<!--      Assistant message container test-->
-<!--      <div class="message-container">-->
-<!--        <div class="message-input">-->
-<!--          <input type="text" class="inputText" placeholder="Assistant writes message" [(ngModel)]="message" #inputBox (keyup.enter)="onEnter($event)"/>-->
-<!--        </div>-->
-<!--        <span class="message-icon pr-4">-->
-<!--          <p-button icon="pi pi-send" [rounded]="true" styleClass="chat-btn" (onClick)="changeUser()"></p-button>-->
-<!--        </span>-->
-<!--      </div>-->
     </div>
   </div>
 </section>

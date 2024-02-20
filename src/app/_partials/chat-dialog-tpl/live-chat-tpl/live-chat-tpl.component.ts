@@ -80,7 +80,6 @@ export class LiveChatTplComponent {
     },500)
 
 
-
    this.chatService.send({
       name: 'User',
       company: 'User Company',
@@ -90,17 +89,8 @@ export class LiveChatTplComponent {
     }).subscribe({
      next: () => this.getMessages()
    })
-
-    this.text = '';
+    this.message = '';
   }
-
-  getCurrentTime(): any {
-    const currentDate = new Date();
-    const hours = currentDate.getHours();
-    const minutes = currentDate.getMinutes();
-    return `${hours}:${minutes}`;
-  }
-
   onKey = (event:any) => {
     this.sendMessage()
   }
@@ -118,4 +108,15 @@ export class LiveChatTplComponent {
     });
   }
 
+  currentDayMessages: any[] = [];
+  filterMessagesByDate(date: Date): void {
+    this.currentDayMessages = this.messages.filter((message) => {
+      const messageDate = new Date(this.currentDate);
+      return messageDate.toDateString() === date.toDateString();
+    });
+  }
+  ngOnInit(): void {
+    const currentDate = new Date(); // You can replace this with your desired date
+    this.filterMessagesByDate(currentDate);
+  }
 }
