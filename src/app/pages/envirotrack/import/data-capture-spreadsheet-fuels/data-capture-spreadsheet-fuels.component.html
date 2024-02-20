@@ -1,0 +1,98 @@
+<!--<app-company-select (company)="getCompany($event)"></app-company-select>-->
+
+<section>
+  <div class="container">
+    <div class="grid">
+      <div class="col-12">
+        <p-panel header="Non HH Data" [style]="{'min-width':'1000px', 'paddingBottom':'300px'}">
+          <div class="pb-5">
+            <button pButton (click)="addFuelType()" label="Add New Fuel Type" icon="pi pi-plus" class="btn-style"></button>
+          </div>
+
+          <p-tabView [(activeIndex)]="activeTab">
+            <p-tabPanel *ngFor="let fuel of fuels; index as i" [header]="fuel.type" [style]="{'paddingBottom': '300px', cursor: 'pointer'}">
+
+              <ng-template pTemplate="header">
+                <div style="overflow: hidden; cursor: pointer">
+                  <label *ngIf="selectedItem !== fuel" (dblclick)="showDialog(fuel)">{{ fuel.type }} </label>
+                  <input pInputText type="text" class="p-inputtext-sm" *ngIf="display && selectedItem === fuel"
+                         [(ngModel)]="nameChange" [placeholder]="fuel.type" [style]="{padding: '0.35rem 0.75rem', cursor: 'pointer'}"
+                         (keydown)="onKeyDown($event)" (keydown.enter)="saveName(nameChange, fuel)">
+                  <button pButton type="button" icon="pi pi-save" *ngIf="display && selectedItem === fuel"
+                          class="btn h-2rem w-2rem ml-2"
+                          (click)="saveName(nameChange, fuel)"></button>
+                  <button pButton type="button" icon="pi pi-times" *ngIf="display && selectedItem === fuel"
+                          class="btn-dark h-2rem w-2rem ml-2"
+                          (click)="cancelNameChange()"></button>
+                </div>
+              </ng-template>
+
+              <p-toast></p-toast>
+              <p-confirmDialog header="Confirmation"></p-confirmDialog>
+
+              <div class="flex justify-content-end p-5">
+                <button pButton class="btn mr-2" icon="pi pi-plus" label="Import Spreadsheet"
+                        (click)="importSpreadsheet(fuel)"></button>
+                <button pButton class="btn-dark mr-2" icon="pi pi-pencil" label="Edit Column"
+                        (click)="editFuelType(fuel)"></button>
+                <button pButton class="btn-dark mr-2" pRipple icon="pi pi-file-excel" (click)="exportExcel(fuel)"></button>
+                <p-button (click)="deleteFuelType($event, fuel)" icon="pi pi-times" styleClass="p-button-danger"></p-button>
+              </div>
+              <p-table [value]="fuel.rows" styleClass="p-datatable-sm" #table [style]="{padding: 0}"
+                       [columns]="getCols(fuel.cols)" [exportFilename]="fuel.type">
+
+                <ng-template pTemplate="header">
+                  <tr [style]="{width: '100px'}">
+                    <th *ngFor="let col of fuel.cols" style="width: 150px" [pTooltip]="col.checked ? tooltipText(col) : '' "
+                        tooltipPosition="top">{{ col.name }}
+                    </th>
+                    <th></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-fuelRow let-i=rowIndex>
+                  <tr style="width: 150px">
+                    <td *ngFor="let col of fuelRow">
+                      <p-calendar
+                        *ngIf="col.type === 'date'"
+                        [style]="{width: '150px', height: '2.5rem', marginBottom: '0'}"
+                        [appendTo]="table"
+                        [showIcon]="false"
+                        [readonlyInput]="false"
+                        dateFormat="dd/mm/y"
+                        [(ngModel)]="col.value"
+                        (onSelect)="calculateDays(fuelRow)"
+                        (onBlur)="calculateDays(fuelRow)"
+                      ></p-calendar>
+                      <input pInputText class="p-inputtext-sm" style="width: 100px" *ngIf="col.type === 'text'"
+                             [(ngModel)]="col.value"/>
+                      <p-inputNumber mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5"
+                                     prefix="{{col.prefix ? col.prefix : ''}}" suffix="{{col.suffix ? '' : ''}}"
+                                     class="p-inputtext-sm" [inputStyle]="{width: '100px'}" *ngIf="col.type === 'number'"
+                                     [(ngModel)]="col.value" (ngModelChange)="calculateCellValue(fuelRow)"></p-inputNumber>
+                      <p-dropdown *ngIf="col.type === 'uom'" [options]="uomOptions"
+                                  [style]="{width: '120px', height: '2.5rem', marginBottom: '2px'}" [appendTo]="table"
+                                  [(ngModel)]="col.value"></p-dropdown>
+                    </td>
+                    <td>
+                      <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+                                (click)="deleteRow(fuel, i)"></p-button>
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                  <div class="flex">
+                    <button pButton icon="pi pi-plus" class="btn-dark" (click)="addNewRow(fuel)"
+                            [style]="{marginTop: '1rem'}"></button>
+                    <button pButton icon="pi pi-save" label="Save" class="btn" (click)="saveFuel()"
+                            [style]="{marginTop: '1rem', marginLeft: '0.5rem'}"></button>
+                  </div>
+                </ng-template>
+              </p-table>
+            </p-tabPanel>
+          </p-tabView>
+        </p-panel>
+
+      </div>
+    </div>
+  </div>
+</section>

@@ -12,6 +12,32 @@ import {RegistrationFormComponent} from "./users/register/registration-form/regi
 import {LiveChatTplComponent} from "./_partials/chat-dialog-tpl/live-chat-tpl/live-chat-tpl.component";
 import {ChatDialogTplComponent} from "./_partials/chat-dialog-tpl/chat-dialog-tpl.component";
 import {HeroComponent} from "./_partials/hero/hero.component";
+import {ImportEnvirotrackComponent} from "./pages/envirotrack/import/import-envirotrack/import-envirotrack.component";
+import {
+  DataCaptureSpreadsheetFuelsComponent
+} from "./pages/envirotrack/import/data-capture-spreadsheet-fuels/data-capture-spreadsheet-fuels.component";
+import {EnvirotrackReportComponent} from "./pages/envirotrack/report/envirotrack-report/envirotrack-report.component";
+import {
+  EnvirotrackReportHeatmapComponent
+} from "./pages/envirotrack/report/envirotrack-report-heatmap/envirotrack-report-heatmap.component";
+import {
+  EnvirotrackReportScatterComponent
+} from "./pages/envirotrack/report/envirotrack-report-scatter/envirotrack-report-scatter.component";
+import {
+  EnvirotrackReportBarComponent
+} from "./pages/envirotrack/report/envirotrack-report-bar/envirotrack-report-bar.component";
+import {
+  EnvirotrackReportAvgComponent
+} from "./pages/envirotrack/report/envirotrack-report-avg/envirotrack-report-avg.component";
+import {
+  EnvirotrackReportPieComponent
+} from "./pages/envirotrack/report/envirotrack-report-pie/envirotrack-report-pie.component";
+import {
+  EnvirotrackReportBase1Component
+} from "./pages/envirotrack/report/envirotrack-report-base1/envirotrack-report-base1.component";
+import {
+  EnvirotrackReportDemandComponent
+} from "./pages/envirotrack/report/envirotrack-report-demand/envirotrack-report-demand.component";
 
 export const routes: Routes = [
   {path: '', component: LandingPageComponent},
@@ -24,7 +50,25 @@ export const routes: Routes = [
   {path:'chat',component: ChatDialogTplComponent},
   {path:'live-chat',component:LiveChatTplComponent},
   {path:'registration',component:RegistrationFormComponent},
-  {path: 'dashboard', canActivate: [authGuard], children:[
+  {
+    path: 'envirotrack', children: [
+      {path: 'import', component: ImportEnvirotrackComponent},
+      {path: 'gas-data', component: DataCaptureSpreadsheetFuelsComponent},
+      {
+        path: 'report', component: EnvirotrackReportComponent, children: [
+          {path: 'heatmap', component: EnvirotrackReportHeatmapComponent},
+          {path: 'scatter', component: EnvirotrackReportScatterComponent},
+              { path: 'bar', component: EnvirotrackReportBarComponent },
+              { path: 'pie', component: EnvirotrackReportPieComponent },
+              { path: 'base1', component: EnvirotrackReportBase1Component },
+              { path: 'avg', component: EnvirotrackReportAvgComponent },
+              { path: 'demand', component: EnvirotrackReportDemandComponent },
+        ]
+      },
+    ]
+  },
+  {
+    path: 'dashboard', canActivate: [authGuard], children: [
       {path: '', component: DashboardComponent}
     ]
   },

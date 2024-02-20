@@ -1,0 +1,51 @@
+<div class="flex">
+  <div class="flex-1">
+    <p-panel header="Select Company">
+      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+    </p-panel>
+  </div>
+  <div class="flex-1" *ngIf="mpan.length">
+    <p-panel header="Select Mpan">
+      <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+    </p-panel>
+  </div>
+  <div class="flex-shrink" *ngIf="isAdmin">
+<!--    <p-panel header="Cache">-->
+<!--      <app-clear-cache></app-clear-cache>-->
+<!--    </p-panel>-->
+  </div>
+</div>
+<p-panel>
+  <ng-template pTemplate="header">
+    <div class="flex w-full">
+      <div class="flex-grow-1">
+        <h3 *ngIf="chartModel">Energy Footprint</h3>
+        <h3 *ngIf="!chartModel">Energy Footprint</h3>
+      </div>
+      <div class="flex-shrink-1">
+        <p-toggleButton onLabel="Detailed" offLabel="Simplified" styleClass="p-button-raised btn p-button-text" [(ngModel)]="chartModel" [style]="{ background:'#006633',color:'#ffffff'}"></p-toggleButton>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="body">
+    <ng-container *ngIf="chartModel">
+      <div class="h-screen" >
+        <div style="display: flex; margin-bottom: 3rem;">
+        <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select" ></p-selectButton>
+        <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" class="btn-date"></p-calendar>
+          </div>
+        <plotly-plot  divId="plotlyChart" *ngIf="testChart" [data]="testChart.data" [layout]="testChart.layout" [useResizeHandler]="true" [style]="{position: 'relative',width: '100%', height: '65vh', marginTop: '3rem'}" (plotlyClick)="onPlotClick($event)"></plotly-plot>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!chartModel">
+      <div style="display: flex; margin-bottom: 3rem;">
+      <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select"></p-selectButton>
+      <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" class="btn-date"></p-calendar>
+      </div>
+      <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px"></div>
+    </ng-container>
+
+  </ng-template>
+</p-panel>
+

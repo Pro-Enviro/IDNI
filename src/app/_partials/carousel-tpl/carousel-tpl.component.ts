@@ -49,8 +49,7 @@ partners = [
   },
   {
     title: 'Advanced Manufacturing Innovation Centre',
-    content: 'AMIC - a £100m project under Belfast Region City Deal - is a collaborative, innovative powerhouse of advanced manufacturing set to elevate our region globally. \n' +
-      'We are supporting economic growth and prosperity for Northern IreIand by creating high quality jobs and increasing inward investment through high value manufacturing innovation clusters. \n',
+    content: 'AMIC is an industry led, open access manufacturing & engineering innovation centre with state of the art facilities and an expert engineering team, underpinned by academic excellence.',
     image:'../../../assets/logos/amic-logo.png'
   },
   {
