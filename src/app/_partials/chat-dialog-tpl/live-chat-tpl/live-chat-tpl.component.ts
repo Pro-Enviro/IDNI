@@ -1,117 +1,121 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ButtonModule} from "primeng/button";
-import {interval, map} from "rxjs";
-import {DatePipe} from "@angular/common";
+import {DatePipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {AvatarModule} from "primeng/avatar";
+import {ChipModule} from "primeng/chip";
+import {RouterLink} from "@angular/router";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ToastModule} from "primeng/toast";
+import {PrimeNGConfig} from "primeng/api";
+import {ConfirmationService,MessageService,ConfirmEventType} from "primeng/api";
+import {ChatService} from "../../../_services/chat.service";
+
+
+export interface chat{
+  name?: string;
+  email?: string;
+  company?: string;
+  dateTime?: Date;
+  message?: string;
+  status?: string; //send or received
+}
 
 @Component({
   selector: 'app-live-chat-tpl',
   standalone: true,
-    imports: [
-        ButtonModule
-    ],
+  imports: [
+    ButtonModule,
+    NgIf,
+    NgForOf,
+    FormsModule,
+    JsonPipe,
+    AvatarModule,
+    DatePipe,
+    ChipModule,
+    RouterLink,
+    ConfirmDialogModule,
+    ToastModule
+  ],
   templateUrl: './live-chat-tpl.component.html',
-  styleUrl: './live-chat-tpl.component.scss'
+  styleUrl: './live-chat-tpl.component.scss',
+  providers: [ConfirmationService,MessageService]
 })
 export class LiveChatTplComponent {
-  @ViewChild('inputBox') inputBoxRef?:ElementRef;
-  @ViewChild('timeBox') timeBoxRef?:ElementRef;
-  chat?:any;
-  inputBox?:any
-  date?: Date = new Date();
+  @ViewChild('chat') chatBoxRef ?: ElementRef;
+  //NEW CODE
+  messages: chat[] = [];
+  text: string | undefined;
+  private chat: any;
+  message: any;
+  private userId: any;
+  currentDate = new Date();
+  user!: chat;
 
-  assistantPhrases ?:any = [
-  "Welcome !",
-  "How can I help today ?",
-  "IDNI assistant is here to help you",
-  "Good afternoon",
-  "Chat Intelligence is here to help you !",
-  "Call us on +1234 567 890",
-  "For more information send us a letter by the post"
-  ]
+  constructor(
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private chatService: ChatService
+  ) {
+    this.user = this.chatService.chatUserDetails
+
+    console.log(this.user)
+    this.getMessages();
+  }
+
+
+  getMessages = ()=> {
+    this.chatService.receive().subscribe({
+      next: (res:chat[]) => this.messages = res
+    })
+  }
+
+
 
   sendMessage= () => {
-    const day = new Date();
-    console.log(this.date);
-  let randomPhrase = Math.floor(Math.random()* this.assistantPhrases.length);
-  let assistantMessageText = this.assistantPhrases[randomPhrase];
-
-  // Creating a DIV
-  const userDiv = document.createElement("div");
-   userDiv.classList.add("user-container");
-
-   //USER P TAG
-   const userP= document.createElement("p");
-
-   //TIME P TAG
-   const timeBox = document.createElement('span');
-   timeBox.classList.add("time-style");
-   //TIME FORMAT
-    //timeBox.innerHTML = <string>(new DatePipe('en-US').transform(new Date(), 'dd-MM-yyyy hh:mm:ss'));
-    timeBox.innerHTML = <string>(new DatePipe('en-US').transform(new Date(), 'hh:mm:ss'));
-    //timeBox.innerHTML = this.date?.toLocaleString("en-US") || '';
-
-
-   this.chat = document.querySelector(".chat");
-   this.inputBox = document.querySelector(".inputText");
-   userP.innerHTML = this.inputBox.value;
-   userP.classList.add("userMsg");
-   userDiv.append(userP);
-   userDiv.append(timeBox);
-   this.chat.appendChild(userDiv);
-   this.inputBox.value = "";
-   this.chat.scrollTop = this.chat.scrollHeight;
-
-   let typing = document.createElement("p");
-   typing.innerHTML = "Assistant is typing ...";
-   typing.classList.add("typing-text");
-   this.chat.appendChild(typing);
-   setTimeout(()=>{
-     let assistDiv = document.createElement("div");
-     let assistP = document.createElement("p");
-     //TIME P TAG
-     const timeBox = document.createElement('span');
-     timeBox.classList.add("time-style");
-     timeBox.innerHTML = <string>(new DatePipe('en-US').transform(new Date(), 'hh:mm:ss'));
-     assistP.innerHTML = assistantMessageText;
-     assistP.classList.add("assistantMsg");
-     assistDiv.classList.add("assistant-container");
-     assistDiv.append(assistP);
-     assistDiv.append(timeBox);
-     this.chat.appendChild(assistDiv);
-     this.chat.scrollTop = this.chat.scrollHeight;
-     this.chat.removeChild(typing);
-   },2000)
-  }
-
-
-  onKey = (event: any) => {
-    if (event === "Enter") {
-    let random = Math.floor(Math.random()*this.assistantPhrases.length);
-    let assistantTextBox = this.assistantPhrases[random];
-    const userDiv2 = document.createElement("div");
-    userDiv2.classList.add("user-container");
-    let userP2 = document.createElement("p");
-    userP2.innerHTML = this.inputBox.value;
-    userP2.classList.add("userMsg");
-    userDiv2.append(userP2);
-    this.chat.appendChild(userDiv2);
-    this.inputBox.value = "";
-    this.chat.scrollTop = this.chat.scrollHeight;
-
-    let type = document.createElement("p");
-    type.innerHTML = "Assistant is typing...";
-    type.classList.add("typing-text");
-    this.chat.appendChild(type);
+    //Scroll Top
     setTimeout(() => {
-      let assistantMessage = document.createElement("p");
-      assistantMessage.innerHTML = assistantTextBox;
-      assistantMessage.classList.add("assistantMsg");
-      this.chat.appendChild(assistantMessage);
-      this.chat.scrollTop = this.chat.scrollHeight;
-      this.chat.remove(type);
+      let chatScroll = this.chatBoxRef?.nativeElement;
+      chatScroll.scrollTop +=500;
+    },500)
 
-    },2000)
+   this.chatService.send({
+      name: 'Name',
+      company: 'Company',
+      message: this.message,
+      dateTime: new Date(),
+      status: 'send',
+    }).subscribe({
+     next: () => this.getMessages()
+   })
+    this.message = '';
   }
+  onKey = (event:any) => {
+    this.sendMessage()
   }
 
+  confirm(event: Event) {
+    this.confirmationService.confirm({
+      header: 'Are you sure you want to close the chat?',
+      message: 'Please confirm to proceed.',
+      accept: () => {
+        this.messageService.add({ severity: 'success', summary: 'Agree', detail: 'To start a new chat, please fill the form again !', life: 3000 });
+      },
+      reject: () => {
+        this.messageService.add({ severity: 'info', summary: 'Cancel', detail: 'You have rejected to close the chat !', life: 3000 });
+      }
+    });
+  }
+
+  currentDayMessages: any[] = [];
+  filterMessagesByDate(date: Date): void {
+    this.currentDayMessages = this.messages.filter((message) => {
+      const messageDate = new Date(this.currentDate);
+      return messageDate.toDateString() === date.toDateString();
+    });
+  }
+  ngOnInit(): void {
+    const currentDate = new Date();
+    this.filterMessagesByDate(currentDate);
+  }
 }

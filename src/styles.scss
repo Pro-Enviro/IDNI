@@ -13,6 +13,7 @@
   $headerColor:#253b3c;
   $lightColor-100: #daedea;
   $lightColor-50:#f4f9f8;
+  $darkColor-900:#112122;
 
   h2{
     color: $primeColor;
@@ -52,9 +53,20 @@
    color:#2e5757;
    margin-right: 5px;
    &:hover{
-     background-color:$primeColor;
-     border:1px solid $darkColor;
+     background-color:$darkColor;
+     border:2px solid $lightColor-50;
      color:#f4f9f8;
+   }
+ }
+
+ .close-btn{
+     background-color: transparent;
+     color: $darkColor;
+     border-color: transparent;
+   &:hover{
+     background-color: transparent;
+     color: $primeColor;
+     border-color: transparent;
    }
  }
 
@@ -154,12 +166,12 @@
     display: flex;
     flex-direction: column;
     .chatbox-nav {
-      padding: 2.5rem;
+      padding: 2rem;
       margin-bottom:30px;
       background-image: url("assets/img/chat-box-line.svg");
       background-position: right bottom;
       background-repeat: no-repeat;
-      background-size: 65rem;
+      background-size: 80rem;
       h3{
         z-index: 1;
         position: relative;
@@ -190,7 +202,6 @@
       scrollbar-width: none;
     }
   }
-
 
   .message-container {
     display: flex;
@@ -235,25 +246,36 @@
     padding:10px;
     .assistant-text-container>p{
       background-color: #b5dad6;
-      border-radius: 30px;
       color:black;
       font-size:1rem;
       padding: 1.3rem;
       width: fit-content;
+      max-width: 450px;
+      border-radius: 15px;
+      border-bottom-left-radius: 0;
+    }
+    .assist-logo{
+      background-color:#458785;
+      color:white
     }
   }
-
   .user-container{
     display:flex;
     justify-content: end;
     padding:10px;
     .user-text-container>p{
       background-color: #daedea;
-      border-radius: 30px;
       color:black;
       font-size:1rem;
       padding: 1.3rem;
       width: fit-content;
+      max-width: 450px;
+      border-radius: 15px;
+      border-bottom-right-radius: 0;
+    }
+    .user-logo{
+      background-color:#85bfba;
+      color:white;
     }
   }
 
@@ -278,9 +300,9 @@
     width: fit-content;
   }
 
-  .typing-text{
+  .span-style{
     font-size: .75rem;
-    padding-left:0.5rem;
+    padding:0.5rem;
     color: var(--gray-500) !important;
   }
 
@@ -290,6 +312,16 @@
     color: var(--gray-500) !important;
   }
 
+  .confirm-dialog-icon{
+    margin-top:-5rem;
+    width:6rem;
+    height:6rem;
+    background-color:$primeColor;
+    color:$darkColor-900;
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+  }
   //----------------------------------------------------MENU------------------------------------------------------------
   .p-megamenu{
     border: none;

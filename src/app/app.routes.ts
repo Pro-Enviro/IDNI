@@ -8,6 +8,10 @@ import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 import {LoginComponent} from "./users/login/login.component";
 import {authGuard} from "./_helpers/auth.guard";
 import {RegisterComponent} from "./users/register/register.component";
+import {RegistrationFormComponent} from "./users/register/registration-form/registration-form.component";
+import {LiveChatTplComponent} from "./_partials/chat-dialog-tpl/live-chat-tpl/live-chat-tpl.component";
+import {ChatDialogTplComponent} from "./_partials/chat-dialog-tpl/chat-dialog-tpl.component";
+import {HeroComponent} from "./_partials/hero/hero.component";
 import {ImportEnvirotrackComponent} from "./pages/envirotrack/import/import-envirotrack/import-envirotrack.component";
 import {
   DataCaptureSpreadsheetFuelsComponent
@@ -35,15 +39,17 @@ import {
   EnvirotrackReportDemandComponent
 } from "./pages/envirotrack/report/envirotrack-report-demand/envirotrack-report-demand.component";
 
-
 export const routes: Routes = [
   {path: '', component: LandingPageComponent},
+  {path:'home',component:HeroComponent},
   {path: 'pet', component: PetComponent},
   {path: 'coming-soon', component: ConstructionComponent},
-  {path: 'local-decarbonisation', component: LocalDecarbonisationComponent},
-  {path: 'local-decarb-single', component: LocalDecabSingleTplComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'registration', component: RegisterComponent},
+  {path:'local-decarbonisation', component:LocalDecarbonisationComponent},
+  {path:'local-decarb-single',component:LocalDecabSingleTplComponent},
+  {path:'login',component: LoginComponent},
+  {path:'chat',component: ChatDialogTplComponent},
+  {path:'live-chat',component:LiveChatTplComponent},
+  {path:'registration',component:RegistrationFormComponent},
   {
     path: 'envirotrack', children: [
       {path: 'import', component: ImportEnvirotrackComponent},
