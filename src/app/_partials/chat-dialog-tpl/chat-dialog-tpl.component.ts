@@ -8,6 +8,7 @@ import {FormControl, FormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../../_services/users/auth.service";
 import {Router, RouterLink} from "@angular/router";
 import {NgClass, NgIf} from "@angular/common";
+import {ChatService} from "../../_services/chat.service";
 
 
 export interface formChat{
@@ -42,21 +43,22 @@ export class ChatDialogTplComponent {
   company_name?: string;
   email?:string;
 
-  form: formChat[] = [];
+  constructor(
+    private chat: ChatService,
+    private router: Router
+  ) {
+
+
+  }
 
 
   startChat() {
-
-    let userLogIn = {
+    this.chat.updateChatUser({
       name: this.name,
       email: this.email,
       company_name: this.company_name
-    }
+    })
 
-    this.form.push(userLogIn);
-    this.name = '';
-    this.company_name = '';
-    this.email = '';
-
+    this.router.navigate(['live-chat'])
   }
 }

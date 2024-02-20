@@ -31,7 +31,7 @@
       <div class="chat" #chat>
 <!--        <pre>{{messages | json}}</pre>-->
         @for (message of messages; track $index){
-        @if(message.userId == '0'){
+        @if(message.email != user.email){
             <div class="assistant-container">
               <div class="flex flex-row">
                 <span class="span-style">{{message.name}}</span>

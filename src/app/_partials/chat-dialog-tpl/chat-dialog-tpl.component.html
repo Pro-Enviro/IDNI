@@ -16,13 +16,12 @@
           <input [(ngModel)]="email" name="email" type="text" pInputText required pattern="[^ @]*@[^ @]*" emailDomain>
         </div>
         <div class="pt-3 flex justify-content-center">
-          <p-button label="Start Chat" styleClass="btn-style" (onClick)="startChat()" routerLink="live-chat"></p-button>
+          <p-button label="Start Chat" styleClass="btn-style" (onClick)="startChat()"></p-button>
         </div>
       </div>
     </p-panel>
   </div>
 </section>
 
-<app-live-chat-tpl></app-live-chat-tpl>
 
 

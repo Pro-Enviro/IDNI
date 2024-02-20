@@ -9,6 +9,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ToastModule} from "primeng/toast";
 import {PrimeNGConfig} from "primeng/api";
 import {ConfirmationService,MessageService,ConfirmEventType} from "primeng/api";
+import {ChatService} from "../../../_services/chat.service";
 
 
 export interface chat{
@@ -16,10 +17,8 @@ export interface chat{
   email?: string;
   company?: string;
   dateTime?: Date;
-  fullDate?:Date;
   message?: string;
   status?: string; //send or received
-  userId?:string;
 }
 
 @Component({
@@ -51,29 +50,29 @@ export class LiveChatTplComponent {
   message: any;
   private userId: any;
   currentDate = new Date();
+  user!: chat;
 
-  constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {
-    this.messages = [
-      { name: 'Assistant', company: 'IDNI', message: 'Hello! How can I help you?', dateTime:this.getCurrentTime(),status: 'send', userId:'0'},
-      { name: 'User', company: 'User Company', message: 'Hi there! I have a question.', dateTime:this.getCurrentTime(),status: 'received',userId:'1'},
-    ];
+  constructor(
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private chatService: ChatService
+  ) {
+    this.user = this.chatService.chatUserDetails
+
+    console.log(this.user)
+    this.getMessages();
+  }
+
+
+  getMessages = ()=> {
+    this.chatService.receive().subscribe({
+      next: (res:chat[]) => this.messages = res
+    })
   }
 
 
 
-
   sendMessage= () => {
-    //Rian's Code Don't delete
-    // this.messages.push({
-    //   message: this.text,
-    //   dateTime: this.getCurrentTime(),
-    //   name: 'User\'s Name',
-    //   email: 'User\'s Email',
-    //   company: 'User\'s Company',
-    //   status: 'send',
-    // })
-    // this.text = '';
-
     //Scroll Top
     setTimeout(() => {
       let chatScroll = this.chatBoxRef?.nativeElement;
@@ -81,29 +80,18 @@ export class LiveChatTplComponent {
     },500)
 
 
-    //USERS FUNCTION
-    const userMessage = {
+
+   this.chatService.send({
       name: 'User',
       company: 'User Company',
       message: this.message,
-      dateTime: this.getCurrentTime(),
+      dateTime: new Date(),
       status: 'send',
-      userId:'1'
-    };
+    }).subscribe({
+     next: () => this.getMessages()
+   })
 
-    // const assistantReply = {
-    //   name: 'Assistant',
-    //   company: 'IDNI',
-    //   message: this.text,
-    //   dateTime: this.getCurrentTime(),
-    //   status: 'received',
-    //   userId:'0'
-    // };
-    //this.messages.push(userMessage,assistantReply)
-
-    this.messages.push(userMessage)
     this.text = '';
-    this.changeUser();
   }
 
   getCurrentTime(): any {
@@ -116,23 +104,6 @@ export class LiveChatTplComponent {
   onKey = (event:any) => {
     this.sendMessage()
   }
-
-  changeUser(){
-    const assistantReply = {
-      name: 'Assistant',
-      company: 'IDNI',
-      message: 'Hello I am assistant',
-      dateTime: this.getCurrentTime(),
-      status: 'received',
-      userId:'0',
-    };
-    this.messages.push(assistantReply)
-    this.message = '';
-  }
-  onEnter = (event:any) => {
-    this.changeUser()
-  }
-
 
   confirm(event: Event) {
     this.confirmationService.confirm({

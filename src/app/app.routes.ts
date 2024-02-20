@@ -21,6 +21,7 @@ export const routes: Routes = [
   {path:'local-decarbonisation', component:LocalDecarbonisationComponent},
   {path:'local-decarb-single',component:LocalDecabSingleTplComponent},
   {path:'login',component: LoginComponent},
+  {path:'chat',component: ChatDialogTplComponent},
   {path:'live-chat',component:LiveChatTplComponent},
   {path:'registration',component:RegistrationFormComponent},
   {path: 'dashboard', canActivate: [authGuard], children:[
