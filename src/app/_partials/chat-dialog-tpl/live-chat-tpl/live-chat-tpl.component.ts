@@ -81,8 +81,8 @@ export class LiveChatTplComponent {
 
 
    this.chatService.send({
-      name: 'User',
-      company: 'User Company',
+      name: 'Name',
+      company: 'Company',
       message: this.message,
       dateTime: new Date(),
       status: 'send',
@@ -116,7 +116,7 @@ export class LiveChatTplComponent {
     });
   }
   ngOnInit(): void {
-    const currentDate = new Date(); // You can replace this with your desired date
+    const currentDate = new Date();
     this.filterMessagesByDate(currentDate);
   }
 }
