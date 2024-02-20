@@ -9,6 +9,7 @@ import {AuthService} from "../../_services/users/auth.service";
 import {Router, RouterLink} from "@angular/router";
 import {NgClass, NgIf} from "@angular/common";
 import {ChatService} from "../../_services/chat.service";
+import {MessageModule} from "primeng/message";
 
 
 export interface formChat{
@@ -30,7 +31,8 @@ export interface formChat{
     FormsModule,
     RouterLink,
     NgClass,
-    NgIf
+    NgIf,
+    MessageModule
   ],
   templateUrl: './chat-dialog-tpl.component.html',
   styleUrl: './chat-dialog-tpl.component.scss'

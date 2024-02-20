@@ -79,7 +79,6 @@ export class LiveChatTplComponent {
       chatScroll.scrollTop +=500;
     },500)
 
-
    this.chatService.send({
       name: 'Name',
       company: 'Company',
