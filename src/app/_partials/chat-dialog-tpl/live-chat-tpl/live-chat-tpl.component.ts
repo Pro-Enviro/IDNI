@@ -112,25 +112,15 @@ export class LiveChatTplComponent {
 
 
   // CLEAR THE CHAT AFTER ONE DAY
-  currentDayMessages: any[] = [];
-  filterMessagesByDate(date: Date): void {
-    this.currentDayMessages = this.messages.filter((message) => {
-      const messageDate = new Date(this.currentDate);
-      return messageDate.toDateString() === date.toDateString();
-    });
-  }
   ngOnInit(): void {
     const currentDate = new Date();
-    this.filterMessagesByDate(currentDate);
     this.chat = '';
-
     this.clearChatAfterOneDay();
   }
 
   ngOnDestroy() {
     this.clearTimer();
   }
-
   clearChatAfterOneDay() {
     this.timer = setInterval(() => {
       this.messages = this.messages.filter(message => {
