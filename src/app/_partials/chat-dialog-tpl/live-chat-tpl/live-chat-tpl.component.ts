@@ -51,6 +51,8 @@ export class LiveChatTplComponent {
   private userId: any;
   currentDate = new Date();
   user!: chat;
+  private timer?: any;
+
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -70,8 +72,6 @@ export class LiveChatTplComponent {
     })
   }
 
-
-
   sendMessage= () => {
     //Scroll Top
     setTimeout(() => {
@@ -82,6 +82,7 @@ export class LiveChatTplComponent {
    this.chatService.send({
       name: 'Name',
       company: 'Company',
+      //email:'',
       message: this.message,
       dateTime: new Date(),
       status: 'send',
@@ -100,12 +101,14 @@ export class LiveChatTplComponent {
       message: 'Please confirm to proceed.',
       accept: () => {
         this.messageService.add({ severity: 'success', summary: 'Agree', detail: 'To start a new chat, please fill the form again !', life: 3000 });
+
       },
       reject: () => {
         this.messageService.add({ severity: 'info', summary: 'Cancel', detail: 'You have rejected to close the chat !', life: 3000 });
       }
     });
   }
+
 
   currentDayMessages: any[] = [];
   filterMessagesByDate(date: Date): void {
@@ -117,5 +120,31 @@ export class LiveChatTplComponent {
   ngOnInit(): void {
     const currentDate = new Date();
     this.filterMessagesByDate(currentDate);
+    this.chat = '';
+
+    this.clearChatAfterOneDay();
+  }
+
+  ngOnDestroy() {
+    this.clearTimer();
+  }
+
+  clearChatAfterOneDay() {
+    // Set up a timer to periodically check and clear the chat
+    this.timer = setInterval(() => {
+      this.messages = this.messages.filter(message => {
+        const messageDate = new Date(this.currentDate);
+        const oneDayAgo = new Date();
+
+        oneDayAgo.setDate(oneDayAgo.getDate() - 1);
+        return messageDate > oneDayAgo;
+      });
+    }, 24 * 60 * 60 * 1000);
+  }
+
+  clearTimer() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
   }
 }
