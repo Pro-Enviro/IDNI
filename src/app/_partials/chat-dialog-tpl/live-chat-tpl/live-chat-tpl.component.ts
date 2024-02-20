@@ -110,6 +110,8 @@ export class LiveChatTplComponent {
   }
 
 
+
+  // CLEAR THE CHAT AFTER ONE DAY
   currentDayMessages: any[] = [];
   filterMessagesByDate(date: Date): void {
     this.currentDayMessages = this.messages.filter((message) => {
@@ -130,7 +132,6 @@ export class LiveChatTplComponent {
   }
 
   clearChatAfterOneDay() {
-    // Set up a timer to periodically check and clear the chat
     this.timer = setInterval(() => {
       this.messages = this.messages.filter(message => {
         const messageDate = new Date(this.currentDate);
