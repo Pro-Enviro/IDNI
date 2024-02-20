@@ -59,7 +59,6 @@ export class ChatDialogTplComponent {
       email: this.email,
       company_name: this.company_name
     })
-
     this.router.navigate(['live-chat'])
   }
 }

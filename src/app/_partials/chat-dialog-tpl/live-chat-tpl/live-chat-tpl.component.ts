@@ -10,6 +10,7 @@ import {ToastModule} from "primeng/toast";
 import {PrimeNGConfig} from "primeng/api";
 import {ConfirmationService,MessageService,ConfirmEventType} from "primeng/api";
 import {ChatService} from "../../../_services/chat.service";
+import {formChat} from "../chat-dialog-tpl.component";
 
 
 export interface chat{
@@ -48,7 +49,6 @@ export class LiveChatTplComponent {
   text: string | undefined;
   private chat: any;
   message: any;
-  private userId: any;
   currentDate = new Date();
   user!: chat;
   private timer?: any;
@@ -57,14 +57,11 @@ export class LiveChatTplComponent {
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private chatService: ChatService
+    private chatService: ChatService,
   ) {
     this.user = this.chatService.chatUserDetails
-
-    console.log(this.user)
     this.getMessages();
   }
-
 
   getMessages = ()=> {
     this.chatService.receive().subscribe({
@@ -79,10 +76,10 @@ export class LiveChatTplComponent {
       chatScroll.scrollTop +=500;
     },500)
 
-   this.chatService.send({
-      name: 'Name',
+    this.chatService.send({
+      name: 'name',
       company: 'Company',
-      //email:'',
+      //email:'test@test',
       message: this.message,
       dateTime: new Date(),
       status: 'send',
@@ -91,6 +88,7 @@ export class LiveChatTplComponent {
    })
     this.message = '';
   }
+
   onKey = (event:any) => {
     this.sendMessage()
   }
@@ -101,15 +99,12 @@ export class LiveChatTplComponent {
       message: 'Please confirm to proceed.',
       accept: () => {
         this.messageService.add({ severity: 'success', summary: 'Agree', detail: 'To start a new chat, please fill the form again !', life: 3000 });
-
       },
       reject: () => {
         this.messageService.add({ severity: 'info', summary: 'Cancel', detail: 'You have rejected to close the chat !', life: 3000 });
       }
     });
   }
-
-
 
   // CLEAR THE CHAT AFTER ONE DAY
   ngOnInit(): void {
@@ -131,6 +126,7 @@ export class LiveChatTplComponent {
         return messageDate > oneDayAgo;
       });
     }, 24 * 60 * 60 * 1000);
+  // }, 86400000);
   }
 
   clearTimer() {
