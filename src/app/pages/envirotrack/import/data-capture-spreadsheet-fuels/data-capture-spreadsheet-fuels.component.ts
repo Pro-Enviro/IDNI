@@ -380,18 +380,21 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     if (this.selectedCompany) {
       this.track.getFuelData(this.selectedCompany).subscribe({
         next: (res:any) => {
-          if (res?.data) {
+          if (res?.data?.fuel_data) {
+
             this.fuels = JSON.parse(res.data?.fuel_data)
 
-            // Change DB string for primeng calendar
-            this.fuels.map((fuelType: any) => {
-              fuelType.rows.map((col: any) => {
-                const findStartDate = col.findIndex((col: any) => col.name === 'Start Date')
-                const findEndDate = col.findIndex((col: any) => col.name === 'End Date')
-                col[findStartDate].value ? col[findStartDate].value = new Date(col[findStartDate].value) : new Date()
-                col[findEndDate].value ? col[findEndDate].value = new Date(col[findEndDate].value) : new Date()
+
+              // Change DB string for primeng calendar
+              this.fuels.map((fuelType: any) => {
+                fuelType.rows.map((col: any) => {
+                  const findStartDate = col.findIndex((col: any) => col.name === 'Start Date')
+                  const findEndDate = col.findIndex((col: any) => col.name === 'End Date')
+                  col[findStartDate].value ? col[findStartDate].value = new Date(col[findStartDate].value) : new Date()
+                  col[findEndDate].value ? col[findEndDate].value = new Date(col[findEndDate].value) : new Date()
+                })
               })
-            })
+
           }
         },
         error: (err) => console.log(err),
@@ -408,17 +411,18 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
 
     this.track.saveFuelData(this.selectedCompany, dataObject).subscribe({
       next: (res: any) => {
-        this.fuels = JSON.parse(res.data?.fuel_data)
-
-        // Change DB string for primeng calendar
-        this.fuels.map((fuelType: any) => {
-          fuelType.rows.map((col: any) => {
-            const findStartDate = col.findIndex((col: any) => col.name === 'Start Date')
-            const findEndDate = col.findIndex((col: any) => col.name === 'End Date')
-            col[findStartDate].value ? col[findStartDate].value = new Date(col[findStartDate].value) : new Date()
-            col[findEndDate].value ? col[findEndDate].value = new Date(col[findEndDate].value) : new Date()
+        if (res?.data?.fuel_data) {
+          this.fuels = JSON.parse(res.data?.fuel_data)
+          // Change DB string for primeng calendar
+          this.fuels.map((fuelType: any) => {
+            fuelType.rows.map((col: any) => {
+              const findStartDate = col.findIndex((col: any) => col.name === 'Start Date')
+              const findEndDate = col.findIndex((col: any) => col.name === 'End Date')
+              col[findStartDate].value ? col[findStartDate].value = new Date(col[findStartDate].value) : new Date()
+              col[findEndDate].value ? col[findEndDate].value = new Date(col[findEndDate].value) : new Date()
+            })
           })
-        })
+        }
       },
       error: (err) => console.log(err),
       complete: () => {
