@@ -7,10 +7,12 @@ import {ChipModule} from "primeng/chip";
 import {RouterLink} from "@angular/router";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ToastModule} from "primeng/toast";
-import {PrimeNGConfig} from "primeng/api";
+import {Message, PrimeNGConfig} from "primeng/api";
 import {ConfirmationService,MessageService,ConfirmEventType} from "primeng/api";
 import {ChatService} from "../../../_services/chat.service";
 import {formChat} from "../chat-dialog-tpl.component";
+import {TagModule} from "primeng/tag";
+import {MessagesModule} from "primeng/messages";
 
 
 export interface chat{
@@ -36,7 +38,9 @@ export interface chat{
     ChipModule,
     RouterLink,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    TagModule,
+    MessagesModule
   ],
   templateUrl: './live-chat-tpl.component.html',
   styleUrl: './live-chat-tpl.component.scss',
@@ -51,7 +55,6 @@ export class LiveChatTplComponent implements OnInit  {
   message: any;
   currentDate = new Date();
   user!: chat;
-  private timer?: any;
 
 
   constructor(
@@ -120,6 +123,7 @@ export class LiveChatTplComponent implements OnInit  {
   ngOnInit(): void {
     const currentDate = new Date();
     this.chat = '';
+
   }
 
 
