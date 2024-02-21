@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {DatePipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
@@ -7,10 +7,8 @@ import {ChipModule} from "primeng/chip";
 import {Router, RouterLink} from "@angular/router";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ToastModule} from "primeng/toast";
-import {Message, PrimeNGConfig} from "primeng/api";
-import {ConfirmationService,MessageService,ConfirmEventType} from "primeng/api";
+import {ConfirmationService,MessageService} from "primeng/api";
 import {ChatService} from "../../../_services/chat.service";
-import {formChat} from "../chat-dialog-tpl.component";
 import {TagModule} from "primeng/tag";
 import {MessagesModule} from "primeng/messages";
 import moment from "moment";
@@ -49,6 +47,7 @@ export interface chat{
 })
 export class LiveChatTplComponent implements OnInit  {
   @ViewChild('chat') chatBoxRef ?: ElementRef;
+
   //NEW CODE
   messages: chat[] = [];
   text: string | undefined;
@@ -56,7 +55,8 @@ export class LiveChatTplComponent implements OnInit  {
   message: any;
   currentDate = new Date();
   user!: chat;
-
+  isScrolling: boolean = false;
+  scrollButton: boolean = false;
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -76,10 +76,24 @@ export class LiveChatTplComponent implements OnInit  {
     })
   }
 
+
+  scrollToBottom = (event: any) => {
+    this.isScrolling = false;
+  }
+
+  onScrollEnd = () => {
+    let chatScroll = this.chatBoxRef?.nativeElement;
+    this.isScrolling = (chatScroll.scrollHeight - chatScroll.clientHeight) != chatScroll.scrollTop
+  }
   scrollEffect = () => {
     setTimeout(() => {
       let chatScroll = this.chatBoxRef?.nativeElement;
-      chatScroll.scrollTop +=500;
+      this.scrollButton = (chatScroll.scrollHeight - chatScroll.clientHeight) != chatScroll.scrollTop
+      if(!this.isScrolling){
+
+        chatScroll.scrollTop = (chatScroll.scrollHeight - chatScroll.clientHeight);
+        this.isScrolling = false;
+      }
     },1000)
   }
 
