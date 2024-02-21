@@ -55,6 +55,7 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     // this.uomOptions = this.global.supplyUnit
     if (this.track.selectedCompany.value) {
       this.selectedCompany = this.track.selectedCompany.value
+      this.getFuelData()
     }
   }
 
