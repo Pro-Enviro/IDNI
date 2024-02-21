@@ -47,7 +47,7 @@ export const routes: Routes = [
   {
     path: 'envirotrack', children: [
       {path: 'import', component: ImportEnvirotrackComponent},
-      {path: 'gas-data', component: DataCaptureSpreadsheetFuelsComponent},
+      {path: 'fuel-data', component: DataCaptureSpreadsheetFuelsComponent},
       {
         path: 'report', component: EnvirotrackReportComponent, children: [
           {path: 'heatmap', component: EnvirotrackReportHeatmapComponent},
