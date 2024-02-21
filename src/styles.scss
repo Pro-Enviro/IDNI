@@ -74,6 +74,11 @@
    background-color: $darkColor;
    border:$darkColor;
    color:white;
+   &:hover{
+     background-color: $primeColor;
+     border:$darkColor;
+     color:$darkColor;
+   }
  }
 
 .btn-dropdown{

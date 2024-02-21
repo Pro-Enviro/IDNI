@@ -116,19 +116,6 @@ export class LiveChatTplComponent implements OnInit  {
     this.sendMessage()
   }
 
-  confirm(event: Event) {
-    this.confirmationService.confirm({
-      header: 'Are you sure you want to close the chat?',
-      message: 'Please confirm to proceed.',
-      accept: () => {
-        this.messageService.add({ severity: 'success', summary: 'Agree', detail: 'To start a new chat, please fill the form again !', life: 3000 });
-      },
-      reject: () => {
-        this.messageService.add({ severity: 'info', summary: 'Cancel', detail: 'You have rejected to close the chat !', life: 3000 });
-      }
-    });
-  }
-
   // CLEAR THE CHAT AFTER ONE DAY
   ngOnInit(): void {
     !this.user.email ? this.router.navigate(['chat']) : null
