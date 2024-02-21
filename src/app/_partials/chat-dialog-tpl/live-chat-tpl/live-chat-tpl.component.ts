@@ -84,9 +84,9 @@ export class LiveChatTplComponent implements OnInit  {
     },500)
 
     this.chatService.send({
-      name: 'name',
-      company: 'Company',
-      //email:'test@test',
+      name: this.user.name,
+      company: this.user.company,
+      email: this.user.email,
       message: this.message,
       dateTime: new Date(),
       status: 'send',
