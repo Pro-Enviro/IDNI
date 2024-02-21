@@ -35,13 +35,17 @@
               <p-toast></p-toast>
               <p-confirmDialog header="Confirmation"></p-confirmDialog>
 
-              <div class="flex justify-content-end p-5">
-                <button pButton class="btn-style mr-2" icon="pi pi-plus" label="Import Spreadsheet"
-                        (click)="importSpreadsheet(fuel)"></button>
-                <button pButton class="btn-outline mr-2" icon="pi pi-pencil" label="Edit Column"
-                        (click)="editFuelType(fuel)"></button>
-                <button pButton class="btn-style mr-2" pRipple icon="pi pi-file-excel" (click)="exportExcel(fuel)"></button>
-                <p-button (click)="deleteFuelType($event, fuel)" icon="pi pi-times" styleClass="btn-dark"></p-button>
+              <div class="flex justify-content-between p-5">
+                <div class="flex justify-content-start">
+                  <button pButton class="btn-style mr-2" icon="pi pi-plus" label="Import Spreadsheet"
+                          (click)="importSpreadsheet(fuel)"></button>
+                  <button pButton class="btn-outline mr-2" icon="pi pi-pencil" label="Edit Column"
+                          (click)="editFuelType(fuel)"></button>
+                </div>
+                <div class="flex justify-content-end">
+                  <button pButton class="btn-style mr-2" pRipple icon="pi pi-file-excel" (click)="exportExcel(fuel)"></button>
+                  <p-button (click)="deleteFuelType($event, fuel)" icon="pi pi-times" styleClass="btn-dark"></p-button>
+                </div>
               </div>
               <p-table [value]="fuel.rows" styleClass="p-datatable-sm" #table [style]="{padding: 0}"
                        [columns]="getCols(fuel.cols)" [exportFilename]="fuel.type">
