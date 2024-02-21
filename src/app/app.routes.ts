@@ -39,7 +39,10 @@ import {
   EnvirotrackReportDemandComponent
 } from "./pages/envirotrack/report/envirotrack-report-demand/envirotrack-report-demand.component";
 
+
+
 export const routes: Routes = [
+
   {path: '', component: LandingPageComponent},
   {path:'home',component:HeroComponent},
   {path: 'pet', component: PetComponent},
@@ -49,7 +52,7 @@ export const routes: Routes = [
   {path:'login',component: LoginComponent},
   {path:'chat',component: ChatDialogTplComponent},
   {path:'live-chat',component:LiveChatTplComponent},
-  {path:'registration',component:RegistrationFormComponent},
+  {path:'registration',component:RegisterComponent},
   {
     path: 'envirotrack', children: [
       {path: 'import', component: ImportEnvirotrackComponent},
