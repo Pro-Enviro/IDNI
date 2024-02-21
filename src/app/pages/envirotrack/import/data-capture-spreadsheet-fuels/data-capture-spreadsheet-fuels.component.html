@@ -6,10 +6,10 @@
       <div class="col-12">
 
         <p-panel header="Select Company">
-          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"></p-dropdown>
+          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
         </p-panel>
 
-        <p-panel header="Non HH Data" [style]="{'min-width':'1000px', 'paddingBottom':'300px'}">
+        <p-panel header="Non HH Data" [style]="{'min-width':'1000px', 'paddingBottom':'300px','paddingTop':'30px'}">
           <div class="pb-5">
             <button pButton (click)="addFuelType()" label="Add New Fuel Type" icon="pi pi-plus" class="btn-style"></button>
           </div>
@@ -36,12 +36,12 @@
               <p-confirmDialog header="Confirmation"></p-confirmDialog>
 
               <div class="flex justify-content-end p-5">
-                <button pButton class="btn mr-2" icon="pi pi-plus" label="Import Spreadsheet"
+                <button pButton class="btn-style mr-2" icon="pi pi-plus" label="Import Spreadsheet"
                         (click)="importSpreadsheet(fuel)"></button>
-                <button pButton class="btn-dark mr-2" icon="pi pi-pencil" label="Edit Column"
+                <button pButton class="btn-outline mr-2" icon="pi pi-pencil" label="Edit Column"
                         (click)="editFuelType(fuel)"></button>
-                <button pButton class="btn-dark mr-2" pRipple icon="pi pi-file-excel" (click)="exportExcel(fuel)"></button>
-                <p-button (click)="deleteFuelType($event, fuel)" icon="pi pi-times" styleClass="p-button-danger"></p-button>
+                <button pButton class="btn-style mr-2" pRipple icon="pi pi-file-excel" (click)="exportExcel(fuel)"></button>
+                <p-button (click)="deleteFuelType($event, fuel)" icon="pi pi-times" styleClass="btn-dark"></p-button>
               </div>
               <p-table [value]="fuel.rows" styleClass="p-datatable-sm" #table [style]="{padding: 0}"
                        [columns]="getCols(fuel.cols)" [exportFilename]="fuel.type">
@@ -88,8 +88,9 @@
                   <div class="flex">
                     <button pButton icon="pi pi-plus" class="btn-dark" (click)="addNewRow(fuel)"
                             [style]="{marginTop: '1rem'}"></button>
-                    <button pButton icon="pi pi-save" label="Save" class="btn" (click)="saveFuel()"
-                            [style]="{marginTop: '1rem', marginLeft: '0.5rem'}"></button>
+                  </div>
+                  <div class="flex mt-5">
+                    <button pButton icon="pi pi-save" label="Save" class="btn-style" (click)="saveFuel()"></button>
                   </div>
                 </ng-template>
               </p-table>

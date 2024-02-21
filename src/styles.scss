@@ -71,6 +71,31 @@
   }
 }
 
+.drop-column {
+  .p-button {
+    color: #ffffff;
+    background: $primeColor;
+    border: 1px solid $primeColor;
+  }
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #ffffff;
+  border-color: $primeColor;
+  color: $darkColor;
+}
+
+.p-datatable .p-sortable-column.p-highlight {
+  background: #EFF6FF;
+  color: $darkColor;
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #ffffff;
+  border-color: $primeColor;
+  color: $darkColor;
+}
+
   //CONTAINER
   .container { margin-left: auto; margin-right: auto; }
   @media only screen and (max-width: 767px) { .container { max-width: 100%; } }

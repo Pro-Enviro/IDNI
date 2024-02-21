@@ -73,14 +73,14 @@
     <p-panel header="Data Team Admin" [style]="{marginTop: '0.5rem'}" class="col-5">
      <div class="flex flex-column">
        <label class="mb-3">Choose a custom Conversion Factor</label>
-       <p-dropdown appendTo="body" [options]="fuelTypes" [(ngModel)]="customConversionFactor" ></p-dropdown>
+       <p-dropdown appendTo="body" [options]="fuelTypes" [(ngModel)]="customConversionFactor" scrollHeight="350px"></p-dropdown>
      </div>
     </p-panel>
   </div>
 
   <div class="col-6" style="position: fixed; top: 120px; right: 10px">
 
-    <button pButton label="{{editMode ? 'Update' : 'Done'}}" icon="pi pi-save" class="btn" (click)="close()"
+    <button pButton label="{{editMode ? 'Update' : 'Done'}}" icon="pi pi-save" class="btn-style" (click)="close()"
             style="margin-bottom: 2rem; margin-left: 1rem"></button>
 
     <p-panel header="Available Columns" styleClass="drag-column" pDroppable (onDrop)="dropB()" class="drop-column"
@@ -96,10 +96,13 @@
     </p-panel>
 
     <p-panel header="Custom Columns" [style]="{marginTop: '0.5rem'}">
-      <label>Column Name</label>
-      <input pInputText [(ngModel)]="newColumn">
-      <button pButton class="btn" icon="pi pi-plus" label="Create Column" (click)="addToOptionalColumns()"
-              style="margin-left: 1rem"></button>
+     <div class="flex flex-column">
+           <label class="pb-3">Column Name</label>
+           <input pInputText [(ngModel)]="newColumn" class="w-4 mb-2">
+         </div>
+      <div class="">
+        <button pButton class="btn-style" icon="pi pi-plus" label="Create Column" (click)="addToOptionalColumns()"></button>
+      </div>
     </p-panel>
 
 
