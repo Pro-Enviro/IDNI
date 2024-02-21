@@ -26,7 +26,6 @@ export class ChatService {
       }));
   }
 
-
   receive = () => {
     return this.http.get<chat>('https://app.idni.eco/items/chat').pipe(
       map((x:any) => {

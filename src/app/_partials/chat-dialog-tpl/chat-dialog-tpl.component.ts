@@ -14,7 +14,7 @@ import {MessageModule} from "primeng/message";
 
 export interface formChat{
   name?: string;
-  company_name?: string;
+  company?: string;
   email?: string;
 }
 
@@ -42,14 +42,13 @@ export interface formChat{
 export class ChatDialogTplComponent {
 
   name?: string;
-  company_name?: string;
+  company?: string;
   email?:string;
 
   constructor(
     private chat: ChatService,
     private router: Router
   ) {
-
 
   }
 
@@ -58,9 +57,8 @@ export class ChatDialogTplComponent {
     this.chat.updateChatUser({
       name: this.name,
       email: this.email,
-      company_name: this.company_name
+      company: this.company
     })
-
     this.router.navigate(['live-chat'])
   }
 }

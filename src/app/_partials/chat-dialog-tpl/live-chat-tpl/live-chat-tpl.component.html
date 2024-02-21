@@ -1,33 +1,20 @@
 <section>
   <div class="container relative" style="padding:15px">
     <div class="chat-container">
-      <div class="flex justify-content-end p-3">
-        <p-toast></p-toast>
-        <p-confirmDialog #confirmDialog>
-          <ng-template pTemplate="headless" let-dialog>
-            <div class="flex flex-column align-items-center p-5 surface-overlay border-round">
-              <div class="border-circle confirm-dialog-icon">
-                <i class="pi pi-question text-5xl"></i>
-              </div>
-              <span class="font-bold text-2xl block mb-2 mt-4">{{ dialog.header }}</span>
-              <p class="mb-0">{{ dialog.message}}</p>
-              <div class="flex align-items-center gap-2 mt-4">
-                <button pButton label="Save" (click)="confirmDialog.accept()" class="btn-style w-8rem"></button>
-                <button pButton label="Cancel" (click)="confirmDialog.reject()" class="btn-outline w-8rem"></button>
-              </div>
-            </div>
-          </ng-template>
-        </p-confirmDialog>
-        <p-button icon="pi pi-times" iconPos="right" [rounded]="true" size="large" styleClass="close-btn" label="End Chat" (click)="confirm($event)"></p-button>
-      </div>
       <div class="chatbox-nav">
         <img src="assets/img/idni-logo.svg" height="100px" class="ml-2">
         <h3 class="header-style text-4xl mr-5">IDNI Q&A</h3>
       </div>
+      @if (scrollButton){
+        <div class="flex justify-content-end p-5">
+          <button pButton (click)="scrollToBottom($event)" label="Go to bottom" icon="pi pi-arrow-down" class="btn-dark"></button>
+        </div>
+      }
       <div class="flex flex-row justify-content-center pt-3">
         <p class="text-gray-600 font-medium text-xl font-italic">{{currentDate | date:'EEEE dd.MM.yyyy'}}</p>
       </div>
-      <div class="chat" #chat>
+      <div class="chat" #chat (scrollend)="onScrollEnd()">
+
 <!--        <pre>{{messages | json}}</pre>-->
         @for (message of messages; track $index){
         @if(message.email != user.email){
@@ -38,12 +25,12 @@
               </div>
               <div class="assistant-text-container flex flex-row">
                 @if(message.name){
-                <p-avatar [label]="message.name.substring(0,1)" class="pt-5 pr-2" size="normal" styleClass="assist-logo"></p-avatar>
+                <p-avatar [label]="message.name.substring(0,1).toUpperCase()" class="pt-5 pr-2" size="normal" styleClass="assist-logo"></p-avatar>
                 }
                 <p>{{message.message}}</p>
               </div>
               <div class="flex flex-row">
-                <span class="span-style">{{message.dateTime | date:'hh:mm'}}</span>
+                <span class="span-style">{{message.dateTime | date:'H:mm'}}</span>
                 <span class="span-style">{{message.status}}</span>
               </div>
             </div>
@@ -57,11 +44,11 @@
              <div class="user-text-container flex flex-row">
                <p>{{message.message}}</p>
                @if(message.name){
-               <p-avatar [label]="message.name.substring(0,1)" class="pt-5 pl-2" size="normal" styleClass="user-logo"></p-avatar>
+               <p-avatar [label]="message.name.substring(0,1).toUpperCase()" class="pt-5 pl-2" size="normal" styleClass="user-logo"></p-avatar>
                }
              </div>
              <div class="flex flex-row justify-content-end">
-               <span class="span-style">{{message.dateTime | date:'hh:mm'}}</span>
+               <span class="span-style">{{message.dateTime | date:'H:mm'}}</span>
                <span class="span-style">{{message.status}}</span>
              </div>
            </div>
@@ -71,7 +58,7 @@
       </div>
       <div class="message-container">
         <div class="message-input">
-          <input type="text" class="inputText" placeholder="Type your message here" [(ngModel)]="message" #inputBox (keyup.enter)="onKey($event)"/>
+          <input type="text" class="inputText" placeholder="Type your message here" [(ngModel)]="message" (keyup.enter)="onKey($event)"/>
         </div>
         <span class="message-icon pr-4">
           <p-button icon="pi pi-send" [rounded]="true" styleClass="chat-btn" (onClick)="sendMessage()"></p-button>
@@ -80,4 +67,7 @@
     </div>
   </div>
 </section>
+<!--@if (scrollButton){-->
+<!--  <button pButton (click)="scrollToBottom($event)" label="Go to bottom"></button>-->
+<!--}-->
 
