@@ -52,7 +52,7 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     private track: EnvirotrackService,
     private confirmationService: ConfirmationService,
   ) {
-    // this.uomOptions = this.global.supplyUnit
+    this.uomOptions = this.track.supplyUnit
     if (this.track.selectedCompany.value) {
       this.selectedCompany = this.track.selectedCompany.value
       this.getFuelData()

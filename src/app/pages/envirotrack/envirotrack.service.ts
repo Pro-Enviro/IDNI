@@ -7,6 +7,7 @@ import {BehaviorSubject} from "rxjs";
   providedIn: 'root'
 })
 export class EnvirotrackService {
+  public supplyUnit: string[] = ['kWh', 'tonnes', 'litres', 'kg']
   url: any = `https://app.idni.eco`
   selectedCompany: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   constructor(
