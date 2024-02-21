@@ -4,6 +4,11 @@
   <div class="container">
     <div class="grid">
       <div class="col-12">
+
+        <p-panel header="Select Company">
+          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"></p-dropdown>
+        </p-panel>
+
         <p-panel header="Non HH Data" [style]="{'min-width':'1000px', 'paddingBottom':'300px'}">
           <div class="pb-5">
             <button pButton (click)="addFuelType()" label="Add New Fuel Type" icon="pi pi-plus" class="btn-style"></button>

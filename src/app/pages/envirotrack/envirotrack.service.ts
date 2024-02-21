@@ -19,6 +19,14 @@ export class EnvirotrackService {
     return this.http.get(`${this.url}/items/companies`)
   }
 
+  getFuelData = (id: number) => {
+    return this.http.get(`${this.url}/items/companies/${id}?fields=fuel_data`)
+  }
+
+  saveFuelData = (id: number, data: { fuel_data: string }) => {
+    return this.http.patch(`${this.url}/items/companies/${id}?fields=fuel_data`, data)
+  }
+
   uploadData = (data: any, company: number) => {
     return this.http.post(`${this.url}/items/envirotrack`, data)
     //return this.http.patch(`${this.url}/items/companies/${company}`, {envirotrack: data})
