@@ -4,7 +4,7 @@ import {DatePipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {AvatarModule} from "primeng/avatar";
 import {ChipModule} from "primeng/chip";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ToastModule} from "primeng/toast";
 import {Message, PrimeNGConfig} from "primeng/api";
@@ -13,6 +13,7 @@ import {ChatService} from "../../../_services/chat.service";
 import {formChat} from "../chat-dialog-tpl.component";
 import {TagModule} from "primeng/tag";
 import {MessagesModule} from "primeng/messages";
+import moment from "moment";
 
 
 export interface chat{
@@ -61,6 +62,7 @@ export class LiveChatTplComponent implements OnInit  {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private chatService: ChatService,
+    private router: Router
   ) {
     this.user = this.chatService.chatUserDetails
     this.getMessages();
@@ -69,16 +71,8 @@ export class LiveChatTplComponent implements OnInit  {
   getMessages = ()=> {
     this.chatService.receive().subscribe({
       next: (res:chat[]) => {
-        console.log(res)
-        return this.messages = res.filter(message => {
-          const messageDate = new Date();
-          const oneDayAgo = new Date();
-
-          oneDayAgo.setDate(oneDayAgo.getDate() - 1);
-          return messageDate > oneDayAgo;
-        });
+        return this.messages = res.filter((message:chat)=> moment(message.dateTime).format('YYYY-MM-DD') === moment(new Date()).format('YYYY-MM-DD'));
       }
-
     })
   }
 
@@ -121,9 +115,9 @@ export class LiveChatTplComponent implements OnInit  {
 
   // CLEAR THE CHAT AFTER ONE DAY
   ngOnInit(): void {
-    const currentDate = new Date();
-    this.chat = '';
+    !this.user.email ? this.router.navigate(['chat']) : null
 
+    setInterval(this.getMessages, 1000)
   }
 
 
