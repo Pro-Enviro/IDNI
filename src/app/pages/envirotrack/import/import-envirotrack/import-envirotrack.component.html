@@ -5,7 +5,7 @@
     <div class="grid">
       <div class="col-12">
         <p-panel *ngIf="!fileContent" header="Select Company" [style]="{width: '60%', margin: 'auto', marginTop:'5rem'}" >
-          <p-dropdown [options]="companies" optionLabel="name" optionValue="id" [(ngModel)]="selectedCompany"></p-dropdown>
+          <p-dropdown [options]="companies" optionLabel="name" optionValue="id" [(ngModel)]="selectedCompany" [style]="{ width: '12rem'}"></p-dropdown>
         </p-panel>
       </div>
       <div class="col-12">
@@ -61,7 +61,7 @@
                 <p-panel header="Data Type">
                   <ul class="list-none flex flex-column gap-2 p-0 m-0">
                     <li class="p-2 border-round shadow-1">
-                      <p-toggleButton [(ngModel)]="reactiveData" onLabel="kVAr" offLabel="kWh" [style]="{ width: '10em', background:'#006633',color:'#ffffff'}"></p-toggleButton>
+                      <p-toggleButton [(ngModel)]="reactiveData" onLabel="kVAr" offLabel="kWh" [style]="{ width: '10em', background:'#356c6b',color:'#ffffff'}"></p-toggleButton>
                     </li>
                   </ul>
                 </p-panel>
@@ -78,7 +78,9 @@
               </ng-template>
             </p-table>
 
-            <button pButton class="btn-style pt-3" icon="pi pi-cog" label="Process" (click)="processData()"></button>
+            <div class="pt-3">
+              <button pButton class="btn-style pt-3" icon="pi pi-cog" label="Process" (click)="processData()"></button>
+            </div>
           </p-panel>
         </ng-container>
       </div>
