@@ -81,7 +81,7 @@ export class LiveChatTplComponent implements OnInit  {
     setTimeout(() => {
       let chatScroll = this.chatBoxRef?.nativeElement;
       chatScroll.scrollTop +=500;
-    },500)
+    },1000)
 
     this.chatService.send({
       name: this.user.name,
@@ -117,7 +117,11 @@ export class LiveChatTplComponent implements OnInit  {
   ngOnInit(): void {
     !this.user.email ? this.router.navigate(['chat']) : null
 
-    setInterval(this.getMessages, 1000)
+    setInterval(() =>{
+      this.getMessages();
+      let chatScroll = this.chatBoxRef?.nativeElement;
+      chatScroll.scrollTop +=500;
+    },  1000)
   }
 
 
