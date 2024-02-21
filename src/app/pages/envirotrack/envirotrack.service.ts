@@ -19,6 +19,13 @@ export class EnvirotrackService {
     return this.http.get(`${this.url}/items/companies`)
   }
 
+  getCompanyDetails(id: any, fields: string[]) {
+    return this.http.get(`${this.url}/items/companies/${id}?fields=${fields.toString()}`)
+      .pipe(
+        map((res: any) => res.data)
+      )
+  }
+
   getFuelData = (id: number) => {
     return this.http.get(`${this.url}/items/companies/${id}?fields=fuel_data`)
   }

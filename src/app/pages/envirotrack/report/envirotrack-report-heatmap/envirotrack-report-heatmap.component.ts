@@ -84,6 +84,8 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   }
 
   onPlotClick = (event: any) => {
+
+
     this.dialogRef = this.dialog.open(EnvirotrackDayLineComponent, {
       width: '95vw',
       data: {
@@ -392,24 +394,32 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         // @ts-ignore
         let dateFilter = parseInt(this.dateFilter.substring(1, 2))
         let start!: Date;
-        let end: moment.Moment
+        let end: Date;
         if (dateFilter === 1) {
           start = moment(this.maxDate).subtract(12, 'months').toDate();
+          end = moment(this.maxDate).subtract(9, 'months').toDate()
         }
         if (dateFilter === 2) {
           start = moment(this.maxDate).subtract(9, 'months').toDate();
+          end = moment(this.maxDate).subtract(6, 'months').toDate()
         }
         if (dateFilter === 3) {
           start = moment(this.maxDate).subtract(6, 'months').toDate();
+          end = moment(this.maxDate).subtract(3, 'months').toDate()
         }
         if (dateFilter === 4) {
           start = moment(this.maxDate).subtract(3, 'months').toDate();
+          end = moment(this.maxDate).subtract(0, 'months').toDate()
         }
+
 
         this.filteredData = this.data.filter((x: any) => {
           return moment(x.date).isBetween(moment(start), moment(start).add(3, 'months'))
         })
         this.chartX = this.months.filter((x: any) => moment(x).isBetween(start, end))
+
+
+
       } else {
         this.chartX = this.months
         this.filteredData = this.data
@@ -436,7 +446,12 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   }
 
   initContourChart = (data: any) => {
+    this.chartData.map((row: any) => {
+      row[0] = moment(row[0]).format('YYYY-MM-DD')
+      return row;
+    })
     this.chartData.sort((a: any, b: any) => moment(a[0], 'YYYY-MM-DD') > moment(b[0], 'YYYY-MM-DD'));
+    console.log(data)
 
     this.testChart = {
       data: [{
