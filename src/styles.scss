@@ -188,9 +188,11 @@
       gap: 1.5rem;
       overflow: hidden;
       padding:20px;
+      scroll-behavior: smooth;
       &:hover{
         overflow: hidden;
         overflow-y: scroll;
+        scroll-behavior: smooth;
       }
     }
     .chat::-webkit-scrollbar {

@@ -76,12 +76,14 @@ export class LiveChatTplComponent implements OnInit  {
     })
   }
 
-  sendMessage= () => {
-    //Scroll Top
+  scrollEffect = () => {
     setTimeout(() => {
       let chatScroll = this.chatBoxRef?.nativeElement;
       chatScroll.scrollTop +=500;
     },1000)
+  }
+
+  sendMessage= () => {
 
     this.chatService.send({
       name: this.user.name,
@@ -119,8 +121,7 @@ export class LiveChatTplComponent implements OnInit  {
 
     setInterval(() =>{
       this.getMessages();
-      let chatScroll = this.chatBoxRef?.nativeElement;
-      chatScroll.scrollTop +=500;
+     this.scrollEffect();
     },  1000)
   }
 
