@@ -70,10 +70,15 @@ export class ImportEnvirotrackComponent {
   constructor(
     private track: EnvirotrackService,
     private msg: MessageService,
-    private papa: Papa
+    private papa: Papa,
   ) {
     moment.locale('en-gb')
     moment().format('L')
+
+    if (this.track.selectedCompany.value) {
+      this.selectedCompany = this.track.selectedCompany.value
+    }
+
     this.getCompanies();
   }
 

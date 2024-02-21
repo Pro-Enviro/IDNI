@@ -53,6 +53,9 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     private confirmationService: ConfirmationService,
   ) {
     // this.uomOptions = this.global.supplyUnit
+    if (this.track.selectedCompany.value) {
+      this.selectedCompany = this.track.selectedCompany.value
+    }
   }
 
   showDialog = (fuel: any) => {
