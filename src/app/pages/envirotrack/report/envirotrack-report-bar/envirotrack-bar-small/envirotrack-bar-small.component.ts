@@ -1,33 +1,31 @@
 import { Component } from '@angular/core';
-import {EChartsOption} from "echarts";
-import {EnvirotrackService} from "../../../envirotrack.service";
-import moment from "moment/moment";
-import {PanelModule} from "primeng/panel";
-import {SelectButtonModule} from "primeng/selectbutton";
 import {CalendarModule} from "primeng/calendar";
-import {NgxEchartsDirective} from "ngx-echarts";
-
 import {DropdownModule} from "primeng/dropdown";
 import {NgIf} from "@angular/common";
+import {NgxEchartsDirective} from "ngx-echarts";
+import {PanelModule} from "primeng/panel";
+import {SelectButtonModule} from "primeng/selectbutton";
 import {SharedModules} from "../../../../../shared-module";
+import * as echarts from "echarts";
+import {EnvirotrackService} from "../../../envirotrack.service";
+import moment from "moment/moment";
 
 @Component({
-  selector: 'app-envirotrack-small-pie-chart',
+  selector: 'app-envirotrack-bar-small',
   standalone: true,
   imports: [
-    PanelModule,
-    SelectButtonModule,
     CalendarModule,
-    NgxEchartsDirective,
-
     DropdownModule,
     NgIf,
+    NgxEchartsDirective,
+    PanelModule,
+    SelectButtonModule,
     SharedModules
   ],
-  templateUrl: './envirotrack-small-pie-chart.component.html',
-  styleUrl: './envirotrack-small-pie-chart.component.scss'
+  templateUrl: './envirotrack-bar-small.component.html',
+  styleUrl: './envirotrack-bar-small.component.scss'
 })
-export class EnvirotrackSmallPieChartComponent {
+export class EnvirotrackBarSmallComponent {
   data: any;
   months: string[] = [];
   filteredData: any;
@@ -36,7 +34,7 @@ export class EnvirotrackSmallPieChartComponent {
   chartData: any = [];
   chartX: string[] = [];
   chartY: string[] = [];
-  chartOptions!: EChartsOption;
+  chartOptions!: echarts.EChartsOption;
   max: number = 0;
   dateFilter: number = 12;
   defaultFilters: object[] = [{
@@ -51,9 +49,6 @@ export class EnvirotrackSmallPieChartComponent {
   },{
     name: 'Past 3 months',
     value: 3
-  },{
-    name: 'Past 1 months',
-    value: 1
   }];
   dateRange: any;
   minDate!: Date;
@@ -66,23 +61,39 @@ export class EnvirotrackSmallPieChartComponent {
     private track: EnvirotrackService,
   ) {}
 
-
+  // saveChartAsBase64 = () => {
+  //   console.log('saving as base 64');
+  //   if (!this.chartOptions) return;
+  //
+  //   // Create temporary chart that uses echarts.instanceOf
+  //   const div = document.createElement('div')
+  //   div.style.width = '1200px'
+  //   div.style.height = '1200px'
+  //
+  //   const temporaryChart = echarts.init(div)
+  //
+  //   temporaryChart.setOption({...this.chartOptions, animation: false})
+  //
+  //   const data = temporaryChart.getDataURL({
+  //     backgroundColor: '#fff',
+  //     pixelRatio: 2
+  //   })
+  //   console.log(data);
+  //   return data;
+  // }
   initChart = () => {
     this.chartOptions = {
       legend: {
         show: true,
-        top: 50,
-        left: 'center'
       },
-      grid:{
-        bottom:'100'
+      grid: {
+        left: '140'
       },
       title: {
         text: 'Electricity Consumption, kWh',
         left: 'center',
-        top:10,
         textStyle:{
-          fontSize: this.screenWidth >= 1441 ? 16 : 12,
+          fontSize: this.screenWidth >= 1441 ? 16: 12
         }
       },
       graphic: {
@@ -94,14 +105,25 @@ export class EnvirotrackSmallPieChartComponent {
           image: '/assets/img/pro-enviro-logo-email.png',
           x: 0,
           y: 0,
-          width: this.screenWidth >= 1441 ? 200 : 120,
+          width: this.screenWidth >= 1441 ? 200: 120,
           height: this.screenWidth >= 1441 ? 50 : 30
         }
+      },
+      xAxis: {
+        type: 'category',
+        data: this.chartX,
+        name: 'Date',
+        nameLocation: "middle",
+        nameTextStyle: {
+          fontSize: 16,
+          fontWeight: "bold"
+        },
+        nameGap: 40
       },
       tooltip: {
         extraCssText: 'text-transform: capitalize',
         trigger: 'item',
-        formatter: '{b} ({d}%)',
+        formatter: `{a} <br />{b}: {c}`,
         axisPointer: {
           type: 'cross',
           label: {
@@ -117,24 +139,19 @@ export class EnvirotrackSmallPieChartComponent {
           }
         }
       },
+      yAxis: {
+        type: 'value',
+        name: 'kWh',
+        nameLocation: "middle",
+        nameTextStyle: {
+          fontSize: 16,
+          fontWeight: "bold"
+        },
+        nameGap: 70
+      },
       series: [{
-        top:100,
-        type: 'pie',
+        type: 'bar',
         data: this.chartData,
-        radius: this.screenWidth >= 1441 ? [50,200] : [30,100],
-        label: {
-          formatter: '{b}  {per|{d}%}',
-          fontSize: 14,
-          rich: {
-            per: {
-              fontWeight: "bold",
-              fontSize: 18
-            }
-          }
-        },
-        itemStyle: {
-          borderRadius: 5
-        },
         emphasis: {
           itemStyle: {
             borderColor: '#333',
@@ -147,10 +164,8 @@ export class EnvirotrackSmallPieChartComponent {
 
   getCompanies = () =>{
     this.track.getCompanies().subscribe({
-      next: (res: any)=>{
-        if (res.data) {
-          this.companies = res.data
-        }
+      next: (res: any) => {
+        this.companies = res.data;
       }
     })
   }
@@ -161,7 +176,7 @@ export class EnvirotrackSmallPieChartComponent {
     this.getData(this.selectedCompany)
   }
 
-  getTimes = () => {
+  getTimes = () =>{
     for(let i = 0; i < 48; i++){
       this.chartY.push(moment('00:00', 'HH:mm').add(i*30, 'minutes').format('HH:mm'))
     }
@@ -174,11 +189,11 @@ export class EnvirotrackSmallPieChartComponent {
     this.chartX = [];
     this.chartY = [];
     this.track.getData(id).subscribe({
-        next: (res) => {;
+        next: (res) => {
           res.forEach((row: any) => {
             row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
             this.months.push(row.date)
-            !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan):  null;
+            !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
 
           // if (this.global.selectedMpan?.value) {
@@ -203,6 +218,7 @@ export class EnvirotrackSmallPieChartComponent {
 
   filterData = () =>{
 
+    this.chartData = [];
     if(this.dateRange != undefined && this.dateRange[1]){
       this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
       this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
@@ -215,62 +231,17 @@ export class EnvirotrackSmallPieChartComponent {
         this.filteredData = this.data
       }
     }
-
-
-    let monday: any[] = [];
-    let tuesday: any[] = [];
-    let wednesday: any[] = [];
-    let thursday: any[] = [];
-    let friday: any[] = [];
-    let saturday: any[] = [];
-    let sunday: any[] = [];
     this.filteredData = this.filteredData.filter((x:any) => x.mpan === this.selectedMpan)
-
-
-
     this.filteredData.forEach((row: any) => {
       row.hhd.forEach((hh: any, i:number) => {
         hh = hh ? hh : 0;
         row.hhd[i] = !isNaN(parseInt(hh.toString())) ? hh : 0
       })
-      if(row.hhd.length) {
-        switch (moment(row.date).format('dddd')) {
-          case 'Monday':
-            monday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
-            break;
-          case 'Tuesday':
-            tuesday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
-            break;
-          case 'Wednesday':
-            wednesday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
-            break;
-          case 'Thursday':
-            thursday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
-            break;
-          case 'Friday':
-            friday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
-            break;
-          case 'Saturday':
-            saturday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
-            break;
-          case 'Sunday':
-            sunday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
-            break;
-          default:
-            break;
-        }
+      if(row.hhd.length){
+        this.chartData.push([row.date, row.hhd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
       }
-    })
-    this.chartData = [
-      { name: 'Sunday', value: sunday.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) ) },
-      { name: 'Monday', value: monday.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) ) },
-      { name: 'Tuesday', value: tuesday.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) ) },
-      { name: 'Wednesday', value: wednesday.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) ) },
-      { name: 'Thursday', value: thursday.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) ) },
-      { name: 'Friday', value: friday.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) ) },
-      { name: 'Saturday', value: saturday.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )}
-    ]
 
+    })
 
     let arr: number[] = this.chartData.map((x:any) => x[2])
     this.max = Math.max(...arr)
@@ -285,6 +256,6 @@ export class EnvirotrackSmallPieChartComponent {
       this.getData(this.selectedCompany)
     }
 
-    this.screenWidth = window.innerWidth;
+    this.screenWidth = window.innerWidth
   }
 }
