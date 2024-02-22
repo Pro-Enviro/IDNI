@@ -1,12 +1,14 @@
 <section>
   <div class="p-8">
-    <div class="grid">
-      <div class="col-2">
+    <div class="flex justify-content-center">
+      <div class="mr-4">
         <p-panel header="Charts">
-          <p-menu [model]="items" styleClass="charts-bar"></p-menu>
+          <div class="flex">
+            <p-menu [model]="items" styleClass="charts-bar"></p-menu>
+          </div>
         </p-panel>
       </div>
-      <div class="col-9">
+      <div class="flex">
         <router-outlet></router-outlet>
       </div>
     </div>
