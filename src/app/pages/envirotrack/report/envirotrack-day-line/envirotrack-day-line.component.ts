@@ -37,6 +37,10 @@ export class EnvirotrackDayLineComponent implements OnInit {
       legend: {
         show: false
       },
+      grid: {
+        top: '100',
+        left: '200'
+      },
       tooltip: {
         extraCssText: 'text-transform: capitalize',
         trigger: 'item',
