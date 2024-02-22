@@ -27,6 +27,21 @@
     border-top: 1px solid $primeColor;
   }
 
+.charts-bar {
+  padding: 0.5rem 0;
+  background: white;
+  color: #4b5563;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  width: 20rem;
+  a{
+    font-size:18px;
+  }
+  span.material-symbols-outlined.material-icon{
+    color:$darkColor;
+  }
+}
+
   //----------------------------------------------------BUTTON----------------------------------------------------------
 
 .btn-select{

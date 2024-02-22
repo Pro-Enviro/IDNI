@@ -4,7 +4,7 @@
   <div class="container">
     <div class="grid">
       <div class="col-12">
-        <p-panel *ngIf="!fileContent" header="Select Company" [style]="{width: '60%', margin: 'auto', marginTop:'5rem'}" >
+        <p-panel *ngIf="!fileContent" header="Select Company" [style]="{width: '60%', margin: 'auto', marginTop:'5rem'}">
           <p-dropdown [options]="companies" optionLabel="name" optionValue="id" [(ngModel)]="selectedCompany" [style]="{ width: '12rem'}"></p-dropdown>
         </p-panel>
       </div>
