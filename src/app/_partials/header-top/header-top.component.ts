@@ -44,6 +44,21 @@ export class HeaderTopComponent {
   //   url: 'https://my.proenviro.co.uk'
   // }
   ];
+
+  envirotrackPage: MenuItem[] = [
+    {
+      label:'<span class="material-symbols-outlined">stacked_line_chart</span> Envirotrack Import',
+      routerLink:'envirotrack/import'
+    },
+    {
+      label:'<span class="material-symbols-outlined">monitoring</span> Envirotrack Report',
+      routerLink:'envirotrack/report/heatmap'
+    },
+    {
+      label:'<span class="material-symbols-outlined">flowsheet</span> Fuel Data',
+      routerLink:'envirotrack/fuel-data',
+    }
+  ]
   constructor(/*db: DbService*/) {
    /* db.getMenu().subscribe({
       next: (res: any) => this.menuItems = res.map((item: any) => {

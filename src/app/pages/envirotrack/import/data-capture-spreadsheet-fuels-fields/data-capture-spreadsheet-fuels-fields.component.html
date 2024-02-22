@@ -80,7 +80,7 @@
 
   <div class="col-6" style="position: fixed; top: 120px; right: 10px">
 
-    <button pButton label="{{editMode ? 'Update' : 'Done'}}" icon="pi pi-save" class="btn-style" (click)="close()"
+    <button pButton label="{{editMode ? 'Update' : 'Done'}}" icon="pi pi-spin pi-spinner" class="btn-dark" (click)="close()"
             style="margin-bottom: 2rem; margin-left: 1rem"></button>
 
     <p-panel header="Available Columns" styleClass="drag-column" pDroppable (onDrop)="dropB()" class="drop-column"
