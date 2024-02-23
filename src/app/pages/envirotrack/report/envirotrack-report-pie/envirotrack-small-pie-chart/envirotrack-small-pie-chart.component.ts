@@ -150,6 +150,8 @@ export class EnvirotrackSmallPieChartComponent {
       next: (res: any)=>{
         if (res.data) {
           this.companies = res.data
+          this.selectedCompany = res.data[0].id
+          this.onSelectCompany()
         }
       }
     })
