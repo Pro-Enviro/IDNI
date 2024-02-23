@@ -44,7 +44,7 @@ import {
 export const routes: Routes = [
 
   {path: '', component: LandingPageComponent},
-  {path:'home',component:HeroComponent},
+  {path:'home',component: LandingPageComponent},
   {path: 'pet', component: PetComponent},
   {path: 'coming-soon', component: ConstructionComponent},
   {path:'local-decarbonisation', component:LocalDecarbonisationComponent},

@@ -17,14 +17,14 @@ import {StorageService} from "../../_services/storage.service";
   styleUrl: './header-top.component.scss'
 })
 export class HeaderTopComponent {
-  menuItems: MegaMenuItem[] = this.storage.getMenu.map((x:any) => {
-    return {
-      label: x.pagetitle,
-      routerLink: x.alias
-    }
-  });
+  menuItems!: MegaMenuItem[];
   constructor(private storage: StorageService) {
-
+    this.menuItems = this.storage.getMenu.map((x:any) => {
+      return {
+        label: x.pagetitle,
+        routerLink: x.alias
+      }
+    });
   }
   ngOnInit() {
     this.burgerMenuClick();
