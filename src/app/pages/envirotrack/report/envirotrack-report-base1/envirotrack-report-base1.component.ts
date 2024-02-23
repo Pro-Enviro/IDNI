@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import moment from "moment";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {EChartsOption} from "echarts";
@@ -16,7 +16,7 @@ import {SharedComponents} from "../../shared-components";
   styleUrls: ['./envirotrack-report-base1.component.scss']
 })
 
-export class EnvirotrackReportBase1Component {
+export class EnvirotrackReportBase1Component implements OnInit {
   data: any;
   months: string[] = [];
   filteredData: any;
@@ -117,37 +117,36 @@ export class EnvirotrackReportBase1Component {
     }
   }
 
-  saveChartAsBase64 = () => {
-    if (!this.chartOptions) return;
-
-    // Create temporary chart that uses echarts.instanceOf
-    const div = document.createElement('div')
-    div.style.width = '1200px'
-    div.style.height = '1200px'
-
-    const temporaryChart = echarts.init(div)
-
-    temporaryChart.setOption({...this.chartOptions, animation: false})
-
-    const data = temporaryChart.getDataURL({
-      backgroundColor: '#fff',
-      pixelRatio: 4
-    })
-    return data;
-  }
+  // saveChartAsBase64 = () => {
+  //   if (!this.chartOptions) return;
+  //
+  //   // Create temporary chart that uses echarts.instanceOf
+  //   const div = document.createElement('div')
+  //   div.style.width = '1200px'
+  //   div.style.height = '1200px'
+  //
+  //   const temporaryChart = echarts.init(div)
+  //
+  //   temporaryChart.setOption({...this.chartOptions, animation: false})
+  //
+  //   const data = temporaryChart.getDataURL({
+  //     backgroundColor: '#fff',
+  //     pixelRatio: 4
+  //   })
+  //   return data;
+  // }
 
   getCompanies = () =>{
-    // this.track.getCompanies().subscribe({
-    //   next: (res)=>{
-    //     this.selectedCompany = res[0].id
-    //     this.companies = res;
-    //     this.getData(this.selectedCompany)
-    //   }
-    // })
+    this.track.getCompanies().subscribe({
+      next: (res: any)=>{
+        this.companies = res.data;
+      }
+    })
   }
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
+    this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
   }
 
@@ -166,9 +165,9 @@ export class EnvirotrackReportBase1Component {
     this.track.getData(id).subscribe({
         next: (res) => {
           res.forEach((row: any) => {
-            row.hdd = JSON.parse(row.hdd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
-            if(row.hdd.length){
-              row.total = row.hdd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0))
+            row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
+            if(row.hhd.length){
+              row.total = row.hhd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0))
             }
 
             this.months.push(row.date)
@@ -233,7 +232,7 @@ export class EnvirotrackReportBase1Component {
     this.chartData =  [{
       type: 'line',
       name: cDay.date,
-      data: cDay.hdd,
+      data: cDay.hhd,
       emphasis: {
         itemStyle: {
           borderColor: '#333',
@@ -243,7 +242,7 @@ export class EnvirotrackReportBase1Component {
     },{
       type: 'line',
       name: lowDay.date,
-      data: lowDay.hdd,
+      data: lowDay.hhd,
       emphasis: {
         itemStyle: {
           borderColor: '#333',
@@ -257,6 +256,12 @@ export class EnvirotrackReportBase1Component {
 
   ngOnInit() {
     this.getCompanies();
+
+    if (this.track.selectedCompany.value) {
+      this.selectedCompany = this.track.selectedCompany.value
+      this.getData(this.selectedCompany)
+    }
+
     this.screenWidth = window.innerWidth;
   }
 }

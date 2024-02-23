@@ -2,11 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import * as echarts from "echarts";
 import {EnvirotrackService} from "../../envirotrack.service";
 import moment from "moment/moment";
-import {PlotlyService, PlotlySharedModule} from "angular-plotly.js";
+import { PlotlyService, PlotlySharedModule, PlotlyViaCDNModule} from "angular-plotly.js";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {EnvirotrackDayLineComponent} from "../envirotrack-day-line/envirotrack-day-line.component";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
+
+PlotlyViaCDNModule.setPlotlyVersion('latest')
 
 
 @Component({
@@ -14,12 +16,14 @@ import {SharedComponents} from "../../shared-components";
   standalone: true,
   templateUrl: './envirotrack-report-heatmap.component.html',
   providers: [
-    DialogService
+    DialogService,
+    PlotlyService
   ],
   imports: [
     SharedModules,
     SharedComponents,
     PlotlySharedModule,
+    PlotlyViaCDNModule
   ],
   styleUrls: ['./envirotrack-report-heatmap.component.scss']
 })
@@ -80,6 +84,8 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   }
 
   onPlotClick = (event: any) => {
+
+
     this.dialogRef = this.dialog.open(EnvirotrackDayLineComponent, {
       width: '95vw',
       data: {
@@ -88,44 +94,43 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         mpan: this.selectedMpan
       }
     })
-
   }
 
 
-  saveChartAsBase64 = () => {
-    if (!this.chartOptions) return;
-    // Create temporary chart that uses echarts.instanceOf
-    const div = document.createElement('div')
-    div.style.width = '1200px'
-    div.style.height = '1200px'
+  // saveChartAsBase64 = () => {
+  //   if (!this.chartOptions) return;
+  //   // Create temporary chart that uses echarts.instanceOf
+  //   const div = document.createElement('div')
+  //   div.style.width = '1200px'
+  //   div.style.height = '1200px'
+  //
+  //   const temporaryChart = echarts.init(div)
+  //
+  //   temporaryChart.setOption({...this.chartOptions, animation: false})
+  //
+  //   const data = temporaryChart.getDataURL({
+  //     backgroundColor: '#fff',
+  //     pixelRatio: 4
+  //   })
+  //   return data;
+  //
+  // }
 
-    const temporaryChart = echarts.init(div)
-
-    temporaryChart.setOption({...this.chartOptions, animation: false})
-
-    const data = temporaryChart.getDataURL({
-      backgroundColor: '#fff',
-      pixelRatio: 4
-    })
-    return data;
-
-  }
-
-  saveDetailedChartAsBase64 = () => {
-    const plotlyRef: any = this.plotlyService.getInstanceByDivId('plotlyChart')
-
-    if (!plotlyRef) {
-      return null;
-      // return this.saveChartAsBase64();
-
-    }
-
-    return this.plotlyService.getPlotly().then((res: any) => {
-      return res.toImage(plotlyRef, {format: 'png', width: 800, height: 600}).then((dataUrl: any) => {
-        return dataUrl;
-      })
-    });
-  }
+  // saveDetailedChartAsBase64 = () => {
+  //   const plotlyRef: any = this.plotlyService.getInstanceByDivId('plotlyChart')
+  //
+  //   if (!plotlyRef) {
+  //     return null;
+  //     // return this.saveChartAsBase64();
+  //
+  //   }
+  //
+  //   return this.plotlyService.getPlotly().then((res: any) => {
+  //     return res.toImage(plotlyRef, {format: 'png', width: 800, height: 600}).then((dataUrl: any) => {
+  //       return dataUrl;
+  //     })
+  //   });
+  // }
 
   initChart3d = () => {
     // @ts-ignore
@@ -321,18 +326,16 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
     }
   }
   getCompanies = () => {
-    // this.track.getCompanies().subscribe({
-    //   next: (res) => {
-    //     this.selectedCompany = res[0].id
-    //     this.companies = res;
-    //     this.getData(this.selectedCompany)
-    //   }
-    // })
+  this.track.getCompanies().subscribe({
+      next: (res: any) => {
+        this.companies = res.data;
+      }
+    })
   }
 
   onSelectCompany = () => {
     this.chartData = [];
-    // this.global.updateSelectedMpan(this.selectedMpan)
+    this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
   }
 
@@ -351,7 +354,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
     this.track.getData(id).subscribe({
         next: (res) => {
           res.forEach((row: any) => {
-            row.hdd = JSON.parse(row.hdd.replaceAll('"', '').replaceAll("'", '')).map((x: number) => x ? x : 0)
+            row.hhd = JSON.parse(row.hhd.replaceAll('"', '').replaceAll("'", '')).map((x: number) => x ? x : 0)
             this.months.push(row.date)
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
@@ -391,24 +394,32 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         // @ts-ignore
         let dateFilter = parseInt(this.dateFilter.substring(1, 2))
         let start!: Date;
-        let end: moment.Moment
+        let end: Date;
         if (dateFilter === 1) {
           start = moment(this.maxDate).subtract(12, 'months').toDate();
+          end = moment(this.maxDate).subtract(9, 'months').toDate()
         }
         if (dateFilter === 2) {
           start = moment(this.maxDate).subtract(9, 'months').toDate();
+          end = moment(this.maxDate).subtract(6, 'months').toDate()
         }
         if (dateFilter === 3) {
           start = moment(this.maxDate).subtract(6, 'months').toDate();
+          end = moment(this.maxDate).subtract(3, 'months').toDate()
         }
         if (dateFilter === 4) {
           start = moment(this.maxDate).subtract(3, 'months').toDate();
+          end = moment(this.maxDate).subtract(0, 'months').toDate()
         }
+
 
         this.filteredData = this.data.filter((x: any) => {
           return moment(x.date).isBetween(moment(start), moment(start).add(3, 'months'))
         })
         this.chartX = this.months.filter((x: any) => moment(x).isBetween(start, end))
+
+
+
       } else {
         this.chartX = this.months
         this.filteredData = this.data
@@ -418,7 +429,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
 
     this.filteredData.forEach((row: any) => {
       if (row.mpan === this.selectedMpan) {
-        row.hdd.forEach((hh: number, i: number) => {
+        row.hhd.forEach((hh: number, i: number) => {
           if (!isNaN(parseInt(hh.toString()))) {
             this.chartData.push([row.date, moment('00:00', 'HH:mm').add(i * 30, 'minutes').format('HH:mm'), hh])
           }
@@ -435,7 +446,12 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   }
 
   initContourChart = (data: any) => {
+    this.chartData.map((row: any) => {
+      row[0] = moment(row[0]).format('YYYY-MM-DD')
+      return row;
+    })
     this.chartData.sort((a: any, b: any) => moment(a[0], 'YYYY-MM-DD') > moment(b[0], 'YYYY-MM-DD'));
+    console.log(data)
 
     this.testChart = {
       data: [{
@@ -520,6 +536,11 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
 
   ngOnInit() {
     this.getCompanies();
+
+    if (this.track.selectedCompany.value) {
+      this.selectedCompany = this.track.selectedCompany.value
+      this.getData(this.selectedCompany)
+    }
     this.screenWidth = window.innerWidth
   }
 }

@@ -1,16 +1,21 @@
- <p-megaMenu [model]="menuItems" styleClass="flex">
-    <ng-template pTemplate="start">
-      <img src="assets/img/idni-logo.svg" height="80" class="mr-2 ml-2" routerLink=""/>
-    </ng-template>
-    <p-button routerLink="login" label="Login" icon="pi pi-user" styleClass="btn-outline" [rounded]="true"></p-button>
-    <p-button label="PET" routerLink="pet" icon="pi pi-cog"  styleClass="btn-style" [rounded]="true"></p-button>
-<!--    <p-button label="temp: import" routerLink="envirotrack/import" icon="pi pi-cog"  styleClass="btn-style" [rounded]="true"></p-button>-->
-<!--    <p-button label="temp: gas-data" routerLink="envirotrack/gas-data" icon="pi pi-cog"  styleClass="btn-style" [rounded]="true"></p-button>-->
-<!--    <p-button label="temp: reports" routerLink="envirotrack/report/heatmap" icon="pi pi-cog"  styleClass="btn-style" [rounded]="true"></p-button>-->
-  </p-megaMenu>
+<p-megaMenu [model]="menuItems" styleClass="flex">
+  <ng-template pTemplate="start">
+    <img src="assets/img/idni-logo.svg" height="80" class="mr-2 ml-2"/>
+  </ng-template>
+  <p-button routerLink="login" label="Login" icon="pi pi-user" styleClass="btn-outline" [rounded]="true"></p-button>
+  <p-button label="PET" routerLink="pet" icon="pi pi-cog" styleClass="btn-style" [rounded]="true"></p-button>
+</p-megaMenu>
+<!-- To move somewhere more appropriate -->
+<!--<p-button label="temp: import" routerLink="envirotrack/import" icon="pi pi-cog" styleClass="btn-style"-->
+<!--          [rounded]="true"></p-button>-->
+<!--<p-button label="temp: Fuel-data" routerLink="envirotrack/fuel-data" icon="pi pi-cog" styleClass="btn-style"-->
+<!--          [rounded]="true"></p-button>-->
+<!--<p-button label="temp: reports" routerLink="envirotrack/report/heatmap" icon="pi pi-cog" styleClass="btn-style"-->
+<!--          [rounded]="true"></p-button>-->
 
-
-
+<!--  <div class="flex justify-content-start envirotrack-menu">-->
+<!--    <p-menubar [model]="envirotrackPage"></p-menubar>-->
+<!--  </div>-->
 <!--<div class="flex justify-content-between flex-wrap navbar-wrapper">-->
 <!--  <div class="p-3">-->
 <!--    <img src="assets/img/idni-logo.svg" class="nav-logo"/>-->

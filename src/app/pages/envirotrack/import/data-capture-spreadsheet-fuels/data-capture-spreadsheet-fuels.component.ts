@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {
   DataCaptureSpreadsheetFuelsFieldsComponent
@@ -13,6 +13,7 @@ import FileSaver from "file-saver";
 
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
+import {EnvirotrackService} from "../../envirotrack.service";
 
 export class Fields {
   type: string = '';
@@ -32,8 +33,9 @@ export class Fields {
     SharedComponents,
   ]
 })
-export class DataCaptureSpreadsheetFuelsComponent {
+export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
   selectedCompany: any;
+  companies: any[] = []
   ref: DynamicDialogRef | undefined;
   fuels: Fields[] = [];
   activeTab: number = 0;
@@ -47,22 +49,14 @@ export class DataCaptureSpreadsheetFuelsComponent {
   constructor(
     private dialog: DialogService,
     private msg: MessageService,
-    // private global: GlobalService,
-    // private admin: AdminService,
+    private track: EnvirotrackService,
     private confirmationService: ConfirmationService,
   ) {
-    // this.uomOptions = this.global.supplyUnit
-  }
-
-
-  getCompany = (id: any) => {
-    if (!id) return;
-    // this.admin.fnGetCompanyDetails(id, ['*']).subscribe({
-    //   next: (res: any) => {
-    //     this.selectedCompany = res;
-    //     this.getFuelData()
-    //   }
-    // })
+    this.uomOptions = this.track.supplyUnit
+    if (this.track.selectedCompany.value) {
+      this.selectedCompany = this.track.selectedCompany.value
+      this.getFuelData()
+    }
   }
 
   showDialog = (fuel: any) => {
@@ -88,6 +82,20 @@ export class DataCaptureSpreadsheetFuelsComponent {
   }
 
   onKeyDown = (event: KeyboardEvent) => event.stopPropagation()
+
+  getCompanies = () => {
+    this.track.getCompanies().subscribe({
+      next: (res: any) => {
+        this.companies = res.data;
+      }
+    })
+  }
+
+  onSelectCompany = () => {
+    this.fetchedFuelData = []
+    this.track.updateSelectedCompany(this.selectedCompany)
+    this.getFuelData()
+  }
 
   deleteFuelType = (event: any, fuel: any) => {
     this.confirmationService.confirm({
@@ -367,113 +375,63 @@ export class DataCaptureSpreadsheetFuelsComponent {
 
 
   getFuelData = () => {
-
     this.fuels = []
 
     if (this.selectedCompany) {
-      // this.admin.fnGetCompanyDetails(this.selectedCompany.id, [
-      //   'fuel_data.*'
-      // ]).subscribe({
-      //   next: (res: any) => {
-      //     this.fetchedFuelData = res.fuel_data;
-      //     // If saved data is found
-      //
-      //     // take the longest all_other_fields
-      //     const all = res.fuel_data.map((row: any) => row.all_other_fields)
-      //     // const longest = all.reduce((acc: any, curr: any) => acc?.length > curr?.length ? acc : curr)
-      //
-      //     // Take earliest created
-      //     const earliestCreated = all.reduce((acc: any, curr: any) => acc?.date_created > curr?.date_created ? acc : curr, [])
-      //
-      //     // Latest updated (attempt at fixing duplicate bug)
-      //     // const latestUpdated = res.fuel_data.reduce((a:any, b:any) => a.date_updated > b.date_updated ? a : b)
-      //
-      //     if (earliestCreated.length) {
-      //       this.fuels = []
-      //       this.fuels = JSON.parse(earliestCreated)
-      //
-      //       this.fuels.map((fuelType: any) => {
-      //         fuelType.rows.map((col: any) => {
-      //
-      //           // Change  DB string to Date for Primeng Calendar
-      //           const findStartDate = col.findIndex((col: any) => col.name === 'Start Date')
-      //           const findEndDate = col.findIndex((col: any) => col.name === 'End Date')
-      //           col[findStartDate].value ? col[findStartDate].value = new Date(col[findStartDate].value) : new Date()
-      //           col[findEndDate].value ? col[findEndDate].value = new Date(col[findEndDate].value) : new Date()
-      //         })
-      //       })
-      //     } else {
-      //       this.fuels = []
-      //     }
-      //   }
-      // })
+      this.track.getFuelData(this.selectedCompany).subscribe({
+        next: (res:any) => {
+          if (res?.data?.fuel_data) {
+
+            this.fuels = JSON.parse(res.data?.fuel_data)
+
+
+              // Change DB string for primeng calendar
+              this.fuels.map((fuelType: any) => {
+                fuelType.rows.map((col: any) => {
+                  const findStartDate = col.findIndex((col: any) => col.name === 'Start Date')
+                  const findEndDate = col.findIndex((col: any) => col.name === 'End Date')
+                  col[findStartDate].value ? col[findStartDate].value = new Date(col[findStartDate].value) : new Date()
+                  col[findEndDate].value ? col[findEndDate].value = new Date(col[findEndDate].value) : new Date()
+                })
+              })
+
+          }
+        },
+        error: (err) => console.log(err),
+
+      })
+
     }
   }
 
   saveFuel = () => {
-    let stringifiedData: any;
-    if (this.fetchedFuelData.length) {
-      stringifiedData = _.cloneDeep(this.fetchedFuelData[0]);
-      stringifiedData.all_other_fields = JSON.stringify(this.fuels)
-    } else {
-      stringifiedData = {
-        all_other_fields: JSON.stringify(this.fuels),
+    const stringifyFuels = JSON.stringify(this.fuels)
+    const dataObject = {fuel_data: stringifyFuels}
+
+
+    this.track.saveFuelData(this.selectedCompany, dataObject).subscribe({
+      next: (res: any) => {
+        if (res?.data?.fuel_data) {
+          this.fuels = JSON.parse(res.data?.fuel_data)
+          // Change DB string for primeng calendar
+          this.fuels.map((fuelType: any) => {
+            fuelType.rows.map((col: any) => {
+              const findStartDate = col.findIndex((col: any) => col.name === 'Start Date')
+              const findEndDate = col.findIndex((col: any) => col.name === 'End Date')
+              col[findStartDate].value ? col[findStartDate].value = new Date(col[findStartDate].value) : new Date()
+              col[findEndDate].value ? col[findEndDate].value = new Date(col[findEndDate].value) : new Date()
+            })
+          })
+        }
+      },
+      error: (err) => console.log(err),
+      complete: () => {
+        this.msg.add({
+          severity: 'success',
+          detail: 'Saved'
+        })
       }
-    }
-
-    let createNew = []
-    let updateExisting = []
-
-    // Check if an update is required rather than a new push
-    if (this?.fetchedFuelData?.[0]?.id) {
-      stringifiedData.id = this.fetchedFuelData[0].id
-      updateExisting.push(stringifiedData)
-    } else if (this.selectedCompany?.fuel_data.length === 0) {
-      createNew.push(stringifiedData)
-    } else {
-      this.msg.add({
-        severity: 'warn',
-        detail: 'Something went wrong. Try again'
-      })
-    }
-
-    // this.admin.updateCompanyM2ORow('fuel_data', this.selectedCompany.id, createNew, updateExisting, []).subscribe({
-    //   next: (res: any) => {
-    //     if (res.fuel_data.length) {
-    //       // Latest updated (attempt at fixing duplicate bug)
-    //       // const latestUpdated = res.fuel_data.reduce((a:any, b:any) => a.date_updated > b.date_updated ? a : b)
-    //
-    //       // take the longest all_other_fields - Attempt at fixing missing data
-    //       const all = res.fuel_data.map((row: any) => row.all_other_fields)
-    //       const longest = all.reduce((acc: any, curr: any) => acc.length > curr.length ? acc : curr)
-    //
-    //       // Take earliest created
-    //       const earliestCreated = all.reduce((acc: any, curr: any) => acc?.date_created > curr?.date_created ? acc : curr)
-    //
-    //       if (earliestCreated) {
-    //         this.fuels = []
-    //
-    //         this.fuels = JSON.parse(earliestCreated)
-    //
-    //         this.fuels.map((fuelType: any) => {
-    //           fuelType.rows.map((col: any) => {
-    //             // Change  DB string to Date for Primeng Calendar
-    //             const findStartDate = col.findIndex((col: any) => col.name === 'Start Date')
-    //             const findEndDate = col.findIndex((col: any) => col.name === 'End Date')
-    //             col[findStartDate].value ? col[findStartDate].value = new Date(col[findStartDate].value) : new Date()
-    //             col[findEndDate].value ? col[findEndDate].value = new Date(col[findEndDate].value) : new Date()
-    //           })
-    //         })
-    //       }
-    //     }
-    //
-    //     return this.msg.add({
-    //       severity: 'success',
-    //       detail: 'Saved Data'
-    //     })
-    //   },
-    //   error: (err: any) => console.log(err),
-    // })
+    })
   }
 
 
@@ -507,5 +465,9 @@ export class DataCaptureSpreadsheetFuelsComponent {
         }
       }
     })
+  }
+
+  ngOnInit() {
+    this.getCompanies()
   }
 }

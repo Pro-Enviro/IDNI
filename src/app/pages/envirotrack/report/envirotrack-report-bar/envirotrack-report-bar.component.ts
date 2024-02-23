@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import moment from "moment";
 import * as echarts from "echarts";
 import {EnvirotrackService} from "../../envirotrack.service";
@@ -16,7 +16,7 @@ import {SharedComponents} from "../../shared-components";
   templateUrl: './envirotrack-report-bar.component.html',
   styleUrls: ['./envirotrack-report-bar.component.scss']
 })
-export class EnvirotrackReportBarComponent {
+export class EnvirotrackReportBarComponent implements OnInit {
   data: any;
   months: string[] = [];
   filteredData: any;
@@ -52,26 +52,26 @@ export class EnvirotrackReportBarComponent {
     private track: EnvirotrackService,
   ) {}
 
-  saveChartAsBase64 = () => {
-    console.log('saving as base 64');
-    if (!this.chartOptions) return;
-
-    // Create temporary chart that uses echarts.instanceOf
-    const div = document.createElement('div')
-    div.style.width = '1200px'
-    div.style.height = '1200px'
-
-    const temporaryChart = echarts.init(div)
-
-    temporaryChart.setOption({...this.chartOptions, animation: false})
-
-    const data = temporaryChart.getDataURL({
-      backgroundColor: '#fff',
-      pixelRatio: 2
-    })
-    console.log(data);
-    return data;
-  }
+  // saveChartAsBase64 = () => {
+  //   console.log('saving as base 64');
+  //   if (!this.chartOptions) return;
+  //
+  //   // Create temporary chart that uses echarts.instanceOf
+  //   const div = document.createElement('div')
+  //   div.style.width = '1200px'
+  //   div.style.height = '1200px'
+  //
+  //   const temporaryChart = echarts.init(div)
+  //
+  //   temporaryChart.setOption({...this.chartOptions, animation: false})
+  //
+  //   const data = temporaryChart.getDataURL({
+  //     backgroundColor: '#fff',
+  //     pixelRatio: 2
+  //   })
+  //   console.log(data);
+  //   return data;
+  // }
   initChart = () => {
     this.chartOptions = {
       legend: {
@@ -154,17 +154,16 @@ export class EnvirotrackReportBarComponent {
   }
 
   getCompanies = () =>{
-    // this.track.getCompanies().subscribe({
-    //   next: (res)=>{
-    //     this.selectedCompany = res[0].id
-    //     this.companies = res;
-    //     this.getData(this.selectedCompany)
-    //   }
-    // })
+    this.track.getCompanies().subscribe({
+      next: (res: any) => {
+        this.companies = res.data;
+      }
+    })
   }
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
+    this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
   }
 
@@ -181,9 +180,9 @@ export class EnvirotrackReportBarComponent {
     this.chartX = [];
     this.chartY = [];
     this.track.getData(id).subscribe({
-        next: (res) => {;
+        next: (res) => {
           res.forEach((row: any) => {
-            row.hdd = JSON.parse(row.hdd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
+            row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
             this.months.push(row.date)
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
@@ -225,12 +224,12 @@ export class EnvirotrackReportBarComponent {
     }
     this.filteredData = this.filteredData.filter((x:any) => x.mpan === this.selectedMpan)
     this.filteredData.forEach((row: any) => {
-      row.hdd.forEach((hh: any, i:number) => {
+      row.hhd.forEach((hh: any, i:number) => {
         hh = hh ? hh : 0;
-        row.hdd[i] = !isNaN(parseInt(hh.toString())) ? hh : 0
+        row.hhd[i] = !isNaN(parseInt(hh.toString())) ? hh : 0
       })
-      if(row.hdd.length){
-        this.chartData.push([row.date, row.hdd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
+      if(row.hhd.length){
+        this.chartData.push([row.date, row.hhd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
       }
 
     })
@@ -241,7 +240,13 @@ export class EnvirotrackReportBarComponent {
   }
 
   ngOnInit() {
-    // this.getCompanies();
+    this.getCompanies();
+
+    if (this.track.selectedCompany.value) {
+      this.selectedCompany = this.track.selectedCompany.value
+      this.getData(this.selectedCompany)
+    }
+
     this.screenWidth = window.innerWidth
   }
 }

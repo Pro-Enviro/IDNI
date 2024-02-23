@@ -47,25 +47,25 @@ export const routes: Routes = [
   {path:'home',component: LandingPageComponent},
   {path: 'pet', component: PetComponent},
   {path: 'coming-soon', component: ConstructionComponent},
-  {path:'local-decarbonisation', component:LocalDecarbonisationComponent},
-  {path:'local-decarb-single',component:LocalDecabSingleTplComponent},
-  {path:'login',component: LoginComponent},
+  {path: 'local-decarbonisation', component: LocalDecarbonisationComponent},
+  {path: 'local-decarb-single', component: LocalDecabSingleTplComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'registration', component: RegisterComponent},
+  {path:'dashboard',component:DashboardComponent},
   {path:'chat',component: ChatDialogTplComponent},
   {path:'live-chat',component:LiveChatTplComponent},
-  {path:'registration',component:RegisterComponent},
   {
     path: 'envirotrack', children: [
       {path: 'import', component: ImportEnvirotrackComponent},
-      {path: 'gas-data', component: DataCaptureSpreadsheetFuelsComponent},
-      {
-        path: 'report', component: EnvirotrackReportComponent, children: [
+      {path: 'fuel-data', component: DataCaptureSpreadsheetFuelsComponent},
+      {path: 'report', component: EnvirotrackReportComponent, children: [
           {path: 'heatmap', component: EnvirotrackReportHeatmapComponent},
           {path: 'scatter', component: EnvirotrackReportScatterComponent},
-              { path: 'bar', component: EnvirotrackReportBarComponent },
-              { path: 'pie', component: EnvirotrackReportPieComponent },
-              { path: 'base1', component: EnvirotrackReportBase1Component },
-              { path: 'avg', component: EnvirotrackReportAvgComponent },
-              { path: 'demand', component: EnvirotrackReportDemandComponent },
+          {path: 'bar', component: EnvirotrackReportBarComponent },
+          {path: 'pie', component: EnvirotrackReportPieComponent },
+          {path: 'base1', component: EnvirotrackReportBase1Component },
+          {path: 'avg', component: EnvirotrackReportAvgComponent },
+          {path: 'demand', component: EnvirotrackReportDemandComponent },
         ]
       },
     ]

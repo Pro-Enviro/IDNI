@@ -6,16 +6,19 @@
     </p-panel>
   </div>
   <div class="col-6">
-    <div class="flex-1" *ngIf="mpan.length">
+    <div class="" *ngIf="mpan.length">
       <p-panel header="Select Mpan">
         <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
       </p-panel>
     </div>
   </div>
   <div class="col-12">
-    <p-panel >
-      <p-selectButton *ngIf="defaultFilters.length" [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select" [style]="{marginBottom: '2rem'}"></p-selectButton>
-      <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px"></div>
+    <p-panel>
+      <div class="flex justify-content-between mb-6">
+        <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select"></p-selectButton>
+        <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
+      </div>
+      <div echarts [options]="chartOptions" style="max-height: 40vh; height: 512px;"></div>
     </p-panel>
   </div>
 </div>

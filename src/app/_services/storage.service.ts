@@ -13,15 +13,17 @@ export interface menu{
   providedIn: 'root'
 })
 export class StorageService {
+
   menu: BehaviorSubject<menu[]> = new BehaviorSubject<menu[]>([])
 
   updateMenu = (value: menu[]) => this.menu.next(value);
 
-
   constructor(
     private msg: MessageService,
     private route: Router
-  ) { }
+  ) {}
+
+
 
   public get getMenu(){
     return this.menu.value
@@ -40,7 +42,7 @@ export class StorageService {
         detail: 'The requested information could not be received. Please login again'
       })
 
-      this.route.navigate(['login']);
+      this.route.navigate(['login']).then(r => console.log('Navigating'));
       return
     }
     return item

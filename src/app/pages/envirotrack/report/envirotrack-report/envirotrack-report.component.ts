@@ -15,6 +15,7 @@ import {SharedComponents} from "../../shared-components";
 
 })
 export class EnvirotrackReportComponent implements OnInit{
+  collapse: boolean = false;
 
   hhdVisible: boolean = false; // TODO
 

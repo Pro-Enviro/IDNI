@@ -1,20 +1,33 @@
-
-import {Component, OnInit} from '@angular/core';
-import moment from "moment";
-import {EnvirotrackService} from "../../envirotrack.service";
+import { Component } from '@angular/core';
 import {EChartsOption} from "echarts";
-import * as echarts from "echarts";
-import {SharedModules} from "../../../../shared-module";
-import {SharedComponents} from "../../shared-components";
+import {EnvirotrackService} from "../../../envirotrack.service";
+import moment from "moment/moment";
+import {PanelModule} from "primeng/panel";
+import {SelectButtonModule} from "primeng/selectbutton";
+import {CalendarModule} from "primeng/calendar";
+import {NgxEchartsDirective} from "ngx-echarts";
+
+import {DropdownModule} from "primeng/dropdown";
+import {NgIf} from "@angular/common";
+import {SharedModules} from "../../../../../shared-module";
 
 @Component({
-  selector: 'app-envirotrack-report-pie',
+  selector: 'app-envirotrack-small-pie-chart',
   standalone: true,
-  imports: [SharedModules, SharedComponents],
-  templateUrl: './envirotrack-report-pie.component.html',
-  styleUrls: ['./envirotrack-report-pie.component.scss']
+  imports: [
+    PanelModule,
+    SelectButtonModule,
+    CalendarModule,
+    NgxEchartsDirective,
+
+    DropdownModule,
+    NgIf,
+    SharedModules
+  ],
+  templateUrl: './envirotrack-small-pie-chart.component.html',
+  styleUrl: './envirotrack-small-pie-chart.component.scss'
 })
-export class EnvirotrackReportPieComponent implements OnInit {
+export class EnvirotrackSmallPieChartComponent {
   data: any;
   months: string[] = [];
   filteredData: any;
@@ -53,31 +66,12 @@ export class EnvirotrackReportPieComponent implements OnInit {
     private track: EnvirotrackService,
   ) {}
 
-  // saveChartAsBase64 = () => {
-  //
-  //   if (!this.chartOptions) return;
-  //
-  //   // Create temporary chart that uses echarts.instanceOf
-  //   const div = document.createElement('div')
-  //   div.style.width = '1200px'
-  //   div.style.height = '1200px'
-  //
-  //   const temporaryChart = echarts.init(div)
-  //
-  //   temporaryChart.setOption({...this.chartOptions, animation: false})
-  //
-  //   const data = temporaryChart.getDataURL({
-  //     backgroundColor: '#fff',
-  //     pixelRatio: 4
-  //   })
-  //   return data;
-  // }
 
   initChart = () => {
     this.chartOptions = {
       legend: {
         show: true,
-        top: 70,
+        top: 50,
         left: 'center'
       },
       grid:{
@@ -86,7 +80,7 @@ export class EnvirotrackReportPieComponent implements OnInit {
       title: {
         text: 'Electricity Consumption, kWh',
         left: 'center',
-        top:30,
+        top:10,
         textStyle:{
           fontSize: this.screenWidth >= 1441 ? 16 : 12,
         }
@@ -190,7 +184,7 @@ export class EnvirotrackReportPieComponent implements OnInit {
           // if (this.global.selectedMpan?.value) {
           //   this.selectedMpan = this.global.selectedMpan.value
           // } else {
-            this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
+          this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
           // }
 
           this.data = res
@@ -287,8 +281,8 @@ export class EnvirotrackReportPieComponent implements OnInit {
     this.getCompanies();
 
     if (this.track.selectedCompany.value) {
-        this.selectedCompany = this.track.selectedCompany.value
-        this.getData(this.selectedCompany)
+      this.selectedCompany = this.track.selectedCompany.value
+      this.getData(this.selectedCompany)
     }
 
     this.screenWidth = window.innerWidth;

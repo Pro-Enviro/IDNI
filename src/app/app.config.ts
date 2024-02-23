@@ -1,3 +1,4 @@
+
 import {APP_INITIALIZER, ApplicationConfig} from '@angular/core';
 import {provideRouter, ROUTES} from '@angular/router';
 import {provideAnimations} from "@angular/platform-browser/animations";

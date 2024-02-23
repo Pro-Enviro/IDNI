@@ -67,13 +67,14 @@ export class DataCaptureImportSpreadsheetComponent implements OnInit {
   ) {
     moment.locale('en-gb')
     moment().format('L')
-    this.getCompanies();
+    // this.getCompanies();
 
 
     if (this?.config?.data) {
-      this.selectedCompany = this.config.data.company.id
+      this.selectedCompany = this.config.data.company
       this.fuelData = this.config.data.fuel;
       const cols = this.config.data.fuel.cols;
+
 
       this.fuelColumns = cols.map((col: any) => {
         return {

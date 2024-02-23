@@ -3,9 +3,9 @@
                 (onSelect)="getFileType($event)"
                 (uploadHandler)="onUpload($event)"
                 [multiple]="false"
-                chooseStyleClass="btn"
+                chooseStyleClass="btn-style"
                 cancelStyleClass="btn-dark"
-                uploadStyleClass="btn">
+                uploadStyleClass="btn-outline">
     <ng-template pTemplate="content">
       <ul *ngIf="uploadedFiles.length">
         <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
@@ -48,10 +48,9 @@
       </ng-template>
     </p-table>
 
-    <div class="mt-2">
-      <button pButton class="btn" icon="pi pi-cog" label="Process" (click)="processData()"></button>
-      <button pButton label="Save & Close" icon="pi pi-save" class="btn" (click)="close()" [disabled]="!processed"
-              style=" margin-left: 1rem"></button>
+    <div class="mt-2 flex">
+      <button pButton class="btn-style" icon="pi pi-cog" label="Process" (click)="processData()"></button>
+      <button pButton label="Save & Close" icon="pi pi-save" class="btn-dark ml-2" (click)="close()" [disabled]="!processed"></button>
     </div>
   </p-panel>
 

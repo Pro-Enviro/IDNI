@@ -13,9 +13,12 @@
     </div>
   </div>
   <div class="col-12">
-    <p-panel >
-      <p-selectButton *ngIf="defaultFilters.length" [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select" [style]="{marginBottom: '2rem'}"></p-selectButton>
-      <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px"></div>
+    <p-panel>
+      <div class="flex justify-content-between mb-3">
+        <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select"></p-selectButton>
+        <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
+      </div>
+      <div echarts [options]="chartOptions" style="max-height: 40vh; height: 500px;"></div>
     </p-panel>
   </div>
 </div>

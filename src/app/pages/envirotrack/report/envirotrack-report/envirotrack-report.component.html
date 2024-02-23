@@ -1,12 +1,18 @@
-<div class="flex">
-  <div class="flex flex-0">
-    <p-panel header="Charts">
-      <p-menu [model]="items" ></p-menu>
-    </p-panel>
+<section>
+  <div class="p-8">
+    <div class="flex justify-content-center">
+      <div class="mr-4">
+        <p-panel header="Charts">
+          <div class="flex">
+            <p-menu [model]="items" styleClass="charts-bar"></p-menu>
+          </div>
+        </p-panel>
+      </div>
+      <div class="flex">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
   </div>
-  <div class="flex flex-1">
-    <router-outlet></router-outlet>
-  </div>
-</div>
 
+</section>
 
