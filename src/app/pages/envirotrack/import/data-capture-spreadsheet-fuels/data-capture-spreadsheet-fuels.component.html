@@ -1,17 +1,15 @@
 <!--<app-company-select (company)="getCompany($event)"></app-company-select>-->
 
 <section>
-  <div style="padding:50px">
-    <div class="grid ml-8">
-
-       <div class="col-3">
-         <p-panel header="Select Company" >
+    <div class="grid p-4">
+       <div class="col-5">
+         <p-card header="Select Company" styleClass="card-charts">
            <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
-         </p-panel>
+         </p-card>
        </div>
-      <div class="col-10">
+      <div class="col-11">
 
-        <p-panel header="Non HH Data">
+        <p-card header="Non HH Data" styleClass="card-charts">
           <div class="pb-5">
             <button pButton (click)="addFuelType()" label="Add New Fuel Type" icon="pi pi-plus" class="btn-style"></button>
           </div>
@@ -100,9 +98,8 @@
               </p-table>
             </p-tabPanel>
           </p-tabView>
-        </p-panel>
+        </p-card>
 
       </div>
     </div>
-  </div>
 </section>
