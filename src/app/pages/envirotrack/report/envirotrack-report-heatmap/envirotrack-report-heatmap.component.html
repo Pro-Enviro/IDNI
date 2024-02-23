@@ -1,25 +1,25 @@
 <div class="grid">
   <div class="col-6">
-    <p-panel header="Select Company">
+    <p-card header="Select Company" styleClass="card-charts">
       <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
       <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
-    </p-panel>
+    </p-card>
   </div>
   <div class="col-6">
     <div *ngIf="mpan.length">
-      <p-panel header="Select Mpan">
+      <p-card header="Select Mpan" styleClass="card-charts">
         <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
-      </p-panel>
+      </p-card>
     </div>
   </div>
   <div class="col-12">
 
-    <p-panel>
+    <p-card styleClass="card-charts">
       <ng-template pTemplate="header">
-        <div class="flex w-full">
+        <div class="flex w-full p-4">
           <div class="flex-grow-1">
-            <h3 *ngIf="chartModel">Energy Footprint</h3>
-            <h3 *ngIf="!chartModel">Energy Footprint</h3>
+            <h3 *ngIf="chartModel" class="text-2xl">Energy Footprint</h3>
+            <h3 *ngIf="!chartModel" class="text-2xl">Energy Footprint</h3>
           </div>
           <div class="flex-shrink-1 pt-3">
             <p-toggleButton onLabel="Detailed" offLabel="Simplified" styleClass="btn-dark" [(ngModel)]="chartModel"></p-toggleButton>
@@ -49,7 +49,7 @@
         </ng-container>
 
       </ng-template>
-    </p-panel>
+    </p-card>
   </div>
 </div>
 

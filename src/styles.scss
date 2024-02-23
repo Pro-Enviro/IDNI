@@ -152,6 +152,10 @@
   }
 
   //---------------------------------------------------FORM-------------------------------------------------------------
+
+  .card-charts{
+    background-color:#FDFDFD;
+  }
   .p-panel .p-panel-header
   {
     border: 1px solid #e5e7eb;
@@ -168,20 +172,17 @@
   }
 
   .date-btn{
-    .p-datepicker table td.p-datepicker-today > span
-    {
+    .p-datepicker table td.p-datepicker-today > span {
       background: $primeColor;
       color: white;
       border-color: $primeColor;
     }
-    .p-button
-    {
+    .p-button {
       background: $lightColor-100;
       color: $darkColor;
       border: 1px solid $darkColor;
     }
-    .p-button:not(:disabled):hover
-    {
+    .p-button:not(:disabled):hover {
       background: $lightColor-100;
       color: $darkColor;
       border-color: $darkColor;
@@ -439,7 +440,8 @@
 
   .p-megamenu{
     border: none;
-    background-color: #FBFBFB;
+    //background-color: #FBFBFB;
+    background-color: 	#f8f8f8;
     .p-megamenu-start{
       flex-grow: 1;
     }
