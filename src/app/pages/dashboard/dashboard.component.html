@@ -1,20 +1,17 @@
 <div class="grid" style="background-color: #fbfbfb">
     <div class="col-2">
-      <div class="sidenav">
-        <div class="mt-5 p-3">
-          <img src="assets/img/idni-logo.svg" alt="" height="80px">
-        </div>
-        <div class="flex flex-column envirotrack-menu mt-3">
-          <p-menubar [model]="envirotrackPage"></p-menubar>
-        </div>
-      </div>
+        <div class="sidenav">
+            <div class="flex flex-column envirotrack-menu mt-3">
+              <p-menubar [model]="envirotrackPage"></p-menubar>
+            </div>
+          </div>
     </div>
     <div class="col-10">
 <!--    <app-stat-containers-tpl></app-stat-containers-tpl>-->
 
-     <div class="p-4">
-        <router-outlet></router-outlet>
-     </div>
+       <div class="p-4">
+          <router-outlet></router-outlet>
+       </div>
     </div>
  </div>
 

@@ -5,12 +5,12 @@
   <div class="container">
     <div class="grid">
       <div class="col-12">
-        <p-panel *ngIf="!fileContent" header="Select Company" [style]="{width: '60%', margin: 'auto', marginTop:'5rem'}">
+        <p-card *ngIf="!fileContent" header="Select Company" [style]="{width: '70%', margin: 'auto', marginTop:'5rem'}" styleClass="card-charts">
           <p-dropdown [options]="companies" optionLabel="name" optionValue="id" [(ngModel)]="selectedCompany" [style]="{ width: '12rem'}"></p-dropdown>
-        </p-panel>
+        </p-card>
       </div>
       <div class="col-12">
-        <p-panel header="File Upload" *ngIf="!fileContent" [style]="{width: '60%', margin: 'auto', marginTop:'5rem'}">
+        <p-card header="File Upload" *ngIf="!fileContent" [style]="{width: '70%', margin: 'auto', marginTop:'4rem'}" styleClass="card-charts">
           <p-fileUpload name="file[]" [customUpload]="true"
                         (onSelect)="getFileType($event)"
                         (uploadHandler)="onUpload($event)"
@@ -24,48 +24,48 @@
               </ul>
             </ng-template>
           </p-fileUpload>
-        </p-panel>
-        <p-panel *ngIf="isXlsx">
+        </p-card>
+        <p-card *ngIf="isXlsx" styleClass="card-charts mt-5">
           <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()" class="btn-select"></p-selectButton>
-        </p-panel>
+        </p-card>
         <ng-container *ngIf="fileContent">
-          <p-panel  #table  header="HHD">
-            <div class="flex">
-              <div class="p-2 border-1 surface-border border-round w-15rem" pDroppable (onDrop)="dropMpan()">
-                <p-panel header="MPAN Number">
-                  <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="selectedMpan" >
+          <p-card  #table  header="Half-Hourly Data (HHD)" styleClass="card-charts mt-4">
+            <div class="grid">
+              <div class="col-3" pDroppable (onDrop)="dropMpan()">
+                 <p-card header="MPAN Number" styleClass="envirotrack-import">
+                  <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="selectedMpan">
                     <li class="p-2 border-round shadow-1">
                       {{selectedMpan.name}}
                     </li>
                   </ul>
-                </p-panel>
+                </p-card>
               </div>
-              <div class="p-2 border-1 surface-border border-round w-15rem" pDroppable (onDrop)="dropStartDate()">
-                <p-panel header="Date Column">
+              <div class="col-3" pDroppable (onDrop)="dropStartDate()">
+                <p-card header="Date Column" styleClass="envirotrack-import">
                   <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="selectedStartDate" >
                     <li class="p-2 border-round shadow-1">
                       {{selectedStartDate.name}}
                     </li>
                   </ul>
-                </p-panel>
+                </p-card>
               </div>
-              <div class="p-2 border-1 surface-border border-round w-15rem" pDroppable (onDrop)="dropFirstData()">
-                <p-panel header="Data Start Point">
+              <div class="col-3" pDroppable (onDrop)="dropFirstData()">
+                <p-card header="Data Start Point" styleClass="envirotrack-import">
                   <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="selectedDataStart" >
                     <li class="p-2 border-round shadow-1">
                       {{selectedDataStart.name}}
                     </li>
                   </ul>
-                </p-panel>
+                </p-card>
               </div>
-              <div class="p-2 border-1 surface-border border-round w-15rem">
-                <p-panel header="Data Type">
+              <div class="col-3">
+                <p-card header="Data Type" styleClass="envirotrack-import">
                   <ul class="list-none flex flex-column gap-2 p-0 m-0">
                     <li class="">
                       <p-toggleButton [(ngModel)]="reactiveData" onLabel="kVAr" offLabel="kWh" [style]="{ width: '10em', background:'#356c6b',color:'#ffffff'}"></p-toggleButton>
                     </li>
                   </ul>
-                </p-panel>
+                </p-card>
               </div>
             </div>
 
@@ -82,7 +82,7 @@
             <div class="pt-3">
               <button pButton class="btn-style pt-3" icon="pi pi-cog" label="Process" (click)="processData()"></button>
             </div>
-          </p-panel>
+          </p-card>
         </ng-container>
       </div>
     </div>

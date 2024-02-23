@@ -21,6 +21,7 @@ import {
   EnvirotrackBarSmallComponent
 } from "../envirotrack/report/envirotrack-report-bar/envirotrack-bar-small/envirotrack-bar-small.component";
 import {StatContainersTplComponent} from "./stat-containers-tpl/stat-containers-tpl.component";
+import {MenuModule} from "primeng/menu";
 
 
 @Component({
@@ -37,7 +38,8 @@ import {StatContainersTplComponent} from "./stat-containers-tpl/stat-containers-
     EnvirotrackReportBarComponent,
     EnvirotrackSmallPieChartComponent,
     EnvirotrackBarSmallComponent,
-    StatContainersTplComponent
+    StatContainersTplComponent,
+    MenuModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
