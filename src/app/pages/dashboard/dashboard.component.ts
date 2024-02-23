@@ -20,6 +20,7 @@ import {
 import {
   EnvirotrackBarSmallComponent
 } from "../envirotrack/report/envirotrack-report-bar/envirotrack-bar-small/envirotrack-bar-small.component";
+import {StatContainersTplComponent} from "./stat-containers-tpl/stat-containers-tpl.component";
 
 
 @Component({
@@ -35,7 +36,8 @@ import {
     EnvirotrackReportHeatmapComponent,
     EnvirotrackReportBarComponent,
     EnvirotrackSmallPieChartComponent,
-    EnvirotrackBarSmallComponent
+    EnvirotrackBarSmallComponent,
+    StatContainersTplComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
