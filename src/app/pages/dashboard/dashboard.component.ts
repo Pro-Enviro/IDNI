@@ -48,50 +48,50 @@ export class DashboardComponent {
     },
     {
       label:'<span class="material-symbols-outlined">flowsheet</span> Fuel Data',
-      routerLink:'/envirotrack/fuel-data',
+      routerLink:'/dashboard/fuel-data',
     },
     {
       label:'<span class="material-symbols-outlined">stacked_line_chart</span> Envirotrack Import',
-      routerLink:'/envirotrack/import'
+      routerLink:'/dashboard/import'
     },
     {
       label:'<span class="material-symbols-outlined">monitoring</span> Envirotrack Report',
-      routerLink:'/envirotrack/report/heatmap',
+      routerLink:'/dashboard/heatmap',
       items:[
         {
           label:'<span class="material-symbols-outlined material-icon">assessment</span> Electricity consumption, kWh per half-hour',
           escape: false,
-          routerLink: '/envirotrack/report/heatmap'
+          routerLink: '/dashboard/heatmap'
         },
         {
           label:'<span class="material-symbols-outlined material-icon">scatter_plot</span> Electricity consumption, kWh split by day of the week',
           escape: false,
-          routerLink: '/envirotrack/report/scatter',
+          routerLink: '/dashboard/scatter',
         },
         {
           label:'<span class="material-symbols-outlined material-icon">bar_chart</span> Electricity consumption, kWh',
           escape: false,
-          routerLink: '/envirotrack/report/bar'
+          routerLink: '/dashboard/bar'
         },
         {
           label:'<span class="material-symbols-outlined material-icon">pie_chart</span> Electricity Consumption, % split by day of the week',
           escape: false,
-          routerLink: '/envirotrack/report/pie'
+          routerLink: '/dashboard/pie'
         },
         {
           label:'<span class="material-symbols-outlined material-icon">show_chart</span> Christmas Day vs lowest day of the year consumption',
           escape: false,
-          routerLink: '/envirotrack/report/base1'
+          routerLink: '/dashboard/base1'
         },
         {
           label:'<span class="material-symbols-outlined material-icon">stacked_line_chart</span> Average daily consumption, kWh per half hour',
           escape: false,
-          routerLink: '/envirotrack/report/avg'
+          routerLink: '/dashboard/avg'
         },
         {
           label:'<span class="material-symbols-outlined material-icon">data_exploration</span> Maximum Demand',
           escape: false,
-          routerLink: '/envirotrack/report/demand'
+          routerLink: '/dashboard/demand'
         }
 
       ]
