@@ -1,27 +1,34 @@
 import { Injectable } from '@angular/core';
 import {MessageService} from "primeng/api";
 import {Router} from "@angular/router";
-import Encryption from "encrypt-decrypt-library";
+import {BehaviorSubject} from "rxjs";
 
+export interface menu{
+  id: number,
+  pagetitle: string,
+  alias: string,
+  parents: number[]
+}
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
-  config = {
-    algorithm: '',
-    encryptionKey: '',
-    salt: ''
-  }
+  menu: BehaviorSubject<menu[]> = new BehaviorSubject<menu[]>([])
 
-  encryption = new Encryption(this.config);
+  updateMenu = (value: menu[]) => this.menu.next(value);
+
 
   constructor(
     private msg: MessageService,
     private route: Router
   ) { }
 
+  public get getMenu(){
+    return this.menu.value
+  }
+
   save = (name: string, token: string) => {
-    localStorage.setItem(name,this.encryption.encrypt(JSON.stringify(token)));
+    localStorage.setItem(name,JSON.stringify(token));
   }
 
   get = (name: string) => {
@@ -36,6 +43,7 @@ export class StorageService {
       this.route.navigate(['login']);
       return
     }
-    return this.encryption.decrypt(item)
+    return item
   }
+
 }
