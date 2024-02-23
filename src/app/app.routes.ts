@@ -44,6 +44,7 @@ export const routes: Routes = [
   {path: 'local-decarb-single', component: LocalDecabSingleTplComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
+  {path:'dashboard',component:DashboardComponent},
   {
     path: 'envirotrack', children: [
       {path: 'import', component: ImportEnvirotrackComponent},
