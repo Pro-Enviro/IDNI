@@ -169,13 +169,15 @@
   }
 
   .envirotrack-import{
-      background-color:#fafafa;
+      //background-color:#fafafa;
+    background-color:$lightColor-50;
       .p-card-title {
         font-size: 1.25rem;
         font-weight: 700;
         margin-bottom: 0.5rem;
       }
   }
+
   .p-panel .p-panel-header {
     border: 1px solid #e5e7eb;
     padding: 1.25rem;
