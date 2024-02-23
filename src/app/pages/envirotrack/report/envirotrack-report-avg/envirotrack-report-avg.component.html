@@ -1,19 +1,49 @@
-<div class="grid">
+<!--<div class="grid">-->
+<!--    <div class="col-6">-->
+<!--      <p-card header="Select Company" styleClass="card-charts">-->
+<!--        &lt;!&ndash;        <p-selectButton class="btn-select" [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"></p-selectButton>&ndash;&gt;-->
+<!--        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>-->
+<!--      </p-card>-->
+<!--    </div>-->
+<!--    <div class="col-6">-->
+<!--      <div class="flex-1" *ngIf="mpan.length">-->
+<!--        <p-card header="Select Mpan" styleClass="card-charts">-->
+<!--          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
+<!--        </p-card>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="col-12">-->
+<!--      <p-card styleClass="card-charts">-->
+<!--        <div class="toggle-buttons flex" style="margin-bottom: 2rem">-->
+<!--          <div class="select-container flex-1">-->
+<!--            <p-selectButton *ngIf="defaultFilters.length" [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="select btn-select"></p-selectButton>-->
+<!--          </div>-->
+<!--          <div class="flex-end">-->
+<!--            <p-toggleButton onLabel="Hide Expected Operating Hours" offLabel="Show Expected Operating Hours" [style]="{ background:'#356c6b',color:'#ffffff'}" [(ngModel)]="shift" (click)="filterData()"></p-toggleButton>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>-->
+<!--      </p-card>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<p-card styleClass="card-charts">
+  <div class="grid">
     <div class="col-6">
-      <p-card header="Select Company" styleClass="card-charts">
+      <p-card header="Select Company" styleClass="card-select-panel">
         <!--        <p-selectButton class="btn-select" [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"></p-selectButton>-->
         <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
       </p-card>
     </div>
     <div class="col-6">
       <div class="flex-1" *ngIf="mpan.length">
-        <p-card header="Select Mpan" styleClass="card-charts">
+        <p-card header="Select Mpan" styleClass="card-select-panel">
           <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
         </p-card>
       </div>
     </div>
     <div class="col-12">
-      <p-card styleClass="card-charts">
+      <p-card styleClass="card-style-none">
         <div class="toggle-buttons flex" style="margin-bottom: 2rem">
           <div class="select-container flex-1">
             <p-selectButton *ngIf="defaultFilters.length" [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="select btn-select"></p-selectButton>
@@ -26,3 +56,4 @@
       </p-card>
     </div>
   </div>
+</p-card>

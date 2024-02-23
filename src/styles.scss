@@ -156,8 +156,19 @@
   .card-charts{
     background-color:#FDFDFD;
   }
-  .p-panel .p-panel-header
-  {
+
+  .card-select-panel{
+    background-color:#fbfbfb;
+  }
+
+  .card-style-none{
+      background: transparent;
+      color: #4b5563;
+      box-shadow: none;
+      border-radius: 0px;
+  }
+
+  .p-panel .p-panel-header {
     border: 1px solid #e5e7eb;
     padding: 1.25rem;
     background: $primeColor;

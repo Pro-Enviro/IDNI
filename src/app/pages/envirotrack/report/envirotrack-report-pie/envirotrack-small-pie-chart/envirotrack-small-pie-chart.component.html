@@ -1,26 +1,26 @@
-<p-card styleClass="card-charts">
+ <p-card styleClass="card-charts">
     <div class="grid">
-    <div class="col-6">
-      <p-card header="Select Company" styleClass="card-charts">
-        <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
-        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
-      </p-card>
-    </div>
-    <div class="col-6">
-      <div class="flex-1" *ngIf="mpan.length">
-        <p-card header="Select Mpan" styleClass="card-charts">
-          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+      <div class="col-6">
+        <p-card header="Select Company" styleClass="card-select-panel">
+          <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
+          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
         </p-card>
       </div>
-    </div>
-    <div class="col-12">
-        <div class="flex pb-3">
-          <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select"></p-selectButton>
+      <div class="col-6">
+        <div class="flex-1" *ngIf="mpan.length">
+          <p-card header="Select Mpan" styleClass="card-select-panel">
+            <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+          </p-card>
         </div>
-        <div class="flex justify-content-start">
-          <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
-        </div>
-        <div echarts [options]="chartOptions" style="display: block; box-sizing: border-box; height: 530px; width: 937px;"></div>
+      </div>
+      <div class="col-12">
+          <div class="flex pb-3">
+            <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select"></p-selectButton>
+          </div>
+          <div class="flex justify-content-start">
+            <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
+          </div>
+          <div echarts [options]="chartOptions" style="display: block; box-sizing: border-box; height: 530px; width: 937px;"></div>
+      </div>
     </div>
-    </div>
-  </p-card>
+ </p-card>
