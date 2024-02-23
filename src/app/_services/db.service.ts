@@ -6,14 +6,14 @@ import {map} from "rxjs";
   providedIn: 'root'
 })
 export class DbService {
-  url: string = 'http://192.168.1.173:8055';
+  url: string = 'https://app.idni.eco';
   constructor(
     private http: HttpClient
   ) {}
 
-  getMenu = () => {
-    return this.http.get(`${this.url}/items/pages?fields=id,title`).pipe(
-      map((x:any) => x.data)
+  getContent = (id: number, args?: any) => {
+    return this.http.get(`${this.url}/items/page/${id}${args ? args : ''}`).pipe(
+      map((x:any)=> x.data)
     )
   }
 }

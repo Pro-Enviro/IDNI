@@ -30,13 +30,13 @@
       <div class="lg:col-6 sm:col-12">
         <div class="field flex flex-column pr-3">
           <label>Password<span style="color:#85bfba;padding-left:5px">*</span></label>
-          <p-password [(ngModel)]="password" [feedback]="false"></p-password>
+          <p-password [(ngModel)]="password" [feedback]="false" [toggleMask]="true"></p-password>
         </div>
       </div>
       <div class="lg:col-6 sm:col-12">
         <div class="field field flex flex-column">
           <label>Confirm Password<span style="color:#85bfba;padding-left:5px">*</span></label>
-          <p-password [(ngModel)]="confirm_password" [feedback]="false"></p-password>
+          <p-password [(ngModel)]="confirm_password" [feedback]="false" [toggleMask]="true"></p-password>
         </div>
       </div>
     </div>
