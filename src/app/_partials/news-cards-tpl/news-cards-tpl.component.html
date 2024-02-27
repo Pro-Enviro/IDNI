@@ -2,41 +2,13 @@
   <div class="lg:col-4 md:col-8 sm:col-12">
     <div class="news-card">
       <div class="card-head">
-        <h4 class="header-style">{{newsCard.title}}</h4>
-        <img src="https://app.idni.eco/assets/{{newsCard.image}}" alt="" class="news-img">
+        <h4 class="header-style">{{content.title}}</h4>
+        <img src="https://app.idni.eco/assets/{{content.image}}" alt="" class="news-img">
       </div>
-      <div class="card-body" [innerHTML]="newsCard.content"></div>
+      <div class="card-body" [innerHTML]="content.content"></div>
       <div class="flex justify-content-center">
         <div class="card-footer">
-          <p-button routerLink="/{{newsCard.link}}" label="Read More" [rounded]="true" styleClass="btn-style"></p-button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="lg:col-4 md:col-8 sm:col-12">
-    <div class="news-card">
-      <div class="card-head">
-        <h4 class="header-style">{{newsCard.title}}</h4>
-        <img src="https://app.idni.eco/assets/{{newsCard.image}}" alt="" class="news-img">
-      </div>
-      <div class="card-body" [innerHTML]="newsCard.content"></div>
-      <div class="flex justify-content-center">
-        <div class="card-footer">
-          <p-button routerLink="/{{newsCard.link}}" label="Read More" [rounded]="true" styleClass="btn-style"></p-button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="lg:col-4 md:col-8 sm:col-12">
-    <div class="news-card">
-      <div class="card-head">
-        <h4 class="header-style">{{newsCard.title}}</h4>
-        <img src="https://app.idni.eco/assets/{{newsCard.image}}" alt="" class="news-img">
-      </div>
-      <div class="card-body" [innerHTML]="newsCard.content"></div>
-      <div class="flex justify-content-center">
-        <div class="card-footer">
-          <p-button routerLink="/{{newsCard.link}}" label="Read More" [rounded]="true" styleClass="btn-style"></p-button>
+          <p-button routerLink="/{{content.link}}" label="Read More" [rounded]="true" styleClass="btn-style"></p-button>
         </div>
       </div>
     </div>

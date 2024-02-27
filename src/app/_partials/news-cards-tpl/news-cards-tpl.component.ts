@@ -2,6 +2,13 @@ import {Component, Input} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {RouterLink} from "@angular/router";
 
+
+export interface newsCard {
+  title: string,
+  image: string,
+  content: string,
+  link:string
+}
 @Component({
   selector: 'app-news-cards-tpl',
   standalone: true,
@@ -13,6 +20,9 @@ import {RouterLink} from "@angular/router";
   styleUrl: './news-cards-tpl.component.scss'
 })
 export class NewsCardsTplComponent {
-  //@Input('content') content: any;
-  @Input('news') newsCard: any;
+  @Input('content') content: any;
+  //@Input('news') newsCard: any;
+
+  newsCard?: newsCard[];
+
 }
