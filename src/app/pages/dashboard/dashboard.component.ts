@@ -4,22 +4,10 @@ import {RouterLink} from "@angular/router";
 import {ButtonModule} from "primeng/button";
 import {MenubarModule} from "primeng/menubar";
 import {MenuItem} from "primeng/api";
-import {
-  EnvirotrackReportPieComponent
-} from "../envirotrack/report/envirotrack-report-pie/envirotrack-report-pie.component";
+import {EnvirotrackReportPieComponent} from "../envirotrack/report/envirotrack-report-pie/envirotrack-report-pie.component";
 import {NgxEchartsDirective} from "ngx-echarts";
-import {
-  EnvirotrackReportHeatmapComponent
-} from "../envirotrack/report/envirotrack-report-heatmap/envirotrack-report-heatmap.component";
-import {
-  EnvirotrackReportBarComponent
-} from "../envirotrack/report/envirotrack-report-bar/envirotrack-report-bar.component";
-import {
-  EnvirotrackSmallPieChartComponent
-} from "../envirotrack/report/envirotrack-report-pie/envirotrack-small-pie-chart/envirotrack-small-pie-chart.component";
-import {
-  EnvirotrackBarSmallComponent
-} from "../envirotrack/report/envirotrack-report-bar/envirotrack-bar-small/envirotrack-bar-small.component";
+import {EnvirotrackReportHeatmapComponent} from "../envirotrack/report/envirotrack-report-heatmap/envirotrack-report-heatmap.component";
+import {EnvirotrackReportBarComponent} from "../envirotrack/report/envirotrack-report-bar/envirotrack-report-bar.component";
 import {StatContainersTplComponent} from "./stat-containers-tpl/stat-containers-tpl.component";
 import {MenuModule} from "primeng/menu";
 
