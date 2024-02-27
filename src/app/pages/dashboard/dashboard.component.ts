@@ -10,6 +10,7 @@ import {EnvirotrackReportHeatmapComponent} from "../envirotrack/report/envirotra
 import {EnvirotrackReportBarComponent} from "../envirotrack/report/envirotrack-report-bar/envirotrack-report-bar.component";
 import {EnvirotrackSmallPieChartComponent} from "../envirotrack/report/envirotrack-report-pie/envirotrack-small-pie-chart/envirotrack-small-pie-chart.component";
 import {EnvirotrackBarSmallComponent} from "../envirotrack/report/envirotrack-report-bar/envirotrack-bar-small/envirotrack-bar-small.component";
+import {PanelMenuModule} from "primeng/panelmenu";
 
 
 @Component({
@@ -25,7 +26,8 @@ import {EnvirotrackBarSmallComponent} from "../envirotrack/report/envirotrack-re
     EnvirotrackReportHeatmapComponent,
     EnvirotrackReportBarComponent,
     EnvirotrackSmallPieChartComponent,
-    EnvirotrackBarSmallComponent
+    EnvirotrackBarSmallComponent,
+    PanelMenuModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -43,9 +45,13 @@ export class DashboardComponent {
     {
       label:'<span class="material-symbols-outlined">add_chart</span> Envirotrack Import',
       routerLink:'/dashboard/import'
-    },
+    }
+  ]
+
+  envirotrackReport : MenuItem[] =[
     {
       label:'<span class="material-symbols-outlined">query_stats</span> Envirotrack Report',
+      escape: false,
       routerLink:'/dashboard/heatmap',
       items:[
         {
@@ -83,9 +89,8 @@ export class DashboardComponent {
           escape: false,
           routerLink: '/dashboard/demand'
         }
-
       ]
     }
-  ]
 
+  ]
 }

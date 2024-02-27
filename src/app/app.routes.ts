@@ -39,6 +39,7 @@ import {
   EnvirotrackReportDemandComponent
 } from "./pages/envirotrack/report/envirotrack-report-demand/envirotrack-report-demand.component";
 import {DasboardWidgetsComponent} from "./pages/dashboard/dasboard-widgets/dasboard-widgets.component";
+import {MsxTplComponent} from "./_partials/msx-tpl/msx-tpl.component";
 
 
 
@@ -50,6 +51,7 @@ export const routes: Routes = [
   {path: 'coming-soon', component: ConstructionComponent},
   {path: 'local-decarbonisation', component: LocalDecarbonisationComponent},
   {path: 'local-decarb-single', component: LocalDecabSingleTplComponent},
+  {path:'msx',component:MsxTplComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
   {path:'dashboard',component:DashboardComponent, children: [

@@ -153,6 +153,21 @@
 
   //---------------------------------------------------FORM-------------------------------------------------------------
 
+.p-panelmenu {
+  .p-panelmenu-header .p-panelmenu-header-content {
+    border: none;
+    background: $lightColor-50;
+    transition: box-shadow 0.2s;
+  }
+  .p-panelmenu-content {
+    padding-left: 15px;
+    border: none;
+    background: $lightColor-50;
+    color: #4b5563;
+    border-top: 0;
+  }
+}
+
   .card-charts{
     background-color:#FDFDFD;
   }
