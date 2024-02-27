@@ -51,7 +51,7 @@ export const routes: Routes = [
   {path: 'coming-soon', component: ConstructionComponent},
   {path: 'local-decarbonisation', component: LocalDecarbonisationComponent},
   {path: 'local-decarb-single', component: LocalDecabSingleTplComponent},
-  {path:'msx',component:MsxTplComponent},
+  {path:'msw',component:MsxTplComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
   {path:'dashboard',component:DashboardComponent, children: [
