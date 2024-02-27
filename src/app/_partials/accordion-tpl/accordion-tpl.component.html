@@ -1,28 +1,22 @@
-<p-accordion [activeIndex]="0">
-  <p-accordionTab header="What is the goal of Industrial Decarbonisation for Northern Ireland (ID-NI)?">
-    <p>
-      The goal of the project is to address carbon reduction in Northern Ireland by taking an innovative dual-approach.
-      It aims to provide businesses with support, advice, tools, and metrics to increase productivity while simultaneously reducing emissions.
-    </p>
-  </p-accordionTab>
-  <p-accordionTab header="What support will businesses receive from the project?">
-    <p>
-      Businesses will receive support, advice, tools, and metrics from the project to help them increase productivity and reduce emissions.
-    </p>
-  </p-accordionTab>
-  <p-accordionTab header="How will the project measure the success of carbon reduction efforts?">
-    <p>
-      The project will use metrics to measure the success of carbon reduction efforts. These metrics will include emissions data, productivity indicators, and other relevant performance measures.
-    </p>
-  </p-accordionTab>
-  <p-accordionTab header="What types of businesses in Northern Ireland can benefit from this project?">
-    <p>
-      The project aims to benefit businesses across various sectors in Northern Ireland by providing them with the necessary support and tools to enhance productivity and reduce emissions.
-    </p>
-  </p-accordionTab>
-  <p-accordionTab header="Is the project limited to a certain timeframe, or is it an ongoing initiative?">
-    <p>
-      Information to be confirmed.
-    </p>
-  </p-accordionTab>
-</p-accordion>
+
+<h2 class="header-style">{{content.title}}</h2>
+
+<div class="flex justify-content-center container">
+  <div [innerHTML]="content.content" class="p-8 text-center text-lg"></div>
+</div>
+<div class="container" style="padding:40px">
+  <div class="grid">
+    <div class="lg:col-7 sm:col-12 lg:flex-order-0 md:flex-order-1 sm:flex-order-1">
+      <p-accordion [activeIndex]="0">
+        @for(item of accordionItems; track $index){
+          <p-accordionTab [header]="item.title">
+            <div [innerHTML]="item.content"></div>
+          </p-accordionTab>
+        }
+      </p-accordion>
+    </div>
+    <div class="lg:col-4 md:col-8 sm:col-12 mt-5 lg:flex-order-1 md:flex-order-0 sm:flex-order-0">
+      <img src="https://app.idni.eco/assets/{{content.image}}" alt="woman-engineer" class="page-img">
+    </div>
+  </div>
+</div>
