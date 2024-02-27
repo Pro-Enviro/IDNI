@@ -157,6 +157,8 @@ export class EnvirotrackReportBarComponent implements OnInit {
     this.track.getCompanies().subscribe({
       next: (res: any) => {
         this.companies = res.data;
+        this.selectedCompany = res.data[0].id
+        this.onSelectCompany()
       }
     })
   }
