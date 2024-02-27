@@ -28,12 +28,14 @@ import {NewsCardsTplComponent} from "../../_partials/news-cards-tpl/news-cards-t
   styleUrl: './landing-page.component.scss'
 })
 export class LandingPageComponent {
-  newsCard :any =[{
-    title:'Title',
-    content:'content',
-    image:'image',
-    link:'link'
+
+  newsCard:any = [{
+    title:"",
+    content:"",
+    image:"",
+    link:""
   }]
+
   content: any;
   tpl: string = 'app-content-tpl';
   constructor(private db: DbService) {
