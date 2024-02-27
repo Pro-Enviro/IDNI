@@ -44,42 +44,6 @@
 }
 
 
-.sidenav {
-  height: 100vh;
-  width: 13vw;
-  background-color: #F4F4F4;
-  overflow-x: hidden;
-  padding:20px;
-}
-
-.sidenav a {
-  font-size:16px;
-  padding:15px;
-  text-decoration: none;
-}
-
-.sidenav a:hover {
-  background-color:$primeColor;
-  text-decoration: none;
-}
-
-.p-menubar .p-submenu-list {
-  //font-size:18px;
-  margin-left:10px;
-  background: #F4F4F4;
-  border: 0 none;
-  box-shadow: none;
-  text-decoration: none;
-  color:pink;
-}
-
-.p-menubar .p-menuitem.p-highlight > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
-  color: #1f322f;
-}
-
-.p-menubar a{
-  text-decoration: none;
-}
   //----------------------------------------------------BUTTON----------------------------------------------------------
 
 .btn-select{
@@ -188,8 +152,33 @@
   }
 
   //---------------------------------------------------FORM-------------------------------------------------------------
-  .p-panel .p-panel-header
-  {
+
+  .card-charts{
+    background-color:#FDFDFD;
+  }
+
+  .card-select-panel{
+    background-color:#fbfbfb;
+  }
+
+  .card-style-none{
+      background: transparent;
+      color: #4b5563;
+      box-shadow: none;
+      border-radius: 0px;
+  }
+
+  .envirotrack-import{
+      //background-color:#fafafa;
+    background-color:$lightColor-50;
+      .p-card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+  }
+
+  .p-panel .p-panel-header {
     border: 1px solid #e5e7eb;
     padding: 1.25rem;
     background: $primeColor;
@@ -204,20 +193,17 @@
   }
 
   .date-btn{
-    .p-datepicker table td.p-datepicker-today > span
-    {
+    .p-datepicker table td.p-datepicker-today > span {
       background: $primeColor;
       color: white;
       border-color: $primeColor;
     }
-    .p-button
-    {
+    .p-button {
       background: $lightColor-100;
       color: $darkColor;
       border: 1px solid $darkColor;
     }
-    .p-button:not(:disabled):hover
-    {
+    .p-button:not(:disabled):hover {
       background: $lightColor-100;
       color: $darkColor;
       border-color: $darkColor;
@@ -408,15 +394,73 @@
   }
   //----------------------------------------------------MENU------------------------------------------------------------
 
-.envirotrack-menu{
-  //border-top:1px solid #f1f1f1;
-  //border-bottom:1px solid #f1f1f1;
-  //background-color:#FBFBFB;
+.sidenav {
+  height: 100%;
+  background-color: $lightColor-50;
+  overflow-x: hidden;
+  padding:20px;
+  a {
+    font-size:18.5px;
+    padding:24px;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  a:hover {
+    background-color:$lightColor-100;
+    text-decoration: none;
+    border-radius:10px;
+  }
+  a:focus{
+    background-color:$lightColor-100;
+    text-decoration: none;
+    border-radius:10px;
+  }
+  a:active{
+    background-color:$lightColor-100;
+    text-decoration: none;
+    border-radius:10px;
+  }
+  span.material-symbols-outlined {
+    color: $primeColor;
+    font-weight:700;
+    padding-right:10px;
+    font-size:1.8rem;
+  }
 
 }
+
+.p-menubar {
+  .p-submenu-list {
+    padding: 0.5rem;
+    background: none;
+    color: #4b5563;
+    margin-left:20px;
+    width:250px;
+    background: $lightColor-50;
+    box-shadow: none;
+    text-decoration: none;
+  }
+  .p-menuitem-text {
+    color: #313131;
+  }
+}
+
+.p-menubar .p-menuitem.p-highlight > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
+  color: #1f322f;
+}
+
+.p-menubar a{
+  text-decoration: none;
+}
+.p-menubar .p-menuitem.p-highlight > .p-menuitem-content .p-menuitem-link .p-submenu-icon {
+  color: $darkColor;
+}
+
+
   .p-megamenu{
     border: none;
-    background-color: white;
+    //background-color: #FBFBFB;
+    background-color: 	#f8f8f8;
     .p-megamenu-start{
       flex-grow: 1;
     }
@@ -443,8 +487,7 @@
     margin-right:0.5rem;
   }
 
-  .p-menubar
-  {
+  .p-menubar {
     padding: 0.5rem;
     background: none;
     color: #4b5563;

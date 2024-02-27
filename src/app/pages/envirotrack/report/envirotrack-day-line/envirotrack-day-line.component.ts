@@ -4,11 +4,12 @@ import {EChartsOption} from "echarts";
 import moment from "moment";
 import {SharedModules} from "../../../../shared-module";
 import {EnvirotrackService} from "../../envirotrack.service";
+import {CardModule} from "primeng/card";
 
 @Component({
   selector: 'app-envirotrack-day-line',
   standalone: true,
-  imports: [SharedModules],
+  imports: [SharedModules, CardModule],
   templateUrl: './envirotrack-day-line.component.html',
   styleUrls: ['./envirotrack-day-line.component.scss']
 })
@@ -19,6 +20,7 @@ export class EnvirotrackDayLineComponent implements OnInit {
   nonProductiveLoad: number = 0;
   productivePercent: number = 0;
   nonProductivePercent: number = 0;
+  productLoad !: [];
 
   constructor(
     private dialog: DynamicDialogConfig,

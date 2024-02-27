@@ -20,8 +20,8 @@ import {
 import {
   EnvirotrackBarSmallComponent
 } from "../envirotrack/report/envirotrack-report-bar/envirotrack-bar-small/envirotrack-bar-small.component";
-import {EnvirotrackSmallPieChartComponent} from "../envirotrack/report/envirotrack-report-pie/envirotrack-small-pie-chart/envirotrack-small-pie-chart.component";
-import {EnvirotrackBarSmallComponent} from "../envirotrack/report/envirotrack-report-bar/envirotrack-bar-small/envirotrack-bar-small.component";
+import {StatContainersTplComponent} from "./stat-containers-tpl/stat-containers-tpl.component";
+import {MenuModule} from "primeng/menu";
 
 
 @Component({
@@ -53,45 +53,45 @@ export class DashboardComponent {
       routerLink:'/dashboard/fuel-data',
     },
     {
-      label:'<span class="material-symbols-outlined">stacked_line_chart</span> Envirotrack Import',
+      label:'<span class="material-symbols-outlined">add_chart</span> Envirotrack Import',
       routerLink:'/dashboard/import'
     },
     {
-      label:'<span class="material-symbols-outlined">monitoring</span> Envirotrack Report',
+      label:'<span class="material-symbols-outlined">query_stats</span> Envirotrack Report',
       routerLink:'/dashboard/heatmap',
       items:[
         {
-          label:'<span class="material-symbols-outlined material-icon">assessment</span> Electricity consumption, kWh per half-hour',
+          label:'<span class="material-symbols-outlined material-icon">assessment</span>Electricity Consumption, kWh per half-hour',
           escape: false,
           routerLink: '/dashboard/heatmap'
         },
         {
-          label:'<span class="material-symbols-outlined material-icon">scatter_plot</span> Electricity consumption, kWh split by day of the week',
+          label:'<span class="material-symbols-outlined material-icon">scatter_plot</span>Electricity Consumption, kWh split by day of the week',
           escape: false,
           routerLink: '/dashboard/scatter',
         },
         {
-          label:'<span class="material-symbols-outlined material-icon">bar_chart</span> Electricity consumption, kWh',
+          label:'<span class="material-symbols-outlined material-icon">bar_chart</span>Electricity Consumption, kWh',
           escape: false,
           routerLink: '/dashboard/bar'
         },
         {
-          label:'<span class="material-symbols-outlined material-icon">pie_chart</span> Electricity Consumption, % split by day of the week',
+          label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Electricity Consumption, % split by day of the week',
           escape: false,
           routerLink: '/dashboard/pie'
         },
         {
-          label:'<span class="material-symbols-outlined material-icon">show_chart</span> Christmas Day vs lowest day of the year consumption',
+          label:'<span class="material-symbols-outlined material-icon">show_chart</span>Christmas Day vs Lowest Day of the year consumption',
           escape: false,
           routerLink: '/dashboard/base1'
         },
         {
-          label:'<span class="material-symbols-outlined material-icon">stacked_line_chart</span> Average daily consumption, kWh per half hour',
+          label:'<span class="material-symbols-outlined material-icon">stacked_line_chart</span>Average Daily Consumption, kWh per half hour',
           escape: false,
           routerLink: '/dashboard/avg'
         },
         {
-          label:'<span class="material-symbols-outlined material-icon">data_exploration</span> Maximum Demand',
+          label:'<span class="material-symbols-outlined material-icon">data_exploration</span>Maximum Demand',
           escape: false,
           routerLink: '/dashboard/demand'
         }

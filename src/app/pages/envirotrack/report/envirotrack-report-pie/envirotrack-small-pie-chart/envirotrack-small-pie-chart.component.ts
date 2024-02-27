@@ -10,6 +10,7 @@ import {NgxEchartsDirective} from "ngx-echarts";
 import {DropdownModule} from "primeng/dropdown";
 import {NgIf} from "@angular/common";
 import {SharedModules} from "../../../../../shared-module";
+import {CardModule} from "primeng/card";
 
 @Component({
   selector: 'app-envirotrack-small-pie-chart',
@@ -22,7 +23,8 @@ import {SharedModules} from "../../../../../shared-module";
 
     DropdownModule,
     NgIf,
-    SharedModules
+    SharedModules,
+    CardModule
   ],
   templateUrl: './envirotrack-small-pie-chart.component.html',
   styleUrl: './envirotrack-small-pie-chart.component.scss'
@@ -150,6 +152,8 @@ export class EnvirotrackSmallPieChartComponent {
       next: (res: any)=>{
         if (res.data) {
           this.companies = res.data
+          this.selectedCompany = res.data[0].id
+          this.onSelectCompany()
         }
       }
     })

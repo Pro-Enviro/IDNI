@@ -9,6 +9,7 @@ import {SharedModules} from "../../../../../shared-module";
 import * as echarts from "echarts";
 import {EnvirotrackService} from "../../../envirotrack.service";
 import moment from "moment/moment";
+import {CardModule} from "primeng/card";
 
 @Component({
   selector: 'app-envirotrack-bar-small',
@@ -20,7 +21,8 @@ import moment from "moment/moment";
     NgxEchartsDirective,
     PanelModule,
     SelectButtonModule,
-    SharedModules
+    SharedModules,
+    CardModule
   ],
   templateUrl: './envirotrack-bar-small.component.html',
   styleUrl: './envirotrack-bar-small.component.scss'
@@ -166,6 +168,8 @@ export class EnvirotrackBarSmallComponent {
     this.track.getCompanies().subscribe({
       next: (res: any) => {
         this.companies = res.data;
+        this.selectedCompany = res.data[0].id
+        this.onSelectCompany()
       }
     })
   }
