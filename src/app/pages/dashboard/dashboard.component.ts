@@ -20,6 +20,8 @@ import {
 import {
   EnvirotrackBarSmallComponent
 } from "../envirotrack/report/envirotrack-report-bar/envirotrack-bar-small/envirotrack-bar-small.component";
+import {EnvirotrackSmallPieChartComponent} from "../envirotrack/report/envirotrack-report-pie/envirotrack-small-pie-chart/envirotrack-small-pie-chart.component";
+import {EnvirotrackBarSmallComponent} from "../envirotrack/report/envirotrack-report-bar/envirotrack-bar-small/envirotrack-bar-small.component";
 
 
 @Component({
