@@ -1,6 +1,26 @@
 <app-top-page-img-tpl></app-top-page-img-tpl>
 <section>
   <div class="container p-5">
+    <h2>{{content.title}</h2>
+    <div [innerHTML]="content.content"></div>
+  </div>
+  <div class="container p-4">
+    <div class="grid">
+      <div class="lg:col-4 sm:col-12">
+        <img src="https://app.idni.eco/assets/{{content.image}}" alt="women" class="page-img">
+      </div>
+      <div class="col"></div>
+      <div class="lg:col-7 sm:col-12">
+        <h3 class="header-style text-xl">{{content.subtitle}}</h3>
+        <div [innerHTML]="content.content"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="container p-5">
     <h2>Derry City & Strabane District Council</h2>
     <p>Derry City and Strabane District Council is the local authority for Derry and
       Strabane district in Northern Ireland. It was created as part of the 2014 Northern Ireland local government reform, replacing Derry City Council and Strabane District Council.</p>

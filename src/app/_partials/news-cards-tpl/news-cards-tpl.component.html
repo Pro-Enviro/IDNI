@@ -1,6 +1,6 @@
 <div class="grid">
+  @for (card of newsItems; track $index){
   <div class="lg:col-4 md:col-8 sm:col-12">
-    @for (card of newsItems; track $index){
       <div class="news-card">
         <div class="card-head">
           <h4 class="header-style">{{card.title}}</h4>
@@ -13,7 +13,7 @@
           </div>
         </div>
       </div>
-    }
   </div>
+  }
 </div>
 
