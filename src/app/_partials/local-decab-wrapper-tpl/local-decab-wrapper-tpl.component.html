@@ -1,0 +1,12 @@
+
+@if (content){
+  <section>
+    <div class="container p-5">
+      <h2>{{content.title}}</h2>
+      <div [innerHTML]="content.content"></div>
+    </div>
+    <div class="container p-4">
+     <app-local-decab-single-tpl></app-local-decab-single-tpl>
+    </div>
+  </section>
+}
