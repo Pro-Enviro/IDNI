@@ -16,4 +16,10 @@ export class DbService {
       map((x:any)=> x.data)
     )
   }
+
+  getContentFromCollection(collection: string, args?:any) {
+    return this.http.get(`${this.url}/items/${collection}${args ? args: ''}`).pipe(
+      map((x:any) => x.data)
+    )
+  }
 }

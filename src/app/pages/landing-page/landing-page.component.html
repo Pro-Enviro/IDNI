@@ -1,6 +1,5 @@
 <app-hero></app-hero>
 @if (content){
-  <pre>{{content | json}}</pre>
   <section>
     <div class="flex justify-content-center text-center container">
       <div class="grid nested-grid">
@@ -54,10 +53,7 @@
 
 
 <section class="blue-curve-right">
-  <h2 class="header-style">News</h2>
-  <div class="container mt-6" style="padding:70px;">
-    <app-news-cards-tpl></app-news-cards-tpl>
-  </div>
+  <app-home-news-tpl></app-home-news-tpl>
 </section>
 
 
