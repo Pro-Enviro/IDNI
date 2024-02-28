@@ -27,6 +27,20 @@
   <section class="blue-curve-right">
     <app-accordion-tpl [content]="content.items?.[3].item"></app-accordion-tpl>
   </section>
+
+  <section class="blue-curve-left">
+    <h2 class="header-style">{{content.items?.[4].item.title}}</h2>
+    <div class="container mt-8" style="padding:20px">
+      <app-home-technology-tpl [content]="content.items?.[4].item"></app-home-technology-tpl>
+    </div>
+  </section>
+
+<!--  <section class="blue-curve-right">-->
+<!--    <h2>{{content.items?.[5].item.title}}</h2>-->
+<!--    <div class="container mt-6" style="padding:70px;">-->
+<!--      <app-news-cards-tpl [content]="content.items?.[5].item"></app-news-cards-tpl>-->
+<!--    </div>-->
+<!--  </section>-->
 }
 
 
@@ -41,23 +55,12 @@
 
 
 
-<section class="blue-curve-left">
-  <h2 class="header-style">Latest <br>Technologies</h2>
-  <div class="flex justify-content-center">
-    <p class="w-7 p-5 text-center">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa
-      qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
-  </div>
-  <div class="container flex justify-content-center align-items-center" style="padding: 30px; margin-top: 4rem">
-    <app-home-technology-tpl></app-home-technology-tpl>
-  </div>
-</section>
 
-
-<section class="blue-curve-right">
-  <h2 class="header-style">News</h2>
-  <div class="container mt-6" style="padding:70px;">
-    <app-news-cards-tpl></app-news-cards-tpl>
-  </div>
-</section>
+<!--<section class="blue-curve-right">-->
+<!--  <h2 class="header-style">News</h2>-->
+<!--  <div class="container mt-6" style="padding:70px;">-->
+<!--    <app-news-cards-tpl></app-news-cards-tpl>-->
+<!--  </div>-->
+<!--</section>-->
 
 
