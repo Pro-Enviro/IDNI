@@ -12,6 +12,7 @@ import {NewsCardsTplComponent} from "../../_partials/news-cards-tpl/news-cards-t
 import {HomeNewsTplComponent} from "../../_partials/home-news-tpl/home-news-tpl.component";
 
 
+
 @Component({
   selector: 'app-landing-page',
   standalone: true,

@@ -1,12 +1,12 @@
-
-@if (content){
+@if(localDecab){
   <section>
     <div class="container p-5">
-      <h2>{{content.title}}</h2>
-      <div [innerHTML]="content.content"></div>
+      <h2>{{localDecab.title}}</h2>
+      <div [innerHTML]="localDecab.content"></div>
     </div>
     <div class="container p-4">
-     <app-local-decab-single-tpl></app-local-decab-single-tpl>
+      <app-local-decab-single-tpl [content]="localDecab.items"></app-local-decab-single-tpl>
     </div>
   </section>
 }
+

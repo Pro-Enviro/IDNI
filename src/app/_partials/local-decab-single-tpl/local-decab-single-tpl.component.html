@@ -1,34 +1,33 @@
 <app-top-page-img-tpl></app-top-page-img-tpl>
 
-
-    <div class="container p-4">
-      <div class="grid">
-        @for(content of decabItems; track $index){
-          <div class="lg:col-4 sm:col-12">
-            <img src="https://app.idni.eco/assets/{{content.image}}" alt="" class="page-img">
-          </div>
-          <div class="col"></div>
-          <div class="lg:col-7 sm:col-12">
-            <h3 class="header-style text-xl">{{content.title}}</h3>
-            <div [innerHTML]="content.content"></div>
-          </div>
-        }
-      </div>
+  <div class="container p-4">
+    <div class="grid">
+      @for(item of decabItems; track $index){
+        <div class="lg:col-4 sm:col-12">
+          <img src="https://app.idni.eco/assets/{{item.image}}" alt="" class="page-img">
+        </div>
+        <div class="col"></div>
+        <div class="lg:col-7 sm:col-12">
+          <h3 class="header-style text-xl">{{item.title}}</h3>
+          <div [innerHTML]="item.content"></div>
+        </div>
+      }
     </div>
-    <div class="container p-4">
-      <div class="grid">
-        @for(content of decabItems; track $index){
-          <div class="lg:col-7 sm:col-12 lg:flex-order-0 md:flex-order-1 sm:flex-order-1">
-            <h3 class="header-style text-xl">{{content.title}}</h3>
-            <div [innerHTML]="content.content"></div>
-          </div>
-          <div class="col"></div>
-          <div class="lg:col-4 sm:col-12 lg:flex-order-1 md:flex-order-0 sm:flex-order-0">
-            <img src="https://app.idni.eco/assets/{{content.image}}" alt="" class="page-img">
-          </div>
-        }
-      </div>
+  </div>
+  <div class="container p-4">
+    <div class="grid">
+      @for(item of decabItems; track $index){
+        <div class="lg:col-7 sm:col-12 lg:flex-order-0 md:flex-order-1 sm:flex-order-1">
+          <h3 class="header-style text-xl">{{item.title}}</h3>
+          <div [innerHTML]="item.content"></div>
+        </div>
+        <div class="col"></div>
+        <div class="lg:col-4 sm:col-12 lg:flex-order-1 md:flex-order-0 sm:flex-order-0">
+          <img src="https://app.idni.eco/assets/{{item.image}}" alt="" class="page-img">
+        </div>
+      }
     </div>
+  </div>
 
 
 
