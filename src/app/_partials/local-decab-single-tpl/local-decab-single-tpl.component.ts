@@ -11,6 +11,6 @@ import {TopPageImgTplComponent} from "../top-page-img-tpl/top-page-img-tpl.compo
   styleUrl: './local-decab-single-tpl.component.scss'
 })
 export class LocalDecabSingleTplComponent {
-  @Input('content') content: any;
+
 
 }
