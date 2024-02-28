@@ -20,12 +20,12 @@ export class NewsCardsTplComponent {
   getArticle = (id: number) => {
     //TODO add model box for news article to open up into using the id to fetch from database.
 
-    this.db.getContent(30, '?fields=title,news_articles.content_with_image_type_id,news_page_id,id').subscribe({
-      next: (res:any) => {
-        console.log(res)
-        this.articles = res.data
-      }
-    })
+    // this.db.getContent(30, '?fields=title,news_articles.content_with_image_type_id,news_page_id,id').subscribe({
+    //   next: (res:any) => {
+    //     console.log(res)
+    //     this.articles = res.data
+    //   }
+    // })
 
   }
 }
