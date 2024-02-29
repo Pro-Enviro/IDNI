@@ -14,10 +14,9 @@ import {JsonPipe} from "@angular/common";
   styleUrl: './local-decab-wrapper-tpl.component.scss'
 })
 export class LocalDecabWrapperTplComponent {
-  @Input('content') content: any;
-  localDecab:any;
+  content:any;
   constructor(private db: DbService) {
-    this.db.getContent(8, `
+    this.db.getContentFromCollection('news_pages/2', `
 ?fields=title,
 description,
 alias,
