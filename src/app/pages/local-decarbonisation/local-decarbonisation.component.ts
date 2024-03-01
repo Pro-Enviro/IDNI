@@ -25,15 +25,25 @@ import {JsonPipe} from "@angular/common";
 export class LocalDecarbonisationComponent {
   content:any;
   constructor(private db: DbService) {
-    this.db.getContentFromCollection('news_pages/2', `
+    this.db.getContentFromCollection('local_decarb/1', `
 ?fields=title,
+summary,
 content,
 id,
-news_articles.content_with_image_type_id.title,news_articles.content_with_image_type_id.content,news_articles.content_with_image_type_id.image,news_articles.content_with_image_type_id.id
+las.*,
+las.local_decarb_id,
+las.related_local_decarb_id,
+las.id,
+items.item.*,
+items.item.image,
+items.item.title,
+items.item.content,
+items.item.id
+
 `).subscribe({
       next: (res: any) => {
         this.content = res
-        this.content.news_articles = this.content.news_articles.map((items:any) =>  items.content_with_image_type_id)
+
       },
 
       error: (err: any) => {

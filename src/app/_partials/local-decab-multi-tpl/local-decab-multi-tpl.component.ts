@@ -7,6 +7,7 @@ import {LocalDecabSingleTplComponent} from "../local-decab-single-tpl/local-deca
 import {DbService} from "../../_services/db.service";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
+import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 
 
 @Component({
@@ -21,21 +22,28 @@ import {map} from "rxjs/operators";
     NgIf
   ],
   templateUrl: './local-decab-multi-tpl.component.html',
-  styleUrl: './local-decab-multi-tpl.component.scss'
+  styleUrl: './local-decab-multi-tpl.component.scss',
+  providers: [DialogService, DynamicDialogRef]
 })
 export class LocalDecabMultiTplComponent {
   @Input('content') content: any;
-  visible: boolean = false;
-
-
+  id: number | undefined;
+  ref: DynamicDialogRef | undefined
+  pageItems:any;
   constructor(
     private http: HttpClient,
+    private db: DbService,
+    private dialog: DialogService,
+   ) {
+  }
 
-  ) {console.log(this.content)}
-  getArticle = (id:string) => {
-    this.visible = true;
-    // return this.http.get(`${this.url}/items/news_pages/${id}?fields=${content.toString()}`)
-  console.log(id)
+  getArticle = (id:number) => {
+    this.ref = this.dialog.open(LocalDecabSingleTplComponent, {
+      header: 'Dialog Header',
+      data: {
+        id: id
+      }
+    })
   }
 
 }
