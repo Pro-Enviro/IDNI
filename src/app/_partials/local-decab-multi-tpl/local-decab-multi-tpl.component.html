@@ -4,7 +4,7 @@
         <div class="container p-4">
           <div class="grid">
             <div class="lg:col-4 sm:col-12">
-              <img src="https://app.idni.eco/assets/{{content.image}}" alt="{{content.title}}" style="max-width:95%;">
+              <img src="https://app.idni.eco/assets/{{content.image}}" alt="{{content.title}}" style="max-width:90%;">
             </div>
             <div class="col"></div>
             <div class="lg:col-7 sm:col-12">
@@ -12,6 +12,9 @@
               <div [innerHTML]="content.content"></div>
               <div class="pt-3">
                 <p-button (click)="getArticle(content.id)" label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
+                <p-dialog [(visible)]="visible">
+                 <app-local-decab-single-tpl [content]="content"></app-local-decab-single-tpl>
+                </p-dialog>
               </div>
             </div>
           </div>
@@ -25,6 +28,9 @@
               <div [innerHTML]="content.content"></div>
               <div class="pt-3">
                 <p-button (click)="getArticle(content.id)" label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
+                <p-dialog [(visible)]="visible">
+                  <app-local-decab-single-tpl [content]="content"></app-local-decab-single-tpl>
+                </p-dialog>
               </div>
             </div>
             <div class="col"></div>
