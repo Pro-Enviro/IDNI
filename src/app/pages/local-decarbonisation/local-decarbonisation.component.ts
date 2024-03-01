@@ -27,8 +27,9 @@ export class LocalDecarbonisationComponent {
   constructor(private db: DbService) {
     this.db.getContentFromCollection('news_pages/2', `
 ?fields=title,
-content
-,news_articles.content_with_image_type_id.title,news_articles.content_with_image_type_id.content,news_articles.content_with_image_type_id.image
+content,
+id,
+news_articles.content_with_image_type_id.title,news_articles.content_with_image_type_id.content,news_articles.content_with_image_type_id.image,news_articles.content_with_image_type_id.id
 `).subscribe({
       next: (res: any) => {
         this.content = res

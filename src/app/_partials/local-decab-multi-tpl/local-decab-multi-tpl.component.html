@@ -1,3 +1,4 @@
+
 @if(content){
     @for(content of content.news_articles; track $index; let e = $even){
       @if(e){
@@ -11,9 +12,10 @@
               <h3 class="header-style text-xl">{{content.title}}</h3>
               <div [innerHTML]="content.content"></div>
               <div class="pt-3">
+                <pre>{{content | json}}</pre>
                 <p-button (click)="getArticle(content.id)" label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
                 <p-dialog [(visible)]="visible">
-                 <app-local-decab-single-tpl [content]="content"></app-local-decab-single-tpl>
+                 <app-local-decab-single-tpl *ngIf="content.id" [content]="content"></app-local-decab-single-tpl>
                 </p-dialog>
               </div>
             </div>
