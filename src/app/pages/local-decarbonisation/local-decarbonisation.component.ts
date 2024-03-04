@@ -50,9 +50,7 @@ las.related_local_decarb_id.items.item.image
             ...news.related_local_decarb_id
           }
         })
-       console.log(this.content)
       },
-
       error: (err: any) => {
         console.error(err)
       }

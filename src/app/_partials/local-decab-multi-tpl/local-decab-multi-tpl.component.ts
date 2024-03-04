@@ -38,10 +38,11 @@ export class LocalDecabMultiTplComponent {
   }
 
   getArticle = (id:number) => {
+    console.log(id)
     this.ref = this.dialog.open(LocalDecabSingleTplComponent, {
       header: 'Dialog Header',
       data: {
-        id: id
+        id: id +1
       }
     })
   }

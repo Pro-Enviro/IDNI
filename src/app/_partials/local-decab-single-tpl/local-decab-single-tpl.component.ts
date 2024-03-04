@@ -22,24 +22,24 @@ export class LocalDecabSingleTplComponent implements OnDestroy{
   @Input('content') content: any;
   @Input('pageItems') pageItems: any;
 
+
   constructor(
     private db: DbService,
     private dialogConfig: DynamicDialogConfig,
     private ref: DynamicDialogRef,
     private dialog: DialogService
   ) {
-    console.log(this.dialogConfig,this.dialog.getInstance(this.ref))
+    console.log(this.dialogConfig,this.dialog.getInstance(this.ref).data['id'])
     this.db.getContentFromCollection(`local_decarb/${this.dialog.getInstance(this.ref).data['id']}`, `
 ?fields=
-las.related_local_decarb_id.items.item.title,
-las.related_local_decarb_id.items.item.content,
-las.related_local_decarb_id.items.item.image
+title,
+items.item.title,
+items.item.content,
+items.item.image
 `).subscribe({
       next: (res: any) => {
         this.content = res
-        this.content.las = this.content.las[0].related_local_decarb_id.items.map((las_items:any) => las_items.item)
-
-
+        this.content.items = this.content.items.map((stuff:any) => stuff.item)
       },
 
       error: (err: any) => {
@@ -51,6 +51,10 @@ las.related_local_decarb_id.items.item.image
   ngOnDestroy(): void {
         this.ref.destroy()
     }
+
+
+
+
 
 
 

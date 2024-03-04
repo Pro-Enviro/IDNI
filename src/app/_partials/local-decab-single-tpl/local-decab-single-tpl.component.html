@@ -1,10 +1,10 @@
 @if(content){
   <div class="container p-5">
-<!--    <pre>{{content | json}}</pre>-->
+    <pre>{{content | json}}</pre>
     <h2>{{content.title}}</h2>
     <div [innerHTML]="content.content"></div>
   </div>
-    @for(items of content.las; track $index; let e = $even){
+    @for(items of content.items; track $index; let e = $even){
       @if(e){
         <div class="container p-4">
           <div class="grid">
