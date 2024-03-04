@@ -30,18 +30,16 @@ export class LocalDecabSingleTplComponent implements OnDestroy{
   ) {
     console.log(this.dialogConfig,this.dialog.getInstance(this.ref))
     this.db.getContentFromCollection(`local_decarb/${this.dialog.getInstance(this.ref).data['id']}`, `
-?fields=title,
-content,
-id,
-items.item.items.content_with_image_type_id.image,
-items.item.items.content_with_image_type_id.title,
-items.item.items.content_with_image_type_id.content,
-items.item.items.content_type_id.title,
-items.item.items.content_type_id.content
+?fields=
+las.related_local_decarb_id.items.item.title,
+las.related_local_decarb_id.items.item.content,
+las.related_local_decarb_id.items.item.image
 `).subscribe({
       next: (res: any) => {
         this.content = res
-        // this.content.news_articles = this.content.news_articles.map((items:any) =>  items.content_with_image_type_id)
+        this.content.las = this.content.las[0].related_local_decarb_id.items.map((las_items:any) => las_items.item)
+
+
       },
 
       error: (err: any) => {

@@ -4,7 +4,7 @@
     <h2>{{content.title}}</h2>
     <div [innerHTML]="content.content"></div>
   </div>
-    @for(items of content.news_articles; track $index; let e = $even){
+    @for(items of content.las; track $index; let e = $even){
       @if(e){
         <div class="container p-4">
           <div class="grid">

@@ -1,6 +1,6 @@
 
 @if(content){
-  <pre>{{content | json}}</pre>
+<!--  <pre>{{content | json}}</pre>-->
     @for(content of content.las; track $index; let e = $even){
       @if(e){
         <div class="container p-4">
@@ -13,6 +13,7 @@
               <h3 class="header-style text-xl">{{content.title}}</h3>
               <div [innerHTML]="content.content"></div>
               <div class="pt-3">
+<!--                <pre>{{content.id | json}}</pre>-->
                 <p-button (click)="getArticle(content.id)" label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
               </div>
             </div>

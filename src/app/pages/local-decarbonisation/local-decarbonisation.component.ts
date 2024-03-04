@@ -30,20 +30,27 @@ export class LocalDecarbonisationComponent {
 summary,
 content,
 id,
-las.*,
+las,
 las.local_decarb_id,
-las.related_local_decarb_id,
 las.id,
-items.item.*,
-items.item.image,
-items.item.title,
-items.item.content,
-items.item.id
+las.related_local_decarb_id.title,
+las.related_local_decarb_id.content,
+las.related_local_decarb_id.image,
+las.related_local_decarb_id.items.item.title,
+las.related_local_decarb_id.items.item.content,
+las.related_local_decarb_id.items.item.image
+
 
 `).subscribe({
       next: (res: any) => {
         this.content = res
-
+        this.content.las = this.content.las.map((news:any) => {
+          return {
+            id: news.id,
+            ...news.related_local_decarb_id
+          }
+        })
+       console.log(this.content)
       },
 
       error: (err: any) => {
