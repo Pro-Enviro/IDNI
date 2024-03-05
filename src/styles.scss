@@ -691,7 +691,7 @@
       position: absolute;
       top:0;
       bottom:3px;
-      left:5px;
+      left:7px;
       right:0;
     }
     .news-img{
@@ -705,6 +705,12 @@
        z-index:1;
        font-size: 1.25rem;
      }
+    span{
+      position:absolute;
+      top:70%;
+      right: 25px;
+      z-index:1;
+    }
   }
 }
 

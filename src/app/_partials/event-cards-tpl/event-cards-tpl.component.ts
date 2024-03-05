@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 
+
 @Component({
   selector: 'app-event-cards-tpl',
   standalone: true,
@@ -12,4 +13,5 @@ import {ButtonModule} from "primeng/button";
 })
 export class EventCardsTplComponent {
   @Input('content') content: any;
+
 }

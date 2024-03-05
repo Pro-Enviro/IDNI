@@ -23,6 +23,7 @@ export class EventsComponent {
     this.db.getContentFromCollection('events_pages/1', `
 ?fields=title,
 content,
+id,
 event_items.event_items_id.title,
 event_items.event_items_id.content,
 event_items.event_items_id.image,
