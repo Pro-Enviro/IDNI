@@ -1,5 +1,3 @@
-import {Component, Input} from '@angular/core';
-import {ButtonModule} from "primeng/button";
 import {JsonPipe} from "@angular/common";
 import {DbService} from "../../_services/db.service";
 import {AfterViewInit, Component, Input} from '@angular/core';
@@ -19,7 +17,7 @@ export interface newsCard {
   standalone: true,
   imports: [
     ButtonModule,
-    JsonPipe
+    JsonPipe,
     RouterLink
   ],
   templateUrl: './news-cards-tpl.component.html',
