@@ -1,6 +1,5 @@
 <app-hero></app-hero>
 @if (content){
-  <pre>{{content | json}}</pre>
   <section>
     <div class="flex justify-content-center text-center container">
       <div class="grid nested-grid">
@@ -27,20 +26,6 @@
   <section class="blue-curve-right">
     <app-accordion-tpl [content]="content.items?.[3].item"></app-accordion-tpl>
   </section>
-
-  <section class="blue-curve-left">
-    <h2 class="header-style">{{content.items?.[4].item.title}}</h2>
-    <div class="container mt-8" style="padding:20px">
-      <app-home-technology-tpl [content]="content.items?.[4].item"></app-home-technology-tpl>
-    </div>
-  </section>
-
-<!--  <section class="blue-curve-right">-->
-<!--    <h2>{{content.items?.[5].item.title}}</h2>-->
-<!--    <div class="container mt-6" style="padding:70px;">-->
-<!--      <app-news-cards-tpl [content]="content.items?.[5].item"></app-news-cards-tpl>-->
-<!--    </div>-->
-<!--  </section>-->
 }
 
 
@@ -56,11 +41,10 @@
 
 
 
-<!--<section class="blue-curve-right">-->
-<!--  <h2 class="header-style">News</h2>-->
-<!--  <div class="container mt-6" style="padding:70px;">-->
-<!--    <app-news-cards-tpl></app-news-cards-tpl>-->
-<!--  </div>-->
-<!--</section>-->
+<section class="blue-curve-right">
+  <app-home-news-tpl></app-home-news-tpl>
+</section>
+
+
 
 

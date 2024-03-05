@@ -9,6 +9,9 @@ import {CarouselTplComponent} from "../../_partials/carousel-tpl/carousel-tpl.co
 import {AccordionTplComponent} from "../../_partials/accordion-tpl/accordion-tpl.component";
 import {HomeTechnologyTplComponent} from "../../_partials/home-technology-tpl/home-technology-tpl.component";
 import {NewsCardsTplComponent} from "../../_partials/news-cards-tpl/news-cards-tpl.component";
+import {HomeNewsTplComponent} from "../../_partials/home-news-tpl/home-news-tpl.component";
+
+
 
 @Component({
   selector: 'app-landing-page',
@@ -22,7 +25,8 @@ import {NewsCardsTplComponent} from "../../_partials/news-cards-tpl/news-cards-t
     CarouselTplComponent,
     AccordionTplComponent,
     HomeTechnologyTplComponent,
-    NewsCardsTplComponent
+    NewsCardsTplComponent,
+    HomeNewsTplComponent
   ],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss'
@@ -48,4 +52,5 @@ items.item.items.content_type_id.content
       }
     })
   }
+
 }

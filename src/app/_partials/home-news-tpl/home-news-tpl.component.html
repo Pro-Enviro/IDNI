@@ -1,0 +1,7 @@
+@if(newsArticles){
+  <h2 class="header-style">{{newsArticles.title}}</h2>
+  <div class="container mt-6" style="padding:70px;">
+    <app-news-cards-tpl [articles]="newsArticles"></app-news-cards-tpl>
+  </div>
+}
+
