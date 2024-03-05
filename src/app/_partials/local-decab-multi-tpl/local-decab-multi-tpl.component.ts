@@ -29,7 +29,6 @@ export class LocalDecabMultiTplComponent {
   @Input('content') content: any;
   id: number | undefined;
   ref: DynamicDialogRef | undefined
-  pageItems:any;
   constructor(
     private http: HttpClient,
     private db: DbService,
@@ -38,7 +37,7 @@ export class LocalDecabMultiTplComponent {
 
 
   getArticle = (id:number) => {
-    console.log(id)
+    // console.log(id)
     this.ref = this.dialog.open(LocalDecabSingleTplComponent, {
       data: {
         id: id +1

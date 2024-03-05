@@ -1,22 +1,46 @@
 @if(content){
-  @for(content of content.event_items; track $index;){
-    <div class="container p-4">
-      <div class="grid">
-        <div class="lg:col-4 sm:col-12">
-          <img src="https://app.idni.eco/assets/{{content.image}}" alt="" style="max-width:90%;">
-        </div>
-        <div class="col"></div>
-        <div class="lg:col-7 sm:col-12">
-          <h3 class="header-style text-xl">{{content.title}}</h3>
-          <p>Date: {{content.date}}</p>
-          <p>Venue: {{content.venue}}</p>
-          <div class="pt-3">
-            <p-button label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
+  <div class="grid">
+    @for(content of content.event_items; track $index;){
+      <div class="lg:col-6 md:col-8 sm:col-12">
+        <div class="news-card">
+          <div class="card-head">
+            <span>Date: {{content.date}}</span>
+            <span class="mt-5">Venue: {{content.venue}}</span>
+            <img src="assets/img/news-2.jpeg" alt="" class="news-img">
+          </div>
+          <div class="card-body text-left">
+            <h3 class="header-style text-2xl">{{content.title}}</h3>
+            <p>{{content.content}}</p>
+          </div>
+          <div class="flex justify-content-start">
+            <div class="card-footer">
+              <p-button label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
+            </div>
           </div>
         </div>
       </div>
-      <hr class="hr-style">
-    </div>
-  }
+    }
+  </div>
+
+
 }
 
+
+
+<!--<div class="container p-4">-->
+<!--  <div class="grid">-->
+<!--    <div class="lg:col-4 sm:col-12">-->
+<!--      <img src="https://app.idni.eco/assets/{{content.image}}" alt="" style="max-width:90%;">-->
+<!--    </div>-->
+<!--    <div class="col"></div>-->
+<!--    <div class="lg:col-7 sm:col-12">-->
+<!--      <h3 class="header-style text-xl">{{content.title}}</h3>-->
+<!--      <p>Date: {{content.date}}</p>-->
+<!--      <p>Venue: {{content.venue}}</p>-->
+<!--      <div class="pt-3">-->
+<!--        <p-button  label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <hr class="hr-style">-->
+<!--</div>-->
