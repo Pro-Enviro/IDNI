@@ -2,11 +2,14 @@
 
 <section>
   @if(content){
-<!--      <pre>{{content | json}}</pre>-->
   <div class="container p-5">
     <h2>{{content.title}}</h2>
     <p>{{content.content}}</p>
+    <div class="pt-3">
+      <p-dropdown [options]="eventOptions" [(ngModel)]="selectedDate" optionLabel="name" [showClear]="true" placeholder="Past/Future Events"></p-dropdown>
+    </div>
   </div>
+
     <div class="container">
       <app-event-cards-tpl [content]="content"></app-event-cards-tpl>
     </div>

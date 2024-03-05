@@ -4,6 +4,8 @@ import {ButtonModule} from "primeng/button";
 import {DbService} from "../../_services/db.service";
 import {EventCardsTplComponent} from "../../_partials/event-cards-tpl/event-cards-tpl.component";
 import {JsonPipe} from "@angular/common";
+import {DropdownModule} from "primeng/dropdown";
+import {SharedModules} from "../../shared-module";
 
 @Component({
   selector: 'app-events',
@@ -12,13 +14,25 @@ import {JsonPipe} from "@angular/common";
     TopPageImgTplComponent,
     ButtonModule,
     EventCardsTplComponent,
-    JsonPipe
+    JsonPipe,
+    DropdownModule,
+    SharedModules
   ],
   templateUrl: './events.component.html',
   styleUrl: './events.component.scss'
 })
 export class EventsComponent {
   content:any;
+  selectedDate: any;
+  eventOptions:any =[
+    {
+      name:'Past Events'
+    },
+    {
+      name:'Future Events'
+    }
+  ]
+
   constructor(private db: DbService) {
     this.db.getContentFromCollection('events_pages/1', `
 ?fields=title,
