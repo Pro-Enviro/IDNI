@@ -26,6 +26,16 @@
   <section class="blue-curve-right">
     <app-accordion-tpl [content]="content.items?.[3].item"></app-accordion-tpl>
   </section>
+
+
+  <section class="blue-curve-left">
+    <h2 class="header-style">{{content.items?.[4].item.title}}</h2>
+    <div class="container mt-8" style="padding:20px">
+      <app-home-technology-tpl [content]="content.items?.[4].item"></app-home-technology-tpl>
+    </div>
+  </section>
+
+
 }
 
 
