@@ -37,4 +37,5 @@ export class NewsCardsTplComponent {
     //   }
     // })
   }
+  article: any;
 }
