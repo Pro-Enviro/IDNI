@@ -4,6 +4,7 @@ import {DialogModule} from "primeng/dialog";
 import {LocalDecabSingleTplComponent} from "../../_partials/local-decab-single-tpl/local-decab-single-tpl.component";
 import {DbService} from "../../_services/db.service";
 import {DatePipe} from "@angular/common";
+import {TopPageImgTplComponent} from "../../_partials/top-page-img-tpl/top-page-img-tpl.component";
 
 @Component({
   selector: 'app-news',
@@ -12,7 +13,8 @@ import {DatePipe} from "@angular/common";
     ButtonModule,
     DialogModule,
     LocalDecabSingleTplComponent,
-    DatePipe
+    DatePipe,
+    TopPageImgTplComponent
   ],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss'
