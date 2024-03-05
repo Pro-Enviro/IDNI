@@ -41,6 +41,7 @@ import {
 import {DasboardWidgetsComponent} from "./pages/dashboard/dasboard-widgets/dasboard-widgets.component";
 import {MsxTplComponent} from "./_partials/msx-tpl/msx-tpl.component";
 import {NewsComponent} from "./pages/news/news.component";
+import {EventsComponent} from "./pages/events/events.component";
 
 
 
@@ -49,10 +50,10 @@ export const routes: Routes = [
   {path: '', component: LandingPageComponent},
   {path:'home',component: LandingPageComponent},
   {path: 'pet', component: PetComponent},
+  {path:'events',component:EventsComponent},
   {path: 'coming-soon', component: ConstructionComponent},
   {path: 'local-decarbonisation', component: LocalDecarbonisationComponent},
   {path: 'local-decarb-single', component: LocalDecabSingleTplComponent},
-  {path:'news',component:NewsComponent},
   {path:'msw',component:MsxTplComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
