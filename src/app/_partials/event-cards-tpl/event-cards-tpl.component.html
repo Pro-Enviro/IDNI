@@ -1,0 +1,22 @@
+@if(content){
+  @for(content of content.event_items; track $index;){
+    <div class="container p-4">
+      <div class="grid">
+        <div class="lg:col-4 sm:col-12">
+          <img src="https://app.idni.eco/assets/{{content.image}}" alt="" style="max-width:90%;">
+        </div>
+        <div class="col"></div>
+        <div class="lg:col-7 sm:col-12">
+          <h3 class="header-style text-xl">{{content.title}}</h3>
+          <p>Date: {{content.date}}</p>
+          <p>Venue: {{content.venue}}</p>
+          <div class="pt-3">
+            <p-button label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
+          </div>
+        </div>
+      </div>
+      <hr class="hr-style">
+    </div>
+  }
+}
+

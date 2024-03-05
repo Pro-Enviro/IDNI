@@ -40,7 +40,7 @@ items.item.image
 `).subscribe({
       next: (res: any) => {
         this.content = res
-        this.content.items = this.content.items.map((stuff:any) => stuff.item)
+        this.content.items = this.content.items.map((las_item:any) => las_item.item)
       },
 
       error: (err: any) => {
