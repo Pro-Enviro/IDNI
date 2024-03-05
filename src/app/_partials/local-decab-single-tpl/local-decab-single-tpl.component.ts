@@ -1,4 +1,8 @@
+
 import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
+
+import {Component, Input} from '@angular/core';
+
 import {TopPageImgTplComponent} from "../top-page-img-tpl/top-page-img-tpl.component";
 import {DbService} from "../../_services/db.service";
 import {findInputsOnElementWithTag} from "@angular/cdk/schematics";
@@ -51,6 +55,7 @@ items.item.image
   ngOnDestroy(): void {
         this.ref.destroy()
     }
+
 
 
 

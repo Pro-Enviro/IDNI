@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {TopPageImgTplComponent} from "../top-page-img-tpl/top-page-img-tpl.component";
 
 @Component({

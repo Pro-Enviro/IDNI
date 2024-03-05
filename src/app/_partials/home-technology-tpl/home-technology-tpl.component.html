@@ -1,58 +1,19 @@
-<div class="grid nested-grid">
-  <div class="lg:col-3 sm:col-12 md:col-5 p-5">
-    <div class="grid">
-      <div class="col-10">
-        <img src="assets/img/led.svg" alt="" class="techno-img">
-      </div>
-      <div class="col-10">
-      <div class="text-center">
-        <h3 class="header-style">Title</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-          do eiusmod tempor incididunt</p>
-      </div>
-      </div>
-    </div>
-  </div>
-  <div class="lg:col-3 sm:col-12 md:col-6 p-5">
-    <div class="grid">
-      <div class="col-10">
-        <img src="assets/img/cock.svg" alt="" class="techno-img">
-      </div>
-      <div class="col-10">
-        <div class="text-center">
-          <h3 class="header-style">Title</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-            do eiusmod tempor incididunt</p>
+
+@if(carouselItems){
+  <p-carousel [value]="carouselItems" [numVisible]="3" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions" [autoplayInterval]="7000">
+    <ng-template let-carousel pTemplate="item">
+      <div class="flex flex-column">
+        <div class="flex-1 justify-content-center align-items-center">
+          <div class="img-container">
+            <img src="https://app.idni.eco/assets/{{carousel.image}}?height=100&format=webp" [alt]="carousel.title" class="techno-img"/>
+          </div>
+        </div>
+        <div class="flex-1">
+          <h4 class="mb-5 text-xl text-center header-style">{{ carousel.title}}</h4>
+          <div class="text-center p-3" [innerHTML]="carousel.content"></div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="lg:col-3 sm:col-12 md:col-6 p-5">
-    <div class="grid">
-      <div class="col-10">
-        <img src="assets/img/pv.svg" alt="" class="techno-img">
-      </div>
-      <div class="col-10">
-        <div class="text-center pt-3">
-          <h3 class="header-style">Title</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-            do eiusmod tempor incididunt</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="lg:col-3 sm:col-12 md:col-6 p-5">
-    <div class="grid">
-      <div class="col-10">
-        <img src="assets/img/bus.svg" alt="" class="techno-img">
-      </div>
-      <div class="col-10">
-        <div class="text-center">
-          <h3 class="header-style">Title</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-            do eiusmod tempor incididunt</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    </ng-template>
+  </p-carousel>
+}
+
