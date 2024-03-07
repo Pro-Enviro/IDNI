@@ -1,6 +1,28 @@
+@if (content){
+  <section class="factsheet">
+    <div class="w-3">
+      <div class="grid flex justify-content-center">
+        <div class="col-5">
+          <img  src="https://app.idni.eco/assets/{{content.idni_logo}}" class="ml-4" alt="" style="max-height:100px">
+        </div>
+        <div class="col-5">
+          <img  src="https://app.idni.eco/assets/{{content.partner_logo}}" alt="" style="max-height:100px">
+        </div>
+      </div>
+    </div>
+    <div class="container mt-8 p-4 text-center">
+      <h2>{{content.title}}</h2>
+      <div [innerHTML]="content.content"></div>
+    </div>
+    <app-factsheet-content-tpl [content]="content"></app-factsheet-content-tpl>
+  </section>
+}
+
+
+
 <section class="factsheet">
   <div class="w-3">
-    <div class="grid">
+    <div class="grid flex justify-content-center">
       <div class="col-5">
         <img src="assets/img/idni-logo.svg" class="ml-4" alt="" style="max-height:100px">
       </div>
