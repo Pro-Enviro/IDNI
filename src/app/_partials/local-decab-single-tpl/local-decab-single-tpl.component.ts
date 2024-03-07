@@ -30,7 +30,7 @@ export class LocalDecabSingleTplComponent implements OnDestroy{
     private ref: DynamicDialogRef,
     private dialog: DialogService
   ) {
-    console.log(this.dialogConfig,this.dialog.getInstance(this.ref).data['id'])
+    // console.log(this.dialogConfig,this.dialog.getInstance(this.ref).data['id'])
     this.db.getContentFromCollection(`local_decarb/${this.dialog.getInstance(this.ref).data['id']}`, `
 ?fields=
 title,
@@ -40,7 +40,7 @@ items.item.image
 `).subscribe({
       next: (res: any) => {
         this.content = res
-        this.content.items = this.content.items.map((stuff:any) => stuff.item)
+        this.content.items = this.content.items.map((las_item:any) => las_item.item)
       },
 
       error: (err: any) => {
