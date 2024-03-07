@@ -1,4 +1,5 @@
 @if (content){
+    <pre>{{content | json}}</pre>
   <section class="factsheet">
     <div class="w-3">
       <div class="grid flex justify-content-center">
@@ -15,94 +16,25 @@
       <div [innerHTML]="content.content"></div>
     </div>
     <app-factsheet-content-tpl [content]="content"></app-factsheet-content-tpl>
+
+    <div class="container p-4">
+      <h3 class="header-style-blue text-3xl">Contact Details</h3>
+      <div class="grid">
+        <div class="col-3">
+          <p>Address: {{content.address}}</p>
+        </div>
+        <div class="col-3">
+          <p>Phone Number: {{content.phone_number}}</p>
+        </div>
+        <div class="col-3">
+          <p>Website: {{content.website}}</p>
+        </div>
+        <div class="col-3">
+          <p>Email: {{content.email}}</p>
+        </div>
+      </div>
+    </div>
   </section>
 }
 
 
-
-<section class="factsheet">
-  <div class="w-3">
-    <div class="grid flex justify-content-center">
-      <div class="col-5">
-        <img src="assets/img/idni-logo.svg" class="ml-4" alt="" style="max-height:100px">
-      </div>
-      <div class="col-5">
-        <img src="assets/logos/derry-logo.png" class="partner-img" alt="" style="max-height:100px">
-      </div>
-    </div>
-  </div>
-  <div class="container mt-8 p-4 text-center">
-    <h2>Title</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-      ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-      officia deserunt mollit anim id est laborum.</p>
-  </div>
-  <div class="container p-4">
-    <div class="grid">
-      <div class="col-7">
-        <h3 class="header-style-blue text-3xl">Subtitle</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </div>
-      <div class="col"></div>
-      <div class="col-4">
-        <img src="assets/img/woman-in-muanufacturing.jpeg" alt="" class="page-img">
-      </div>
-    </div>
-  </div>
-  <div class="container p-4">
-    <div class="grid">
-      <div class="col-4">
-        <img src="assets/img/woman-in-muanufacturing.jpeg" alt="" class="page-img">
-      </div>
-      <div class="col"></div>
-      <div class="col-7">
-        <h3 class="header-style-blue text-3xl">Subtitle</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </div>
-    </div>
-  </div>
-  <div class="container p-4">
-    <div class="grid nested-grid">
-      <div class="col-3">
-        <i class="pi pi-file-pdf" style="font-size: 10rem; color:#b5dad6"></i>
-      </div>
-      <div class="col-9">
-       <div class="grid">
-         <div class="col-6">
-           <p>Name: File Name</p>
-         </div>
-         <div class="col-6">
-           <p>File Size: 1.3 MB</p>
-         </div>
-         <div class="col-6">
-           <p>Date Published: 01/01/2000</p>
-         </div>
-         <div class="col-6">
-           <p>Date Range: 01/01/2000 – 02/02/2000</p>
-         </div>
-       </div>
-      </div>
-    </div>
-  </div>
-  <div class="container p-4">
-    <h3 class="header-style-blue text-3xl">Contact Details</h3>
-    <div class="grid">
-      <div class="col-3">
-          <p>Address: 8 Davy Ct, Rugby CV23 0UZ</p>
-      </div>
-      <div class="col-3">
-        <p>Phone Number: 02 123 456 78</p>
-      </div>
-      <div class="col-3">
-        <p>Website: www.testing.com</p>
-      </div>
-      <div class="col-3">
-        <p>Email: emailtest.com</p>
-      </div>
-    </div>
-  </div>
-</section>

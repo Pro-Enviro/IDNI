@@ -1,67 +1,59 @@
 @if(content){
-  <div class="container p-4">
-    <div class="grid">
-      <div class="col-7">
-        <h3 class="header-style-blue text-3xl">{{content.title}}</h3>
-        <div [innerHTML]="content.content"></div>
-      </div>
-      <div class="col"></div>
-      <div class="col-4">
-        <img src="https://app.idni.eco/assets/{{content.image}}" alt="" class="page-img">
-      </div>
-    </div>
-  </div>
-  <div class="container p-4">
-    <div class="grid">
-      <div class="col-4">
-        <img src="https://app.idni.eco/assets/{{content.image}}" alt="" class="page-img">
-      </div>
-      <div class="col"></div>
-      <div class="col-7">
-        <h3 class="header-style-blue text-3xl">{{content.title}}</h3>
-        <div [innerHTML]="content.content"></div>
-      </div>
-    </div>
-  </div>
-  <div class="container p-4">
-    <div class="grid nested-grid">
-      <div class="col-3">
-        <i class="pi pi-file-pdf" style="font-size: 10rem; color:#b5dad6"></i>
-      </div>
-      <div class="col-9">
+  @for(items of content.fact_items; track $index; let e = $even){
+    @if(e){
+      <div class="container p-4">
         <div class="grid">
-          <div class="col-6">
-            <p>Name: {{content.name}}</p>
+          <div class="col-4">
+            <img src="https://app.idni.eco/assets/{{items.image}}" alt="" class="page-img">
           </div>
-          <div class="col-6">
-            <p>File Size: {{content.file_size}}</p>
+          <div class="col"></div>
+          <div class="col-7">
+            <h3 class="header-style-blue text-3xl">{{items.title}}</h3>
+            <div [innerHTML]="items.content"></div>
           </div>
-          <div class="col-6">
-            <p>Date Published: {{content.date_published}}</p>
+        </div>
+      </div>
+    } @else{
+      <div class="container p-4">
+        <div class="grid">
+          <div class="col-7">
+            <h3 class="header-style-blue text-3xl">{{items.title}}</h3>
+            <div [innerHTML]="items.content"></div>
           </div>
-          <div class="col-6">
-            <p>Date Range: {{content.date_range}}</p>
+          <div class="col"></div>
+          <div class="col-4">
+            <img src="https://app.idni.eco/assets/{{items.image}}" alt="" class="page-img">
+          </div>
+        </div>
+      </div>
+    }
+  }
+
+  @for(files of content.fact_files; track $index){
+    <div class="container p-4">
+      <div class="grid nested-grid">
+        <div class="col-3">
+          <i class="pi pi-file-pdf" style="font-size: 10rem; color:#b5dad6"></i>
+        </div>
+        <div class="col-9">
+          <div class="grid">
+            <div class="col-6">
+              <p>Name: {{files.name}}</p>
+            </div>
+            <div class="col-6">
+              <p>File Size: {{files.file_size}}</p>
+            </div>
+            <div class="col-6">
+              <p>Date Published: {{files.date_published}}</p>
+            </div>
+            <div class="col-6">
+              <p>Date Range: {{files.date_range}}</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container p-4">
-    <h3 class="header-style-blue text-3xl">Contact Details</h3>
-    <div class="grid">
-      <div class="col-3">
-        <p>Address: {{content.address}}</p>
-      </div>
-      <div class="col-3">
-        <p>Phone Number: {{content.phone_number}}</p>
-      </div>
-      <div class="col-3">
-        <p>Website: {{content.website}}</p>
-      </div>
-      <div class="col-3">
-        <p>Email: {{content.email}}</p>
-      </div>
-    </div>
-  </div>
+  }
+
 }
 

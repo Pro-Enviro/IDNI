@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import {DbService} from "../../_services/db.service";
 import {FactsheetContentTplComponent} from "./factsheet-content-tpl/factsheet-content-tpl.component";
+import {JsonPipe} from "@angular/common";
 
 @Component({
   selector: 'app-factsheet-tpl',
   standalone: true,
-  imports: [
-    FactsheetContentTplComponent
-  ],
+    imports: [
+        FactsheetContentTplComponent,
+        JsonPipe
+    ],
   templateUrl: './factsheet-tpl.component.html',
   styleUrl: './factsheet-tpl.component.scss'
 })
@@ -20,21 +22,23 @@ content:any;
 content,
 idni_logo,
 partner_logo,
+address,
+email,
+website,
+phone_number,
 fact_items.factsheet_items_id.title,
 fact_items.factsheet_items_id.content,
 fact_items.factsheet_items_id.image,
-fact_items.factsheet_items_id.address,
-fact_items.factsheet_items_id.email,
-fact_items.factsheet_items_id.file_size,
-fact_items.factsheet_items_id.website,
-fact_items.factsheet_items_id.name,
-fact_items.factsheet_items_id.phone_number,
-fact_items.factsheet_items_id.date_published,
-fact_items.factsheet_items_id.date_range
+fact_files.factsheet_files_id.name,
+fact_files.factsheet_files_id.date_published,
+fact_files.factsheet_files_id.date_range,
+fact_files.factsheet_files_id.file_size
+
 `).subscribe({
       next: (res: any) => {
         this.content = res
         this.content.fact_items = this.content.fact_items.map((items:any) => items.factsheet_items_id)
+          this.content.fact_files = this.content.fact_files.map((files:any) => files.factsheet_files_id)
       },
       error: (err: any) => {
         console.error(err)
