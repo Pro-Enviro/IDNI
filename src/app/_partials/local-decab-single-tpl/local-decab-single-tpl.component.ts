@@ -34,13 +34,25 @@ export class LocalDecabSingleTplComponent implements OnDestroy{
     this.db.getContentFromCollection(`local_decarb/${this.dialog.getInstance(this.ref).data['id']}`, `
 ?fields=
 title,
+content,
+idni_logo,
+partner_logo,
+address,
+phone_number,
+email,
+website,
 items.item.title,
 items.item.content,
-items.item.image
+items.item.image,
+factsheet_files.factsheet_files_id.name,
+factsheet_files.factsheet_files_id.date_published,
+factsheet_files.factsheet_files_id.date_range,
+factsheet_files.factsheet_files_id.file_size
 `).subscribe({
       next: (res: any) => {
         this.content = res
         this.content.items = this.content.items.map((las_item:any) => las_item.item)
+        this.content.factsheet_files = this.content.factsheet_files.map((files:any) => files.factsheet_files_id)
       },
 
       error: (err: any) => {
