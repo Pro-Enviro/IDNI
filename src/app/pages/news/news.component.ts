@@ -5,6 +5,7 @@ import {LocalDecabSingleTplComponent} from "../../_partials/local-decab-single-t
 import {DbService} from "../../_services/db.service";
 import {DatePipe} from "@angular/common";
 import {TopPageImgTplComponent} from "../../_partials/top-page-img-tpl/top-page-img-tpl.component";
+import {FactsheetTplComponent} from "../../_partials/factsheet-tpl/factsheet-tpl.component";
 
 @Component({
   selector: 'app-news',
@@ -14,7 +15,8 @@ import {TopPageImgTplComponent} from "../../_partials/top-page-img-tpl/top-page-
     DialogModule,
     LocalDecabSingleTplComponent,
     DatePipe,
-    TopPageImgTplComponent
+    TopPageImgTplComponent,
+    FactsheetTplComponent
   ],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss'
