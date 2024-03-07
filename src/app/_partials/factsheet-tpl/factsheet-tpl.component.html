@@ -1,5 +1,5 @@
 @if (content){
-    <pre>{{content | json}}</pre>
+<!--    <pre>{{content | json}}</pre>-->
   <section class="factsheet">
     <div class="w-3">
       <div class="grid flex justify-content-center">
@@ -18,19 +18,27 @@
     <app-factsheet-content-tpl [content]="content"></app-factsheet-content-tpl>
 
     <div class="container p-4">
-      <h3 class="header-style-blue text-3xl">Contact Details</h3>
+      <h3 class="header-style-blue text-3xl mb-5">Contact Details</h3>
       <div class="grid">
         <div class="col-3">
-          <p>Address: {{content.address}}</p>
+          <i class="pi pi-map-marker header-style-blue" style="font-size: 2rem"></i>
+          <h3 class="header-style font-medium">Address:</h3>
+          <p>{{content.address}}</p>
         </div>
         <div class="col-3">
-          <p>Phone Number: {{content.phone_number}}</p>
+          <i class="pi pi-phone header-style-blue" style="font-size: 2rem"></i>
+          <h3 class="header-style font-medium">Phone Number:</h3>
+          <p>{{content.phone_number}}</p>
         </div>
         <div class="col-3">
-          <p>Website: {{content.website}}</p>
+         <i class="pi pi-globe header-style-blue" style="font-size: 2rem"></i>
+          <h3 class="header-style font-medium">Website:</h3>
+          <p>{{content.website}}</p>
         </div>
         <div class="col-3">
-          <p>Email: {{content.email}}</p>
+          <i class="pi pi-envelope header-style-blue" style="font-size: 2rem"></i>
+          <h3 class="header-style font-medium">Email:</h3>
+          <p>{{content.email}}</p>
         </div>
       </div>
     </div>
