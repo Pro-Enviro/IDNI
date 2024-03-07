@@ -5,7 +5,7 @@ import {LocalDecabSingleTplComponent} from "../../_partials/local-decab-single-t
 import {DbService} from "../../_services/db.service";
 import {DatePipe} from "@angular/common";
 import {TopPageImgTplComponent} from "../../_partials/top-page-img-tpl/top-page-img-tpl.component";
-import {FactsheetTplComponent} from "../../_partials/factsheet-tpl/factsheet-tpl.component";
+
 
 @Component({
   selector: 'app-news',
@@ -15,40 +15,13 @@ import {FactsheetTplComponent} from "../../_partials/factsheet-tpl/factsheet-tpl
     DialogModule,
     LocalDecabSingleTplComponent,
     DatePipe,
-    TopPageImgTplComponent,
-    FactsheetTplComponent
+    TopPageImgTplComponent
   ],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss'
 })
 export class NewsComponent {
-  content:any;
 
 
-  constructor(private db: DbService) {
-    this.db.getContentFromCollection('page/4', `
-?fields=title,
-description,
-alias,
-items.item.*,
-items.item.items.content_with_image_type_id.image,
-items.item.items.content_with_image_type_id.title,
-items.item.items.content_with_image_type_id.content,
-items.item.items.content_type_id.title,
-items.item.items.content_type_id.content
-`).subscribe({
-      next: (res: any) => {
-        this.content = res
-        this.content = this.content.map((items:any) =>  items.content_with_image_type_id)
-      },
 
-      error: (err: any) => {
-        console.error(err)
-      }
-    })
-  }
-
-  getArticle = (id:any) =>{
-    console.log('')
-  }
 }
