@@ -49,7 +49,8 @@ export class HeaderTopComponent {
                 label: 'Stakeholders'
               },
               {
-                label:'Advisory Board'
+                label:'Advisory Board',
+                routerLink:'advisory-board'
               }
             ]
           }
