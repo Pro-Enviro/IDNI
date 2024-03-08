@@ -11,7 +11,7 @@
             <h3 class="header-style">{{content.title}}</h3>
             <div [innerHTML]="content.content"></div>
             <div class="pt-5 pb-3">
-              <p-button label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
+              <p-button (click)="getPage(content.id)" label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
             </div>
           </div>
         </div>
@@ -24,7 +24,7 @@
             <h3 class="header-style">{{content.title}}</h3>
             <div [innerHTML]="content.content"></div>
             <div class="pt-5 pb-3">
-              <p-button label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
+              <p-button (click)="getPage(content.id)" label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
             </div>
           </div>
           <div class="col"></div>

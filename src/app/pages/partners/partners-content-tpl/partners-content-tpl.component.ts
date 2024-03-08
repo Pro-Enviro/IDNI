@@ -12,4 +12,8 @@ import {ButtonModule} from "primeng/button";
 })
 export class PartnersContentTplComponent {
   @Input('content') content: any;
+
+  getPage = (id:number) =>{
+
+  }
 }
