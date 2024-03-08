@@ -39,7 +39,6 @@ import {
   EnvirotrackReportDemandComponent
 } from "./pages/envirotrack/report/envirotrack-report-demand/envirotrack-report-demand.component";
 import {DasboardWidgetsComponent} from "./pages/dashboard/dasboard-widgets/dasboard-widgets.component";
-import {MsxTplComponent} from "./_partials/msx-tpl/msx-tpl.component";
 import {NewsComponent} from "./pages/news/news.component";
 import {EventsComponent} from "./pages/events/events.component";
 import {ProjectInformationComponent} from "./pages/project-information/project-information.component";
