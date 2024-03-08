@@ -17,20 +17,45 @@ import {StorageService} from "../../_services/storage.service";
   styleUrl: './header-top.component.scss'
 })
 export class HeaderTopComponent {
-  menuItems!: MegaMenuItem[];
-  constructor(private storage: StorageService) {
-    this.menuItems = this.storage.getMenu.map((x:any) => {
-      return {
-        label: x.pagetitle,
-        routerLink: x.alias
-      }
-    });
-  }
-  ngOnInit() {
-    this.burgerMenuClick();
-  }
+  // menuItems!: MegaMenuItem[];
+  // constructor(private storage: StorageService) {
+  //   this.menuItems = this.storage.getMenu.map((x:any) => {
+  //     return {
+  //       label: x.pagetitle,
+  //       routerLink: x.alias
+  //     }
+  //   });
+  // }
+  menuItems: MegaMenuItem[] = [
+    {
+      label:'Home',
+      routerLink:'home'
+    },
+    {
+      label:'Project Information',
+      routerLink:''
+    },
+    {
+      label:'NI Councils',
+      routerLink:'local-decarbonisation'
+    },
+    {
+      label:'Events',
+      routerLink:'events'
+    },
+    {
+      label:'News',
+      routerLink:'coming-soon'
+    },
+    {
+      label:'COSI\'s',
+      routerLink:'coming-soon'
+    },
+    {
+      label:'Funding',
+      routerLink:'coming-soon'
+    }
+  ]
 
-  burgerMenuClick() {
 
-  }
 }
