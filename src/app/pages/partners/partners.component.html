@@ -1,8 +1,17 @@
-<section>
-  <div class="container p-4">
-    <h2>Partners</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+@if(partners){
+  <div class="top-image-wrapper">
+    <div class="top-image">
+      <img src="https://app.idni.eco/assets/{{partners.top_image}}" alt="">
+    </div>
+    <div class="top-image-line">
+      <app-top-page-img-tpl></app-top-page-img-tpl>
+    </div>
   </div>
-<app-partners-content-tpl></app-partners-content-tpl>
-</section>
+  <section>
+    <div class="container p-4">
+      <h2>{{partners.title}}</h2>
+      <div [innerHTML]="partners.content"></div>
+    </div>
+    <app-partners-content-tpl [content]="partners"></app-partners-content-tpl>
+  </section>
+}
