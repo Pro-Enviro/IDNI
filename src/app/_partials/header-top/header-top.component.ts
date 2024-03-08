@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MegaMenuItem, MenuItem} from "primeng/api";
+import {MegaMenuItem} from "primeng/api";
 import {MegaMenuModule} from "primeng/megamenu";
 import {ButtonModule} from "primeng/button";
 import {MenubarModule} from "primeng/menubar";
@@ -28,34 +28,55 @@ export class HeaderTopComponent {
   // }
   menuItems: MegaMenuItem[] = [
     {
-      label:'Home',
-      routerLink:'home'
+      label: 'Home',
+      routerLink: 'home'
     },
     {
-      label:'Project Information',
-      routerLink:''
+      label: 'Project Information',
+      items: [
+        [
+          {
+            items: [
+              {
+                label:'Project Information',
+                routerLink:'/coming-soon'
+              },
+              {
+                label: 'Partners'
+              },
+              {
+                label: 'Stakeholders'
+              },
+              {
+                label:'Advisory Board'
+              }
+            ]
+          }
+        ]
+      ]
     },
     {
-      label:'NI Councils',
-      routerLink:'local-decarbonisation'
+      label: 'NI Councils',
+      routerLink: 'local-decarbonisation'
     },
     {
-      label:'Events',
-      routerLink:'events'
+      label: 'Events',
+      routerLink: 'events'
     },
     {
-      label:'News',
-      routerLink:'coming-soon'
+      label: 'News',
+      routerLink: 'coming-soon'
     },
     {
-      label:'COSI\'s',
-      routerLink:'coming-soon'
+      label: 'COSI\'s',
+      routerLink: 'coming-soon'
     },
     {
-      label:'Funding',
-      routerLink:'coming-soon'
+      label: 'Funding',
+      routerLink: 'coming-soon'
     }
   ]
+
 
 
 }
