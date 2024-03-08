@@ -29,6 +29,7 @@ export class LocalDecarbonisationComponent {
 ?fields=title,
 summary,
 content,
+top_image,
 id,
 las,
 las.local_decarb_id,

@@ -35,6 +35,7 @@ export class LocalDecabSingleTplComponent implements OnDestroy{
 ?fields=
 title,
 content,
+summary,
 idni_logo,
 partner_logo,
 address,

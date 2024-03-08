@@ -1,17 +1,25 @@
-<app-top-page-img-tpl></app-top-page-img-tpl>
 
-<section>
   @if(content){
-  <div class="container p-5">
-    <h2>{{content.title}}</h2>
-    <p>{{content.content}}</p>
-    <div class="pt-3">
-      <p-dropdown [options]="eventOptions" [(ngModel)]="selectedDate" optionLabel="name" [showClear]="true" placeholder="Past/Future Events"></p-dropdown>
+    <div class="top-image-wrapper">
+      <div class="top-image">
+        <img src="https://app.idni.eco/assets/{{content.top_image}}" alt="">
+      </div>
+      <div class="top-image-line">
+        <app-top-page-img-tpl></app-top-page-img-tpl>
+      </div>
     </div>
-  </div>
+    <section>
+      <div class="container p-4">
+        <h2>{{content.title}}</h2>
+        <p>{{content.content}}</p>
+        <div class="flex justify-content-end p-5">
+          <p-dropdown [options]="eventOptions" [(ngModel)]="selectedDate" optionLabel="name" [showClear]="true" placeholder="Past/Future Events"></p-dropdown>
+        </div>
+      </div>
 
-    <div class="container">
-      <app-event-cards-tpl [content]="content"></app-event-cards-tpl>
-    </div>
+      <div class="container p-3">
+        <app-event-cards-tpl [content]="content"></app-event-cards-tpl>
+      </div>
+    </section>
   }
-</section>
+

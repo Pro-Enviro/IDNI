@@ -48,12 +48,13 @@
 }
 
 .factsheet{
-  background-color:#FCFCFC;
+  //background-color:#FCFCFC;
+  background-color:white;
   background-image: url("assets/img/curve-grey.svg");
   background-position: top left;
   background-repeat: no-repeat;
   background-size: 47.5vw;
-
+  //background-size:33vw;
 }
 
 a{
@@ -671,14 +672,14 @@ a{
 //-------------------------------------------------NEWS-----------------------------------------------------------------
 .news-card{
   position: relative;
-  margin:20px;
+  margin-bottom:70px;
   text-align: center;
-  //width:350px;
+  height:100%;
   background-color: #f2f2f2;
   .card-footer{
-    //position:absolute;
-    //bottom:0;
-    //height:3%;
+    position:absolute;
+    bottom:25px;
+    height:3%;
     padding:35px;
   }
   .card-body{

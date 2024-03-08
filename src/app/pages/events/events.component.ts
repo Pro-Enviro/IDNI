@@ -34,10 +34,11 @@ export class EventsComponent {
   ]
 
   constructor(private db: DbService) {
-    this.db.getContentFromCollection('events_pages/1', `
+    this.db.getContentFromCollection('events_pages/3', `
 ?fields=title,
 content,
 id,
+top_image,
 event_items.event_items_id.title,
 event_items.event_items_id.content,
 event_items.event_items_id.image,
