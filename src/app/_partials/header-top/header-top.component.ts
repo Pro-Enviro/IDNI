@@ -39,10 +39,11 @@ export class HeaderTopComponent {
             items: [
               {
                 label:'Project Information',
-                routerLink:'/coming-soon'
+                routerLink:'project-information'
               },
               {
-                label: 'Partners'
+                label: 'Partners',
+                routerLink:'partners'
               },
               {
                 label: 'Stakeholders'

@@ -42,6 +42,8 @@ import {DasboardWidgetsComponent} from "./pages/dashboard/dasboard-widgets/dasbo
 import {MsxTplComponent} from "./_partials/msx-tpl/msx-tpl.component";
 import {NewsComponent} from "./pages/news/news.component";
 import {EventsComponent} from "./pages/events/events.component";
+import {ProjectInformationComponent} from "./pages/project-information/project-information.component";
+import {PartnersComponent} from "./pages/partners/partners.component";
 
 
 
@@ -54,7 +56,8 @@ export const routes: Routes = [
   {path: 'coming-soon', component: ConstructionComponent},
   {path: 'local-decarbonisation', component: LocalDecarbonisationComponent},
   {path: 'local-decarb-single', component: LocalDecabSingleTplComponent},
-  {path:'msw',component:MsxTplComponent},
+  {path:'project-information', component:ProjectInformationComponent},
+  {path:'partners',component:PartnersComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
   {path:'dashboard',component:DashboardComponent, children: [
