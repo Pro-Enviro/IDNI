@@ -1,0 +1,18 @@
+@if(partners){
+<!--    <pre>{{partners | json}}</pre>-->
+  <div class="top-image-wrapper">
+    <div class="top-image">
+      <img src="https://app.idni.eco/assets/{{partners.top_image}}" alt="">
+    </div>
+    <div class="top-image-line">
+      <app-top-page-img-tpl></app-top-page-img-tpl>
+    </div>
+  </div>
+  <section>
+    <div class="container p-4">
+      <h2>{{partners.title}}</h2>
+      <div [innerHTML]="partners.content"></div>
+    </div>
+    <app-partners-content-tpl [content]="partners"></app-partners-content-tpl>
+  </section>
+}

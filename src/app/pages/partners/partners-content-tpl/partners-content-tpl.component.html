@@ -1,0 +1,39 @@
+@if(content){
+  @for(content of content.items; track $index; let e = $even){
+    @if(e){
+      <div class="container p-5">
+        <div class="grid">
+          <div class="col-4 mt-5">
+            <img src="https://app.idni.eco/assets/{{content.image}}" alt="{{content.title}}" class="partner-logo">
+          </div>
+          <div class="col"></div>
+          <div class="col-7">
+            <h3 class="header-style">{{content.title}}</h3>
+            <div [innerHTML]="content.content"></div>
+            <div class="pt-5 pb-3">
+              <p-button (click)="getPage(content.id)" label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
+            </div>
+          </div>
+        </div>
+        <hr class="hr-style">
+      </div>
+    } @else {
+      <div class="container p-4">
+        <div class="grid">
+          <div class="col-7">
+            <h3 class="header-style">{{content.title}}</h3>
+            <div [innerHTML]="content.content"></div>
+            <div class="pt-5 pb-3">
+              <p-button (click)="getPage(content.id)" label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
+            </div>
+          </div>
+          <div class="col"></div>
+          <div class="col-4 mt-5">
+            <img src="https://app.idni.eco/assets/{{content.image}}" alt="{{content.title}}" class="partner-logo">
+          </div>
+        </div>
+        <hr class="hr-style">
+      </div>
+    }
+  }
+}
