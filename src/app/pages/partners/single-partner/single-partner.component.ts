@@ -15,7 +15,7 @@ export class SinglePartnerComponent {
 content:any;
 
   constructor(private db: DbService) {
-    this.db.getContentFromCollection('partners/2', `
+    this.db.getContentFromCollection('partners/id', `
 ?fields=title,
 content,
 top_image,
