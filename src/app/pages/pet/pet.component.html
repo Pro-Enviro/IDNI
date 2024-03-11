@@ -11,46 +11,102 @@
          identify areas for improvement. This includes the assessment of Scope 1, Scope 2, and Scope 3 emissions, offering a comprehensive view of the environmental impact associated with business operations.</p>
      </div>
       <div class="container mt-5" style="overflow-x:auto;">
-        <p-table [value]="rows" styleClass="pet-table p-datatable-sm p-datatable-gridlines col-12">
+        <p-table  [value]="data"  styleClass="pet-table p-datatable-sm p-datatable-gridlines col-12" dataKey="parent.name" rowGroupMode="subheader" groupRowsBy="parent.name" [customSort]="true">
           <ng-template pTemplate="header">
             <tr>
               <th class="header-style text-base font-semibold p-3">Productivity Factors Year 2024</th>
               <th class="header-style text-base font-semibold p-3">Value</th>
               <th class="header-style text-base font-semibold p-3">Per Employee Cost</th>
+              <th colspan="4"></th>
             </tr>
             <tr>
-              <th>
+              <th >
                 <p>Turnover</p>
               </th>
-              <th>
+              <th colspan="5">
                 <p-inputNumber inputId="turnover" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
                                [(ngModel)]="turnover" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
               </th>
-              <th></th>
+
             </tr>
             <tr>
-              <th>
+              <th >
                 <p>Number Of Employees</p>
               </th>
-              <th>
+              <th colspan="5">
                 <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
                                [(ngModel)]="employees" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
               </th>
-              <th></th>
             </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-row>
-            <tr>
-              <td style="width: 400px"><p>{{ row.name }}</p></td>
+
+          <ng-template pTemplate="groupheader" let-groups let-rowIndex="rowIndex" let-expanded="expanded" >
+            <tr >
               <td>
-                <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="row.value"
-                               (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+                <button type="button" pButton pRipple [pRowToggler]="groups" class="p-button-text p-button-rounded p-button-plain mr-2" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                <span class="font-bold ml-2 align-content-center">{{groups.parent.name}}</span>
               </td>
               <td>
-                <p class="p-inputtext-sm">{{ row.secondColumn.toLocaleString('en-US') }}</p>
+                <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
+                               [(ngModel)]="employees" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+              </td>
+              <td>
+                <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
+                               [(ngModel)]="employees" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+              </td>
+              <td colspan="4"></td>
+            </tr>
+            <tr *ngIf="expanded" style="border-bottom: 2px solid black; font-weight: 700">
+              <td>
+                Name
+              </td>
+              <td *ngIf="groups.unitsUom">
+                Unit UoM
+              </td>
+              <td *ngIf="groups.totalUnits !== undefined">
+                Total units used/yr
+              </td>
+              <td *ngIf="groups.cost !== undefined">
+                Cost
+              </td>
+              <td *ngIf="groups.unitOfCost">
+                Unit Of Cost
+              </td>
+              <td *ngIf="groups.regionOfOrigin">
+                Fuel Region of Origin
+              </td>
+              <td *ngIf="groups.scrappageAndWaste !== undefined">
+                % Scrappage & Waste in Production
               </td>
             </tr>
           </ng-template>
+
+          <ng-template pTemplate="rowexpansion" let-groups>
+            <tr style="background-color: #fff">
+              <td>
+                {{groups.name}}
+              </td>
+              <td *ngIf="groups.unitsUom">
+                <p-dropdown [options]="unitsUom" class="p-inputtext-sm" [style]="{width: '150px'}"></p-dropdown>
+              </td>
+              <td *ngIf="groups.totalUnits !== undefined">
+                <p-inputNumber [(ngModel)]="groups.totalUnits" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"></p-inputNumber>
+              </td>
+              <td *ngIf="groups.cost !== undefined">
+                <p-inputNumber [(ngModel)]="groups.cost" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"></p-inputNumber>
+              </td>
+              <td *ngIf="groups.unitOfCost">
+                <p-dropdown [options]="['Total Cost']" class="p-inputtext-sm" [style]="{width: '150px'}"></p-dropdown>
+              </td>
+              <td *ngIf="groups.regionOfOrigin">
+                <p-dropdown [options]="regionOfOrigin" class="p-inputtext-sm" [style]="{width: '150px'}"></p-dropdown>
+              </td>
+              <td *ngIf="groups.scrappageAndWaste !== undefined">
+                <p-inputNumber [(ngModel)]="groups.scrappageAndWaste" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"></p-inputNumber>
+              </td>
+            </tr>
+          </ng-template>
+
           <ng-template pTemplate="footer">
             <tr>
               <td>Total External Cost</td>
@@ -87,6 +143,20 @@
               </td>
               <td>
                 {{ (turnover * (innovationPercent / 100)).toLocaleString('en-US') }}
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="groupfooter" let-groups>
+            <tr class="p-rowgroup-footer" style="background-color: #fff">
+              <td style="text-align: right">Totals</td>
+
+              <td>
+                <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="groups.value"
+                               (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+              </td>
+              <td colspan="4">
+                <p class="p-inputtext-sm">{{ groups.secondColumn.toLocaleString('en-US') }}</p>
               </td>
             </tr>
           </ng-template>
