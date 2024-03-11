@@ -10,54 +10,114 @@ import {FooterComponent} from "../../_partials/footer/footer.component";
 import {RippleModule} from "primeng/ripple";
 import {CommonModule, JsonPipe} from "@angular/common";
 import {DropdownModule} from "primeng/dropdown";
+import {SharedComponents} from "../envirotrack/shared-components";
+import {Mode} from "node:fs";
 
 const rowNames: string[] = ['Cost of Energy', 'Transportation Costs', 'Cost of Water', 'Cost of Waste', 'Cost of Raw Materials', 'Cost of Bought in Goods - Consumables and bought in parts', 'Consultancy Cost', 'Sub Contracting Cost', 'Other External Costs (Legal, rental, accounting etc)']
 
-const energyNames: string[] = ['Electricity','Natural Gas (Grid)', 'Natural Gas off Grid', 'Bio Gas Off Grid', 'LPG','Oil','Kerosene','Bio Fuels','Bio Mass','Coal for Industrial use','Other']
-const materialNames: string[] = ['Steel','Stainless Steel','Aluminium','Copper','Bronze','Titanium','Polymers','Elastomers','Textiles','Composites','Aggregates','Cement','Glass','Wood','Chemicals','Lithium','Magnesium','Other']
+const energyNames: string[] = ['Electricity', 'Natural Gas (Grid)', 'Natural Gas off Grid', 'Bio Gas Off Grid', 'LPG', 'Oil', 'Kerosene', 'Bio Fuels', 'Bio Mass', 'Coal for Industrial use', 'Other']
+const materialNames: string[] = ['Steel', 'Stainless Steel', 'Aluminium', 'Copper', 'Bronze', 'Titanium', 'Polymers', 'Elastomers', 'Textiles', 'Composites', 'Aggregates', 'Cement', 'Glass', 'Wood', 'Chemicals', 'Lithium', 'Magnesium', 'Other']
 
 // const gridAllocationNames: string[] = ['kVa Availability', 'Recorded Winter Max Demand kVa']
 // const onSiteNames: string[] = ['PV', 'Wind', 'Solar Thermal', 'CHP', 'Biomass', 'Hydro', 'AD', 'Other']
 
-type UnitsUom = 'Select' | 'litres' | 'kg' |'kWh' | 'tonnes' | 'cubic metres' | 'km' | 'miles'
+type UnitsUom = 'Select' | 'litres' | 'kg' | 'kWh' | 'tonnes' | 'cubic metres' | 'km' | 'miles' | 'million litres'
 type RegionsOfOrigin = 'UK' | 'EU' | 'US' | 'Asia'
+type UnitsOfCost = 'Cost/unit' | 'Total Cost' | 'Select'
+type ModeOfTransport =
+  'Select'
+  | 'Van <3.5t'
+  | 'Refrigerated Van <3.5t'
+  | 'Van >3.5t < 7.5t'
+  | 'Refrigerated Van > 3.5t < 7.5t'
+  | 'HGV'
+  | 'Refrigerated HGV'
+type FuelTypes = 'Select' | 'Diesel' | 'Petrol' | 'LPG' | 'EV' | 'Hydrogen'
+type OtherModesOfTransport = 'Select' | 'Rail' | 'Sea' | 'Air'
+type CompanyModesOfTransport = 'Select' | 'Rail' | 'Sea' | 'Air' | 'Company Car' | 'Public Transport'
+type Routes = 'Select' | 'NI to UK' | 'NI to EU' | 'NI to USA' | 'NI to RoW'
+type StaffCommuteModes = 'Select'| 'On foot'| 'Cycle'| 'Public Transport'|'Car'|'Motorbike'
 
 
+// Classes for subtables
 
-class BoughtInParts {
-  name: string = 'Description of Part'
-  secondColumn?:number = 0
-  NoOfParts: number = 0
+class SubTable {
   cost: number = 0
-  unitOfCost: 'Cost/unit' | 'Total Cost' | 'Select' = 'Select'
-  regionOfOrigin: RegionsOfOrigin  = 'UK'
-  parent = {
+  secondColumn: number = 0
+  parent: { name: string, addRows: boolean } = {
     name: '',
     addRows: true
   }
 }
+
+class MaterialRow extends SubTable {
+  name: string = ''
+  unitsUom: UnitsUom = 'Select'
+  totalUnits: number = 0
+  regionOfOrigin?: RegionsOfOrigin = 'UK'
+  scrappageAndWaste?: number = 0
+}
+
+class BoughtInParts extends SubTable {
+  name: string = 'Description of Part'
+  noOfParts: number = 0
+  unitOfCost: UnitsOfCost = 'Select'
+  regionOfOrigin: RegionsOfOrigin = 'UK'
+}
+
+class WaterUsage extends SubTable {
+  name: string = 'Water usage name'
+  totalUnits: number =0
+  unitOfCost: UnitsOfCost = 'Select'
+}
+
+class Waste extends SubTable{
+  name: string = 'Description of Waste stream'
+  unitsUom: UnitsUom = 'Select'
+  totalUnits: number = 0
+}
+
+class RoadFreight extends SubTable {
+  name: string = 'Road Freight description'
+  mode: ModeOfTransport = 'Select'
+  fuelType: FuelTypes = 'Select'
+  approxMileage: number = 0
+}
+
+class OtherFreightTransportation extends SubTable {
+  name: string = 'Other Freight description'
+  otherModes: OtherModesOfTransport = 'Select'
+  route: Routes = 'Select'
+  approxMileage = 0
+}
+
+class CompanyTravel extends SubTable {
+  name: string = 'Company Travel description'
+  companyModeOfTransport: CompanyModesOfTransport  = 'Select'
+  approxMileage: number = 0;
+}
+
+class StaffCommute{
+  name: string = 'Staff Commute description'
+  staffCommute: StaffCommuteModes = 'Select'
+  percentStaff: number =0
+  distance: number = 0
+  parent: { name: string, addRows: boolean } = {
+    name: '',
+    addRows: true
+  }
+}
+
+// Generic classes
 class TableRow {
   name: string = ''
-  secondColumn: number = 0 ;
+  secondColumn: number = 0;
   unitsUom: UnitsUom = 'Select'
   totalUnits: number = 0
   cost: number = 0
   unitOfCost?: 'Select' | 'Total Cost' | 'Cost/unit' = 'Select'
   regionOfOrigin?: RegionsOfOrigin = 'UK'
-  parent?: {name: string} = {
-    name: ''
-  }
-}
-
-class MaterialRow {
-  name: string = ''
-  secondColumn: number = 0 ;
-  unitsUom: UnitsUom = 'Select'
-  totalUnits: number = 0
-  cost: number = 0
-  regionOfOrigin?: RegionsOfOrigin = 'UK'
-  scrappageAndWaste?: number = 0
-  parent?: {name: string} = {
+  parent?: { name: string } = {
     name: ''
   }
 }
@@ -66,7 +126,7 @@ class GroupItem {
   name: string = ''
   value: number = 0;
   secondColumn = 0
-  parent: {name: string} = {
+  parent: { name: string } = {
     name: ''
   }
 }
@@ -74,7 +134,7 @@ class GroupItem {
 @Component({
   selector: 'app-pet',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CarouselTplComponent, FooterComponent, RippleModule, JsonPipe, DropdownModule],
+  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CarouselTplComponent, FooterComponent, RippleModule, JsonPipe, DropdownModule, SharedComponents],
   templateUrl: './pet.component.html',
   styleUrl: './pet.component.scss'
 })
@@ -94,14 +154,20 @@ export class PetComponent implements OnInit {
   energyRows: TableRow[] = []
   gridAllocationRows: TableRow[] = []
   onSiteRows: TableRow[] = []
-  unitsUom: UnitsUom[] = ['Select' , 'litres' , 'kg' ,'kWh' , 'tonnes' , 'cubic metres' , 'km' , 'miles']
-  regionOfOrigin: RegionsOfOrigin[] = ['UK' , 'EU' , 'US' , 'Asia']
+
+  // For Primeng dropdowns
+  unitsUom: UnitsUom[] = ['Select', 'litres', 'kg', 'kWh', 'tonnes', 'cubic metres', 'km', 'miles', 'million litres']
+  regionOfOrigin: RegionsOfOrigin[] = ['UK', 'EU', 'US', 'Asia']
+  modeOfTransport: ModeOfTransport[] = ['Select', 'Van <3.5t', 'Refrigerated Van <3.5t', 'Van >3.5t < 7.5t', 'Refrigerated Van > 3.5t < 7.5t', 'HGV', 'Refrigerated HGV']
+  fuelTypes: FuelTypes[] = ['Select', 'Diesel', 'Petrol', 'LPG', 'EV', 'Hydrogen']
+  otherModesOfTransport: OtherModesOfTransport[] = ['Select' , 'Rail' , 'Sea' , 'Air']
+  routes: Routes[] = ['Select' , 'NI to UK' , 'NI to EU' , 'NI to USA' , 'NI to RoW']
+  companyModesOfTransport: CompanyModesOfTransport[] = ['Select', 'Rail', 'Sea', 'Air', 'Company Car', 'Public Transport']
+  staffCommute: StaffCommuteModes[] = ['Select', 'On foot', 'Cycle', 'Public Transport','Car','Motorbike']
 
   data: any = []
-  initialParts = new BoughtInParts()
 
-  constructor() {
-  }
+  constructor() {}
 
   onSelectCompany = () => {
     if (!this.selectedCompany) this.selectedCompany = this.companies[0].id;
@@ -120,58 +186,35 @@ export class PetComponent implements OnInit {
   }
 
   getCompanies = () => {
-    // this.admin.fnGet(`items/organisation/${this.global.cmp}?fields=companies.companies_id.name,companies.companies_id.id`).subscribe({
-    //   next: (res: any) => {
-    //     this.companies = res.data.companies.map((x: any) => x.companies_id);
-    //     this.selectedCompany = this.companies[0].id;
     this.getPETReport(this.selectedCompany)
-    //   }
-    // })
   }
 
   getPETReport = (id: number) => {
-    // this.admin.fnGetCompanyDetails(id, ['pet_tool']).subscribe({
-    //   next: (res: any) => {
-    //     if (res?.pet_tool) {
-    //       const combinedRows = JSON.parse(res.pet_tool);
-    //       this.turnover = combinedRows.turnover
-    //       this.employees = combinedRows.employees
-    //       this.totalOfRows = combinedRows.totalOfRows
-    //       this.productivityScore = combinedRows.productivityScore
-    //       this.innovationPercent = combinedRows.innovationPercent
-    //       this.rows = combinedRows.rows
-    //       this.energyRows = combinedRows.energyRows
-    //       this.gridAllocationRows = combinedRows.gridAllocationRows
-    //       this.onSiteRows = combinedRows.onSiteRows
-    //     } else {
-    //       this.generateRows(rowNames, this.rows)
-    //       this.generateRows(energyNames, this.energyRows)
-    //       this.generateRows(gridAllocationNames, this.gridAllocationRows)
-    //       this.generateRows(onSiteNames, this.onSiteRows)
-    //     }
-    //   }})
-
-
     this.generateClasses('Cost of Energy', TableRow, energyNames)
     this.generateClasses('Cost of Raw Materials ', MaterialRow, materialNames)
     this.generateClasses('Cost of Bought in Goods - Consumables and bought in parts', BoughtInParts)
+    this.generateClasses('Water Usage', WaterUsage)
+    this.generateClasses('Waste', Waste)
+    this.generateClasses('Road Freight', RoadFreight)
+    this.generateClasses('Other Freight', OtherFreightTransportation)
+    this.generateClasses('Company Travel', CompanyTravel)
+    this.generateClasses('Staff Commute', StaffCommute)
   }
 
   generateClasses = (rowTitle: string, classToUse: any, namesArray?: string[]) => {
     if (namesArray?.length) {
       const classArray = namesArray.map((name: string) => {
-          let newClass = new classToUse()
-          newClass.name = name
-          newClass.parent.name = rowTitle
-          if (newClass.parent.addRows) {
-            newClass.parent.addRows = true
-          }
-          return newClass;
+        let newClass = new classToUse()
+        newClass.name = name
+        newClass.parent.name = rowTitle
+        if (newClass.parent.addRows) {
+          newClass.parent.addRows = true
+        }
+        return newClass;
       })
       this.data.push(...classArray)
       console.log(this.data)
     } else {
-      console.log('No names to use')
       let newClass = new classToUse()
       this.generateRows(newClass, rowTitle, true)
     }
@@ -190,7 +233,6 @@ export class PetComponent implements OnInit {
       })
     }
   }
-
 
 
   calculatePerEmployeeCost = () => {
@@ -227,18 +269,6 @@ export class PetComponent implements OnInit {
 
   saveReport = () => {
     const report = this.createReportObject()
-
-    // this.admin.updateCompany(this.selectedCompany, {
-    //   "pet_tool": JSON.stringify(report)
-    // }, ['pet_tool']).subscribe({
-    //   next: (res: any) => {
-    //     return this.msg.add({
-    //       severity: 'success',
-    //       detail: 'Saved'
-    //     })
-    //   },
-    //   error: (err: any) => console.log(err)
-    // })
   }
 
   ngOnInit() {
