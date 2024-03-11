@@ -20,6 +20,8 @@ content:any;
 content,
 top_image,
 image,
+alias,
+id
 `).subscribe({
       next: (res: any) => {
         this.content = res

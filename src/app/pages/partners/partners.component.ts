@@ -4,6 +4,7 @@ import {DbService} from "../../_services/db.service";
 import {SinglePartnerComponent} from "./single-partner/single-partner.component";
 import {JsonPipe} from "@angular/common";
 import {ButtonModule} from "primeng/button";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-partners',
@@ -12,7 +13,8 @@ import {ButtonModule} from "primeng/button";
     TopPageImgTplComponent,
     SinglePartnerComponent,
     JsonPipe,
-    ButtonModule
+    ButtonModule,
+    RouterLink
   ],
   templateUrl: './partners.component.html',
   styleUrl: './partners.component.scss'
@@ -40,7 +42,7 @@ partner_single.related_partners_id.top_image
       next: (res: any) => {
         this.partners = res
         this.partners.items = this.partners.items.map((item:any) => item.partner_items_id)
-        //this.partners.partner_single = this.partners.partner_single.map((article:any) => article.related_partners_id)
+        this.partners.partner_single = this.partners.partner_single.map((article:any) => article.related_partners_id)
       },
       error: (err: any) => {
         console.error(err)

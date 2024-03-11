@@ -45,6 +45,7 @@ import {ProjectInformationComponent} from "./pages/project-information/project-i
 import {PartnersComponent} from "./pages/partners/partners.component";
 import {AdvisoryBoardComponent} from "./pages/project-information/advisory-board/advisory-board.component";
 import {StakeholdersComponent} from "./pages/project-information/stakeholders/stakeholders.component";
+import {SinglePartnerComponent} from "./pages/partners/single-partner/single-partner.component";
 
 
 
@@ -62,6 +63,7 @@ export const routes: Routes = [
   {path:'partners',component:PartnersComponent},
   {path:'advisory-board',component:AdvisoryBoardComponent},
   {path:'stakeholders',component:StakeholdersComponent},
+  {path:'single',component:SinglePartnerComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
   {path:'dashboard',component:DashboardComponent, children: [
