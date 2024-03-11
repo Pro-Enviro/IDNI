@@ -46,7 +46,8 @@ export class HeaderTopComponent {
                 routerLink:'partners'
               },
               {
-                label: 'Stakeholders'
+                label: 'Stakeholders',
+                routerLink:'stakeholders'
               },
               {
                 label:'Advisory Board',

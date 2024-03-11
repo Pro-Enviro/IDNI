@@ -43,7 +43,9 @@ import {NewsComponent} from "./pages/news/news.component";
 import {EventsComponent} from "./pages/events/events.component";
 import {ProjectInformationComponent} from "./pages/project-information/project-information.component";
 import {PartnersComponent} from "./pages/partners/partners.component";
-import {AdvisoryBoardComponent} from "./pages/advisory-board/advisory-board.component";
+import {AdvisoryBoardComponent} from "./pages/project-information/advisory-board/advisory-board.component";
+import {StakeholdersComponent} from "./pages/project-information/stakeholders/stakeholders.component";
+
 
 
 
@@ -59,6 +61,7 @@ export const routes: Routes = [
   {path:'project-information', component:ProjectInformationComponent},
   {path:'partners',component:PartnersComponent},
   {path:'advisory-board',component:AdvisoryBoardComponent},
+  {path:'stakeholders',component:StakeholdersComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
   {path:'dashboard',component:DashboardComponent, children: [

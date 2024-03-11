@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import {ButtonModule} from "primeng/button";
-import {DbService} from "../../_services/db.service";
-import {TopPageImgTplComponent} from "../../_partials/top-page-img-tpl/top-page-img-tpl.component";
+import {TopPageImgTplComponent} from "../../../_partials/top-page-img-tpl/top-page-img-tpl.component";
+import {DbService} from "../../../_services/db.service";
 
 @Component({
   selector: 'app-advisory-board',
   standalone: true,
-  imports: [
-    ButtonModule,
-    TopPageImgTplComponent
-  ],
+    imports: [
+        ButtonModule,
+        TopPageImgTplComponent
+    ],
   templateUrl: './advisory-board.component.html',
   styleUrl: './advisory-board.component.scss'
 })
 export class AdvisoryBoardComponent {
-content:any;
+  content:any;
 
   constructor(private db: DbService) {
     this.db.getContentFromCollection('board/1', `
