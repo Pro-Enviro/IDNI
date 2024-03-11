@@ -146,6 +146,12 @@
       <h3 class="header-style-blue text-3xl mb-5">Contact Details</h3>
       <div class="grid">
         <div class="col-3">
+          <i class="pi pi-user header-style-blue" style="font-size: 2rem"></i>
+          <h3 class="header-style font-medium">Contact Person</h3>
+          <p class="w-6">{{content.name}}</p>
+          <p class="text-xs font-italic mr-2">{{content.position}}</p>
+        </div>
+        <div class="col-3">
           <i class="pi pi-map-marker header-style-blue" style="font-size: 2rem"></i>
           <h3 class="header-style font-medium">Address:</h3>
           <p class="w-8">{{content.address}}</p>
@@ -153,18 +159,19 @@
         <div class="col-3">
           <i class="pi pi-phone header-style-blue" style="font-size: 2rem"></i>
           <h3 class="header-style font-medium">Phone Number:</h3>
-          <p>{{content.phone_number}}</p>
+          <p class="w-7">{{content.phone_number}}</p>
         </div>
         <div class="col-3">
           <i class="pi pi-globe header-style-blue" style="font-size: 2rem"></i>
           <h3 class="header-style font-medium">Website:</h3>
-          <a href="{{content.website}}" target="_blank" style="text-decoration: none">{{content.website}}</a>
+          <a href="{{content.website}}" target="_blank"  class="text-sm">{{content.website}}</a>
         </div>
-        <div class="col-3">
-          <i class="pi pi-envelope header-style-blue" style="font-size: 2rem"></i>
-          <h3 class="header-style font-medium">Email:</h3>
-          <p>{{content.email}}</p>
-        </div>
+      </div>
+    </div>
+    <div class="container mt-4 p-4" style="background-color: #fbfbfb">
+      <div class="flex justify-content-evenly">
+          <img  src="https://app.idni.eco/assets/{{content.idni_logo}}" class="ml-4" alt="" style="max-height:100px">
+          <img  src="https://app.idni.eco/assets/{{content.partner_logo}}" alt="" style="max-height:100px">
       </div>
     </div>
   </section>
