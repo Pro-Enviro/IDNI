@@ -24,7 +24,7 @@
               <h3 class="header-style">{{items.title}}</h3>
               <div [innerHTML]="items.content"></div>
               <div class="pt-5 pb-3">
-                <p-button label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
+                <p-button label="Learn More" [rounded]="true" routerLink="{{items.alias}}" styleClass="btn-style"></p-button>
               </div>
             </div>
           </div>
@@ -37,7 +37,7 @@
               <h3 class="header-style">{{items.title}}</h3>
               <div [innerHTML]="items.content"></div>
               <div class="pt-5 pb-3">
-                <p-button label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
+                <p-button label="Learn More" routerLink="{{items.alias}}" [rounded]="true" styleClass="btn-style"></p-button>
               </div>
             </div>
             <div class="col"></div>

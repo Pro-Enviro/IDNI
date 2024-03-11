@@ -4,6 +4,9 @@ import {MegaMenuModule} from "primeng/megamenu";
 import {ButtonModule} from "primeng/button";
 import {MenubarModule} from "primeng/menubar";
 import {StorageService} from "../../_services/storage.service";
+import {SharedModules} from "../../shared-module";
+import {RippleModule} from "primeng/ripple";
+import {SidebarModule} from "primeng/sidebar";
 
 @Component({
   selector: 'app-header-top',
@@ -11,12 +14,20 @@ import {StorageService} from "../../_services/storage.service";
   imports: [
     MegaMenuModule,
     ButtonModule,
-    MenubarModule
+    MenubarModule,
+    SharedModules,
+    RippleModule,
+    SidebarModule
   ],
   templateUrl: './header-top.component.html',
   styleUrl: './header-top.component.scss'
 })
 export class HeaderTopComponent {
+  burgerMenuOpen: boolean = false;
+  toggleBurgerMenu() {
+    this.burgerMenuOpen = !this.burgerMenuOpen;
+  }
+
   // menuItems!: MegaMenuItem[];
   // constructor(private storage: StorageService) {
   //   this.menuItems = this.storage.getMenu.map((x:any) => {
