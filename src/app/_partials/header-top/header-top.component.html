@@ -10,8 +10,10 @@
   <p-sidebar [(visible)]="sidebarVisible">
     <img src="assets/img/idni-logo.svg" height="80" class="mr-2 ml-2"/>
     <p-menu [model]="items"></p-menu>
-    <p-button routerLink="login" label="Login" icon="pi pi-user" styleClass="btn-outline" [rounded]="true"></p-button>
-    <p-button label="PET" routerLink="pet" icon="pi pi-cog" styleClass="btn-style" [rounded]="true"></p-button>
+    <div class="flex flex-column pt-2">
+      <p-button routerLink="login" label="Login" icon="pi pi-user" styleClass="btn-outline" [rounded]="true"></p-button>
+      <p-button label="PET" routerLink="pet" icon="pi pi-cog" styleClass="btn-style mt-3" [rounded]="true"></p-button>
+    </div>
   </p-sidebar>
   <p-button (click)="sidebarVisible = true" icon="pi pi-bars"></p-button>
 </div>
