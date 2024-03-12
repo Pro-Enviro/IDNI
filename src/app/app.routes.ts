@@ -74,6 +74,7 @@ import {
   TransparentComponent
 } from "./pages/project-information/latest-tech/solar-power/transparent/transparent.component";
 import {FloatingComponent} from "./pages/project-information/latest-tech/solar-power/floating/floating.component";
+import {HeatExchangeComponent} from "./pages/project-information/latest-tech/heat-exchange/heat-exchange.component";
 
 
 
@@ -108,6 +109,7 @@ export const routes: Routes = [
   {path:'invest-ni',component:InvestniComponent},
   {path:'manufacturing-northern-ireland',component:MniComponent},
   {path:'queens-university-belfast',component:QueenUniBelfastComponent},
+  {path:'heat-exchange',component:HeatExchangeComponent},
   {path:'advanced-manufacturing-innovation-centre',component:AmicComponent},
   {path:'economic-intelligence-unit',component:EiuComponent},
   {path:'university-of-ulster',component:UlsterComponent},
