@@ -6,16 +6,18 @@
   <p-button label="PET" routerLink="pet" icon="pi pi-cog" styleClass="btn-style" [rounded]="true"></p-button>
 </p-megaMenu>
 
-<div class="stuff p-2">
+<div class="burger-menu p-2">
   <p-sidebar [(visible)]="sidebarVisible">
-    <img src="assets/img/idni-logo.svg" height="80" class="mr-2 ml-2"/>
-    <p-menu [model]="items"></p-menu>
-    <div class="flex flex-column pt-2">
+    <img src="assets/img/idni-logo.svg" height="80" class="mr-2 ml-2 mb-3"/>
+    <p-panelMenu [model]="items"></p-panelMenu>
+    <div class="flex flex-column pt-3">
       <p-button routerLink="login" label="Login" icon="pi pi-user" styleClass="btn-outline" [rounded]="true"></p-button>
       <p-button label="PET" routerLink="pet" icon="pi pi-cog" styleClass="btn-style mt-3" [rounded]="true"></p-button>
     </div>
   </p-sidebar>
-  <p-button (click)="sidebarVisible = true" icon="pi pi-bars"></p-button>
+  <div class="flex justify-content-end">
+    <p-button (click)="sidebarVisible = true" icon="pi pi-bars" styleClass="btn-outline"></p-button>
+  </div>
 </div>
 
 

@@ -9,6 +9,7 @@ import {RippleModule} from "primeng/ripple";
 import {SidebarModule} from "primeng/sidebar";
 import {ToastModule} from "primeng/toast";
 import {MenuModule} from "primeng/menu";
+import {PanelMenuModule} from "primeng/panelmenu";
 
 @Component({
   selector: 'app-header-top',
@@ -21,7 +22,8 @@ import {MenuModule} from "primeng/menu";
     RippleModule,
     SidebarModule,
     ToastModule,
-    MenuModule
+    MenuModule,
+    PanelMenuModule
   ],
   templateUrl: './header-top.component.html',
   styleUrl: './header-top.component.scss'
@@ -94,10 +96,8 @@ export class HeaderTopComponent {
 
   items: MenuItem[] = [
     {
-      items:[
-        { label: 'Home',
-          routerLink: '/home'}
-      ]
+    label: 'Home',
+      routerLink: '/home'
     },
     {
       label: 'Project Information',
