@@ -59,7 +59,7 @@
                              [(ngModel)]="groups.parent.totalCost" (ngModelChange)="calculatePerEmployeeCost(groups)"></p-inputNumber>
             </td>
             <td>
-              {{groups.parent.secondColumn.toLocaleString('en-US')}}
+              {{groups.parent.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}
             </td>
             <td colspan="4"></td>
           </tr>
@@ -162,31 +162,29 @@
           <tr>
             <td>{{consultancyRow.name}}</td>
             <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="consultancyRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(consultancyRow)"></p-inputNumber></td>
-            <td>{{consultancyRow.secondColumn}}</td>
+            <td>{{consultancyRow.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}</td>
           </tr>
           <tr>
             <td>{{subContractingRow.name}}</td>
             <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="subContractingRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(subContractingRow)"></p-inputNumber></td>
-            <td>{{subContractingRow.secondColumn}}</td>
+            <td>{{subContractingRow.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}</td>
           </tr>
           <tr>
             <td>{{otherExternalCostsRow.name}}</td>
             <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="otherExternalCostsRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(otherExternalCostsRow)"></p-inputNumber></td>
-            <td>{{otherExternalCostsRow.secondColumn}}</td>
+            <td>{{otherExternalCostsRow.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}</td>
           </tr>
           <tr>
             <td>Total External Cost</td>
             <td>
-              <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="totalOfRows"
-              ></p-inputNumber>
+              {{calculateTotalExternalCost()}}
             </td>
             <td></td>
           </tr>
           <tr>
             <td>Productivity Score</td>
             <td>
-              <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="productivityScore"
-              ></p-inputNumber>
+              {{calculateProductivityScore()}}
             </td>
             <td></td>
           </tr>
@@ -208,7 +206,29 @@
               ></p-inputNumber>
             </td>
             <td>
-              {{ (turnover * (innovationPercent / 100)).toLocaleString('en-US') }}
+              {{ (turnover * (innovationPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}
+            </td>
+          </tr>
+          <tr>
+            <td>Training - % of Staff in Training (On the Job, PT-FE, Prof'snl or Post Grad)</td>
+            <td>
+              <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
+                             [(ngModel)]="staffTrainingPercent"
+              ></p-inputNumber>
+            </td>
+            <td>
+              {{ (employees * (staffTrainingPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}
+            </td>
+          </tr>
+          <tr>
+            <td>Export - % of Turnover from Export</td>
+            <td>
+              <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
+                             [(ngModel)]="exportPercent"
+              ></p-inputNumber>
+            </td>
+            <td>
+              {{ (turnover * (exportPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}
             </td>
           </tr>
 

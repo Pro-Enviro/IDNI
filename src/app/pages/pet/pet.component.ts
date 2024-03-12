@@ -156,6 +156,8 @@ export class PetComponent implements OnInit {
   totalOfRows: number = 0;
   productivityScore: number = 0;
   innovationPercent: number = 0;
+  staffTrainingPercent: number = 0;
+  exportPercent: number = 0;
   consultancyRow = {
     name: 'Consultancy Cost',
     totalCost: 0,
@@ -176,8 +178,6 @@ export class PetComponent implements OnInit {
   energyRows: TableRow[] = []
   gridAllocationRows: TableRow[] = []
   onSiteRows: TableRow[] = []
-
-
   // For Primeng dropdowns
   unitsUom: UnitsUom[] = ['Select', 'litres', 'kg', 'kWh', 'tonnes', 'cubic metres', 'km', 'miles', 'million litres']
   regionOfOrigin: RegionsOfOrigin[] = ['UK', 'EU', 'US', 'Asia']
@@ -189,9 +189,14 @@ export class PetComponent implements OnInit {
   staffCommute: StaffCommuteModes[] = ['Select', 'On foot', 'Cycle', 'Public Transport', 'Car', 'Motorbike']
   unitsOfCost: UnitsOfCost[] = ['Cost/unit', 'Total Cost', 'Select']
   data: any = []
-
-  constructor() {
+  twoDecimalPlaces ={
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
   }
+
+  constructor() {}
+
+
 
   onSelectCompany = () => {
     if (!this.selectedCompany) this.selectedCompany = this.companies[0].id;
@@ -299,9 +304,38 @@ export class PetComponent implements OnInit {
     return employeeTotal
   }
 
+  calculateTotalExternalCost = () => {
+    const oneOfEachParent: any = {
+      consultancyCost: this.consultancyRow.totalCost,
+      subContractingRow: this.subContractingRow.totalCost,
+      otherExternalCostsRow: this.otherExternalCostsRow.totalCost,
+    }
+
+    this.data.forEach((row: any) => {
+      if (!oneOfEachParent[row.parent.name]) {
+        oneOfEachParent[row.parent.name] = row.parent.totalCost
+      }
+    })
+
+    let summedValues = this.sumValues(oneOfEachParent)
+
+    return summedValues ? summedValues : 0
+
+  }
+
+  calculateProductivityScore = () =>{
+    // (Turnover - Total external costs) / no. of employees
+    if (!this.employees || !this.turnover) return;
+    const totalExternalCost: number = this.calculateTotalExternalCost()
+    let result = (this.turnover - totalExternalCost) / this.employees
+    return result ? result.toFixed(2) : 0
+}
+
+  sumValues = (obj:any):number => <number>Object.values(obj).reduce((a: any, b: any) => a + b, 0);
+
   calculateIndividualEmployeeCost = (object: any) => {
     if (!this.employees) return;
-    object.secondColumn = object.totalCost / this.employees
+    object.secondColumn = (object.totalCost / this.employees)
   }
 
   calculateGroupTotalCost = (group: any) => {
