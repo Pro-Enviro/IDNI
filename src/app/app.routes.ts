@@ -55,6 +55,8 @@ import {EiuComponent} from "./pages/partners/eiu/eiu.component";
 import {UlsterComponent} from "./pages/partners/ulster/ulster.component";
 import {MpaComponent} from "./pages/partners/mpa/mpa.component";
 import {LatestTechComponent} from "./pages/project-information/latest-tech/latest-tech.component";
+import {ZeroCarbonComponent} from "./pages/project-information/latest-tech/zero-carbon/zero-carbon.component";
+import {CoalComponent} from "./pages/project-information/latest-tech/zero-carbon/coal/coal.component";
 
 
 
@@ -70,6 +72,8 @@ export const routes: Routes = [
   {path: 'local-decarb-single', component: LocalDecabSingleTplComponent},
   {path:'project-information', component:ProjectInformationComponent},
   {path: 'latest-technologies',component:LatestTechComponent},
+  {path:'zero-carbon-technologies',component:ZeroCarbonComponent},
+  {path:'goodbye-coal-generated-electricity',component:CoalComponent},
   {path:'partners',component:PartnersComponent},
   {path:'camirus', component:CamirusComponent},
   {path:'pro-enviro',component:ProEnviroComponent},
