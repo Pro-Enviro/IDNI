@@ -18,6 +18,7 @@ export class ProEnviroComponent {
     this.db.getContentFromCollection('partners/3', `
 ?fields=title,
 content,
+summary,
 top_image,
 image,
 alias,
