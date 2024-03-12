@@ -54,7 +54,7 @@ class MaterialRow extends SubTable {
   name: string = ''
   unitsUom: UnitsUom = 'Select'
   totalUnits: number = 0
-  regionOfOrigin?: RegionsOfOrigin = 'UK'
+  regionOfOrigin: RegionsOfOrigin = 'UK'
   scrappageAndWaste?: number = 0
 }
 
@@ -67,8 +67,8 @@ class BoughtInParts extends SubTable {
 
 class WaterUsage extends SubTable {
   name: string = 'Water usage name'
-  totalUnits: number =0
-  unitOfCost: UnitsOfCost = 'Select'
+  totalUnits: number = 0
+  unitsUom: UnitsUom = 'Select'
 }
 
 class Waste extends SubTable{
@@ -97,11 +97,12 @@ class CompanyTravel extends SubTable {
   approxMileage: number = 0;
 }
 
-class StaffCommute{
+class StaffCommute {
   name: string = 'Staff Commute description'
   staffCommute: StaffCommuteModes = 'Select'
   percentStaff: number =0
   distance: number = 0
+  secondColumn: number =0
   parent: { name: string, addRows: boolean } = {
     name: '',
     addRows: true
@@ -115,8 +116,8 @@ class TableRow {
   unitsUom: UnitsUom = 'Select'
   totalUnits: number = 0
   cost: number = 0
-  unitOfCost?: 'Select' | 'Total Cost' | 'Cost/unit' = 'Select'
-  regionOfOrigin?: RegionsOfOrigin = 'UK'
+  unitOfCost: UnitsOfCost = 'Select'
+  regionOfOrigin: RegionsOfOrigin = 'UK'
   parent?: { name: string } = {
     name: ''
   }
@@ -164,6 +165,7 @@ export class PetComponent implements OnInit {
   routes: Routes[] = ['Select' , 'NI to UK' , 'NI to EU' , 'NI to USA' , 'NI to RoW']
   companyModesOfTransport: CompanyModesOfTransport[] = ['Select', 'Rail', 'Sea', 'Air', 'Company Car', 'Public Transport']
   staffCommute: StaffCommuteModes[] = ['Select', 'On foot', 'Cycle', 'Public Transport','Car','Motorbike']
+  unitsOfCost: UnitsOfCost[] = ['Cost/unit' , 'Total Cost' , 'Select']
 
   data: any = []
 
@@ -213,7 +215,6 @@ export class PetComponent implements OnInit {
         return newClass;
       })
       this.data.push(...classArray)
-      console.log(this.data)
     } else {
       let newClass = new classToUse()
       this.generateRows(newClass, rowTitle, true)
@@ -221,6 +222,7 @@ export class PetComponent implements OnInit {
   }
 
   generateRows = (array: string[] | any, parentName: string, isClass?: boolean) => {
+
     if (isClass) {
       array.parent.name = parentName
       this.data.push(array)
@@ -232,6 +234,14 @@ export class PetComponent implements OnInit {
         this.data.push(newGroupItem)
       })
     }
+  }
+
+  createNewTableRow = (group: any) => {
+    let copy = {...group, name: `${group.parent.name} description`}
+    let findObject =  this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)
+
+    if (findObject ===-1) return;
+    this.data.splice(findObject +1, 0, copy)
   }
 
 
