@@ -69,6 +69,11 @@ import {
 import {HydrogenPowerComponent} from "./pages/project-information/latest-tech/hydrogen-power/hydrogen-power.component";
 import {FuelComponent} from "./pages/project-information/latest-tech/hydrogen-power/fuel/fuel.component";
 import {LondonComponent} from "./pages/project-information/latest-tech/hydrogen-power/london/london.component";
+import {SolarPowerComponent} from "./pages/project-information/latest-tech/solar-power/solar-power.component";
+import {
+  TransparentComponent
+} from "./pages/project-information/latest-tech/solar-power/transparent/transparent.component";
+import {FloatingComponent} from "./pages/project-information/latest-tech/solar-power/floating/floating.component";
 
 
 
@@ -94,6 +99,9 @@ export const routes: Routes = [
   {path:'hydrogen-power',component:HydrogenPowerComponent},
   {path:'fuel-combat',component:FuelComponent},
   {path:'london-road-greener',component:LondonComponent},
+  {path:'solar-power',component:SolarPowerComponent},
+  {path:'transparent-solar-panels',component:TransparentComponent},
+  {path:'floating-solar-farms',component:FloatingComponent},
   {path:'partners',component:PartnersComponent},
   {path:'camirus', component:CamirusComponent},
   {path:'pro-enviro',component:ProEnviroComponent},
