@@ -68,7 +68,7 @@ class BoughtInParts extends SubTable {
 }
 
 class WaterUsage extends SubTable {
-  name: string = 'Water usage name'
+  name: string = 'Water Usage description '
   totalUnits: number = 0
   unitsUom: UnitsUom = 'Select'
 }

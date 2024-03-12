@@ -13,16 +13,16 @@
         identify areas for improvement. This includes the assessment of Scope 1, Scope 2, and Scope 3 emissions,
         offering a comprehensive view of the environmental impact associated with business operations.</p>
     </div>
-    <div class="container mt-5" style="overflow-x:auto;">
+    <div class="container mt-5 lg:col-6" style="overflow-x: hidden;">
       <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines col-12" dataKey="parent.name"
                rowGroupMode="subheader" groupRowsBy="parent.name" [customSort]="true">
 
         <ng-template pTemplate="header">
           <tr>
-            <th class="header-style text-base font-semibold p-3">Productivity Factors Year 2024</th>
-            <th class="header-style text-base font-semibold p-3">Value</th>
-            <th class="header-style text-base font-semibold p-3">Per Employee Cost</th>
-            <th colspan="4"></th>
+            <th class="header-style text-base font-semibold p-3 col-5" >Productivity Factors Year 2024</th>
+            <th class="header-style text-base font-semibold p-3 col-2">Value</th>
+            <th class="header-style text-base font-semibold p-3" colspan="4">Per Employee Cost</th>
+<!--            <th ></th>-->
           </tr>
           <tr>
             <th>
@@ -47,9 +47,9 @@
 
         <ng-template pTemplate="groupheader" let-groups let-rowIndex="rowIndex" let-expanded="expanded">
           <tr >
-            <td class="expandable-rows">
+            <td class="expandable-rows" style="min-width: 300px" >
               <button type="button" pButton pRipple [pRowToggler]="groups"
-                      class="p-button-text p-button-rounded p-button-plain mr-2"
+                      class="p-button-text p-button p-button-plain p-button-sm mr-2"
                       [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
               <span class="font-bold ml-2 ">{{ groups.parent.name }}</span>
             </td>
@@ -58,10 +58,10 @@
               <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
                              [(ngModel)]="groups.parent.totalCost" (ngModelChange)="calculatePerEmployeeCost(groups)"></p-inputNumber>
             </td>
-            <td>
+            <td colspan="4">
               {{groups.parent.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}
             </td>
-            <td colspan="4"></td>
+<!--            <td colspan="4"></td>-->
           </tr>
 
           <!--   Dynamic titles       -->
@@ -71,7 +71,7 @@
             <td *ngIf="groups.mode !== undefined">Mode</td>
             <td *ngIf="groups.fuelType !== undefined">Fuel Type</td>
             <td *ngIf="groups.noOfParts !== undefined">Number of Parts</td>
-            <td *ngIf="groups.totalUnits !== undefined">Total Units</td>
+            <td style="width: 100px" *ngIf="groups.totalUnits !== undefined">Total Units</td>
             <td *ngIf="groups.otherModes !== undefined">Mode</td>
             <td *ngIf="groups.companyModeOfTransport !== undefined">Mode</td>
             <td *ngIf="groups.staffCommute !== undefined">Mode</td>
@@ -82,16 +82,16 @@
             <td *ngIf="groups.regionOfOrigin !== undefined">Region of Origin</td>
             <td *ngIf="groups.scrappageAndWaste !== undefined">% Scrappage & Waste in Prod</td>
             <td *ngIf="groups.percentStaff !== undefined">% Staff</td>
-            <td *ngIf="groups.distance !== undefined">Average Distance (Miles)</td>
+            <td style="width: 100px" *ngIf="groups.distance !== undefined">Average Distance (Miles)</td>
           </tr>
         </ng-template>
 
-        <ng-template pTemplate="rowexpansion" let-groups let-editing="editing">
-          <tr style="background-color: #fff" >
-            <td [pEditableColumn]="groups.name" pEditableColumnField="name">
+        <ng-template pTemplate="rowexpansion" let-groups let-editing="editing" >
+          <tr style="background-color: #fff; overflow-x: scroll">
+            <td [pEditableColumn]="groups.name" pEditableColumnField="name" class="col-5" >
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="groups.name" />
+                  <input pInputText type="text" [(ngModel)]="groups.name" class="p-inputtext-sm" />
                 </ng-template>
                 <ng-template pTemplate="output">
                   {{ groups.name }}
@@ -110,11 +110,11 @@
 
             <td *ngIf="groups.noOfParts !== undefined">
               <p-inputNumber [(ngModel)]="groups.noOfParts" class="p-inputtext-sm"
-                             [inputStyle]="{width: '150px'}"></p-inputNumber>
+                             [inputStyle]="{width: '100px'}"></p-inputNumber>
             </td>
             <td *ngIf="groups.totalUnits !== undefined">
               <p-inputNumber [(ngModel)]="groups.totalUnits" class="p-inputtext-sm"
-                             [inputStyle]="{width: '150px'}"></p-inputNumber>
+                             [inputStyle]="{width: '100px'}"></p-inputNumber>
             </td>
 
             <td *ngIf="groups.otherModes !== undefined">
@@ -131,29 +131,29 @@
             </td>
             <td *ngIf="groups.cost !== undefined">
               <p-inputNumber [(ngModel)]="groups.cost" class="p-inputtext-sm"
-                             [inputStyle]="{width: '150px'}" (ngModelChange)="calculateGroupTotalCost(groups)"></p-inputNumber>
+                             [inputStyle]="{width: '100px'}" (ngModelChange)="calculateGroupTotalCost(groups)"></p-inputNumber>
             </td>
             <td *ngIf="groups.unitOfCost">
               <p-dropdown [options]="unitsOfCost" class="p-inputtext-sm" [style]="{width: '150px'}" [(ngModel)]="groups.unitOfCost"></p-dropdown>
             </td>
             <td *ngIf="groups.approxMileage !== undefined">
               <p-inputNumber [(ngModel)]="groups.approxMileage" class="p-inputtext-sm"
-                             [inputStyle]="{width: '150px'}"></p-inputNumber>
+                             [inputStyle]="{width: '100px'}"></p-inputNumber>
             </td>
             <td *ngIf="groups.regionOfOrigin">
               <p-dropdown [options]="regionOfOrigin" class="p-inputtext-sm" [style]="{width: '150px'}"></p-dropdown>
             </td>
             <td *ngIf="groups.scrappageAndWaste !== undefined">
               <p-inputNumber [(ngModel)]="groups.scrappageAndWaste" class="p-inputtext-sm"
-                             [inputStyle]="{width: '150px'}"></p-inputNumber>
+                             [inputStyle]="{width: '100px'}"></p-inputNumber>
             </td>
             <td *ngIf="groups.percentStaff !== undefined">
               <p-inputNumber [(ngModel)]="groups.percentStaff" class="p-inputtext-sm"
-                             [inputStyle]="{width: '150px'}"></p-inputNumber>
+                             [inputStyle]="{width: '100px'}"></p-inputNumber>
             </td>
             <td *ngIf="groups.distance !== undefined">
               <p-inputNumber [(ngModel)]="groups.distance" class="p-inputtext-sm"
-                             [inputStyle]="{width: '150px'}"></p-inputNumber>
+                             [inputStyle]="{width: '100px'}"></p-inputNumber>
             </td>
           </tr>
         </ng-template>
@@ -240,8 +240,8 @@
             <td *ngIf="groups.unitsUom !== undefined"></td>
             <td *ngIf="groups.mode !== undefined"></td>
             <td *ngIf="groups.fuelType !== undefined"></td>
-            <td *ngIf="groups.noOfParts !== undefined">CALC</td>
-            <td *ngIf="groups.totalUnits !== undefined">CALC</td>
+            <td *ngIf="groups.noOfParts !== undefined"></td>
+            <td *ngIf="groups.totalUnits !== undefined"></td>
             <td *ngIf="groups.otherModes !== undefined"></td>
             <td *ngIf="groups.companyModeOfTransport !== undefined"></td>
             <td *ngIf="groups.staffCommute !== undefined"></td>
