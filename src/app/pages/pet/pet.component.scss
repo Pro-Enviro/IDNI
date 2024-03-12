@@ -16,6 +16,11 @@
   }
 }
 
+.expandable-rows {
+  display: flex;
+  align-items:center;
+}
+
 :host ::ng-deep .p-rowgroup-footer td {
   font-weight: 700;
 }

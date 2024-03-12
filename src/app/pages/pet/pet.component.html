@@ -46,12 +46,12 @@
         </ng-template>
 
         <ng-template pTemplate="groupheader" let-groups let-rowIndex="rowIndex" let-expanded="expanded">
-          <tr>
-            <td>
+          <tr >
+            <td class="expandable-rows">
               <button type="button" pButton pRipple [pRowToggler]="groups"
                       class="p-button-text p-button-rounded p-button-plain mr-2"
                       [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-              <span class="font-bold ml-2 align-content-center">{{ groups.parent.name }}</span>
+              <span class="font-bold ml-2 ">{{ groups.parent.name }}</span>
             </td>
             <td>
 
@@ -65,7 +65,7 @@
           </tr>
 
           <!--   Dynamic titles       -->
-          <tr *ngIf="expanded" style="border-bottom: 2px solid black; font-weight: 700">
+          <tr *ngIf="expanded" style="border-bottom: 2px solid black; font-weight: 700" >
             <td *ngIf="groups.name !== undefined"></td>
             <td *ngIf="groups.unitsUom !== undefined">Unit Uom</td>
             <td *ngIf="groups.mode !== undefined">Mode</td>
@@ -87,7 +87,7 @@
         </ng-template>
 
         <ng-template pTemplate="rowexpansion" let-groups let-editing="editing">
-          <tr style="background-color: #fff">
+          <tr style="background-color: #fff" >
             <td [pEditableColumn]="groups.name" pEditableColumnField="name">
               <p-cellEditor>
                 <ng-template pTemplate="input">
@@ -159,6 +159,21 @@
         </ng-template>
 
         <ng-template pTemplate="footer">
+          <tr>
+            <td>{{consultancyRow.name}}</td>
+            <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="consultancyRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(consultancyRow)"></p-inputNumber></td>
+            <td>{{consultancyRow.secondColumn}}</td>
+          </tr>
+          <tr>
+            <td>{{subContractingRow.name}}</td>
+            <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="subContractingRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(subContractingRow)"></p-inputNumber></td>
+            <td>{{subContractingRow.secondColumn}}</td>
+          </tr>
+          <tr>
+            <td>{{otherExternalCostsRow.name}}</td>
+            <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="otherExternalCostsRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(otherExternalCostsRow)"></p-inputNumber></td>
+            <td>{{otherExternalCostsRow.secondColumn}}</td>
+          </tr>
           <tr>
             <td>Total External Cost</td>
             <td>

@@ -156,11 +156,27 @@ export class PetComponent implements OnInit {
   totalOfRows: number = 0;
   productivityScore: number = 0;
   innovationPercent: number = 0;
+  consultancyRow = {
+    name: 'Consultancy Cost',
+    totalCost: 0,
+    secondColumn: 0
+  }
+  subContractingRow = {
+    name: 'Sub Contracting Cost',
+    totalCost: 0,
+    secondColumn: 0
+  }
+  otherExternalCostsRow = {
+    name: 'Other External Costs (Legal, rental, accounting etc)',
+    totalCost: 0,
+    secondColumn: 0
+  }
   // TableRows
   rows: TableRow[] = []
   energyRows: TableRow[] = []
   gridAllocationRows: TableRow[] = []
   onSiteRows: TableRow[] = []
+
 
   // For Primeng dropdowns
   unitsUom: UnitsUom[] = ['Select', 'litres', 'kg', 'kWh', 'tonnes', 'cubic metres', 'km', 'miles', 'million litres']
@@ -172,7 +188,6 @@ export class PetComponent implements OnInit {
   companyModesOfTransport: CompanyModesOfTransport[] = ['Select', 'Rail', 'Sea', 'Air', 'Company Car', 'Public Transport']
   staffCommute: StaffCommuteModes[] = ['Select', 'On foot', 'Cycle', 'Public Transport', 'Car', 'Motorbike']
   unitsOfCost: UnitsOfCost[] = ['Cost/unit', 'Total Cost', 'Select']
-
   data: any = []
 
   constructor() {
@@ -208,6 +223,8 @@ export class PetComponent implements OnInit {
     this.generateClasses('Other Freight', OtherFreightTransportation)
     this.generateClasses('Company Travel', CompanyTravel)
     this.generateClasses('Staff Commute', StaffCommute)
+
+
   }
 
   generateClasses = (rowTitle: string, classToUse: any, namesArray?: string[]) => {
@@ -267,20 +284,24 @@ export class PetComponent implements OnInit {
         }
         return item;
       })
-      return employeeTotal;
       // If updating the turnover or the no. of employees. Recalculate all per employee costs
     } else {
-
       this.data = this.data.map((item: any) => {
         item.parent.secondColumn = item.parent.totalCost / this.employees
+        employeeTotal = item.parent.secondColumn
         return item;
       })
 
-
-    return 0
+      this.consultancyRow.secondColumn = this.consultancyRow.totalCost / this.employees
+      this.subContractingRow.secondColumn = this.subContractingRow.totalCost / this.employees
+      this.otherExternalCostsRow.secondColumn = this.otherExternalCostsRow.totalCost / this.employees
     }
+    return employeeTotal
+  }
 
-
+  calculateIndividualEmployeeCost = (object: any) => {
+    if (!this.employees) return;
+    object.secondColumn = object.totalCost / this.employees
   }
 
   calculateGroupTotalCost = (group: any) => {
@@ -310,24 +331,24 @@ export class PetComponent implements OnInit {
   }
 
   createReportObject = () => {
-    const reportValues = {
-      turnover: this.turnover,
-      employees: this.employees,
-      totalOfRows: this.totalOfRows,
-      productivityScore: this.productivityScore,
-      innovationPercent: this.innovationPercent,
-      rows: this.rows,
-      energyRows: this.energyRows,
-      gridAllocationRows: this.gridAllocationRows,
-      onSiteRows: this.onSiteRows
-    }
-
-    console.log(reportValues)
-    return reportValues;
+    // const reportValues = {
+    //   turnover: this.turnover,
+    //   employees: this.employees,
+    //   totalOfRows: this.totalOfRows,
+    //   productivityScore: this.productivityScore,
+    //   innovationPercent: this.innovationPercent,
+    //   rows: this.rows,
+    //   energyRows: this.energyRows,
+    //   gridAllocationRows: this.gridAllocationRows,
+    //   onSiteRows: this.onSiteRows
+    // }
+    //
+    // console.log(reportValues)
+    // return reportValues;
   }
 
   saveReport = () => {
-    const report = this.createReportObject()
+    // const report = this.createReportObject()
   }
 
   ngOnInit() {
