@@ -45,7 +45,6 @@ import {ProjectInformationComponent} from "./pages/project-information/project-i
 import {PartnersComponent} from "./pages/partners/partners.component";
 import {AdvisoryBoardComponent} from "./pages/project-information/advisory-board/advisory-board.component";
 import {StakeholdersComponent} from "./pages/project-information/stakeholders/stakeholders.component";
-import {SinglePartnerComponent} from "./pages/partners/single-partner/single-partner.component";
 import {CamirusComponent} from "./pages/partners/camirus/camirus.component";
 import {ProEnviroComponent} from "./pages/partners/pro-enviro/pro-enviro.component";
 import {InvestniComponent} from "./pages/partners/investni/investni.component";
@@ -55,6 +54,7 @@ import {AmicComponent} from "./pages/partners/amic/amic.component";
 import {EiuComponent} from "./pages/partners/eiu/eiu.component";
 import {UlsterComponent} from "./pages/partners/ulster/ulster.component";
 import {MpaComponent} from "./pages/partners/mpa/mpa.component";
+import {LatestTechComponent} from "./pages/project-information/latest-tech/latest-tech.component";
 
 
 
@@ -69,6 +69,7 @@ export const routes: Routes = [
   {path: 'local-decarbonisation', component: LocalDecarbonisationComponent},
   {path: 'local-decarb-single', component: LocalDecabSingleTplComponent},
   {path:'project-information', component:ProjectInformationComponent},
+  {path: 'latest-technologies',component:LatestTechComponent},
   {path:'partners',component:PartnersComponent},
   {path:'camirus', component:CamirusComponent},
   {path:'pro-enviro',component:ProEnviroComponent},
@@ -81,7 +82,6 @@ export const routes: Routes = [
   {path:'mpa',component:MpaComponent},
   {path:'advisory-board',component:AdvisoryBoardComponent},
   {path:'stakeholders',component:StakeholdersComponent},
-  {path:'single',component:SinglePartnerComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
   {path:'dashboard',component:DashboardComponent, children: [

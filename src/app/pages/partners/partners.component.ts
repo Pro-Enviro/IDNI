@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {TopPageImgTplComponent} from "../../_partials/top-page-img-tpl/top-page-img-tpl.component";
 import {DbService} from "../../_services/db.service";
-import {SinglePartnerComponent} from "./single-partner/single-partner.component";
 import {JsonPipe} from "@angular/common";
 import {ButtonModule} from "primeng/button";
 import {RouterLink} from "@angular/router";
@@ -11,7 +10,6 @@ import {RouterLink} from "@angular/router";
   standalone: true,
   imports: [
     TopPageImgTplComponent,
-    SinglePartnerComponent,
     JsonPipe,
     ButtonModule,
     RouterLink

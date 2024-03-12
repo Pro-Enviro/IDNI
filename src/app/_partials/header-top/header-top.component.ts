@@ -66,6 +66,10 @@ export class HeaderTopComponent {
               {
                 label:'Advisory Board',
                 routerLink:'advisory-board'
+              },
+              {
+                label:'Latest Technologies',
+                routerLink:'latest-technologies'
               }
             ]
           }
@@ -117,6 +121,10 @@ export class HeaderTopComponent {
         {
           label:'Advisory Board',
           routerLink:'/advisory-board'
+        },
+        {
+          label:'Latest Technologies',
+          routerLink:'latest-technologies'
         }
       ]
     },

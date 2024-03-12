@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SinglePartnerComponent } from './single-partner.component';
+import { LatestTechComponent } from './latest-tech.component';
 
-describe('SinglePartnerComponent', () => {
-  let component: SinglePartnerComponent;
-  let fixture: ComponentFixture<SinglePartnerComponent>;
+describe('LatestTechComponent', () => {
+  let component: LatestTechComponent;
+  let fixture: ComponentFixture<LatestTechComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SinglePartnerComponent]
+      imports: [LatestTechComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(SinglePartnerComponent);
+    fixture = TestBed.createComponent(LatestTechComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
