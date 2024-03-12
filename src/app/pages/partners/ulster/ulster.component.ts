@@ -18,6 +18,7 @@ export class UlsterComponent {
     this.db.getContentFromCollection('partners/9', `
 ?fields=title,
 content,
+summary,
 top_image,
 image,
 alias,

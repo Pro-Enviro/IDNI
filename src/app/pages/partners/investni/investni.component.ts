@@ -18,6 +18,7 @@ export class InvestniComponent {
     this.db.getContentFromCollection('partners/4', `
 ?fields=title,
 content,
+summary,
 top_image,
 image,
 alias,

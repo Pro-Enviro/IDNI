@@ -18,6 +18,7 @@ export class EiuComponent {
     this.db.getContentFromCollection('partners/8', `
 ?fields=title,
 content,
+summary,
 top_image,
 image,
 alias,

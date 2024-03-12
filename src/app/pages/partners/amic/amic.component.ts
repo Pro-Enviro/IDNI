@@ -18,6 +18,7 @@ export class AmicComponent {
     this.db.getContentFromCollection('partners/7', `
 ?fields=title,
 content,
+summary,
 top_image,
 image,
 alias,

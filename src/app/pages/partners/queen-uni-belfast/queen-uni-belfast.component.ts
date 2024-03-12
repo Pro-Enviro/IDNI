@@ -17,6 +17,7 @@ export class QueenUniBelfastComponent {
     this.db.getContentFromCollection('partners/6', `
 ?fields=title,
 content,
+summary,
 top_image,
 image,
 alias,

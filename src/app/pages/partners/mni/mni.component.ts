@@ -17,6 +17,7 @@ export class MniComponent {
     this.db.getContentFromCollection('partners/5', `
 ?fields=title,
 content,
+summary,
 top_image,
 image,
 alias,

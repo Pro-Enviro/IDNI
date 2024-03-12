@@ -16,7 +16,8 @@
         <div class="col"></div>
         <div class="lg:col-8 sm:col-12">
           <h2>{{content.title}}</h2>
-          <div [innerHTML]="content.content"></div>
+          <div [innerHTML]="content.summary" class="p-2 font-italic"></div>
+          <div class="mt-5" [innerHTML]="content.content"></div>
         </div>
       </div>
     </div>

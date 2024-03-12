@@ -18,6 +18,7 @@ export class MpaComponent {
     this.db.getContentFromCollection('partners/10', `
 ?fields=title,
 content,
+summary,
 top_image,
 image,
 alias,
