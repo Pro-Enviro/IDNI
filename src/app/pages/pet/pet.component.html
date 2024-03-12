@@ -54,12 +54,12 @@
               <span class="font-bold ml-2 align-content-center">{{ groups.parent.name }}</span>
             </td>
             <td>
+
               <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
-                             [(ngModel)]="employees" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+                             [(ngModel)]="groups.parent.totalCost" (ngModelChange)="calculatePerEmployeeCost(groups)"></p-inputNumber>
             </td>
             <td>
-              <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
-                             [(ngModel)]="employees" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+              {{groups.parent.secondColumn.toLocaleString('en-US')}}
             </td>
             <td colspan="4"></td>
           </tr>
@@ -131,7 +131,7 @@
             </td>
             <td *ngIf="groups.cost !== undefined">
               <p-inputNumber [(ngModel)]="groups.cost" class="p-inputtext-sm"
-                             [inputStyle]="{width: '150px'}"></p-inputNumber>
+                             [inputStyle]="{width: '150px'}" (ngModelChange)="calculateGroupTotalCost(groups)"></p-inputNumber>
             </td>
             <td *ngIf="groups.unitOfCost">
               <p-dropdown [options]="unitsOfCost" class="p-inputtext-sm" [style]="{width: '150px'}" [(ngModel)]="groups.unitOfCost"></p-dropdown>
@@ -200,15 +200,25 @@
         </ng-template>
 
         <ng-template pTemplate="groupfooter" let-groups >
-          <tr class="p-rowgroup-footer" style="background-color: #fff">
+          <tr class="p-rowgroup-footer" style="background-color: #fff" >
             <td style="text-align: right">Totals</td>
-            <td>
-              <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="groups.value"
-                             (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
-            </td>
-            <td colspan="4">
-              <p class="p-inputtext-sm">{{ groups.secondColumn.toLocaleString('en-US') }}</p>
-            </td>
+            <td *ngIf="groups.unitsUom !== undefined"></td>
+            <td *ngIf="groups.mode !== undefined"></td>
+            <td *ngIf="groups.fuelType !== undefined"></td>
+            <td *ngIf="groups.noOfParts !== undefined">CALC</td>
+            <td *ngIf="groups.totalUnits !== undefined">CALC</td>
+            <td *ngIf="groups.otherModes !== undefined"></td>
+            <td *ngIf="groups.companyModeOfTransport !== undefined"></td>
+            <td *ngIf="groups.staffCommute !== undefined"></td>
+            <td *ngIf="groups.route !== undefined"></td>
+            <td *ngIf="groups.cost !== undefined">{{ groups.parent.totalCost }}</td>
+            <td *ngIf="groups.unitOfCost !== undefined"></td>
+            <td *ngIf="groups.approxMileage !== undefined"></td>
+            <td *ngIf="groups.regionOfOrigin !== undefined"></td>
+            <td *ngIf="groups.scrappageAndWaste !== undefined"></td>
+            <td *ngIf="groups.percentStaff !== undefined"></td>
+            <td *ngIf="groups.distance !== undefined"></td>
+
           </tr>
           <tr style="background-color: #fff" *ngIf="groups.parent.addRows">
             <td colspan="5">
@@ -220,93 +230,5 @@
     </div>
 
 
-<!--    &lt;!&ndash; Energy Costs &ndash;&gt;-->
-<!--    <div class="container" style="overflow-x:auto;">-->
-<!--      <p-table [value]="energyRows" styleClass="pet-table p-datatable-sm p-datatable-gridlines col-12">-->
-<!--        <ng-template pTemplate="header">-->
-<!--          <tr>-->
-<!--            <th class="header-style text-base font-semibold p-3">Energy Costs</th>-->
-<!--            <th class="header-style text-base font-semibold p-3">£ Annual</th>-->
-<!--            <th class="header-style text-base font-semibold p-3">litres or kWh/yr</th>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--        <ng-template pTemplate="body" let-row>-->
-<!--          <tr>-->
-<!--            <td><p>{{ row.name }}</p></td>-->
-<!--            <td>-->
-<!--              <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="row.value"-->
-<!--              ></p-inputNumber>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="row.secondColumn"-->
-<!--              ></p-inputNumber>-->
-<!--            </td>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--        <ng-template pTemplate="footer">-->
-<!--          <tr>-->
-<!--            <td>Total</td>-->
-<!--            <td></td>-->
-<!--            <td></td>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--      </p-table>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash;  Grid Allocation&ndash;&gt;-->
-<!--    <div class="container" style="overflow-x:auto;">-->
-<!--      <p-table [value]="gridAllocationRows" styleClass="pet-table p-datatable-sm p-datatable-gridlines col-12">-->
-<!--        <ng-template pTemplate="header">-->
-<!--          <tr>-->
-<!--            <th class="header-style text-base font-semibold p-3">Grid Allocation & Usage</th>-->
-<!--            <th class="header-style text-base font-semibold p-3">KvA</th>-->
-<!--            <th class="header-style text-base font-semibold p-3"></th>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--        <ng-template pTemplate="body" let-row>-->
-<!--          <tr>-->
-<!--            <td><p>{{ row.name }}</p></td>-->
-<!--            <td>-->
-<!--              <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="row.value"-->
-<!--              ></p-inputNumber>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="row.secondColumn"-->
-<!--              ></p-inputNumber>-->
-<!--            </td>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--      </p-table>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash;  Onsite Generation&ndash;&gt;-->
-<!--    <div class="container" style="overflow-x:auto;">-->
-<!--      <p-table [value]="onSiteRows" styleClass="pet-table p-datatable-sm p-datatable-gridlines col-12">-->
-<!--        <ng-template pTemplate="header">-->
-<!--          <tr>-->
-<!--            <th class="header-style text-base font-semibold p-3">Onsite Generation</th>-->
-<!--            <th class="header-style text-base font-semibold p-3">Max kWh</th>-->
-<!--            <th class="header-style text-base font-semibold p-3">Annual kWh</th>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--        <ng-template pTemplate="body" let-row>-->
-<!--          <tr>-->
-<!--            <td><p>{{ row.name }}</p></td>-->
-<!--            <td>-->
-<!--              <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="row.value"-->
-<!--              ></p-inputNumber>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="row.secondColumn"-->
-<!--              ></p-inputNumber>-->
-<!--            </td>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--      </p-table>-->
-<!--    </div>-->
-<!--  </div>-->
-
-
-<!--</section>-->
 
 

@@ -36,7 +36,7 @@ type FuelTypes = 'Select' | 'Diesel' | 'Petrol' | 'LPG' | 'EV' | 'Hydrogen'
 type OtherModesOfTransport = 'Select' | 'Rail' | 'Sea' | 'Air'
 type CompanyModesOfTransport = 'Select' | 'Rail' | 'Sea' | 'Air' | 'Company Car' | 'Public Transport'
 type Routes = 'Select' | 'NI to UK' | 'NI to EU' | 'NI to USA' | 'NI to RoW'
-type StaffCommuteModes = 'Select'| 'On foot'| 'Cycle'| 'Public Transport'|'Car'|'Motorbike'
+type StaffCommuteModes = 'Select' | 'On foot' | 'Cycle' | 'Public Transport' | 'Car' | 'Motorbike'
 
 
 // Classes for subtables
@@ -44,8 +44,10 @@ type StaffCommuteModes = 'Select'| 'On foot'| 'Cycle'| 'Public Transport'|'Car'|
 class SubTable {
   cost: number = 0
   secondColumn: number = 0
-  parent: { name: string, addRows: boolean } = {
+  parent: { name: string, addRows: boolean, totalCost: number, secondColumn: number } = {
     name: '',
+    totalCost: 0,
+    secondColumn: 0,
     addRows: true
   }
 }
@@ -71,7 +73,7 @@ class WaterUsage extends SubTable {
   unitsUom: UnitsUom = 'Select'
 }
 
-class Waste extends SubTable{
+class Waste extends SubTable {
   name: string = 'Description of Waste stream'
   unitsUom: UnitsUom = 'Select'
   totalUnits: number = 0
@@ -93,18 +95,20 @@ class OtherFreightTransportation extends SubTable {
 
 class CompanyTravel extends SubTable {
   name: string = 'Company Travel description'
-  companyModeOfTransport: CompanyModesOfTransport  = 'Select'
+  companyModeOfTransport: CompanyModesOfTransport = 'Select'
   approxMileage: number = 0;
 }
 
 class StaffCommute {
   name: string = 'Staff Commute description'
   staffCommute: StaffCommuteModes = 'Select'
-  percentStaff: number =0
+  percentStaff: number = 0
   distance: number = 0
-  secondColumn: number =0
-  parent: { name: string, addRows: boolean } = {
+  secondColumn: number = 0
+  parent: { name: string, addRows: boolean, totalCost: number, secondColumn: number } = {
     name: '',
+    totalCost: 0,
+    secondColumn: 0,
     addRows: true
   }
 }
@@ -112,14 +116,15 @@ class StaffCommute {
 // Generic classes
 class TableRow {
   name: string = ''
-  secondColumn: number = 0;
   unitsUom: UnitsUom = 'Select'
   totalUnits: number = 0
   cost: number = 0
   unitOfCost: UnitsOfCost = 'Select'
   regionOfOrigin: RegionsOfOrigin = 'UK'
-  parent?: { name: string } = {
-    name: ''
+  parent?: { name: string, secondColumn: number, totalCost: number } = {
+    name: '',
+    secondColumn: 0,
+    totalCost: 0
   }
 }
 
@@ -127,8 +132,9 @@ class GroupItem {
   name: string = ''
   value: number = 0;
   secondColumn = 0
-  parent: { name: string } = {
-    name: ''
+  parent: { name: string, secondColumn: number } = {
+    name: '',
+    secondColumn: 0
   }
 }
 
@@ -161,15 +167,16 @@ export class PetComponent implements OnInit {
   regionOfOrigin: RegionsOfOrigin[] = ['UK', 'EU', 'US', 'Asia']
   modeOfTransport: ModeOfTransport[] = ['Select', 'Van <3.5t', 'Refrigerated Van <3.5t', 'Van >3.5t < 7.5t', 'Refrigerated Van > 3.5t < 7.5t', 'HGV', 'Refrigerated HGV']
   fuelTypes: FuelTypes[] = ['Select', 'Diesel', 'Petrol', 'LPG', 'EV', 'Hydrogen']
-  otherModesOfTransport: OtherModesOfTransport[] = ['Select' , 'Rail' , 'Sea' , 'Air']
-  routes: Routes[] = ['Select' , 'NI to UK' , 'NI to EU' , 'NI to USA' , 'NI to RoW']
+  otherModesOfTransport: OtherModesOfTransport[] = ['Select', 'Rail', 'Sea', 'Air']
+  routes: Routes[] = ['Select', 'NI to UK', 'NI to EU', 'NI to USA', 'NI to RoW']
   companyModesOfTransport: CompanyModesOfTransport[] = ['Select', 'Rail', 'Sea', 'Air', 'Company Car', 'Public Transport']
-  staffCommute: StaffCommuteModes[] = ['Select', 'On foot', 'Cycle', 'Public Transport','Car','Motorbike']
-  unitsOfCost: UnitsOfCost[] = ['Cost/unit' , 'Total Cost' , 'Select']
+  staffCommute: StaffCommuteModes[] = ['Select', 'On foot', 'Cycle', 'Public Transport', 'Car', 'Motorbike']
+  unitsOfCost: UnitsOfCost[] = ['Cost/unit', 'Total Cost', 'Select']
 
   data: any = []
 
-  constructor() {}
+  constructor() {
+  }
 
   onSelectCompany = () => {
     if (!this.selectedCompany) this.selectedCompany = this.companies[0].id;
@@ -237,27 +244,69 @@ export class PetComponent implements OnInit {
   }
 
   createNewTableRow = (group: any) => {
-    let copy = {...group, name: `${group.parent.name} description`}
-    let findObject =  this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)
+    console.log(group)
+    let copy = {...group, name: `${group.parent.name} description`, cost: 0}
+    let findObject = this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)
 
-    if (findObject ===-1) return;
-    this.data.splice(findObject +1, 0, copy)
+    if (findObject === -1) return;
+    this.data.splice(findObject + 1, 0, copy)
   }
 
 
-  calculatePerEmployeeCost = () => {
-    let subTotal = 0;
-    this.rows = this.rows.map((row: TableRow) => {
-      // Calculate per employee
-      if (!this.employees) return row;
-      row.secondColumn = row.cost / this.employees;
-      // Calculate New total
-      subTotal += row.cost;
-      this.totalOfRows = subTotal;
-      // Recalculate Productivity Score
-      this.productivityScore = (this.turnover - this.totalOfRows) / this.employees
-      return row;
+  calculatePerEmployeeCost = (groups?: any) => {
+    if (!this.employees) return;
+
+    let employeeTotal = 0
+    // Update the per employee number for only modified number
+    if (groups) {
+      let parentName = groups.parent.name
+      this.data = this.data.map((item: any) => {
+        if (item.parent.name === parentName) {
+          item.parent.secondColumn = item.parent.totalCost / this.employees
+          employeeTotal = item.parent.secondColumn
+        }
+        return item;
+      })
+      return employeeTotal;
+      // If updating the turnover or the no. of employees. Recalculate all per employee costs
+    } else {
+
+      this.data = this.data.map((item: any) => {
+        item.parent.secondColumn = item.parent.totalCost / this.employees
+        return item;
+      })
+
+
+    return 0
+    }
+
+
+  }
+
+  calculateGroupTotalCost = (group: any) => {
+    if (!group?.parent) return 0;
+
+    const parentName = group?.parent.name
+    const total = this.data.filter((item: any) => item.parent.name === parentName).reduce((acc: number, curr: any) => {
+      if (curr.cost !== undefined && curr.cost !== null) {
+        return acc + parseFloat(curr.cost)
+      } else {
+        return acc;
+      }
+    }, 0)
+
+    this.data = this.data.map((item: any) => {
+      if (item.parent.name === parentName) {
+        item.parent.totalCost = total;
+        if (this.employees > 0) {
+          item.parent.secondColumn = (total / this.employees).toFixed(2)
+        }
+      }
+      return item
     })
+
+
+    return total !== undefined ? total : 0
   }
 
   createReportObject = () => {
