@@ -46,6 +46,15 @@ import {PartnersComponent} from "./pages/partners/partners.component";
 import {AdvisoryBoardComponent} from "./pages/project-information/advisory-board/advisory-board.component";
 import {StakeholdersComponent} from "./pages/project-information/stakeholders/stakeholders.component";
 import {SinglePartnerComponent} from "./pages/partners/single-partner/single-partner.component";
+import {CamirusComponent} from "./pages/partners/camirus/camirus.component";
+import {ProEnviroComponent} from "./pages/partners/pro-enviro/pro-enviro.component";
+import {InvestniComponent} from "./pages/partners/investni/investni.component";
+import {MniComponent} from "./pages/partners/mni/mni.component";
+import {QueenUniBelfastComponent} from "./pages/partners/queen-uni-belfast/queen-uni-belfast.component";
+import {AmicComponent} from "./pages/partners/amic/amic.component";
+import {EiuComponent} from "./pages/partners/eiu/eiu.component";
+import {UlsterComponent} from "./pages/partners/ulster/ulster.component";
+import {MpaComponent} from "./pages/partners/mpa/mpa.component";
 
 
 
@@ -61,6 +70,15 @@ export const routes: Routes = [
   {path: 'local-decarb-single', component: LocalDecabSingleTplComponent},
   {path:'project-information', component:ProjectInformationComponent},
   {path:'partners',component:PartnersComponent},
+  {path:'camirus', component:CamirusComponent},
+  {path:'pro-enviro',component:ProEnviroComponent},
+  {path:'invest-ni',component:InvestniComponent},
+  {path:'manufacturing-northern-ireland',component:MniComponent},
+  {path:'queens-university-belfast',component:QueenUniBelfastComponent},
+  {path:'advanced-manufacturing-innovation-centre',component:AmicComponent},
+  {path:'economic-intelligence-unit',component:EiuComponent},
+  {path:'university-of-ulster',component:UlsterComponent},
+  {path:'mpa',component:MpaComponent},
   {path:'advisory-board',component:AdvisoryBoardComponent},
   {path:'stakeholders',component:StakeholdersComponent},
   {path:'single',component:SinglePartnerComponent},

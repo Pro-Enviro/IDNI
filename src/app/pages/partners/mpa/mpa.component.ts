@@ -3,19 +3,19 @@ import {TopPageImgTplComponent} from "../../../_partials/top-page-img-tpl/top-pa
 import {DbService} from "../../../_services/db.service";
 
 @Component({
-  selector: 'app-single-partner',
+  selector: 'app-mpa',
   standalone: true,
-    imports: [
-        TopPageImgTplComponent
-    ],
-  templateUrl: './single-partner.component.html',
-  styleUrl: './single-partner.component.scss'
+  imports: [
+    TopPageImgTplComponent
+  ],
+  templateUrl: './mpa.component.html',
+  styleUrl: './mpa.component.scss'
 })
-export class SinglePartnerComponent {
-content:any;
+export class MpaComponent {
+  content:any;
 
   constructor(private db: DbService) {
-    this.db.getContentFromCollection('partners/2', `
+    this.db.getContentFromCollection('partners/10', `
 ?fields=title,
 content,
 top_image,

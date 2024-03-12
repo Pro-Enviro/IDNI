@@ -3,19 +3,18 @@ import {TopPageImgTplComponent} from "../../../_partials/top-page-img-tpl/top-pa
 import {DbService} from "../../../_services/db.service";
 
 @Component({
-  selector: 'app-single-partner',
+  selector: 'app-queen-uni-belfast',
   standalone: true,
-    imports: [
-        TopPageImgTplComponent
-    ],
-  templateUrl: './single-partner.component.html',
-  styleUrl: './single-partner.component.scss'
+  imports: [
+    TopPageImgTplComponent
+  ],
+  templateUrl: './queen-uni-belfast.component.html',
+  styleUrl: './queen-uni-belfast.component.scss'
 })
-export class SinglePartnerComponent {
-content:any;
-
+export class QueenUniBelfastComponent {
+  content:any;
   constructor(private db: DbService) {
-    this.db.getContentFromCollection('partners/2', `
+    this.db.getContentFromCollection('partners/6', `
 ?fields=title,
 content,
 top_image,
@@ -31,4 +30,5 @@ id
       }
     })
   }
+
 }
