@@ -12,6 +12,10 @@
       <h2>{{content.title}}</h2>
       <div [innerHTML]="content.content"></div>
     </div>
+    <div class="container p-4">
+      <h3 class="header-style mb-3">Industrial Decarbonisation Northern Ireland Interactive Map</h3>
+      <iframe src="https://storymaps.arcgis.com/stories/01b6e7e3deef41b79fed2bbfdcbf7771" title="Industrial Decarbonisation for Northern Ireland" width="100%" height="700px"></iframe>
+    </div>
     @for(items of content.project_list; track $index; let e = $even){
       @if(e){
         <div class="container p-4">
@@ -49,10 +53,6 @@
         </div>
       }
     }
-    <div class="container p-4">
-      <h3 class="header-style mb-3">Industrial Decarbonisation Northern Ireland Interactive Map</h3>
-      <iframe src="https://storymaps.arcgis.com/stories/01b6e7e3deef41b79fed2bbfdcbf7771" title="Industrial Decarbonisation for Northern Ireland" width="100%" height="700px"></iframe>
-    </div>
   </section>
 
 }

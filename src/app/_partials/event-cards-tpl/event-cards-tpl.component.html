@@ -5,12 +5,13 @@
         <div class="news-card">
           <div class="card-head">
             <span>Date: {{content.date}}</span>
-            <span class="mt-5">Venue: {{content.venue}}</span>
+            <span class="mt-5">Time: {{content.time}}</span>
             <img src="https://app.idni.eco/assets/{{content.image}}" alt="" class="news-img">
           </div>
           <div class="card-body text-left">
             <h3 class="header-style text-2xl">{{content.title}}</h3>
-            <p>{{content.content}}</p>
+            <div class="mb-3">Venue: {{content.venue}}</div>
+            <div [innerHTML]="content.content"></div>
           </div>
           <div class="flex justify-content-start">
             <div class="card-footer">

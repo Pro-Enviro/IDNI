@@ -11,7 +11,7 @@
     <section>
       <div class="container p-4">
         <h2>{{content.title}}</h2>
-        <p>{{content.content}}</p>
+        <div [innerHTML]="content.content"></div>
         <div class="flex justify-content-end p-5">
           <p-dropdown [options]="eventOptions" [(ngModel)]="selectedDate" optionLabel="name" [showClear]="true" placeholder="Past/Future Events"></p-dropdown>
         </div>

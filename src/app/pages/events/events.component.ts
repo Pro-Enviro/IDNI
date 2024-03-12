@@ -6,6 +6,7 @@ import {EventCardsTplComponent} from "../../_partials/event-cards-tpl/event-card
 import {JsonPipe} from "@angular/common";
 import {DropdownModule} from "primeng/dropdown";
 import {SharedModules} from "../../shared-module";
+import moment from "moment";
 
 @Component({
   selector: 'app-events',
@@ -43,12 +44,15 @@ event_items.event_items_id.title,
 event_items.event_items_id.content,
 event_items.event_items_id.image,
 event_items.event_items_id.date,
-event_items.event_items_id.venue
+event_items.event_items_id.venue,
+event_items.event_items_id.time
 
 `).subscribe({
       next: (res: any) => {
         this.content = res
         this.content.event_items = this.content.event_items.map((item:any) => item.event_items_id)
+        this.content.event_items = this.content.event_items.sort((a:any,b:any) => moment(a.date, "DD/MM/YYYY").toDate().getTime() - moment(b.date,"DD/MM/YYYY").toDate().getTime())
+        console.log(this.content.event_items)
       },
       error: (err: any) => {
         console.error(err)
