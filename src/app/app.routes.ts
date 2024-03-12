@@ -66,6 +66,9 @@ import {
 import {
   FundingInjectionComponent
 } from "./pages/project-information/latest-tech/carbon-capture/funding-injection/funding-injection.component";
+import {HydrogenPowerComponent} from "./pages/project-information/latest-tech/hydrogen-power/hydrogen-power.component";
+import {FuelComponent} from "./pages/project-information/latest-tech/hydrogen-power/fuel/fuel.component";
+import {LondonComponent} from "./pages/project-information/latest-tech/hydrogen-power/london/london.component";
 
 
 
@@ -88,6 +91,9 @@ export const routes: Routes = [
   {path:'carbon-capture',component:CarbonCaptureComponent},
   {path:'carbon-capture-funding-injection',component:FundingInjectionComponent},
   {path:'carbon-capture-utilization-storage',component:UtilizationComponent},
+  {path:'hydrogen-power',component:HydrogenPowerComponent},
+  {path:'fuel-combat',component:FuelComponent},
+  {path:'london-road-greener',component:LondonComponent},
   {path:'partners',component:PartnersComponent},
   {path:'camirus', component:CamirusComponent},
   {path:'pro-enviro',component:ProEnviroComponent},
