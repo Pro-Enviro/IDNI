@@ -57,6 +57,8 @@ import {MpaComponent} from "./pages/partners/mpa/mpa.component";
 import {LatestTechComponent} from "./pages/project-information/latest-tech/latest-tech.component";
 import {ZeroCarbonComponent} from "./pages/project-information/latest-tech/zero-carbon/zero-carbon.component";
 import {CoalComponent} from "./pages/project-information/latest-tech/zero-carbon/coal/coal.component";
+import {LowCarbonComponent} from "./pages/project-information/latest-tech/low-carbon/low-carbon.component";
+import {GlobalComponent} from "./pages/project-information/latest-tech/low-carbon/global/global.component";
 
 
 
@@ -74,6 +76,8 @@ export const routes: Routes = [
   {path: 'latest-technologies',component:LatestTechComponent},
   {path:'zero-carbon-technologies',component:ZeroCarbonComponent},
   {path:'goodbye-coal-generated-electricity',component:CoalComponent},
+  {path:'low-carbon-technologies',component:LowCarbonComponent},
+  {path:'global-blockage-effect',component:GlobalComponent},
   {path:'partners',component:PartnersComponent},
   {path:'camirus', component:CamirusComponent},
   {path:'pro-enviro',component:ProEnviroComponent},
