@@ -59,6 +59,13 @@ import {ZeroCarbonComponent} from "./pages/project-information/latest-tech/zero-
 import {CoalComponent} from "./pages/project-information/latest-tech/zero-carbon/coal/coal.component";
 import {LowCarbonComponent} from "./pages/project-information/latest-tech/low-carbon/low-carbon.component";
 import {GlobalComponent} from "./pages/project-information/latest-tech/low-carbon/global/global.component";
+import {CarbonCaptureComponent} from "./pages/project-information/latest-tech/carbon-capture/carbon-capture.component";
+import {
+  UtilizationComponent
+} from "./pages/project-information/latest-tech/carbon-capture/utilization/utilization.component";
+import {
+  FundingInjectionComponent
+} from "./pages/project-information/latest-tech/carbon-capture/funding-injection/funding-injection.component";
 
 
 
@@ -78,6 +85,9 @@ export const routes: Routes = [
   {path:'goodbye-coal-generated-electricity',component:CoalComponent},
   {path:'low-carbon-technologies',component:LowCarbonComponent},
   {path:'global-blockage-effect',component:GlobalComponent},
+  {path:'carbon-capture',component:CarbonCaptureComponent},
+  {path:'carbon-capture-funding-injection',component:FundingInjectionComponent},
+  {path:'carbon-capture-utilization-storage',component:UtilizationComponent},
   {path:'partners',component:PartnersComponent},
   {path:'camirus', component:CamirusComponent},
   {path:'pro-enviro',component:ProEnviroComponent},
