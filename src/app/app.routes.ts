@@ -39,7 +39,6 @@ import {
   EnvirotrackReportDemandComponent
 } from "./pages/envirotrack/report/envirotrack-report-demand/envirotrack-report-demand.component";
 import {DasboardWidgetsComponent} from "./pages/dashboard/dasboard-widgets/dasboard-widgets.component";
-import {NewsComponent} from "./pages/news/news.component";
 import {EventsComponent} from "./pages/events/events.component";
 import {ProjectInformationComponent} from "./pages/project-information/project-information.component";
 import {PartnersComponent} from "./pages/partners/partners.component";
@@ -75,6 +74,7 @@ import {
 } from "./pages/project-information/latest-tech/solar-power/transparent/transparent.component";
 import {FloatingComponent} from "./pages/project-information/latest-tech/solar-power/floating/floating.component";
 import {HeatExchangeComponent} from "./pages/project-information/latest-tech/heat-exchange/heat-exchange.component";
+import {NewsComponent} from "./pages/news/news.component";
 
 
 
@@ -86,6 +86,7 @@ export const routes: Routes = [
   {path: 'pet', component: PetComponent},
   {path:'events',component:EventsComponent},
   {path: 'coming-soon', component: ConstructionComponent},
+  {path:'news',component:NewsComponent},
   {path: 'local-decarbonisation', component: LocalDecarbonisationComponent},
   {path: 'local-decarb-single', component: LocalDecabSingleTplComponent},
   {path:'project-information', component:ProjectInformationComponent},
