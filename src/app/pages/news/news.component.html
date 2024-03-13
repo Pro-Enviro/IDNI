@@ -13,7 +13,7 @@
       <h2>{{content.title}}</h2>
       <div [innerHTML]="content.content"></div>
     </div>
-    @for(content of content.news_page_items; track $index; let e = $even){
+    @for(content of content.items; track $index; let e = $even){
       @if(e){
         <div class="container p-5">
           <div class="grid bottom-line">
@@ -27,6 +27,7 @@
               <div class="pt-5 pb-3">
                 <p-button routerLink="{{content.alias}}" label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
               </div>
+              <div class="flex justify-content-end p-3" [innerHTML]="content.date"></div>
             </div>
           </div>
         </div>

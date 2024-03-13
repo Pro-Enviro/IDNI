@@ -31,16 +31,16 @@ export class NewsComponent {
 content,
 alias,
 top_image,
-news_page_items.related_news_pages_id.title,
-news_page_items.related_news_pages_id.date,
-news_page_items.related_news_pages_id.content,
-news_page_items.related_news_pages_id.image,
-news_page_items.related_news_pages_id.alias
+items.news_items_id.title,
+items.news_items_id.date,
+items.news_items_id.content,
+items.news_items_id.image,
+items.news_items_id.alias
 `).subscribe({
       next: (res: any) => {
         this.content = res
-        this.content.news_page_items = this.content.news_page_items.map((article:any) =>  article.related_news_pages_id)
-        this.content.news_page_items = this.content.news_page_items.sort((a:any,b:any) => moment(a.date, "DD/MM/YYYY").toDate().getTime() - moment(b.date,"DD/MM/YYYY").toDate().getTime())
+        this.content.items = this.content.items.map((article:any) =>  article.news_items_id)
+        this.content.items = this.content.items.sort((a:any,b:any) => moment(a.date, "DD/MM/YYYY").toDate().getTime() - moment(b.date,"DD/MM/YYYY").toDate().getTime())
       },
       error: (err: any) => {
         console.error(err)

@@ -3,19 +3,19 @@ import {TopPageImgTplComponent} from "../../../_partials/top-page-img-tpl/top-pa
 import {DbService} from "../../../_services/db.service";
 
 @Component({
-  selector: 'app-climate-crisis',
+  selector: 'app-climate-change-committe',
   standalone: true,
     imports: [
         TopPageImgTplComponent
     ],
-  templateUrl: './climate-crisis.component.html',
-  styleUrl: './climate-crisis.component.scss'
+  templateUrl: './climate-change-committe.component.html',
+  styleUrl: './climate-change-committe.component.scss'
 })
-export class ClimateCrisisComponent {
+export class ClimateChangeCommitteComponent {
   content:any;
 
   constructor(private db: DbService) {
-    this.db.getContentFromCollection('news_pages/8', `
+    this.db.getContentFromCollection('news_pages/10', `
 ?fields=title,
 content,
 summary,
