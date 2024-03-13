@@ -15,7 +15,7 @@
     @for(content of content.advisory_board_items; track $index; let e = $even){
       @if(e){
         <div class="container p-4">
-          <div class="grid">
+          <div class="grid bottom-line">
             <div class="lg:col-4 sm:col-12">
               <img src="https://app.idni.eco/assets/{{content.image}}" alt="{{content.title}}" class="partner-logo">
             </div>
@@ -28,11 +28,10 @@
               </div>
             </div>
           </div>
-          <hr class="hr-style">
         </div>
       }@else{
         <div class="container p-4">
-          <div class="grid">
+          <div class="grid bottom-line">
             <div class="lg:col-7 sm:col-12 lg:flex-order-0 md:flex-order-1 sm:flex-order-1">
               <h3 class="header-style">{{content.title}}</h3>
               <div [innerHTML]="content.content"></div>
@@ -45,7 +44,6 @@
               <img src="https://app.idni.eco/assets/{{content.image}}" alt="{{content.title}}" class="partner-logo">
             </div>
           </div>
-          <hr class="hr-style">
         </div>
       }
     }

@@ -28,8 +28,14 @@
   color:$primeColor;
 }
 
+.bottom-line{
+  border-bottom: 1px solid #e1e1e1;
+}
+
   hr.hr-style {
     border-top: 1px solid $primeColor;
+    //border-top: 1px solid #e1e1e1;
+
   }
 
 .charts-bar {
