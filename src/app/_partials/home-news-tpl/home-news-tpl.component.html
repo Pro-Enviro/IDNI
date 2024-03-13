@@ -4,7 +4,7 @@
     <div [innerHTML]="newsArticles.content"></div>
 <!--    <app-news-cards-tpl [articles]="newsArticles"></app-news-cards-tpl>-->
     <div class="grid">
-      @for(article of newsArticles.news_articles; track $index){
+      @for(article of newsArticles.news_items; track $index){
         <div class="lg:col-4 md:col-8 sm:col-12">
           <div class="news-card-home">
             <div class="card-head">

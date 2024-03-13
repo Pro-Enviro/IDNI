@@ -1,1 +1,25 @@
-<p>climate-crisis works!</p>
+@if(content){
+  <div class="top-image-wrapper">
+    <div class="top-image">
+      <img src="https://app.idni.eco/assets/{{content.top_image}}" alt="">
+    </div>
+    <div class="top-image-line">
+      <app-top-page-img-tpl></app-top-page-img-tpl>
+    </div>
+  </div>
+  <section class="mt-5">
+    <div class="container p-2">
+      <div class="grid">
+        <div class="lg:col-3 sm:col-12">
+          <img src="https://app.idni.eco/assets/{{content.image}}" alt="" style="height: 100px">
+        </div>
+        <div class="col"></div>
+        <div class="lg:col-8 sm:col-12">
+          <h2>{{content.title}}</h2>
+          <div [innerHTML]="content.summary" class="p-2 font-italic"></div>
+          <div class="mt-5" [innerHTML]="content.content"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+}
