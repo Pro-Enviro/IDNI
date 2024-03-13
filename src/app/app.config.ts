@@ -7,6 +7,8 @@ import {MessageService} from "primeng/api";
 import {map, Observable, tap} from "rxjs";
 import {StorageService} from "./_services/storage.service";
 import {routes} from "./app.routes";
+import {AuthService} from "./_services/users/auth.service";
+import {GlobalService} from "./_services/global.service";
 
 
 function initializeAppFactory(httpClient: HttpClient, storage: StorageService): () => Observable<any> {
@@ -22,10 +24,17 @@ function initializeAppFactory(httpClient: HttpClient, storage: StorageService): 
 
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes),provideAnimations(),provideHttpClient(),{
-    provide: APP_INITIALIZER,
-    useFactory: initializeAppFactory,
-    multi: true,
-    deps: [HttpClient,StorageService]
-  },MessageService],
+  providers: [
+    provideRouter(routes),
+    provideAnimations(),
+    provideHttpClient(),{
+      provide: APP_INITIALIZER,
+      useFactory: initializeAppFactory,
+      multi: true,
+      deps: [HttpClient,StorageService]
+    },
+    MessageService,
+    AuthService,
+    GlobalService
+  ],
 };

@@ -29,7 +29,7 @@ export class StorageService {
     return this.menu.value
   }
 
-  save = (name: string, token: string) => {
+  set = (name: string, token: string) => {
     localStorage.setItem(name,JSON.stringify(token));
   }
 

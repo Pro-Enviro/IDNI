@@ -1206,6 +1206,18 @@
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
+"@directus/sdk@^15.0.1":
+  version "15.0.1"
+  resolved "https://registry.yarnpkg.com/@directus/sdk/-/sdk-15.0.1.tgz#6106bc2d6a1c7f0011073a0cb7a0f6cb6aa98015"
+  integrity sha512-NuP+S2SZ23gmcSNnHiX7LxlUxkdIjX0mV3kFKqTdU07epj4OJNHk7ZXfSV2y67fnQjFrb7apTHe2LdWnU8Y6vQ==
+  dependencies:
+    "@directus/system-data" "1.0.0"
+
+"@directus/system-data@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@directus/system-data/-/system-data-1.0.0.tgz#0520f8cf85004449db1d9cff872c5849020acbd7"
+  integrity sha512-AKzYkLg39phx9AysQhcf7AmIGq1D/PIkor5B8Y5NB8R+jq+jkH1PBtg/l5Ev4hfsidpNBi5DmpuFy/xmQEYhHQ==
+
 "@discoveryjs/json-ext@0.5.7":
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
