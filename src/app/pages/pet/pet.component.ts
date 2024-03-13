@@ -241,10 +241,14 @@ export class PetComponent implements OnInit {
   }
 
   sicCodeToLetter = () => {
-    if (this.sicCode.length < 5) return;
+    if (this.sicCode.length < 5) {
+      this.sicCodeLetter = ''
+      return;
+    };
     // Select correct SIC code letter
     const foundRow = this.sicCodeData.find((row: any) => row[1].toString() === this.sicCode)
     if (foundRow) this.sicCodeLetter = foundRow[0]
+    else this.sicCodeLetter = ''
   }
 
   generateClasses = (rowTitle: string, classToUse: any, namesArray?: string[]) => {
@@ -357,13 +361,16 @@ export class PetComponent implements OnInit {
 
     if (findCorrectEmployees === -1) return
 
-    const p10 = findCorrectEmployees[0][5]
-    const p25 = findCorrectEmployees[0][6]
-    const p50 = findCorrectEmployees[0][7]
-    const p75 = findCorrectEmployees[0][8]
-    const p90 = findCorrectEmployees[0][9]
+
+    // Should i default to zero?
+    const p10 = findCorrectEmployees?.[0]?.[5] !== '"[c]"' ? findCorrectEmployees[0][5] : 0
+    const p25 = findCorrectEmployees?.[0]?.[6] !== '"[c]"' ? findCorrectEmployees[0][6] : 0
+    const p50 = findCorrectEmployees?.[0]?.[7] !== '"[c]"' ? findCorrectEmployees[0][7] : 0
+    const p75 = findCorrectEmployees?.[0]?.[8] !== '"[c]"' ? findCorrectEmployees[0][8] : 0
+    const p90 = findCorrectEmployees?.[0]?.[9] !== '"[c]"' ? findCorrectEmployees[0][9] : 0
 
     const counts = [p10, p25, p50, p75, p90]
+
 
     // Get closest
     let closest = counts.reduce((prev: any, curr: any) => {
@@ -376,9 +383,9 @@ export class PetComponent implements OnInit {
 
     // Return text as percentile
     switch (findClosestIndex) {
-      case 0:
+      case 0 :
         return 'p10'
-      case 1:
+      case 1 :
         return 'p25'
       case 2:
         return 'p50'
@@ -389,8 +396,6 @@ export class PetComponent implements OnInit {
       default:
         return ''
     }
-
-
   }
 
   sumValues = (obj:any):number => <number>Object.values(obj).reduce((a: any, b: any) => a + b, 0);

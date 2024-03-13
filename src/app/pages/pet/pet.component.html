@@ -17,7 +17,7 @@
     <div>
       <label class="mr-2" for="sic_code">SIC code</label>
       <input id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" />
-      {{sicCodeLetter}}
+      <p *ngIf="sicCodeLetter.length">{{sicCodeLetter}}</p>
     </div>
 
     <div class="container mt-5 lg:col-6" style="overflow-x: hidden;">
