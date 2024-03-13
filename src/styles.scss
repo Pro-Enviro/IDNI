@@ -32,6 +32,10 @@
   border-bottom: 1px solid #e1e1e1;
 }
 
+.top-line{
+  border-top: 1px solid #e1e1e1;
+}
+
   hr.hr-style {
     border-top: 1px solid $primeColor;
     //border-top: 1px solid #e1e1e1;
@@ -175,6 +179,27 @@ a{
   }
 
   //---------------------------------------------------FORM-------------------------------------------------------------
+
+.panelmenu-style-none{
+  .p-panelmenu-header-content {
+    border: none;
+    background: transparent !important;
+    transition: box-shadow 0.2s;
+    font-weight: 400;
+  }
+  .p-panelmenu-content {
+    padding-left: 15px;
+    border: none;
+    background: transparent !important;
+    color: #4b5563;
+    border-top: 0;
+  }
+  a{
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+  }
+}
 
 .p-panelmenu {
   .p-panelmenu-header .p-panelmenu-header-content {
