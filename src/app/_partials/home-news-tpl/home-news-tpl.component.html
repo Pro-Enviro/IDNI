@@ -1,7 +1,29 @@
 @if(newsArticles){
   <h2 class="header-style">{{newsArticles.title}}</h2>
   <div class="container mt-6" style="padding:70px;">
-    <app-news-cards-tpl [articles]="newsArticles"></app-news-cards-tpl>
+    <div [innerHTML]="newsArticles.content"></div>
+<!--    <app-news-cards-tpl [articles]="newsArticles"></app-news-cards-tpl>-->
+    <div class="grid">
+      @for(article of newsArticles.news_articles; track $index){
+        <div class="lg:col-4 md:col-8 sm:col-12">
+          <div class="news-card-home">
+            <div class="card-head">
+              <span class="header-style">Date: {{article.date}}</span>
+              <img src="https://app.idni.eco/assets/{{article.image}}" alt="" class="news-img">
+            </div>
+            <div class="card-body">
+              <h3 class="header-style">{{article.title}}</h3>
+              <div [innerHTML]="article.content"></div>
+            </div>
+            <div class="flex justify-content-center">
+              <div class="card-footer">
+                <p-button label="Read More" routerLink="{{article.alias}}" [rounded]="true" styleClass="btn-style"></p-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
   </div>
 }
 

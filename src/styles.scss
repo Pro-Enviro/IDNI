@@ -769,6 +769,51 @@ a{
   }
 }
 
+//----------------------------------------------NEWS CARD HOME----------------------------------------------------------
+
+.news-card-home{
+  position: relative;
+  margin-bottom:70px;
+  text-align: center;
+  height:100%;
+  background-color: #f2f2f2;
+  .card-footer{
+    position:absolute;
+    bottom:25px;
+    height:3%;
+    padding-bottom:60px;
+  }
+  .card-body{
+    padding:45px;
+  }
+  .card-head{
+    display: block;
+    position: relative;
+    &:after{
+      content: " ";
+      background-image: url("assets/img/curve-top.svg");
+      background-position: bottom;
+      background-size: contain;
+      background-repeat: no-repeat;
+      position: absolute;
+      top:0;
+      bottom:3px;
+      left:7px;
+      right:0;
+    }
+    .news-img{
+      max-width:100%;
+      margin: auto;
+    }
+    span{
+      position:absolute;
+      top:83%;
+      right: 25px;
+      z-index:1;
+    }
+  }
+}
+
 
 //------------------------------------------------TABLE-----------------------------------------------------------------
 .section-curve-left{
