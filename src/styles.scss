@@ -54,7 +54,6 @@
   background-position: top left;
   background-repeat: no-repeat;
   background-size: 47.5vw;
-  //background-size:33vw;
 }
 
 a{
@@ -427,6 +426,19 @@ a{
   }
   //----------------------------------------------------MENU------------------------------------------------------------
 
+.burger-menu{
+  display:none;
+}
+
+@media screen and (min-width: 200px) and (max-width:1080px) {
+  .burger-menu {
+    display: block;
+  }
+  .p-megamenu{
+    display: none !important;
+  }
+}
+
 .sidenav {
   height: 100%;
   background-color: $lightColor-50;
@@ -670,7 +682,8 @@ a{
 
 //----------------------------------------------TECHNOLOGY--------------------------------------------------------------
 .techno-img{
-  max-height:300px;
+  //max-height:300px;
+  max-width:90%;
 }
 
 //-------------------------------------------------NEWS-----------------------------------------------------------------
@@ -862,6 +875,9 @@ footer{
     }
   }
 }
+
+
+
 
 
 

@@ -43,7 +43,39 @@ import {NewsComponent} from "./pages/news/news.component";
 import {EventsComponent} from "./pages/events/events.component";
 import {ProjectInformationComponent} from "./pages/project-information/project-information.component";
 import {PartnersComponent} from "./pages/partners/partners.component";
-import {AdvisoryBoardComponent} from "./pages/advisory-board/advisory-board.component";
+import {AdvisoryBoardComponent} from "./pages/project-information/advisory-board/advisory-board.component";
+import {StakeholdersComponent} from "./pages/project-information/stakeholders/stakeholders.component";
+import {CamirusComponent} from "./pages/partners/camirus/camirus.component";
+import {ProEnviroComponent} from "./pages/partners/pro-enviro/pro-enviro.component";
+import {InvestniComponent} from "./pages/partners/investni/investni.component";
+import {MniComponent} from "./pages/partners/mni/mni.component";
+import {QueenUniBelfastComponent} from "./pages/partners/queen-uni-belfast/queen-uni-belfast.component";
+import {AmicComponent} from "./pages/partners/amic/amic.component";
+import {EiuComponent} from "./pages/partners/eiu/eiu.component";
+import {UlsterComponent} from "./pages/partners/ulster/ulster.component";
+import {MpaComponent} from "./pages/partners/mpa/mpa.component";
+import {LatestTechComponent} from "./pages/project-information/latest-tech/latest-tech.component";
+import {ZeroCarbonComponent} from "./pages/project-information/latest-tech/zero-carbon/zero-carbon.component";
+import {CoalComponent} from "./pages/project-information/latest-tech/zero-carbon/coal/coal.component";
+import {LowCarbonComponent} from "./pages/project-information/latest-tech/low-carbon/low-carbon.component";
+import {GlobalComponent} from "./pages/project-information/latest-tech/low-carbon/global/global.component";
+import {CarbonCaptureComponent} from "./pages/project-information/latest-tech/carbon-capture/carbon-capture.component";
+import {
+  UtilizationComponent
+} from "./pages/project-information/latest-tech/carbon-capture/utilization/utilization.component";
+import {
+  FundingInjectionComponent
+} from "./pages/project-information/latest-tech/carbon-capture/funding-injection/funding-injection.component";
+import {HydrogenPowerComponent} from "./pages/project-information/latest-tech/hydrogen-power/hydrogen-power.component";
+import {FuelComponent} from "./pages/project-information/latest-tech/hydrogen-power/fuel/fuel.component";
+import {LondonComponent} from "./pages/project-information/latest-tech/hydrogen-power/london/london.component";
+import {SolarPowerComponent} from "./pages/project-information/latest-tech/solar-power/solar-power.component";
+import {
+  TransparentComponent
+} from "./pages/project-information/latest-tech/solar-power/transparent/transparent.component";
+import {FloatingComponent} from "./pages/project-information/latest-tech/solar-power/floating/floating.component";
+import {HeatExchangeComponent} from "./pages/project-information/latest-tech/heat-exchange/heat-exchange.component";
+
 
 
 
@@ -57,8 +89,33 @@ export const routes: Routes = [
   {path: 'local-decarbonisation', component: LocalDecarbonisationComponent},
   {path: 'local-decarb-single', component: LocalDecabSingleTplComponent},
   {path:'project-information', component:ProjectInformationComponent},
+  {path: 'latest-technologies',component:LatestTechComponent},
+  {path:'zero-carbon-technologies',component:ZeroCarbonComponent},
+  {path:'goodbye-coal-generated-electricity',component:CoalComponent},
+  {path:'low-carbon-technologies',component:LowCarbonComponent},
+  {path:'global-blockage-effect',component:GlobalComponent},
+  {path:'carbon-capture',component:CarbonCaptureComponent},
+  {path:'carbon-capture-funding-injection',component:FundingInjectionComponent},
+  {path:'carbon-capture-utilization-storage',component:UtilizationComponent},
+  {path:'hydrogen-power',component:HydrogenPowerComponent},
+  {path:'fuel-combat',component:FuelComponent},
+  {path:'london-road-greener',component:LondonComponent},
+  {path:'solar-power',component:SolarPowerComponent},
+  {path:'transparent-solar-panels',component:TransparentComponent},
+  {path:'floating-solar-farms',component:FloatingComponent},
   {path:'partners',component:PartnersComponent},
+  {path:'camirus', component:CamirusComponent},
+  {path:'pro-enviro',component:ProEnviroComponent},
+  {path:'invest-ni',component:InvestniComponent},
+  {path:'manufacturing-northern-ireland',component:MniComponent},
+  {path:'queens-university-belfast',component:QueenUniBelfastComponent},
+  {path:'heat-exchange',component:HeatExchangeComponent},
+  {path:'advanced-manufacturing-innovation-centre',component:AmicComponent},
+  {path:'economic-intelligence-unit',component:EiuComponent},
+  {path:'university-of-ulster',component:UlsterComponent},
+  {path:'mpa',component:MpaComponent},
   {path:'advisory-board',component:AdvisoryBoardComponent},
+  {path:'stakeholders',component:StakeholdersComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
   {path:'dashboard',component:DashboardComponent, children: [

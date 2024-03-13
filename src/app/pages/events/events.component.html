@@ -11,7 +11,7 @@
     <section>
       <div class="container p-4">
         <h2>{{content.title}}</h2>
-        <p>{{content.content}}</p>
+        <div [innerHTML]="content.content"></div>
         <div class="flex justify-content-end p-5">
           <p-dropdown [options]="eventOptions" [(ngModel)]="selectedDate" optionLabel="name" [showClear]="true" placeholder="Past/Future Events"></p-dropdown>
         </div>
@@ -19,6 +19,50 @@
 
       <div class="container p-3">
         <app-event-cards-tpl [content]="content"></app-event-cards-tpl>
+      </div>
+
+      <div class="container p-3">
+        <h2>Past Events</h2>
+        <div class="grid">
+            <div class="lg:col-6 md:col-8 sm:col-12 mb-4">
+              <div class="news-card">
+                <div class="card-head">
+                  <span>Date: 07/02/2024</span>
+                  <span class="mt-5">Time: 09:00 - 14:00</span>
+                  <img src="assets/img/news-1.jpeg" alt="" class="news-img">
+                </div>
+                <div class="card-body text-left">
+                  <h3 class="header-style text-2xl">Derry City and Strabane District Council</h3>
+                  <div class="mb-3">Venue: The Playhouse, 5-7 Artillery Street, BT48 6RG</div>
+                  <p>Visit Experience Manager at the Playhouse.</p>
+                </div>
+                <div class="flex justify-content-start">
+                  <div class="card-footer">
+                    <p-button label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="lg:col-6 md:col-8 sm:col-12 mb-4">
+            <div class="news-card">
+              <div class="card-head">
+                <span>Date: 21/02/2024</span>
+                <span class="mt-5">Time: 13:00 - 16:00</span>
+                <img src="assets/img/news-2.jpeg" alt="" class="news-img">
+              </div>
+              <div class="card-body text-left">
+                <h3 class="header-style text-2xl">Armagh City, Banbridge and Craigavon Borough Council</h3>
+                <div class="mb-3">Venue: Seagoe Hotel, 22 Upper Church Lane, Portadown, BT63 5JE The Gallery Suite</div>
+                <p>Registration and lunch will be at 13:00.The workshop commences will be from 13:30 until 16:00.</p>
+              </div>
+              <div class="flex justify-content-start">
+                <div class="card-footer">
+                  <p-button label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   }
