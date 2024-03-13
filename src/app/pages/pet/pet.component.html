@@ -13,6 +13,13 @@
         identify areas for improvement. This includes the assessment of Scope 1, Scope 2, and Scope 3 emissions,
         offering a comprehensive view of the environmental impact associated with business operations.</p>
     </div>
+
+    <div>
+      <label class="mr-2" for="sic_code">SIC code</label>
+      <input id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" />
+      {{sicCodeLetter}}
+    </div>
+
     <div class="container mt-5 lg:col-6" style="overflow-x: hidden;">
       <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines col-12" dataKey="parent.name"
                rowGroupMode="subheader" groupRowsBy="parent.name" [customSort]="true">
@@ -189,13 +196,13 @@
             <td></td>
           </tr>
           <tr>
-            <td></td>
-            <td>50%tile</td>
-            <td>95%tile</td>
+<!--            <td></td>-->
+<!--            <td>50%tile</td>-->
+<!--            <td>95%tile</td>-->
           </tr>
           <tr>
             <td>ONS Productivity Comparison</td>
-            <td></td>
+            <td> {{calculateProductivityComparison()}} </td>
             <td></td>
           </tr>
           <tr>

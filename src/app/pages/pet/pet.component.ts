@@ -12,7 +12,10 @@ import {CommonModule, JsonPipe} from "@angular/common";
 import {DropdownModule} from "primeng/dropdown";
 import {SharedComponents} from "../envirotrack/shared-components";
 import {Mode} from "node:fs";
-
+import {HttpClient} from "@angular/common/http";
+import {StorageService} from "../../_services/storage.service";
+import { read, utils, writeFile } from 'xlsx';
+import {arrayBuffer} from "node:stream/consumers";
 const rowNames: string[] = ['Cost of Energy', 'Transportation Costs', 'Cost of Water', 'Cost of Waste', 'Cost of Raw Materials', 'Cost of Bought in Goods - Consumables and bought in parts', 'Consultancy Cost', 'Sub Contracting Cost', 'Other External Costs (Legal, rental, accounting etc)']
 
 const energyNames: string[] = ['Electricity', 'Natural Gas (Grid)', 'Natural Gas off Grid', 'Bio Gas Off Grid', 'LPG', 'Oil', 'Kerosene', 'Bio Fuels', 'Bio Mass', 'Coal for Industrial use', 'Other']
@@ -152,6 +155,8 @@ export class PetComponent implements OnInit {
   companies: any;
   // Table Constants
   turnover: number = 0;
+  template!: any
+  docxInHtml!: any
   employees: number = 0;
   totalOfRows: number = 0;
   productivityScore: number = 0;
@@ -193,8 +198,11 @@ export class PetComponent implements OnInit {
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
   }
-
-  constructor() {}
+  productivityData!: any // Excel spreadsheet
+  sicCodeData!: any // Excel Spreadsheet
+  sicCode: string = ''
+  sicCodeLetter: string = ''
+  constructor(private http: HttpClient, private storage: StorageService) {}
 
 
 
@@ -230,6 +238,13 @@ export class PetComponent implements OnInit {
     this.generateClasses('Staff Commute', StaffCommute)
 
 
+  }
+
+  sicCodeToLetter = () => {
+    if (this.sicCode.length < 5) return;
+    // Select correct SIC code letter
+    const foundRow = this.sicCodeData.find((row: any) => row[1].toString() === this.sicCode)
+    if (foundRow) this.sicCodeLetter = foundRow[0]
   }
 
   generateClasses = (rowTitle: string, classToUse: any, namesArray?: string[]) => {
@@ -328,8 +343,55 @@ export class PetComponent implements OnInit {
     if (!this.employees || !this.turnover) return;
     const totalExternalCost: number = this.calculateTotalExternalCost()
     let result = (this.turnover - totalExternalCost) / this.employees
+    this.productivityScore = result;
     return result ? result.toFixed(2) : 0
 }
+
+
+  calculateProductivityComparison = () => {
+    if (!this.sicCodeLetter || !this.employees || !this.productivityScore) return;
+
+    // Sort through excel data for matching sic code letter and number of employees
+    const findCorrectLetter = this.productivityData.filter((row: any) => row[1] === this.sicCodeLetter)
+    const findCorrectEmployees = findCorrectLetter.filter((row: any) => this.employees > row[2] && this.employees < row[3])
+
+    if (findCorrectEmployees === -1) return
+
+    const p10 = findCorrectEmployees[0][5]
+    const p25 = findCorrectEmployees[0][6]
+    const p50 = findCorrectEmployees[0][7]
+    const p75 = findCorrectEmployees[0][8]
+    const p90 = findCorrectEmployees[0][9]
+
+    const counts = [p10, p25, p50, p75, p90]
+
+    // Get closest
+    let closest = counts.reduce((prev: any, curr: any) => {
+      return (Math.abs(curr - this.productivityScore) < Math.abs(prev - this.productivityScore) ? curr : prev);
+    });
+
+    // find correct closest
+    const findClosestIndex = counts.findIndex((num: number) => num ===closest)
+    if (findClosestIndex === -1) return;
+
+    // Return text as percentile
+    switch (findClosestIndex) {
+      case 0:
+        return 'p10'
+      case 1:
+        return 'p25'
+      case 2:
+        return 'p50'
+      case 3:
+        return 'p75'
+      case 4:
+        return 'p90'
+      default:
+        return ''
+    }
+
+
+  }
 
   sumValues = (obj:any):number => <number>Object.values(obj).reduce((a: any, b: any) => a + b, 0);
 
@@ -385,8 +447,55 @@ export class PetComponent implements OnInit {
     // const report = this.createReportObject()
   }
 
+  getTemplate = () => {
+    // Change content id to match correct selected template
+    let id = 20;
+    let sicCodeId = 21
+
+    // TODO: Protect backend links with .env?
+    this.http.get(`https://ecp.proenviro.co.uk/items/content/${id}`).subscribe({
+      next: (res: any) => {
+        this.template = `https://ecp.proenviro.co.uk/assets/${res.data.file}?token=${this.storage.get('access_token')}`
+
+        this.http.get(this.template, {
+          responseType: 'arraybuffer'
+        }).subscribe({
+          next: (buffer: ArrayBuffer) => {
+            const workbook = read(buffer);
+            const sheets = workbook.SheetNames
+            const worksheet = workbook.Sheets[workbook.SheetNames[3]];
+            const raw_data = utils.sheet_to_json(worksheet, {header: 1});
+
+            this.productivityData = raw_data
+          }
+        })
+      }
+    })
+
+    this.http.get(`https://ecp.proenviro.co.uk/items/content/${sicCodeId}`).subscribe({
+      next: (res: any) => {
+        this.template = `https://ecp.proenviro.co.uk/assets/${res.data.file}?token=${this.storage.get('access_token')}`
+
+        this.http.get(this.template, {
+          responseType: 'arraybuffer'
+        }).subscribe({
+          next: (buffer: ArrayBuffer) => {
+            const workbook = read(buffer);
+            const sheets = workbook.SheetNames
+            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            const raw_data = utils.sheet_to_json(worksheet, {header: 1});
+
+            this.sicCodeData = raw_data
+
+          }
+        })
+      }
+    })
+  }
+
   ngOnInit() {
     this.getCompanies()
+    this.getTemplate()
   }
 
 }
