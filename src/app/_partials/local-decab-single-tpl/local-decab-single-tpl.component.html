@@ -118,10 +118,13 @@
 
     </div>
     @for(files of content.factsheet_files; track $index){
-      <div class="container p-6">
+      <div class="container p-5">
         <div class="grid nested-grid">
           <div class="lg:col-3 sm:col-12">
-            <i class="pi pi-file-pdf" style="font-size: 8rem; color:#b5dad6"></i>
+           <div class="flex flex-column">
+             <i class="pi pi-file-pdf" style="font-size: 7rem; color:#b5dad6"></i>
+             <a href="{{files.document_link}}" target="_blank"  class="text-sm pt-2"><p-button styleClass="btn-outline" [raised]="true" label="Read More" size="small"></p-button></a>
+           </div>
           </div>
           <div class="lg:col-9 sm:col-12">
             <div class="grid">

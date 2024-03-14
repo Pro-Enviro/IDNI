@@ -6,6 +6,7 @@ import {findInputsOnElementWithTag} from "@angular/cdk/schematics";
 import {JsonPipe} from "@angular/common";
 import {DialogRef} from "@angular/cdk/dialog";
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {ButtonModule} from "primeng/button";
 
 
 @Component({
@@ -13,7 +14,8 @@ import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dyna
   standalone: true,
   imports: [
     TopPageImgTplComponent,
-    JsonPipe
+    JsonPipe,
+    ButtonModule
   ],
   templateUrl: './local-decab-single-tpl.component.html',
   styleUrl: './local-decab-single-tpl.component.scss',
@@ -49,7 +51,8 @@ items.item.image,
 factsheet_files.factsheet_files_id.name,
 factsheet_files.factsheet_files_id.date_published,
 factsheet_files.factsheet_files_id.date_range,
-factsheet_files.factsheet_files_id.file_size
+factsheet_files.factsheet_files_id.file_size,
+factsheet_files.factsheet_files_id.document_link
 `).subscribe({
       next: (res: any) => {
         this.content = res
