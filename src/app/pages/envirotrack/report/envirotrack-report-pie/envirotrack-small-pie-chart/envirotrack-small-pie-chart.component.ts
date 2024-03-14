@@ -113,6 +113,8 @@ export class EnvirotrackSmallPieChartComponent {
       },
       toolbox: {
         show: true,
+        left:'0',
+        top:'20',
         feature: {
           saveAsImage: {
             show: true

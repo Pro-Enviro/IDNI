@@ -135,6 +135,7 @@ export class EnvirotrackBarSmallComponent {
       },
       toolbox: {
         show: true,
+        left:'0',
         feature: {
           saveAsImage: {
             show: true
