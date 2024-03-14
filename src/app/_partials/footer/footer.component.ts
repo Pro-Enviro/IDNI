@@ -27,28 +27,7 @@ export class FooterComponent {
     },
     {
       label: 'Project Information',
-      items:[
-        {
-          label:'Project Information',
-          routerLink:'/project-information'
-        },
-        {
-          label: 'Partners',
-          routerLink:'/partners'
-        },
-        {
-          label: 'Stakeholders',
-          routerLink:'/stakeholders'
-        },
-        {
-          label:'Advisory Board',
-          routerLink:'/advisory-board'
-        },
-        {
-          label:'Latest Technologies',
-          routerLink:'latest-technologies'
-        }
-      ]
+      routerLink:'/project-information'
     },
     {
       label: 'NI Councils',

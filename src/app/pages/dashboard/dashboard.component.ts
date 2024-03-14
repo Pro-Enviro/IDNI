@@ -33,22 +33,22 @@ import {PanelMenuModule} from "primeng/panelmenu";
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-  envirotrackPage: MenuItem[] = [
+  envirotrackReport : MenuItem[] =[
     {
       label:'<span class="material-symbols-outlined">dashboard</span> Dashboard',
-      routerLink:'/dashboard'
+      routerLink:'/dashboard',
+      escape: false
     },
     {
       label:'<span class="material-symbols-outlined">flowsheet</span> Fuel Data',
       routerLink:'/dashboard/fuel-data',
+      escape: false
     },
     {
       label:'<span class="material-symbols-outlined">add_chart</span> Envirotrack Import',
+      escape: false,
       routerLink:'/dashboard/import'
-    }
-  ]
-
-  envirotrackReport : MenuItem[] =[
+    },
     {
       label:'<span class="material-symbols-outlined">query_stats</span> Envirotrack Report',
       escape: false,
