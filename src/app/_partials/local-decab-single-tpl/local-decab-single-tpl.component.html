@@ -125,26 +125,26 @@
     </div>
     @for(files of content.factsheet_files; track $index){
       <div class="container p-5">
-        <div class="grid nested-grid">
+        <div class="grid nested-grid bottom-line">
           <div class="lg:col-3 sm:col-12">
            <div class="flex flex-column">
-             <i class="pi pi-file-pdf" style="font-size: 7rem; color:#b5dad6"></i>
+             <i class="pi pi-file-pdf" style="font-size: 6rem; color:#b5dad6"></i>
              <a href="{{files.document_link}}" target="_blank"  class="text-sm pt-2"><p-button styleClass="btn-outline" [raised]="true" label="Read More" size="small"></p-button></a>
            </div>
           </div>
           <div class="lg:col-9 sm:col-12">
             <div class="grid">
-              <div class="col-6">
+              <div class="col-12">
                 <p>Name: {{files.name}}</p>
               </div>
-              <div class="col-6">
-                <p>File Size: {{files.file_size}}</p>
-              </div>
-              <div class="col-6">
+              <div class="col-4">
                 <p>Date Published: {{files.date_published}}</p>
               </div>
-              <div class="col-6">
+              <div class="col-4">
                 <p>Date Range: {{files.date_range}}</p>
+              </div>
+              <div class="col-4">
+                <p>File Size: {{files.file_size}}</p>
               </div>
             </div>
           </div>
