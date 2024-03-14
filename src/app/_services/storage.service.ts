@@ -30,7 +30,12 @@ export class StorageService {
   }
 
   set = (name: string, token: string) => {
-    localStorage.setItem(name,JSON.stringify(token));
+    if (name === 'directus_items') {
+      localStorage.setItem(name, JSON.stringify(token));
+    } else {
+
+      localStorage.setItem(name, token);
+    }
   }
 
   get = (name: string) => {

@@ -14,10 +14,10 @@
     <div class="col-2">
       <p-card header="Select Company" styleClass="card-charts">
         <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
-        <div>
+        <div class="mr-2">
           <label class="mr-2" for="sic_code">SIC code</label>
-          <input id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" />
-          <p *ngIf="sicCodeLetter.length">{{sicCodeLetter}}</p>
+          <input pInputText id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" />
+          <p *ngIf="sicCodeLetter.length">SIC Code Letter: {{sicCodeLetter}}</p>
         </div>
       </p-card>
     </div>

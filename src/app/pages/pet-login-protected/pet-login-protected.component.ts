@@ -533,7 +533,7 @@ export class PetLoginProtected implements OnInit {
 
       let totalValue = 0
       let totalCost = 0
-      let unit = ''
+      let unit: string = ''
 
       fuel.rows.forEach((row: any) => {
         const findValue = row.findIndex((cell: any) => cell.name === 'Value')
@@ -566,10 +566,14 @@ export class PetLoginProtected implements OnInit {
 
       if (foundType === -1) return;
 
+      console.log(extracted.unit)
+
       this.data[foundType].totalUnits = extracted.totalValue
       this.data[foundType].cost = extracted.totalCost
       this.data[foundType].unitsUom = extracted.unit ? extracted.unit : 'kWh'
     })
+
+
 
   }
 

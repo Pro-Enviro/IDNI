@@ -34,22 +34,28 @@ export class AuthService {
   }
   url:string = 'https://app.idni.eco/'
   login = async (credentials: Credentials) => {
-    credentials = {
-      email: 'rian.jacobs@proenviro.co.uk',
-      password: 'Kinibay100%'
-    }
-    await this.client.login(credentials.email, credentials.password)
-    console.log(this.client.getToken())
-    /* this.http.post(`${this.url}auth/login`, credentials).pipe(
-       map((x:any) => x.data),
-     ).subscribe({
-       next: (res:any) => {
-         this.storage.save('access_token', res.access_token);
-         this.storage.save('expires', res.expires);
-         this.storage.save('refresh_token', res.refresh_token);
-         this.route.navigate(['dashboard'])
-       }
-     })*/
+    // credentials = {
+    //   email: 'rian.jacobs@proenviro.co.uk',
+    //   password: 'Kinibay100%'
+    // }
+    const result = await this.client.login(credentials.email, credentials.password)
+
+    const token = await this.client.getToken()
+
+    this.storage.set('access_token', token)
+    this.storage.set('expires', result.expires)
+    this.storage.set('refresh_token', result.refresh_token)
+    this.route.navigate(['dashboard'])
+     // this.http.post(`${this.url}auth/login`, credentials).pipe(
+     //   map((x:any) => x.data),
+     // ).subscribe({
+     //   next: (res:any) => {
+     //     this.storage.set('access_token', res.access_token);
+     //     this.storage.set('expires', res.expires);
+     //     this.storage.set('refresh_token', res.refresh_token);
+     //     this.route.navigate(['dashboard'])
+     //   }
+     // })
   }
 
   refresh = () => {
