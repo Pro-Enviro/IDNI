@@ -114,8 +114,14 @@
     <div class="container p-4" style="margin-top:6rem">
       <h2 >{{content.title}}</h2>
       <div [innerHTML]="content.content"></div>
-      <div [innerHTML]="content.summary"></div>
-
+      <div class="grid">
+        <div class="col-6">
+          <img src="https://app.idni.eco/assets/{{content.page_image}}" alt="" class="page-img">
+        </div>
+        <div class="col-5">
+          <div class="p-8" [innerHTML]="content.summary"></div>
+        </div>
+      </div>
     </div>
     @for(files of content.factsheet_files; track $index){
       <div class="container p-5">
