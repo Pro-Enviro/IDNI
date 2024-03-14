@@ -13,7 +13,7 @@ export class HttpInterceptorService {
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.storage.get('access_token');
+    const token = this.storage.get('directus-data');
 
 
     if (token) {

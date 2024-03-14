@@ -1,7 +1,4 @@
-<!--<p-panel header="Select Company">-->
-<!--  <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id"-->
-<!--                  (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
-<!--</p-panel>-->
+
 
 <section class="section-curve-left">
   <h2 class="header-style text-2xl">Productivity, <br>Emissions, <br>and Materials Tool</h2>
@@ -14,15 +11,22 @@
         offering a comprehensive view of the environmental impact associated with business operations.</p>
     </div>
 
-    <div>
-      <label class="mr-2" for="sic_code">SIC code</label>
-      <input id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" />
-      <p *ngIf="sicCodeLetter.length">{{sicCodeLetter}}</p>
+    <div class="col-2">
+      <p-card header="Select Company" styleClass="card-charts">
+        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
+        <div>
+          <label class="mr-2" for="sic_code">SIC code</label>
+          <input id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" />
+          <p *ngIf="sicCodeLetter.length">{{sicCodeLetter}}</p>
+        </div>
+      </p-card>
     </div>
 
-    <div class="container mt-5 lg:col-6" style="overflow-x: hidden;">
+
+
+    <div class="container mt-5 lg:col-12" style="overflow-x: hidden;">
       <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines col-12" dataKey="parent.name"
-               rowGroupMode="subheader" groupRowsBy="parent.name" [customSort]="true">
+               rowGroupMode="subheader" groupRowsBy="parent.name" [customSort]="true" *ngIf="selectedCompany">
 
         <ng-template pTemplate="header">
           <tr>
@@ -269,6 +273,8 @@
           </tr>
         </ng-template>
       </p-table>
+
+      <p-button label="Save" ></p-button>
     </div>
   </div>
 </section>

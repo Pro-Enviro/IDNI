@@ -131,6 +131,7 @@ export const routes: Routes = [
       {path: '', component: DasboardWidgetsComponent},
       {path: 'import', component: ImportEnvirotrackComponent},
       {path: 'fuel-data', component: DataCaptureSpreadsheetFuelsComponent},
+      {path: 'pet', component: PetLoginProtected},
       {path: 'report', component: EnvirotrackReportComponent},
       {path: 'heatmap', component: EnvirotrackReportHeatmapComponent},
       {path: 'scatter', component: EnvirotrackReportScatterComponent},
@@ -150,7 +151,7 @@ export const routes: Routes = [
   {
     path: 'dashboard', canActivate: [authGuard], children: [
       {path: '', component: DashboardComponent},
-      {path: 'pet', component: PetLoginProtected}
+
     ]
   },
 

@@ -10,7 +10,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router: Router = inject(Router)
 
   //if token invalid then
-  if(!storage.get('access_token')){
+  if(!storage.get('directus-data')){
     router.navigate(['login'])
     return false;
   }

@@ -35,6 +35,7 @@ export class StorageService {
 
   get = (name: string) => {
     const item: string | null = localStorage.getItem(name);
+
     if(!item){
       this.msg.add({
         severity: 'error',

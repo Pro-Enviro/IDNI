@@ -45,6 +45,10 @@ export class DashboardComponent {
     {
       label:'<span class="material-symbols-outlined">add_chart</span> Envirotrack Import',
       routerLink:'/dashboard/import'
+    },
+    {
+      label:'<span class="material-symbols-outlined">add_chart</span> PET',
+      routerLink:'/dashboard/pet'
     }
   ]
 

@@ -16,6 +16,7 @@ import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../../_services/storage.service";
 import { read, utils, writeFile } from 'xlsx';
 import {arrayBuffer} from "node:stream/consumers";
+import {EnvirotrackService} from "../envirotrack/envirotrack.service";
 const rowNames: string[] = ['Cost of Energy', 'Transportation Costs', 'Cost of Water', 'Cost of Waste', 'Cost of Raw Materials', 'Cost of Bought in Goods - Consumables and bought in parts', 'Consultancy Cost', 'Sub Contracting Cost', 'Other External Costs (Legal, rental, accounting etc)']
 
 const energyNames: string[] = ['Electricity', 'Natural Gas (Grid)', 'Natural Gas off Grid', 'Bio Gas Off Grid', 'LPG', 'Oil', 'Kerosene', 'Bio Fuels', 'Bio Mass', 'Coal for Industrial use', 'Other']
@@ -202,12 +203,13 @@ export class PetLoginProtected implements OnInit {
   sicCodeData!: any // Excel Spreadsheet
   sicCode: string = ''
   sicCodeLetter: string = ''
-  constructor(private http: HttpClient, private storage: StorageService) {}
+  fuels = []
+  constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService) {}
 
 
 
   onSelectCompany = () => {
-    if (!this.selectedCompany) this.selectedCompany = this.companies[0].id;
+    if (!this.selectedCompany) this.selectedCompany = this.companies[0]
     // Reset table
     this.turnover = 0
     this.employees = 0;
@@ -217,13 +219,22 @@ export class PetLoginProtected implements OnInit {
     this.energyRows = []
     this.gridAllocationRows = []
     this.onSiteRows = []
+    this.data = []
+    this.fuels = []
 
     // Get sites report or generate new rows
     this.getPETReport(this.selectedCompany)
+    this.getFuelData()
   }
 
   getCompanies = () => {
-    this.getPETReport(this.selectedCompany)
+    // Fetch all companies
+    this.track.getCompanies().subscribe({
+      next: (res: any) => {
+        this.companies = res.data;
+      }
+    })
+
   }
 
   getPETReport = (id: number) => {
@@ -236,8 +247,6 @@ export class PetLoginProtected implements OnInit {
     this.generateClasses('Other Freight', OtherFreightTransportation)
     this.generateClasses('Company Travel', CompanyTravel)
     this.generateClasses('Staff Commute', StaffCommute)
-
-
   }
 
   sicCodeToLetter = () => {
@@ -460,7 +469,7 @@ export class PetLoginProtected implements OnInit {
     // TODO: Protect backend links with .env?
     this.http.get(`https://ecp.proenviro.co.uk/items/content/${id}`).subscribe({
       next: (res: any) => {
-        this.template = `https://ecp.proenviro.co.uk/assets/${res.data.file}?token=${this.storage.get('access_token')}`
+        this.template = `https://ecp.proenviro.co.uk/assets/${res.data.file}?token=${this.storage.get('directus-data')}`
 
         this.http.get(this.template, {
           responseType: 'arraybuffer'
@@ -479,7 +488,7 @@ export class PetLoginProtected implements OnInit {
 
     this.http.get(`https://ecp.proenviro.co.uk/items/content/${sicCodeId}`).subscribe({
       next: (res: any) => {
-        this.template = `https://ecp.proenviro.co.uk/assets/${res.data.file}?token=${this.storage.get('access_token')}`
+        this.template = `https://ecp.proenviro.co.uk/assets/${res.data.file}?token=${this.storage.get('directus-data')}`
 
         this.http.get(this.template, {
           responseType: 'arraybuffer'
@@ -496,6 +505,72 @@ export class PetLoginProtected implements OnInit {
         })
       }
     })
+  }
+
+  getFuelData = () => {
+    this.fuels = []
+
+    if (this.selectedCompany) {
+      this.track.getFuelData(this.selectedCompany).subscribe({
+        next: (res:any) => {
+          if (res?.data?.fuel_data) {
+            this.fuels = JSON.parse(res.data?.fuel_data)
+          }
+        },
+        error: (err) => console.log(err),
+        complete: () => this.assignFuelDataToCorrectCost()
+
+      })
+    }
+  }
+
+  assignFuelDataToCorrectCost = () => {
+     if (!this.fuels.length) return;
+     console.log(this.fuels)
+     // loop through fuel types and just get total of all values/units/ total cost/
+
+    let extractedData = this.fuels.map((fuel: any) => {
+
+      let totalValue = 0
+      let totalCost = 0
+      let unit = ''
+
+      fuel.rows.forEach((row: any) => {
+        const findValue = row.findIndex((cell: any) => cell.name === 'Value')
+        const findUnit = row.findIndex((cell: any) => cell.name === 'Unit')
+        const findCost = row.findIndex((cell: any) => cell.name === 'Total')
+
+        // Check if not available
+        if (findValue !== -1) totalValue += parseFloat(row[findValue].value)
+        if (findCost !== -1 ) totalCost += parseFloat(row[findCost].value)
+        if (findUnit !== -1) unit = row[findUnit].value
+
+      })
+
+      return {
+        type: fuel.type,
+        totalValue,
+        totalCost,
+        unit: unit ? unit : 'kWh'
+      }
+    })
+
+    console.log(extractedData)
+
+    // Add to the data in the table
+    extractedData.forEach((extracted: any) => {
+
+      if (extracted.type === 'Gas') extracted.type = 'Natural Gas (Grid)'
+
+      let foundType = this.data.findIndex((tableRow: any) => tableRow.name === extracted.type)
+
+      if (foundType === -1) return;
+
+      this.data[foundType].totalUnits = extracted.totalValue
+      this.data[foundType].cost = extracted.totalCost
+      this.data[foundType].unitsUom = extracted.unit ? extracted.unit : 'kWh'
+    })
+
   }
 
   ngOnInit() {
