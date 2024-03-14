@@ -7,6 +7,7 @@ import {JsonPipe} from "@angular/common";
 import {DialogRef} from "@angular/cdk/dialog";
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ButtonModule} from "primeng/button";
+import moment from "moment/moment";
 
 
 @Component({
@@ -58,6 +59,7 @@ factsheet_files.factsheet_files_id.document_link
         this.content = res
         this.content.items = this.content.items.map((las_item:any) => las_item.item)
         this.content.factsheet_files = this.content.factsheet_files.map((files:any) => files.factsheet_files_id)
+        this.content.factsheet_files = this.content.factsheet_files.sort((a:any,b:any) => moment(a.date, "DD/MM/YYYY").toDate().getTime() - moment(b.date,"DD/MM/YYYY").toDate().getTime())
       },
 
       error: (err: any) => {
