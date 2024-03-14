@@ -79,7 +79,7 @@ import {ClimateCrisisComponent} from "./pages/news/climate-crisis/climate-crisis
 import {NetZeroBusinessComponent} from "./pages/news/net-zero-business/net-zero-business.component";
 import {ClimateChangeCommitteComponent} from "./pages/news/climate-change-committe/climate-change-committe.component";
 import {EnergyEfficiencyComponent} from "./pages/news/energy-efficiency/energy-efficiency.component";
-
+import {PetLoginProtected} from "./pages/pet-login-protected/pet-login-protected.component";
 
 
 
@@ -149,7 +149,8 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard', canActivate: [authGuard], children: [
-      {path: '', component: DashboardComponent}
+      {path: '', component: DashboardComponent},
+      {path: 'pet', component: PetLoginProtected}
     ]
   },
 
