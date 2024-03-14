@@ -39,7 +39,6 @@ import {
   EnvirotrackReportDemandComponent
 } from "./pages/envirotrack/report/envirotrack-report-demand/envirotrack-report-demand.component";
 import {DasboardWidgetsComponent} from "./pages/dashboard/dasboard-widgets/dasboard-widgets.component";
-import {NewsComponent} from "./pages/news/news.component";
 import {EventsComponent} from "./pages/events/events.component";
 import {ProjectInformationComponent} from "./pages/project-information/project-information.component";
 import {PartnersComponent} from "./pages/partners/partners.component";
@@ -75,6 +74,11 @@ import {
 } from "./pages/project-information/latest-tech/solar-power/transparent/transparent.component";
 import {FloatingComponent} from "./pages/project-information/latest-tech/solar-power/floating/floating.component";
 import {HeatExchangeComponent} from "./pages/project-information/latest-tech/heat-exchange/heat-exchange.component";
+import {NewsComponent} from "./pages/news/news.component";
+import {ClimateCrisisComponent} from "./pages/news/climate-crisis/climate-crisis.component";
+import {NetZeroBusinessComponent} from "./pages/news/net-zero-business/net-zero-business.component";
+import {ClimateChangeCommitteComponent} from "./pages/news/climate-change-committe/climate-change-committe.component";
+import {EnergyEfficiencyComponent} from "./pages/news/energy-efficiency/energy-efficiency.component";
 
 
 
@@ -86,6 +90,11 @@ export const routes: Routes = [
   {path: 'pet', component: PetComponent},
   {path:'events',component:EventsComponent},
   {path: 'coming-soon', component: ConstructionComponent},
+  {path:'news',component:NewsComponent},
+  {path:'tackling-climate-crisis',component:ClimateCrisisComponent},
+  {path:'micro-businesses-net-zero',component:NetZeroBusinessComponent},
+  {path:'progress-report-climate-change-committee',component:ClimateChangeCommitteComponent},
+  {path:'drive-energy-efficiency-to-deliver',component:EnergyEfficiencyComponent},
   {path: 'local-decarbonisation', component: LocalDecarbonisationComponent},
   {path: 'local-decarb-single', component: LocalDecabSingleTplComponent},
   {path:'project-information', component:ProjectInformationComponent},

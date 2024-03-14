@@ -86,7 +86,7 @@ export class HeaderTopComponent {
     },
     {
       label: 'News',
-      routerLink: 'coming-soon'
+      routerLink: 'news'
     },
     {
       label: 'COSI\'s',

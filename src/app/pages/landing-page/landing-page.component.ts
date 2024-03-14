@@ -8,7 +8,6 @@ import {TwoColTplComponent} from "../../_partials/two-col-tpl/two-col-tpl.compon
 import {CarouselTplComponent} from "../../_partials/carousel-tpl/carousel-tpl.component";
 import {AccordionTplComponent} from "../../_partials/accordion-tpl/accordion-tpl.component";
 import {HomeTechnologyTplComponent} from "../../_partials/home-technology-tpl/home-technology-tpl.component";
-import {NewsCardsTplComponent} from "../../_partials/news-cards-tpl/news-cards-tpl.component";
 import {HomeNewsTplComponent} from "../../_partials/home-news-tpl/home-news-tpl.component";
 
 
@@ -25,7 +24,6 @@ import {HomeNewsTplComponent} from "../../_partials/home-news-tpl/home-news-tpl.
     CarouselTplComponent,
     AccordionTplComponent,
     HomeTechnologyTplComponent,
-    NewsCardsTplComponent,
     HomeNewsTplComponent
   ],
   templateUrl: './landing-page.component.html',

@@ -6,7 +6,6 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {CarouselTplComponent} from "../carousel-tpl/carousel-tpl.component";
 import {AccordionTplComponent} from "../accordion-tpl/accordion-tpl.component";
 import {FooterComponent} from "../footer/footer.component";
-import {NewsCardsTplComponent} from "../news-cards-tpl/news-cards-tpl.component";
 import {HomeTechnologyTplComponent} from "../home-technology-tpl/home-technology-tpl.component";
 import {RegistrationFormComponent} from "../../users/register/registration-form/registration-form.component";
 import {ChatDialogTplComponent} from "../chat-dialog-tpl/chat-dialog-tpl.component";
@@ -21,7 +20,6 @@ import {ChatDialogTplComponent} from "../chat-dialog-tpl/chat-dialog-tpl.compone
     CarouselTplComponent,
     AccordionTplComponent,
     FooterComponent,
-    NewsCardsTplComponent,
     HomeTechnologyTplComponent,
     RegistrationFormComponent,
     ChatDialogTplComponent

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewsCardsTplComponent } from './news-cards-tpl.component';
+import { NetZeroBusinessComponent } from './net-zero-business.component';
 
-describe('NewsCardsTplComponent', () => {
-  let component: NewsCardsTplComponent;
-  let fixture: ComponentFixture<NewsCardsTplComponent>;
+describe('NetZeroBusinessComponent', () => {
+  let component: NetZeroBusinessComponent;
+  let fixture: ComponentFixture<NetZeroBusinessComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NewsCardsTplComponent]
+      imports: [NetZeroBusinessComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(NewsCardsTplComponent);
+    fixture = TestBed.createComponent(NetZeroBusinessComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -45,14 +45,21 @@ event_items.event_items_id.content,
 event_items.event_items_id.image,
 event_items.event_items_id.date,
 event_items.event_items_id.venue,
-event_items.event_items_id.time
-
+event_items.event_items_id.time,
+past_events.related_events_pages_id.title,
+past_events.related_events_pages_id.content,
+past_events.related_events_pages_id.image,
+past_events.related_events_pages_id.date,
+past_events.related_events_pages_id.venue,
+past_events.related_events_pages_id.time
 `).subscribe({
       next: (res: any) => {
         this.content = res
         this.content.event_items = this.content.event_items.map((item:any) => item.event_items_id)
         this.content.event_items = this.content.event_items.sort((a:any,b:any) => moment(a.date, "DD/MM/YYYY").toDate().getTime() - moment(b.date,"DD/MM/YYYY").toDate().getTime())
-        console.log(this.content.event_items)
+
+        this.content.past_events = this.content.past_events.map((event:any) => event.related_events_pages_id)
+        this.content.past_events = this.content.past_events.sort((a:any,b:any) => moment(a.date, "DD/MM/YYYY").toDate().getTime() - moment(b.date,"DD/MM/YYYY").toDate().getTime())
       },
       error: (err: any) => {
         console.error(err)
