@@ -13,11 +13,11 @@ export class HttpInterceptorService {
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('INTERCEPTOR')
+
     const token = this.storage.get('access_token');
 
     if (token) {
-      console.log('Adding header')
+
       request = request.clone({
         setHeaders: { Authorization: `Bearer ${token}` }
       });

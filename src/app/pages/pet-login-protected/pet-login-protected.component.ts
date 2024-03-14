@@ -469,7 +469,7 @@ export class PetLoginProtected implements OnInit {
     // TODO: Protect backend links with .env?
     this.http.get(`https://ecp.proenviro.co.uk/items/content/${id}`).subscribe({
       next: (res: any) => {
-        this.template = `https://ecp.proenviro.co.uk/assets/${res.data.file}?token=${this.storage.get('directus-data')}`
+        this.template = `https://ecp.proenviro.co.uk/assets/${res.data.file}?token=${this.storage.get('access_token')}`
 
         this.http.get(this.template, {
           responseType: 'arraybuffer'
@@ -488,7 +488,7 @@ export class PetLoginProtected implements OnInit {
 
     this.http.get(`https://ecp.proenviro.co.uk/items/content/${sicCodeId}`).subscribe({
       next: (res: any) => {
-        this.template = `https://ecp.proenviro.co.uk/assets/${res.data.file}?token=${this.storage.get('directus-data')}`
+        this.template = `https://ecp.proenviro.co.uk/assets/${res.data.file}?token=${this.storage.get('access_token')}`
 
         this.http.get(this.template, {
           responseType: 'arraybuffer'
