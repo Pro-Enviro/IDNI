@@ -11,14 +11,16 @@
         offering a comprehensive view of the environmental impact associated with business operations.</p>
     </div>
 
-    <div class="col-2">
+    <div class="col-3">
       <p-card header="Select Company" styleClass="card-charts">
-        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem', marginBottom: '2rem'}"></p-dropdown>
+        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '15rem', marginBottom: '2rem'}"></p-dropdown>
 
-          <label style="margin-top: 2rem" for="sic_code">SIC code</label>
-          <input pInputText id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" [style]="{width: '12rem', marginTop: '0.5rem'}"/>
+        <div style="display: flex; flex-direction: column">
+          <label for="sic_code">SIC code</label>
+          <input pInputText id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" [style]="{width: '15rem', marginTop: '0.5rem'}"/>
           <p style="font-weight: 600" *ngIf="sicCodeLetter.length">SIC Code Letter: {{sicCodeLetter}}</p>
 
+        </div>
       </p-card>
     </div>
 
@@ -191,7 +193,7 @@
           <tr>
             <td>Total External Cost</td>
             <td>
-              {{calculateTotalExternalCost()}}
+<!--              {{calculateTotalExternalCost()}}-->
             </td>
             <td></td>
           </tr>
@@ -206,7 +208,7 @@
           </tr>
           <tr>
             <td>ONS Productivity Comparison</td>
-            <td> {{calculateProductivityComparison()}} </td>
+            <td >{{productivityPercentile}}</td>
             <td></td>
           </tr>
           <tr>
@@ -277,4 +279,15 @@
       <p-button label="Save" ></p-button>
     </div>
   </div>
+
+
+  <div class="container mt-5 lg:col-12" style="overflow-x: hidden;" *ngIf="this.chartData">
+    <div class="flex justify-content-start">
+      <div echarts [options]="chartOptions" style="max-height: 80vh; height: 80vh; width: 80vw"></div>
+    </div>
+  </div>
+
 </section>
+
+
+
