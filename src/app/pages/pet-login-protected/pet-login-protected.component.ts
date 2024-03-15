@@ -436,7 +436,8 @@ export class PetLoginProtected implements OnInit {
       ['50', p50],
       ['75', p75],
       ['90', p90],
-      ['100', null]
+      // ['100', null]
+      ['100', p90*1.5]
     ]
 
     // Return text as percentile
@@ -444,32 +445,32 @@ export class PetLoginProtected implements OnInit {
       case 0 :
         this.markStart = 0
         this.markEnd = 1
-         this.productivityPercentile = '10th Percentile'
+        this.productivityPercentile = '10th Percentile'
         break;
       case 1 :
         this.markStart = 0
         this.markEnd = 2
-         this.productivityPercentile = '25th Percentile'
+        this.productivityPercentile = '25th Percentile'
         break;
       case 2:
         this.markStart = 0
         this.markEnd = 3
-         this.productivityPercentile = '50th Percentile'
+        this.productivityPercentile = '50th Percentile'
         break;
       case 3:
         this.markStart = 0
         this.markEnd = 4
-         this.productivityPercentile = '75th Percentile'
+        this.productivityPercentile = '75th Percentile'
         break;
       case 4:
         this.markStart = 0
         this.markEnd = 5
-         this.productivityPercentile = '90th Percentile'
+        this.productivityPercentile = '90th Percentile'
         break;
       default:
         this.markStart = 0
         this.markEnd = 0
-         this.productivityPercentile = ''
+        this.productivityPercentile = ''
         break;
     }
 
