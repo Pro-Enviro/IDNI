@@ -8,6 +8,7 @@ import {DialogRef} from "@angular/cdk/dialog";
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ButtonModule} from "primeng/button";
 import moment from "moment/moment";
+import {RouterLink} from "@angular/router";
 
 
 @Component({
@@ -16,7 +17,8 @@ import moment from "moment/moment";
   imports: [
     TopPageImgTplComponent,
     JsonPipe,
-    ButtonModule
+    ButtonModule,
+    RouterLink
   ],
   templateUrl: './local-decab-single-tpl.component.html',
   styleUrl: './local-decab-single-tpl.component.scss',
@@ -50,17 +52,21 @@ page_image,
 items.item.title,
 items.item.content,
 items.item.image,
+factsheet_files.factsheet_files_id.id,
 factsheet_files.factsheet_files_id.name,
 factsheet_files.factsheet_files_id.date_published,
 factsheet_files.factsheet_files_id.date_range,
 factsheet_files.factsheet_files_id.file_size,
-factsheet_files.factsheet_files_id.document_link
+factsheet_files.factsheet_files_id.document_link,
+factsheet_files.factsheet_files_id.template.*
 `).subscribe({
       next: (res: any) => {
         this.content = res
         this.content.items = this.content.items.map((las_item:any) => las_item.item)
         this.content.factsheet_files = this.content.factsheet_files.map((files:any) => files.factsheet_files_id)
         this.content.factsheet_files = this.content.factsheet_files.sort((a:any,b:any) => moment(a.date, "DD/MM/YYYY").toDate().getTime() - moment(b.date,"DD/MM/YYYY").toDate().getTime())
+
+        console.log(this.content)
       },
 
       error: (err: any) => {
