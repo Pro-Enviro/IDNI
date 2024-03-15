@@ -145,6 +145,10 @@ class GroupItem {
   }
 }
 
+class OtherExternalCosts extends SubTable {
+  name: string = ''
+}
+
 @Component({
   selector: 'app-pet-login-protected',
   standalone: true,
@@ -167,6 +171,7 @@ export class PetLoginProtected implements OnInit {
   innovationPercent: number = 0;
   staffTrainingPercent: number = 0;
   exportPercent: number = 0;
+
   consultancyRow = {
     name: 'Consultancy Cost',
     totalCost: 0,
@@ -207,6 +212,7 @@ export class PetLoginProtected implements OnInit {
   sicCode: string = ''
   sicCodeLetter: string = ''
   fuels = []
+  externalCost: number = 0
   productivityPercentile: string =''
   chartOptions!: EChartsOption | null;
   chartData: any = [];
@@ -257,13 +263,14 @@ export class PetLoginProtected implements OnInit {
     this.generateClasses('Other Freight', OtherFreightTransportation)
     this.generateClasses('Company Travel', CompanyTravel)
     this.generateClasses('Staff Commute', StaffCommute)
+    this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
   }
 
   sicCodeToLetter = () => {
     if (this.sicCode.length < 5) {
       this.sicCodeLetter = ''
       return;
-    };
+    }
     // Select correct SIC code letter
     const foundRow = this.sicCodeData.find((row: any) => row[1].toString() === this.sicCode)
     if (foundRow) this.sicCodeLetter = foundRow[0]
@@ -304,7 +311,6 @@ export class PetLoginProtected implements OnInit {
   }
 
   createNewTableRow = (group: any) => {
-    console.log(group)
     let copy = {...group, name: `${group.parent.name} description`, cost: 0}
     let findObject = this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)
 
@@ -314,9 +320,10 @@ export class PetLoginProtected implements OnInit {
 
 
   calculatePerEmployeeCost = (groups?: any) => {
+    this.calculateTotalExternalCost()
+
     if (!this.employees) return;
 
-    console.log('CALCULATE PER EMPLOYEE COST')
 
     let employeeTotal = 0
     // Update the per employee number for only modified number
@@ -341,11 +348,12 @@ export class PetLoginProtected implements OnInit {
       this.subContractingRow.secondColumn = this.subContractingRow.totalCost / this.employees
       this.otherExternalCostsRow.secondColumn = this.otherExternalCostsRow.totalCost / this.employees
     }
+
+
     return employeeTotal
   }
 
   calculateTotalExternalCost = () => {
-    console.log('CALCULATE EXTERNAL COST')
 
     const oneOfEachParent: any = {
       consultancyCost: this.consultancyRow.totalCost,
@@ -361,6 +369,11 @@ export class PetLoginProtected implements OnInit {
 
     let summedValues = this.sumValues(oneOfEachParent)
 
+
+    this.externalCost = summedValues? summedValues : 0
+
+    this.calculateProductivityScore()
+
     return summedValues ? summedValues : 0
 
   }
@@ -368,10 +381,9 @@ export class PetLoginProtected implements OnInit {
   calculateProductivityScore = () =>{
     // (Turnover - Total external costs) / no. of employees
     if (!this.employees || !this.turnover) return;
-    console.log('CALCULATE PRODUCTIVITY SCORE')
-    const totalExternalCost: number = this.calculateTotalExternalCost()
+    const totalExternalCost: number = this.externalCost
     let result = (this.turnover - totalExternalCost) / this.employees
-    this.productivityScore = result;
+    this.productivityScore = result ? result : 0;
 
     this.calculateProductivityComparison()
     return result ? result.toFixed(2) : 0
@@ -407,7 +419,6 @@ export class PetLoginProtected implements OnInit {
 
     const counts = [p10, p25, p50, p75, p90]
 
-      console.log(counts)
     // Get closest
     let closest = counts.reduce((prev: any, curr: any) => {
       return (Math.abs(curr - this.productivityScore) < Math.abs(prev - this.productivityScore) ? curr : prev);
@@ -471,13 +482,12 @@ export class PetLoginProtected implements OnInit {
 
   calculateIndividualEmployeeCost = (object: any) => {
     if (!this.employees || !object.totalCost) return;
-    console.log('CALCULATE INDIVIDUAL EMPLOYEE COST')
+
     object.secondColumn = (object.totalCost / this.employees)
   }
 
   calculateGroupTotalCost = (group: any) => {
     if (!group?.parent) return 0;
-    console.log('CALCULATE GROUP TOTAL COST')
     const parentName = group?.parent.name
     const total = this.data.filter((item: any) => item.parent.name === parentName).reduce((acc: number, curr: any) => {
       if (curr.cost !== undefined && curr.cost !== null) {
@@ -585,7 +595,6 @@ export class PetLoginProtected implements OnInit {
 
   assignFuelDataToCorrectCost = () => {
      if (!this.fuels.length) return;
-     console.log(this.fuels)
      // loop through fuel types and just get total of all values/units/ total cost/
 
     let extractedData = this.fuels.map((fuel: any) => {
@@ -614,7 +623,6 @@ export class PetLoginProtected implements OnInit {
       }
     })
 
-    console.log(extractedData)
 
     // Add to the data in the table
     extractedData.forEach((extracted: any) => {
@@ -625,7 +633,6 @@ export class PetLoginProtected implements OnInit {
 
       if (foundType === -1) return;
 
-      console.log(extracted.unit)
 
       this.data[foundType].totalUnits = extracted.totalValue
       this.data[foundType].cost = extracted.totalCost

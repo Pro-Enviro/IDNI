@@ -77,6 +77,7 @@
             <!--            <td colspan="4"></td>-->
           </tr>
 
+
           <!--   Dynamic titles       -->
           <tr *ngIf="expanded" style="border-bottom: 2px solid black; font-weight: 700" >
             <td *ngIf="groups.name !== undefined"></td>
@@ -173,34 +174,35 @@
 
         <ng-template pTemplate="footer">
 
-          <tr>
-            <td>{{otherExternalCostsRow.name}}</td>
-            <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="otherExternalCostsRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(otherExternalCostsRow)"></p-inputNumber></td>
-            <td>{{otherExternalCostsRow.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}</td>
-          </tr>
+<!--          <tr>-->
+<!--            <td>{{otherExternalCostsRow.name}}</td>-->
+<!--            <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="otherExternalCostsRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(otherExternalCostsRow)"></p-inputNumber></td>-->
+<!--            <td>{{otherExternalCostsRow.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}</td>-->
+<!--          </tr>-->
 
-          <tr>
-            <td>{{consultancyRow.name}}</td>
-            <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="consultancyRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(consultancyRow)"></p-inputNumber></td>
-            <td>{{consultancyRow.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}</td>
-          </tr>
-          <tr>
-            <td>{{subContractingRow.name}}</td>
-            <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="subContractingRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(subContractingRow)"></p-inputNumber></td>
-            <td>{{subContractingRow.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}</td>
-          </tr>
+<!--          <tr>-->
+<!--            <td>{{consultancyRow.name}}</td>-->
+<!--            <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="consultancyRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(consultancyRow)"></p-inputNumber></td>-->
+<!--            <td>{{consultancyRow.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>{{subContractingRow.name}}</td>-->
+<!--            <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="subContractingRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(subContractingRow)"></p-inputNumber></td>-->
+<!--            <td>{{subContractingRow.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}</td>-->
+<!--          </tr>-->
 
           <tr>
             <td>Total External Cost</td>
             <td>
-<!--              {{calculateTotalExternalCost()}}-->
+              {{externalCost}}
             </td>
             <td></td>
           </tr>
           <tr>
             <td>Productivity Score</td>
             <td>
-              {{calculateProductivityScore()}}
+<!--              {{calculateProductivityScore()}}-->
+              {{productivityScore.toLocaleString('en-US', twoDecimalPlaces)}}
             </td>
             <td></td>
           </tr>
