@@ -11,6 +11,9 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   //if token invalid then
   if(!storage.get('access_token')){
+
+    console.log('NO Access token')
+
     router.navigate(['login'])
     return false;
   }

@@ -127,7 +127,15 @@ export const routes: Routes = [
   {path:'stakeholders',component:StakeholdersComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
-  {path:'dashboard',component:DashboardComponent, children: [
+
+  {path:'chat',component: ChatDialogTplComponent},
+  {path:'live-chat',component:LiveChatTplComponent},
+  {
+    path: 'envirotrack', children: [
+
+    ]
+  },
+  {path:'dashboard',component:DashboardComponent, canActivate: [authGuard], canActivateChild: [authGuard], children: [
       {path: '', component: DasboardWidgetsComponent},
       {path: 'import', component: ImportEnvirotrackComponent},
       {path: 'fuel-data', component: DataCaptureSpreadsheetFuelsComponent},
@@ -141,13 +149,6 @@ export const routes: Routes = [
       {path: 'avg', component: EnvirotrackReportAvgComponent },
       {path: 'demand', component: EnvirotrackReportDemandComponent },
     ]},
-  {path:'chat',component: ChatDialogTplComponent},
-  {path:'live-chat',component:LiveChatTplComponent},
-  {
-    path: 'envirotrack', children: [
-
-    ]
-  },
   {
     path: 'dashboard', canActivate: [authGuard], children: [
       {path: '', component: DashboardComponent},

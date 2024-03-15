@@ -48,10 +48,9 @@ export class StorageService {
         detail: 'The requested information could not be received. Please login again'
       })
 
-      this.route.navigate(['login'])
-      return Error('No token')
+      // this.route.navigate(['login'])
+      return null
     }
-    console.log(item)
     return item
   }
 

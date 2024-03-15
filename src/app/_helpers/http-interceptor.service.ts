@@ -4,7 +4,7 @@ import {
   HttpInterceptorFn,
   HttpRequest,
 } from "@angular/common/http";
-import {catchError, throwError} from "rxjs";
+import {catchError, map, throwError} from "rxjs";
 import {StorageService} from "../_services/storage.service";
 import {inject} from '@angular/core';
 import {Router} from "@angular/router";
@@ -20,32 +20,33 @@ export const HttpInterceptorService: HttpInterceptorFn = (
   const msg = inject(MessageService)
   const token = storage.get('access_token');
 
-  if (token) {
-    req = req.clone({
-      setHeaders: {Authorization: `Bearer ${token}`}
-    });
-    return next(req);
 
-  } else {
+  // if (token) {
+  //   console.log('Token is fine')
+  //   req = req.clone({
+  //     setHeaders: {Authorization: `Bearer ${token}`}
+  //   });
+  //   return next(req);
+  //
+  // } else {
+    console.log('Token is not fine')
     return next(req).pipe(
       catchError((error: HttpErrorResponse) => {
         console.log(error)
         if ([401, 403].includes(error.status)) {
           console.log('rerouting to login')
           // auto logout if 401 or 403 response returned from api
-          router.navigate(['login'])
-        }
 
+        }
         msg.add({
           severity: 'warning',
           detail: 'You are unauthorized.'
         })
 
-        router.navigate(['login'])
+
         return throwError(() => error);
       }))
-
-  }
+  // }
 
 };
 
