@@ -42,7 +42,9 @@
                 </div>
                 <div class="flex justify-content-start">
                   <div class="card-footer">
-<!--                    <p-button label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>-->
+                    @if(content.link){
+                      <a href="{{content.link}}" target="_blank"  class="text-sm pt-3 pb-2"><p-button styleClass="btn-style" label="Learn More"></p-button></a>
+                    }
                   </div>
                 </div>
               </div>
