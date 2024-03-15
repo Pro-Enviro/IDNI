@@ -3,6 +3,7 @@
 <!--                  (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
 <!--</p-panel>-->
 
+
 <section class="section-curve-left">
   <h2 class="header-style text-2xl">Productivity, <br>Emissions, <br>and Materials Tool</h2>
   <div class="flex align-items-center flex-column">
@@ -14,261 +15,101 @@
         offering a comprehensive view of the environmental impact associated with business operations.</p>
     </div>
 
-    <div>
-      <label class="mr-2" for="sic_code">SIC code</label>
-      <input id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" />
-      <p *ngIf="sicCodeLetter.length">{{sicCodeLetter}}</p>
-    </div>
 
-    <div class="container mt-5 lg:col-6" style="overflow-x: hidden;">
-      <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines col-12" dataKey="parent.name"
-               rowGroupMode="subheader" groupRowsBy="parent.name" [customSort]="true">
 
-        <ng-template pTemplate="header">
-          <tr>
-            <th class="header-style text-base font-semibold p-3 col-5" >Productivity Factors Year 2024</th>
-            <th class="header-style text-base font-semibold p-3 col-2">Value</th>
-            <th class="header-style text-base font-semibold p-3" colspan="4">Per Employee Cost</th>
-<!--            <th ></th>-->
-          </tr>
-          <tr>
-            <th>
-              <p>Turnover</p>
-            </th>
-            <th colspan="5">
-              <p-inputNumber inputId="turnover" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
-                             [(ngModel)]="turnover" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
-            </th>
+  <p-table [value]="rows" styleClass="pet-table p-datatable-sm p-datatable-gridlines  container mt-5 lg:col-12">
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="font-weight: 600">Productivity Factors Year 2024</th>
+        <th style="width: 150px; font-weight: 600">Value</th>
+        <th style="width: 150px; font-weight: 600">Per Employee Cost</th>
+      </tr>
+      <tr>
+        <th>
+          <p>Turnover</p>
+        </th>
+        <th>
+          <p-inputNumber inputId="turnover" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
+                         [(ngModel)]="turnover" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+        </th>
+        <th></th>
+      </tr>
+      <tr>
+        <th>
+          <p>Number Of Employees</p>
+        </th>
+        <th>
+          <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
+                         [(ngModel)]="employees" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <td style="width: 400px"><p>{{ row.name }}</p></td>
+        <td>
+          <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="row.value"
+                         (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+        </td>
+        <td>
+          <p class="p-inputtext-sm">{{ row.secondColumn.toLocaleString('en-US') }}</p>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <tr>
+        <td>Total External Cost</td>
+        <td>
+          <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="totalOfRows"
+          ></p-inputNumber>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Productivity Score</td>
+        <td>
+          <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="productivityScore"
+          ></p-inputNumber>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Innovation - % of Turnover from Products <3 years</td>
+        <td>
+          <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
+                         [(ngModel)]="innovationPercent"
+          ></p-inputNumber>
+        </td>
+        <td>
+          {{ (turnover * (innovationPercent / 100)).toLocaleString('en-US') }}
+        </td>
+      </tr>
+      <tr>
+        <td>Training - % of staff in Training (On the Job, PT-FE, Prof'snl or Post Grad)</td>
+        <td>
+          <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
+                         [(ngModel)]="trainingPercent"
+          ></p-inputNumber>
+        </td>
+        <td>
+          {{ ((employees * trainingPercent)/100).toLocaleString('en-US') }}
+        </td>
+      </tr>
+      <tr>
+        <td>Export - % of Turnover from Export</td>
+        <td>
+          <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
+                         [(ngModel)]="exportPercent"
+          ></p-inputNumber>
+        </td>
+        <td>
+          {{ ((turnover * exportPercent)/100).toLocaleString('en-US') }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 
-          </tr>
-          <tr>
-            <th>
-              <p>Number Of Employees</p>
-            </th>
-            <th colspan="5">
-              <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
-                             [(ngModel)]="employees" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
-            </th>
-          </tr>
-        </ng-template>
-
-        <ng-template pTemplate="groupheader" let-groups let-rowIndex="rowIndex" let-expanded="expanded">
-          <tr >
-            <td class="expandable-rows" style="min-width: 300px" >
-              <button type="button" pButton pRipple [pRowToggler]="groups"
-                      class="p-button-text p-button p-button-plain p-button-sm mr-2"
-                      [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-              <span class="font-bold ml-2 ">{{ groups.parent.name }}</span>
-            </td>
-            <td>
-
-              <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
-                             [(ngModel)]="groups.parent.totalCost" (ngModelChange)="calculatePerEmployeeCost(groups)"></p-inputNumber>
-            </td>
-            <td colspan="4">
-              {{groups.parent.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}
-            </td>
-<!--            <td colspan="4"></td>-->
-          </tr>
-
-          <!--   Dynamic titles       -->
-          <tr *ngIf="expanded" style="border-bottom: 2px solid black; font-weight: 700" >
-            <td *ngIf="groups.name !== undefined"></td>
-            <td *ngIf="groups.unitsUom !== undefined">Unit Uom</td>
-            <td *ngIf="groups.mode !== undefined">Mode</td>
-            <td *ngIf="groups.fuelType !== undefined">Fuel Type</td>
-            <td *ngIf="groups.noOfParts !== undefined">Number of Parts</td>
-            <td style="width: 100px" *ngIf="groups.totalUnits !== undefined">Total Units</td>
-            <td *ngIf="groups.otherModes !== undefined">Mode</td>
-            <td *ngIf="groups.companyModeOfTransport !== undefined">Mode</td>
-            <td *ngIf="groups.staffCommute !== undefined">Mode</td>
-            <td *ngIf="groups.route !== undefined">Route</td>
-            <td *ngIf="groups.cost !== undefined">Cost</td>
-            <td *ngIf="groups.unitOfCost !== undefined">Unit of cost</td>
-            <td *ngIf="groups.approxMileage !== undefined">Approx Mileage</td>
-            <td *ngIf="groups.regionOfOrigin !== undefined">Region of Origin</td>
-            <td *ngIf="groups.scrappageAndWaste !== undefined">% Scrappage & Waste in Prod</td>
-            <td *ngIf="groups.percentStaff !== undefined">% Staff</td>
-            <td style="width: 100px" *ngIf="groups.distance !== undefined">Average Distance (Miles)</td>
-          </tr>
-        </ng-template>
-
-        <ng-template pTemplate="rowexpansion" let-groups let-editing="editing" >
-          <tr style="background-color: #fff; overflow-x: scroll">
-            <td [pEditableColumn]="groups.name" pEditableColumnField="name" class="col-5" >
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="groups.name" class="p-inputtext-sm" />
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{ groups.name }}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td *ngIf="groups.mode">
-              <p-dropdown [options]="modeOfTransport" class="p-inputtext-sm" [style]="{width: '150px'}" [(ngModel)]="groups.mode"></p-dropdown>
-            </td>
-            <td *ngIf="groups.fuelType">
-              <p-dropdown [options]="fuelTypes" class="p-inputtext-sm" [style]="{width: '150px'}" [(ngModel)]="groups.fuelType"></p-dropdown>
-            </td>
-            <td *ngIf="groups.unitsUom">
-              <p-dropdown [options]="unitsUom" class="p-inputtext-sm" [style]="{width: '150px'}"></p-dropdown>
-            </td>
-
-            <td *ngIf="groups.noOfParts !== undefined">
-              <p-inputNumber [(ngModel)]="groups.noOfParts" class="p-inputtext-sm"
-                             [inputStyle]="{width: '100px'}"></p-inputNumber>
-            </td>
-            <td *ngIf="groups.totalUnits !== undefined">
-              <p-inputNumber [(ngModel)]="groups.totalUnits" class="p-inputtext-sm"
-                             [inputStyle]="{width: '100px'}"></p-inputNumber>
-            </td>
-
-            <td *ngIf="groups.otherModes !== undefined">
-              <p-dropdown [options]="otherModesOfTransport" class="p-inputtext-sm" [style]="{width: '150px'}"></p-dropdown>
-            </td>
-            <td *ngIf="groups.companyModeOfTransport !== undefined">
-              <p-dropdown [options]="companyModesOfTransport" class="p-inputtext-sm" [style]="{width: '150px'}"></p-dropdown>
-            </td>
-            <td *ngIf="groups.staffCommute !== undefined">
-              <p-dropdown [options]="staffCommute" class="p-inputtext-sm" [style]="{width: '150px'}"></p-dropdown>
-            </td>
-            <td *ngIf="groups.route !== undefined">
-              <p-dropdown [options]="routes" class="p-inputtext-sm" [style]="{width: '150px'}"></p-dropdown>
-            </td>
-            <td *ngIf="groups.cost !== undefined">
-              <p-inputNumber [(ngModel)]="groups.cost" class="p-inputtext-sm"
-                             [inputStyle]="{width: '100px'}" (ngModelChange)="calculateGroupTotalCost(groups)"></p-inputNumber>
-            </td>
-            <td *ngIf="groups.unitOfCost">
-              <p-dropdown [options]="unitsOfCost" class="p-inputtext-sm" [style]="{width: '150px'}" [(ngModel)]="groups.unitOfCost"></p-dropdown>
-            </td>
-            <td *ngIf="groups.approxMileage !== undefined">
-              <p-inputNumber [(ngModel)]="groups.approxMileage" class="p-inputtext-sm"
-                             [inputStyle]="{width: '100px'}"></p-inputNumber>
-            </td>
-            <td *ngIf="groups.regionOfOrigin">
-              <p-dropdown [options]="regionOfOrigin" class="p-inputtext-sm" [style]="{width: '150px'}"></p-dropdown>
-            </td>
-            <td *ngIf="groups.scrappageAndWaste !== undefined">
-              <p-inputNumber [(ngModel)]="groups.scrappageAndWaste" class="p-inputtext-sm"
-                             [inputStyle]="{width: '100px'}"></p-inputNumber>
-            </td>
-            <td *ngIf="groups.percentStaff !== undefined">
-              <p-inputNumber [(ngModel)]="groups.percentStaff" class="p-inputtext-sm"
-                             [inputStyle]="{width: '100px'}"></p-inputNumber>
-            </td>
-            <td *ngIf="groups.distance !== undefined">
-              <p-inputNumber [(ngModel)]="groups.distance" class="p-inputtext-sm"
-                             [inputStyle]="{width: '100px'}"></p-inputNumber>
-            </td>
-          </tr>
-        </ng-template>
-
-        <ng-template pTemplate="footer">
-          <tr>
-            <td>{{consultancyRow.name}}</td>
-            <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="consultancyRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(consultancyRow)"></p-inputNumber></td>
-            <td>{{consultancyRow.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}</td>
-          </tr>
-          <tr>
-            <td>{{subContractingRow.name}}</td>
-            <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="subContractingRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(subContractingRow)"></p-inputNumber></td>
-            <td>{{subContractingRow.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}</td>
-          </tr>
-          <tr>
-            <td>{{otherExternalCostsRow.name}}</td>
-            <td><p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="otherExternalCostsRow.totalCost" (ngModelChange)="calculateIndividualEmployeeCost(otherExternalCostsRow)"></p-inputNumber></td>
-            <td>{{otherExternalCostsRow.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}</td>
-          </tr>
-          <tr>
-            <td>Total External Cost</td>
-            <td>
-              {{calculateTotalExternalCost()}}
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Productivity Score</td>
-            <td>
-              {{calculateProductivityScore()}}
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-          </tr>
-          <tr>
-            <td>ONS Productivity Comparison</td>
-            <td> {{calculateProductivityComparison()}} </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Innovation - % of Turnover from Products <3 years</td>
-            <td>
-              <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
-                             [(ngModel)]="innovationPercent"
-              ></p-inputNumber>
-            </td>
-            <td>
-              {{ (turnover * (innovationPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}
-            </td>
-          </tr>
-          <tr>
-            <td>Training - % of Staff in Training (On the Job, PT-FE, Prof'snl or Post Grad)</td>
-            <td>
-              <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
-                             [(ngModel)]="staffTrainingPercent"
-              ></p-inputNumber>
-            </td>
-            <td>
-              {{ (employees * (staffTrainingPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}
-            </td>
-          </tr>
-          <tr>
-            <td>Export - % of Turnover from Export</td>
-            <td>
-              <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
-                             [(ngModel)]="exportPercent"
-              ></p-inputNumber>
-            </td>
-            <td>
-              {{ (turnover * (exportPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}
-            </td>
-          </tr>
-
-        </ng-template>
-
-        <ng-template pTemplate="groupfooter" let-groups >
-          <tr class="p-rowgroup-footer" style="background-color: #fff" >
-            <td style="text-align: right">Totals</td>
-            <td *ngIf="groups.unitsUom !== undefined"></td>
-            <td *ngIf="groups.mode !== undefined"></td>
-            <td *ngIf="groups.fuelType !== undefined"></td>
-            <td *ngIf="groups.noOfParts !== undefined"></td>
-            <td *ngIf="groups.totalUnits !== undefined"></td>
-            <td *ngIf="groups.otherModes !== undefined"></td>
-            <td *ngIf="groups.companyModeOfTransport !== undefined"></td>
-            <td *ngIf="groups.staffCommute !== undefined"></td>
-            <td *ngIf="groups.route !== undefined"></td>
-            <td *ngIf="groups.cost !== undefined">{{ groups.parent.totalCost }}</td>
-            <td *ngIf="groups.unitOfCost !== undefined"></td>
-            <td *ngIf="groups.approxMileage !== undefined"></td>
-            <td *ngIf="groups.regionOfOrigin !== undefined"></td>
-            <td *ngIf="groups.scrappageAndWaste !== undefined"></td>
-            <td *ngIf="groups.percentStaff !== undefined"></td>
-            <td *ngIf="groups.distance !== undefined"></td>
-
-          </tr>
-          <tr style="background-color: #fff" *ngIf="groups.parent.addRows">
-            <td colspan="5">
-              <p-button class="p-button-rounded p-button-success" label="Add new row" (click)="createNewTableRow(groups)" ></p-button>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </div>
 
   </div>
 </section>
-
-
