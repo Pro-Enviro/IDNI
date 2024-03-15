@@ -128,7 +128,7 @@ export const routes: Routes = [
   {path:'advisory-board',component:AdvisoryBoardComponent},
   {path:'stakeholders',component:StakeholdersComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'registration', component: RegisterComponent},
+  {path: 'registration-form', component: RegistrationFormComponent},
   {path:'dashboard',component:DashboardComponent, children: [
       {path: '', component: DasboardWidgetsComponent},
       {path: 'import', component: ImportEnvirotrackComponent},

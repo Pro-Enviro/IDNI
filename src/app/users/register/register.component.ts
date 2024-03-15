@@ -11,24 +11,32 @@ import {InputTextModule} from "primeng/inputtext";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {PanelModule} from "primeng/panel";
 import {PasswordModule} from "primeng/password";
+import {TopPageImgTplComponent} from "../../_partials/top-page-img-tpl/top-page-img-tpl.component";
+import {RegistrationFormComponent} from "./registration-form/registration-form.component";
+import {CardModule} from "primeng/card";
+import {EnergyCostInformationComponent} from "./energy-cost-information/energy-cost-information.component";
 
 @Component({
   selector: 'app-register',
   standalone: true,
-    imports: [
-        ButtonModule,
-        CalendarModule,
-        CheckboxModule,
-        ChipsModule,
-        FormsModule,
-        InputGroupAddonModule,
-        InputGroupModule,
-        InputNumberModule,
-        InputTextModule,
-        InputTextareaModule,
-        PanelModule,
-        PasswordModule
-    ],
+  imports: [
+    ButtonModule,
+    CalendarModule,
+    CheckboxModule,
+    ChipsModule,
+    FormsModule,
+    InputGroupAddonModule,
+    InputGroupModule,
+    InputNumberModule,
+    InputTextModule,
+    InputTextareaModule,
+    PanelModule,
+    PasswordModule,
+    TopPageImgTplComponent,
+    RegistrationFormComponent,
+    CardModule,
+    EnergyCostInformationComponent
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
@@ -51,4 +59,11 @@ export class RegisterComponent {
   website_url?:string;
   company_description?:string;
   policy?:boolean;
+  policy_idni?:boolean;
+  carbon_emissions?:any;
+  development_issues?:any;
+  challenges?:any;
+  decarb_plans?:any;
+  economy_opportunities?:any;
+  existing_plans?:any;
 }
