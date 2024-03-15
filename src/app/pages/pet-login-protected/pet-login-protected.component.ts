@@ -393,15 +393,15 @@ export class PetLoginProtected implements OnInit {
     // Return text as percentile
     switch (findClosestIndex) {
       case 0 :
-        return 'p10'
+        return '10th Percentile'
       case 1 :
-        return 'p25'
+        return '25th Percentile'
       case 2:
-        return 'p50'
+        return '50th Percentile'
       case 3:
-        return 'p75'
+        return '75th Percentile'
       case 4:
-        return 'p90'
+        return '90th Percentile'
       default:
         return ''
     }
@@ -479,12 +479,12 @@ export class PetLoginProtected implements OnInit {
             const sheets = workbook.SheetNames
             const worksheet = workbook.Sheets[workbook.SheetNames[3]];
             const raw_data = utils.sheet_to_json(worksheet, {header: 1});
-
             this.productivityData = raw_data
           }
         })
       }
     })
+
 
     this.http.get(`https://ecp.proenviro.co.uk/items/content/${sicCodeId}`).subscribe({
       next: (res: any) => {
@@ -498,9 +498,7 @@ export class PetLoginProtected implements OnInit {
             const sheets = workbook.SheetNames
             const worksheet = workbook.Sheets[workbook.SheetNames[0]];
             const raw_data = utils.sheet_to_json(worksheet, {header: 1});
-
             this.sicCodeData = raw_data
-
           }
         })
       }
