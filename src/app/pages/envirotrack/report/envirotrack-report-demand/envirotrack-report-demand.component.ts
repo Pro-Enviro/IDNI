@@ -267,6 +267,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
       this.chartData.push([moment(row.date).format('DD/MM/YYYY'), (Math.max(...row.hhd)*2 )])
 
     })
+
     // @ts-ignore
     this.chartData  = this.chartData.sort((a:any,b:any) => moment(a[0],'DD/MM/YYYY').format('YYYYMMDD') - moment(b[0],'DD/MM/YYYY').format('YYYYMMDD'))
     this.chartData.forEach((row:any) => {
