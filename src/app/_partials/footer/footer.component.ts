@@ -38,6 +38,10 @@ export class FooterComponent {
       routerLink: 'events'
     },
     {
+      label:'Virtual Tour',
+      routerLink:'virtual-tour'
+    },
+    {
       label: 'News',
       routerLink: 'coming-soon',
     },
