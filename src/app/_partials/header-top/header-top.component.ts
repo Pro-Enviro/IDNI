@@ -85,6 +85,10 @@ export class HeaderTopComponent {
       routerLink: 'events'
     },
     {
+      label:'Virtual Tour',
+      routerLink:'virtual-tour'
+    },
+    {
       label: 'News',
       routerLink: 'news'
     },
@@ -135,6 +139,10 @@ export class HeaderTopComponent {
     {
       label: 'Events',
       routerLink: 'events'
+    },
+    {
+      label:'Virtual Tour',
+      routerLink:'virtual-tour'
     },
     {
       label: 'News',

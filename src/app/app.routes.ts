@@ -79,6 +79,7 @@ import {ClimateCrisisComponent} from "./pages/news/climate-crisis/climate-crisis
 import {NetZeroBusinessComponent} from "./pages/news/net-zero-business/net-zero-business.component";
 import {ClimateChangeCommitteComponent} from "./pages/news/climate-change-committe/climate-change-committe.component";
 import {EnergyEfficiencyComponent} from "./pages/news/energy-efficiency/energy-efficiency.component";
+import {VirtualTourComponent} from "./pages/virtual-tour/virtual-tour.component";
 
 
 
@@ -91,6 +92,7 @@ export const routes: Routes = [
   {path:'events',component:EventsComponent},
   {path: 'coming-soon', component: ConstructionComponent},
   {path:'news',component:NewsComponent},
+  {path:'virtual-tour',component:VirtualTourComponent},
   {path:'tackling-climate-crisis',component:ClimateCrisisComponent},
   {path:'micro-businesses-net-zero',component:NetZeroBusinessComponent},
   {path:'progress-report-climate-change-committee',component:ClimateChangeCommitteComponent},
