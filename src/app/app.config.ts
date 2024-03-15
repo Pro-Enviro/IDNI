@@ -2,7 +2,13 @@
 import {APP_INITIALIZER, ApplicationConfig} from '@angular/core';
 import {provideRouter, ROUTES} from '@angular/router';
 import {provideAnimations} from "@angular/platform-browser/animations";
-import {HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  provideHttpClient,
+  withInterceptors,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 import {MessageService} from "primeng/api";
 import {map, Observable, tap} from "rxjs";
 import {StorageService} from "./_services/storage.service";
@@ -26,15 +32,9 @@ function initializeAppFactory(httpClient: HttpClient, storage: StorageService): 
 
 export const appConfig: ApplicationConfig = {
   providers: [
-
+    provideHttpClient(withInterceptors([HttpInterceptorService])),
     provideRouter(routes),
     provideAnimations(),
-    provideHttpClient(withInterceptorsFromDi()),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpInterceptorService,
-      multi: true,
-    },
     {
       provide: APP_INITIALIZER,
       useFactory: initializeAppFactory,

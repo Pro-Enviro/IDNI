@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {MessageService} from "primeng/api";
 import {Router} from "@angular/router";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, throwError} from "rxjs";
 
 export interface menu{
   id: number,
@@ -48,9 +48,10 @@ export class StorageService {
         detail: 'The requested information could not be received. Please login again'
       })
 
-      this.route.navigate(['login']).then(r => console.log('Navigating'));
-      return
+      this.route.navigate(['login'])
+      return Error('No token')
     }
+    console.log(item)
     return item
   }
 
