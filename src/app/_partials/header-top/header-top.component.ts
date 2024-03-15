@@ -70,6 +70,10 @@ export class HeaderTopComponent {
               {
                 label:'Latest Technologies',
                 routerLink:'latest-technologies'
+              },
+              {
+                label:'Virtual Tour',
+                routerLink:'virtual-tour'
               }
             ]
           }
@@ -83,10 +87,6 @@ export class HeaderTopComponent {
     {
       label: 'Events',
       routerLink: 'events'
-    },
-    {
-      label:'Virtual Tour',
-      routerLink:'virtual-tour'
     },
     {
       label: 'News',
@@ -129,6 +129,10 @@ export class HeaderTopComponent {
         {
           label:'Latest Technologies',
           routerLink:'latest-technologies'
+        },
+        {
+          label:'Virtual Tour',
+          routerLink:'virtual-tour'
         }
       ]
     },
