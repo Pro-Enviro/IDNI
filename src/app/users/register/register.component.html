@@ -33,16 +33,19 @@
       <label>Company Name<span style="color:#85bfba;padding-left:5px">*</span></label>
       <input type="text" name="company_name" pInputText class="text-base" [(ngModel)]="company_name" required>
     </div>
+
     <div class="formgrid grid p-2">
       <div class="field lg:col-6 sm:col-12 flex flex-column">
         <label>Address<span style="color:#85bfba;padding-left:5px">*</span></label>
         <input id="address" name="address" type="text" pInputText  [(ngModel)]="address" required>
       </div>
+
       <div class="field lg:col-6 sm:col-12 flex flex-column">
         <label>Postcode<span style="color:#85bfba;padding-left:5px">*</span></label>
         <input id="postcode" name="postcode" pInputText type="text" [(ngModel)]="postcode" required>
       </div>
     </div>
+
     <div class="field flex flex-column p-2">
       <label>Unique Property Reference Number (UPRN)</label>
       <small><i>if known</i></small>
@@ -54,6 +57,7 @@
         <label>To which local authority do you pay your business rates?<span style="color:#85bfba;padding-left:5px">*</span></label>
         <input id="local_auth" type="text" name="local_auth" pInputText [(ngModel)]="local_auth" required>
       </div>
+
       <div class="field lg:col-6 sm:col-12">
         <div class="flex flex-column">
           <label class="mb-2">Business established year</label>
@@ -103,7 +107,37 @@
 <div class="container p-3">
   <p-card styleClass="p-card-bck" header="Energy Costs Information">
     <p style="color:#85bfba">Please fill in the information if applicable !</p>
-    <app-energy-cost-information></app-energy-cost-information>
+    <div class="flex flex-column p-3">
+      <label>Energy Cost</label>
+      <div class="flex flex-row pt-3">
+        <p-dropdown [options]="energyTypes" [(ngModel)]="selectedEnergyType" optionLabel="name" [showClear]="true" placeholder="Select Energy Type" appendTo="body" styleClass="mr-5"></p-dropdown>
+        <p-inputNumber name="employees" inputId="integeronly" [(ngModel)]="energyTypeCost"></p-inputNumber>
+      </div>
+    </div>
+
+    <div class="flex flex-column p-3">
+      <label>Additional Energy Costs</label>
+      <div class="flex flex-row pt-3">
+        <p-dropdown [options]="energyCost" [(ngModel)]="selectedEnergyCost" optionLabel="name" [showClear]="true" placeholder="Select Additional Energy Costs" appendTo="body" styleClass="mr-5"></p-dropdown>
+        <p-inputNumber name="employees" inputId="integeronly" [(ngModel)]="energyCostAdditional"></p-inputNumber>
+      </div>
+    </div>
+
+    <div class="flex flex-column p-3">
+      <label>Additional Energy Information</label>
+      <div class="flex flex-row pt-3">
+        <p-dropdown [options]="energyInfo" [(ngModel)]="selectedEnergyInfo" optionLabel="name" [showClear]="true" placeholder="Select Additional Energy Information" appendTo="body" styleClass="mr-5"></p-dropdown>
+        <p-inputNumber name="employees" inputId="integeronly" [(ngModel)]="additionalEnergyInfo"></p-inputNumber>
+      </div>
+    </div>
+
+    <div class="flex flex-column p-3">
+      <label>Onsite Generation</label>
+      <div class="flex flex-row pt-3">
+        <p-dropdown [options]="generationOptions" [(ngModel)]="selectedGeneration" optionLabel="name" [showClear]="true" placeholder="Select Onsite Generation" appendTo="body" styleClass="mr-5"></p-dropdown>
+        <p-inputNumber name="employees" inputId="integeronly" [(ngModel)]="onSiteGeneration"></p-inputNumber>
+      </div>
+    </div>
   </p-card>
 </div>
 

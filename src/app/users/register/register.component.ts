@@ -12,9 +12,8 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {PanelModule} from "primeng/panel";
 import {PasswordModule} from "primeng/password";
 import {TopPageImgTplComponent} from "../../_partials/top-page-img-tpl/top-page-img-tpl.component";
-import {RegistrationFormComponent} from "./registration-form/registration-form.component";
 import {CardModule} from "primeng/card";
-import {EnergyCostInformationComponent} from "./energy-cost-information/energy-cost-information.component";
+import {DropdownModule} from "primeng/dropdown";
 
 @Component({
   selector: 'app-register',
@@ -33,9 +32,8 @@ import {EnergyCostInformationComponent} from "./energy-cost-information/energy-c
     PanelModule,
     PasswordModule,
     TopPageImgTplComponent,
-    RegistrationFormComponent,
     CardModule,
-    EnergyCostInformationComponent
+    DropdownModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -66,4 +64,112 @@ export class RegisterComponent {
   decarb_plans?:any;
   economy_opportunities?:any;
   existing_plans?:any;
+  selectedEnergyType?:any;
+  energyTypeCost?:any;
+  selectedEnergyCost?:any;
+  energyCostAdditional?:any;
+  selectedEnergyInfo?:any;
+  additionalEnergyInfo?:any;
+  selectedGeneration?:any;
+  onSiteGeneration?:any;
+
+  energyTypes:any = [
+    {
+      name:'Oil',
+      value:'oil'
+    },
+    {
+      name:'Gas',
+      value:'gas'
+    },
+    {
+      name:'LPG',
+      value:'lpg'
+    },
+    {
+      name:'Electricity',
+      value:'electricity'
+    },
+    {
+      name:'Diesel',
+      value:'diesel'
+    },
+    {
+      name:'Kerosene',
+      value:'kerosene'
+    },
+    {
+      name:'Gas Oil/Red Diesel',
+      value:'gas oil/red diesel'
+    },
+    {
+      name:'Other',
+      value:'other'
+    }
+  ]
+
+  energyCost :any =[
+    {
+      name:'Transportation Costs',
+      value:'transportation'
+    },
+    {
+      name:'Cost of Water',
+      value:'water'
+    },
+    {
+      name:'Cost of Waste/Recycling',
+      value: 'recycle'
+    }
+  ]
+
+  energyInfo:any =[
+    {
+      name:'Grid Allocation & Usage',
+      value:'grid allocation usage'
+    },
+    {
+      name:'kVa Availability',
+      value:'kva availability'
+    },
+    {
+      name:'Recorded Winter Max Demand kVa',
+      value:'winter max demand'
+    }
+  ]
+
+  generationOptions:any =[
+    {
+      name:'PV',
+      value:'pv'
+    },
+    {
+      name:'Wind',
+      value:'wind'
+    },
+    {
+      name:'Solar Thermal',
+      value:'solar thermal'
+    },
+    {
+      name:'CHP',
+      value:'chp'
+    },
+    {
+      name:'Biomass',
+      value:'biomass'
+    },
+    {
+      name:'Hydro',
+      value:'hydro'
+    },
+    {
+      name:'AD',
+      value:'ad'
+    },
+    {
+      name:'Other',
+      value:'other'
+    }
+  ]
 }
