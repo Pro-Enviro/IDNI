@@ -22,7 +22,9 @@ export class VirtualTourComponent {
 content,
 top_image,
 alias,
-id
+id,
+video_items.video_items_id.title,
+video_items.video_items_id.link
 `).subscribe({
       next: (res: any) => {
         this.content = res
