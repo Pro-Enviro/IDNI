@@ -186,6 +186,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
 
   getAsc = (startDate: any, endDate: any) => {
     this.asc = [];
+    this.initChart()
     // this.admin.fnGet(`items/energy_supply_info?filter[mpan][_eq]=${this.selectedMpan}`).subscribe({
     //   next: (res: any) => {
     //     this.supply = res.data
