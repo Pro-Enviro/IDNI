@@ -50,6 +50,7 @@ export const HttpInterceptorService: HttpInterceptorFn = (
           } else if (error.status === 403) {
             console.log('403 Error')
             // handle 403
+            router.navigate([''])
           } else {
             router.navigate(['login'])
           }
@@ -74,17 +75,18 @@ export const HttpInterceptorService: HttpInterceptorFn = (
           if (error.status === 401) {
             console.log('401 Error')
             // handle 401
-          // global.refreshToken()
-          //
-          //   const clonedRequest = req.clone({
-          //     headers: req.headers.set('Authorization', `Bearer ${token}`)
-          //   })
-          //
-          //   return next(clonedRequest)
+             auth.refreshToken()
+
+            const clonedRequest = req.clone({
+              headers: req.headers.set('Authorization', `Bearer ${token}`)
+            })
+
+            return next(clonedRequest)
 
           } else if (error.status === 403) {
             console.log('403 Error')
             // handle 403
+            router.navigate([''])
           } else {
             router.navigate(['login'])
           }
