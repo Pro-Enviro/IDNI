@@ -3,7 +3,7 @@ import {ButtonModule} from "primeng/button";
 import {CalendarModule} from "primeng/calendar";
 import {CheckboxModule} from "primeng/checkbox";
 import {ChipsModule} from "primeng/chips";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, NgForm} from "@angular/forms";
 import {InputGroupAddonModule} from "primeng/inputgroupaddon";
 import {InputGroupModule} from "primeng/inputgroup";
 import {InputNumberModule} from "primeng/inputnumber";
@@ -14,6 +14,7 @@ import {PasswordModule} from "primeng/password";
 import {TopPageImgTplComponent} from "../../_partials/top-page-img-tpl/top-page-img-tpl.component";
 import {CardModule} from "primeng/card";
 import {DropdownModule} from "primeng/dropdown";
+import {DbService} from "../../_services/db.service";
 
 @Component({
   selector: 'app-register',
@@ -57,7 +58,7 @@ export class RegisterComponent {
   sic_code?:string;
   website_url?:string;
   company_description?:string;
-  policy?:boolean;
+  policy:boolean = false;
   policy_idni?:boolean;
   carbon_emissions?:any;
   development_issues?:any;
@@ -174,9 +175,20 @@ export class RegisterComponent {
       value:'other'
     }
   ]
-  //protected readonly onsubmit = onsubmit;
 
-  onSubmit = (event:any) => {
+  constructor(private db: DbService) {
+  }
+
+  onSubmit = () => {
+    const userObj = {
+      first_name:this.first_name,
+      last_name:this.last_name,
+      email:this.email,
+      phone_number:this.phone_number,
+      password:this.password,
+      confirm_password:this.confirm_password,
+    }
+
    const formObj = {
      name: this.company_name,
      address:this.address,
@@ -209,5 +221,13 @@ export class RegisterComponent {
      policy_idni:this.policy_idni
 
    }
+
+    this.db.addCompany(['*'],formObj,userObj).subscribe({
+      next:(res) => {
+        console.log(res)
+      }
+    })
+
   }
+
 }

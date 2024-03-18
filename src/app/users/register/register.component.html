@@ -1,212 +1,213 @@
 
-<div class="container p-3">
-  <p-card styleClass="p-card-bck" header="User Information">
+  <div class="container p-3">
+    <p-card styleClass="p-card-bck" header="User Information">
       <div class="field flex flex-column p-2">
         <label>First Name<span style="color:#85bfba;padding-left:5px">*</span></label>
         <input type="text" id="first_name" name="first_name" pInputText class="text-base" [(ngModel)]="first_name" required>
       </div>
-    <div class="field flex flex-column p-2">
-      <label>last Name<span style="color:#85bfba;padding-left:5px">*</span></label>
-      <input type="text" id="last_name" name="last_name" pInputText class="text-base" [(ngModel)]="last_name" required>
-    </div>
-    <div class="formgrid grid p-2">
-      <div class="field lg:col-6 sm:col-12">
-        <label>Email<span style="color:#85bfba;padding-left:5px">*</span></label>
+      <div class="field flex flex-column p-2">
+        <label>last Name<span style="color:#85bfba;padding-left:5px">*</span></label>
+        <input type="text" id="last_name" name="last_name" pInputText class="text-base" [(ngModel)]="last_name" required>
+      </div>
+      <div class="formgrid grid p-2">
+        <div class="field lg:col-6 sm:col-12">
+          <label>Email<span style="color:#85bfba;padding-left:5px">*</span></label>
+          <p-inputGroup>
+            <p-inputGroupAddon>
+              <i class="pi pi-envelope"></i>
+            </p-inputGroupAddon>
+            <input type="text" id="email" name="email" pInputText [(ngModel)]="email" required pattern="[^ @]*@[^ @]*" emailDomain/>
+          </p-inputGroup>
+        </div>
+        <div class="field lg:col-6 sm:col-12">
+          <label>Phone<span style="color:#85bfba;padding-left:5px">*</span></label>
+          <p-inputGroup>
+            <p-inputGroupAddon>
+              <i class="pi pi-phone"></i>
+            </p-inputGroupAddon>
+            <input pInputText id="phone_number" type="text" name="phone_number" [(ngModel)]="phone_number" required/>
+          </p-inputGroup>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="container p-3">
+    <p-card styleClass="p-card-bck" header="Company Information">
+      <div class="field flex flex-column p-2">
+        <label>Company Name<span style="color:#85bfba;padding-left:5px">*</span></label>
+        <input type="text" id="company_name" name="company_name" pInputText class="text-base" [(ngModel)]="company_name" required>
+      </div>
+
+      <div class="formgrid grid p-2">
+        <div class="field lg:col-6 sm:col-12 flex flex-column">
+          <label>Address<span style="color:#85bfba;padding-left:5px">*</span></label>
+          <input id="address" name="address" type="text" pInputText  [(ngModel)]="address" required>
+        </div>
+
+        <div class="field lg:col-6 sm:col-12 flex flex-column">
+          <label>Postcode<span style="color:#85bfba;padding-left:5px">*</span></label>
+          <input id="postcode" name="postcode" pInputText type="text" [(ngModel)]="postcode" required>
+        </div>
+      </div>
+
+      <div class="field flex flex-column p-2">
+        <label>Unique Property Reference Number (UPRN)</label>
+        <small><i>if known</i></small>
+        <input id="uprn" type="text" name="uprn" pInputText [(ngModel)]="uprn">
+      </div>
+
+      <div class="formgrid grid p-2">
+        <div class="field lg:col-6 sm:col-12">
+          <label>To which local authority do you pay your business rates?<span style="color:#85bfba;padding-left:5px">*</span></label>
+          <input id="local_auth" type="text" name="local_auth" pInputText [(ngModel)]="local_auth" required>
+        </div>
+
+        <div class="field lg:col-6 sm:col-12">
+          <div class="flex flex-column">
+            <label class="mb-2">Business established year</label>
+            <p-calendar [(ngModel)]="est_year" [showIcon]="true" dateFormat="dd/mm/yy" styleClass="date-btn"></p-calendar>
+          </div>
+        </div>
+      </div>
+
+      <div class="formgrid grid p-2">
+        <div class="field lg:col-6 sm:col-12">
+          <label>Total number of people employed by your business?</label>
+          <p-inputNumber id="employees" name="employees" inputId="integeronly" [(ngModel)]="employees"></p-inputNumber>
+        </div>
+        <div class="field lg:col-6 sm:col-12">
+          <label>Please,provide your most recent annual turnover figure (£)</label>
+          <p-inputNumber id="turnover" [(ngModel)]="turnover" inputId="currency-gbp" mode="currency" currency="GBP" name="turnover"></p-inputNumber>
+        </div>
+      </div>
+
+      <div class="formgrid grid p-2">
+        <div class="field lg:col-6 sm:col-12 flex flex-column">
+          <label>Sector</label>
+          <input id="sector" type="text" name="sector" [(ngModel)]="sector" pInputText>
+        </div>
+        <div class="field lg:col-6 sm:col-12 flex flex-column">
+          <label>Sic Code</label>
+          <p-chips [(ngModel)]="sic_code" separator=","></p-chips>
+        </div>
+      </div>
+      <div class="field flex flex-column p-2">
+        <label>Website</label>
         <p-inputGroup>
           <p-inputGroupAddon>
-            <i class="pi pi-envelope"></i>
+            <i class="pi pi-globe"></i>
           </p-inputGroupAddon>
-          <input type="text" id="email" name="email" pInputText [(ngModel)]="email" required pattern="[^ @]*@[^ @]*" emailDomain/>
+          <input id="website_url" type="text" pInputText name="website_url" [(ngModel)]="website_url"/>
         </p-inputGroup>
+
       </div>
-      <div class="field lg:col-6 sm:col-12">
-        <label>Phone<span style="color:#85bfba;padding-left:5px">*</span></label>
-        <p-inputGroup>
-          <p-inputGroupAddon>
-            <i class="pi pi-phone"></i>
-          </p-inputGroupAddon>
-          <input pInputText id="phone_number" type="text" name="phone_number" [(ngModel)]="phone_number" required/>
-        </p-inputGroup>
+      <div class="field flex flex-column p-2">
+        <label>Describe the primary business activity?</label>
+        <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" [(ngModel)]="company_description"></textarea>
       </div>
-    </div>
-  </p-card>
-</div>
-
-<div class="container p-3">
-  <p-card styleClass="p-card-bck" header="Company Information">
-    <div class="field flex flex-column p-2">
-      <label>Company Name<span style="color:#85bfba;padding-left:5px">*</span></label>
-      <input type="text" id="company_name" name="company_name" pInputText class="text-base" [(ngModel)]="company_name" required>
-    </div>
-
-    <div class="formgrid grid p-2">
-      <div class="field lg:col-6 sm:col-12 flex flex-column">
-        <label>Address<span style="color:#85bfba;padding-left:5px">*</span></label>
-        <input id="address" name="address" type="text" pInputText  [(ngModel)]="address" required>
-      </div>
-
-      <div class="field lg:col-6 sm:col-12 flex flex-column">
-        <label>Postcode<span style="color:#85bfba;padding-left:5px">*</span></label>
-        <input id="postcode" name="postcode" pInputText type="text" [(ngModel)]="postcode" required>
-      </div>
-    </div>
-
-    <div class="field flex flex-column p-2">
-      <label>Unique Property Reference Number (UPRN)</label>
-      <small><i>if known</i></small>
-      <input id="uprn" type="text" name="uprn" pInputText [(ngModel)]="uprn">
-    </div>
-
-    <div class="formgrid grid p-2">
-      <div class="field lg:col-6 sm:col-12">
-        <label>To which local authority do you pay your business rates?<span style="color:#85bfba;padding-left:5px">*</span></label>
-        <input id="local_auth" type="text" name="local_auth" pInputText [(ngModel)]="local_auth" required>
-      </div>
-
-      <div class="field lg:col-6 sm:col-12">
-        <div class="flex flex-column">
-          <label class="mb-2">Business established year</label>
-          <p-calendar [(ngModel)]="est_year" [showIcon]="true" dateFormat="dd/mm/yy" styleClass="date-btn"></p-calendar>
-        </div>
-      </div>
-    </div>
-
-    <div class="formgrid grid p-2">
-      <div class="field lg:col-6 sm:col-12">
-        <label>Total number of people employed by your business?</label>
-        <p-inputNumber id="employees" name="employees" inputId="integeronly" [(ngModel)]="employees"></p-inputNumber>
-      </div>
-      <div class="field lg:col-6 sm:col-12">
-        <label>Please,provide your most recent annual turnover figure (£)</label>
-        <p-inputNumber id="turnover" [(ngModel)]="turnover" inputId="currency-gbp" mode="currency" currency="GBP" name="turnover"></p-inputNumber>
-      </div>
-    </div>
-
-    <div class="formgrid grid p-2">
-      <div class="field lg:col-6 sm:col-12 flex flex-column">
-        <label>Sector</label>
-        <input id="sector" type="text" name="sector" [(ngModel)]="sector" pInputText>
-      </div>
-      <div class="field lg:col-6 sm:col-12 flex flex-column">
-        <label>Sic Code</label>
-        <p-chips [(ngModel)]="sic_code" separator=","></p-chips>
-      </div>
-    </div>
-    <div class="field flex flex-column p-2">
-      <label>Website</label>
-      <p-inputGroup>
-        <p-inputGroupAddon>
-          <i class="pi pi-globe"></i>
-        </p-inputGroupAddon>
-        <input id="website_url" type="text" pInputText name="website_url" [(ngModel)]="website_url"/>
-      </p-inputGroup>
-
-    </div>
-    <div class="field flex flex-column p-2">
-      <label>Describe the primary business activity?</label>
-      <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" [(ngModel)]="company_description"></textarea>
-    </div>
-  </p-card>
-</div>
-
-<div class="container p-3">
-  <p-card styleClass="p-card-bck" header="Energy Costs Information">
-    <p style="color:#85bfba">Please fill in the information if applicable !</p>
-    <div class="flex flex-column p-3">
-      <label>Energy Cost</label>
-      <div class="flex flex-row pt-3">
-        <p-dropdown [options]="energyTypes" [(ngModel)]="selectedEnergyType" optionLabel="name" [showClear]="true" placeholder="Select Energy Type" appendTo="body" styleClass="mr-5"></p-dropdown>
-        <p-inputNumber name="energyTypeCost" inputId="integeronly" [(ngModel)]="energyTypeCost"></p-inputNumber>
-        <input class="ml-3" id="otherEnergyType" type="text" name="otherEnergyType" [(ngModel)]="otherEnergyType" pInputText placeholder="Other Energy Type">
-      </div>
-    </div>
-
-
-    <div class="flex flex-column p-3">
-      <label>Additional Energy Costs</label>
-      <div class="flex flex-row pt-3">
-        <p-dropdown [options]="energyCost" [(ngModel)]="selectedEnergyCost" optionLabel="name" [showClear]="true" placeholder="Select Additional Energy Costs" appendTo="body" styleClass="mr-5"></p-dropdown>
-        <p-inputNumber name="energyCostAdditional" inputId="integeronly" [(ngModel)]="energyCostAdditional"></p-inputNumber>
-      </div>
-    </div>
-
-    <div class="flex flex-column p-3">
-      <label>Additional Energy Information</label>
-      <div class="flex flex-row pt-3">
-        <p-dropdown [options]="energyInfo" [(ngModel)]="selectedEnergyInfo" optionLabel="name" [showClear]="true" placeholder="Select Additional Energy Information" appendTo="body" styleClass="mr-5"></p-dropdown>
-        <p-inputNumber name="additionalEnergyInfo" inputId="integeronly" [(ngModel)]="additionalEnergyInfo"></p-inputNumber>
-      </div>
-    </div>
-
-    <div class="flex flex-column p-3">
-      <label>Onsite Generation</label>
-      <div class="flex flex-row pt-3">
-        <p-dropdown [options]="generationOptions" [(ngModel)]="selectedOnSiteGeneration" optionLabel="name" [showClear]="true" placeholder="Select Onsite Generation" appendTo="body" styleClass="mr-5"></p-dropdown>
-        <p-inputNumber name="onSiteGeneration" inputId="integeronly" [(ngModel)]="onSiteGeneration"></p-inputNumber>
-        <input class="ml-3" id="otherOnSiteGeneration" type="text" name="otherOnSiteGeneration" [(ngModel)]="otherOnSiteGeneration" pInputText placeholder="Other Onsite Generation">
-      </div>
-    </div>
-  </p-card>
-</div>
-
-<div class="container p-3">
-  <p-card styleClass="p-card-bck" header="Additional Information">
-    <p style="color:#85bfba">Please fill in the information if applicable !</p>
-    <div class="field flex flex-column p-2">
-      <label>Total annual carbon emissions</label>
-      <input id="carbon_emissions" type="text" name="carbon_emissions" pInputText class="text-base" [(ngModel)]="carbon_emissions">
-    </div>
-
-    <div class="field flex flex-column p-2">
-      <label>Existing or anticipated land/planning/development issues or proposals</label>
-      <p><small>(or opportunities, such as spare land seeking a tenant)</small></p>
-      <input type="text" id="development_issues" name="development_issues" pInputText class="text-base" [(ngModel)]="development_issues">
-    </div>
-
-    <div class="field flex flex-column p-2">
-      <label>Specific decarbonisation challenges anticipated</label>
-      <p><small>(e.g., industrial operations that cannot be electrified)</small></p>
-      <input type="text" id="challenges" name="challenges" pInputText class="text-base" [(ngModel)]="challenges">
-    </div>
-
-    <div class="field flex flex-column p-2">
-      <label>Existing decarbonisation plans in place</label>
-      <input id="decarb_plans" type="text" name="decarb_plans" pInputText class="text-base" [(ngModel)]="decarb_plans">
-    </div>
-
-    <div class="field flex flex-column p-2">
-      <label>Circular economy opportunities/waste streams currently seen as problematic with rough volumes</label>
-      <input id="economy_opportunitie" type="text" name="economy_opportunities" pInputText class="text-base" [(ngModel)]="economy_opportunities">
-    </div>
-  </p-card>
-</div>
-
-<div class="container p-3">
-  <h2 class="header-style">Privacy</h2>
-  <div class="">
-    <p-checkbox [binary]="true" inputId="policy" name="policy" [(ngModel)]="policy" value="policy" [required]="true"></p-checkbox>
-    <label class="pl-2">I agree with the terms and conditions<span style="color:#006633;padding-left:5px">*</span></label>
+    </p-card>
   </div>
-  <div class="mt-3">
-    <p-checkbox [binary]="true" inputId="policy_idni" name="policy_idni" [(ngModel)]="policy_idni" value="policy_idni" [required]="true"></p-checkbox>
-    <label class="pl-2">I agree to share my data to Industrial Decarbonisation Northern Ireland (ID-NI) Project.<span style="color:#006633;padding-left:5px">*</span></label>
+
+  <div class="container p-3">
+    <p-card styleClass="p-card-bck" header="Energy Costs Information">
+      <p style="color:#85bfba">Please fill in the information if applicable !</p>
+      <div class="flex flex-column p-3">
+        <label>Energy Cost</label>
+        <div class="flex flex-row pt-3">
+          <p-dropdown [options]="energyTypes" [(ngModel)]="selectedEnergyType" optionLabel="name" [showClear]="true" placeholder="Select Energy Type" appendTo="body" styleClass="mr-5"></p-dropdown>
+          <p-inputNumber name="energyTypeCost" inputId="integeronly" [(ngModel)]="energyTypeCost"></p-inputNumber>
+          <input class="ml-3" id="otherEnergyType" type="text" name="otherEnergyType" [(ngModel)]="otherEnergyType" pInputText placeholder="Other Energy Type">
+        </div>
+      </div>
+
+
+      <div class="flex flex-column p-3">
+        <label>Additional Energy Costs</label>
+        <div class="flex flex-row pt-3">
+          <p-dropdown [options]="energyCost" [(ngModel)]="selectedEnergyCost" optionLabel="name" [showClear]="true" placeholder="Select Additional Energy Costs" appendTo="body" styleClass="mr-5"></p-dropdown>
+          <p-inputNumber name="energyCostAdditional" inputId="integeronly" [(ngModel)]="energyCostAdditional"></p-inputNumber>
+        </div>
+      </div>
+
+      <div class="flex flex-column p-3">
+        <label>Additional Energy Information</label>
+        <div class="flex flex-row pt-3">
+          <p-dropdown [options]="energyInfo" [(ngModel)]="selectedEnergyInfo" optionLabel="name" [showClear]="true" placeholder="Select Additional Energy Information" appendTo="body" styleClass="mr-5"></p-dropdown>
+          <p-inputNumber name="additionalEnergyInfo" inputId="integeronly" [(ngModel)]="additionalEnergyInfo"></p-inputNumber>
+        </div>
+      </div>
+
+      <div class="flex flex-column p-3">
+        <label>Onsite Generation</label>
+        <div class="flex flex-row pt-3">
+          <p-dropdown [options]="generationOptions" [(ngModel)]="selectedOnSiteGeneration" optionLabel="name" [showClear]="true" placeholder="Select Onsite Generation" appendTo="body" styleClass="mr-5"></p-dropdown>
+          <p-inputNumber name="onSiteGeneration" inputId="integeronly" [(ngModel)]="onSiteGeneration"></p-inputNumber>
+          <input class="ml-3" id="otherOnSiteGeneration" type="text" name="otherOnSiteGeneration" [(ngModel)]="otherOnSiteGeneration" pInputText placeholder="Other Onsite Generation">
+        </div>
+      </div>
+    </p-card>
   </div>
-  @if(policy_idni){
-    <div class="grid p-4 m-3" style="background:#fcfcfc">
-      <div class="lg:col-6 sm:col-12">
-        <div class="field flex flex-column pr-3">
-          <label>Password<span style="color:#85bfba;padding-left:5px">*</span></label>
-          <p-password [(ngModel)]="password" [feedback]="false" [toggleMask]="true"></p-password>
-        </div>
+
+  <div class="container p-3">
+    <p-card styleClass="p-card-bck" header="Additional Information">
+      <p style="color:#85bfba">Please fill in the information if applicable !</p>
+      <div class="field flex flex-column p-2">
+        <label>Total annual carbon emissions</label>
+        <input id="carbon_emissions" type="text" name="carbon_emissions" pInputText class="text-base" [(ngModel)]="carbon_emissions">
       </div>
-      <div class="lg:col-6 sm:col-12">
-        <div class="field field flex flex-column">
-          <label>Confirm Password<span style="color:#85bfba;padding-left:5px">*</span></label>
-          <p-password [(ngModel)]="confirm_password" [feedback]="false" [toggleMask]="true"></p-password>
-        </div>
+
+      <div class="field flex flex-column p-2">
+        <label>Existing or anticipated land/planning/development issues or proposals</label>
+        <p><small>(or opportunities, such as spare land seeking a tenant)</small></p>
+        <input type="text" id="development_issues" name="development_issues" pInputText class="text-base" [(ngModel)]="development_issues">
       </div>
+
+      <div class="field flex flex-column p-2">
+        <label>Specific decarbonisation challenges anticipated</label>
+        <p><small>(e.g., industrial operations that cannot be electrified)</small></p>
+        <input type="text" id="challenges" name="challenges" pInputText class="text-base" [(ngModel)]="challenges">
+      </div>
+
+      <div class="field flex flex-column p-2">
+        <label>Existing decarbonisation plans in place</label>
+        <input id="decarb_plans" type="text" name="decarb_plans" pInputText class="text-base" [(ngModel)]="decarb_plans">
+      </div>
+
+      <div class="field flex flex-column p-2">
+        <label>Circular economy opportunities/waste streams currently seen as problematic with rough volumes</label>
+        <input id="economy_opportunitie" type="text" name="economy_opportunities" pInputText class="text-base" [(ngModel)]="economy_opportunities">
+      </div>
+    </p-card>
+  </div>
+
+  <div class="container p-3">
+    <h2 class="header-style">Privacy</h2>
+    <div class="">
+      <p-checkbox [binary]="true" inputId="policy" name="policy" [(ngModel)]="policy" value="policy" [required]="true"></p-checkbox>
+      <label class="pl-2">I agree with the terms and conditions<span style="color:#006633;padding-left:5px">*</span></label>
     </div>
-  }
-  <p><small>Please read the <a href="" style="color:#85bfba">Data Privacy Policy</a> for full information.</small></p>
-  <p-button styleClass="btn-style mt-3" label="Submit" icon="pi pi-send" (click)="onSubmit($event)"></p-button>
-</div>
+    <div class="mt-3">
+      <p-checkbox [binary]="true" inputId="policy_idni" name="policy_idni" [(ngModel)]="policy_idni" value="policy_idni" [required]="true"></p-checkbox>
+      <label class="pl-2">I agree to share my data to Industrial Decarbonisation Northern Ireland (ID-NI) Project.<span style="color:#006633;padding-left:5px">*</span></label>
+    </div>
+    @if(policy_idni){
+      <div class="grid p-4 m-3" style="background:#fcfcfc">
+        <div class="lg:col-6 sm:col-12">
+          <div class="field flex flex-column pr-3">
+            <label>Password<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <p-password [(ngModel)]="password" [feedback]="false" [toggleMask]="true"></p-password>
+          </div>
+        </div>
+        <div class="lg:col-6 sm:col-12">
+          <div class="field field flex flex-column">
+            <label>Confirm Password<span style="color:#85bfba;padding-left:5px">*</span></label>
+            <p-password [(ngModel)]="confirm_password" [feedback]="false" [toggleMask]="true"></p-password>
+          </div>
+        </div>
+      </div>
+    }
+    <p><small>Please read the <a href="" style="color:#85bfba">Data Privacy Policy</a> for full information.</small></p>
+    <p-button styleClass="btn-style mt-3" label="Submit" icon="pi pi-send" (onClick)="onSubmit()" [disabled]="!policy"></p-button>
+  </div>
+
