@@ -250,7 +250,6 @@ export class RegisterComponent implements OnInit{
 
   checkInputs = () => {
     if (this?.first_name?.length < 3) {
-      console.log(this.first_name?.length && this?.first_name?.length < 3);
       this.messages = [{
         severity: 'warn',
         detail: 'Your first name must contain minimum 3 characters!'
@@ -290,14 +289,15 @@ export class RegisterComponent implements OnInit{
       return false;
     }
 
-    // const reg = /^([\w-\.]+@(?!lsu.edu)([\w-]+\.)+[\w-]{2,4})?$/;
-    // if (reg.test(this.email)){
-    //   this.messages = [{
-    //     severity: 'warn',
-    //     detail: 'Invalid email!'
-    //   }]
-    //   return false;
-    // }
+    const reg = /^\S+@\S+\.\S+$/;
+
+    if (!reg.test(this.email)) {
+      this.messages = [{
+        severity: 'warn',
+        detail: 'Invalid email!'
+      }];
+      return false;
+    }
 
      return true;
   }
