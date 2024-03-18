@@ -70,10 +70,6 @@ export class HeaderTopComponent {
               {
                 label:'Latest Technologies',
                 routerLink:'latest-technologies'
-              },
-              {
-                label:'Virtual Tour',
-                routerLink:'virtual-tour'
               }
             ]
           }
@@ -83,6 +79,10 @@ export class HeaderTopComponent {
     {
       label: 'NI Councils',
       routerLink: 'local-decarbonisation'
+    },
+    {
+      label:'Virtual Tour',
+      routerLink:'virtual-tour'
     },
     {
       label: 'Events',
@@ -129,16 +129,16 @@ export class HeaderTopComponent {
         {
           label:'Latest Technologies',
           routerLink:'latest-technologies'
-        },
-        {
-          label:'Virtual Tour',
-          routerLink:'virtual-tour'
         }
       ]
     },
     {
       label: 'NI Councils',
       routerLink: 'local-decarbonisation'
+    },
+    {
+      label:'Virtual Tour',
+      routerLink:'virtual-tour'
     },
     {
       label: 'Events',
