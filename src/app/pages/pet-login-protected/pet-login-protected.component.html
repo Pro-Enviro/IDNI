@@ -278,7 +278,7 @@
         </ng-template>
       </p-table>
 
-      <p-button label="Save" ></p-button>
+      <p-button label="Save"  *ngIf="selectedCompany" (click)="savePETdata()"></p-button>
     </div>
   </div>
 

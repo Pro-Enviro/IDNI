@@ -1,5 +1,6 @@
+
 import {
-  HttpErrorResponse,
+  HttpErrorResponse, HttpHandler,
   HttpHandlerFn,
   HttpInterceptorFn,
   HttpRequest,
@@ -9,6 +10,7 @@ import {StorageService} from "../_services/storage.service";
 import {inject} from '@angular/core';
 import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
+import {AuthService} from "../_services/users/auth.service";
 
 export const HttpInterceptorService: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
@@ -19,36 +21,89 @@ export const HttpInterceptorService: HttpInterceptorFn = (
   const router = inject(Router)
   const msg = inject(MessageService)
   const token = storage.get('access_token');
+  const auth = inject(AuthService)
 
 
-  // if (token) {
-  //   console.log('Token is fine')
-  //   req = req.clone({
-  //     setHeaders: {Authorization: `Bearer ${token}`}
-  //   });
-  //   return next(req);
-  //
-  // } else {
-    console.log('Token is not fine')
-    return next(req).pipe(
+  if (token){
+    const clonedRequest = req.clone({
+      headers: req.headers.set('Authorization', `Bearer ${token}`)
+    })
+
+    return next(clonedRequest).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log(error)
+        console.log('ERROR: ', error)
         if ([401, 403].includes(error.status)) {
           console.log('rerouting to login')
+          console.log(error)
           // auto logout if 401 or 403 response returned from api
+          if (error.status === 401) {
+            console.log('401 Error')
+            // handle 401
+            auth.refreshToken()
 
+            const clonedRequest = req.clone({
+              headers: req.headers.set('Authorization', `Bearer ${token}`)
+            })
+
+            return next(clonedRequest)
+
+          } else if (error.status === 403) {
+            console.log('403 Error')
+            // handle 403
+          } else {
+            router.navigate(['login'])
+          }
         }
         msg.add({
           severity: 'warning',
           detail: 'You are unauthorized.'
         })
 
+        console.log('HERE')
 
         return throwError(() => error);
       }))
-  // }
+  } else {
+    console.log('ERROR INTERCEPTOR')
+    return next(req).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.log('ERROR: ', error)
+        if ([401, 403].includes(error.status)) {
+          console.log('rerouting to login')
+          // auto logout if 401 or 403 response returned from api
+          if (error.status === 401) {
+            console.log('401 Error')
+            // handle 401
+          // global.refreshToken()
+          //
+          //   const clonedRequest = req.clone({
+          //     headers: req.headers.set('Authorization', `Bearer ${token}`)
+          //   })
+          //
+          //   return next(clonedRequest)
 
+          } else if (error.status === 403) {
+            console.log('403 Error')
+            // handle 403
+          } else {
+            router.navigate(['login'])
+          }
+
+          router.navigate(['login'])
+        }
+        msg.add({
+          severity: 'warning',
+          detail: 'You are unauthorized.'
+        })
+
+        console.log('HERE')
+
+        return throwError(() => error);
+      }))
+  }
 };
+
+
 
 
 // import { Injectable } from '@angular/core';
@@ -97,5 +152,5 @@ export const HttpInterceptorService: HttpInterceptorFn = (
 //         return evt;
 //       }));
 //   }
-// }
+//
 

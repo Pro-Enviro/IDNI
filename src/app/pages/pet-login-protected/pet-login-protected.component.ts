@@ -20,6 +20,7 @@ import {EnvirotrackService} from "../envirotrack/envirotrack.service";
 import {NgxEchartsDirective} from "ngx-echarts";
 import {EChartsOption} from "echarts";
 import {MessageService} from "primeng/api";
+import {DbService} from "../../_services/db.service";
 const rowNames: string[] = ['Cost of Energy', 'Transportation Costs', 'Cost of Water', 'Cost of Waste', 'Cost of Raw Materials', 'Cost of Bought in Goods - Consumables and bought in parts', 'Consultancy Cost', 'Sub Contracting Cost', 'Other External Costs (Legal, rental, accounting etc)']
 
 const energyNames: string[] = ['Electricity', 'Natural Gas (Grid)', 'Natural Gas off Grid', 'Bio Gas Off Grid', 'LPG', 'Oil', 'Kerosene', 'Bio Fuels', 'Bio Mass', 'Coal for Industrial use', 'Other']
@@ -220,7 +221,7 @@ export class PetLoginProtected implements OnInit {
   markStart: any
   markEnd:any
 
-  constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService) {}
+  constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService) {}
 
 
 
@@ -253,17 +254,43 @@ export class PetLoginProtected implements OnInit {
 
   }
 
+
   getPETReport = (id: number) => {
-    this.generateClasses('Cost of Energy', TableRow, energyNames)
-    this.generateClasses('Cost of Raw Materials ', MaterialRow, materialNames)
-    this.generateClasses('Cost of Bought in Goods - Consumables and bought in parts', BoughtInParts)
-    this.generateClasses('Water Usage', WaterUsage)
-    this.generateClasses('Waste', Waste)
-    this.generateClasses('Road Freight', RoadFreight)
-    this.generateClasses('Other Freight', OtherFreightTransportation)
-    this.generateClasses('Company Travel', CompanyTravel)
-    this.generateClasses('Staff Commute', StaffCommute)
-    this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
+
+
+    this.db.getPetData(id).subscribe({
+      next: (res: any) => {
+        if (res.data.PET_Data) {
+          const data = JSON.parse(res.data.PET_Data)
+          this.data = data.defaultData || []
+          this.employees = data.employees || 0
+          this.turnover = data.turnover || 0
+          this.staffTrainingPercent = data.staffTrainingPercent || 0
+          this.sicCode = data.sicNumber || 0
+          this.sicCodeLetter = data.sicLetter || ''
+          this.productivityScore = data.productivityScore || 0
+          this.innovationPercent = data.innovationPercent || 0
+          this.exportPercent = data.exportPercent || 0
+          this.productivityPercentile = data.productivityPercentile || null
+          this.markStart = data.markStart || 0
+          this.markEnd = data.markEnd || 0
+
+          this.initChart()
+        } else {
+          // If no saved data
+          this.generateClasses('Cost of Energy', TableRow, energyNames)
+          this.generateClasses('Cost of Raw Materials ', MaterialRow, materialNames)
+          this.generateClasses('Cost of Bought in Goods - Consumables and bought in parts', BoughtInParts)
+          this.generateClasses('Water Usage', WaterUsage)
+          this.generateClasses('Waste', Waste)
+          this.generateClasses('Road Freight', RoadFreight)
+          this.generateClasses('Other Freight', OtherFreightTransportation)
+          this.generateClasses('Company Travel', CompanyTravel)
+          this.generateClasses('Staff Commute', StaffCommute)
+          this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
+        }
+      }
+    })
   }
 
   sicCodeToLetter = () => {
@@ -475,8 +502,6 @@ export class PetLoginProtected implements OnInit {
     }
 
     this.initChart()
-
-
   }
 
   sumValues = (obj:any):number => <number>Object.values(obj).reduce((a: any, b: any) => a + b, 0);
@@ -724,6 +749,56 @@ export class PetLoginProtected implements OnInit {
         }
       ]
     }
+  }
+
+  savePETdata = () => {
+    const objectToSave = {
+      sicNumber: this.sicCode,
+      sicLetter: this.sicCodeLetter,
+      turnover: this.turnover,
+      employees: this.employees,
+      defaultData: this.data,
+      productivityScore: this.productivityScore,
+      innovationPercent: this.innovationPercent,
+      staffTrainingPercent: this.staffTrainingPercent,
+      exportPercent: this.exportPercent,
+      productivityPercentile: this.productivityPercentile,
+      markStart: this.markStart,
+      markEnd: this.markEnd,
+    }
+
+    console.log(objectToSave)
+
+    if (!this.selectedCompany) return;
+
+    const token = this.storage.get('access_token');
+    if (!token) return;
+
+
+    console.log(objectToSave)
+
+    // {
+    //   headers:{
+    //     'content-type': 'application/json',
+    //       'Authorization': `Bearer ${token}`
+    //   }
+    // }
+
+    this.db.savePetData(this.selectedCompany, {
+      PET_Data: JSON.stringify(objectToSave)
+    }, ).subscribe({
+      next: (res: any) => {
+        console.log('SUCCESS')
+        console.log(res)
+
+        this.msg.add({
+          severity: 'success',
+          detail: 'Data saved'
+        })
+      },
+      error: (error) => console.log(error)
+    })
+
   }
 
   ngOnInit() {
