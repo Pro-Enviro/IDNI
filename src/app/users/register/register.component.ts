@@ -63,15 +63,16 @@ export class RegisterComponent {
   challenges?:any;
   decarb_plans?:any;
   economy_opportunities?:any;
-  existing_plans?:any;
   selectedEnergyType?:any;
+  otherEnergyType?:any;
   energyTypeCost?:any;
   selectedEnergyCost?:any;
   energyCostAdditional?:any;
   selectedEnergyInfo?:any;
   additionalEnergyInfo?:any;
-  selectedGeneration?:any;
+  selectedOnSiteGeneration?:any;
   onSiteGeneration?:any;
+  otherOnSiteGeneration?:any;
 
   energyTypes:any = [
     {
@@ -111,15 +112,15 @@ export class RegisterComponent {
   energyCost :any =[
     {
       name:'Transportation Costs',
-      value:'transportation'
+      value:'transportation cost'
     },
     {
       name:'Cost of Water',
-      value:'water'
+      value:'cost of water'
     },
     {
       name:'Cost of Waste/Recycling',
-      value: 'recycle'
+      value: 'cost of waste/recycling'
     }
   ]
 
@@ -172,7 +173,40 @@ export class RegisterComponent {
       value:'other'
     }
   ]
-  protected readonly onsubmit = onsubmit;
+  //protected readonly onsubmit = onsubmit;
 
+  onSubmit = (event:any) => {
+   const formObj = {
+     name: this.company_name,
+     address:this.address,
+     postcode:this.postcode,
+     uprn:this.uprn,
+     local_auth:this.local_auth,
+     est_year:this.est_year,
+     employees:this.employees,
+     turnover:this.turnover,
+     sector:this.sector,
+     sic_code:this.sector,
+     website_url:this.website_url,
+     company_description:this.company_description,
+     selectedEnergyType:this.selectedEnergyType,
+     energyTypeCost:this.energyTypeCost,
+     otherEnergyType:this.otherEnergyType,
+     selectedEnergyCost:this.selectedEnergyCost,
+     energyCostAdditional:this.energyCostAdditional,
+     selectedEnergyInfo:this.selectedEnergyInfo,
+     additionalEnergyInfo:this.additionalEnergyInfo,
+     selectedOnSiteGeneration:this.selectedOnSiteGeneration,
+     onSiteGeneration:this.onSiteGeneration,
+     otherOnSiteGeneration:this.otherOnSiteGeneration,
+     carbon_emissions:this.carbon_emissions,
+     development_issues:this.development_issues,
+     challenges:this.challenges,
+     decarb_plans:this.decarb_plans,
+     economy_opportunities:this.economy_opportunities,
+     policy:this.policy,
+     policy_idni:this.policy_idni
 
+   }
+  }
 }
