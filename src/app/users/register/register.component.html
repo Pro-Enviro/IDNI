@@ -2,7 +2,7 @@
   <p-card styleClass="p-card-bck" header="User Information">
       <div class="field flex flex-column p-2">
         <label>Name<span style="color:#85bfba;padding-left:5px">*</span></label>
-        <input type="text" name="name" pInputText class="text-base" [(ngModel)]="name" required>
+        <input type="text" id="name" name="name" pInputText class="text-base" [(ngModel)]="name" required>
       </div>
     <div class="formgrid grid p-2">
       <div class="field lg:col-6 sm:col-12">
@@ -11,7 +11,7 @@
           <p-inputGroupAddon>
             <i class="pi pi-envelope"></i>
           </p-inputGroupAddon>
-          <input type="text" name="email" pInputText [(ngModel)]="email" required pattern="[^ @]*@[^ @]*" emailDomain/>
+          <input type="text" id="email" name="email" pInputText [(ngModel)]="email" required pattern="[^ @]*@[^ @]*" emailDomain/>
         </p-inputGroup>
       </div>
       <div class="field lg:col-6 sm:col-12">
@@ -20,7 +20,7 @@
           <p-inputGroupAddon>
             <i class="pi pi-phone"></i>
           </p-inputGroupAddon>
-          <input pInputText type="text" name="phone_number" [(ngModel)]="phone_number" required/>
+          <input pInputText id="phone_number" type="text" name="phone_number" [(ngModel)]="phone_number" required/>
         </p-inputGroup>
       </div>
     </div>
@@ -31,7 +31,7 @@
   <p-card styleClass="p-card-bck" header="Company Information">
     <div class="field flex flex-column p-2">
       <label>Company Name<span style="color:#85bfba;padding-left:5px">*</span></label>
-      <input type="text" name="company_name" pInputText class="text-base" [(ngModel)]="company_name" required>
+      <input type="text" id="company_name" name="company_name" pInputText class="text-base" [(ngModel)]="company_name" required>
     </div>
 
     <div class="formgrid grid p-2">
@@ -69,11 +69,11 @@
     <div class="formgrid grid p-2">
       <div class="field lg:col-6 sm:col-12">
         <label>Total number of people employed by your business?</label>
-        <p-inputNumber name="employees" inputId="integeronly" [(ngModel)]="employees"></p-inputNumber>
+        <p-inputNumber id="employees" name="employees" inputId="integeronly" [(ngModel)]="employees"></p-inputNumber>
       </div>
       <div class="field lg:col-6 sm:col-12">
         <label>Please,provide your most recent annual turnover figure (£)</label>
-        <p-inputNumber [(ngModel)]="turnover" inputId="currency-gbp" mode="currency" currency="GBP" name="turnover"></p-inputNumber>
+        <p-inputNumber id="turnover" [(ngModel)]="turnover" inputId="currency-gbp" mode="currency" currency="GBP" name="turnover"></p-inputNumber>
       </div>
     </div>
 
@@ -84,7 +84,7 @@
       </div>
       <div class="field lg:col-6 sm:col-12 flex flex-column">
         <label>Sic Code</label>
-        <p-chips [(ngModel)]="sic_code"></p-chips>
+        <p-chips [(ngModel)]="sic_code" separator=","></p-chips>
       </div>
     </div>
     <div class="field flex flex-column p-2">
@@ -93,7 +93,7 @@
         <p-inputGroupAddon>
           <i class="pi pi-globe"></i>
         </p-inputGroupAddon>
-        <input type="text" pInputText name="website_url" [(ngModel)]="website_url"/>
+        <input id="website_url" type="text" pInputText name="website_url" [(ngModel)]="website_url"/>
       </p-inputGroup>
 
     </div>
@@ -111,7 +111,7 @@
       <label>Energy Cost</label>
       <div class="flex flex-row pt-3">
         <p-dropdown [options]="energyTypes" [(ngModel)]="selectedEnergyType" optionLabel="name" [showClear]="true" placeholder="Select Energy Type" appendTo="body" styleClass="mr-5"></p-dropdown>
-        <p-inputNumber name="employees" inputId="integeronly" [(ngModel)]="energyTypeCost"></p-inputNumber>
+        <p-inputNumber name="energyTypeCost" inputId="integeronly" [(ngModel)]="energyTypeCost"></p-inputNumber>
       </div>
     </div>
 
@@ -119,7 +119,7 @@
       <label>Additional Energy Costs</label>
       <div class="flex flex-row pt-3">
         <p-dropdown [options]="energyCost" [(ngModel)]="selectedEnergyCost" optionLabel="name" [showClear]="true" placeholder="Select Additional Energy Costs" appendTo="body" styleClass="mr-5"></p-dropdown>
-        <p-inputNumber name="employees" inputId="integeronly" [(ngModel)]="energyCostAdditional"></p-inputNumber>
+        <p-inputNumber name="energyCostAdditional" inputId="integeronly" [(ngModel)]="energyCostAdditional"></p-inputNumber>
       </div>
     </div>
 
@@ -127,7 +127,7 @@
       <label>Additional Energy Information</label>
       <div class="flex flex-row pt-3">
         <p-dropdown [options]="energyInfo" [(ngModel)]="selectedEnergyInfo" optionLabel="name" [showClear]="true" placeholder="Select Additional Energy Information" appendTo="body" styleClass="mr-5"></p-dropdown>
-        <p-inputNumber name="employees" inputId="integeronly" [(ngModel)]="additionalEnergyInfo"></p-inputNumber>
+        <p-inputNumber name="additionalEnergyInfo" inputId="integeronly" [(ngModel)]="additionalEnergyInfo"></p-inputNumber>
       </div>
     </div>
 
@@ -135,7 +135,7 @@
       <label>Onsite Generation</label>
       <div class="flex flex-row pt-3">
         <p-dropdown [options]="generationOptions" [(ngModel)]="selectedGeneration" optionLabel="name" [showClear]="true" placeholder="Select Onsite Generation" appendTo="body" styleClass="mr-5"></p-dropdown>
-        <p-inputNumber name="employees" inputId="integeronly" [(ngModel)]="onSiteGeneration"></p-inputNumber>
+        <p-inputNumber name="onSiteGeneration" inputId="integeronly" [(ngModel)]="onSiteGeneration"></p-inputNumber>
       </div>
     </div>
   </p-card>
@@ -146,51 +146,51 @@
     <p style="color:#85bfba">Please fill in the information if applicable !</p>
     <div class="field flex flex-column p-2">
       <label>Total annual carbon emissions</label>
-      <input type="text" name="carbon_emissions" pInputText class="text-base" [(ngModel)]="carbon_emissions">
+      <input id="carbon_emissions" type="text" name="carbon_emissions" pInputText class="text-base" [(ngModel)]="carbon_emissions">
     </div>
 
     <div class="field flex flex-column p-2">
       <label>Existing or anticipated land/planning/development issues or proposals</label>
       <p><small>(or opportunities, such as spare land seeking a tenant)</small></p>
-      <input type="text" name="development_issues" pInputText class="text-base" [(ngModel)]="development_issues">
+      <input type="text" id="development_issues" name="development_issues" pInputText class="text-base" [(ngModel)]="development_issues">
     </div>
 
     <div class="field flex flex-column p-2">
       <label>Specific decarbonisation challenges anticipated</label>
       <p><small>(e.g., industrial operations that cannot be electrified)</small></p>
-      <input type="text" name="challenges" pInputText class="text-base" [(ngModel)]="challenges">
+      <input type="text" id="challenges" name="challenges" pInputText class="text-base" [(ngModel)]="challenges">
     </div>
 
     <div class="field flex flex-column p-2">
       <label>Existing decarbonisation plans in place</label>
-      <input type="text" name="decarb_plans" pInputText class="text-base" [(ngModel)]="decarb_plans">
+      <input id="decarb_plans" type="text" name="decarb_plans" pInputText class="text-base" [(ngModel)]="decarb_plans">
     </div>
 
     <div class="field flex flex-column p-2">
       <label>Circular economy opportunities/waste streams currently seen as problematic with rough volumes</label>
-      <input type="text" name="economy_opportunities" pInputText class="text-base" [(ngModel)]="economy_opportunities">
+      <input id="economy_opportunitie" type="text" name="economy_opportunities" pInputText class="text-base" [(ngModel)]="economy_opportunities">
     </div>
 
     <div class="field flex flex-column p-2">
       <label>Circular economy opportunities/waste streams currently seen as problematic with rough volumes</label>
-      <input type="text" name="economy_opportunities" pInputText class="text-base" [(ngModel)]="economy_opportunities">
+      <input id="economy_opportunities" type="text" name="economy_opportunities" pInputText class="text-base" [(ngModel)]="economy_opportunities">
     </div>
 
     <div class="field flex flex-column p-2">
       <label>Existing decarbonisation plans in place</label>
-      <input type="text" name="economy_opportunities" pInputText class="text-base" [(ngModel)]="existing_plans">
+      <input type="text" id="existing_plans" name="existing_plans" pInputText class="text-base" [(ngModel)]="existing_plans">
     </div>
   </p-card>
 </div>
 
 <div class="container p-3">
-  <h3 class="header-style">Privacy</h3>
+  <h2 class="header-style">Privacy</h2>
   <div class="">
-    <p-checkbox [binary]="true" inputId="policy" name="policy" [(ngModel)]="policy"></p-checkbox>
+    <p-checkbox [binary]="true" inputId="policy" name="policy" [(ngModel)]="policy" value="policy" [required]="true"></p-checkbox>
     <label class="pl-2">I agree with the terms and conditions<span style="color:#006633;padding-left:5px">*</span></label>
   </div>
   <div class="mt-3">
-    <p-checkbox [binary]="true" inputId="policy_idni" name="policy_idni" [(ngModel)]="policy_idni"></p-checkbox>
+    <p-checkbox [binary]="true" inputId="policy_idni" name="policy_idni" [(ngModel)]="policy_idni" value="policy_idni" [required]="true"></p-checkbox>
     <label class="pl-2">I agree to share my data to Industrial Decarbonisation Northern Ireland (ID-NI) Project.<span style="color:#006633;padding-left:5px">*</span></label>
   </div>
   @if(policy_idni){
@@ -210,5 +210,5 @@
     </div>
   }
   <p><small>Please read the <a href="" style="color:#85bfba">Data Privacy Policy</a> for full information.</small></p>
-  <p-button styleClass="btn-style" label="Register" icon="pi pi-users"></p-button>
+  <p-button styleClass="btn-style" label="Register" icon="pi pi-users" ></p-button>
 </div>

@@ -172,4 +172,7 @@ export class RegisterComponent {
       value:'other'
     }
   ]
+  protected readonly onsubmit = onsubmit;
+
+
 }
