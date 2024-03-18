@@ -6,7 +6,7 @@
         <input type="text" id="first_name" name="first_name" pInputText class="text-base" [(ngModel)]="first_name" required>
       </div>
       <div class="field flex flex-column p-2">
-        <label>Last Name<span style="color:#85bfba;padding-left:5px">*</span></label>
+        <label>Surname<span style="color:#85bfba;padding-left:5px">*</span></label>
         <input type="text" id="last_name" name="last_name" pInputText class="text-base" [(ngModel)]="last_name" required>
       </div>
       <div class="formgrid grid p-2">
@@ -16,7 +16,7 @@
             <p-inputGroupAddon>
               <i class="pi pi-envelope"></i>
             </p-inputGroupAddon>
-            <input type="text" id="email" name="email" pInputText [(ngModel)]="email" required pattern="[^ @]*@[^ @]*" emailDomain/>
+            <input type="text" id="email" name="email" pInputText [(ngModel)]="email" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$" emailDomain/>
           </p-inputGroup>
         </div>
         <div class="field lg:col-6 sm:col-12">
@@ -212,6 +212,7 @@
       </div>
     }
     <p><small>Please read the <a href="" style="color:#85bfba">Data Privacy Policy</a> for full information.</small></p>
-    <p-button styleClass="btn-style mt-3" label="Submit" icon="pi pi-send" (onClick)="onSubmit()" [disabled]="!policy"></p-button>
+<!--    <p-button styleClass="btn-style mt-3" label="Submit" icon="pi pi-send" (onClick)="onSubmit()" [disabled]="!policy"></p-button>-->
+    <p-button styleClass="btn-style mt-3" label="Submit" icon="pi pi-send" (onClick)="onSubmit()" [disabled]="!checkInputs()"></p-button>
   </div>
 
