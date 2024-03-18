@@ -46,15 +46,15 @@ import {Message, MessageService} from "primeng/api";
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent implements OnInit{
-  first_name?:string;
-  last_name?:string;
-  email?:string = '';
-  phone_number?:string;
+  first_name:string = '';
+  last_name:string = '';
+  email:string = '';
+  phone_number:string = '';
   password?:string;
   confirm_password?:string;
-  company_name?:string;
-  address?:string;
-  postcode?:string;
+  company_name:string = '';
+  address:string = '';
+  postcode:string = '';
   uprn?:string;
   local_auth?:string;
   est_year?: Date;
@@ -249,7 +249,7 @@ export class RegisterComponent implements OnInit{
   }
 
   checkInputs = () => {
-    if (this.first_name?.length && this?.first_name?.length < 3) {
+    if (this?.first_name?.length < 3) {
       console.log(this.first_name?.length && this?.first_name?.length < 3);
       this.messages = [{
         severity: 'warn',
@@ -257,45 +257,47 @@ export class RegisterComponent implements OnInit{
       }]
       return false;
     }
-    if (this.last_name?.length && this?.last_name?.length < 4) {
+    if (this?.last_name?.length < 4) {
       this.messages = [{
         severity: 'warn',
         detail: 'Your surname must contain minimum 4 characters!'
       }]
       return false;
     }
-    if (this.phone_number?.length && this?.phone_number?.length < 8) {
+    if (this?.phone_number?.length < 8) {
       this.messages = [{
         severity: 'warn',
         detail: 'Your mobile number must contain minimum 8 characters!'
       }]
       return false;
     }
-    if (this.address?.length && this?.address.length < 5) {
+    if (this?.address?.length < 5) {
       this.messages = [{
         severity: 'warn',
         detail: 'Your address must contain minimum 5 characters!'
       }]
       return false;
     }
-    if (!this.postcode?.length || this?.postcode.length < 5) {
+    if (this?.postcode.length < 5) {
       this.messages = [{
         severity: 'warn',
         detail: 'Your postcode must contain minimum 6 characters!'
       }]
       return false;
     }
+    console.log(this.policy)
     if (!this.policy) {
       return false;
     }
-    const reg = /^([\w-\.]+@(?!lsu.edu)([\w-]+\.)+[\w-]{2,4})?$/;
-    if (!this.email?.length || reg.test(this.email)){
-      this.messages = [{
-        severity: 'warn',
-        detail: 'Invalid email!'
-      }]
-      return false;
-    }
+
+    // const reg = /^([\w-\.]+@(?!lsu.edu)([\w-]+\.)+[\w-]{2,4})?$/;
+    // if (reg.test(this.email)){
+    //   this.messages = [{
+    //     severity: 'warn',
+    //     detail: 'Invalid email!'
+    //   }]
+    //   return false;
+    // }
 
      return true;
   }

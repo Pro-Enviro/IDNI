@@ -16,7 +16,7 @@
             <p-inputGroupAddon>
               <i class="pi pi-envelope"></i>
             </p-inputGroupAddon>
-            <input type="text" id="email" name="email" pInputText [(ngModel)]="email" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$" emailDomain/>
+            <input type="text" id="email" name="email" pInputText [(ngModel)]="email" required pattern="[^ @]*@[^ @]*" emailDomain/>
           </p-inputGroup>
         </div>
         <div class="field lg:col-6 sm:col-12">
