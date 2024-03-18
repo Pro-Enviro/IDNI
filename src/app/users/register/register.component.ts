@@ -199,7 +199,7 @@ export class RegisterComponent {
      employees:this.employees,
      turnover:this.turnover,
      sector:this.sector,
-     sic_code:this.sector,
+     sic_code:this.sic_code,
      website_url:this.website_url,
      company_description:this.company_description,
      selectedEnergyType:this.selectedEnergyType,
