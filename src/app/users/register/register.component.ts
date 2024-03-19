@@ -50,8 +50,8 @@ export class RegisterComponent implements OnInit{
   last_name:string = '';
   email:string = '';
   phone_number:string = '';
-  password?:string;
-  confirm_password?:string;
+  password:string = '';
+  confirm_password:string = '';
   company_name:string = '';
   address:string = '';
   postcode:string = '';
@@ -66,6 +66,7 @@ export class RegisterComponent implements OnInit{
   company_description?:string;
   policy:boolean = false;
   policy_idni?:boolean;
+  policy_bill?:boolean;
   carbon_emissions?:any;
   development_issues?:any;
   challenges?:any;
@@ -227,10 +228,10 @@ export class RegisterComponent implements OnInit{
       decarb_plans: this.decarb_plans,
       economy_opportunities: this.economy_opportunities,
       policy: this.policy,
-      policy_idni: this.policy_idni
+      policy_idni: this.policy_idni,
+      policy_bill:this.policy_bill
 
     }
-
 
 
     if (this.checkInputs()){
@@ -249,6 +250,14 @@ export class RegisterComponent implements OnInit{
   }
 
   checkInputs = () => {
+    const reg = /^\S+@\S+\.\S+$/;
+    if (!reg.test(this.email)) {
+      this.messages = [{
+        severity: 'warn',
+        detail: 'Please fill in valid email.'
+      }];
+      return false;
+    }
     if (this?.first_name?.length < 3) {
       this.messages = [{
         severity: 'warn',
@@ -284,22 +293,27 @@ export class RegisterComponent implements OnInit{
       }]
       return false;
     }
-    console.log(this.policy)
+
     if (!this.policy) {
       return false;
     }
-
-    const reg = /^\S+@\S+\.\S+$/;
-
-    if (!reg.test(this.email)) {
-      this.messages = [{
-        severity: 'warn',
-        detail: 'Please fill in valid email.'
-      }];
+    if (!this.policy_bill) {
+      return false;
+    }
+    if (!this.policy_idni) {
       return false;
     }
 
-     return true;
+
+    if(this?.password.length < 6 || this?.confirm_password.length < 6){
+      return false
+    }
+
+    if(this.password !== this.confirm_password){
+      return false
+    }
+
+     return true
   }
 
 
