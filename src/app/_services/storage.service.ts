@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {MessageService} from "primeng/api";
 import {Router} from "@angular/router";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, throwError} from "rxjs";
 
 export interface menu{
   id: number,
@@ -30,11 +30,17 @@ export class StorageService {
   }
 
   set = (name: string, token: string) => {
-    localStorage.setItem(name,JSON.stringify(token));
+    if (name === 'directus_items') {
+      localStorage.setItem(name, JSON.stringify(token));
+    } else {
+
+      localStorage.setItem(name, token);
+    }
   }
 
   get = (name: string) => {
     const item: string | null = localStorage.getItem(name);
+
     if(!item){
       this.msg.add({
         severity: 'error',
@@ -42,8 +48,8 @@ export class StorageService {
         detail: 'The requested information could not be received. Please login again'
       })
 
-      this.route.navigate(['login']).then(r => console.log('Navigating'));
-      return
+      // this.route.navigate(['login'])
+      return null
     }
     return item
   }

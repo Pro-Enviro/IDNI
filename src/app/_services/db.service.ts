@@ -25,6 +25,15 @@ export class DbService {
     )
   }
 
+  getPetData = (id: number) =>{
+    return this.http.get(`${this.url}/items/companies/${id}?fields=PET_Data`)
+  }
+
+  savePetData = (id: number, data: { PET_Data: string }) => {
+    return this.http.patch(`${this.url}/items/companies/${id}?fields=PET_Data`, data)
+  }
+
+
   addCompany(
     fields: string[],
     data: any,
@@ -44,4 +53,5 @@ export class DbService {
     )
 
   }
+
 }

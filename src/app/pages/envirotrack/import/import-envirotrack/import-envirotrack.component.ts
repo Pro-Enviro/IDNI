@@ -9,6 +9,7 @@ import {EnvirotrackService} from "../../envirotrack.service";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {TopPageImgTplComponent} from "../../../../_partials/top-page-img-tpl/top-page-img-tpl.component";
+import {HttpClient} from "@angular/common/http";
 
 
 interface Sheet {
@@ -43,6 +44,7 @@ interface HHDData {
 })
 
 export class ImportEnvirotrackComponent {
+  url: string = 'https://app.idni.eco';
   draggedCell: any | null;
   companies: object[] = [];
   selectedCompany: number | undefined;
@@ -66,11 +68,13 @@ export class ImportEnvirotrackComponent {
   selectedSheet: string | undefined;
   availableSheets: string[] = [];
   sheetData: any;
+  userLevel: number = 2
 
   constructor(
     private track: EnvirotrackService,
     private msg: MessageService,
     private papa: Papa,
+    private http: HttpClient
   ) {
     moment.locale('en-gb')
     moment().format('L')
@@ -201,6 +205,31 @@ export class ImportEnvirotrackComponent {
     })
   }
 
+  sendDataToProEnviro(){
+    this.msg.add({
+      severity: 'success',
+      detail: 'Data sent'
+    })
+    // return this.http.post(`${this.url}/Mailer`,{
+    //   subject: 'Pro Enviro Envirotrack sent',
+    //   to: '@proenviro.co.uk', // WIP: Update with correct email address
+    //   list: {
+    //     unsubscribe: {
+    //       url: 'mailto:unsubscribe@proenviro.com',
+    //       comment: 'unsubscribe
+    //     }
+    //   },
+    //   template: {
+    //     name: "new_envirotrack",
+    //     data: {
+    //       supplier: data.supplier
+    //     }
+    //   },
+    //   files: data.envirotrack
+    // },{responseType: "text"})
+  }
+
+
   processData = async () => {
     if (!this.selectedMpan) {
       this.msg.add({
@@ -314,6 +343,9 @@ export class ImportEnvirotrackComponent {
     }
   }
 }
+
+
+
 export function omit(key: any, obj: any) {
   const { [key]: omitted, ...rest } = obj;
   return rest;

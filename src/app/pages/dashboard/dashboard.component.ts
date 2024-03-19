@@ -49,6 +49,15 @@ export class DashboardComponent {
       escape: false,
       routerLink:'/dashboard/import'
     },
+
+    {
+      label:'<span class="material-symbols-outlined">add_chart</span> PET',
+      routerLink:'/dashboard/pet'
+    }
+  ]
+
+  envirotrackReport : MenuItem[] =[
+
     {
       label:'<span class="material-symbols-outlined">query_stats</span> Report',
       escape: false,
@@ -88,6 +97,16 @@ export class DashboardComponent {
           label:'<span class="material-symbols-outlined material-icon">data_exploration</span>Maximum Demand',
           escape: false,
           routerLink: '/dashboard/demand'
+        },
+        {
+          label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Breakdown of CO2e (tonnes) by emissions source',
+          escape: false,
+          routerLink: '/dashboard/co2emissions'
+        },
+        {
+          label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Breakdown of CO2e (tonnes) by scope',
+          escape: false,
+          routerLink: '/dashboard/co2emissionsbyscope'
         }
       ]
     }

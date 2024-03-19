@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import {authentication, createDirectus, graphql, rest} from "@directus/sdk";
-import {StorageService} from "./storage.service";
+import {authentication, createDirectus, graphql, rest, refresh} from "@directus/sdk";
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +25,6 @@ export class GlobalService {
     const storage: Storage = new Storage()
     this.client = createDirectus('https://app.idni.eco').with(authentication('json', {storage})).with(rest()).with(graphql())
   }
+
+
 }

@@ -453,7 +453,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
       return row;
     })
     this.chartData.sort((a: any, b: any) => moment(a[0], 'YYYY-MM-DD') > moment(b[0], 'YYYY-MM-DD'));
-    console.log(data)
+
 
     this.testChart = {
       data: [{

@@ -79,7 +79,13 @@ import {ClimateCrisisComponent} from "./pages/news/climate-crisis/climate-crisis
 import {NetZeroBusinessComponent} from "./pages/news/net-zero-business/net-zero-business.component";
 import {ClimateChangeCommitteComponent} from "./pages/news/climate-change-committe/climate-change-committe.component";
 import {EnergyEfficiencyComponent} from "./pages/news/energy-efficiency/energy-efficiency.component";
+
+import {PetLoginProtected} from "./pages/pet-login-protected/pet-login-protected.component";
+import {TypeChartComponent} from "./pages/envirotrack/report/type-chart/type-chart.component";
+import {ScopeChartComponent} from "./pages/envirotrack/report/scope-chart/scope-chart.component";
+
 import {VirtualTourComponent} from "./pages/virtual-tour/virtual-tour.component";
+
 
 
 
@@ -128,11 +134,25 @@ export const routes: Routes = [
   {path:'advisory-board',component:AdvisoryBoardComponent},
   {path:'stakeholders',component:StakeholdersComponent},
   {path: 'login', component: LoginComponent},
+
+  {path: 'registration', component: RegisterComponent},
+
+  {path:'chat',component: ChatDialogTplComponent},
+  {path:'live-chat',component:LiveChatTplComponent},
+  {
+    path: 'envirotrack', children: [
+
+    ]
+  },
+  {path:'dashboard',component:DashboardComponent, canActivate: [authGuard], canActivateChild: [authGuard], children: [
+
   {path: 'registration-form', component: RegistrationFormComponent},
   {path:'dashboard',component:DashboardComponent, children: [
+
       {path: '', component: DasboardWidgetsComponent},
       {path: 'import', component: ImportEnvirotrackComponent},
       {path: 'fuel-data', component: DataCaptureSpreadsheetFuelsComponent},
+      {path: 'pet', component: PetLoginProtected},
       {path: 'report', component: EnvirotrackReportComponent},
       {path: 'heatmap', component: EnvirotrackReportHeatmapComponent},
       {path: 'scatter', component: EnvirotrackReportScatterComponent},
@@ -141,17 +161,13 @@ export const routes: Routes = [
       {path: 'base1', component: EnvirotrackReportBase1Component },
       {path: 'avg', component: EnvirotrackReportAvgComponent },
       {path: 'demand', component: EnvirotrackReportDemandComponent },
+      {path: 'co2emissions', component:  TypeChartComponent},
+      {path: 'co2emissionsbyscope', component: ScopeChartComponent },
     ]},
-  {path:'chat',component: ChatDialogTplComponent},
-  {path:'live-chat',component:LiveChatTplComponent},
-  {
-    path: 'envirotrack', children: [
-
-    ]
-  },
   {
     path: 'dashboard', canActivate: [authGuard], children: [
-      {path: '', component: DashboardComponent}
+      {path: '', component: DashboardComponent},
+
     ]
   },
 
