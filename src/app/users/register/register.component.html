@@ -205,13 +205,37 @@
           <div class="lg:col-6 sm:col-12">
             <div class="field flex flex-column pr-3">
               <label>Password<span style="color:#85bfba;padding-left:5px">*</span></label>
-              <p-password [(ngModel)]="password" [toggleMask]="true" weakLabel="The password is weak" mediumLabel="The password is medium" strongLabel="The password is strong"></p-password>
+              <p-password [(ngModel)]="password" [toggleMask]="true" weakLabel="The password is weak" mediumLabel="The password is medium" strongLabel="The password is strong">
+                <ng-template pTemplate="footer">
+                  <p-divider></p-divider>
+                  <p class="mt-2">The password must contain:</p>
+                  <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                    <li>Minimum 8 characters.</li>
+                    <li>At least one lowercase character.</li>
+                    <li>At least one uppercase character.</li>
+                    <li>At least one digit.</li>
+                    <li>At least one of the following special characters # ! ? $ % &</li>
+                  </ul>
+                </ng-template>
+              </p-password>
             </div>
           </div>
           <div class="lg:col-6 sm:col-12">
             <div class="field field flex flex-column">
               <label>Confirm Password<span style="color:#85bfba;padding-left:5px">*</span></label>
-              <p-password [(ngModel)]="confirm_password" [toggleMask]="true" weakLabel="The password is weak" mediumLabel="The password is medium" strongLabel="The password is strong"></p-password>
+              <p-password [(ngModel)]="confirm_password" [toggleMask]="true" weakLabel="The password is weak" mediumLabel="The password is medium" strongLabel="The password is strong">
+                <ng-template pTemplate="footer">
+                  <p-divider></p-divider>
+                  <p class="mt-2">The password must contain:</p>
+                  <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                    <li>Minimum 8 characters.</li>
+                    <li>At least one lowercase character.</li>
+                    <li>At least one uppercase character.</li>
+                    <li>At least one digit.</li>
+                    <li>At least one of the following special characters # ! ? $ % &</li>
+                  </ul>
+                </ng-template>
+              </p-password>
             </div>
           </div>
         </div>

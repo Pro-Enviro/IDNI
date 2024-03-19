@@ -19,6 +19,7 @@ import {InputMaskModule} from "primeng/inputmask";
 import {NG_VALIDATORS} from '@angular/forms';
 import {NgClass} from "@angular/common";
 import {Message, MessageService} from "primeng/api";
+import {DividerModule} from "primeng/divider";
 
 @Component({
   selector: 'app-register',
@@ -41,6 +42,7 @@ import {Message, MessageService} from "primeng/api";
     DropdownModule,
     InputMaskModule,
     NgClass,
+    DividerModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -233,7 +235,6 @@ export class RegisterComponent{
 
     }
 
-
     if (this.checkInputs()){
       this.db.addCompany(['*'], formObj, userObj).subscribe({
         next: (res) => {
@@ -300,37 +301,53 @@ export class RegisterComponent{
     if (!this.policy_bill) {
       return false;
     }
-    if (!this.policy_idni) {
-      return false;
-    }
+    // if (!this.policy_idni) {
+    //   return false;
+    // }
 
-    const regPassword =  /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$%&? "])[a-zA-Z0-9!#$%&?]{8,20}$/
-    const specialSymbol = /^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/
-    if (!regPassword.test(this.password && this.confirm_password)) {
-      this.messages = [{
-        severity: 'warn',
-        detail: 'Please fill in valid password.'
-      }];
-      return false;
-    }
-    if(!specialSymbol.test(this.password && this.confirm_password)){
-      this.messages = [{
-        severity: 'warn',
-        detail: 'Please fill in valid password.'
-      }];
-      return false;
-    }
+    // const regPassword =  /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$%&? "])[a-zA-Z0-9!#$%&?]{8,20}$/
+    // const specialSymbol = /^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/
+    // if (!regPassword.test(this.password && this.confirm_password)) {
+    //   this.messages = [{
+    //     severity: 'warn',
+    //     detail: 'Please fill in valid password.'
+    //   }];
+    //   return false;
+    // }
+    // if(!specialSymbol.test(this.password && this.confirm_password)){
+    //   this.messages = [{
+    //     severity: 'warn',
+    //     detail: 'Please fill in valid password.'
+    //   }];
+    //   return false;
+    // }
 
-    // if(this?.password.length < 8 || this?.confirm_password.length < 8){
+    // if(this.password !== this.confirm_password){
     //   return false
     // }
 
+    if (this.policy_idni) {
+      const regPassword =  /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$%&? "])[a-zA-Z0-9!#$%&?]{8,20}$/
+      const specialSymbol = /^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/
+      if (!regPassword.test(this.password && this.confirm_password)) {
+        this.messages = [{
+          severity: 'warn',
+          detail: 'Please fill in valid password.'
+        }];
+        return false;
+      }
+      if(!specialSymbol.test(this.password && this.confirm_password)){
+        this.messages = [{
+          severity: 'warn',
+          detail: 'Please fill in valid password.'
+        }];
+        return false;
+      }
 
-
-    if(this.password !== this.confirm_password){
-      return false
+      if(this.password !== this.confirm_password){
+        return false
+      }
     }
-
      return true
   }
 
