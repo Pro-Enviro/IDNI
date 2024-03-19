@@ -45,7 +45,7 @@ import {Message, MessageService} from "primeng/api";
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent{
   first_name:string = '';
   last_name:string = '';
   email:string = '';
@@ -304,10 +304,28 @@ export class RegisterComponent implements OnInit{
       return false;
     }
 
-
-    if(this?.password.length < 6 || this?.confirm_password.length < 6){
-      return false
+    const regPassword =  /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$%&? "])[a-zA-Z0-9!#$%&?]{8,20}$/
+    const specialSymbol = /^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/
+    if (!regPassword.test(this.password && this.confirm_password)) {
+      this.messages = [{
+        severity: 'warn',
+        detail: 'Please fill in valid password.'
+      }];
+      return false;
     }
+    if(!specialSymbol.test(this.password && this.confirm_password)){
+      this.messages = [{
+        severity: 'warn',
+        detail: 'Please fill in valid password.'
+      }];
+      return false;
+    }
+
+    // if(this?.password.length < 8 || this?.confirm_password.length < 8){
+    //   return false
+    // }
+
+
 
     if(this.password !== this.confirm_password){
       return false
@@ -316,13 +334,5 @@ export class RegisterComponent implements OnInit{
      return true
   }
 
-
-
-
-
-
-  ngOnInit(): void {
-
-  }
 
 }
