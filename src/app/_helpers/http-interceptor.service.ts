@@ -45,9 +45,10 @@ export const HttpInterceptorService: HttpInterceptorFn = (
             console.log('401 Error')
             // handle 401
             auth.refreshToken().then((res)=> {
-              console.log('refreshed', res)
+              return next(clonedRequest)
             })
 
+            router.navigate([''])
 
           } else if (error.status === 403) {
             console.log('403 Error')
@@ -77,13 +78,6 @@ export const HttpInterceptorService: HttpInterceptorFn = (
           if (error.status === 401) {
             console.log('401 Error')
             // handle 401
-            auth.refreshToken().then(() => {
-              const clonedRequest = req.clone({
-                headers: req.headers.set('Authorization', `Bearer ${token}`)
-              })
-
-              return next(clonedRequest)
-            })
 
           } else if (error.status === 403) {
             console.log('403 Error')
