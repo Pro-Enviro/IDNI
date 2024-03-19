@@ -49,6 +49,15 @@ export class DashboardComponent {
       escape: false,
       routerLink:'/dashboard/import'
     },
+
+    {
+      label:'<span class="material-symbols-outlined">add_chart</span> PET',
+      routerLink:'/dashboard/pet'
+    }
+  ]
+
+  envirotrackReport : MenuItem[] =[
+
     {
       label:'<span class="material-symbols-outlined">query_stats</span> Report',
       escape: false,
