@@ -44,13 +44,8 @@ export const HttpInterceptorService: HttpInterceptorFn = (
           if (error.status === 401) {
             console.log('401 Error')
             // handle 401
-            auth.refreshToken().then(() => {
-              const clonedRequest = req.clone({
-                headers: req.headers.set('Authorization', `Bearer ${token}`)
-              })
-
-              console.log(clonedRequest)
-              return next(clonedRequest)
+            auth.refreshToken().then((res)=> {
+              console.log('refreshed', res)
             })
 
 

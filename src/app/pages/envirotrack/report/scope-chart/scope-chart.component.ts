@@ -30,7 +30,7 @@ export class ScopeChartComponent implements OnInit {
   selectedYears: any;
   filteredData: any;
   selectedTypes:any;
-
+  envirotrackData: any = {}
   chartOption!: EChartsOption;
   fuels: any[] = []
   datas: any;
@@ -59,6 +59,8 @@ export class ScopeChartComponent implements OnInit {
   }
 
   initChart(){
+
+    this.dataArray.push(this.envirotrackData)
 
     this.chartOption = {
       legend: {
@@ -202,7 +204,7 @@ export class ScopeChartComponent implements OnInit {
       value: total.toFixed(2)
     }]
 
-
+    this.initChart()
   }
 
   getData = (id: number) => {
@@ -217,14 +219,12 @@ export class ScopeChartComponent implements OnInit {
               grandTotal += row.hhd.reduce((acc: number, curr: number) => acc + curr, 0)
             })
 
-            this.dataArray.push({
+            this.envirotrackData = {
               name: 'Scope 2',
               value:( grandTotal/1000).toFixed(2)
-            })
+            }
           }
-
         },
-        complete: () => this.initChart()
       }
     )
   }

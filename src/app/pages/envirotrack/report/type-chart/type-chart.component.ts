@@ -34,7 +34,7 @@ export class TypeChartComponent implements OnInit {
   companies: any;
   selectedCompany!: number;
   fuels: any[] = []
-  envirotrackData: any[] = []
+  envirotrackData: any = {}
 
   fltr1: any = [];
 
@@ -63,7 +63,7 @@ export class TypeChartComponent implements OnInit {
     this.dataArray = []
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getFuelData(this.selectedCompany)
-
+    this.getData(this.selectedCompany)
   }
 
   resetDataArray(){
@@ -80,6 +80,7 @@ export class TypeChartComponent implements OnInit {
   }
 
   initChart(){
+    this.dataArray.push(this.envirotrackData)
 
     this.chartOption = {
       legend: {
@@ -162,7 +163,7 @@ export class TypeChartComponent implements OnInit {
     this.filteredData = this.data.filter((x:any)=> this.fltr.filters['in'](x.year, filterArr));
     this.resetDataArray();
     this.getDataArray(this.filteredData);
-    this.initChart();
+    // this.initChart();
   }
 
   onScopeFilter(){
@@ -233,12 +234,13 @@ export class TypeChartComponent implements OnInit {
       }
     })
 
+    this.initChart()
 
-    this.getData(this.selectedCompany)
   }
 
   // Envirotrack data
   getData = (id: number) => {
+    console.log(this.dataArray)
     this.track.getData(id).subscribe({
         next: (res) => {
           if (res){
@@ -248,28 +250,23 @@ export class TypeChartComponent implements OnInit {
               // Sort the envirotrack data
               grandTotal += row.hhd.reduce((acc: number, curr: number) => acc + curr, 0)
             })
-
-            this.dataArray.push({
+            this.envirotrackData = {
               name: 'Electricity',
               value:( grandTotal/1000).toFixed(2)
-            })
-
-             console.log(this.dataArray)
-
-            this.envirotrackData = res
+            }
           }
 
         },
-      complete: () => this.initChart()
       }
     )
   }
 
 
   ngOnInit(): void {
+    console.log('NG ON INIT')
     this.dataArray = []
     this.getCompanies()
-    this.resetDataArray();
+    // this.resetDataArray();
     // this.getDataArray(this.data)
     // this.initChart()
   }

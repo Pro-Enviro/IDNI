@@ -8,6 +8,6 @@
     </p-card>
   </div>
 
-  <div echarts [options]="chartOption" [initOpts]="{ renderer: 'svg' }" class="chart"
+  <div echarts *ngIf="dataArray.length" [options]="chartOption" [initOpts]="{ renderer: 'svg' }" class="chart" [id]="'chartId'"
        style="max-height: 800px; height: 800px;"></div>
 </p-card>
