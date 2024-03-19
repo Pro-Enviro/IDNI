@@ -116,10 +116,8 @@
         <label>Energy Cost</label>
         <div class="flex flex-row pt-3">
           <p-dropdown [options]="energyTypes" [(ngModel)]="selectedEnergyType" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Energy Type" appendTo="body" styleClass="mr-5"></p-dropdown>
-          <p-inputNumber name="energyTypeCost" inputId="integeronly" [(ngModel)]="energyTypeCost"></p-inputNumber>
-          @if(selectedEnergyType){
+          <p-inputNumber id="energyTypeCost" name="energyTypeCost" inputId="integeronly" [(ngModel)]="energyTypeCost"></p-inputNumber>
             <input class="ml-3" id="otherEnergyType" type="text" name="otherEnergyType" [(ngModel)]="otherEnergyType" pInputText placeholder="Other Energy Type">
-          }
         </div>
       </div>
 
@@ -128,7 +126,7 @@
         <label>Additional Energy Costs</label>
         <div class="flex flex-row pt-3">
           <p-dropdown [options]="energyCost" [(ngModel)]="selectedEnergyCost" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Additional Energy Costs" appendTo="body" styleClass="mr-5"></p-dropdown>
-          <p-inputNumber name="energyCostAdditional" inputId="integeronly" [(ngModel)]="energyCostAdditional"></p-inputNumber>
+          <p-inputNumber id="energyCostAdditional" name="energyCostAdditional" inputId="integeronly" [(ngModel)]="energyCostAdditional"></p-inputNumber>
         </div>
       </div>
 
@@ -136,7 +134,7 @@
         <label>Additional Energy Information</label>
         <div class="flex flex-row pt-3">
           <p-dropdown [options]="energyInfo" [(ngModel)]="selectedEnergyInfo" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Additional Energy Information" appendTo="body" styleClass="mr-5"></p-dropdown>
-          <p-inputNumber name="additionalEnergyInfo" inputId="integeronly" [(ngModel)]="additionalEnergyInfo"></p-inputNumber>
+          <p-inputNumber id="additionalEnergyInfo" name="additionalEnergyInfo" inputId="integeronly" [(ngModel)]="additionalEnergyInfo"></p-inputNumber>
         </div>
       </div>
 
@@ -144,10 +142,8 @@
         <label>Onsite Generation</label>
         <div class="flex flex-row pt-3">
           <p-dropdown [options]="generationOptions" [(ngModel)]="selectedOnSiteGeneration" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Onsite Generation" appendTo="body" styleClass="mr-5"></p-dropdown>
-          <p-inputNumber name="onSiteGeneration" inputId="integeronly" [(ngModel)]="onSiteGeneration"></p-inputNumber>
-          @if(selectedOnSiteGeneration){
-            <input class="ml-3" id="otherOnSiteGeneration" type="text" name="otherOnSiteGeneration" [(ngModel)]="otherOnSiteGeneration" pInputText placeholder="Other Onsite Generation">
-          }
+          <p-inputNumber id="onSiteGeneration" name="onSiteGeneration" inputId="integeronly" [(ngModel)]="onSiteGeneration"></p-inputNumber>
+          <input class="ml-3" id="otherOnSiteGeneration" type="text" name="otherOnSiteGeneration" [(ngModel)]="otherOnSiteGeneration" pInputText placeholder="Other Onsite Generation">
         </div>
       </div>
     </p-card>

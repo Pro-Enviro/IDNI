@@ -60,13 +60,13 @@ export class RegisterComponent{
   uprn?:string;
   local_auth?:string;
   est_year?: Date;
-  employees?:string;
-  turnover?:string;
+  employees:string = '';
+  turnover:string = '';
   sector?:string;
-  sic_code?:string;
+  sic_code?:string[];
   website_url?:string;
   company_description?:string;
-  policy:boolean = false;
+  policy?:boolean;
   policy_idni?:boolean;
   policy_bill?:boolean;
   carbon_emissions?:any;
@@ -75,16 +75,15 @@ export class RegisterComponent{
   decarb_plans?:any;
   economy_opportunities?:any;
   selectedEnergyType?:any;
-  otherEnergyType?:any;
-  energyTypeCost?:any;
+  otherEnergyType:string = '';
+  energyTypeCost: string = '';
   selectedEnergyCost?:any;
-  energyCostAdditional?:any;
+  energyCostAdditional: string = '';
   selectedEnergyInfo?:any;
-  additionalEnergyInfo?:any;
+  additionalEnergyInfo:string = '';
   selectedOnSiteGeneration?:any;
-  onSiteGeneration?:any;
-  otherOnSiteGeneration?:any;
-  //form!: FormGroup;
+  onSiteGeneration?:string;
+  otherOnSiteGeneration:string = '';
   messages!: Message[];
 
   energyTypes:any = [
@@ -239,6 +238,42 @@ export class RegisterComponent{
       this.db.addCompany(['*'], formObj, userObj).subscribe({
         next: (res) => {
           console.log(res)
+        this.first_name = ''
+          this.last_name = ''
+          this.email = ''
+          this.phone_number = ''
+          this.password = ''
+          this.confirm_password = ''
+          this.company_name = ''
+          this.address = ''
+          this.postcode = ''
+          this.uprn = ''
+          this.local_auth = ''
+          this.employees = ''
+          this.turnover = ''
+          this.sector = ''
+          this.sic_code = []
+          this.website_url = ''
+          this.company_description = ''
+          this.selectedEnergyType = null
+          this.energyTypeCost = ''
+          this.otherEnergyType = ''
+          this.selectedEnergyCost = null
+          this.energyCostAdditional = ''
+          this.selectedEnergyInfo = null
+          this.additionalEnergyInfo = ''
+          this.selectedOnSiteGeneration = null
+          this.onSiteGeneration = ' '
+          this.otherOnSiteGeneration = ''
+          this.carbon_emissions = ''
+          this.development_issues = ''
+          this.challenges = ''
+          this.decarb_plans = ''
+          this.economy_opportunities = ''
+          this.policy = false
+          this.policy_idni = false
+          this.policy_bill = false
+
         }
       })
     } else{
