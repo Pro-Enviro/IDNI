@@ -20,6 +20,8 @@ import {NG_VALIDATORS} from '@angular/forms';
 import {NgClass} from "@angular/common";
 import {Message, MessageService} from "primeng/api";
 import {DividerModule} from "primeng/divider";
+import {Router, RouterLink} from "@angular/router";
+
 
 @Component({
   selector: 'app-register',
@@ -43,6 +45,7 @@ import {DividerModule} from "primeng/divider";
     InputMaskModule,
     NgClass,
     DividerModule,
+    RouterLink,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -187,7 +190,8 @@ export class RegisterComponent{
   ]
 
 
-  constructor(private db: DbService,private msg: MessageService) {
+
+  constructor(private db: DbService,private msg: MessageService , private router: Router) {
   }
 
   onSubmit = () => {
@@ -280,6 +284,7 @@ export class RegisterComponent{
             summary:'Success',
             detail:'You have successfully registered.'
           })
+          this.router.navigate(['login'])
         }
       })
     } else{
@@ -288,7 +293,6 @@ export class RegisterComponent{
         detail:'Please fill in all of the mandatory fields.'
       })
     }
-
   }
 
   checkInputs = () => {
