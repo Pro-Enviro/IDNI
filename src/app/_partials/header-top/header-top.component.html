@@ -2,15 +2,17 @@
   <ng-template pTemplate="start">
     <img src="assets/img/idni-logo.svg" height="80" class="mr-2 ml-2"/>
   </ng-template>
+  <p-button routerLink="registration-form" label="Sign Up" icon="pi pi-user" styleClass="btn-gradient mr-2" [rounded]="true"></p-button>
   <p-button routerLink="login" label="Login" icon="pi pi-user" styleClass="btn-outline" [rounded]="true"></p-button>
   <p-button label="PET" routerLink="pet" icon="pi pi-cog" styleClass="btn-style" [rounded]="true"></p-button>
 </p-megaMenu>
 
 <div class="burger-menu p-2">
   <p-sidebar [(visible)]="sidebarVisible">
-    <img src="assets/img/idni-logo.svg" height="80" class="mr-2 ml-2 mb-3"/>
-    <p-panelMenu [model]="items"></p-panelMenu>
+   <img src="assets/img/idni-logo.svg" height="80" class="mr-2 ml-2 mb-3"/>
+    <p-panelMenu [model]="items" styleClass="panelmenu-style-none"></p-panelMenu>
     <div class="flex flex-column pt-3">
+      <p-button routerLink="registration-form" label="Sign Up" icon="pi pi-user" styleClass="btn-gradient mb-2" [rounded]="true"></p-button>
       <p-button routerLink="login" label="Login" icon="pi pi-user" styleClass="btn-outline" [rounded]="true"></p-button>
       <p-button label="PET" routerLink="pet" icon="pi pi-cog" styleClass="btn-style mt-3" [rounded]="true"></p-button>
     </div>

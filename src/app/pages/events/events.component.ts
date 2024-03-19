@@ -7,6 +7,9 @@ import {JsonPipe} from "@angular/common";
 import {DropdownModule} from "primeng/dropdown";
 import {SharedModules} from "../../shared-module";
 import moment from "moment";
+import {RouterLink} from "@angular/router";
+import {DialogModule} from "primeng/dialog";
+import {CardModule} from "primeng/card";
 
 @Component({
   selector: 'app-events',
@@ -17,12 +20,16 @@ import moment from "moment";
     EventCardsTplComponent,
     JsonPipe,
     DropdownModule,
-    SharedModules
+    SharedModules,
+    RouterLink,
+    DialogModule,
+    CardModule
   ],
   templateUrl: './events.component.html',
   styleUrl: './events.component.scss'
 })
 export class EventsComponent {
+  visible: boolean = false;
   content:any;
   selectedDate: any;
   eventOptions:any =[
@@ -51,7 +58,8 @@ past_events.related_events_pages_id.content,
 past_events.related_events_pages_id.image,
 past_events.related_events_pages_id.date,
 past_events.related_events_pages_id.venue,
-past_events.related_events_pages_id.time
+past_events.related_events_pages_id.time,
+past_events.related_events_pages_id.link
 `).subscribe({
       next: (res: any) => {
         this.content = res
@@ -67,4 +75,7 @@ past_events.related_events_pages_id.time
     })
   }
 
+  showDialog() {
+    this.visible = true;
+  }
 }

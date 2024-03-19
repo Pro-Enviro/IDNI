@@ -12,6 +12,9 @@
       <div class="container p-4">
         <h2>{{content.title}}</h2>
         <div [innerHTML]="content.content"></div>
+        <p>If you wish to register for a Workshop in your area , please send an e-mail at:
+          <a class="font-semibold" style="color:#85bfba" href="mailto:GreenEconomyDevelopment@InvestNI.com" target="_blank" itemprop="email">{{"GreenEconomyDevelopment&#64;InvestNI.com" }}</a>
+        </p>
 <!--        <div class="flex justify-content-end p-5">-->
 <!--          <p-dropdown [options]="eventOptions" [(ngModel)]="selectedDate" optionLabel="name" [showClear]="true" placeholder="Past/Future Events"></p-dropdown>-->
 <!--        </div>-->
@@ -35,11 +38,24 @@
                 <div class="card-body text-left">
                   <h3 class="header-style text-2xl">{{content.title}}</h3>
                   <div class="mb-3">Venue: {{content.venue}}</div>
-                  <div [innerHTML]="content.content"></div>
+                  <div [innerHTML]="content.content" class="font-semibold"></div>
                 </div>
                 <div class="flex justify-content-start">
                   <div class="card-footer">
-                    <p-button label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
+                    @if(content.link){
+                      <p-button styleClass="btn-style" (click)="showDialog()">{{content.link}}</p-button>
+                      <p-dialog [(visible)]="visible" header="Mid Ulster District Council - Industrial Decarbonisation Cluster Workshop" [style]="{width: '50vw'}">
+                        <p-card styleClass="p-card-bck">
+                          <div class="grid">
+                            <div class="col-12">
+                              <div class="iframe-container">
+                                <iframe src="https://player.vimeo.com/video/924122067?h=813b60dffa" width="640" height="338" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                              </div>
+                            </div>
+                          </div>
+                        </p-card>
+                      </p-dialog>
+                    }
                   </div>
                 </div>
               </div>

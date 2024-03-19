@@ -63,7 +63,7 @@
   background-image: url("assets/img/curve-grey.svg");
   background-position: top left;
   background-repeat: no-repeat;
-  background-size: 47.5vw;
+  background-size: 50vw;
 }
 
 a{
@@ -128,6 +128,15 @@ a{
   .p-autocomplete-dd .p-autocomplete-dropdown {
     background-color: $primeColor;
     border: none;
+  }
+}
+
+.btn-gradient{
+  background-color:#458785;
+  border:1px solid #458785;
+  &:hover{
+    background-image: linear-gradient(#356c6b, #458785);
+    border:1px solid #458785;
   }
 }
 
@@ -216,6 +225,10 @@ a{
   }
 }
 
+.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-panelmenu-header-action {
+  padding: 8px !important;
+}
+
   .card-charts{
     background-color:#FDFDFD;
   }
@@ -223,6 +236,13 @@ a{
   .card-select-panel{
     background-color:#fbfbfb;
   }
+
+.p-card-bck {
+  background: #fdfdfd !important;
+  color: #4b5563;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+}
 
   .card-style-none{
       background: transparent;
@@ -477,7 +497,7 @@ a{
   padding:20px;
   a {
     font-size:18.5px;
-    padding:24px;
+    padding:10px;
     text-decoration: none;
     font-weight: 500;
   }
@@ -884,6 +904,24 @@ footer{
   }
 }
 
+//-------------------------------------------------IFRAME VIDEO---------------------------------------------------------
+.wrapper-frame {
+  width: 50%;
+}
+.iframe-container {
+  height: 0;
+  width: 100%;
+  padding-bottom: 50%;
+  overflow: hidden;
+  position: relative;
+}
+.iframe-container iframe {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
 //----------------------------------------------------TOP IMAGE---------------------------------------------------------
 
   .top-image-wrapper{
