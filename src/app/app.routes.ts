@@ -81,7 +81,7 @@ import {ClimateChangeCommitteComponent} from "./pages/news/climate-change-commit
 import {EnergyEfficiencyComponent} from "./pages/news/energy-efficiency/energy-efficiency.component";
 import {PetLoginProtected} from "./pages/pet-login-protected/pet-login-protected.component";
 import {TypeChartComponent} from "./pages/envirotrack/report/type-chart/type-chart.component";
-import {TypeYearChartComponent} from "./pages/envirotrack/report/type-year-chart/type-year-chart.component";
+import {ScopeChartComponent} from "./pages/envirotrack/report/scope-chart/scope-chart.component";
 
 
 
@@ -151,7 +151,7 @@ export const routes: Routes = [
       {path: 'avg', component: EnvirotrackReportAvgComponent },
       {path: 'demand', component: EnvirotrackReportDemandComponent },
       {path: 'co2emissions', component:  TypeChartComponent},
-      {path: 'co2emissionsbyscope', component: TypeYearChartComponent },
+      {path: 'co2emissionsbyscope', component: ScopeChartComponent },
     ]},
   {
     path: 'dashboard', canActivate: [authGuard], children: [

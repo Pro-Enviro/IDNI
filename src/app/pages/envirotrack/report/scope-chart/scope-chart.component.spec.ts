@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TypeYearChartComponent } from './type-year-chart.component';
+import { ScopeChartComponent } from './scope-chart.component';
 
-describe('TypeYearChartComponent', () => {
-  let component: TypeYearChartComponent;
-  let fixture: ComponentFixture<TypeYearChartComponent>;
+describe('ScopeChartComponent', () => {
+  let component: ScopeChartComponent;
+  let fixture: ComponentFixture<ScopeChartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TypeYearChartComponent ]
+      declarations: [ ScopeChartComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TypeYearChartComponent);
+    fixture = TestBed.createComponent(ScopeChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

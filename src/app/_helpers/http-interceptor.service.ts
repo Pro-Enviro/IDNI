@@ -44,14 +44,15 @@ export const HttpInterceptorService: HttpInterceptorFn = (
           if (error.status === 401) {
             console.log('401 Error')
             // handle 401
-            auth.refreshToken()
+            auth.refreshToken().then(() => {
+              const clonedRequest = req.clone({
+                headers: req.headers.set('Authorization', `Bearer ${token}`)
+              })
 
-            const clonedRequest = req.clone({
-              headers: req.headers.set('Authorization', `Bearer ${token}`)
+              console.log(clonedRequest)
+              return next(clonedRequest)
             })
 
-
-            return next(clonedRequest)
 
           } else if (error.status === 403) {
             console.log('403 Error')
@@ -66,7 +67,7 @@ export const HttpInterceptorService: HttpInterceptorFn = (
           detail: 'You are unauthorized.'
         })
 
-        console.log('HERE')
+
 
         return throwError(() => error);
       }))
@@ -81,13 +82,13 @@ export const HttpInterceptorService: HttpInterceptorFn = (
           if (error.status === 401) {
             console.log('401 Error')
             // handle 401
-             auth.refreshToken()
+            auth.refreshToken().then(() => {
+              const clonedRequest = req.clone({
+                headers: req.headers.set('Authorization', `Bearer ${token}`)
+              })
 
-            const clonedRequest = req.clone({
-              headers: req.headers.set('Authorization', `Bearer ${token}`)
+              return next(clonedRequest)
             })
-
-            return next(clonedRequest)
 
           } else if (error.status === 403) {
             console.log('403 Error')
@@ -96,7 +97,6 @@ export const HttpInterceptorService: HttpInterceptorFn = (
           } else {
             router.navigate(['login'])
           }
-
           router.navigate(['login'])
         }
         msg.add({

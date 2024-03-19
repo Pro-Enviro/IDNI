@@ -1,8 +1,13 @@
-<div class="col-6">
-  <p-card header="Select Company" styleClass="card-select-panel">
-    <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
-  </p-card>
-</div>
+<p-card styleClass="card-charts">
+  <div class="col-4">
+    <p-card header="Select Company" styleClass="card-select-panel">
+      <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id"
+                  (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
+      <p-multiSelect [options]="yearFilter" optionLabel="name" optionName="value" [(ngModel)]="selectedYears"
+                     (ngModelChange)="onYearFilter()"></p-multiSelect>
+    </p-card>
+  </div>
 
-<p-multiSelect [options]="yearFilter" optionLabel="name" optionName="value" [(ngModel)]="selectedYears" (ngModelChange)="onYearFilter()"></p-multiSelect>
-<div echarts [options]="chartOption" [initOpts]="{ renderer: 'svg' }" class="chart" style="max-height: 600px; height: 600px;"></div>
+  <div echarts [options]="chartOption" [initOpts]="{ renderer: 'svg' }" class="chart"
+       style="max-height: 800px; height: 800px;"></div>
+</p-card>
