@@ -274,6 +274,11 @@ export class RegisterComponent{
           this.policy_idni = false
           this.policy_bill = false
 
+          this.msg.add({
+            severity:'success',
+            summary:'Success',
+            detail:'You have successfully registered.'
+          })
         }
       })
     } else{
@@ -288,45 +293,24 @@ export class RegisterComponent{
   checkInputs = () => {
     const reg = /^\S+@\S+\.\S+$/;
     if (!reg.test(this.email)) {
-      this.messages = [{
-        severity: 'warn',
-        detail: 'Please fill in valid email.'
-      }];
       return false;
     }
     if (this?.first_name?.length < 3) {
-      this.messages = [{
-        severity: 'warn',
-        detail: 'Your first name must contain minimum 3 characters!'
-      }]
       return false;
     }
     if (this?.last_name?.length < 4) {
-      this.messages = [{
-        severity: 'warn',
-        detail: 'Your surname must contain minimum 4 characters!'
-      }]
       return false;
     }
     if (this?.phone_number?.length < 8) {
-      this.messages = [{
-        severity: 'warn',
-        detail: 'Your mobile number must contain minimum 8 characters!'
-      }]
       return false;
     }
+    if(this.company_name?.length < 5){
+      return false
+    }
     if (this?.address?.length < 5) {
-      this.messages = [{
-        severity: 'warn',
-        detail: 'Your address must contain minimum 5 characters!'
-      }]
       return false;
     }
     if (this?.postcode.length < 5) {
-      this.messages = [{
-        severity: 'warn',
-        detail: 'Your postcode must contain minimum 6 characters!'
-      }]
       return false;
     }
 
@@ -336,46 +320,14 @@ export class RegisterComponent{
     if (!this.policy_bill) {
       return false;
     }
-    // if (!this.policy_idni) {
-    //   return false;
-    // }
-
-    // const regPassword =  /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$%&? "])[a-zA-Z0-9!#$%&?]{8,20}$/
-    // const specialSymbol = /^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/
-    // if (!regPassword.test(this.password && this.confirm_password)) {
-    //   this.messages = [{
-    //     severity: 'warn',
-    //     detail: 'Please fill in valid password.'
-    //   }];
-    //   return false;
-    // }
-    // if(!specialSymbol.test(this.password && this.confirm_password)){
-    //   this.messages = [{
-    //     severity: 'warn',
-    //     detail: 'Please fill in valid password.'
-    //   }];
-    //   return false;
-    // }
-
-    // if(this.password !== this.confirm_password){
-    //   return false
-    // }
 
     if (this.policy_idni) {
       const regPassword =  /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$%&? "])[a-zA-Z0-9!#$%&?]{8,20}$/
       const specialSymbol = /^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/
       if (!regPassword.test(this.password && this.confirm_password)) {
-        this.messages = [{
-          severity: 'warn',
-          detail: 'Please fill in valid password.'
-        }];
         return false;
       }
       if(!specialSymbol.test(this.password && this.confirm_password)){
-        this.messages = [{
-          severity: 'warn',
-          detail: 'Please fill in valid password.'
-        }];
         return false;
       }
 

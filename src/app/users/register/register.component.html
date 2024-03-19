@@ -3,11 +3,11 @@
     <p-card styleClass="p-card-bck" header="User Information">
       <div class="field flex flex-column p-2">
         <label>First Name<span style="color:#85bfba;padding-left:5px">*</span></label>
-        <input type="text" id="first_name" name="first_name" pInputText class="text-base" [(ngModel)]="first_name" required>
+        <input type="text" id="first_name" name="first_name" pInputText class="text-base" [(ngModel)]="first_name">
       </div>
       <div class="field flex flex-column p-2">
         <label>Surname<span style="color:#85bfba;padding-left:5px">*</span></label>
-        <input type="text" id="last_name" name="last_name" pInputText class="text-base" [(ngModel)]="last_name" required>
+        <input type="text" id="last_name" name="last_name" pInputText class="text-base" [(ngModel)]="last_name">
       </div>
       <div class="formgrid grid p-2">
         <div class="field lg:col-6 sm:col-12">
@@ -16,7 +16,7 @@
             <p-inputGroupAddon>
               <i class="pi pi-envelope"></i>
             </p-inputGroupAddon>
-            <input type="text" id="email" name="email" pInputText [(ngModel)]="email" required pattern="[^ @]*@[^ @]*" emailDomain/>
+            <input type="text" id="email" name="email" pInputText [(ngModel)]="email" pattern="[^ @]*@[^ @]*" emailDomain/>
           </p-inputGroup>
         </div>
         <div class="field lg:col-6 sm:col-12">
@@ -25,7 +25,7 @@
             <p-inputGroupAddon>
               <i class="pi pi-phone"></i>
             </p-inputGroupAddon>
-            <input pInputText id="phone_number" type="text" name="phone_number" [(ngModel)]="phone_number" required/>
+            <input pInputText id="phone_number" type="text" name="phone_number" [(ngModel)]="phone_number"/>
           </p-inputGroup>
         </div>
       </div>
@@ -36,18 +36,18 @@
     <p-card styleClass="p-card-bck" header="Company Information">
       <div class="field flex flex-column p-2">
         <label>Company Name<span style="color:#85bfba;padding-left:5px">*</span></label>
-        <input type="text" id="company_name" name="company_name" pInputText class="text-base" [(ngModel)]="company_name" required>
+        <input type="text" id="company_name" name="company_name" pInputText class="text-base" [(ngModel)]="company_name">
       </div>
 
       <div class="formgrid grid p-2">
         <div class="field lg:col-6 sm:col-12 flex flex-column">
           <label>Address<span style="color:#85bfba;padding-left:5px">*</span></label>
-          <input id="address" name="address" type="text" pInputText  [(ngModel)]="address" required>
+          <input id="address" name="address" type="text" pInputText  [(ngModel)]="address">
         </div>
 
         <div class="field lg:col-6 sm:col-12 flex flex-column">
           <label>Postcode<span style="color:#85bfba;padding-left:5px">*</span></label>
-          <input id="postcode" name="postcode" pInputText type="text" [(ngModel)]="postcode" required>
+          <input id="postcode" name="postcode" pInputText type="text" [(ngModel)]="postcode">
         </div>
       </div>
 
@@ -60,7 +60,7 @@
       <div class="formgrid grid p-2">
         <div class="field lg:col-6 sm:col-12">
           <label>To which local authority do you pay your business rates?<span style="color:#85bfba;padding-left:5px">*</span></label>
-          <input id="local_auth" type="text" name="local_auth" pInputText [(ngModel)]="local_auth" required>
+          <input id="local_auth" type="text" name="local_auth" pInputText [(ngModel)]="local_auth">
         </div>
 
         <div class="field lg:col-6 sm:col-12">
