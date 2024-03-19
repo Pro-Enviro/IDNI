@@ -59,7 +59,7 @@ export class RegisterComponent{
   postcode:string = '';
   uprn?:string;
   local_auth?:string;
-  est_year?: Date;
+  est_year?: Date[];
   employees:string = '';
   turnover:string = '';
   sector?:string;
@@ -249,6 +249,7 @@ export class RegisterComponent{
           this.postcode = ''
           this.uprn = ''
           this.local_auth = ''
+          this.est_year = []
           this.employees = ''
           this.turnover = ''
           this.sector = ''
