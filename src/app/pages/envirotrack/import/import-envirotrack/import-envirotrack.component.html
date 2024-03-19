@@ -19,15 +19,20 @@
                         cancelStyleClass="btn-dark"
                         uploadStyleClass="btn-outline">
             <ng-template pTemplate="content">
+
               <ul *ngIf="uploadedFiles.length">
                 <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
               </ul>
             </ng-template>
           </p-fileUpload>
         </p-card>
-        <p-card *ngIf="isXlsx" styleClass="card-charts mt-5">
-          <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()" class="btn-select"></p-selectButton>
+
+        <p-card *ngIf="uploadedFiles.length" styleClass="card-charts mt-5">
+          <p-button *ngIf="isXlsx && userLevel < 3" styleClass="btn-dark m-1"  label="Send Data" (click)="sendDataToProEnviro()"></p-button>
+          <p-selectButton *ngIf="userLevel >= 3"  [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()" class="btn-select"></p-selectButton>
         </p-card>
+
+
         <ng-container *ngIf="fileContent">
           <p-card  #table  header="Half-Hourly Data (HHD)" styleClass="card-charts mt-4">
             <div class="grid">

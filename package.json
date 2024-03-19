@@ -24,6 +24,7 @@
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.11.19",
     "@types/plotly.js-dist-min": "^2.3.4",
+    "@types/tinycolor2": "^1.4.6",
     "FileSaver": "^0.10.0",
     "angular-plotly.js": "^5.2.2",
     "echarts": "^5.4.3",
@@ -40,6 +41,7 @@
     "primeicons": "^6.0.1",
     "primeng": "^17.3.2",
     "rxjs": "~7.8.0",
+    "tinycolor2": "^1.6.0",
     "tslib": "^2.3.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz",
     "zone.js": "~0.14.2"

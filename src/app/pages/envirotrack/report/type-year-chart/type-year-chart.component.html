@@ -1,0 +1,6 @@
+<div class="mb-4">
+  <p-selectButton [options]="companyList" optionLabel="name" optionValue="value" [(ngModel)]="selectedCompany"
+                  name="selectedCompany" [multiple]="true" (ngModelChange)="filterData($event)" class="btn-select"
+  ></p-selectButton>
+</div>
+<div class="chart" echarts [options]="chartOption" [initOpts]="{ renderer: 'svg' }" style="max-height: 800px; height: 800px"></div>

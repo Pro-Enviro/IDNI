@@ -182,7 +182,7 @@ export class EnvirotrackReportPieComponent implements OnInit {
     this.chartX = [];
     this.chartY = [];
     this.track.getData(id).subscribe({
-        next: (res) => {;
+        next: (res) => {
           res.forEach((row: any) => {
             row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
             this.months.push(row.date)

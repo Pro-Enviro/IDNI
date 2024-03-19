@@ -92,6 +92,16 @@ export class DashboardComponent {
           label:'<span class="material-symbols-outlined material-icon">data_exploration</span>Maximum Demand',
           escape: false,
           routerLink: '/dashboard/demand'
+        },
+        {
+          label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Breakdown of CO2e (tonnes) by emissions source',
+          escape: false,
+          routerLink: '/dashboard/co2emissions'
+        },
+        {
+          label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Breakdown of CO2e (tonnes) by scope',
+          escape: false,
+          routerLink: '/dashboard/co2emissionsbyscope'
         }
       ]
     }

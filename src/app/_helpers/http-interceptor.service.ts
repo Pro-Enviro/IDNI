@@ -12,6 +12,10 @@ import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {AuthService} from "../_services/users/auth.service";
 
+
+
+
+
 export const HttpInterceptorService: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
@@ -22,6 +26,7 @@ export const HttpInterceptorService: HttpInterceptorFn = (
   const msg = inject(MessageService)
   const token = storage.get('access_token');
   const auth = inject(AuthService)
+
 
 
   if (token){
@@ -44,6 +49,7 @@ export const HttpInterceptorService: HttpInterceptorFn = (
             const clonedRequest = req.clone({
               headers: req.headers.set('Authorization', `Bearer ${token}`)
             })
+
 
             return next(clonedRequest)
 
