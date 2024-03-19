@@ -8,6 +8,8 @@ import {DropdownModule} from "primeng/dropdown";
 import {SharedModules} from "../../shared-module";
 import moment from "moment";
 import {RouterLink} from "@angular/router";
+import {DialogModule} from "primeng/dialog";
+import {CardModule} from "primeng/card";
 
 @Component({
   selector: 'app-events',
@@ -19,12 +21,15 @@ import {RouterLink} from "@angular/router";
     JsonPipe,
     DropdownModule,
     SharedModules,
-    RouterLink
+    RouterLink,
+    DialogModule,
+    CardModule
   ],
   templateUrl: './events.component.html',
   styleUrl: './events.component.scss'
 })
 export class EventsComponent {
+  visible: boolean = false;
   content:any;
   selectedDate: any;
   eventOptions:any =[
@@ -70,4 +75,7 @@ past_events.related_events_pages_id.link
     })
   }
 
+  showDialog() {
+    this.visible = true;
+  }
 }

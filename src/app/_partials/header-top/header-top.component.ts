@@ -81,12 +81,12 @@ export class HeaderTopComponent {
       routerLink: 'local-decarbonisation'
     },
     {
-      label: 'Events',
-      routerLink: 'events'
-    },
-    {
       label:'Virtual Tour',
       routerLink:'virtual-tour'
+    },
+    {
+      label: 'Events',
+      routerLink: 'events'
     },
     {
       label: 'News',
@@ -135,6 +135,10 @@ export class HeaderTopComponent {
     {
       label: 'NI Councils',
       routerLink: 'local-decarbonisation'
+    },
+    {
+      label:'Virtual Tour',
+      routerLink:'virtual-tour'
     },
     {
       label: 'Events',

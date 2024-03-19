@@ -131,6 +131,15 @@ a{
   }
 }
 
+.btn-gradient{
+  background-color:#458785;
+  border:1px solid #458785;
+  &:hover{
+    background-image: linear-gradient(#356c6b, #458785);
+    border:1px solid #458785;
+  }
+}
+
 .drop-column {
   .p-button {
     color: #ffffff;
@@ -214,6 +223,10 @@ a{
     color: #4b5563;
     border-top: 0;
   }
+}
+
+.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-panelmenu-header-action {
+  padding: 8px !important;
 }
 
   .card-charts{
@@ -891,6 +904,24 @@ footer{
   }
 }
 
+//-------------------------------------------------IFRAME VIDEO---------------------------------------------------------
+.wrapper-frame {
+  width: 50%;
+}
+.iframe-container {
+  height: 0;
+  width: 100%;
+  padding-bottom: 50%;
+  overflow: hidden;
+  position: relative;
+}
+.iframe-container iframe {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
 //----------------------------------------------------TOP IMAGE---------------------------------------------------------
 
   .top-image-wrapper{

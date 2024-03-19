@@ -43,7 +43,18 @@
                 <div class="flex justify-content-start">
                   <div class="card-footer">
                     @if(content.link){
-                      <a href="{{content.link}}" target="_blank"  class="text-sm pt-3 pb-2"><p-button styleClass="btn-style" label="Learn More"></p-button></a>
+                      <p-button styleClass="btn-style" (click)="showDialog()">{{content.link}}</p-button>
+                      <p-dialog [(visible)]="visible" header="Mid Ulster District Council - Industrial Decarbonisation Cluster Workshop" [style]="{width: '50vw'}">
+                        <p-card styleClass="p-card-bck">
+                          <div class="grid">
+                            <div class="col-12">
+                              <div class="iframe-container">
+                                <iframe src="https://player.vimeo.com/video/924122067?h=813b60dffa" width="640" height="338" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                              </div>
+                            </div>
+                          </div>
+                        </p-card>
+                      </p-dialog>
                     }
                   </div>
                 </div>
