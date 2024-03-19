@@ -294,7 +294,7 @@ export class RegisterComponent implements OnInit{
     if (!reg.test(this.email)) {
       this.messages = [{
         severity: 'warn',
-        detail: 'Invalid email!'
+        detail: 'Please fill in valid email.'
       }];
       return false;
     }
@@ -303,36 +303,12 @@ export class RegisterComponent implements OnInit{
   }
 
 
-  // initForm = () => {
-  //   this.form = this._fb.group({
-  //     "first_name":['', [Validators.required]],
-  //     "last_name":['', [Validators.required]],
-  //     "email": ['', [Validators.required, Validators.email]],
-  //     "phone_number":['', [Validators.required]],
-  //     "company_name":['', [Validators.required]],
-  //     "address":['', [Validators.required]],
-  //     "postcode":['', [Validators.required]],
-  //     "policy":['', [Validators.required]],
-  //     "policy_idni": ['', [Validators.required]]
-  //   })
-  // }
-
-  onSave = () => {
-    // if(this.form.invalid){
-    //   this.messages.add=({
-    //     severity: 'warn',
-    //     detail: 'Please fill in all required fields'
-    //   })
-    //   return;
-    // }
-  }
 
 
 
 
   ngOnInit(): void {
-    // this.initForm();
-    // this.onSave();
+
   }
 
 }
