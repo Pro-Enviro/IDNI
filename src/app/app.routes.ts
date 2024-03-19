@@ -93,7 +93,7 @@ export const routes: Routes = [
   {path: 'coming-soon', component: ConstructionComponent},
   {path:'news',component:NewsComponent},
   {path:'virtual-tour',component:VirtualTourComponent},
-  {path:'tackling-climate-crisis',component:ClimateCrisisComponent},
+  {path:'climate-crisis',component:ClimateCrisisComponent},
   {path:'micro-businesses-net-zero',component:NetZeroBusinessComponent},
   {path:'progress-report-climate-change-committee',component:ClimateChangeCommitteComponent},
   {path:'drive-energy-efficiency-to-deliver',component:EnergyEfficiencyComponent},
