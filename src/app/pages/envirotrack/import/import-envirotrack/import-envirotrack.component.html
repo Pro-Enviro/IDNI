@@ -28,8 +28,8 @@
         </p-card>
 
         <p-card *ngIf="uploadedFiles.length" styleClass="card-charts mt-5">
-          <p-button *ngIf="isXlsx && userLevel < 3" styleClass="btn-dark m-1"  label="Send Data" (click)="sendDataToProEnviro()"></p-button>
-          <p-selectButton *ngIf="userLevel >= 3"  [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()" class="btn-select"></p-selectButton>
+          <p-button *ngIf="isXlsx" styleClass="btn-dark m-1"  label="Send Data" (click)="sendDataToProEnviro()"></p-button>
+          <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()" class="btn-select"></p-selectButton>
         </p-card>
 
 
