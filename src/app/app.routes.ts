@@ -84,6 +84,7 @@ import {TypeChartComponent} from "./pages/envirotrack/report/type-chart/type-cha
 import {ScopeChartComponent} from "./pages/envirotrack/report/scope-chart/scope-chart.component";
 import {VirtualTourComponent} from "./pages/virtual-tour/virtual-tour.component";
 import {DataPrivacyComponent} from "./pages/data-privacy/data-privacy.component";
+import {KnowledgeBaseComponent} from "./pages/knowledge-base/knowledge-base.component";
 
 
 
@@ -131,6 +132,7 @@ export const routes: Routes = [
   {path:'mpa',component:MpaComponent},
   {path:'advisory-board',component:AdvisoryBoardComponent},
   {path:'stakeholders',component:StakeholdersComponent},
+  {path:'knowledge-base',component:KnowledgeBaseComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
   {path: 'registration-form', component: RegistrationFormComponent},

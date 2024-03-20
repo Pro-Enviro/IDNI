@@ -99,6 +99,10 @@ export class HeaderTopComponent {
     {
       label: 'Funding',
       routerLink: 'coming-soon'
+    },
+    {
+      label:'Knowledge Base',
+      routerLink:'knowledge-base'
     }
   ]
 
