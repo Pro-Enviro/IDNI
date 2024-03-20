@@ -222,7 +222,7 @@
     <div class="">
       <p-checkbox [binary]="true" inputId="policy_idni" name="policy_idni" [(ngModel)]="policy_idni" value="policy_idni" [required]="true"></p-checkbox>
       <label class="pl-2"> Your company/organisation is content to allow the IDNI partnership team to collate and assess any data collected as part of this project and to share the findings of any data analysis anonymously to allow collective decarbonisation plans to be developed?<span style="color:#006633;padding-left:5px">*</span></label>
-      @if(policy_idni){
+      @if(policy_idni && policy && policy_bill){
         <div class="grid p-4 m-3" style="background:#fcfcfc">
           <div class="lg:col-6 sm:col-12">
             <div class="field flex flex-column pr-3">
