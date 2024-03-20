@@ -394,7 +394,7 @@ export class EnvirotrackReportFieldsComponent {
 
     this.series = seriesPerType
 
-    console.log(this.series)
+
 
     const monthArr: any[] = Array.from(months);
     monthArr.sort((a: any, b: any) => moment(a, ['MMMM-YYYY']).diff(moment(b, ['MMMM-YYYY'])))
