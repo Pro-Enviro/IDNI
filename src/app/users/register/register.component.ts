@@ -326,7 +326,24 @@ export class RegisterComponent{
       return false;
     }
 
-    if (this.policy_idni) {
+    if(!this.policy_idni){
+      return false
+    }
+
+      // const regPassword =  /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$%&? "])[a-zA-Z0-9!#$%&?]{8,20}$/
+      // const specialSymbol = /^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/
+      // if (!regPassword.test(this.password && this.confirm_password)) {
+      //   return false;
+      // }
+      // if(!specialSymbol.test(this.password && this.confirm_password)){
+      //   return false;
+      // }
+      //
+      // if(this.password !== this.confirm_password){
+      //   return false
+      // }
+
+    if(this.password && this.confirm_password){
       const regPassword =  /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$%&? "])[a-zA-Z0-9!#$%&?]{8,20}$/
       const specialSymbol = /^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/
       if (!regPassword.test(this.password && this.confirm_password)) {
@@ -340,6 +357,9 @@ export class RegisterComponent{
         return false
       }
     }
+
+
+
      return true
   }
 
