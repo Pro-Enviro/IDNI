@@ -119,6 +119,11 @@ export class DashboardComponent {
           routerLink: '/dashboard/demand'
         },
         {
+          label:'<span class="material-symbols-outlined material-icon">bar_chart</span>Fuel Usage',
+          escape: false,
+          routerLink: '/dashboard/fuel-usage'
+        },
+        {
           label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Breakdown of CO2e (tonnes) by emissions source',
           escape: false,
           routerLink: '/dashboard/co2emissions'

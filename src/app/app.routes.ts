@@ -84,6 +84,9 @@ import {TypeChartComponent} from "./pages/envirotrack/report/type-chart/type-cha
 import {ScopeChartComponent} from "./pages/envirotrack/report/scope-chart/scope-chart.component";
 import {VirtualTourComponent} from "./pages/virtual-tour/virtual-tour.component";
 import {DataPrivacyComponent} from "./pages/data-privacy/data-privacy.component";
+import {
+  EnvirotrackReportFieldsComponent
+} from "./pages/envirotrack/report/envirotrack-report-fields/envirotrack-report-fields.component";
 
 
 
@@ -157,6 +160,7 @@ export const routes: Routes = [
       {path: 'base1', component: EnvirotrackReportBase1Component },
       {path: 'avg', component: EnvirotrackReportAvgComponent },
       {path: 'demand', component: EnvirotrackReportDemandComponent },
+      {path:'fuel-usage', component: EnvirotrackReportFieldsComponent},
       {path: 'co2emissions', component:  TypeChartComponent},
       {path: 'co2emissionsbyscope', component: ScopeChartComponent },
     ]},
