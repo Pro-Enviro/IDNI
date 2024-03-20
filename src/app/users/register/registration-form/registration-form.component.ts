@@ -13,6 +13,7 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {PaginatorModule} from "primeng/paginator";
 import {PanelModule} from "primeng/panel";
 import {PasswordModule} from "primeng/password";
+import {DbService} from "../../../_services/db.service";
 
 @Component({
   selector: 'app-registration-form',

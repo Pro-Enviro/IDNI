@@ -74,7 +74,7 @@ export class DashboardComponent {
       },
 
       {
-        label:'<span class="material-symbols-outlined">add_chart</span> PET',
+        label:'<span class="material-symbols-outlined">data_thresholding</span> PET',
         routerLink:'/dashboard/pet',
         escape: false
       },
