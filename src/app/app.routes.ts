@@ -83,6 +83,7 @@ import {PetLoginProtected} from "./pages/pet-login-protected/pet-login-protected
 import {TypeChartComponent} from "./pages/envirotrack/report/type-chart/type-chart.component";
 import {ScopeChartComponent} from "./pages/envirotrack/report/scope-chart/scope-chart.component";
 import {VirtualTourComponent} from "./pages/virtual-tour/virtual-tour.component";
+import {DataPrivacyComponent} from "./pages/data-privacy/data-privacy.component";
 
 
 
@@ -90,6 +91,7 @@ export const routes: Routes = [
 
   {path: '', component: LandingPageComponent},
   {path:'home',component: LandingPageComponent},
+  {path:'data-privacy-policy',component:DataPrivacyComponent},
   {path: 'pet', component: PetComponent},
   {path:'events',component:EventsComponent},
   {path: 'coming-soon', component: ConstructionComponent},
