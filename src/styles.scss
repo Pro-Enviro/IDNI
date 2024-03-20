@@ -628,7 +628,13 @@ a{
       }
     }
   }
-
+.search-bar-container{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: 20%;
+  right: 20%;
+}
 
 //sections
 .faq-bg{
@@ -947,6 +953,7 @@ footer{
      max-width:100%;
      position: relative;
    }
+
 
   .top-image-wrapper svg {
     position: absolute;
