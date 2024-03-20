@@ -333,13 +333,11 @@ export class EnvirotrackReportFieldsComponent {
         let uom = row[rawUOM].value ? row[rawUOM].value : 'kWh'
         if (typeof uom !== 'string') uom = 'kWh'
 
-        console.log(row)
 
         if (uom !== 'kWh') {
           value = this.convertToKwh(fuelType, uom, value)
         }
 
-        console.log(value)
 
 
         let currentMonth: moment.Moment = startDate.clone().startOf('month')
@@ -552,12 +550,14 @@ export class EnvirotrackReportFieldsComponent {
         }
 
 
+
         const total = row[findTotal].value ? row[findTotal].value : 0
         const cost = row[findCost].value ? row[findCost].value : 0
         let consumption = row[findValue]?.value ? row[findValue].value : 0
 
-        const uom = row[findUOM].value ? row[findUOM].value : 'kWh'
+        let uom = row[findUOM].value ? row[findUOM].value : 'kWh'
 
+        if (typeof uom !== 'string') uom = 'kWh'
 
         // If not in kWh - convert (Numbers above taken from Bill data Template - Bianca)
         if (uom !== 'kWh'){
