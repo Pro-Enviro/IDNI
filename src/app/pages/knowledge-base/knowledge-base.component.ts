@@ -4,6 +4,7 @@ import {RippleModule} from "primeng/ripple";
 import {TopPageImgTplComponent} from "../../_partials/top-page-img-tpl/top-page-img-tpl.component";
 import {ToolbarModule} from "primeng/toolbar";
 import {InputTextModule} from "primeng/inputtext";
+import {CardModule} from "primeng/card";
 
 @Component({
   selector: 'app-knowledge-base',
@@ -13,7 +14,8 @@ import {InputTextModule} from "primeng/inputtext";
     RippleModule,
     TopPageImgTplComponent,
     ToolbarModule,
-    InputTextModule
+    InputTextModule,
+    CardModule
   ],
   templateUrl: './knowledge-base.component.html',
   styleUrl: './knowledge-base.component.scss'
