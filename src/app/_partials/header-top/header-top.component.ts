@@ -64,7 +64,7 @@ export class HeaderTopComponent {
                 routerLink:'stakeholders'
               },
               {
-                label:'Green Technologies',
+                label:'Sustainable Technologies',
                 routerLink:'latest-technologies'
               }
             ]
@@ -119,7 +119,7 @@ export class HeaderTopComponent {
           routerLink:'/stakeholders'
         },
         {
-          label:'Green Technologies',
+          label:'Sustainable Technologies',
           routerLink:'latest-technologies'
         }
       ]
