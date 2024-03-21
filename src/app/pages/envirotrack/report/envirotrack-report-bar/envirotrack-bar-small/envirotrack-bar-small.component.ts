@@ -11,6 +11,7 @@ import {EnvirotrackService} from "../../../envirotrack.service";
 import moment from "moment/moment";
 import {CardModule} from "primeng/card";
 import {GlobalService} from "../../../../../_services/global.service";
+import {StorageService} from "../../../../../_services/storage.service";
 
 @Component({
   selector: 'app-envirotrack-bar-small',
@@ -63,7 +64,8 @@ export class EnvirotrackBarSmallComponent implements OnInit {
 
   constructor(
     private track: EnvirotrackService,
-    private global: GlobalService
+    private global: GlobalService,
+    private storage: StorageService
   ) {
     this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
     this.selectedCompany = this?.global?.companyAssignedId?.value || null;
@@ -172,20 +174,17 @@ export class EnvirotrackBarSmallComponent implements OnInit {
   }
 
   getCompanies = () =>{
-    if (this.global.companyAssignedId.value){
-      this.selectedCompany = this.global.companyAssignedId.value
-      this.onSelectCompany()
-    } else {
+
       this.track.getCompanies().subscribe({
         next: (res: any)=>{
           if (res.data) {
             this.companies = res.data
-            this.selectedCompany = res.data[0].id
+
 
           }
         }
       })
-    }
+
 
   }
 
@@ -271,14 +270,13 @@ export class EnvirotrackBarSmallComponent implements OnInit {
     this.getCompanies();
 
     if (this.global.companyAssignedId.value) {
-      console.log(this.selectedCompany)
-      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
+      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'|| this.storage.get('_rle') === 'Admin' || this.storage.get('_rle') === 'Consultant'
       console.log(this.global.role.value)
       this.selectedCompany = this?.global?.companyAssignedId?.value || null;
       this.getData(this?.global?.companyAssignedId?.value)
     } else {
       console.log('Check for admin/consultant')
-      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
+      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant' || this.storage.get('_rle') === 'Admin' || this.storage.get('_rle') === 'Consultant'
 
     }
 

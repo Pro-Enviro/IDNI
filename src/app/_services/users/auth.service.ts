@@ -42,6 +42,7 @@ export class AuthService {
 
     // Reset tokens if re logging in
     localStorage.clear()
+    this.global.updateRole('')
 
     const result = await this.client.login(credentials.email, credentials.password)
     const token = await this.client.getToken()
@@ -87,11 +88,10 @@ export class AuthService {
 
 
 
+    setTimeout(() => {
+      this.route.navigate(['dashboard'])
+    }, 400)
 
-
-
-
-    this.route.navigate(['dashboard'])
      // this.http.post(`${this.url}auth/login`, credentials).pipe(
      //   map((x:any) => x.data),
      // ).subscribe({

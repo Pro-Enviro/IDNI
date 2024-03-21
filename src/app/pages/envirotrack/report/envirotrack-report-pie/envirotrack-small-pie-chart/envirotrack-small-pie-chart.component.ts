@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import {EChartsOption} from "echarts";
 import {EnvirotrackService} from "../../../envirotrack.service";
 import moment from "moment/moment";
@@ -12,6 +12,7 @@ import {NgIf} from "@angular/common";
 import {SharedModules} from "../../../../../shared-module";
 import {CardModule} from "primeng/card";
 import {GlobalService} from "../../../../../_services/global.service";
+import {StorageService} from "../../../../../_services/storage.service";
 
 @Component({
   selector: 'app-envirotrack-small-pie-chart',
@@ -67,7 +68,8 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
 
   constructor(
     private track: EnvirotrackService,
-    private global: GlobalService
+    private global: GlobalService,
+    private storage: StorageService
   ) {
 
   }
@@ -155,20 +157,15 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
 
   getCompanies = () =>{
 
-    if (this.global.companyAssignedId.value){
-      this.selectedCompany = this.global.companyAssignedId.value
-      this.onSelectCompany()
-    } else {
+
       this.track.getCompanies().subscribe({
         next: (res: any)=>{
           if (res.data) {
             this.companies = res.data
-            this.selectedCompany = res.data[0].id
-
           }
         }
       })
-    }
+
 
   }
 
@@ -294,22 +291,37 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
     this.initChart()
   }
 
-  ngOnInit() {
-    this.getCompanies();
 
+
+  fetchDataByRole = () => {
     if (this.global.companyAssignedId.value) {
       console.log(this.selectedCompany)
-      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
+      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'|| this.storage.get('_rle') === 'Admin' || this.storage.get('_rle') === 'Consultant'
       console.log(this.global.role.value)
       this.selectedCompany = this?.global?.companyAssignedId?.value || null;
       this.getData(this?.global?.companyAssignedId?.value)
+      this.onSelectCompany()
     } else {
-      console.log('Check for admin/consultant')
-      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
-    }
+      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant' || this.storage.get('_rle') === 'Admin' || this.storage.get('_rle') === 'Consultant'
 
-    console.log(this.isConsultant)
+    }
+  }
+
+
+  ngOnInit() {
+    this.getCompanies();
+    this.fetchDataByRole()
 
     this.screenWidth = window.innerWidth;
   }
 }
+
+
+
+
+
+
+
+
+
+
