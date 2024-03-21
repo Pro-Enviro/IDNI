@@ -289,13 +289,13 @@
           </tr>
           <tr style="background-color: #fff" *ngIf="groups.parent.addRows">
             <td colspan="5">
-              <p-button class="p-button-rounded p-button-success" label="Add new row" (click)="createNewTableRow(groups)" ></p-button>
+              <p-button icon="pi pi-plus" label="Add new row" (click)="createNewTableRow(groups)" styleClass="btn-dark mt-3 mb-3"></p-button>
             </td>
           </tr>
         </ng-template>
       </p-table>
 
-      <p-button label="Save"  *ngIf="selectedCompany" (click)="savePETdata()"></p-button>
+      <p-button label="Save"  *ngIf="selectedCompany" (click)="savePETdata()" styleClass="btn-style"></p-button>
     </div>
   </div>
 
