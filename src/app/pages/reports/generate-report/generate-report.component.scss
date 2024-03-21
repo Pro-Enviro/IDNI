@@ -1,0 +1,61 @@
+.checkbox {
+  display: flex;
+
+  label {
+    padding-bottom: 0 !important;
+    margin-left: 0.3rem !important;
+  }
+}
+
+
+:host ::ng-deep .report-card {
+  height: 100%;
+  //box-shadow:  rgba(0, 0, 0, 0.25) 0px 1px 3px;
+  box-shadow: none;
+  border: 1px solid #e0dcdc;
+}
+
+:host ::ng-deep .p-card-body {
+  height: 100%;
+
+  & > .p-card-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  & > .p-card-content {
+    padding: 0;
+
+    > br {
+      display: none;
+    }
+  }
+}
+
+:host ::ng-deep .reco-table {
+
+  tr td input {
+    padding: 0.5rem;
+  }
+}
+
+
+:host ::ng-deep .p-tabview-title{
+  font-size: 0.9rem
+}
+
+.floating {
+  position: sticky;
+  right: 30px;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  > button {
+    margin-right: 1rem;
+  }
+}
+
+

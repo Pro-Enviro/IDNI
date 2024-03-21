@@ -84,6 +84,7 @@ import {TypeChartComponent} from "./pages/envirotrack/report/type-chart/type-cha
 import {ScopeChartComponent} from "./pages/envirotrack/report/scope-chart/scope-chart.component";
 import {VirtualTourComponent} from "./pages/virtual-tour/virtual-tour.component";
 import {DataPrivacyComponent} from "./pages/data-privacy/data-privacy.component";
+import {GenerateReportComponent} from "./pages/reports/generate-report/generate-report.component";
 
 
 
@@ -136,6 +137,7 @@ export const routes: Routes = [
   {path: 'registration-form', component: RegistrationFormComponent},
   {path:'chat',component: ChatDialogTplComponent},
   {path:'live-chat',component:LiveChatTplComponent},
+
   {
     path: 'envirotrack', children: [
 
@@ -149,6 +151,7 @@ export const routes: Routes = [
       {path: 'import', component: ImportEnvirotrackComponent},
       {path: 'fuel-data', component: DataCaptureSpreadsheetFuelsComponent},
       {path: 'pet', component: PetLoginProtected},
+      {path:'recommendations', component: GenerateReportComponent},
       {path: 'report', component: EnvirotrackReportComponent},
       {path: 'heatmap', component: EnvirotrackReportHeatmapComponent},
       {path: 'scatter', component: EnvirotrackReportScatterComponent},

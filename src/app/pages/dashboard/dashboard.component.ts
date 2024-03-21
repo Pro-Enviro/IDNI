@@ -79,6 +79,11 @@ export class DashboardComponent {
         escape: false
       },
     {
+      label:'<span class="material-symbols-outlined">data_thresholding</span> Recommendations',
+      routerLink:'/dashboard/recommendations',
+      escape: false
+    },
+    {
       label:'<span class="material-symbols-outlined">query_stats</span> Report',
       escape: false,
       routerLink:'/dashboard/heatmap',
