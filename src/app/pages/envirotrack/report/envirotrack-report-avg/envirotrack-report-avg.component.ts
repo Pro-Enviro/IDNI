@@ -158,6 +158,7 @@ export class EnvirotrackReportAvgComponent implements OnInit {
 
 
   getCompanies = () =>{
+
     this.track.getCompanies().subscribe({
       next: (res: any)=>{
         this.companies = res.data;

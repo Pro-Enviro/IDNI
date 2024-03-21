@@ -31,6 +31,4 @@ export class GlobalService {
     const storage: Storage = new Storage()
     this.client = createDirectus('https://app.idni.eco').with(authentication('json', {storage})).with(rest()).with(graphql())
   }
-
-
 }
