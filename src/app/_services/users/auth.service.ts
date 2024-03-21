@@ -38,6 +38,11 @@ export class AuthService {
     //   email: 'rian.jacobs@proenviro.co.uk',
     //   password: 'Kinibay100%'
     // }
+
+
+    // Reset tokens if re logging in
+    localStorage.clear()
+
     const result = await this.client.login(credentials.email, credentials.password)
     const token = await this.client.getToken()
 
@@ -51,17 +56,14 @@ export class AuthService {
     this.http.get(`${this.url}users/me?fields=email,role.name`).subscribe({
       next: (res: any)=>{
         // Adjust user permissions
+        console.log(res.data.role.name)
         if (res.data.role.name === 'Administrator') {
-          // Allow all companies to be viewed
           this.global.updateRole('Admin')
-          console.log('ADMIN')
+
         } else if (res.data.role.name === 'consultant') {
-          // Allow all companies to be viewed
           this.global.updateRole('Consultant')
         } else if (res.data.role.name === 'user') {
           this.global.updateRole('User')
-          console.log('USER')
-
 
           // Only show the company that the user is attached to
           this.http.get(`${this.url}items/companies?filter[users][directus_users_id][email][_eq]=${credentials.email}`).subscribe({
@@ -76,6 +78,9 @@ export class AuthService {
           })
 
         }
+
+        // Encrypt TBD
+        this.storage.set('_rle', this.global.role.value)
       },
       error: (err: any) => console.log(err)
     })

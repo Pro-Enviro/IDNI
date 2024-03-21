@@ -69,8 +69,7 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
     private track: EnvirotrackService,
     private global: GlobalService
   ) {
-    this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
-    this.selectedCompany = this?.global?.companyAssignedId?.value || null;
+
   }
 
 
@@ -300,9 +299,16 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
 
     if (this.global.companyAssignedId.value) {
       console.log(this.selectedCompany)
-      this.selectedCompany = this.global.companyAssignedId.value
-      this.getData(this.selectedCompany)
+      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
+      console.log(this.global.role.value)
+      this.selectedCompany = this?.global?.companyAssignedId?.value || null;
+      this.getData(this?.global?.companyAssignedId?.value)
+    } else {
+      console.log('Check for admin/consultant')
+      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
     }
+
+    console.log(this.isConsultant)
 
     this.screenWidth = window.innerWidth;
   }

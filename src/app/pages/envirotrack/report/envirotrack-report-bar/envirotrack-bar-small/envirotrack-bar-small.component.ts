@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CalendarModule} from "primeng/calendar";
 import {DropdownModule} from "primeng/dropdown";
 import {NgIf} from "@angular/common";
@@ -28,7 +28,7 @@ import {GlobalService} from "../../../../../_services/global.service";
   templateUrl: './envirotrack-bar-small.component.html',
   styleUrl: './envirotrack-bar-small.component.scss'
 })
-export class EnvirotrackBarSmallComponent {
+export class EnvirotrackBarSmallComponent implements OnInit {
   data: any;
   months: string[] = [];
   filteredData: any;
@@ -272,8 +272,14 @@ export class EnvirotrackBarSmallComponent {
 
     if (this.global.companyAssignedId.value) {
       console.log(this.selectedCompany)
-      this.selectedCompany = this.global.companyAssignedId.value
-      this.getData(this.selectedCompany)
+      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
+      console.log(this.global.role.value)
+      this.selectedCompany = this?.global?.companyAssignedId?.value || null;
+      this.getData(this?.global?.companyAssignedId?.value)
+    } else {
+      console.log('Check for admin/consultant')
+      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
+
     }
 
     this.screenWidth = window.innerWidth
