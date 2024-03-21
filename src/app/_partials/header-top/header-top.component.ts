@@ -64,11 +64,7 @@ export class HeaderTopComponent {
                 routerLink:'stakeholders'
               },
               {
-                label:'Advisory Board',
-                routerLink:'advisory-board'
-              },
-              {
-                label:'Latest Technologies',
+                label:'Green Technologies',
                 routerLink:'latest-technologies'
               }
             ]
@@ -123,11 +119,7 @@ export class HeaderTopComponent {
           routerLink:'/stakeholders'
         },
         {
-          label:'Advisory Board',
-          routerLink:'/advisory-board'
-        },
-        {
-          label:'Latest Technologies',
+          label:'Green Technologies',
           routerLink:'latest-technologies'
         }
       ]
