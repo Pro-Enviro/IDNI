@@ -43,6 +43,7 @@ export class AuthService {
     // Reset tokens if re logging in
     localStorage.clear()
     this.global.updateRole('')
+    this.global.updateCompanyId(0)
 
     const result = await this.client.login(credentials.email, credentials.password)
     const token = await this.client.getToken()

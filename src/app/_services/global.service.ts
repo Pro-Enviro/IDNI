@@ -17,7 +17,7 @@ export class Storage {
 
 export class GlobalService {
   role: BehaviorSubject<string> = new BehaviorSubject<any>('User');
-  companyAssignedId: BehaviorSubject<number> = new BehaviorSubject<any>(null)
+  companyAssignedId: BehaviorSubject<number | null> = new BehaviorSubject<any>(null)
   client: any;
 
   constructor() {

@@ -309,6 +309,8 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
 
 
   ngOnInit() {
+    this.isConsultant = false
+    this.selectedCompany = null;
     this.getCompanies();
     this.fetchDataByRole()
 
