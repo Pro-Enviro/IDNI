@@ -150,6 +150,8 @@ class OtherExternalCosts extends SubTable {
   name: string = ''
 }
 
+
+
 @Component({
   selector: 'app-pet-login-protected',
   standalone: true,
@@ -221,6 +223,27 @@ export class PetLoginProtected implements OnInit {
   markStart: any
   markEnd:any
 
+
+  RowMaterials:any[] = [
+    {name:'Steel', value:'steel'},
+    {name:'Stainless Steel',value:'stainless steel'},
+    {name:'Aluminium',value:'aluminium'},
+    {name:'Copper',value:'copper'},
+    {name:'Bronze',value:'bronze'},
+    {name:'Titanium',value:'titanium'},
+    {name:'Polymers',value:'polymers'},
+    {name:'Elastomers',value:'elastomers'},
+    {name:'Textiles',value:'textiles'},
+    {name:'Composites',value:'composites'},
+    {name:'Aggregates',value:'aggregates'},
+    {name:'Cement',value:'cement'},
+    {name:'Glass',value:'glass'},
+    {name:'Wood',value:'wood'},
+    {name:'Chemicals',value:'chemicals'},
+    {name:'Lithium',value:'lithium'},
+    {name:'Magnesium',value:'magnesium'},
+    {name:'Other',value:'other'}
+  ]
   constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService) {}
 
 
@@ -279,7 +302,7 @@ export class PetLoginProtected implements OnInit {
         } else {
           // If no saved data
           this.generateClasses('Cost of Energy', TableRow, energyNames)
-          this.generateClasses('Cost of Raw Materials ', MaterialRow, materialNames)
+          this.generateClasses('Cost of Raw Materials', MaterialRow)
           this.generateClasses('Cost of Bought in Goods - Consumables and bought in parts', BoughtInParts)
           this.generateClasses('Water Usage', WaterUsage)
           this.generateClasses('Waste', Waste)
@@ -323,7 +346,6 @@ export class PetLoginProtected implements OnInit {
   }
 
   generateRows = (array: string[] | any, parentName: string, isClass?: boolean) => {
-
     if (isClass) {
       array.parent.name = parentName
       this.data.push(array)
@@ -338,6 +360,7 @@ export class PetLoginProtected implements OnInit {
   }
 
   createNewTableRow = (group: any) => {
+    console.log(group)
     let copy = {...group, name: `${group.parent.name} description`, cost: 0}
     let findObject = this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)
 

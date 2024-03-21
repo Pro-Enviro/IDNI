@@ -119,16 +119,22 @@
 
         <ng-template pTemplate="rowexpansion" let-groups let-editing="editing" >
           <tr style="background-color: #fff; overflow-x: scroll">
-            <td [pEditableColumn]="groups.name" pEditableColumnField="name" class="col-5" >
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="groups.name" class="p-inputtext-sm" />
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{ groups.name }}
-                </ng-template>
-              </p-cellEditor>
-            </td>
+            @if(groups.parent.name == 'Cost of Raw Materials'){
+              <td>
+                <p-dropdown [options]="RowMaterials" optionValue="value" optionLabel="name" placeholder="Select" appendTo="body"></p-dropdown>
+              </td>
+            }@else{
+              <td [pEditableColumn]="groups.name" pEditableColumnField="name" class="col-5" >
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="groups.name" class="p-inputtext-sm" />
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ groups.name }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+            }
             <td *ngIf="groups.mode">
               <p-dropdown [options]="modeOfTransport" class="p-inputtext-sm" [style]="{width: '150px'}" [(ngModel)]="groups.mode"></p-dropdown>
             </td>
