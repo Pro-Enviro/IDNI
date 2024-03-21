@@ -39,12 +39,53 @@ export class AuthService {
     //   password: 'Kinibay100%'
     // }
     const result = await this.client.login(credentials.email, credentials.password)
-
     const token = await this.client.getToken()
 
     this.storage.set('access_token', token)
     this.storage.set('expires', result.expires)
     this.storage.set('refresh_token', result.refresh_token)
+
+
+
+      // Get users role
+    this.http.get(`${this.url}users/me?fields=email,role.name`).subscribe({
+      next: (res: any)=>{
+        // Adjust user permissions
+        if (res.data.role.name === 'Administrator') {
+          // Allow all companies to be viewed
+          this.global.updateRole('Admin')
+          console.log('ADMIN')
+        } else if (res.data.role.name === 'consultant') {
+          // Allow all companies to be viewed
+          this.global.updateRole('Consultant')
+        } else if (res.data.role.name === 'user') {
+          this.global.updateRole('User')
+          console.log('USER')
+
+
+          // Only show the company that the user is attached to
+          this.http.get(`${this.url}items/companies?filter[users][directus_users_id][email][_eq]=${credentials.email}`).subscribe({
+            next: (res:any) => {
+              console.log('Getting company')
+              console.log(res)
+              if (res?.data.length ){
+                this.global.updateCompanyId(res.data[0].id)
+              }
+            },
+            error: (error: any) => console.log(error)
+          })
+
+        }
+      },
+      error: (err: any) => console.log(err)
+    })
+
+
+
+
+
+
+
     this.route.navigate(['dashboard'])
      // this.http.post(`${this.url}auth/login`, credentials).pipe(
      //   map((x:any) => x.data),

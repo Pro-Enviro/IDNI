@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EChartsOption} from "echarts";
 import {EnvirotrackService} from "../../../envirotrack.service";
 import moment from "moment/moment";
@@ -11,6 +11,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {NgIf} from "@angular/common";
 import {SharedModules} from "../../../../../shared-module";
 import {CardModule} from "primeng/card";
+import {GlobalService} from "../../../../../_services/global.service";
 
 @Component({
   selector: 'app-envirotrack-small-pie-chart',
@@ -20,7 +21,6 @@ import {CardModule} from "primeng/card";
     SelectButtonModule,
     CalendarModule,
     NgxEchartsDirective,
-
     DropdownModule,
     NgIf,
     SharedModules,
@@ -29,12 +29,12 @@ import {CardModule} from "primeng/card";
   templateUrl: './envirotrack-small-pie-chart.component.html',
   styleUrl: './envirotrack-small-pie-chart.component.scss'
 })
-export class EnvirotrackSmallPieChartComponent {
+export class EnvirotrackSmallPieChartComponent implements OnInit {
   data: any;
   months: string[] = [];
   filteredData: any;
   companies: any;
-  selectedCompany!: number;
+  selectedCompany!: number | null;
   chartData: any = [];
   chartX: string[] = [];
   chartY: string[] = [];
@@ -63,10 +63,15 @@ export class EnvirotrackSmallPieChartComponent {
   mpan: string[] = [];
   selectedMpan!: string;
   screenWidth: any;
+  isConsultant = false
 
   constructor(
     private track: EnvirotrackService,
-  ) {}
+    private global: GlobalService
+  ) {
+    this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
+    this.selectedCompany = this?.global?.companyAssignedId?.value || null;
+  }
 
 
   initChart = () => {
@@ -150,21 +155,28 @@ export class EnvirotrackSmallPieChartComponent {
   }
 
   getCompanies = () =>{
-    this.track.getCompanies().subscribe({
-      next: (res: any)=>{
-        if (res.data) {
-          this.companies = res.data
-          this.selectedCompany = res.data[0].id
-          this.onSelectCompany()
+
+    if (this.global.companyAssignedId.value){
+      this.selectedCompany = this.global.companyAssignedId.value
+      this.onSelectCompany()
+    } else {
+      this.track.getCompanies().subscribe({
+        next: (res: any)=>{
+          if (res.data) {
+            this.companies = res.data
+            this.selectedCompany = res.data[0].id
+
+          }
         }
-      }
-    })
+      })
+    }
+
   }
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
-    this.track.updateSelectedCompany(this.selectedCompany)
-    this.getData(this.selectedCompany)
+    // this.selectedCompany ? this.track.updateSelectedCompany(this.selectedCompany) : null;
+    this.selectedCompany ? this.getData(this.selectedCompany) : null
   }
 
   getTimes = () => {
@@ -286,8 +298,9 @@ export class EnvirotrackSmallPieChartComponent {
   ngOnInit() {
     this.getCompanies();
 
-    if (this.track.selectedCompany.value) {
-      this.selectedCompany = this.track.selectedCompany.value
+    if (this.global.companyAssignedId.value) {
+      console.log(this.selectedCompany)
+      this.selectedCompany = this.global.companyAssignedId.value
       this.getData(this.selectedCompany)
     }
 

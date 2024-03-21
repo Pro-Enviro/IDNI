@@ -14,6 +14,7 @@ import FileSaver from "file-saver";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {EnvirotrackService} from "../../envirotrack.service";
+import {GlobalService} from "../../../../_services/global.service";
 
 export class Fields {
   type: string = '';
@@ -44,19 +45,24 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
   display: boolean = false;
   selectedItem: any = {}
   nameChange: string = ''
-
+  isConsultantLevel = false
 
   constructor(
     private dialog: DialogService,
     private msg: MessageService,
     private track: EnvirotrackService,
     private confirmationService: ConfirmationService,
+    private global: GlobalService
+
   ) {
     this.uomOptions = this.track.supplyUnit
     if (this.track.selectedCompany.value) {
-      this.selectedCompany = this.track.selectedCompany.value
+      this.selectedCompany = this.global.companyAssignedId.value
       this.getFuelData()
     }
+
+    this.isConsultantLevel = this.global.role.value === 'Admin' || this.global.role.value ==='Consultant'
+    this.selectedCompany = this.global.companyAssignedId.value;
   }
 
   showDialog = (fuel: any) => {
@@ -84,6 +90,11 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
   onKeyDown = (event: KeyboardEvent) => event.stopPropagation()
 
   getCompanies = () => {
+
+    if (!this.isConsultantLevel) {
+      return this.onSelectCompany()
+    }
+
     this.track.getCompanies().subscribe({
       next: (res: any) => {
         this.companies = res.data;
@@ -468,6 +479,9 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCompanies()
+    if (this.global.companyAssignedId.value) {
+      this.selectedCompany = this.global.companyAssignedId.value
+      this.onSelectCompany()
+    }
   }
 }

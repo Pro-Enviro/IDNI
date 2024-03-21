@@ -146,6 +146,8 @@ class GroupItem {
   }
 }
 
+
+
 class OtherExternalCosts extends SubTable {
   name: string = ''
 }
@@ -279,7 +281,7 @@ export class PetLoginProtected implements OnInit {
         } else {
           // If no saved data
           this.generateClasses('Cost of Energy', TableRow, energyNames)
-          this.generateClasses('Cost of Raw Materials ', MaterialRow, materialNames)
+          this.generateClasses('Cost of Raw Materials ', MaterialRow)
           this.generateClasses('Cost of Bought in Goods - Consumables and bought in parts', BoughtInParts)
           this.generateClasses('Water Usage', WaterUsage)
           this.generateClasses('Waste', Waste)
@@ -323,7 +325,6 @@ export class PetLoginProtected implements OnInit {
   }
 
   generateRows = (array: string[] | any, parentName: string, isClass?: boolean) => {
-
     if (isClass) {
       array.parent.name = parentName
       this.data.push(array)
@@ -335,6 +336,7 @@ export class PetLoginProtected implements OnInit {
         this.data.push(newGroupItem)
       })
     }
+
   }
 
   createNewTableRow = (group: any) => {
@@ -801,9 +803,12 @@ export class PetLoginProtected implements OnInit {
 
   }
 
+
+
   ngOnInit() {
     this.getCompanies()
     this.getTemplate()
   }
 
 }
+

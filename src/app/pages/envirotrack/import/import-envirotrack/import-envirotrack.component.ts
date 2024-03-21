@@ -10,6 +10,7 @@ import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {TopPageImgTplComponent} from "../../../../_partials/top-page-img-tpl/top-page-img-tpl.component";
 import {HttpClient} from "@angular/common/http";
+import {GlobalService} from "../../../../_services/global.service";
 
 
 interface Sheet {
@@ -72,6 +73,7 @@ export class ImportEnvirotrackComponent {
 
   constructor(
     private track: EnvirotrackService,
+    private global: GlobalService,
     private msg: MessageService,
     private papa: Papa,
     private http: HttpClient
@@ -79,8 +81,8 @@ export class ImportEnvirotrackComponent {
     moment.locale('en-gb')
     moment().format('L')
 
-    if (this.track.selectedCompany.value) {
-      this.selectedCompany = this.track.selectedCompany.value
+    if (this.global.companyAssignedId.value) {
+      this.selectedCompany = this.global.companyAssignedId.value
     }
 
     this.getCompanies();

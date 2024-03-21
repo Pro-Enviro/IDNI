@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {authentication, createDirectus, graphql, rest, refresh} from "@directus/sdk";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,16 @@ export class Storage {
 }
 
 export class GlobalService {
+  role: BehaviorSubject<string> = new BehaviorSubject<any>('User');
+  companyAssignedId: BehaviorSubject<number> = new BehaviorSubject<any>(null)
   client: any;
 
   constructor() {
     this.initSession();
   }
+
+  updateRole = (value: string) => this.role.next(value);
+  updateCompanyId = (value: number) => this.companyAssignedId.next(value)
 
   initSession = () => {
     const storage: Storage = new Storage()

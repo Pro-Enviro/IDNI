@@ -10,6 +10,7 @@ import * as echarts from "echarts";
 import {EnvirotrackService} from "../../../envirotrack.service";
 import moment from "moment/moment";
 import {CardModule} from "primeng/card";
+import {GlobalService} from "../../../../../_services/global.service";
 
 @Component({
   selector: 'app-envirotrack-bar-small',
@@ -32,7 +33,7 @@ export class EnvirotrackBarSmallComponent {
   months: string[] = [];
   filteredData: any;
   companies: any;
-  selectedCompany!: number;
+  selectedCompany!: number | null;
   chartData: any = [];
   chartX: string[] = [];
   chartY: string[] = [];
@@ -58,10 +59,15 @@ export class EnvirotrackBarSmallComponent {
   mpan: string[] = [];
   selectedMpan!: string;
   screenWidth: any;
+  isConsultant = false
 
   constructor(
     private track: EnvirotrackService,
-  ) {}
+    private global: GlobalService
+  ) {
+    this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
+    this.selectedCompany = this?.global?.companyAssignedId?.value || null;
+  }
 
   // saveChartAsBase64 = () => {
   //   console.log('saving as base 64');
@@ -166,19 +172,27 @@ export class EnvirotrackBarSmallComponent {
   }
 
   getCompanies = () =>{
-    this.track.getCompanies().subscribe({
-      next: (res: any) => {
-        this.companies = res.data;
-        this.selectedCompany = res.data[0].id
-        this.onSelectCompany()
-      }
-    })
+    if (this.global.companyAssignedId.value){
+      this.selectedCompany = this.global.companyAssignedId.value
+      this.onSelectCompany()
+    } else {
+      this.track.getCompanies().subscribe({
+        next: (res: any)=>{
+          if (res.data) {
+            this.companies = res.data
+            this.selectedCompany = res.data[0].id
+
+          }
+        }
+      })
+    }
+
   }
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
-    this.track.updateSelectedCompany(this.selectedCompany)
-    this.getData(this.selectedCompany)
+    this.selectedCompany ? this.global.updateCompanyId(this.selectedCompany) : null
+    this.selectedCompany ? this.getData(this.selectedCompany) : null
   }
 
   getTimes = () =>{
@@ -256,8 +270,9 @@ export class EnvirotrackBarSmallComponent {
   ngOnInit() {
     this.getCompanies();
 
-    if (this.track.selectedCompany.value) {
-      this.selectedCompany = this.track.selectedCompany.value
+    if (this.global.companyAssignedId.value) {
+      console.log(this.selectedCompany)
+      this.selectedCompany = this.global.companyAssignedId.value
       this.getData(this.selectedCompany)
     }
 

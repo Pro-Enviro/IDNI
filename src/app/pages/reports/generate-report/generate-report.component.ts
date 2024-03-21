@@ -278,9 +278,9 @@ export class GenerateReportComponent implements OnInit {
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getReportValues(this.selectedCompany)
   }
-  getReportValues = (id: number) => {
+  getReportValues = (selectedCompany: number) => {
 
-    this.db.getRecommendations(this.selectedCompany).subscribe({
+    this.db.getRecommendations(selectedCompany).subscribe({
       next: (res: any) => {
         if (res?.recommendations) {
 
