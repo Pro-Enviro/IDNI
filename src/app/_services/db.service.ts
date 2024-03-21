@@ -34,7 +34,7 @@ export class DbService {
   }
 
   getRecommendations = (companyId: number) => {
-    return this.http.get(`${this.url}/items/companies/${companyId}?field=recommendations`)
+    return this.http.get(`${this.url}/items/companies/${companyId}?fields=recommendations`)
   }
 
   saveRecommendations = (companyId: number, data: {recommendations: string}) => {

@@ -24,6 +24,8 @@ import {SharedModules} from "../../../shared-module";
 import {HttpClient} from "@angular/common/http";
 import {DialogModule} from "primeng/dialog";
 import {EnvirotrackService} from "../../envirotrack/envirotrack.service";
+import {DbService} from "../../../_services/db.service";
+import {InputTextareaModule} from "primeng/inputtextarea";
 
 
 // Image handling functions for DocXTemplater
@@ -146,7 +148,7 @@ const stripHTML = (content: any) => {
   templateUrl: './generate-report.component.html',
   styleUrls: ['./generate-report.component.scss'],
   standalone: true,
-  imports: [SharedComponents, SharedModules, DialogModule]
+  imports: [SharedComponents, SharedModules, DialogModule, InputTextareaModule]
 })
 export class GenerateReportComponent implements OnInit {
   companies: any;
@@ -180,16 +182,16 @@ export class GenerateReportComponent implements OnInit {
   timerText = 'Start';
   time = 0;
   autosaveTimer?: Subscription;
- changeOptions: any[] = ['Behavioural', 'Upgrades', 'Changes to existing technology','Improvements to building fabric','Resource efficiency', 'Other' ]
-  percentOptions: any[] = [1,1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10]
+  changeOptions: any[] = ['Behavioural', 'Upgrades', 'Changes to existing technology', 'Improvements to building fabric', 'Resource efficiency', 'Other']
+  percentOptions: any[] = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10]
 
   constructor(
     private global: GlobalService,
     private msg: MessageService,
     private http: HttpClient,
-    private track: EnvirotrackService
-  ) {
-  }
+    private track: EnvirotrackService,
+    private db: DbService
+  ) {}
 
 
   getTotal = (propertyToTotal: string) => {
@@ -278,6 +280,25 @@ export class GenerateReportComponent implements OnInit {
   }
   getReportValues = (id: number) => {
 
+    this.db.getRecommendations(this.selectedCompany).subscribe({
+      next: (res: any) => {
+        if (res?.recommendations) {
+
+          const parsed = JSON.parse(res.recommendations);
+
+          this.recommendations = parsed
+
+          // parsed.recommendations.forEach((rec: any) => {
+          //   rec.steps.map((step: any) => {
+          //     step.completionDate = new Date(step.completionDate)
+          //     step.startDate = new Date(step.startDate)
+          //   })
+          // })
+        }
+      },
+      error: (error: any) => console.log(error),
+
+    })
     // this.admin.fnGetCompanyDetails(id, ['*']).subscribe({
     //   next: (res: any) => {
     //     // Check if report has been previously saved
@@ -367,8 +388,8 @@ export class GenerateReportComponent implements OnInit {
     //   },
     //   error: (err: any) => console.log(err),
     //   complete: () => {
-        // this.getQuestions()
-      // }
+    // this.getQuestions()
+    // }
     // })
   }
 
@@ -483,20 +504,20 @@ export class GenerateReportComponent implements OnInit {
 
 
     // this.admin.fnGet(`/items/content/${id}`).subscribe({
-      // next: (res: any) => {
-      //   this.template = `${environment.api}/assets/${res.data.file}?token=${this.storage.get('access_token')}`
-      //   this.http.get(this.template, {
-      //     responseType: 'arraybuffer'
-      //   }).subscribe({
-      //     next: (buffer: ArrayBuffer) => {
-      //       mammoth.convertToHtml({
-      //         arrayBuffer: buffer
-      //       }).then((result: any) => {
-      //         this.docxInHtml = result.value;
-      //       }).catch((error: any) => console.error(error))
-      //     }
-      //   })
-      // }
+    // next: (res: any) => {
+    //   this.template = `${environment.api}/assets/${res.data.file}?token=${this.storage.get('access_token')}`
+    //   this.http.get(this.template, {
+    //     responseType: 'arraybuffer'
+    //   }).subscribe({
+    //     next: (buffer: ArrayBuffer) => {
+    //       mammoth.convertToHtml({
+    //         arrayBuffer: buffer
+    //       }).then((result: any) => {
+    //         this.docxInHtml = result.value;
+    //       }).catch((error: any) => console.error(error))
+    //     }
+    //   })
+    // }
     // })
   }
 
@@ -735,20 +756,19 @@ export class GenerateReportComponent implements OnInit {
     // this.updateTemplate(report, `recommendations_${moment(new Date).format('DD-MM-YYYY')}`)
   }
   saveForm = () => {
-    // const report = this.createReportObject('save')
-    //
-    // this.admin.updateCompany(this.selectedCompany, {
-    //   "report_fields": JSON.stringify(report)
-    // }, ['report_fields.*']).subscribe({
-    //   next: (res: any) => {
-    //     this.time = 0;
-    //     return this.msg.add({
-    //       severity: 'success',
-    //       detail: 'Report saved'
-    //     })
-    //   },
-    //   error: (err: any) => console.log(err)
-    // })
+    const report = this.createReportObject('save')
+
+    this.db.saveRecommendations(this.selectedCompany, {'recommendations': JSON.stringify(report)})
+      .subscribe({
+      next: (res: any) => {
+        return this.msg.add({
+          severity: 'success',
+          detail: 'Report saved'
+        })
+      },
+      error: (error: any) => console.log(error),
+    })
+
   }
 
   runAutoSave = () => {

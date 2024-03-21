@@ -22,10 +22,10 @@
 <!--                  [(ngModel)]="selectedTemplate"-->
 <!--                  (onChange)="filterQuestions()"></p-dropdown>-->
     </div>
-      <div class="flex justify-content-end">
-        <button type="submit" icon="pi pi-save" label="Save" pButton class="btn mr-2" (click)="saveForm()"></button>
-        <button pButton label="Generate Report" (click)="generateReport()" class="btn-dark" icon="pi pi-file-export"></button>
-      </div>
+<!--      <div class="flex justify-content-end">-->
+<!--        <button type="submit" icon="pi pi-save" label="Save" pButton class="btn mr-2" (click)="saveForm()"></button>-->
+<!--        <button pButton label="Generate Report" (click)="generateReport()" class="btn-dark" icon="pi pi-file-export"></button>-->
+<!--      </div>-->
   </div>
 
 <!--  <div class="flex flex-row p-3">-->
@@ -512,7 +512,7 @@
           </td>
 
           <td>
-            <p-dropdown [options]="changeOptions" class="p-inputtext-sm" [style]="{width: '180px'}" [(ngModel)]="rec.changeType"></p-dropdown>
+            <p-dropdown [options]="changeOptions" class="p-inputtext-sm" [style]="{width: '180px'}" [(ngModel)]="rec.changeType" appendTo="body"></p-dropdown>
           </td>
           <td>
             <p-inputNumber [inputStyle]="{'width':'100px'}" class="p-inputtext-sm"
@@ -533,7 +533,7 @@
                            [(ngModel)]="rec.estimatedCarbonSaving" class="p-inputtext-sm"></p-inputNumber>
           </td>
           <td>
-            <p-dropdown [options]="percentOptions" class="p-inputtext-sm" [(ngModel)]="rec.marginOfErrorSavings"></p-dropdown>
+            <p-dropdown [options]="percentOptions" class="p-inputtext-sm" [(ngModel)]="rec.marginOfErrorSavings" appendTo="body"></p-dropdown>
           </td>
           <td>
             <button pButton class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-trash"

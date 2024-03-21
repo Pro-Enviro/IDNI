@@ -47,10 +47,12 @@ export const HttpInterceptorService: HttpInterceptorFn = (
             auth.refreshToken().then((res)=> {
               return next(clonedRequest)
             })
+            localStorage.clear()
 
             router.navigate([''])
 
           } else if (error.status === 403) {
+            localStorage.clear()
             console.log('403 Error')
             // handle 403
             router.navigate([''])
@@ -82,8 +84,10 @@ export const HttpInterceptorService: HttpInterceptorFn = (
           } else if (error.status === 403) {
             console.log('403 Error')
             // handle 403
+            localStorage.clear()
             router.navigate([''])
           } else {
+            localStorage.clear()
             router.navigate(['login'])
           }
           router.navigate(['login'])
