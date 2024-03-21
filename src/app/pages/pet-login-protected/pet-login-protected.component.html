@@ -121,7 +121,7 @@
           <tr style="background-color: #fff; overflow-x: scroll">
             @if(groups.parent.name == 'Cost of Raw Materials'){
               <td>
-                <p-dropdown [options]="RowMaterials" optionValue="value" optionLabel="name" placeholder="Select" appendTo="body"></p-dropdown>
+                <p-dropdown [options]="RowMaterials" optionValue="value" optionLabel="name" placeholder="Select" appendTo="body" [style]="{width: '200px'}"></p-dropdown>
               </td>
             }@else{
               <td [pEditableColumn]="groups.name" pEditableColumnField="name" class="col-5" >
