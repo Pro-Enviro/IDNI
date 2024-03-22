@@ -15,6 +15,7 @@
     <div class="container p-4" style="margin-top:6rem">
       <h2 >{{content.title}}</h2>
       <div [innerHTML]="content.content"></div>
+      <div [innerHTML]="content.description" class="pb-3"></div>
       <div class="grid">
         <div class="lg:col-6 sm:col-12">
           <img src="https://app.idni.eco/assets/{{content.page_image}}" alt="" class="page-img">
@@ -41,6 +42,9 @@
             <div class="grid">
               <div class="col-12">
                 <div class="font-semibold" [innerHTML]="files.name"></div>
+              </div>
+              <div class="col-12">
+                <div [innerHTML]="files.project_content"></div>
               </div>
               <div class="lg:col-4 sm:col-12">
                 <p>Date Published: {{files.date_published}}</p>
