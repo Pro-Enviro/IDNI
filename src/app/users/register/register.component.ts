@@ -70,6 +70,7 @@ export class RegisterComponent{
   website_url?:string;
   company_description?:string;
   policy?:boolean;
+  policy_cosi?:boolean;
   policy_idni?:boolean;
   policy_bill?:boolean;
   carbon_emissions?:any;
@@ -90,103 +91,37 @@ export class RegisterComponent{
   messages!: Message[];
 
   energyTypes:any = [
-    {
-      name:'Oil',
-      value:'oil'
-    },
-    {
-      name:'Gas',
-      value:'gas'
-    },
-    {
-      name:'LPG',
-      value:'lpg'
-    },
-    {
-      name:'Electricity',
-      value:'electricity'
-    },
-    {
-      name:'Diesel',
-      value:'diesel'
-    },
-    {
-      name:'Kerosene',
-      value:'kerosene'
-    },
-    {
-      name:'Gas Oil/Red Diesel',
-      value:'gas oil/red diesel'
-    },
-    {
-      name:'Other',
-      value:'other'
-    }
+    {name:'Oil', value:'oil'},
+    {name:'Gas', value:'gas'},
+    {name:'LPG', value:'lpg'},
+    {name:'Electricity', value:'electricity'},
+    {name:'Diesel', value:'diesel'},
+    {name:'Kerosene', value:'kerosene'},
+    {name:'Gas Oil/Red Diesel', value:'gas oil/red diesel'},
+    {name:'Other', value:'other'}
   ]
 
   energyCost :any =[
-    {
-      name:'Transportation Costs',
-      value:'transportation cost'
-    },
-    {
-      name:'Cost of Water',
-      value:'cost of water'
-    },
-    {
-      name:'Cost of Waste/Recycling',
-      value: 'cost of waste/recycling'
-    }
+    {name:'Transportation Costs', value:'transportation cost'},
+    {name:'Cost of Water', value:'cost of water'},
+    {name:'Cost of Waste/Recycling', value: 'cost of waste/recycling'}
   ]
 
   energyInfo:any =[
-    {
-      name:'Grid Allocation & Usage',
-      value:'grid allocation usage'
-    },
-    {
-      name:'kVa Availability',
-      value:'kva availability'
-    },
-    {
-      name:'Recorded Winter Max Demand kVa',
-      value:'winter max demand'
-    }
+    {name:'Grid Allocation & Usage', value:'grid allocation usage'},
+    {name:'kVa Availability', value:'kva availability'},
+    {name:'Recorded Winter Max Demand kVa', value:'winter max demand'}
   ]
 
   generationOptions:any =[
-    {
-      name:'PV',
-      value:'pv'
-    },
-    {
-      name:'Wind',
-      value:'wind'
-    },
-    {
-      name:'Solar Thermal',
-      value:'solar thermal'
-    },
-    {
-      name:'CHP',
-      value:'chp'
-    },
-    {
-      name:'Biomass',
-      value:'biomass'
-    },
-    {
-      name:'Hydro',
-      value:'hydro'
-    },
-    {
-      name:'AD',
-      value:'ad'
-    },
-    {
-      name:'Other',
-      value:'other'
-    }
+    {name:'PV', value:'pv'},
+    {name:'Wind', value:'wind'},
+    {name:'Solar Thermal', value:'solar thermal'},
+    {name:'CHP', value:'chp'},
+    {name:'Biomass', value:'biomass'},
+    {name:'Hydro', value:'hydro'},
+    {name:'AD', value:'ad'},
+    {name:'Other', value:'other'}
   ]
 
 
@@ -233,6 +168,7 @@ export class RegisterComponent{
       decarb_plans: this.decarb_plans,
       economy_opportunities: this.economy_opportunities,
       policy: this.policy,
+      policy_cosi:this.policy_cosi,
       policy_idni: this.policy_idni,
       policy_bill:this.policy_bill
 
@@ -241,7 +177,6 @@ export class RegisterComponent{
     if (this.checkInputs()){
       this.db.addCompany(['*'], formObj, userObj).subscribe({
         next: (res) => {
-          console.log(res)
         this.first_name = ''
           this.last_name = ''
           this.email = ''
@@ -276,6 +211,7 @@ export class RegisterComponent{
           this.decarb_plans = ''
           this.economy_opportunities = ''
           this.policy = false
+          this.policy_cosi = false
           this.policy_idni = false
           this.policy_bill = false
 

@@ -214,6 +214,10 @@
       <label class="pl-2">I agree with the terms and conditions<span style="color:#006633;padding-left:5px">*</span></label>
     </div>
     <div class="pt-3">
+      <p-checkbox [binary]="true" inputId="policy_cosi" name="policy" [(ngModel)]="policy_cosi" value="policy_cosi" [required]="true"></p-checkbox>
+      <label class="pl-2">I agree to be part of COSI/Cluster.<span style="color:#006633;padding-left:5px">*</span></label>
+    </div>
+    <div class="pt-3">
       <p-checkbox [binary]="true" inputId="policy_bill" name="policy_bill" [(ngModel)]="policy_bill" value="policy_bill" [required]="true"></p-checkbox>
       <label class="pl-2">Your company/organisation is content to provide some initial high-level electricity and/or gas data to the IDNI project.<span style="color:#006633;padding-left:5px">*</span></label>
       <p><small>This data will need to be in the form of a maximum of 12 months energy usage data, such as half-hourly energy usage information,which will you find on your utility bill, or by contacting your utility bill provider.
