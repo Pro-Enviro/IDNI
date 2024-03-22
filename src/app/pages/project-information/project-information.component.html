@@ -27,6 +27,7 @@
             <div class="lg:col-7 sm:col-12">
               <h3 class="header-style">{{items.title}}</h3>
               <div [innerHTML]="items.content"></div>
+              <div class="p-2 font-italic text-sm" [innerHTML]="items.disclaimer"></div>
               <div class="pt-5 pb-3">
                 <p-button label="Learn More" [rounded]="true" routerLink="{{items.alias}}" styleClass="btn-style"></p-button>
               </div>
@@ -39,6 +40,7 @@
             <div class="lg:col-7 sm:col-12 lg:flex-order-0 md:flex-order-1 sm:flex-order-1">
               <h3 class="header-style">{{items.title}}</h3>
               <div [innerHTML]="items.content"></div>
+              <div class="p-2 font-italic text-sm" [innerHTML]="items.disclaimer"></div>
               <div class="pt-5 pb-3">
                 <p-button label="Learn More" routerLink="{{items.alias}}" [rounded]="true" styleClass="btn-style"></p-button>
               </div>

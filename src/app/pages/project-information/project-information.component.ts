@@ -27,6 +27,7 @@ id,
 alias,
 project_list.project_list_id.title,
 project_list.project_list_id.content,
+project_list.project_list_id.disclaimer,
 project_list.project_list_id.image,
 project_list.project_list_id.alias
 `).subscribe({
