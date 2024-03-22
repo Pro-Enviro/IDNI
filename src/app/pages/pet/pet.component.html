@@ -37,7 +37,17 @@
 
 
 
+    <div class="col-3">
+      <p-card header="SIC Code" styleClass="card-charts">
+        <div style="display: flex; flex-direction: column">
+          <input pInputText id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" [style]="{width: '15rem', marginTop: '0.5rem'}" placeholder="e.g. 01110"/>
+          <p style="font-weight: 600" *ngIf="sicCodeLetter.length" >SIC Code Letter: {{sicCodeLetter}}</p>
+        </div>
+      </p-card>
+    </div>
+
   <p-table [value]="rows" styleClass="pet-table p-datatable-sm p-datatable-gridlines  container mt-5 lg:col-12">
+
     <ng-template pTemplate="header">
       <tr>
         <th style="font-weight: 600">Productivity Factors Year 2024</th>
@@ -95,6 +105,11 @@
         <td></td>
       </tr>
       <tr>
+        <td>ONS Productivity Comparison</td>
+        <td >{{productivityPercentile}}</td>
+        <td></td>
+      </tr>
+      <tr>
         <td>Innovation - % of Turnover from Products <3 years</td>
         <td>
           <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
@@ -131,5 +146,13 @@
   </p-table>
 
 
+
   </div>
 </section>
+
+
+<div class="container mt-5 lg:col-12" style="overflow-x: hidden;" *ngIf="this.chartData">
+  <div class="flex justify-content-start">
+    <div echarts [options]="chartOptions" style="max-height: 80vh; height: 80vh; width: 80vw"></div>
+  </div>
+</div>
