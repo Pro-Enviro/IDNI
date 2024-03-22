@@ -85,6 +85,7 @@ import {ScopeChartComponent} from "./pages/envirotrack/report/scope-chart/scope-
 import {VirtualTourComponent} from "./pages/virtual-tour/virtual-tour.component";
 import {DataPrivacyComponent} from "./pages/data-privacy/data-privacy.component";
 import {RegisterSuccessPageComponent} from "./users/register/register-success-page/register-success-page.component";
+import {CaseStudiesComponent} from "./pages/case-studies/case-studies.component";
 
 
 
@@ -92,6 +93,7 @@ export const routes: Routes = [
 
   {path: '', component: LandingPageComponent},
   {path:'home',component: LandingPageComponent},
+  {path:'case-studies',component:CaseStudiesComponent},
   {path:'data-privacy-policy',component:DataPrivacyComponent},
   {path: 'pet', component: PetComponent},
   {path:'events',component:EventsComponent},

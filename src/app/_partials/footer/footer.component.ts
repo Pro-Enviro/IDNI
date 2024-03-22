@@ -46,6 +46,10 @@ export class FooterComponent {
       routerLink: 'coming-soon',
     },
     {
+      label:'Case Studies',
+      routerLink:'case-studies'
+    },
+    {
       label: 'COSI\'s',
       routerLink: 'coming-soon',
     },

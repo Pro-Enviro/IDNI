@@ -89,6 +89,10 @@ export class HeaderTopComponent {
       routerLink: 'news'
     },
     {
+      label:'Case Studies',
+      routerLink:'case-studies'
+    },
+    {
       label: 'COSI\'s',
       routerLink: 'coming-soon'
     },
@@ -143,6 +147,10 @@ export class HeaderTopComponent {
     {
       label: 'News',
       routerLink: 'coming-soon',
+    },
+    {
+      label:'Case Studies',
+      routerLink:'case-studies'
     },
     {
       label: 'COSI\'s',
