@@ -220,7 +220,7 @@ export class RegisterComponent{
             summary:'Success',
             detail:'You have successfully registered.'
           })
-          this.router.navigate(['login'])
+          this.router.navigate(['successful-registration'])
         }
       })
     } else{
