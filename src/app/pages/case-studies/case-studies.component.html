@@ -1,5 +1,16 @@
-<section>
-  <div class="container">
-
+@if(content){
+  <div class="top-image-wrapper">
+    <div class="top-image">
+      <img src="https://app.idni.eco/assets/{{content.top_image}}" alt="">
+    </div>
+    <div class="top-image-line">
+      <app-top-page-img-tpl></app-top-page-img-tpl>
+    </div>
   </div>
-</section>
+  <section>
+    <div class="container p-4">
+      <h2>{{content.title}}</h2>
+      <div [innerHTML]="content.content"></div>
+    </div>
+  </section>
+}
