@@ -52,16 +52,12 @@ export class AuthService {
     this.storage.set('expires', result.expires)
     this.storage.set('refresh_token', result.refresh_token)
 
-
-
       // Get users role
     this.http.get(`${this.url}users/me?fields=email,role.name`).subscribe({
       next: (res: any)=>{
         // Adjust user permissions
-        console.log(res.data.role.name)
         if (res.data.role.name === 'Administrator') {
           this.global.updateRole('Admin')
-
         } else if (res.data.role.name === 'consultant') {
           this.global.updateRole('Consultant')
         } else if (res.data.role.name === 'user') {
@@ -78,7 +74,6 @@ export class AuthService {
             },
             error: (error: any) => console.log(error)
           })
-
         }
 
         // Encrypt TBD
