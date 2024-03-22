@@ -176,6 +176,7 @@ export class EnvirotrackReportAvgComponent implements OnInit {
   getTimes = () =>{
     for(let i = 0; i < 48; i++){
       this.chartX.push(moment('00:00', 'HH:mm').add(i*30, 'minutes').format('HH:mm'))
+
     }
   }
 
@@ -215,7 +216,7 @@ export class EnvirotrackReportAvgComponent implements OnInit {
     )
   }
   averageTime = (data:any) =>{
-    let times: number[] = new Array(48).fill(0);
+    let times: number[] = new Array(48).fill(10);
     let days: number = data.length
     let returnVal: number[] = []
     data.forEach((x:any, i: number) => {
