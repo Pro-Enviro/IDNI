@@ -87,6 +87,7 @@ import {DataPrivacyComponent} from "./pages/data-privacy/data-privacy.component"
 import {KnowledgeBaseComponent} from "./pages/knowledge-base/knowledge-base.component";
 import {FuelsKnowledgeComponent} from "./pages/knowledge-base/fuels-knowledge/fuels-knowledge.component";
 import {WasteTransportComponent} from "./pages/knowledge-base/waste-transport/waste-transport.component";
+import {HeatingKnowledgeComponent} from "./pages/knowledge-base/heating-knowledge/heating-knowledge.component";
 
 
 
@@ -142,6 +143,7 @@ export const routes: Routes = [
   {path:'knowledge-base',component:KnowledgeBaseComponent},
   {path:'fuels-type',component:FuelsKnowledgeComponent},
   {path:'waste-trasnport',component:WasteTransportComponent},
+  {path:'heating',component:HeatingKnowledgeComponent},
   {
     path: 'envirotrack', children: [
 
