@@ -13,7 +13,7 @@
       <div [innerHTML]="content.content"></div>
     </div>
     @for(content of content.items; track $index;){
-        <div class="container p-5 bottom-line">
+        <div class="container p-5">
           <div class="tech-container">
             <div class="grid">
               <div class="lg:col-4 sm:col-12">
@@ -29,6 +29,7 @@
               </div>
             </div>
           </div>
+          <div class="bottom-line mt-5"></div>
         </div>
     }
   </section>
