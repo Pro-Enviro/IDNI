@@ -85,6 +85,7 @@ import {ScopeChartComponent} from "./pages/envirotrack/report/scope-chart/scope-
 import {VirtualTourComponent} from "./pages/virtual-tour/virtual-tour.component";
 import {DataPrivacyComponent} from "./pages/data-privacy/data-privacy.component";
 import {KnowledgeBaseComponent} from "./pages/knowledge-base/knowledge-base.component";
+import {FuelsKnowledgeComponent} from "./pages/knowledge-base/fuels-knowledge/fuels-knowledge.component";
 
 
 
@@ -132,12 +133,13 @@ export const routes: Routes = [
   {path:'mpa',component:MpaComponent},
   {path:'advisory-board',component:AdvisoryBoardComponent},
   {path:'stakeholders',component:StakeholdersComponent},
-  {path:'knowledge-base',component:KnowledgeBaseComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
   {path: 'registration-form', component: RegistrationFormComponent},
   {path:'chat',component: ChatDialogTplComponent},
   {path:'live-chat',component:LiveChatTplComponent},
+  {path:'knowledge-base',component:KnowledgeBaseComponent},
+  {path:'fuels-type',component:FuelsKnowledgeComponent},
   {
     path: 'envirotrack', children: [
 

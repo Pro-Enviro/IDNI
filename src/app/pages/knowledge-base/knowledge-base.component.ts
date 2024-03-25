@@ -5,6 +5,8 @@ import {TopPageImgTplComponent} from "../../_partials/top-page-img-tpl/top-page-
 import {ToolbarModule} from "primeng/toolbar";
 import {InputTextModule} from "primeng/inputtext";
 import {CardModule} from "primeng/card";
+import {RouterLink} from "@angular/router";
+
 
 @Component({
   selector: 'app-knowledge-base',
@@ -15,7 +17,8 @@ import {CardModule} from "primeng/card";
     TopPageImgTplComponent,
     ToolbarModule,
     InputTextModule,
-    CardModule
+    CardModule,
+    RouterLink
   ],
   templateUrl: './knowledge-base.component.html',
   styleUrl: './knowledge-base.component.scss'
