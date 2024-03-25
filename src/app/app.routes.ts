@@ -86,6 +86,7 @@ import {VirtualTourComponent} from "./pages/virtual-tour/virtual-tour.component"
 import {DataPrivacyComponent} from "./pages/data-privacy/data-privacy.component";
 import {KnowledgeBaseComponent} from "./pages/knowledge-base/knowledge-base.component";
 import {FuelsKnowledgeComponent} from "./pages/knowledge-base/fuels-knowledge/fuels-knowledge.component";
+import {WasteTransportComponent} from "./pages/knowledge-base/waste-transport/waste-transport.component";
 
 
 
@@ -140,6 +141,7 @@ export const routes: Routes = [
   {path:'live-chat',component:LiveChatTplComponent},
   {path:'knowledge-base',component:KnowledgeBaseComponent},
   {path:'fuels-type',component:FuelsKnowledgeComponent},
+  {path:'waste-trasnport',component:WasteTransportComponent},
   {
     path: 'envirotrack', children: [
 
