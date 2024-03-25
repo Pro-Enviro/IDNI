@@ -114,7 +114,7 @@
       <p style="color:#85bfba">Please fill in the information if applicable !</p>
       <div class="field flex flex-column p-3">
         <label>Energy Cost</label>
-        <div class="grid bottom-line">
+        <div class="grid">
           <div class="lg:col-4 sm:col-12 p-2">
             <p-dropdown [options]="energyTypes" [(ngModel)]="selectedEnergyType" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Energy Type" appendTo="body" styleClass="mr-5"></p-dropdown>
           </div>
@@ -125,13 +125,14 @@
             <input id="otherEnergyType" type="text" name="otherEnergyType" [(ngModel)]="otherEnergyType" pInputText placeholder="Other Energy Type">
           </div>
         </div>
+        <div class="bottom-line mt-3"></div>
       </div>
 
 
       <div class="flex flex-column p-3">
         <label>Additional Energy Costs</label>
         <div class="field flex flex-column pt-3">
-          <div class="grid bottom-line">
+          <div class="grid">
             <div class="lg:col-6 sm:col-12 p-2">
               <p-dropdown [options]="energyCost" [(ngModel)]="selectedEnergyCost" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Additional Energy Costs" appendTo="body" styleClass="mr-5"></p-dropdown>
             </div>
@@ -140,12 +141,13 @@
             </div>
           </div>
         </div>
+        <div class="bottom-line mt-2"></div>
       </div>
 
       <div class="flex flex-column p-3">
         <label>Additional Energy Information</label>
         <div class="field flex flex-column pt-3">
-          <div class="grid bottom-line">
+          <div class="grid">
             <div class="lg:col-6 sm:col-12 p-2">
               <p-dropdown [options]="energyInfo" [(ngModel)]="selectedEnergyInfo" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Energy Information" appendTo="body" styleClass="mr-5"></p-dropdown>
             </div>
@@ -154,6 +156,7 @@
             </div>
           </div>
         </div>
+        <div class="bottom-line mt-2"></div>
       </div>
 
       <div class="flex flex-column p-3">
