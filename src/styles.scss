@@ -643,13 +643,17 @@ a{
   background-size: cover;
 }
 .blue-curve-left{
-  background-color: #f2f2f2;
+  background-color: #f9f9f9;
+  //background-color: #f2f2f2;
   background-image: url("assets/img/curve-bottom.svg");
   background-position: top left;
   background-repeat: no-repeat;
   background-size: 40rem;
   h2{
-    padding-left: 3.5rem;
+    padding-left: 2rem;
+    color:#f9f9f9;
+    font-size: 2rem;
+    width:10px;
   }
 }
 .blue-curve-right{
