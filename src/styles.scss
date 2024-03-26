@@ -804,12 +804,59 @@ a{
 
 //----------------------------------------------NEWS CARD HOME----------------------------------------------------------
 
+.p-card-home-news{
+  height:100%;
+  background-color: #fefefe;
+  position: relative;
+  .news-line{
+    border-bottom: 1px inset #f7f7f7;
+  }
+  .p-card-header {
+    display: block;
+    position: relative;
+    &:after {
+      content: " ";
+      background-image: url("assets/img/curve-top-grey.svg");
+      background-position: bottom;
+      background-size: contain;
+      background-repeat: no-repeat;
+      position: absolute;
+      top: 0;
+      bottom: 3px;
+      left: 7px;
+      right: 0;
+    }
+    span{
+      position:absolute;
+      top:83%;
+      right: 25px;
+      z-index:1;
+    }
+  }
+  .card-body{
+    padding:20px;
+    margin-bottom:20px;
+  }
+  .p-card-footer{
+    position:absolute;
+    bottom:25px;
+    left:27%;
+    padding:25px;
+  }
+}
+
+
+
 .news-card-home{
   position: relative;
-  margin-bottom:70px;
+  margin-bottom:35px;
   text-align: center;
   height:100%;
-  background-color: #f2f2f2;
+  //background-color: #f2f2f2;
+  background-color: #fafafa;
+  .news-line{
+    border-bottom: 1px inset white;
+  }
   .card-footer{
     position:absolute;
     bottom:25px;
@@ -818,13 +865,14 @@ a{
   }
   .card-body{
     padding:45px;
+
   }
   .card-head{
     display: block;
     position: relative;
     &:after{
       content: " ";
-      background-image: url("assets/img/curve-top.svg");
+      background-image: url("assets/img/curve-top-grey.svg");
       background-position: bottom;
       background-size: contain;
       background-repeat: no-repeat;
