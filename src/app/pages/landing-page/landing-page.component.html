@@ -22,18 +22,14 @@
     <app-accordion-tpl [content]="content.items?.[3].item"></app-accordion-tpl>
   </section>
 
-
   <section class="blue-curve-left">
     <h2 class="header-style">{{content.items?.[4].item.title}}</h2>
-    <div class="container mt-8" style="padding:20px">
-      <div class="mb-3">
-        <h3 class="p-4 font-normal text-center text-lg">Modern technology is all about efficiency and speed, but technological advances are about much more than the new electric car
-          or improved solar panels, it is about moving forward and advancing. Moving away from our reliance on fossil fuels and becoming greener in our emissions by reducing them to net-zero where possible.</h3>
-      </div>
+    <div class="container carousel-container">
+      <p class="p-4 font-normal text-center text-lg">Modern technology is all about efficiency and speed, but technological advances are about much more than the new electric car
+        or improved solar panels, it is about moving forward and advancing. Moving away from our reliance on fossil fuels and becoming greener in our emissions by reducing them to net-zero where possible.</p>
       <app-home-technology-tpl [content]="content.items?.[4].item"></app-home-technology-tpl>
     </div>
   </section>
-
 
 }
 
