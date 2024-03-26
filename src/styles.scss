@@ -710,7 +710,12 @@ a{
 }
 
 .partner-logo{
-  max-height:90px;
+  //max-height:90px;
+  display: block;
+  max-width: 250px;
+  max-height: 90px;
+  width: auto;
+  height: auto;
 }
 
 
