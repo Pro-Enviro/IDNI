@@ -195,6 +195,29 @@ a{
   }
 
   //---------------------------------------------------FORM-------------------------------------------------------------
+.panelmenu-style-footer{
+  .p-panelmenu-header-content {
+    border: none;
+    background: transparent !important;
+    transition: box-shadow 0.2s;
+    font-weight: 400;
+  }
+  .p-panelmenu-content {
+    padding-left: 15px;
+    border: none;
+    background: transparent !important;
+    color: #4b5563;
+    border-top: 0;
+  }
+  a{
+    text-decoration: none;
+    color: #284747;
+    font-weight: 550;
+    &:hover{
+      color:$primeColor;
+    }
+  }
+}
 
 .panelmenu-style-none{
   .p-panelmenu-header-content {
