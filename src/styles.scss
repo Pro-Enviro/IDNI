@@ -606,10 +606,11 @@ a{
     height: 90vh;
     position: relative;
     color:white;
+    z-index: -1;
     .bg-arrow{
-      color: white;
+      position:absolute;
       height: 90vh;
-      width:50vw;
+      width:42vw;
       background-image: url("assets/img/arrow.svg");
       background-repeat: no-repeat;
       background-size: cover;
@@ -622,7 +623,7 @@ a{
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        //padding:40px;
+        width:230%;
         h1{
           //font-size: 6rem;
         }
@@ -1001,10 +1002,27 @@ footer{
 
   }
 //--------------------------HERO----------------------------
+@media screen and (max-width: 1440px) and (min-width: 900px){
+  .hero{
+    .bg-arrow{
+      width:50vw;
+    }
+  }
+}
+@media screen and (max-width: 1280px) and (min-width: 800px){
+  .hero{
+    .bg-arrow{
+      width:60vw;
+    }
+  }
+}
 @media screen and (max-width: 700px) and (min-width: 200px){
   .hero{
     .bg-arrow{
       width:100vw;
+      .content{
+        width:120%;
+      }
     }
   }
 }

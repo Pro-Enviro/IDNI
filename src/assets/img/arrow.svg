@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 888.87 1005.01">
-  <defs>
-    <style>
-      .cls-1 {
-        opacity: .46;
-      }
-    </style>
-  </defs>
-  <g id="home-1">
-    <path class="cls-1" d="M.89,1005C-1.12,906.19,.89,0,.89,0L565.76,.49c19.71,.26,38.04,10.87,48.09,27.83l267.31,451.34c10.05,16.96,10.28,37.7,.61,54.4l-257.21,444.37c-9.67,16.7-27.76,26.83-47.48,26.56"/>
-  </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 28.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_2_00000178887734657589758490000010987662836754443906_"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 888.9 1005"
+	 style="enable-background:new 0 0 888.9 1005;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0.46;enable-background:new    ;}
+</style>
+<g id="home-1">
+	<path class="st0" d="M0.9,1005c-2-98.8,0-1005,0-1005l564.9,0.5c19.7,0.3,38,10.9,48.1,27.8l267.3,451.3c10,17,10.3,37.7,0.6,54.4
+		L624.6,978.4c-9.7,16.7-27.8,26.8-47.5,26.6"/>
+</g>
 </svg>
