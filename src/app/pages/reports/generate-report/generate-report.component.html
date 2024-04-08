@@ -1,7 +1,10 @@
 <div class="col-6">
-  <p-card header="Select Company" styleClass="card-select-panel">
+  <p-card header="Select Company" styleClass="card-select-panel" *ngIf="role !== 'User'">
     <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
     <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
+  </p-card>
+  <p-card styleClass="card-select-panel" *ngIf="role === 'User'">
+    {{companyName}}
   </p-card>
 </div>
 

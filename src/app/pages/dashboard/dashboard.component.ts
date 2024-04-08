@@ -11,6 +11,7 @@ import {EnvirotrackReportBarComponent} from "../envirotrack/report/envirotrack-r
 import {EnvirotrackSmallPieChartComponent} from "../envirotrack/report/envirotrack-report-pie/envirotrack-small-pie-chart/envirotrack-small-pie-chart.component";
 import {EnvirotrackBarSmallComponent} from "../envirotrack/report/envirotrack-report-bar/envirotrack-bar-small/envirotrack-bar-small.component";
 import {PanelMenuModule} from "primeng/panelmenu";
+import {GlobalService} from "../../_services/global.service";
 
 
 @Component({
@@ -33,6 +34,7 @@ import {PanelMenuModule} from "primeng/panelmenu";
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
+  showFuelData: boolean = true;
   // envirotrackReport : MenuItem[] =[
   //   {
   //     label:'<span class="material-symbols-outlined">dashboard</span> Dashboard',
@@ -56,6 +58,9 @@ export class DashboardComponent {
   //   }
   // ]
 
+  constructor(private global: GlobalService) {
+  }
+
   envirotrackReport : MenuItem[] =[
       {
         label:'<span class="material-symbols-outlined">dashboard</span> Dashboard',
@@ -65,7 +70,8 @@ export class DashboardComponent {
       {
         label:'<span class="material-symbols-outlined">flowsheet</span> Fuel Data',
         routerLink:'/dashboard/fuel-data',
-        escape: false
+        escape: false,
+        visible: this?.global?.role?.value !== 'User'
       },
       {
         label:'<span class="material-symbols-outlined">add_chart</span> Data Upload',
