@@ -158,14 +158,36 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
 
   getCompanies = () =>{
 
-
-      this.track.getCompanies().subscribe({
-        next: (res: any)=>{
-          if (res.data) {
-            this.companies = res.data
-          }
+    this.global.getCurrentUser().subscribe({
+      next: (res: any) => {
+        if (res.role.name === 'user'){
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data){
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+              }
+            }
+          })
+        } else {
+          this.track.getCompanies().subscribe({
+            next:(res: any) => {
+              this.companies = res.data;
+            }
+          })
         }
-      })
+
+      }
+    })
+
+      //
+      // this.track.getCompanies().subscribe({
+      //   next: (res: any)=>{
+      //     if (res.data) {
+      //       this.companies = res.data
+      //     }
+      //   }
+      // })
 
 
   }

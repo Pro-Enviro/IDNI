@@ -68,9 +68,10 @@ export class EnvirotrackBarSmallComponent implements OnInit {
     private global: GlobalService,
     private storage: StorageService
   ) {
-    this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
-    this.selectedCompany = this?.global?.companyAssignedId?.value || null;
-    if (this.selectedCompany) this.selectedName = this?.global?.companyName?.value || ''
+    // this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
+    // this.selectedCompany = this?.global?.companyAssignedId?.value || null;
+    // if (this.selectedCompany) this.selectedName = this?.global?.companyName?.value || ''
+
 
   }
 
@@ -178,15 +179,39 @@ export class EnvirotrackBarSmallComponent implements OnInit {
 
   getCompanies = () =>{
 
-      this.track.getCompanies().subscribe({
-        next: (res: any)=>{
-          if (res.data) {
-            this.companies = res.data
 
-
-          }
+    this.global.getCurrentUser().subscribe({
+      next: (res: any) => {
+        if (res.role.name === 'user'){
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data){
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+              }
+            }
+          })
+        } else {
+          this.track.getCompanies().subscribe({
+            next:(res: any) => {
+              this.companies = res.data;
+            }
+          })
         }
-      })
+
+      }
+    })
+
+
+    // this.track.getCompanies().subscribe({
+    //     next: (res: any)=>{
+    //       if (res.data) {
+    //         this.companies = res.data
+    //
+    //
+    //       }
+    //     }
+    //   })
 
 
   }
@@ -278,7 +303,6 @@ export class EnvirotrackBarSmallComponent implements OnInit {
       this.selectedCompany = this?.global?.companyAssignedId?.value || null;
       this.getData(this?.global?.companyAssignedId?.value)
     } else {
-      console.log('Check for admin/consultant')
       this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant' || this.storage.get('_rle') === 'Admin' || this.storage.get('_rle') === 'Consultant'
 
     }

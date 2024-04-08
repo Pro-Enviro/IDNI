@@ -1,12 +1,12 @@
 <p-card styleClass="card-charts">
   <div class="grid">
     <div class="col-6">
-      <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant">
+      <p-card header="Select Company" styleClass="card-select-panel">
         <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" ></p-dropdown>
       </p-card>
-      <p-card styleClass="card-select-panel" *ngIf="!isConsultant && selectedCompany"  >
-        <p *ngIf="!isConsultant && selectedCompany">{{selectedName}}</p>
-      </p-card>
+<!--      <p-card styleClass="card-select-panel" *ngIf="!isConsultant && selectedCompany"  >-->
+<!--        <p *ngIf="!isConsultant && selectedCompany">{{selectedName}}</p>-->
+<!--      </p-card>-->
     </div>
     <div class="col-6">
       <div class="" *ngIf="mpan.length">

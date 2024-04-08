@@ -29,7 +29,7 @@ export class GlobalService {
   }
 
   getCurrentUser = () => {
-    return from(this.client.request(readMe({fields: ['email']})))
+    return from(this.client.request(readMe({fields: ['email', 'role.name']})))
   }
 
 
