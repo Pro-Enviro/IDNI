@@ -12,11 +12,10 @@
       <h2>{{content.title}}</h2>
       <div [innerHTML]="content.content"></div>
     </div>
-    @for(content of content.items; track $index; let e = $even){
-      @if(e){
+    @for(content of content.items; track $index;){
         <div class="container p-4">
           <div class="grid">
-            <div class="lg:col-4 sm:col-12">
+            <div class="lg:col-4 sm:col-12 mt-4">
               <img src="https://app.idni.eco/assets/{{content.image}}" alt="{{content.title}}" class="partner-logo">
             </div>
             <div class="col"></div>
@@ -30,24 +29,6 @@
           </div>
           <div class="bottom-line mt-5"></div>
         </div>
-      }@else{
-        <div class="container p-4">
-          <div class="grid">
-            <div class="lg:col-7 sm:col-12 lg:flex-order-0 md:flex-order-1 sm:flex-order-1">
-              <h3 class="header-style">{{content.title}}</h3>
-              <div [innerHTML]="content.content"></div>
-              <div class="pt-5 pb-3">
-                <p-button label="Learn More" [rounded]="true" styleClass="btn-style"></p-button>
-              </div>
-            </div>
-            <div class="col"></div>
-            <div class="lg:col-4 sm:col-12 lg:flex-order-1 md:flex-order-0 sm:flex-order-0">
-              <img src="https://app.idni.eco/assets/{{content.image}}" alt="{{content.title}}" class="partner-logo">
-            </div>
-          </div>
-          <div class="bottom-line mt-5"></div>
-        </div>
-      }
     }
   </section>
 }

@@ -13,11 +13,11 @@
       </div>
     </div>
     <div class="container p-4" style="margin-top:6rem">
-      <h2 >{{content.title}}</h2>
+      <h2 class="mt-3">{{content.title}}</h2>
       <div [innerHTML]="content.content"></div>
       <div [innerHTML]="content.description" class="mb-4"></div>
       <div class="grid">
-        <div class="lg:col-6 sm:col-12">
+        <div class="lg:col-6 sm:col-12 mt-3">
           <img src="https://app.idni.eco/assets/{{content.page_image}}" alt="" class="page-img">
         </div>
         <div class="lg:col-5 sm:col-12">
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="p-4">
-      <h3 class="header-style">REPORTS / LINKS</h3>
+      <h3 class="header-style-blue text-3xl mb-5">REPORTS / LINKS</h3>
       <p>The Council has provided us with the reports /links below.</p>
     </div>
     @for(files of content.factsheet_files; track $index){
@@ -98,3 +98,18 @@
     </div>
   </section>
 }
+
+  <div class="row">
+    <div class="columns small-8">8
+      <div class="row">
+        <div class="columns small-8">8 Nested
+          <div class="row">
+            <div class="columns small-8">8 Nested Again</div>
+            <div class="columns small-4">4</div>
+          </div>
+        </div>
+        <div class="columns small-4">4</div>
+      </div>
+    </div>
+    <div class="columns small-4">4</div>
+  </div>

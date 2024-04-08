@@ -3,13 +3,15 @@ import {DbService} from "../../_services/db.service";
 import moment from "moment/moment";
 import {ButtonModule} from "primeng/button";
 import {RouterLink} from "@angular/router";
+import {CardModule} from "primeng/card";
 
 @Component({
   selector: 'app-home-news-tpl',
   standalone: true,
   imports: [
     ButtonModule,
-    RouterLink
+    RouterLink,
+    CardModule
   ],
   templateUrl: './home-news-tpl.component.html',
   styleUrl: './home-news-tpl.component.scss'
