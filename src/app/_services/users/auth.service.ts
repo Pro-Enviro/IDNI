@@ -108,6 +108,8 @@ export class AuthService {
 
   logout = () =>{
     this.client.logout()
+    localStorage.clear()
+    this.route.navigate(['/'])
   }
 
   refreshToken =  async () => {

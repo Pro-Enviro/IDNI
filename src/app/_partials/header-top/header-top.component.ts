@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MegaMenuItem, MenuItem} from "primeng/api";
 import {MegaMenuModule} from "primeng/megamenu";
 import {ButtonModule} from "primeng/button";
@@ -10,6 +10,9 @@ import {SidebarModule} from "primeng/sidebar";
 import {ToastModule} from "primeng/toast";
 import {MenuModule} from "primeng/menu";
 import {PanelMenuModule} from "primeng/panelmenu";
+import {GlobalService} from "../../_services/global.service";
+import {EnvirotrackService} from "../../pages/envirotrack/envirotrack.service";
+import {AuthService} from "../../_services/users/auth.service";
 
 @Component({
   selector: 'app-header-top',
@@ -28,8 +31,13 @@ import {PanelMenuModule} from "primeng/panelmenu";
   templateUrl: './header-top.component.html',
   styleUrl: './header-top.component.scss'
 })
-export class HeaderTopComponent {
+export class HeaderTopComponent implements OnInit {
   sidebarVisible: boolean = false;
+  loggedIn: boolean = false;
+
+  constructor(private global: GlobalService, private track: EnvirotrackService, private auth: AuthService) {
+
+  }
 
   // menuItems!: MegaMenuItem[];
   // constructor(private storage: StorageService) {
@@ -40,6 +48,11 @@ export class HeaderTopComponent {
   //     }
   //   });
   // }
+
+  logout = ()  => {
+    this.auth.logout()
+  }
+
   menuItems: MegaMenuItem[] = [
     {
       label: 'Home',
@@ -162,4 +175,12 @@ export class HeaderTopComponent {
     }
   ];
 
+
+    ngOnInit() {
+      // this.global.getCurrentUser().subscribe({
+      //   next: (res: any) => {
+      //     this.loggedIn = !!res.email;
+      //   }
+      // })
+    }
 }

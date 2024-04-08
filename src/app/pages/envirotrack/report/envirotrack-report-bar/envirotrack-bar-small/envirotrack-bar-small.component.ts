@@ -299,7 +299,6 @@ export class EnvirotrackBarSmallComponent implements OnInit {
 
     if (this.global.companyAssignedId.value) {
       this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'|| this.storage.get('_rle') === 'Admin' || this.storage.get('_rle') === 'Consultant'
-      console.log(this.global.role.value)
       this.selectedCompany = this?.global?.companyAssignedId?.value || null;
       this.getData(this?.global?.companyAssignedId?.value)
     } else {
