@@ -132,7 +132,7 @@ export const routes: Routes = [
   {path:'mpa',component:MpaComponent},
   {path:'advisory-board',component:AdvisoryBoardComponent},
   {path:'stakeholders',component:StakeholdersComponent},
-  // {path: 'login', component: LoginComponent},
+  {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
   {path: 'registration-form', component: RegistrationFormComponent},
   {path:'successful-registration',component:RegisterSuccessPageComponent},
