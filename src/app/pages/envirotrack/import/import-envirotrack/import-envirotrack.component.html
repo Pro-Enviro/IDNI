@@ -5,8 +5,11 @@
   <div class="container">
     <div class="grid">
       <div class="col-12">
-        <p-card *ngIf="!fileContent" header="Select Company" [style]="{width: '70%', margin: 'auto', marginTop:'5rem'}" styleClass="card-charts">
+        <p-card *ngIf="!fileContent && !selectedName" header="Select Company" [style]="{width: '70%', margin: 'auto', marginTop:'5rem'}" styleClass="card-charts">
           <p-dropdown [options]="companies" optionLabel="name" optionValue="id" [(ngModel)]="selectedCompany" [style]="{ width: '12rem'}"></p-dropdown>
+        </p-card>
+        <p-card *ngIf="!fileContent && selectedName" header="Select Company" [style]="{width: '70%', margin: 'auto', marginTop:'5rem'}" styleClass="card-charts">
+          {{selectedName}}
         </p-card>
       </div>
       <div class="col-12">
@@ -27,11 +30,12 @@
           </p-fileUpload>
         </p-card>
 
-        <p-card *ngIf="uploadedFiles.length" styleClass="card-charts mt-5">
-          <p-button *ngIf="isXlsx" styleClass="btn-dark m-1"  label="Send Data" (click)="sendDataToProEnviro()"></p-button>
+        <p-card *ngIf="uploadedFiles.length && !selectedName" styleClass="card-charts mt-5" >
           <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()" class="btn-select"></p-selectButton>
         </p-card>
-
+        <p-card *ngIf="uploadedFiles.length && selectedName" styleClass="card-charts mt-5" >
+          <p-button *ngIf="isXlsx" styleClass="btn-dark m-1"  label="Send Data" (click)="sendDataToProEnviro()"></p-button>
+        </p-card>
 
         <ng-container *ngIf="fileContent">
           <p-card  #table  header="Half-Hourly Data (HHD)" styleClass="card-charts mt-4">

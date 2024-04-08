@@ -70,6 +70,7 @@ export class ImportEnvirotrackComponent {
   availableSheets: string[] = [];
   sheetData: any;
   userLevel: number = 2
+  selectedName: string = ''
 
   constructor(
     private track: EnvirotrackService,
@@ -83,9 +84,12 @@ export class ImportEnvirotrackComponent {
 
     if (this.global.companyAssignedId.value) {
       this.selectedCompany = this.global.companyAssignedId.value
+      this.selectedName = this.global.companyName.value || ''
     }
 
-    this.getCompanies();
+    if (!this.selectedName){
+      this.getCompanies();
+    }
   }
 
     openXlsx = async (data: any) => {

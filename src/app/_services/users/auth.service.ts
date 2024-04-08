@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../storage.service";
 import {authentication, createDirectus, graphql, rest} from "@directus/sdk";
 import {GlobalService} from "../global.service";
+
 export interface Credentials {
   email: string;
   password: string;

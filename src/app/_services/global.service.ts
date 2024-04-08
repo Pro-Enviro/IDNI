@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import {authentication, createDirectus, graphql, rest, refresh} from "@directus/sdk";
-import {BehaviorSubject} from "rxjs";
+import {authentication, createDirectus, graphql, rest, readMe} from "@directus/sdk";
+import {BehaviorSubject, from} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
+
 })
 
 export class Storage {
@@ -20,10 +22,16 @@ export class GlobalService {
   companyAssignedId: BehaviorSubject<number | null> = new BehaviorSubject<any>(null)
   companyName: BehaviorSubject<string | null> = new BehaviorSubject<any>(null)
   client: any;
+  url: any = `https://app.idni.eco`
 
   constructor() {
     this.initSession();
   }
+
+  getCurrentUser = () => {
+    return from(this.client.request(readMe({fields: ['email']})))
+  }
+
 
   updateRole = (value: string) => this.role.next(value);
   updateCompanyId = (value: number) => this.companyAssignedId.next(value)

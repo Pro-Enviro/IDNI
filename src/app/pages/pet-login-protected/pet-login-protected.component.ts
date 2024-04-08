@@ -21,6 +21,7 @@ import {NgxEchartsDirective} from "ngx-echarts";
 import {EChartsOption} from "echarts";
 import {MessageService} from "primeng/api";
 import {DbService} from "../../_services/db.service";
+import {GlobalService} from "../../_services/global.service";
 const rowNames: string[] = ['Cost of Energy', 'Transportation Costs', 'Cost of Water', 'Cost of Waste', 'Cost of Raw Materials', 'Cost of Bought in Goods - Consumables and bought in parts', 'Consultancy Cost', 'Sub Contracting Cost', 'Other External Costs (Legal, rental, accounting etc)']
 
 const energyNames: string[] = ['Electricity', 'Natural Gas (Grid)', 'Natural Gas off Grid', 'Bio Gas Off Grid', 'LPG', 'Oil', 'Kerosene', 'Bio Fuels', 'Bio Mass', 'Coal for Industrial use', 'Other']
@@ -223,12 +224,14 @@ export class PetLoginProtected implements OnInit {
   markStart: any
   markEnd:any
 
-  constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService) {}
+  constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService, private global: GlobalService) {
+  }
 
 
 
   onSelectCompany = () => {
     if (!this.selectedCompany) this.selectedCompany = this.companies[0]
+    console.log(this.selectedCompany)
     // Reset table
     this.turnover = 0
     this.employees = 0;
@@ -248,18 +251,23 @@ export class PetLoginProtected implements OnInit {
 
   getCompanies = () => {
     // Fetch all companies
-    this.track.getCompanies().subscribe({
+    this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        this.companies = res.data;
+        this.track.getUsersCompany(res.email).subscribe({
+          next: (res: any) => {
+            if (res.data){
+              this.companies = res.data
+            }
+          }
+        })
+
+
       }
     })
-
   }
 
 
   getPETReport = (id: number) => {
-
-
     this.db.getPetData(id).subscribe({
       next: (res: any) => {
         if (res.data.PET_Data) {
