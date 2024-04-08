@@ -65,13 +65,14 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
   selectedMpan!: string;
   screenWidth: any;
   isConsultant = false
+  selectedName: string = ''
 
   constructor(
     private track: EnvirotrackService,
     private global: GlobalService,
     private storage: StorageService
   ) {
-
+    this.selectedName = this.global?.companyName?.value || ''
   }
 
 

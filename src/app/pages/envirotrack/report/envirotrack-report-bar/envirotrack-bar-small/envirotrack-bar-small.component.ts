@@ -61,6 +61,7 @@ export class EnvirotrackBarSmallComponent implements OnInit {
   selectedMpan!: string;
   screenWidth: any;
   isConsultant = false
+  selectedName: string = ''
 
   constructor(
     private track: EnvirotrackService,
@@ -69,6 +70,8 @@ export class EnvirotrackBarSmallComponent implements OnInit {
   ) {
     this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
     this.selectedCompany = this?.global?.companyAssignedId?.value || null;
+    if (this.selectedCompany) this.selectedName = this?.global?.companyName?.value || ''
+
   }
 
   // saveChartAsBase64 = () => {

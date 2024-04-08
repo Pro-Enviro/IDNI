@@ -5,7 +5,9 @@
           <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
         </p-card>
-        <p *ngIf="!isConsultant && selectedCompany">Company selected</p>
+        <p-card styleClass="card-select-panel" *ngIf="!isConsultant && selectedCompany"  >
+         <p *ngIf="!isConsultant && selectedCompany">{{selectedName}}</p>
+        </p-card>
       </div>
       <div class="col-6">
         <div class="flex-1" *ngIf="mpan.length">

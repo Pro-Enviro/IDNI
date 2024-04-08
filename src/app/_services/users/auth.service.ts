@@ -70,6 +70,7 @@ export class AuthService {
               console.log(res)
               if (res?.data.length ){
                 this.global.updateCompanyId(res.data[0].id)
+                this.global.updateCompanyName(res.data[0].name)
               }
             },
             error: (error: any) => console.log(error)

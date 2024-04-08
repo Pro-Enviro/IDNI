@@ -18,6 +18,7 @@ export class Storage {
 export class GlobalService {
   role: BehaviorSubject<string> = new BehaviorSubject<any>('User');
   companyAssignedId: BehaviorSubject<number | null> = new BehaviorSubject<any>(null)
+  companyName: BehaviorSubject<string | null> = new BehaviorSubject<any>(null)
   client: any;
 
   constructor() {
@@ -26,6 +27,7 @@ export class GlobalService {
 
   updateRole = (value: string) => this.role.next(value);
   updateCompanyId = (value: number) => this.companyAssignedId.next(value)
+  updateCompanyName = (value: string) => this.companyName.next(value)
 
   initSession = () => {
     const storage: Storage = new Storage()
