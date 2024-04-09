@@ -9,6 +9,8 @@
   </p-card>
 </div>
 <div echarts [options]="chartOption" [initOpts]="{ renderer: 'svg' }" class="Scope Chart" style="max-height: 600px; height: 600px" [id]="'chartId'"></div>
-
+  <div *ngIf="!dataArray.length">
+    <p>No fuel data uploaded.</p>
+  </div>
 
 </p-card>

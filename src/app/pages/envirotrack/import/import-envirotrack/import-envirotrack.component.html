@@ -30,11 +30,13 @@
           </p-fileUpload>
         </p-card>
 
-        <p-card *ngIf="uploadedFiles.length && !selectedName" styleClass="card-charts mt-5" >
+        <p-card *ngIf="uploadedFiles.length && isConsultant" styleClass="card-charts mt-5" >
           <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()" class="btn-select"></p-selectButton>
         </p-card>
-        <p-card *ngIf="uploadedFiles.length && selectedName" styleClass="card-charts mt-5" >
+
+        <p-card *ngIf="uploadedFiles.length && !isConsultant" styleClass="card-charts mt-5" >
           <p-button *ngIf="isXlsx" styleClass="btn-dark m-1"  label="Send Data" (click)="sendDataToProEnviro()"></p-button>
+          <p>Send data to Pro Enviro to process</p>
         </p-card>
 
         <ng-container *ngIf="fileContent">

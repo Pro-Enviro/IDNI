@@ -236,23 +236,17 @@ export class ImportEnvirotrackComponent {
       severity: 'success',
       detail: 'Data sent'
     })
-    // return this.http.post(`${this.url}/Mailer`,{
-    //   subject: 'Pro Enviro Envirotrack sent',
-    //   to: '@proenviro.co.uk', // WIP: Update with correct email address
-    //   list: {
-    //     unsubscribe: {
-    //       url: 'mailto:unsubscribe@proenviro.com',
-    //       comment: 'unsubscribe
-    //     }
-    //   },
-    //   template: {
-    //     name: "new_envirotrack",
-    //     data: {
-    //       supplier: data.supplier
-    //     }
-    //   },
-    //   files: data.envirotrack
-    // },{responseType: "text"})
+    return this.http.post(`${this.url}/Mailer`,{
+      subject: 'Pro Enviro Envirotrack sent',
+      to: 'adam.shelley@proenviro.co.uk', // WIP: Update with correct email address
+      template: {
+        name: "New_envirotrack upload",
+        data: {
+          company: this.selectedName
+        }
+      },
+      files: ''
+    },{responseType: "text"})
   }
 
 

@@ -27,35 +27,36 @@ export const HttpInterceptorService: HttpInterceptorFn = (
   const token = storage.get('access_token');
   const auth = inject(AuthService)
 
-
+  const addTokenHeader = (request: HttpRequest<any>, token: string | null) => {
+    return request.clone({
+      headers: request.headers.set('Authorization', 'Bearer ' + token!),
+    });
+  }
 
   if (token){
-    const clonedRequest = req.clone({
-      headers: req.headers.set('Authorization', `Bearer ${token}`)
-    })
+    // const clonedRequest = req.clone({
+    //   headers: req.headers.set('Authorization', `Bearer ${token}`)
+    // })
 
-    return next(clonedRequest).pipe(
+    const authRequest = addTokenHeader(req, token)
+
+    return next(authRequest).pipe(
       catchError((error: HttpErrorResponse) => {
         console.log('ERROR 1: ', error)
         if ([401, 403].includes(error.status)) {
-          console.log('rerouting to login')
-          console.log(error)
           // auto logout if 401 or 403 response returned from api
           if (error.status === 401) {
             console.log('401 Error')
             // handle 401
             auth.refreshToken().then((res)=> {
-              return next(clonedRequest)
+              return next(authRequest)
             })
-            localStorage.clear()
-
-            auth.logout()
 
             router.navigate([''])
 
           } else if (error.status === 403) {
-            localStorage.clear()
             console.log('403 Error')
+            localStorage.clear()
             // handle 403
             router.navigate([''])
           } else {
@@ -66,13 +67,10 @@ export const HttpInterceptorService: HttpInterceptorFn = (
           severity: 'warning',
           detail: 'You are unauthorized.'
         })
-
-
-
         return throwError(() => error);
       }))
   } else {
-    console.log('ERROR INTERCEPTOR')
+    console.log('ERROR INTERCEPTOR NOT LOGGED IN')
     return next(req).pipe(
       catchError((error: HttpErrorResponse) => {
         console.log('ERROR 2: ', error)
@@ -104,7 +102,12 @@ export const HttpInterceptorService: HttpInterceptorFn = (
         return throwError(() => error);
       }))
   }
+
+
 };
+
+
+
 
 
 
