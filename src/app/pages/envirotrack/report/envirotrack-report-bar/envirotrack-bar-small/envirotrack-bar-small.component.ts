@@ -67,34 +67,9 @@ export class EnvirotrackBarSmallComponent implements OnInit {
     private track: EnvirotrackService,
     private global: GlobalService,
     private storage: StorageService
-  ) {
-    // this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'
-    // this.selectedCompany = this?.global?.companyAssignedId?.value || null;
-    // if (this.selectedCompany) this.selectedName = this?.global?.companyName?.value || ''
+  ) {}
 
 
-  }
-
-  // saveChartAsBase64 = () => {
-  //   console.log('saving as base 64');
-  //   if (!this.chartOptions) return;
-  //
-  //   // Create temporary chart that uses echarts.instanceOf
-  //   const div = document.createElement('div')
-  //   div.style.width = '1200px'
-  //   div.style.height = '1200px'
-  //
-  //   const temporaryChart = echarts.init(div)
-  //
-  //   temporaryChart.setOption({...this.chartOptions, animation: false})
-  //
-  //   const data = temporaryChart.getDataURL({
-  //     backgroundColor: '#fff',
-  //     pixelRatio: 2
-  //   })
-  //   console.log(data);
-  //   return data;
-  // }
   initChart = () => {
     this.chartOptions = {
       legend: {
@@ -298,12 +273,8 @@ export class EnvirotrackBarSmallComponent implements OnInit {
     this.getCompanies();
 
     if (this.global.companyAssignedId.value) {
-      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'|| this.storage.get('_rle') === 'Admin' || this.storage.get('_rle') === 'Consultant'
       this.selectedCompany = this?.global?.companyAssignedId?.value || null;
       this.getData(this?.global?.companyAssignedId?.value)
-    } else {
-      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant' || this.storage.get('_rle') === 'Admin' || this.storage.get('_rle') === 'Consultant'
-
     }
 
     this.screenWidth = window.innerWidth

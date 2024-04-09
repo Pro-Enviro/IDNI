@@ -3,7 +3,6 @@ import {Router} from "@angular/router";
 import {BehaviorSubject, map} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../storage.service";
-import {authentication, createDirectus, graphql, rest} from "@directus/sdk";
 import {GlobalService} from "../global.service";
 
 export interface Credentials {
@@ -25,7 +24,9 @@ export class AuthService {
     private storage: StorageService,
     private route: Router
   ) {
-    this.client = this.global.client//createDirectus('https://app.idni.eco/').with(rest()).with(graphql()).with(authentication('json'));
+    this.client = this.global.client
+
+    //createDirectus('https://app.idni.eco/').with(rest()).with(graphql()).with(authentication('json'));
     /*this.client.auth.token = this.storage.get('access_token');
     this.isLoggedIn.next(!!this.storage.get('access_token'));
     this.client.auth.on('token_changed', (token:any) => {
@@ -67,8 +68,6 @@ export class AuthService {
           // Only show the company that the user is attached to
           this.http.get(`${this.url}items/companies?filter[users][directus_users_id][email][_eq]=${credentials.email}`).subscribe({
             next: (res:any) => {
-              console.log('Getting company')
-              // console.log(res)
               if (res?.data.length ){
                 this.global.updateCompanyId(res.data[0].id)
                 this.global.updateCompanyName(res.data[0].name)
@@ -77,11 +76,6 @@ export class AuthService {
             error: (error: any) => console.log(error)
           })
         }
-
-
-
-        // Encrypt TBD
-        this.storage.set('_rle', this.global.role.value)
       },
       error: (err: any) => console.log(err)
     })
@@ -111,6 +105,7 @@ export class AuthService {
 
   logout = () =>{
     this.client.logout()
+    this.isLoggedIn.next(false)
     localStorage.clear()
     this.route.navigate(['/'])
   }

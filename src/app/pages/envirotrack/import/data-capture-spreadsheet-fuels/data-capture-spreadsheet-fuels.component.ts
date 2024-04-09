@@ -60,9 +60,6 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
       this.selectedCompany = this.global.companyAssignedId.value
       this.getFuelData()
     }
-
-    // this.isConsultantLevel = this.global.role.value === 'Admin' || this.global.role.value ==='Consultant'
-    // this.selectedCompany = this.global.companyAssignedId.value;
   }
 
   showDialog = (fuel: any) => {

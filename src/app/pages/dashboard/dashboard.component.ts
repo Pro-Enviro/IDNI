@@ -58,94 +58,103 @@ export class DashboardComponent {
   //   }
   // ]
 
+
+  envirotrackReport : MenuItem[] =[]
+
   constructor(private global: GlobalService) {
-    if (this.global.role.value === 'User'){
-      this.showFuelData = false
-    }
-  }
-
-
-
-  envirotrackReport : MenuItem[] =[
-      {
-        label:'<span class="material-symbols-outlined">dashboard</span> Dashboard',
-        routerLink:'/dashboard',
-        escape: false
-      },
-      {
-        label:'<span class="material-symbols-outlined">flowsheet</span> Fuel Data',
-        routerLink:'/dashboard/fuel-data',
-        escape: false,
-        visible: this.showFuelData
-      },
-      {
-        label:'<span class="material-symbols-outlined">add_chart</span> Data Upload',
-        escape: false,
-        routerLink:'/dashboard/import'
-      },
-
-      {
-        label:'<span class="material-symbols-outlined">data_thresholding</span> PET',
-        routerLink:'/dashboard/pet',
-        escape: false
-      },
-    {
-      label:'<span class="material-symbols-outlined">data_thresholding</span> Recommendations',
-      routerLink:'/dashboard/recommendations',
-      escape: false
-    },
-    {
-      label:'<span class="material-symbols-outlined">query_stats</span> Report',
-      escape: false,
-      routerLink:'/dashboard/heatmap',
-      items:[
-        {
-          label:'<span class="material-symbols-outlined material-icon">assessment</span>Electricity Consumption, kWh per half-hour',
-          escape: false,
-          routerLink: '/dashboard/heatmap'
-        },
-        {
-          label:'<span class="material-symbols-outlined material-icon">scatter_plot</span>Electricity Consumption, kWh split by day of the week',
-          escape: false,
-          routerLink: '/dashboard/scatter',
-        },
-        {
-          label:'<span class="material-symbols-outlined material-icon">bar_chart</span>Electricity Consumption, kWh',
-          escape: false,
-          routerLink: '/dashboard/bar'
-        },
-        {
-          label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Electricity Consumption, % split by day of the week',
-          escape: false,
-          routerLink: '/dashboard/pie'
-        },
-        {
-          label:'<span class="material-symbols-outlined material-icon">show_chart</span>Christmas Day vs Lowest Day of the year consumption',
-          escape: false,
-          routerLink: '/dashboard/base1'
-        },
-        {
-          label:'<span class="material-symbols-outlined material-icon">stacked_line_chart</span>Average Daily Consumption, kWh per half hour',
-          escape: false,
-          routerLink: '/dashboard/avg'
-        },
-        {
-          label:'<span class="material-symbols-outlined material-icon">data_exploration</span>Maximum Demand',
-          escape: false,
-          routerLink: '/dashboard/demand'
-        },
-        {
-          label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Breakdown of CO2e (tonnes) by emissions source',
-          escape: false,
-          routerLink: '/dashboard/co2emissions'
-        },
-        {
-          label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Breakdown of CO2e (tonnes) by scope',
-          escape: false,
-          routerLink: '/dashboard/co2emissionsbyscope'
+    this.global.getCurrentUser().subscribe({
+      next: (res: any) => {
+        if (res.role.name === 'user'){
+          this.showFuelData = false
         }
-      ]
-    }
+      },
+      complete: () => {
+        this.envirotrackReport  =[
+          {
+            label:'<span class="material-symbols-outlined">dashboard</span> Dashboard',
+            routerLink:'/dashboard',
+            escape: false
+          },
+          {
+            label:'<span class="material-symbols-outlined">flowsheet</span> Fuel Data',
+            routerLink:'/dashboard/fuel-data',
+            escape: false,
+            visible: this.showFuelData
+          },
+          {
+            label:'<span class="material-symbols-outlined">add_chart</span> Data Upload',
+            escape: false,
+            routerLink:'/dashboard/import'
+          },
 
-  ]
+          {
+            label:'<span class="material-symbols-outlined">data_thresholding</span> PET',
+            routerLink:'/dashboard/pet',
+            escape: false
+          },
+          {
+            label:'<span class="material-symbols-outlined">data_thresholding</span> Recommendations',
+            routerLink:'/dashboard/recommendations',
+            escape: false
+          },
+          {
+            label:'<span class="material-symbols-outlined">query_stats</span> Report',
+            escape: false,
+            routerLink:'/dashboard/heatmap',
+            items:[
+              {
+                label:'<span class="material-symbols-outlined material-icon">assessment</span>Electricity Consumption, kWh per half-hour',
+                escape: false,
+                routerLink: '/dashboard/heatmap'
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">scatter_plot</span>Electricity Consumption, kWh split by day of the week',
+                escape: false,
+                routerLink: '/dashboard/scatter',
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">bar_chart</span>Electricity Consumption, kWh',
+                escape: false,
+                routerLink: '/dashboard/bar'
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Electricity Consumption, % split by day of the week',
+                escape: false,
+                routerLink: '/dashboard/pie'
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">show_chart</span>Christmas Day vs Lowest Day of the year consumption',
+                escape: false,
+                routerLink: '/dashboard/base1'
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">stacked_line_chart</span>Average Daily Consumption, kWh per half hour',
+                escape: false,
+                routerLink: '/dashboard/avg'
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">data_exploration</span>Maximum Demand',
+                escape: false,
+                routerLink: '/dashboard/demand'
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Breakdown of CO2e (tonnes) by emissions source',
+                escape: false,
+                routerLink: '/dashboard/co2emissions'
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Breakdown of CO2e (tonnes) by scope',
+                escape: false,
+                routerLink: '/dashboard/co2emissionsbyscope'
+              }
+            ]
+          }
+
+        ]
+      }
+    })
+
+
+
+  }
 }

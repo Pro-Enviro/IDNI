@@ -194,13 +194,7 @@ export class GenerateReportComponent implements OnInit {
     private http: HttpClient,
     private track: EnvirotrackService,
     private db: DbService,
-    private storage: StorageService
   ) {
-    this.role = this.global.role.value || this.storage.get('_rle')
-    //
-    // if (this.role === 'User'){
-    //   this.companyName = this?.global?.companyName?.value || ''
-    // }
   }
 
 
@@ -292,6 +286,7 @@ export class GenerateReportComponent implements OnInit {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
               this.companies = res.data;
+
             }
           })
         }
@@ -314,18 +309,9 @@ export class GenerateReportComponent implements OnInit {
 
     this.db.getRecommendations(selectedCompany).subscribe({
       next: (res: any) => {
-        if (res?.recommendations) {
-
-          const parsed = JSON.parse(res.recommendations);
-
-          this.recommendations = parsed
-
-          // parsed.recommendations.forEach((rec: any) => {
-          //   rec.steps.map((step: any) => {
-          //     step.completionDate = new Date(step.completionDate)
-          //     step.startDate = new Date(step.startDate)
-          //   })
-          // })
+        if (res?.data?.recommendations) {
+          const parsed = JSON.parse(res.data.recommendations);
+          this.recommendations = parsed.recommendations
         }
       },
       error: (error: any) => console.log(error),

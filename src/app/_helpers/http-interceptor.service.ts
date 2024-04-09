@@ -49,6 +49,8 @@ export const HttpInterceptorService: HttpInterceptorFn = (
             })
             localStorage.clear()
 
+            auth.logout()
+
             router.navigate([''])
 
           } else if (error.status === 403) {

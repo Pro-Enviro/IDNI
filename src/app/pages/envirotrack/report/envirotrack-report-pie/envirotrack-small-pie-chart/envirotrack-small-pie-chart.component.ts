@@ -318,13 +318,10 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
 
   fetchDataByRole = () => {
     if (this.global.companyAssignedId.value) {
-      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant'|| this.storage.get('_rle') === 'Admin' || this.storage.get('_rle') === 'Consultant'
       this.selectedCompany = this?.global?.companyAssignedId?.value || null;
       this.getData(this?.global?.companyAssignedId?.value)
       this.onSelectCompany()
-    } else {
-      this.isConsultant = this.global.role.value === 'Admin' || this.global.role.value === 'Consultant' || this.storage.get('_rle') === 'Admin' || this.storage.get('_rle') === 'Consultant'
-    }
+    } 
   }
 
 

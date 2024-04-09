@@ -22,32 +22,12 @@ import {EnvirotrackService} from "../../envirotrack/envirotrack.service";
   styleUrl: './dasboard-widgets.component.scss'
 })
 export class DasboardWidgetsComponent implements OnInit {
-  role: string | null = ''
+  // role: string | null = ''
 
   constructor(private global: GlobalService, private storage: StorageService,private track: EnvirotrackService) {
-    // this.global.getCurrentUser().subscribe({
-    //   next: (res: any) => {
-    //     if (res.role.name === 'user'){
-    //       this.track.getUsersCompany(res.email).subscribe({
-    //         next: (res: any) => {
-    //           if (res.data){
-    //             this.companies = res.data
-    //           }
-    //         }
-    //       })
-    //     } else {
-    //       this.track.getCompanies().subscribe({
-    //         next:(res: any) => {
-    //           this.companies = res.data;
-    //         }
-    //       })
-    //     }
-    //
-    //   }
-    // })
+
   }
   ngOnInit(){
-    this.role = this.global.role.value || this.storage.get('_rle')
   }
 
 
