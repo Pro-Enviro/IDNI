@@ -7,6 +7,7 @@ import * as echarts from "echarts";
 import {SharedModules} from "../../../../shared-module";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {SharedComponents} from "../../shared-components";
+import {GlobalService} from "../../../../_services/global.service";
 
 @Component({
   selector: 'app-envirotrack-report-base1',
@@ -41,6 +42,7 @@ export class EnvirotrackReportBase1Component implements OnInit {
   constructor(
     private track: EnvirotrackService,
     private msg: MessageService,
+    private global: GlobalService
   ) {}
 
   initChart = () => {
@@ -137,13 +139,35 @@ export class EnvirotrackReportBase1Component implements OnInit {
   // }
 
   getCompanies = () =>{
-    this.track.getCompanies().subscribe({
-      next: (res: any)=>{
-        this.companies = res.data;
-        this.selectedCompany = res.data[0].id
-        this.onSelectCompany()
+    this.global.getCurrentUser().subscribe({
+      next: (res: any) => {
+        if (res.role.name === 'user') {
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                this.companies = res.data
+                this.selectedCompany = res.data[0].id
+                this.onSelectCompany()
+              }
+            }
+          })
+        } else {
+          this.track.getCompanies().subscribe({
+            next: (res: any) => {
+              this.companies = res.data;
+            }
+          })
+        }
+
       }
     })
+    // this.track.getCompanies().subscribe({
+    //   next: (res: any)=>{
+    //     this.companies = res.data;
+    //     this.selectedCompany = res.data[0].id
+    //     this.onSelectCompany()
+    //   }
+    // })
   }
 
   onSelectCompany = () => {

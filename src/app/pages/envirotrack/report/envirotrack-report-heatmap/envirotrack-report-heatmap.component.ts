@@ -7,6 +7,7 @@ import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {EnvirotrackDayLineComponent} from "../envirotrack-day-line/envirotrack-day-line.component";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
+import {GlobalService} from "../../../../_services/global.service";
 
 PlotlyViaCDNModule.setPlotlyVersion('latest')
 
@@ -79,6 +80,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
     private track: EnvirotrackService,
     public plotlyService: PlotlyService,
     private dialog: DialogService,
+    private global: GlobalService
   ) {
     // this.isAdmin = this.auth.isAdmin()
   }
@@ -326,13 +328,37 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
     }
   }
   getCompanies = () => {
-  this.track.getCompanies().subscribe({
+
+    this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        this.companies = res.data;
-        this.selectedCompany = res.data[0].id
-        this.onSelectCompany()
+        if (res.role.name === 'user') {
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                this.companies = res.data
+                this.selectedCompany = res.data[0].id
+                this.onSelectCompany()
+              }
+            }
+          })
+        } else {
+          this.track.getCompanies().subscribe({
+            next: (res: any) => {
+              this.companies = res.data;
+            }
+          })
+        }
+
       }
     })
+
+    // this.track.getCompanies().subscribe({
+    //     next: (res: any) => {
+    //       this.companies = res.data;
+    //       this.selectedCompany = res.data[0].id
+    //       this.onSelectCompany()
+    //     }
+    //   })
   }
 
   onSelectCompany = () => {

@@ -5,6 +5,7 @@ import {EnvirotrackService} from "../../envirotrack.service";
 import {DialogService} from "primeng/dynamicdialog";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
+import {GlobalService} from "../../../../_services/global.service";
 
 
 @Component({
@@ -57,6 +58,7 @@ export class EnvirotrackReportScatterComponent implements OnInit {
 
   constructor(
     private track: EnvirotrackService,
+    private global: GlobalService
   ) {}
 
 
@@ -162,13 +164,37 @@ export class EnvirotrackReportScatterComponent implements OnInit {
   }
 
   getCompanies = () =>{
-    this.track.getCompanies().subscribe({
+
+    this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        this.companies = res.data;
-        this.selectedCompany = res.data[0].id
-        this.onSelectCompany()
+        if (res.role.name === 'user') {
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                this.companies = res.data
+                this.selectedCompany = res.data[0].id
+                this.onSelectCompany()
+              }
+            }
+          })
+        } else {
+          this.track.getCompanies().subscribe({
+            next: (res: any) => {
+              this.companies = res.data;
+            }
+          })
+        }
+
       }
     })
+
+    // this.track.getCompanies().subscribe({
+    //   next: (res: any) => {
+    //     this.companies = res.data;
+    //     this.selectedCompany = res.data[0].id
+    //     this.onSelectCompany()
+    //   }
+    // })
   }
 
   onSelectCompany = () => {

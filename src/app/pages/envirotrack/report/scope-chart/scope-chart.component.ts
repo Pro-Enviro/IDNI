@@ -6,6 +6,7 @@ import {SharedComponents} from "../../shared-components";
 import {SharedModules} from "../../../../shared-module";
 import {MultiSelectModule} from "primeng/multiselect";
 import {EnvirotrackService} from "../../envirotrack.service";
+import {GlobalService} from "../../../../_services/global.service";
 
 @Component({
   selector: 'app-scope-chart',
@@ -39,7 +40,8 @@ export class ScopeChartComponent implements OnInit {
 
   constructor(
     private fltr: FilterService,
-    private track: EnvirotrackService
+    private track: EnvirotrackService,
+    private global: GlobalService
   ) { }
 
   resetDataArray(){
@@ -122,13 +124,37 @@ export class ScopeChartComponent implements OnInit {
   }
 
   getCompanies = () =>{
-    this.track.getCompanies().subscribe({
+
+    this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        this.companies = res.data;
-        this.selectedCompany = res.data[0].id
-        this.onSelectCompany()
+        if (res.role.name === 'user') {
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                this.companies = res.data
+                this.selectedCompany = res.data[0].id
+                this.onSelectCompany()
+              }
+            }
+          })
+        } else {
+          this.track.getCompanies().subscribe({
+            next: (res: any) => {
+              this.companies = res.data;
+            }
+          })
+        }
+
       }
     })
+
+    // this.track.getCompanies().subscribe({
+    //   next: (res: any) => {
+    //     this.companies = res.data;
+    //     this.selectedCompany = res.data[0].id
+    //     this.onSelectCompany()
+    //   }
+    // })
   }
 
   onSelectCompany = () => {

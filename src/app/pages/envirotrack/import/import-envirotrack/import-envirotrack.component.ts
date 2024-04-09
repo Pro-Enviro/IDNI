@@ -206,6 +206,7 @@ export class ImportEnvirotrackComponent {
             next: (res: any) => {
               if (res.data){
                 this.companies = res.data
+                this.selectedCompany = res.data[0].id
               }
             }
           })
