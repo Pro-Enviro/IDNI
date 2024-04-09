@@ -68,7 +68,7 @@ export class AuthService {
           this.http.get(`${this.url}items/companies?filter[users][directus_users_id][email][_eq]=${credentials.email}`).subscribe({
             next: (res:any) => {
               console.log('Getting company')
-              console.log(res)
+              // console.log(res)
               if (res?.data.length ){
                 this.global.updateCompanyId(res.data[0].id)
                 this.global.updateCompanyName(res.data[0].name)
@@ -78,12 +78,15 @@ export class AuthService {
           })
         }
 
+
+
         // Encrypt TBD
         this.storage.set('_rle', this.global.role.value)
       },
       error: (err: any) => console.log(err)
     })
 
+    this.global.isSignedIn.next(true);
 
 
     setTimeout(() => {

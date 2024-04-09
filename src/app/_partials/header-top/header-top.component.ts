@@ -35,9 +35,7 @@ export class HeaderTopComponent implements OnInit {
   sidebarVisible: boolean = false;
   loggedIn: boolean = false;
 
-  constructor(private global: GlobalService, private track: EnvirotrackService, private auth: AuthService) {
-
-  }
+  constructor(private global: GlobalService, private auth: AuthService, private storage: StorageService) {}
 
   // menuItems!: MegaMenuItem[];
   // constructor(private storage: StorageService) {
@@ -51,6 +49,7 @@ export class HeaderTopComponent implements OnInit {
 
   logout = ()  => {
     this.auth.logout()
+    this.global.isSignedIn.next(false)
   }
 
   menuItems: MegaMenuItem[] = [
@@ -177,10 +176,21 @@ export class HeaderTopComponent implements OnInit {
 
 
     ngOnInit() {
-      // this.global.getCurrentUser().subscribe({
-      //   next: (res: any) => {
-      //     this.loggedIn = !!res.email;
-      //   }
-      // })
+
+      const storage = this.storage.get('directus-data')
+
+      if (storage) {
+        const parsedStorage = JSON.parse(storage)
+        console.log('Logged in')
+        // Refresh with directus - Check access token is legit
+        if (parsedStorage.access_token) {
+          this.global.isSignedIn.next(true)
+        }
+      }
+
+
+      this.global.onSignedIn.subscribe((isSignedIn: boolean) => {
+        this.loggedIn = isSignedIn
+      })
     }
 }

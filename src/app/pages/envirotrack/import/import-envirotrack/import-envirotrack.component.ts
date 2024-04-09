@@ -82,14 +82,11 @@ export class ImportEnvirotrackComponent {
     moment.locale('en-gb')
     moment().format('L')
 
-    if (this.global.companyAssignedId.value) {
-      this.selectedCompany = this.global.companyAssignedId.value
-      this.selectedName = this.global.companyName.value || ''
-    }
-
-    if (!this.selectedName){
+    // if (this.global.companyAssignedId.value) {
+    //   this.selectedCompany = this.global.companyAssignedId.value
+    //   this.selectedName = this.global.companyName.value || ''
+    // }
       this.getCompanies();
-    }
   }
 
     openXlsx = async (data: any) => {

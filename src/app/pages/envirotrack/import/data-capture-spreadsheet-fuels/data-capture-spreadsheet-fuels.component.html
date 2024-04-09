@@ -2,7 +2,7 @@
 
 <section>
     <div class="grid p-6">
-       <div class="col-5" *ngIf="isConsultantLevel">
+       <div class="col-5" >
          <p-card header="Select Company" styleClass="card-charts">
            <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
          </p-card>

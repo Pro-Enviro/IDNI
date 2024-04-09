@@ -59,7 +59,12 @@ export class DashboardComponent {
   // ]
 
   constructor(private global: GlobalService) {
+    if (this.global.role.value === 'User'){
+      this.showFuelData = false
+    }
   }
+
+
 
   envirotrackReport : MenuItem[] =[
       {
@@ -71,7 +76,7 @@ export class DashboardComponent {
         label:'<span class="material-symbols-outlined">flowsheet</span> Fuel Data',
         routerLink:'/dashboard/fuel-data',
         escape: false,
-        visible: this?.global?.role?.value !== 'User'
+        visible: this.showFuelData
       },
       {
         label:'<span class="material-symbols-outlined">add_chart</span> Data Upload',

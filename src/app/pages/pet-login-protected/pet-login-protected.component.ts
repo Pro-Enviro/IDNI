@@ -231,7 +231,7 @@ export class PetLoginProtected implements OnInit {
 
   onSelectCompany = () => {
     if (!this.selectedCompany) this.selectedCompany = this.companies[0]
-    console.log(this.selectedCompany)
+    // console.log(this.selectedCompany)
     // Reset table
     this.turnover = 0
     this.employees = 0;

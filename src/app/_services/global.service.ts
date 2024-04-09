@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import {authentication, createDirectus, graphql, rest, readMe} from "@directus/sdk";
 import {BehaviorSubject, from} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {StorageService} from "./storage.service";
 
 @Injectable({
   providedIn: 'root',
-
 })
 
 export class Storage {
@@ -21,7 +21,7 @@ export class GlobalService {
   role: BehaviorSubject<string> = new BehaviorSubject<any>('User');
   companyAssignedId: BehaviorSubject<number | null> = new BehaviorSubject<any>(null)
   companyName: BehaviorSubject<string | null> = new BehaviorSubject<any>(null)
-  isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  isSignedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   client: any;
   url: any = `https://app.idni.eco`
 
@@ -37,7 +37,7 @@ export class GlobalService {
   updateRole = (value: string) => this.role.next(value);
   updateCompanyId = (value: number) => this.companyAssignedId.next(value)
   updateCompanyName = (value: string) => this.companyName.next(value)
-  updateIsLoggedIn = (value: boolean) => this.isLoggedIn.next(value)
+  onSignedIn = this.isSignedIn.asObservable();
 
   initSession = () => {
     const storage: Storage = new Storage()

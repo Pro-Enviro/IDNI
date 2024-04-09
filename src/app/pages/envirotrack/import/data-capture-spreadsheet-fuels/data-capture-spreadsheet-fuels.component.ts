@@ -61,8 +61,8 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
       this.getFuelData()
     }
 
-    this.isConsultantLevel = this.global.role.value === 'Admin' || this.global.role.value ==='Consultant'
-    this.selectedCompany = this.global.companyAssignedId.value;
+    // this.isConsultantLevel = this.global.role.value === 'Admin' || this.global.role.value ==='Consultant'
+    // this.selectedCompany = this.global.companyAssignedId.value;
   }
 
   showDialog = (fuel: any) => {
@@ -91,15 +91,37 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
 
   getCompanies = () => {
 
-    if (!this.isConsultantLevel) {
-      return this.onSelectCompany()
-    }
+    // if (!this.isConsultantLevel) {
+    //   return this.onSelectCompany()
+    // }
 
-    this.track.getCompanies().subscribe({
+    this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        this.companies = res.data;
+        if (res.role.name === 'user'){
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data){
+                this.companies = res.data
+                this.selectedCompany = res.data[0].id
+              }
+            }
+          })
+        } else {
+          this.track.getCompanies().subscribe({
+            next:(res: any) => {
+              this.companies = res.data;
+            }
+          })
+        }
+
       }
     })
+
+    // this.track.getCompanies().subscribe({
+    //   next: (res: any) => {
+    //     this.companies = res.data;
+    //   }
+    // })
   }
 
   onSelectCompany = () => {
@@ -479,6 +501,7 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCompanies()
     if (this.global.companyAssignedId.value) {
       this.selectedCompany = this.global.companyAssignedId.value
       this.onSelectCompany()
