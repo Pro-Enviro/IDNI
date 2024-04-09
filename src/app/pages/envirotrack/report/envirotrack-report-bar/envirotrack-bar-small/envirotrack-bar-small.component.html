@@ -2,7 +2,7 @@
   <div class="grid">
     <div class="col-6">
       <p-card header="Select Company" styleClass="card-select-panel">
-        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" ></p-dropdown>
+        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" ></p-dropdown>
       </p-card>
 <!--      <p-card styleClass="card-select-panel" *ngIf="!isConsultant && selectedCompany"  >-->
 <!--        <p *ngIf="!isConsultant && selectedCompany">{{selectedName}}</p>-->
@@ -21,7 +21,7 @@
           <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
         </div>
         <!--      <div echarts [options]="chartOptions" style="max-height: 40vh; height: 512px;"></div>-->
-        <div echarts *ngIf="chartData.length" [options]="chartOptions" style="display: block; box-sizing: border-box; height: 530px; width: 937px;"></div>
+        <div echarts *ngIf="chartData.length" [options]="chartOptions" style="display: block; box-sizing: border-box; height: 530px; width: 800px;"></div>
       <p *ngIf="!chartData.length">Add data to see this chart</p>
     </div>
   </div>

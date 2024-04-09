@@ -71,6 +71,7 @@ export class ImportEnvirotrackComponent {
   sheetData: any;
   userLevel: number = 2
   selectedName: string = ''
+  isConsultant: boolean = false;
 
   constructor(
     private track: EnvirotrackService,
@@ -211,6 +212,7 @@ export class ImportEnvirotrackComponent {
           this.track.getCompanies().subscribe({
             next:(res: any) => {
               this.companies = res.data;
+              this.isConsultant = true;
             }
           })
         }

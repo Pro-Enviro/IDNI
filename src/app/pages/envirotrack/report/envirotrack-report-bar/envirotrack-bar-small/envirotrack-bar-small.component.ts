@@ -163,6 +163,7 @@ export class EnvirotrackBarSmallComponent implements OnInit {
               if (res.data){
                 this.companies = res.data
                 this.selectedCompany = this.companies[0].id
+
               }
             }
           })
@@ -170,6 +171,7 @@ export class EnvirotrackBarSmallComponent implements OnInit {
           this.track.getCompanies().subscribe({
             next:(res: any) => {
               this.companies = res.data;
+              this.isConsultant = true;
             }
           })
         }

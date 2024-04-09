@@ -223,6 +223,7 @@ export class PetLoginProtected implements OnInit {
   chartX: any = []
   markStart: any
   markEnd:any
+  isConsultant: boolean = false;
 
   constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService, private global: GlobalService) {
   }
@@ -266,6 +267,7 @@ export class PetLoginProtected implements OnInit {
           this.track.getCompanies().subscribe({
             next:(res: any) => {
               this.companies = res.data;
+              this.isConsultant = true;
             }
           })
         }

@@ -27,8 +27,5 @@ export class DasboardWidgetsComponent implements OnInit {
   constructor(private global: GlobalService, private storage: StorageService,private track: EnvirotrackService) {
 
   }
-  ngOnInit(){
-  }
-
-
+  ngOnInit(){}
 }

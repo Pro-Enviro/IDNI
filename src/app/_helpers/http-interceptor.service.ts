@@ -36,7 +36,7 @@ export const HttpInterceptorService: HttpInterceptorFn = (
 
     return next(clonedRequest).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log('ERROR: ', error)
+        console.log('ERROR 1: ', error)
         if ([401, 403].includes(error.status)) {
           console.log('rerouting to login')
           console.log(error)
@@ -75,7 +75,7 @@ export const HttpInterceptorService: HttpInterceptorFn = (
     console.log('ERROR INTERCEPTOR')
     return next(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log('ERROR: ', error)
+        console.log('ERROR 2: ', error)
         if ([401, 403].includes(error.status)) {
           console.log('rerouting to login')
           // auto logout if 401 or 403 response returned from api

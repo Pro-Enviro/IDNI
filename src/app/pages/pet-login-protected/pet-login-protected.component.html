@@ -33,7 +33,7 @@
 
     <div class="col-3">
       <p-card header="Select Company" styleClass="card-charts">
-        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '15rem', marginBottom: '2rem'}"></p-dropdown>
+        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant"></p-dropdown>
 
         <div style="display: flex; flex-direction: column">
           <label for="sic_code">SIC code</label>

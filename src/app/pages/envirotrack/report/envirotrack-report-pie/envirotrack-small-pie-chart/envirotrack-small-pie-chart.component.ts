@@ -173,6 +173,7 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
           this.track.getCompanies().subscribe({
             next:(res: any) => {
               this.companies = res.data;
+              this.isConsultant = true
             }
           })
         }
@@ -321,7 +322,7 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
       this.selectedCompany = this?.global?.companyAssignedId?.value || null;
       this.getData(this?.global?.companyAssignedId?.value)
       this.onSelectCompany()
-    } 
+    }
   }
 
 

@@ -75,6 +75,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   chartModel: boolean = true;
   isAdmin: boolean = false;
   screenWidth: any;
+  isConsultant: boolean = false
 
   constructor(
     private track: EnvirotrackService,
@@ -345,6 +346,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
               this.companies = res.data;
+              this.isConsultant = true;
             }
           })
         }

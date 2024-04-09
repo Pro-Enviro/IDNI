@@ -186,7 +186,7 @@ export class GenerateReportComponent implements OnInit {
   changeOptions: any[] = ['Behavioural', 'Upgrades', 'Changes to existing technology', 'Improvements to building fabric', 'Resource efficiency', 'Other']
   percentOptions: any[] = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10]
   companyName: string = ''
-  role: any = ''
+  isConsulant: boolean = false;
 
   constructor(
     private global: GlobalService,
@@ -286,7 +286,7 @@ export class GenerateReportComponent implements OnInit {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
               this.companies = res.data;
-
+              this.isConsulant = true
             }
           })
         }
