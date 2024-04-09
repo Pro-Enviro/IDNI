@@ -197,10 +197,10 @@ export class GenerateReportComponent implements OnInit {
     private storage: StorageService
   ) {
     this.role = this.global.role.value || this.storage.get('_rle')
-
-    if (this.role === 'User'){
-      this.companyName = this?.global?.companyName?.value || ''
-    }
+    //
+    // if (this.role === 'User'){
+    //   this.companyName = this?.global?.companyName?.value || ''
+    // }
   }
 
 
@@ -276,12 +276,34 @@ export class GenerateReportComponent implements OnInit {
     this.recommendations[recommendationIndex].steps.splice(stepIndex, 1)
   }
   getCompanies = () => {
-    this.track.getCompanies().subscribe({
+    this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        this.companies = res.data;
-        this.selectedCompany = res.data[0].id
-        this.onSelectCompany()
+        if (res.role.name === 'user') {
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                this.companies = res.data
+                this.selectedCompany = res.data[0].id
+                this.onSelectCompany()
+              }
+            }
+          })
+        } else {
+          this.track.getCompanies().subscribe({
+            next: (res: any) => {
+              this.companies = res.data;
+            }
+          })
+        }
+
       }
+      // this.track.getCompanies().subscribe({
+      //   next: (res: any) => {
+      //     this.companies = res.data;
+      //     this.selectedCompany = res.data[0].id
+      //     this.onSelectCompany()
+      //   }
+      // })
     })
   }
   onSelectCompany = () => {

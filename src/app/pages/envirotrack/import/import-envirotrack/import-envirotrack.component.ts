@@ -199,16 +199,36 @@ export class ImportEnvirotrackComponent {
   }
 
   getCompanies = () => {
-    this.companies = []
-    this.track.getCompanies().subscribe({
+    this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        if (res?.data?.length) {
-          this.companies = res.data
+        if (res.role.name === 'user'){
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data){
+                this.companies = res.data
+              }
+            }
+          })
+        } else {
+          this.track.getCompanies().subscribe({
+            next:(res: any) => {
+              this.companies = res.data;
+            }
+          })
         }
 
-      },
-      error: (err) => console.log(err)
+      }
     })
+
+    // this.track.getCompanies().subscribe({
+    //   next: (res: any) => {
+    //     if (res?.data?.length) {
+    //       this.companies = res.data
+    //     }
+    //
+    //   },
+    //   error: (err) => console.log(err)
+    // })
   }
 
   sendDataToProEnviro(){
