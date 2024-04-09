@@ -45,6 +45,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
   supply: any;
   asc: any;
   screenWidth: any;
+  isConsultant: boolean = false;
 
   constructor(
     private track: EnvirotrackService,
@@ -182,6 +183,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
               this.companies = res.data;
+              this.isConsultant = true;
             }
           })
         }

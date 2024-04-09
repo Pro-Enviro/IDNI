@@ -36,6 +36,7 @@ export class ScopeChartComponent implements OnInit {
   fuels: any[] = []
   datas: any;
   dataArray: any;
+  isConsultant: boolean = false;
 
 
   constructor(
@@ -141,6 +142,7 @@ export class ScopeChartComponent implements OnInit {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
               this.companies = res.data;
+              this.isConsultant = true;
             }
           })
         }

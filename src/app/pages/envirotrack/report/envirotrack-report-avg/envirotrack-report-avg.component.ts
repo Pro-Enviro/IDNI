@@ -53,6 +53,7 @@ export class EnvirotrackReportAvgComponent implements OnInit {
   shift: boolean = true;
   screenHeight: any;
   screenWidth: any;
+  isConsultant: boolean =false;
 
   constructor(
     private track: EnvirotrackService,
@@ -177,6 +178,7 @@ export class EnvirotrackReportAvgComponent implements OnInit {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
               this.companies = res.data;
+              this.isConsultant = true;
             }
           })
         }

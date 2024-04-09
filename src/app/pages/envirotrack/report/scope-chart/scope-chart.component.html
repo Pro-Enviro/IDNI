@@ -4,7 +4,7 @@
 <div class="col-4">
 
   <p-card header="Select Company" styleClass="card-select-panel">
-    <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
+    <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"></p-dropdown>
 <!--    <p-multiSelect [options]="yearFilter" optionLabel="name" optionName="value" [(ngModel)]="selectedYears" (ngModelChange)="onYearFilter($event)"></p-multiSelect>-->
   </p-card>
 </div>

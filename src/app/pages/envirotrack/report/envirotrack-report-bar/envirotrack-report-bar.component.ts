@@ -48,6 +48,7 @@ export class EnvirotrackReportBarComponent implements OnInit {
   mpan: string[] = [];
   selectedMpan!: string;
   screenWidth: any;
+  isConsultant: boolean = false;
 
   constructor(
     private track: EnvirotrackService,
@@ -172,6 +173,7 @@ export class EnvirotrackReportBarComponent implements OnInit {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
               this.companies = res.data;
+              this.isConsultant = true;
             }
           })
         }
