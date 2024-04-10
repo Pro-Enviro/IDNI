@@ -11,155 +11,20 @@ import {RippleModule} from "primeng/ripple";
 import {CommonModule, JsonPipe} from "@angular/common";
 import {DropdownModule} from "primeng/dropdown";
 import {SharedComponents} from "../envirotrack/shared-components";
-import {Mode} from "node:fs";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../../_services/storage.service";
-import { read, utils, writeFile } from 'xlsx';
-import {arrayBuffer} from "node:stream/consumers";
+import { read, utils } from 'xlsx'
 import {EnvirotrackService} from "../envirotrack/envirotrack.service";
 import {NgxEchartsDirective} from "ngx-echarts";
 import {EChartsOption} from "echarts";
 import {MessageService} from "primeng/api";
 import {DbService} from "../../_services/db.service";
 import {GlobalService} from "../../_services/global.service";
-const rowNames: string[] = ['Cost of Energy', 'Transportation Costs', 'Cost of Water', 'Cost of Waste', 'Cost of Raw Materials', 'Cost of Bought in Goods - Consumables and bought in parts', 'Consultancy Cost', 'Sub Contracting Cost', 'Other External Costs (Legal, rental, accounting etc)']
+
+import {UnitsUom, RegionsOfOrigin, MaterialFormats, MaterialTypes, OtherMaterials, FuelTypes, OtherMetals, SteelMaterials, UnitsOfCost, Routes, OtherModesOfTransport, CompanyModesOfTransport, ModeOfTransport, Plastics, StaffCommuteModes} from "./pet-tool-types";
+import { TableRow, OtherExternalCosts, MaterialRow, OtherFreightTransportation, RoadFreight, Waste, StaffCommute, WaterUsage, CompanyTravel, GroupItem, BoughtInParts} from "./pet-tool-classes";
 
 const energyNames: string[] = ['Electricity', 'Natural Gas (Grid)', 'Natural Gas off Grid', 'Bio Gas Off Grid', 'LPG', 'Oil', 'Kerosene', 'Bio Fuels', 'Bio Mass', 'Coal for Industrial use', 'Other']
-const materialNames: string[] = ['Steel', 'Stainless Steel', 'Aluminium', 'Copper', 'Bronze', 'Titanium', 'Polymers', 'Elastomers', 'Textiles', 'Composites', 'Aggregates', 'Cement', 'Glass', 'Wood', 'Chemicals', 'Lithium', 'Magnesium', 'Other']
-
-// const gridAllocationNames: string[] = ['kVa Availability', 'Recorded Winter Max Demand kVa']
-// const onSiteNames: string[] = ['PV', 'Wind', 'Solar Thermal', 'CHP', 'Biomass', 'Hydro', 'AD', 'Other']
-
-type UnitsUom = 'Select' | 'litres' | 'kg' | 'kWh' | 'tonnes' | 'cubic metres' | 'km' | 'miles' | 'million litres'
-type RegionsOfOrigin = 'UK' | 'EU' | 'US' | 'Asia'
-type UnitsOfCost = 'Cost/unit' | 'Total Cost' | 'Select'
-type ModeOfTransport =
-  'Select'
-  | 'Van <3.5t'
-  | 'Refrigerated Van <3.5t'
-  | 'Van >3.5t < 7.5t'
-  | 'Refrigerated Van > 3.5t < 7.5t'
-  | 'HGV'
-  | 'Refrigerated HGV'
-type FuelTypes = 'Select' | 'Diesel' | 'Petrol' | 'LPG' | 'EV' | 'Hydrogen'
-type OtherModesOfTransport = 'Select' | 'Rail' | 'Sea' | 'Air'
-type CompanyModesOfTransport = 'Select' | 'Rail' | 'Sea' | 'Air' | 'Company Car' | 'Public Transport'
-type Routes = 'Select' | 'NI to UK' | 'NI to EU' | 'NI to USA' | 'NI to RoW'
-type StaffCommuteModes = 'Select' | 'On foot' | 'Cycle' | 'Public Transport' | 'Car' | 'Motorbike'
-type MaterialTypes = 'Steel' | 'Other Metals' | 'Plastics' | 'Other Materials'
-type SteelMaterials = 'Mild Steel' | 'Carbon Steel' | 'Tool Steel D2' | 'Tool Steel H13' | 'Tool Steel M2' | 'Tool Steel S275' | 'Tool Steel S325' | 'Alloy Steel 4340' | 'Alloy Steel 4140' | 'Alloy Steel 4150' | 'Alloy Steel 9310' | 'Alloy Steel 52100' | 'Stainless Steel 304' | 'Stainless Steel 316' | 'Duplex Steel'
-type OtherMetals = 'Aluminium 1000'| 'Aluminium 2000'| 'Aluminium 6000'| 'Aluminium 7000'| 'Duralumin'| 'Aluminium Lithium'| 'Copper'| 'Bronze'| 'Titanium'| 'Lithium'| 'Magnesium'
-type Plastics = 'ABS'| 'PA'| 'PET'| 'PP'| 'PU'| 'POM'| 'PEEK'| 'PE'| 'PVC'| 'PPS'| 'Elastomers'| 'Composites'| 'Textiles'
-type OtherMaterials = 'Composites' | 'Textiles' | 'Cement' | 'Aggregate' | 'Sand' | 'Glass' | 'Chemicals' | 'Hardwood' | 'Softwood'
-type MaterialFormats = 'Sheet' |  'Profile' |  'Filament/Fibre' |  'Ingot/Billet' |  'Natural State' |  'Powder' |  'Granule' |  'Liquid' |  'Gas' |  'Recyclate'
-
-// Classes for subtables
-
-class SubTable {
-  cost: number = 0
-  secondColumn: number = 0
-  parent: { name: string, addRows: boolean, totalCost: number, secondColumn: number } = {
-    name: '',
-    totalCost: 0,
-    secondColumn: 0,
-    addRows: true
-  }
-}
-
-class MaterialRow extends SubTable {
-  name: string = 'Material Type'
-  type: MaterialTypes = 'Steel'
-  subtype: SteelMaterials | OtherMaterials| Plastics | OtherMaterials | undefined
-  format: MaterialFormats | undefined
-  unitsUom: UnitsUom = 'Select'
-  totalUnits: number = 0
-  regionOfOrigin: RegionsOfOrigin = 'UK'
-  scrappageAndWaste?: number = 0
-}
-
-class BoughtInParts extends SubTable {
-  name: string = 'Description of Part'
-  noOfParts: number = 0
-  unitOfCost: UnitsOfCost = 'Select'
-  regionOfOrigin: RegionsOfOrigin = 'UK'
-}
-
-class WaterUsage extends SubTable {
-  name: string = 'Water Usage description '
-  totalUnits: number = 0
-  unitsUom: UnitsUom = 'Select'
-}
-
-class Waste extends SubTable {
-  name: string = 'Description of Waste stream'
-  unitsUom: UnitsUom = 'Select'
-  totalUnits: number = 0
-}
-
-class RoadFreight extends SubTable {
-  name: string = 'Road Freight description'
-  mode: ModeOfTransport = 'Select'
-  fuelType: FuelTypes = 'Select'
-  approxMileage: number = 0
-}
-
-class OtherFreightTransportation extends SubTable {
-  name: string = 'Other Freight description'
-  otherModes: OtherModesOfTransport = 'Select'
-  route: Routes = 'Select'
-  approxMileage = 0
-}
-
-class CompanyTravel extends SubTable {
-  name: string = 'Company Travel description'
-  companyModeOfTransport: CompanyModesOfTransport = 'Select'
-  approxMileage: number = 0;
-}
-
-class StaffCommute {
-  name: string = 'Staff Commute description'
-  staffCommute: StaffCommuteModes = 'Select'
-  percentStaff: number = 0
-  distance: number = 0
-  secondColumn: number = 0
-  parent: { name: string, addRows: boolean, totalCost: number, secondColumn: number } = {
-    name: '',
-    totalCost: 0,
-    secondColumn: 0,
-    addRows: true
-  }
-}
-
-// Generic classes
-class TableRow {
-  name: string = ''
-  unitsUom: UnitsUom = 'Select'
-  totalUnits: number = 0
-  cost: number = 0
-  unitOfCost: UnitsOfCost = 'Select'
-  regionOfOrigin: RegionsOfOrigin = 'UK'
-  parent?: { name: string, secondColumn: number, totalCost: number } = {
-    name: '',
-    secondColumn: 0,
-    totalCost: 0
-  }
-}
-
-class GroupItem {
-  name: string = ''
-  value: number = 0;
-  secondColumn = 0
-  parent: { name: string, secondColumn: number } = {
-    name: '',
-    secondColumn: 0
-  }
-}
-
-
-
-class OtherExternalCosts extends SubTable {
-  name: string = ''
-}
 
 @Component({
   selector: 'app-pet-login-protected',
@@ -176,9 +41,7 @@ export class PetLoginProtected implements OnInit {
   // Table Constants
   turnover: number = 0;
   template!: any
-  docxInHtml!: any
   employees: number = 0;
-  totalOfRows: number = 0;
   productivityScore: number = 0;
   innovationPercent: number = 0;
   staffTrainingPercent: number = 0;
@@ -237,7 +100,6 @@ export class PetLoginProtected implements OnInit {
   productivityPercentile: string =''
   chartOptions!: EChartsOption | null;
   chartData: any = [];
-  chartX: any = []
   markStart: any
   markEnd:any
   isConsultant: boolean = false;
@@ -577,27 +439,6 @@ export class PetLoginProtected implements OnInit {
     return total !== undefined ? total : 0
   }
 
-  createReportObject = () => {
-    // const reportValues = {
-    //   turnover: this.turnover,
-    //   employees: this.employees,
-    //   totalOfRows: this.totalOfRows,
-    //   productivityScore: this.productivityScore,
-    //   innovationPercent: this.innovationPercent,
-    //   rows: this.rows,
-    //   energyRows: this.energyRows,
-    //   gridAllocationRows: this.gridAllocationRows,
-    //   onSiteRows: this.onSiteRows
-    // }
-    //
-    // console.log(reportValues)
-    // return reportValues;
-  }
-
-  saveReport = () => {
-    // const report = this.createReportObject()
-  }
-
   getTemplate = () => {
     // Change content id to match correct selected template
     let id = 20;
@@ -812,13 +653,6 @@ export class PetLoginProtected implements OnInit {
     if (!token) return;
 
 
-    // {
-    //   headers:{
-    //     'content-type': 'application/json',
-    //       'Authorization': `Bearer ${token}`
-    //   }
-    // }
-
     this.db.savePetData(this.selectedCompany, {
       PET_Data: JSON.stringify(objectToSave)
     }, ).subscribe({
@@ -833,9 +667,7 @@ export class PetLoginProtected implements OnInit {
       },
       error: (error) => console.log(error)
     })
-
   }
-
 
 
   ngOnInit() {
