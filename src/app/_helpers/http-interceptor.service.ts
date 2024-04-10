@@ -42,22 +42,16 @@ export const HttpInterceptorService: HttpInterceptorFn = (
         if ([401, 403].includes(error.status)) {
           // auto logout if 401 or 403 response returned from api
           if (error.status === 401) {
-            console.log('401 Error')
+            // console.log('401 Error')
             // handle 401
             return from(auth.refreshToken()).pipe(
               switchMap((token: any) => {
-                console.log(token)
-                return next(authRequest)
+                const newRequest = addTokenHeader(req, token)
+                return next(newRequest)
               })
             )
-
-              // .then((res)=> {
-              // console.log('Refreshing token')
-              // return next(authRequest)
-            // })
-            // router.navigate([''])
           } else if (error.status === 403) {
-            console.log('403 Error')
+            // console.log('403 Error')
             localStorage.clear()
             // handle 403
             router.navigate([''])
