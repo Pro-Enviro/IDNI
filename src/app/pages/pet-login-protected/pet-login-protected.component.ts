@@ -447,7 +447,9 @@ export class PetLoginProtected implements OnInit {
     this.markEnd = 0
 
     // Sort through excel data for matching sic code letter and number of employees
-    const findCorrectLetter = this.productivityData.filter((row: any) => row[1] === this.sicCodeLetter)
+    const findCorrectLetter = this.productivityData?.filter((row: any) => row[1] === this.sicCodeLetter)
+    if (!findCorrectLetter) return null;
+
     const findCorrectEmployees = findCorrectLetter.filter((row: any) => this.employees >= row[2] && this.employees <= row[3])
 
     if (findCorrectEmployees === -1) return
@@ -530,7 +532,6 @@ export class PetLoginProtected implements OnInit {
 
   calculateIndividualEmployeeCost = (object: any) => {
     if (!this.employees || !object.totalCost) return;
-
     object.secondColumn = (object.totalCost / this.employees)
   }
 

@@ -115,6 +115,8 @@ export class AuthService {
     this.storage.set('access_token', result.access_token)
     this.storage.set('expires', result.expires)
     this.storage.set('refresh_token', result.refresh_token)
+
+    return result;
   }
 
 }

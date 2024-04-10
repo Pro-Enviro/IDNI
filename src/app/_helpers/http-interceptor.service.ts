@@ -5,7 +5,7 @@ import {
   HttpInterceptorFn,
   HttpRequest,
 } from "@angular/common/http";
-import {catchError, map, throwError} from "rxjs";
+import {catchError, from, map, switchMap, throwError} from "rxjs";
 import {StorageService} from "../_services/storage.service";
 import {inject} from '@angular/core';
 import {Router} from "@angular/router";
@@ -34,10 +34,6 @@ export const HttpInterceptorService: HttpInterceptorFn = (
   }
 
   if (token){
-    // const clonedRequest = req.clone({
-    //   headers: req.headers.set('Authorization', `Bearer ${token}`)
-    // })
-
     const authRequest = addTokenHeader(req, token)
 
     return next(authRequest).pipe(
@@ -48,13 +44,18 @@ export const HttpInterceptorService: HttpInterceptorFn = (
           if (error.status === 401) {
             console.log('401 Error')
             // handle 401
-            auth.refreshToken().then((res)=> {
-              console.log('Refreshing token')
-              return next(authRequest)
-            })
+            return from(auth.refreshToken()).pipe(
+              switchMap((token: any) => {
+                console.log(token)
+                return next(authRequest)
+              })
+            )
 
-            router.navigate([''])
-
+              // .then((res)=> {
+              // console.log('Refreshing token')
+              // return next(authRequest)
+            // })
+            // router.navigate([''])
           } else if (error.status === 403) {
             console.log('403 Error')
             localStorage.clear()
