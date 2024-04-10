@@ -49,6 +49,7 @@ export const HttpInterceptorService: HttpInterceptorFn = (
             console.log('401 Error')
             // handle 401
             auth.refreshToken().then((res)=> {
+              console.log('Refreshing token')
               return next(authRequest)
             })
 

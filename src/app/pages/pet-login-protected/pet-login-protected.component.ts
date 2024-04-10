@@ -252,6 +252,7 @@ export class PetLoginProtected implements OnInit {
 
   getCompanies = () => {
     // Fetch all companies
+
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {
         if (res.role.name === 'user'){
@@ -281,6 +282,7 @@ export class PetLoginProtected implements OnInit {
     this.db.getPetData(id).subscribe({
       next: (res: any) => {
         if (res.data.PET_Data) {
+
           const data = JSON.parse(res.data.PET_Data)
           this.data = data.defaultData || []
           this.employees = data.employees || 0
@@ -295,7 +297,7 @@ export class PetLoginProtected implements OnInit {
           this.markStart = data.markStart || 0
           this.markEnd = data.markEnd || 0
 
-          this.initChart()
+          this.calculateProductivityComparison()
         } else {
           // If no saved data
           this.generateClasses('Cost of Energy', TableRow, energyNames)
@@ -634,7 +636,6 @@ export class PetLoginProtected implements OnInit {
         },
         error: (err) => console.log(err),
         complete: () => this.assignFuelDataToCorrectCost()
-
       })
     }
   }
@@ -658,7 +659,6 @@ export class PetLoginProtected implements OnInit {
         if (findValue !== -1) totalValue += parseFloat(row[findValue].value)
         if (findCost !== -1 ) totalCost += parseFloat(row[findCost].value)
         if (findUnit !== -1) unit = row[findUnit].value
-
       })
 
       return {
@@ -787,15 +787,12 @@ export class PetLoginProtected implements OnInit {
       markEnd: this.markEnd,
     }
 
-    console.log(objectToSave)
 
     if (!this.selectedCompany) return;
 
     const token = this.storage.get('access_token');
     if (!token) return;
 
-
-    console.log(objectToSave)
 
     // {
     //   headers:{
@@ -808,8 +805,8 @@ export class PetLoginProtected implements OnInit {
       PET_Data: JSON.stringify(objectToSave)
     }, ).subscribe({
       next: (res: any) => {
-        console.log('SUCCESS')
-        console.log(res)
+        // console.log('SUCCESS')
+        // console.log(res)
 
         this.msg.add({
           severity: 'success',
