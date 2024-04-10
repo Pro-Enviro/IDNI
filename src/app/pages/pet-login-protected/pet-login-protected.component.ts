@@ -49,7 +49,7 @@ import {
   WaterUsage,
   CompanyTravel,
   GroupItem,
-  BoughtInParts
+  BoughtInParts, SubTable
 } from "./pet-tool-classes";
 
 
@@ -113,7 +113,6 @@ export class PetLoginProtected implements OnInit {
 
 
   data: any = []
-
   twoDecimalPlaces = {minimumFractionDigits: 0, maximumFractionDigits: 2,}
   productivityData!: any// Excel spreadsheet
   sicCodeData!: Array<[number | string]> // Excel Spreadsheet
@@ -123,9 +122,9 @@ export class PetLoginProtected implements OnInit {
   externalCost: number = 0
   productivityPercentile: string = ''
   chartOptions!: EChartsOption | null;
-  chartData: any = [];
-  markStart: any
-  markEnd: any
+  chartData: [string, (string | number)][] = []
+  markStart: number | undefined
+  markEnd: number | undefined
   isConsultant: boolean = false;
 
   constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService, private global: GlobalService) {}
@@ -260,6 +259,7 @@ export class PetLoginProtected implements OnInit {
   }
 
   createNewTableRow = (group: any) => {
+
     let copy = {...group, name: `${group.parent.name} description`, cost: 0}
     let findObject = this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)
 
@@ -318,7 +318,6 @@ export class PetLoginProtected implements OnInit {
 
     let summedValues = this.sumValues(oneOfEachParent)
 
-
     this.externalCost = summedValues ? summedValues : 0
 
     this.calculateProductivityScore()
@@ -352,7 +351,7 @@ export class PetLoginProtected implements OnInit {
 
     const findCorrectEmployees = findCorrectLetter.filter((row: any) => this.employees >= row[2] && this.employees <= row[3])
 
-    // if (findCorrectEmployees === -1) return
+    if (findCorrectEmployees === -1) return
 
     // Should i default to zero?
     const p10 = findCorrectEmployees?.[0]?.[5] !== "[c]" ? findCorrectEmployees[0][5] : null
@@ -478,7 +477,6 @@ export class PetLoginProtected implements OnInit {
             const sheets = workbook.SheetNames
             const worksheet = workbook.Sheets[workbook.SheetNames[3]];
             const raw_data = utils.sheet_to_json(worksheet, {header: 1});
-            console.log(raw_data)
             this.productivityData = raw_data
           }
         })
@@ -646,7 +644,7 @@ export class PetLoginProtected implements OnInit {
             data: [{xAxis: 1}, {xAxis: 3}, {xAxis: 5}, {xAxis: 7}]
           },
           areaStyle: {},
-          data: this.chartData
+          data: this.chartData as Array<[string, (string | number)]>
         }
       ]
     }
@@ -679,9 +677,6 @@ export class PetLoginProtected implements OnInit {
       PET_Data: JSON.stringify(objectToSave)
     },).subscribe({
       next: (res: any) => {
-        // console.log('SUCCESS')
-        // console.log(res)
-
         this.msg.add({
           severity: 'success',
           detail: 'Data saved'

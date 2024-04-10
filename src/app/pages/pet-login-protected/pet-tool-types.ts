@@ -25,8 +25,8 @@ export interface PetToolData {
   defaultData: {}[]
   employees: number
   exportPercent: number
-  markEnd: number
-  markStart: number
+  markEnd: number | undefined
+  markStart: number | undefined
   productivityPercentile: string
   productivityScore: number
   sicLetter: string
