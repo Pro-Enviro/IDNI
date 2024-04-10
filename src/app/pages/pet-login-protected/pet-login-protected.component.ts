@@ -13,7 +13,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {SharedComponents} from "../envirotrack/shared-components";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../../_services/storage.service";
-import { read, utils } from 'xlsx'
+import {read, utils} from 'xlsx'
 import {EnvirotrackService} from "../envirotrack/envirotrack.service";
 import {NgxEchartsDirective} from "ngx-echarts";
 import {EChartsOption} from "echarts";
@@ -21,10 +21,37 @@ import {MessageService} from "primeng/api";
 import {DbService} from "../../_services/db.service";
 import {GlobalService} from "../../_services/global.service";
 
-import {UnitsUom, RegionsOfOrigin, MaterialFormats, MaterialTypes, OtherMaterials, FuelTypes, OtherMetals, SteelMaterials, UnitsOfCost, Routes, OtherModesOfTransport, CompanyModesOfTransport, ModeOfTransport, Plastics, StaffCommuteModes} from "./pet-tool-types";
-import { TableRow, OtherExternalCosts, MaterialRow, OtherFreightTransportation, RoadFreight, Waste, StaffCommute, WaterUsage, CompanyTravel, GroupItem, BoughtInParts} from "./pet-tool-classes";
+import {
+  energyNames, UnitsUom,
+  RegionsOfOrigin,
+  MaterialFormats,
+  MaterialTypes,
+  OtherMaterials,
+  FuelTypes,
+  OtherMetals,
+  SteelMaterials,
+  UnitsOfCost,
+  Routes,
+  OtherModesOfTransport,
+  CompanyModesOfTransport,
+  ModeOfTransport,
+  Plastics,
+  StaffCommuteModes, PetToolData,
+} from "./pet-tool-types";
+import {
+  TableRow,
+  OtherExternalCosts,
+  MaterialRow,
+  OtherFreightTransportation,
+  RoadFreight,
+  Waste,
+  StaffCommute,
+  WaterUsage,
+  CompanyTravel,
+  GroupItem,
+  BoughtInParts
+} from "./pet-tool-classes";
 
-const energyNames: string[] = ['Electricity', 'Natural Gas (Grid)', 'Natural Gas off Grid', 'Bio Gas Off Grid', 'LPG', 'Oil', 'Kerosene', 'Bio Fuels', 'Bio Mass', 'Coal for Industrial use', 'Other']
 
 @Component({
   selector: 'app-pet-login-protected',
@@ -77,36 +104,31 @@ export class PetLoginProtected implements OnInit {
   companyModesOfTransport: CompanyModesOfTransport[] = ['Select', 'Rail', 'Sea', 'Air', 'Company Car', 'Public Transport']
   staffCommute: StaffCommuteModes[] = ['Select', 'On foot', 'Cycle', 'Public Transport', 'Car', 'Motorbike']
   unitsOfCost: UnitsOfCost[] = ['Cost/unit', 'Total Cost', 'Select']
-  materialTypes: MaterialTypes[] = ['Steel', 'Other Metals', 'Plastics','Other Materials']
-  // Materials based on Material Types
-  steelMaterials: SteelMaterials[] = ['Mild Steel', 'Carbon Steel', 'Tool Steel D2', 'Tool Steel H13', 'Tool Steel M2', 'Tool Steel S275', 'Tool Steel S325', 'Alloy Steel 4340', 'Alloy Steel 4140', 'Alloy Steel 4150', 'Alloy Steel 9310', 'Alloy Steel 52100', 'Stainless Steel 304', 'Stainless Steel 316', 'Duplex Steel' ]
+  materialTypes: MaterialTypes[] = ['Steel', 'Other Metals', 'Plastics', 'Other Materials']
+  steelMaterials: SteelMaterials[] = ['Mild Steel', 'Carbon Steel', 'Tool Steel D2', 'Tool Steel H13', 'Tool Steel M2', 'Tool Steel S275', 'Tool Steel S325', 'Alloy Steel 4340', 'Alloy Steel 4140', 'Alloy Steel 4150', 'Alloy Steel 9310', 'Alloy Steel 52100', 'Stainless Steel 304', 'Stainless Steel 316', 'Duplex Steel']
   otherMetals: OtherMetals[] = ['Aluminium 1000', 'Aluminium 2000', 'Aluminium 6000', 'Aluminium 7000', 'Duralumin', 'Aluminium Lithium', 'Copper', 'Bronze', 'Titanium', 'Lithium', 'Magnesium']
   plastics: Plastics[] = ['ABS', 'PA', 'PET', 'PP', 'PU', 'POM', 'PEEK', 'PE', 'PVC', 'PPS', 'Elastomers', 'Composites', 'Textiles']
-  otherMaterials: OtherMaterials[] = ['Composites' , 'Textiles' , 'Cement' , 'Aggregate' , 'Sand' , 'Glass' , 'Chemicals' , 'Hardwood' , 'Softwood']
-  materialFormats: MaterialFormats[] = ['Sheet' ,  'Profile' ,  'Filament/Fibre' ,  'Ingot/Billet' ,  'Natural State' ,  'Powder' ,  'Granule' ,  'Liquid' ,  'Gas' ,  'Recyclate']
+  otherMaterials: OtherMaterials[] = ['Composites', 'Textiles', 'Cement', 'Aggregate', 'Sand', 'Glass', 'Chemicals', 'Hardwood', 'Softwood']
+  materialFormats: MaterialFormats[] = ['Sheet', 'Profile', 'Filament/Fibre', 'Ingot/Billet', 'Natural State', 'Powder', 'Granule', 'Liquid', 'Gas', 'Recyclate']
 
 
   data: any = []
-  twoDecimalPlaces ={
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  }
-  productivityData!: any // Excel spreadsheet
-  sicCodeData!: any // Excel Spreadsheet
+
+  twoDecimalPlaces = {minimumFractionDigits: 0, maximumFractionDigits: 2,}
+  productivityData!: any// Excel spreadsheet
+  sicCodeData!: Array<[number | string]> // Excel Spreadsheet
   sicCode: string = ''
-  sicCodeLetter: string = ''
+  sicCodeLetter:string = ''
   fuels = []
   externalCost: number = 0
-  productivityPercentile: string =''
+  productivityPercentile: string = ''
   chartOptions!: EChartsOption | null;
   chartData: any = [];
   markStart: any
-  markEnd:any
+  markEnd: any
   isConsultant: boolean = false;
 
-  constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService, private global: GlobalService) {
-  }
-
+  constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService, private global: GlobalService) {}
 
 
   onSelectCompany = () => {
@@ -131,13 +153,12 @@ export class PetLoginProtected implements OnInit {
 
   getCompanies = () => {
     // Fetch all companies
-
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        if (res.role.name === 'user'){
+        if (res.role.name === 'user') {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
-              if (res.data){
+              if (res.data) {
                 this.companies = res.data
                 this.selectedCompany = res.data[0].id
               }
@@ -145,7 +166,7 @@ export class PetLoginProtected implements OnInit {
           })
         } else {
           this.track.getCompanies().subscribe({
-            next:(res: any) => {
+            next: (res: any) => {
               this.companies = res.data;
               this.isConsultant = true;
             }
@@ -161,22 +182,22 @@ export class PetLoginProtected implements OnInit {
     this.db.getPetData(id).subscribe({
       next: (res: any) => {
         if (res.data.PET_Data) {
-
-          const data = JSON.parse(res.data.PET_Data)
+          const data: PetToolData = JSON.parse(res.data.PET_Data)
           this.data = data.defaultData || []
           this.employees = data.employees || 0
           this.turnover = data.turnover || 0
           this.staffTrainingPercent = data.staffTrainingPercent || 0
-          this.sicCode = data.sicNumber || 0
+          this.sicCode = data.sicNumber || ''
           this.sicCodeLetter = data.sicLetter || ''
           this.productivityScore = data.productivityScore || 0
           this.innovationPercent = data.innovationPercent || 0
           this.exportPercent = data.exportPercent || 0
-          this.productivityPercentile = data.productivityPercentile || null
+          this.productivityPercentile = data.productivityPercentile || ''
           this.markStart = data.markStart || 0
           this.markEnd = data.markEnd || 0
 
           this.calculateProductivityComparison()
+
         } else {
           // If no saved data
           this.generateClasses('Cost of Energy', TableRow, energyNames)
@@ -201,7 +222,7 @@ export class PetLoginProtected implements OnInit {
     }
     // Select correct SIC code letter
     const foundRow = this.sicCodeData.find((row: any) => row[1].toString() === this.sicCode)
-    if (foundRow) this.sicCodeLetter = foundRow[0]
+    if (foundRow) this.sicCodeLetter = foundRow[0] as string
     else this.sicCodeLetter = ''
   }
 
@@ -298,7 +319,7 @@ export class PetLoginProtected implements OnInit {
     let summedValues = this.sumValues(oneOfEachParent)
 
 
-    this.externalCost = summedValues? summedValues : 0
+    this.externalCost = summedValues ? summedValues : 0
 
     this.calculateProductivityScore()
 
@@ -306,7 +327,7 @@ export class PetLoginProtected implements OnInit {
 
   }
 
-  calculateProductivityScore = () =>{
+  calculateProductivityScore = () => {
     // (Turnover - Total external costs) / no. of employees
     if (!this.employees || !this.turnover) return;
     const totalExternalCost: number = this.externalCost
@@ -331,7 +352,7 @@ export class PetLoginProtected implements OnInit {
 
     const findCorrectEmployees = findCorrectLetter.filter((row: any) => this.employees >= row[2] && this.employees <= row[3])
 
-    if (findCorrectEmployees === -1) return
+    // if (findCorrectEmployees === -1) return
 
     // Should i default to zero?
     const p10 = findCorrectEmployees?.[0]?.[5] !== "[c]" ? findCorrectEmployees[0][5] : null
@@ -342,7 +363,7 @@ export class PetLoginProtected implements OnInit {
 
     if (!p10 && !p25 && !p50 && !p75 && !p90) {
       return this.msg.add({
-        severity:'info',
+        severity: 'info',
         detail: 'There is no available data for the provided details.'
       })
     }
@@ -355,7 +376,7 @@ export class PetLoginProtected implements OnInit {
     });
 
     // find correct closest
-    const findClosestIndex = counts.findIndex((num: number) => num ===closest)
+    const findClosestIndex = counts.findIndex((num: number) => num === closest)
     if (findClosestIndex === -1) return;
 
 
@@ -367,7 +388,7 @@ export class PetLoginProtected implements OnInit {
       ['75', p75],
       ['90', p90],
       // ['100', null]
-      ['100', p90*1.5]
+      ['100', p90 * 1.5]
     ]
 
     // Return text as percentile
@@ -407,7 +428,7 @@ export class PetLoginProtected implements OnInit {
     this.initChart()
   }
 
-  sumValues = (obj:any):number => <number>Object.values(obj).reduce((a: any, b: any) => a + b, 0);
+  sumValues = (obj: any): number => <number>Object.values(obj).reduce((a: any, b: any) => a + b, 0);
 
   calculateIndividualEmployeeCost = (object: any) => {
     if (!this.employees || !object.totalCost) return;
@@ -457,6 +478,7 @@ export class PetLoginProtected implements OnInit {
             const sheets = workbook.SheetNames
             const worksheet = workbook.Sheets[workbook.SheetNames[3]];
             const raw_data = utils.sheet_to_json(worksheet, {header: 1});
+            console.log(raw_data)
             this.productivityData = raw_data
           }
         })
@@ -476,7 +498,7 @@ export class PetLoginProtected implements OnInit {
             const sheets = workbook.SheetNames
             const worksheet = workbook.Sheets[workbook.SheetNames[0]];
             const raw_data = utils.sheet_to_json(worksheet, {header: 1});
-            this.sicCodeData = raw_data
+            this.sicCodeData = raw_data as Array<[number | string]>
           }
         })
       }
@@ -488,7 +510,7 @@ export class PetLoginProtected implements OnInit {
 
     if (this.selectedCompany) {
       this.track.getFuelData(this.selectedCompany).subscribe({
-        next: (res:any) => {
+        next: (res: any) => {
           if (res?.data?.fuel_data) {
             this.fuels = JSON.parse(res.data?.fuel_data)
           }
@@ -500,8 +522,8 @@ export class PetLoginProtected implements OnInit {
   }
 
   assignFuelDataToCorrectCost = () => {
-     if (!this.fuels.length) return;
-     // loop through fuel types and just get total of all values/units/ total cost/
+    if (!this.fuels.length) return;
+    // loop through fuel types and just get total of all values/units/ total cost/
 
     let extractedData = this.fuels.map((fuel: any) => {
 
@@ -516,7 +538,7 @@ export class PetLoginProtected implements OnInit {
 
         // Check if not available
         if (findValue !== -1) totalValue += parseFloat(row[findValue].value)
-        if (findCost !== -1 ) totalCost += parseFloat(row[findCost].value)
+        if (findCost !== -1) totalCost += parseFloat(row[findCost].value)
         if (findUnit !== -1) unit = row[findUnit].value
       })
 
@@ -620,8 +642,8 @@ export class PetLoginProtected implements OnInit {
           },
           markLine: {
             symbol: ['none', 'none'],
-            label: { show: false },
-            data: [{ xAxis: 1 }, { xAxis: 3 }, { xAxis: 5 }, { xAxis: 7 }]
+            label: {show: false},
+            data: [{xAxis: 1}, {xAxis: 3}, {xAxis: 5}, {xAxis: 7}]
           },
           areaStyle: {},
           data: this.chartData
@@ -631,7 +653,7 @@ export class PetLoginProtected implements OnInit {
   }
 
   savePETdata = () => {
-    const objectToSave = {
+    const objectToSave: PetToolData = {
       sicNumber: this.sicCode,
       sicLetter: this.sicCodeLetter,
       turnover: this.turnover,
@@ -655,7 +677,7 @@ export class PetLoginProtected implements OnInit {
 
     this.db.savePetData(this.selectedCompany, {
       PET_Data: JSON.stringify(objectToSave)
-    }, ).subscribe({
+    },).subscribe({
       next: (res: any) => {
         // console.log('SUCCESS')
         // console.log(res)

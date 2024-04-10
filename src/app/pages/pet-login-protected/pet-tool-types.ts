@@ -20,3 +20,20 @@ export type OtherMetals = 'Aluminium 1000'| 'Aluminium 2000'| 'Aluminium 6000'| 
 export type Plastics = 'ABS'| 'PA'| 'PET'| 'PP'| 'PU'| 'POM'| 'PEEK'| 'PE'| 'PVC'| 'PPS'| 'Elastomers'| 'Composites'| 'Textiles'
 export type OtherMaterials = 'Composites' | 'Textiles' | 'Cement' | 'Aggregate' | 'Sand' | 'Glass' | 'Chemicals' | 'Hardwood' | 'Softwood'
 export type MaterialFormats = 'Sheet' |  'Profile' |  'Filament/Fibre' |  'Ingot/Billet' |  'Natural State' |  'Powder' |  'Granule' |  'Liquid' |  'Gas' |  'Recyclate'
+
+export interface PetToolData {
+  defaultData: {}[]
+  employees: number
+  exportPercent: number
+  markEnd: number
+  markStart: number
+  productivityPercentile: string
+  productivityScore: number
+  sicLetter: string
+  sicNumber: string
+  staffTrainingPercent: number
+  turnover: number,
+  innovationPercent: number
+}
+
+export const energyNames: string[] = ['Electricity', 'Natural Gas (Grid)', 'Natural Gas off Grid', 'Bio Gas Off Grid', 'LPG', 'Oil', 'Kerosene', 'Bio Fuels', 'Bio Mass', 'Coal for Industrial use', 'Other']
