@@ -123,12 +123,12 @@
         <ng-template pTemplate="rowexpansion" let-groups let-editing="editing" >
           <tr style="background-color: #fff; overflow-x: scroll">
             <td *ngIf="groups.parent.name === 'Cost of Raw Materials'">
-              <p-dropdown [options]="materialTypes" class="p-inputtext-sm" [style]="{width: '200px'}" [(ngModel)]="groups.type" ></p-dropdown>
-              <p-dropdown [options]="steelMaterials" class="p-inputtext-sm" [style]="{width:'200px'}" *ngIf="groups.type === 'Steel'"></p-dropdown>
-              <p-dropdown [options]="otherMetals" class="p-inputtext-sm" [style]="{width:'200px'}" *ngIf="groups.type === 'Other Metals'"></p-dropdown>
-              <p-dropdown [options]="plastics" class="p-inputtext-sm" [style]="{width:'200px'}" *ngIf="groups.type === 'Plastics'"></p-dropdown>
-              <p-dropdown [options]="otherMaterials" class="p-inputtext-sm" [style]="{width:'200px'}" *ngIf="groups.type === 'Other Materials'"></p-dropdown>
-
+              <p-dropdown [options]="materialTypes" class="p-inputtext-sm" [style]="{width: '160px'}" [(ngModel)]="groups.type" ></p-dropdown>
+              <p-dropdown [options]="steelMaterials" class="p-inputtext-sm" [style]="{width:'160px'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Steel'"></p-dropdown>
+              <p-dropdown [options]="otherMetals" class="p-inputtext-sm" [style]="{width:'160px'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Other Metals'"></p-dropdown>
+              <p-dropdown [options]="plastics" class="p-inputtext-sm" [style]="{width:'160px'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Plastics'"></p-dropdown>
+              <p-dropdown [options]="otherMaterials" class="p-inputtext-sm" [style]="{width:'160px'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Other Materials'"></p-dropdown>
+              <p-dropdown [options]="materialFormats" class="p-inputtext-sm" [style]="{width:'160px'}" [(ngModel)]="groups.format"></p-dropdown>
             </td>
 
             <td [pEditableColumn]="groups.name" pEditableColumnField="name" class="col-5" *ngIf="groups.parent.name !== 'Cost of Raw Materials'">

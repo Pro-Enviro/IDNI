@@ -69,6 +69,8 @@ class SubTable {
 class MaterialRow extends SubTable {
   name: string = 'Material Type'
   type: MaterialTypes = 'Steel'
+  subtype: SteelMaterials | OtherMaterials| Plastics | OtherMaterials | undefined
+  format: MaterialFormats | undefined
   unitsUom: UnitsUom = 'Select'
   totalUnits: number = 0
   regionOfOrigin: RegionsOfOrigin = 'UK'
