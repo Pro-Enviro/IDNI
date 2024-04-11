@@ -222,7 +222,7 @@ export class PetLoginProtected implements OnInit {
     }
     // Select correct SIC code letter
     const foundRow = this.sicCodeData.find((row: any) => row.sector === this.sicCode)
-    console.log(foundRow)
+
     if (foundRow) this.sicCodeLetter = foundRow.sic_number
     else this.sicCodeLetter = ''
   }
@@ -350,16 +350,11 @@ export class PetLoginProtected implements OnInit {
     // Sort through excel data for matching sic code letter and number of employees
 
     const findCorrectLetter = this.productivityData?.filter((row: any) => row.sic_section === this.sicCodeLetter)
-
     if (!findCorrectLetter) return null;
 
-    console.log(findCorrectLetter)
 
     const findCorrectEmployees = findCorrectLetter.filter((row: any) => this.employees >= row.from && this.employees <= row.to)[0]
-
     if (findCorrectEmployees === -1) return
-
-    console.log(findCorrectEmployees)
 
     // Should i default to zero?
     const p10 = findCorrectEmployees?.p10 !== "[c]" ? findCorrectEmployees.p10 : null
