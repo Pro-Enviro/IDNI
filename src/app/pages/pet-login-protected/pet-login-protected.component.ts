@@ -511,7 +511,7 @@ export class PetLoginProtected implements OnInit {
   // }
 
   getProductivityData = () => {
-    this.http.get(`${this.url}/items/sic_codes`).subscribe({
+    this.http.get(`${this.url}/items/sic_codes?limit=-1`).subscribe({
       next: (res: any) => {
         if (res?.data) {
           this.sicCodeData = res.data
