@@ -46,8 +46,8 @@
 
         <div style="display: flex; flex-direction: column">
           <label for="sic_code">SIC code</label>
-          <input pInputText id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" [style]="{width: '15rem', marginTop: '0.5rem'}"/>
-          <p style="font-weight: 600" *ngIf="sicCodeLetter.length">SIC Code Letter: {{sicCodeLetter}}</p>
+          <input pInputText id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" [style]="{width: '15rem', marginTop: '0.5rem', fontSize: '12px'}"/>
+          <p style="font-weight: 500" *ngIf="sicCodeLetter.length">SIC Code Letter: {{sicCodeLetter}}</p>
         </div>
       </p-card>
 <!--    </div>-->
