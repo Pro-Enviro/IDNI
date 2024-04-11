@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, from, Observable} from "rxjs";
+import {AuthService} from "../../_services/users/auth.service";
+import {GlobalService} from "../../_services/global.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +14,38 @@ export class EnvirotrackService {
   selectedCompany: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   constructor(
     private http: HttpClient,
-  ) {}
+    private global: GlobalService
+  ) {
+  }
 
   updateSelectedCompany = (company: number) => this.selectedCompany.next(company)
 
   getCompanies = () => {
-    return this.http.get(`${this.url}/items/companies`)
+      return this.http.get(`${this.url}/items/companies`)
   }
+
+  // getCompanyByUser = () => {
+  //   this.global.getCurrentUser().subscribe({
+  //     next: (res: any) => {
+  //       this.http.get(`${this.url}/items/companies?filter[users][directus_users_id][email][_eq]=${res.email}`).subscribe({
+  //         next: (res: any) =>{
+  //           console.log(res)
+  //           return res;
+  //         }
+  //       })
+  //     }
+  //   })
+  // }
 
   getCompanyDetails(id: any, fields: string[]) {
     return this.http.get(`${this.url}/items/companies/${id}?fields=${fields.toString()}`)
       .pipe(
         map((res: any) => res.data)
       )
+  }
+
+  getUsersCompany(email: string) {
+    return this.http.get(`${this.url}/items/companies?filter[users][directus_users_id][email][_eq]=${email}&fields=*`)
   }
 
   getFuelData = (id: number) => {

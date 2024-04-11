@@ -5,6 +5,7 @@ import * as echarts from "echarts";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
+import {GlobalService} from "../../../../_services/global.service";
 
 @Component({
   selector: 'app-envirotrack-report-avg',
@@ -52,9 +53,11 @@ export class EnvirotrackReportAvgComponent implements OnInit {
   shift: boolean = true;
   screenHeight: any;
   screenWidth: any;
+  isConsultant: boolean =false;
 
   constructor(
     private track: EnvirotrackService,
+    private global: GlobalService
   ) {}
 
   initChart = () => {
@@ -158,13 +161,38 @@ export class EnvirotrackReportAvgComponent implements OnInit {
 
 
   getCompanies = () =>{
-    this.track.getCompanies().subscribe({
-      next: (res: any)=>{
-        this.companies = res.data;
-        this.selectedCompany = res.data[0].id
-        this.onSelectCompany()
+
+    this.global.getCurrentUser().subscribe({
+      next: (res: any) => {
+        if (res.role.name === 'user') {
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                this.companies = res.data
+                this.selectedCompany = res.data[0].id
+                this.onSelectCompany()
+              }
+            }
+          })
+        } else {
+          this.track.getCompanies().subscribe({
+            next: (res: any) => {
+              this.companies = res.data;
+              this.isConsultant = true;
+            }
+          })
+        }
+
       }
     })
+
+    // this.track.getCompanies().subscribe({
+    //   next: (res: any)=>{
+    //     this.companies = res.data;
+    //     this.selectedCompany = res.data[0].id
+    //     this.onSelectCompany()
+    //   }
+    // })
   }
 
   onSelectCompany = () => {

@@ -10,6 +10,7 @@ import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {TopPageImgTplComponent} from "../../../../_partials/top-page-img-tpl/top-page-img-tpl.component";
 import {HttpClient} from "@angular/common/http";
+import {GlobalService} from "../../../../_services/global.service";
 
 
 interface Sheet {
@@ -69,9 +70,12 @@ export class ImportEnvirotrackComponent {
   availableSheets: string[] = [];
   sheetData: any;
   userLevel: number = 2
+  selectedName: string = ''
+  isConsultant: boolean = false;
 
   constructor(
     private track: EnvirotrackService,
+    private global: GlobalService,
     private msg: MessageService,
     private papa: Papa,
     private http: HttpClient
@@ -79,11 +83,11 @@ export class ImportEnvirotrackComponent {
     moment.locale('en-gb')
     moment().format('L')
 
-    if (this.track.selectedCompany.value) {
-      this.selectedCompany = this.track.selectedCompany.value
-    }
-
-    this.getCompanies();
+    // if (this.global.companyAssignedId.value) {
+    //   this.selectedCompany = this.global.companyAssignedId.value
+    //   this.selectedName = this.global.companyName.value || ''
+    // }
+      this.getCompanies();
   }
 
     openXlsx = async (data: any) => {
@@ -193,16 +197,38 @@ export class ImportEnvirotrackComponent {
   }
 
   getCompanies = () => {
-    this.companies = []
-    this.track.getCompanies().subscribe({
+    this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        if (res?.data?.length) {
-          this.companies = res.data
+        if (res.role.name === 'user'){
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data){
+                this.companies = res.data
+                this.selectedCompany = res.data[0].id
+              }
+            }
+          })
+        } else {
+          this.track.getCompanies().subscribe({
+            next:(res: any) => {
+              this.companies = res.data;
+              this.isConsultant = true;
+            }
+          })
         }
 
-      },
-      error: (err) => console.log(err)
+      }
     })
+
+    // this.track.getCompanies().subscribe({
+    //   next: (res: any) => {
+    //     if (res?.data?.length) {
+    //       this.companies = res.data
+    //     }
+    //
+    //   },
+    //   error: (err) => console.log(err)
+    // })
   }
 
   sendDataToProEnviro(){
@@ -210,23 +236,17 @@ export class ImportEnvirotrackComponent {
       severity: 'success',
       detail: 'Data sent'
     })
-    // return this.http.post(`${this.url}/Mailer`,{
-    //   subject: 'Pro Enviro Envirotrack sent',
-    //   to: '@proenviro.co.uk', // WIP: Update with correct email address
-    //   list: {
-    //     unsubscribe: {
-    //       url: 'mailto:unsubscribe@proenviro.com',
-    //       comment: 'unsubscribe
-    //     }
-    //   },
-    //   template: {
-    //     name: "new_envirotrack",
-    //     data: {
-    //       supplier: data.supplier
-    //     }
-    //   },
-    //   files: data.envirotrack
-    // },{responseType: "text"})
+    return this.http.post(`${this.url}/Mailer`,{
+      subject: 'Pro Enviro Envirotrack sent',
+      to: 'adam.shelley@proenviro.co.uk', // WIP: Update with correct email address
+      template: {
+        name: "New_envirotrack upload",
+        data: {
+          company: this.selectedName
+        }
+      },
+      files: ''
+    },{responseType: "text"})
   }
 
 

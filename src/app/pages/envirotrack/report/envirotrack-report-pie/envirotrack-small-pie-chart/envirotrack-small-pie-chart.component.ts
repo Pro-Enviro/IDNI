@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import {EChartsOption} from "echarts";
 import {EnvirotrackService} from "../../../envirotrack.service";
 import moment from "moment/moment";
@@ -11,6 +11,8 @@ import {DropdownModule} from "primeng/dropdown";
 import {NgIf} from "@angular/common";
 import {SharedModules} from "../../../../../shared-module";
 import {CardModule} from "primeng/card";
+import {GlobalService} from "../../../../../_services/global.service";
+import {StorageService} from "../../../../../_services/storage.service";
 
 @Component({
   selector: 'app-envirotrack-small-pie-chart',
@@ -20,7 +22,6 @@ import {CardModule} from "primeng/card";
     SelectButtonModule,
     CalendarModule,
     NgxEchartsDirective,
-
     DropdownModule,
     NgIf,
     SharedModules,
@@ -29,12 +30,12 @@ import {CardModule} from "primeng/card";
   templateUrl: './envirotrack-small-pie-chart.component.html',
   styleUrl: './envirotrack-small-pie-chart.component.scss'
 })
-export class EnvirotrackSmallPieChartComponent {
+export class EnvirotrackSmallPieChartComponent implements OnInit {
   data: any;
   months: string[] = [];
   filteredData: any;
   companies: any;
-  selectedCompany!: number;
+  selectedCompany!: number | null;
   chartData: any = [];
   chartX: string[] = [];
   chartY: string[] = [];
@@ -63,10 +64,16 @@ export class EnvirotrackSmallPieChartComponent {
   mpan: string[] = [];
   selectedMpan!: string;
   screenWidth: any;
+  isConsultant = false
+  selectedName: string = ''
 
   constructor(
     private track: EnvirotrackService,
-  ) {}
+    private global: GlobalService,
+    private storage: StorageService
+  ) {
+    this.selectedName = this.global?.companyName?.value || ''
+  }
 
 
   initChart = () => {
@@ -150,21 +157,46 @@ export class EnvirotrackSmallPieChartComponent {
   }
 
   getCompanies = () =>{
-    this.track.getCompanies().subscribe({
-      next: (res: any)=>{
-        if (res.data) {
-          this.companies = res.data
-          this.selectedCompany = res.data[0].id
-          this.onSelectCompany()
+
+    this.global.getCurrentUser().subscribe({
+      next: (res: any) => {
+        if (res.role.name === 'user'){
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data){
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+              }
+            }
+          })
+        } else {
+          this.track.getCompanies().subscribe({
+            next:(res: any) => {
+              this.companies = res.data;
+              this.isConsultant = true
+            }
+          })
         }
+
       }
     })
+
+      //
+      // this.track.getCompanies().subscribe({
+      //   next: (res: any)=>{
+      //     if (res.data) {
+      //       this.companies = res.data
+      //     }
+      //   }
+      // })
+
+
   }
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
-    this.track.updateSelectedCompany(this.selectedCompany)
-    this.getData(this.selectedCompany)
+    // this.selectedCompany ? this.track.updateSelectedCompany(this.selectedCompany) : null;
+    this.selectedCompany ? this.getData(this.selectedCompany) : null
   }
 
   getTimes = () => {
@@ -283,14 +315,33 @@ export class EnvirotrackSmallPieChartComponent {
     this.initChart()
   }
 
-  ngOnInit() {
-    this.getCompanies();
 
-    if (this.track.selectedCompany.value) {
-      this.selectedCompany = this.track.selectedCompany.value
-      this.getData(this.selectedCompany)
+
+  fetchDataByRole = () => {
+    if (this.global.companyAssignedId.value) {
+      this.selectedCompany = this?.global?.companyAssignedId?.value || null;
+      this.getData(this?.global?.companyAssignedId?.value)
+      this.onSelectCompany()
     }
+  }
+
+
+  ngOnInit() {
+    this.isConsultant = false
+    this.selectedCompany = null;
+    this.getCompanies();
+    this.fetchDataByRole()
 
     this.screenWidth = window.innerWidth;
   }
 }
+
+
+
+
+
+
+
+
+
+

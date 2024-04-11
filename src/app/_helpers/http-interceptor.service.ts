@@ -1,11 +1,11 @@
 
 import {
-  HttpErrorResponse, HttpHandler,
+  HttpErrorResponse,
   HttpHandlerFn,
   HttpInterceptorFn,
   HttpRequest,
 } from "@angular/common/http";
-import {catchError, map, throwError} from "rxjs";
+import {catchError, from, switchMap, throwError} from "rxjs";
 import {StorageService} from "../_services/storage.service";
 import {inject} from '@angular/core';
 import {Router} from "@angular/router";
@@ -13,46 +13,37 @@ import {MessageService} from "primeng/api";
 import {AuthService} from "../_services/users/auth.service";
 
 
-
-
-
 export const HttpInterceptorService: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
 ) => {
-
+  const auth = inject(AuthService)
   const storage = inject(StorageService)
   const router = inject(Router)
   const msg = inject(MessageService)
   const token = storage.get('access_token');
-  const auth = inject(AuthService)
 
-
+  const addTokenHeader = (request: HttpRequest<any>, token: string | null) => {
+    return request.clone({
+      headers: request.headers.set('Authorization', 'Bearer ' + token!),
+    });
+  }
 
   if (token){
-    const clonedRequest = req.clone({
-      headers: req.headers.set('Authorization', `Bearer ${token}`)
-    })
+    const authRequest = addTokenHeader(req, token)
 
-    return next(clonedRequest).pipe(
+    return next(authRequest).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log('ERROR: ', error)
         if ([401, 403].includes(error.status)) {
-          console.log('rerouting to login')
-          console.log(error)
-          // auto logout if 401 or 403 response returned from api
           if (error.status === 401) {
-            console.log('401 Error')
-            // handle 401
-            auth.refreshToken().then((res)=> {
-              return next(clonedRequest)
-            })
-
-            router.navigate([''])
-
+            return from(auth.refreshToken()).pipe(
+              switchMap((token: any) => {
+                const newRequest = addTokenHeader(req, token)
+                return next(newRequest)
+              })
+            )
           } else if (error.status === 403) {
-            console.log('403 Error')
-            // handle 403
+            localStorage.clear()
             router.navigate([''])
           } else {
             router.navigate(['login'])
@@ -62,18 +53,14 @@ export const HttpInterceptorService: HttpInterceptorFn = (
           severity: 'warning',
           detail: 'You are unauthorized.'
         })
-
-
-
         return throwError(() => error);
       }))
   } else {
-    console.log('ERROR INTERCEPTOR')
+    // If the user has no token (not logged in)
     return next(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log('ERROR: ', error)
+        console.log('ERROR 2: ', error)
         if ([401, 403].includes(error.status)) {
-          console.log('rerouting to login')
           // auto logout if 401 or 403 response returned from api
           if (error.status === 401) {
             console.log('401 Error')
@@ -82,8 +69,10 @@ export const HttpInterceptorService: HttpInterceptorFn = (
           } else if (error.status === 403) {
             console.log('403 Error')
             // handle 403
+            localStorage.clear()
             router.navigate([''])
           } else {
+            localStorage.clear()
             router.navigate(['login'])
           }
           router.navigate(['login'])
@@ -99,55 +88,3 @@ export const HttpInterceptorService: HttpInterceptorFn = (
       }))
   }
 };
-
-
-
-
-// import { Injectable } from '@angular/core';
-// import {HttpEvent, HttpHandler, HttpRequest, HttpResponse} from "@angular/common/http";
-// import {catchError, map, Observable} from "rxjs";
-// import {StorageService} from "../_services/storage.service";
-// import {Router} from "@angular/router";
-//
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class HttpInterceptorService {
-//
-//   constructor(
-//     private storage: StorageService,
-//     private router: Router
-//   ) { }
-//
-//   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-//
-//     console.log('Running interceptor')
-//
-//     const token = this.storage.get('access_token');
-//
-//     if (token) {
-//
-//       console.log('Token found')
-//
-//       request = request.clone({
-//         setHeaders: { Authorization: `Bearer ${token}` }
-//       });
-//     }
-//
-//     return next.handle(request).pipe(catchError((err) => {
-//       if ([401, 403].includes(err.status)) {
-//         console.log('rerouting to login')
-//         // auto logout if 401 or 403 response returned from api
-//         this.router.navigate(['login'])
-//       }
-//
-//       return err;
-//     }))
-//       .pipe(map((evt:any) => {
-//         if (evt instanceof HttpResponse) {
-//         }
-//         return evt;
-//       }));
-//   }
-//
-

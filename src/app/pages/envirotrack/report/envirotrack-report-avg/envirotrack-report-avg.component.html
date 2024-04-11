@@ -31,8 +31,10 @@
   <div class="grid">
     <div class="col-6">
       <p-card header="Select Company" styleClass="card-select-panel">
-                <p-selectButton class="btn-select" [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"></p-selectButton>
-<!--        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>-->
+
+        <!--        <p-selectButton class="btn-select" [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"></p-selectButton>-->
+        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"></p-dropdown>
+
       </p-card>
     </div>
     <div class="col-6">

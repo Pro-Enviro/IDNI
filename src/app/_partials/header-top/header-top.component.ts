@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MegaMenuItem, MenuItem} from "primeng/api";
 import {MegaMenuModule} from "primeng/megamenu";
 import {ButtonModule} from "primeng/button";
@@ -10,6 +10,9 @@ import {SidebarModule} from "primeng/sidebar";
 import {ToastModule} from "primeng/toast";
 import {MenuModule} from "primeng/menu";
 import {PanelMenuModule} from "primeng/panelmenu";
+import {GlobalService} from "../../_services/global.service";
+import {EnvirotrackService} from "../../pages/envirotrack/envirotrack.service";
+import {AuthService} from "../../_services/users/auth.service";
 
 @Component({
   selector: 'app-header-top',
@@ -28,8 +31,11 @@ import {PanelMenuModule} from "primeng/panelmenu";
   templateUrl: './header-top.component.html',
   styleUrl: './header-top.component.scss'
 })
-export class HeaderTopComponent {
+export class HeaderTopComponent implements OnInit {
   sidebarVisible: boolean = false;
+  loggedIn: boolean = false;
+
+  constructor(private global: GlobalService, private auth: AuthService, private storage: StorageService) {}
 
   // menuItems!: MegaMenuItem[];
   // constructor(private storage: StorageService) {
@@ -40,6 +46,12 @@ export class HeaderTopComponent {
   //     }
   //   });
   // }
+
+  logout = ()  => {
+    this.auth.logout()
+    this.global.isSignedIn.next(false)
+  }
+
   menuItems: MegaMenuItem[] = [
     {
       label: 'Home',
@@ -154,4 +166,23 @@ export class HeaderTopComponent {
     }
   ];
 
+
+    ngOnInit() {
+
+      const storage = this.storage.get('directus-data')
+
+      if (storage) {
+        const parsedStorage = JSON.parse(storage)
+        console.log('Logged in')
+        // Refresh with directus - Check access token is legit
+        if (parsedStorage.access_token) {
+          this.global.isSignedIn.next(true)
+        }
+      }
+
+
+      this.global.onSignedIn.subscribe((isSignedIn: boolean) => {
+        this.loggedIn = isSignedIn
+      })
+    }
 }

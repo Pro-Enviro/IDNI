@@ -33,12 +33,23 @@ export class DbService {
     return this.http.patch(`${this.url}/items/companies/${id}?fields=PET_Data`, data)
   }
 
+  getRecommendations = (companyId: number) => {
+    return this.http.get(`${this.url}/items/companies/${companyId}?fields=recommendations`)
+  }
+
+  saveRecommendations = (companyId: number, data: {recommendations: string}) => {
+    return this.http.patch(`${this.url}/items/companies/${companyId}?fields=recommendations`, data)
+  }
+
 
   addCompany(
     fields: string[],
     data: any,
     userData?: any
   ) {
+
+
+
     return this.http.post(`${this.url}/items/companies/?fields=${fields.map((field) => field).toString()}.*`, {
       ...data,
       "users": {

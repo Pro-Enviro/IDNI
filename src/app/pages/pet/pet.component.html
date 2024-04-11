@@ -46,104 +46,107 @@
       </p-card>
     </div>
 
-  <p-table [value]="rows" styleClass="pet-table p-datatable-sm p-datatable-gridlines  container mt-5 lg:col-12">
 
-    <ng-template pTemplate="header">
-      <tr>
-        <th style="font-weight: 600">Productivity Factors Year 2024</th>
-        <th style="width: 150px; font-weight: 600">Value</th>
-        <th style="width: 150px; font-weight: 600">Per Employee Cost</th>
-      </tr>
-      <tr>
-        <th>
-          <p>Turnover</p>
-        </th>
-        <th>
-          <p-inputNumber inputId="turnover" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
-                         [(ngModel)]="turnover" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
-        </th>
-        <th></th>
-      </tr>
-      <tr>
-        <th>
-          <p>Number Of Employees</p>
-        </th>
-        <th>
-          <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
-                         [(ngModel)]="employees" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
-        </th>
-        <th></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-row>
-      <tr>
-        <td style="width: 400px"><p>{{ row.name }}</p></td>
-        <td>
-          <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="row.value"
-                         (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
-        </td>
-        <td>
-          <p class="p-inputtext-sm">{{ row.secondColumn.toLocaleString('en-US') }}</p>
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="footer">
-      <tr>
-        <td>Total External Cost</td>
-        <td>
-          <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="totalOfRows"
-          ></p-inputNumber>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Productivity Score</td>
-        <td>
-          <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="productivityScore"
-          ></p-inputNumber>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>ONS Productivity Comparison</td>
-        <td >{{productivityPercentile}}</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Innovation - % of Turnover from Products <3 years</td>
-        <td>
-          <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
-                         [(ngModel)]="innovationPercent"
-          ></p-inputNumber>
-        </td>
-        <td>
-          {{ (turnover * (innovationPercent / 100)).toLocaleString('en-US') }}
-        </td>
-      </tr>
-      <tr>
-        <td>Training - % of staff in Training (On the Job, PT-FE, Prof'snl or Post Grad)</td>
-        <td>
-          <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
-                         [(ngModel)]="trainingPercent"
-          ></p-inputNumber>
-        </td>
-        <td>
-          {{ ((employees * trainingPercent)/100).toLocaleString('en-US') }}
-        </td>
-      </tr>
-      <tr>
-        <td>Export - % of Turnover from Export</td>
-        <td>
-          <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
-                         [(ngModel)]="exportPercent"
-          ></p-inputNumber>
-        </td>
-        <td>
-          {{ ((turnover * exportPercent)/100).toLocaleString('en-US') }}
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+    <p-table [value]="rows" styleClass="pet-table p-datatable-sm p-datatable-gridlines  container mt-5 lg:col-12">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="font-weight: 600">Productivity Factors Year 2024</th>
+          <th style="width: 150px; font-weight: 600">Value</th>
+          <th style="width: 150px; font-weight: 600">Per Employee Cost</th>
+        </tr>
+        <tr>
+          <th>
+            <p>Turnover</p>
+          </th>
+          <th>
+            <p-inputNumber inputId="turnover" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
+                           [(ngModel)]="turnover" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+          </th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>
+            <p>Number Of Employees</p>
+          </th>
+          <th>
+            <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
+                           [(ngModel)]="employees" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-row>
+        <tr>
+          <td style="width: 400px"><p>{{ row.name }}</p></td>
+          <td>
+            <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="row.value"
+                           (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+          </td>
+          <td>
+            <p class="p-inputtext-sm">{{ row.secondColumn.toLocaleString('en-US') }}</p>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <td>Total External Cost</td>
+          <td>
+            <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="totalOfRows"
+            ></p-inputNumber>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Productivity Score</td>
+          <td>
+            <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" [(ngModel)]="productivityScore"
+            ></p-inputNumber>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>ONS Productivity Comparison</td>
+          <td >{{productivityPercentile}}</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Innovation - % of Turnover from Products <3 years</td>
+          <td>
+            <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
+                           [(ngModel)]="innovationPercent"
+            ></p-inputNumber>
+          </td>
+          <td>
+            {{ (turnover * (innovationPercent / 100)).toLocaleString('en-US') }}
+          </td>
+        </tr>
+        <tr>
+          <td>Training - % of staff in Training (On the Job, PT-FE, Prof'snl or Post Grad)</td>
+          <td>
+            <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
+                           [(ngModel)]="trainingPercent"
+            ></p-inputNumber>
+          </td>
+          <td>
+            {{ ((employees * trainingPercent)/100).toLocaleString('en-US') }}
+          </td>
+        </tr>
+        <tr>
+          <td>Export - % of Turnover from Export</td>
+          <td>
+            <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
+                           [(ngModel)]="exportPercent"
+            ></p-inputNumber>
+          </td>
+          <td>
+            {{ ((turnover * exportPercent)/100).toLocaleString('en-US') }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+
 
 
 

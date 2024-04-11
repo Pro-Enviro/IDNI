@@ -14,6 +14,7 @@ import FileSaver from "file-saver";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {EnvirotrackService} from "../../envirotrack.service";
+import {GlobalService} from "../../../../_services/global.service";
 
 export class Fields {
   type: string = '';
@@ -44,17 +45,19 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
   display: boolean = false;
   selectedItem: any = {}
   nameChange: string = ''
-
+  isConsultantLevel = false
 
   constructor(
     private dialog: DialogService,
     private msg: MessageService,
     private track: EnvirotrackService,
     private confirmationService: ConfirmationService,
+    private global: GlobalService
+
   ) {
     this.uomOptions = this.track.supplyUnit
     if (this.track.selectedCompany.value) {
-      this.selectedCompany = this.track.selectedCompany.value
+      this.selectedCompany = this.global.companyAssignedId.value
       this.getFuelData()
     }
   }
@@ -84,11 +87,38 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
   onKeyDown = (event: KeyboardEvent) => event.stopPropagation()
 
   getCompanies = () => {
-    this.track.getCompanies().subscribe({
+
+    // if (!this.isConsultantLevel) {
+    //   return this.onSelectCompany()
+    // }
+
+    this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        this.companies = res.data;
+        if (res.role.name === 'user'){
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data){
+                this.companies = res.data
+                this.selectedCompany = res.data[0].id
+              }
+            }
+          })
+        } else {
+          this.track.getCompanies().subscribe({
+            next:(res: any) => {
+              this.companies = res.data;
+            }
+          })
+        }
+
       }
     })
+
+    // this.track.getCompanies().subscribe({
+    //   next: (res: any) => {
+    //     this.companies = res.data;
+    //   }
+    // })
   }
 
   onSelectCompany = () => {
@@ -469,5 +499,9 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
 
   ngOnInit() {
     this.getCompanies()
+    if (this.global.companyAssignedId.value) {
+      this.selectedCompany = this.global.companyAssignedId.value
+      this.onSelectCompany()
+    }
   }
 }

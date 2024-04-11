@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CalendarModule} from "primeng/calendar";
 import {DropdownModule} from "primeng/dropdown";
 import {NgIf} from "@angular/common";
@@ -10,6 +10,8 @@ import * as echarts from "echarts";
 import {EnvirotrackService} from "../../../envirotrack.service";
 import moment from "moment/moment";
 import {CardModule} from "primeng/card";
+import {GlobalService} from "../../../../../_services/global.service";
+import {StorageService} from "../../../../../_services/storage.service";
 
 @Component({
   selector: 'app-envirotrack-bar-small',
@@ -27,12 +29,12 @@ import {CardModule} from "primeng/card";
   templateUrl: './envirotrack-bar-small.component.html',
   styleUrl: './envirotrack-bar-small.component.scss'
 })
-export class EnvirotrackBarSmallComponent {
+export class EnvirotrackBarSmallComponent implements OnInit {
   data: any;
   months: string[] = [];
   filteredData: any;
   companies: any;
-  selectedCompany!: number;
+  selectedCompany!: number | null;
   chartData: any = [];
   chartX: string[] = [];
   chartY: string[] = [];
@@ -58,31 +60,16 @@ export class EnvirotrackBarSmallComponent {
   mpan: string[] = [];
   selectedMpan!: string;
   screenWidth: any;
+  isConsultant = false
+  selectedName: string = ''
 
   constructor(
     private track: EnvirotrackService,
+    private global: GlobalService,
+    private storage: StorageService
   ) {}
 
-  // saveChartAsBase64 = () => {
-  //   console.log('saving as base 64');
-  //   if (!this.chartOptions) return;
-  //
-  //   // Create temporary chart that uses echarts.instanceOf
-  //   const div = document.createElement('div')
-  //   div.style.width = '1200px'
-  //   div.style.height = '1200px'
-  //
-  //   const temporaryChart = echarts.init(div)
-  //
-  //   temporaryChart.setOption({...this.chartOptions, animation: false})
-  //
-  //   const data = temporaryChart.getDataURL({
-  //     backgroundColor: '#fff',
-  //     pixelRatio: 2
-  //   })
-  //   console.log(data);
-  //   return data;
-  // }
+
   initChart = () => {
     this.chartOptions = {
       legend: {
@@ -166,19 +153,50 @@ export class EnvirotrackBarSmallComponent {
   }
 
   getCompanies = () =>{
-    this.track.getCompanies().subscribe({
+
+
+    this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        this.companies = res.data;
-        this.selectedCompany = res.data[0].id
-        this.onSelectCompany()
+        if (res.role.name === 'user'){
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data){
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+
+              }
+            }
+          })
+        } else {
+          this.track.getCompanies().subscribe({
+            next:(res: any) => {
+              this.companies = res.data;
+              this.isConsultant = true;
+            }
+          })
+        }
+
       }
     })
+
+
+    // this.track.getCompanies().subscribe({
+    //     next: (res: any)=>{
+    //       if (res.data) {
+    //         this.companies = res.data
+    //
+    //
+    //       }
+    //     }
+    //   })
+
+
   }
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
-    this.track.updateSelectedCompany(this.selectedCompany)
-    this.getData(this.selectedCompany)
+    this.selectedCompany ? this.global.updateCompanyId(this.selectedCompany) : null
+    this.selectedCompany ? this.getData(this.selectedCompany) : null
   }
 
   getTimes = () =>{
@@ -256,9 +274,9 @@ export class EnvirotrackBarSmallComponent {
   ngOnInit() {
     this.getCompanies();
 
-    if (this.track.selectedCompany.value) {
-      this.selectedCompany = this.track.selectedCompany.value
-      this.getData(this.selectedCompany)
+    if (this.global.companyAssignedId.value) {
+      this.selectedCompany = this?.global?.companyAssignedId?.value || null;
+      this.getData(this?.global?.companyAssignedId?.value)
     }
 
     this.screenWidth = window.innerWidth
