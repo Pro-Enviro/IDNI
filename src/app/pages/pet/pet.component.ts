@@ -15,9 +15,9 @@ import {NgIf} from "@angular/common";
 import {read, utils} from "xlsx";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../../_services/storage.service";
-import {NgxEchartsDirective} from "ngx-echarts";
 import {EChartsOption} from "echarts";
 import {MessageService} from "primeng/api";
+import {NgxEchartsModule} from "ngx-echarts";
 
 const rowNames: string[] = ['Cost of Energy', 'Transportation Costs', 'Cost of Water', 'Cost of Waste', 'Cost of Raw Materials', 'Cost of Bought in Goods - Consumables and bought in parts', 'Consultancy Cost', 'Sub Contracting Cost', 'Other External Costs (Legal, rental, accounting etc)']
 const energyNames: string[] = ['Oil', 'Gas', 'LPG', 'Electricity', 'Diesel', 'Kerosene', 'Other']
@@ -34,9 +34,9 @@ class TableRow {
 @Component({
   selector: 'app-pet',
   standalone: true,
-  imports: [FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CardModule, DropdownModule, InputTextModule, NgIf, NgxEchartsDirective],
+  imports: [FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CardModule, DropdownModule, InputTextModule, NgIf, NgxEchartsModule],
   templateUrl: './pet.component.html',
-  styleUrl: './pet.component.scss'
+  styleUrl: './pet.component.scss',
 })
 
 export class PetComponent implements OnInit {
