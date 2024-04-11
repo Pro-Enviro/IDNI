@@ -32,6 +32,7 @@
   border-bottom: 1px solid #e1e1e1;
 }
 
+
 .top-line{
   border-top: 1px solid #e1e1e1;
 }
@@ -69,6 +70,11 @@
 a{
   text-decoration:none;
   color:black;
+}
+
+.tech-container{
+  background-color:#fbfbfb;
+  padding: 1.5rem;
 }
 
   //----------------------------------------------------BUTTON----------------------------------------------------------
@@ -184,10 +190,34 @@ a{
     }
   }
   .gradient-bck{
-    background-image: linear-gradient(to right, rgba(244,249,248,0), rgba(218,237,234,1));
+    //background-image: linear-gradient(to right, rgba(244,249,248,0), rgba(218,237,234,1));
+  background-image:linear-gradient(105deg, #f5faf9,#f4f9f7,#f4f9f8,#f4f9f9);
   }
 
   //---------------------------------------------------FORM-------------------------------------------------------------
+.panelmenu-style-footer{
+  .p-panelmenu-header-content {
+    border: none;
+    background: transparent !important;
+    transition: box-shadow 0.2s;
+    font-weight: 400;
+  }
+  .p-panelmenu-content {
+    padding-left: 15px;
+    border: none;
+    background: transparent !important;
+    color: #4b5563;
+    border-top: 0;
+  }
+  a{
+    text-decoration: none;
+    color: #284747;
+    font-weight: 550;
+    &:hover{
+      color:$primeColor;
+    }
+  }
+}
 
 .panelmenu-style-none{
   .p-panelmenu-header-content {
@@ -594,15 +624,18 @@ a{
 
 //----------------------------------------------------------HERO--------------------------------------------------------
   .hero{
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 90vh;
-    position: relative;
-    color:white;
-    .bg-arrow{
-      color: white;
+    //img{
+      background-size: cover;
+      background-repeat: no-repeat;
       height: 90vh;
-      width:50vw;
+      position: relative;
+      color:white;
+      z-index: -1;
+    //}
+    .bg-arrow{
+      position:absolute;
+      height: 90vh;
+      width:42vw;
       background-image: url("assets/img/arrow.svg");
       background-repeat: no-repeat;
       background-size: cover;
@@ -615,7 +648,7 @@ a{
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        //padding:40px;
+        width:230%;
         h1{
           //font-size: 6rem;
         }
@@ -635,15 +668,20 @@ a{
   background-size: cover;
 }
 .blue-curve-left{
-  background-color: #f2f2f2;
+  background-color: #f9f9f9;
+  //background-color: #f2f2f2;
   background-image: url("assets/img/curve-bottom.svg");
   background-position: top left;
   background-repeat: no-repeat;
   background-size: 40rem;
   h2{
-    padding-left: 3.5rem;
+    padding-left: 2rem;
+    color:#ffffff;
+    font-size: 2rem;
+    width:10px;
   }
 }
+
 .blue-curve-right{
   background-image: url("assets/img/curve-bottom-right.svg");
   background-position: top right;
@@ -651,7 +689,8 @@ a{
   background-size: 40rem;
   h2{
     text-align: end;
-    color: black;
+    color:#ffffff;
+    font-size: 2rem;
     padding-right: 3.5rem;
   }
 }
@@ -674,7 +713,12 @@ a{
 }
 
 .partner-logo{
-  max-height:90px;
+  //max-height:90px;
+  display: block;
+  max-width: 250px;
+  max-height: 100px;
+  width: auto;
+  height: auto;
 }
 
 
@@ -791,12 +835,59 @@ a{
 
 //----------------------------------------------NEWS CARD HOME----------------------------------------------------------
 
+.p-card-home-news{
+  height:100%;
+  background-color: #fefefe;
+  position: relative;
+  .news-line{
+    border-bottom: 1px inset #f7f7f7;
+  }
+  .p-card-header {
+    display: block;
+    position: relative;
+    &:after {
+      content: " ";
+      background-image: url("assets/img/curve-top-grey.svg");
+      background-position: bottom;
+      background-size: contain;
+      background-repeat: no-repeat;
+      position: absolute;
+      top: 0;
+      bottom: 3px;
+      left: 7px;
+      right: 0;
+    }
+    span{
+      position:absolute;
+      top:83%;
+      right: 25px;
+      z-index:1;
+    }
+  }
+  .card-body{
+    padding:20px;
+    margin-bottom:20px;
+  }
+  .p-card-footer{
+    position:absolute;
+    bottom:25px;
+    left:27%;
+    padding:25px;
+  }
+}
+
+
+
 .news-card-home{
   position: relative;
-  margin-bottom:70px;
+  margin-bottom:35px;
   text-align: center;
   height:100%;
-  background-color: #f2f2f2;
+  //background-color: #f2f2f2;
+  background-color: #fafafa;
+  .news-line{
+    border-bottom: 1px inset white;
+  }
   .card-footer{
     position:absolute;
     bottom:25px;
@@ -805,13 +896,14 @@ a{
   }
   .card-body{
     padding:45px;
+
   }
   .card-head{
     display: block;
     position: relative;
     &:after{
       content: " ";
-      background-image: url("assets/img/curve-top.svg");
+      background-image: url("assets/img/curve-top-grey.svg");
       background-position: bottom;
       background-size: contain;
       background-repeat: no-repeat;
@@ -994,10 +1086,30 @@ footer{
 
   }
 //--------------------------HERO----------------------------
+@media screen and (max-width: 1440px) and (min-width: 900px){
+  .hero{
+    .bg-arrow{
+      width:50vw;
+    }
+  }
+}
+@media screen and (max-width: 1280px) and (min-width: 800px){
+  .hero{
+    .bg-arrow{
+      width:60vw;
+    }
+  }
+}
 @media screen and (max-width: 700px) and (min-width: 200px){
   .hero{
     .bg-arrow{
       width:100vw;
+      .content{
+        width:120%;
+        .hero-heading{
+          font-size:1rem;
+        }
+      }
     }
   }
 }

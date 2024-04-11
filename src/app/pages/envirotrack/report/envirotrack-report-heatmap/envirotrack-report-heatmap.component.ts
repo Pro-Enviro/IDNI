@@ -87,8 +87,6 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   }
 
   onPlotClick = (event: any) => {
-
-
     this.dialogRef = this.dialog.open(EnvirotrackDayLineComponent, {
       width: '95vw',
       data: {
@@ -135,96 +133,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   //   });
   // }
 
-  initChart3d = () => {
-    // @ts-ignore
-    this.chartOptions = {
-      tooltip: {
-        extraCssText: 'text-transform: capitalize',
-        trigger: 'item',
-        formatter: `{a} <br />{b}: {c}`,
-        axisPointer: {
-          type: 'cross',
-          label: {
-            backgroundColor: '#6a7985'
-          }
-        }
-      },
-      toolbox: {
-        show: true,
-        feature: {
-          saveAsImage: {
-            show: true
-          }
-        }
-      },
-      visualMap: {
-        type: 'piecewise',
-        min: 0,
-        max: Math.round(this.max),
-        left: 'right',
-        top: 'center',
-        calculable: true,
-        realtime: false,
-        splitNumber: 25,
-        inRange: {
-          color: [
-            "#0000FF", "#0024FF", "#0049FF", "#006DFF", "#0092FF",
-            "#00B6FF", "#00DBFF", "#00FFFF", "#00FFDB", "#00FFB6",
-            "#00FF92", "#00FF6D", "#00FF49", "#00FF24", "#00FF00",
-            "#24FF00", "#49FF00", "#6DFF00", "#92FF00", "#B6FF00",
-            "#DBFF00", "#FFFF00", "#FFDB00", "#FFB600", "#FF9200",
-            "#FF6D00", "#FF4900", "#FF2400"
-          ]
-        }
-      },
-      xAxis3D: {
-        type: 'category',
-        data: this.chartX
-      },
-      yAxis3D: {
-        type: 'category',
-        data: this.chartY
-      },
-      zAxis3D: {
-        type: 'value',
-        max: this.max,
-        min: 0
-      },
-      grid3D: {
-        axisLine: {
-          lineStyle: {color: '#fff'}
-        },
-        axisPointer: {
-          lineStyle: {color: '#fff'}
-        },
-        viewControl: {
-          // autoRotate: true
-        },
-        light: {
-          main: {
-            shadow: true,
-            quality: 'ultra',
-            intensity: 1.5
-          }
-        }
-      },
-      dataZoom: [{
-        type: 'slider'
-      }],
-      series: [
-        {
-          type: 'bar3D' as any,
-          data: this.chartData,
-          emphasis: {
-            itemStyle: {
-              borderColor: '#333',
-              borderWidth: 1,
-            }
-          }
-        }
-      ]
-    }
-  }
+
   initChart = () => {
     // @ts-ignore
     this.chartOptions = {
@@ -328,6 +237,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
       ]
     }
   }
+
   getCompanies = () => {
 
     this.global.getCurrentUser().subscribe({
@@ -367,6 +277,8 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
     this.chartData = [];
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
+
+    console.log()
   }
 
   getTimes = () => {

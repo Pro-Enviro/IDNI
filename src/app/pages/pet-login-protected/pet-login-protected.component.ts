@@ -53,6 +53,8 @@ import {
 } from "./pet-tool-classes";
 
 
+
+
 @Component({
   selector: 'app-pet-login-protected',
   standalone: true,
@@ -126,6 +128,7 @@ export class PetLoginProtected implements OnInit {
   markStart: number | undefined
   markEnd: number | undefined
   isConsultant: boolean = false;
+
 
 
 

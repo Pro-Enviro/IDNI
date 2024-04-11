@@ -162,8 +162,10 @@ export class PetComponent implements OnInit {
       return;
     }
     // Select correct SIC code letter
+
     const foundRow = this.sicCodeData.find((row: any) => row.sector === this.sicCode)
     if (foundRow) this.sicCodeLetter = foundRow.sic_number
+
     else this.sicCodeLetter = ''
   }
 
@@ -199,6 +201,7 @@ export class PetComponent implements OnInit {
     //   error: (err: any) => console.log(err)
     // })
   }
+
 
   // getTemplate = () => {
   //   // Change content id to match correct selected template
@@ -242,7 +245,7 @@ export class PetComponent implements OnInit {
   //       })
   //     }
   //   })
-  // }
+
 
   initChart = () => {
 
@@ -338,6 +341,7 @@ export class PetComponent implements OnInit {
     this.markEnd = 0
 
     // Sort through excel data for matching sic code letter and number of employees
+
     const findCorrectLetter = this.productivityData?.filter((row: any) => row.sic_section === this.sicCodeLetter)
     if (!findCorrectLetter) return null;
 
@@ -351,6 +355,7 @@ export class PetComponent implements OnInit {
     const p50 = findCorrectEmployees?.p50 !== "[c]" ? findCorrectEmployees.p50 : null
     const p75 = findCorrectEmployees?.p75 !== "[c]" ? findCorrectEmployees.p75 : null
     const p90 = findCorrectEmployees?.p90 !== "[c]" ? findCorrectEmployees.p90 : null
+
 
     if (!p10 && !p25 && !p50 && !p75 && !p90) {
       return this.msg.add({
@@ -419,6 +424,7 @@ export class PetComponent implements OnInit {
     this.initChart()
   }
 
+
   getProductivityData = () => {
     this.http.get(`${this.url}/items/sic_codes`).subscribe({
       next: (res: any) => {
@@ -442,6 +448,7 @@ export class PetComponent implements OnInit {
     this.getPETReport()
     // this.getTemplate()
     this.getProductivityData()
+
   }
 
 }

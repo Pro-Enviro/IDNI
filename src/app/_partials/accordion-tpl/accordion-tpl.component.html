@@ -2,9 +2,9 @@
 <h2 class="header-style">{{content.title}}</h2>
 
 <div class="flex justify-content-center container">
-  <div [innerHTML]="content.content" class="p-8 text-center text-lg"></div>
+  <div [innerHTML]="content.content" class="mt-5 p-5 text-center text-lg"></div>
 </div>
-<div class="container" style="padding:40px">
+<div class="container p-4">
   <div class="grid">
     <div class="lg:col-7 sm:col-12 lg:flex-order-0 md:flex-order-1 sm:flex-order-1">
       <p-accordion [activeIndex]="0">
@@ -15,8 +15,8 @@
         }
       </p-accordion>
     </div>
-    <div class="lg:col-4 md:col-8 sm:col-12 mt-5 lg:flex-order-1 md:flex-order-0 sm:flex-order-0">
-      <img src="https://app.idni.eco/assets/{{content.image}}" alt="woman-engineer" class="page-img">
+    <div class="lg:col-4 md:col-8 sm:col-12 lg:flex-order-1 md:flex-order-0 sm:flex-order-0">
+      <img src="https://app.idni.eco/assets/{{content.image}}" alt="woman-engineer" style="max-width: 110%;">
     </div>
   </div>
 </div>

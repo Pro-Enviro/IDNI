@@ -76,11 +76,7 @@ export class HeaderTopComponent implements OnInit {
                 routerLink:'stakeholders'
               },
               {
-                label:'Advisory Board',
-                routerLink:'advisory-board'
-              },
-              {
-                label:'Latest Technologies',
+                label:'Sustainable Technologies',
                 routerLink:'latest-technologies'
               }
             ]
@@ -135,11 +131,7 @@ export class HeaderTopComponent implements OnInit {
           routerLink:'/stakeholders'
         },
         {
-          label:'Advisory Board',
-          routerLink:'/advisory-board'
-        },
-        {
-          label:'Latest Technologies',
+          label:'Sustainable Technologies',
           routerLink:'latest-technologies'
         }
       ]
