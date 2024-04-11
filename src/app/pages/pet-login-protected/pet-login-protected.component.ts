@@ -115,9 +115,9 @@ export class PetLoginProtected implements OnInit {
   data: any = []
   twoDecimalPlaces = {minimumFractionDigits: 0, maximumFractionDigits: 2,}
   productivityData!: any// Excel spreadsheet
-  sicCodeData!: Array<[number | string]> // Excel Spreadsheet
+  sicCodeData!: any // Excel Spreadsheet
   sicCode: string = ''
-  sicCodeLetter:string = ''
+  sicCodeLetter: string = ''
   fuels = []
   externalCost: number = 0
   productivityPercentile: string = ''
@@ -221,8 +221,9 @@ export class PetLoginProtected implements OnInit {
       return;
     }
     // Select correct SIC code letter
-    const foundRow = this.sicCodeData.find((row: any) => row[1].toString() === this.sicCode)
-    if (foundRow) this.sicCodeLetter = foundRow[0] as string
+    const foundRow = this.sicCodeData.find((row: any) => row.sector === this.sicCode)
+    console.log(foundRow)
+    if (foundRow) this.sicCodeLetter = foundRow.sic_number
     else this.sicCodeLetter = ''
   }
 
@@ -347,19 +348,25 @@ export class PetLoginProtected implements OnInit {
     this.markEnd = 0
 
     // Sort through excel data for matching sic code letter and number of employees
-    const findCorrectLetter = this.productivityData?.filter((row: any) => row[1] === this.sicCodeLetter)
+
+    const findCorrectLetter = this.productivityData?.filter((row: any) => row.sic_section === this.sicCodeLetter)
+
     if (!findCorrectLetter) return null;
 
-    const findCorrectEmployees = findCorrectLetter.filter((row: any) => this.employees >= row[2] && this.employees <= row[3])
+    console.log(findCorrectLetter)
+
+    const findCorrectEmployees = findCorrectLetter.filter((row: any) => this.employees >= row.from && this.employees <= row.to)[0]
 
     if (findCorrectEmployees === -1) return
 
+    console.log(findCorrectEmployees)
+
     // Should i default to zero?
-    const p10 = findCorrectEmployees?.[0]?.[5] !== "[c]" ? findCorrectEmployees[0][5] : null
-    const p25 = findCorrectEmployees?.[0]?.[6] !== "[c]" ? findCorrectEmployees[0][6] : null
-    const p50 = findCorrectEmployees?.[0]?.[7] !== "[c]" ? findCorrectEmployees[0][7] : null
-    const p75 = findCorrectEmployees?.[0]?.[8] !== "[c]" ? findCorrectEmployees[0][8] : null
-    const p90 = findCorrectEmployees?.[0]?.[9] !== "[c]" ? findCorrectEmployees[0][9] : null
+    const p10 = findCorrectEmployees?.p10 !== "[c]" ? findCorrectEmployees.p10 : null
+    const p25 = findCorrectEmployees?.p25 !== "[c]" ? findCorrectEmployees.p25 : null
+    const p50 = findCorrectEmployees?.p50 !== "[c]" ? findCorrectEmployees.p50 : null
+    const p75 = findCorrectEmployees?.p75 !== "[c]" ? findCorrectEmployees.p75 : null
+    const p90 = findCorrectEmployees?.p90 !== "[c]" ? findCorrectEmployees.p90 : null
 
     if (!p10 && !p25 && !p50 && !p75 && !p90) {
       return this.msg.add({
@@ -460,49 +467,65 @@ export class PetLoginProtected implements OnInit {
     return total !== undefined ? total : 0
   }
 
-  getTemplate = () => {
-    // Change content id to match correct selected template
-    // let id = 20;
-    // let sicCodeId = 21
+  // getTemplate = () => {
+  //   // Change content id to match correct selected template
+  //
+  //   let id = 1
+  //   let sicCodeId = 2
+  //
+  //   // TODO: Protect backend links with .env?
+  //   this.http.get(`${this.url}/items/content/${id}`).subscribe({
+  //     next: (res: any) => {
+  //       this.template = `${this.url}/assets/${res.data.file}?token=${this.storage.get('access_token')}`
+  //
+  //       this.http.get(this.template, {
+  //         responseType: 'arraybuffer'
+  //       }).subscribe({
+  //         next: (buffer: ArrayBuffer) => {
+  //           const workbook = read(buffer);
+  //           const sheets = workbook.SheetNames
+  //           const worksheet = workbook.Sheets[workbook.SheetNames[3]];
+  //           const raw_data = utils.sheet_to_json(worksheet, {header: 1});
+  //           this.productivityData = raw_data
+  //         }
+  //       })
+  //     }
+  //   })
+  //
+  //
+  //   this.http.get(`${this.url}/items/content/${sicCodeId}`).subscribe({
+  //     next: (res: any) => {
+  //       this.template = `${this.url}/assets/${res.data.file}?token=${this.storage.get('access_token')}`
+  //
+  //       this.http.get(this.template, {
+  //         responseType: 'arraybuffer'
+  //       }).subscribe({
+  //         next: (buffer: ArrayBuffer) => {
+  //           const workbook = read(buffer);
+  //           const sheets = workbook.SheetNames
+  //           const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+  //           const raw_data = utils.sheet_to_json(worksheet, {header: 1});
+  //           this.sicCodeData = raw_data as Array<[number | string]>
+  //         }
+  //       })
+  //     }
+  //   })
+  // }
 
-    let id = 1
-    let sicCodeId = 2
-
-    // TODO: Protect backend links with .env?
-    this.http.get(`${this.url}/items/content/${id}`).subscribe({
+  getProductivityData = () => {
+    this.http.get(`${this.url}/items/sic_codes`).subscribe({
       next: (res: any) => {
-        this.template = `${this.url}/assets/${res.data.file}?token=${this.storage.get('access_token')}`
-
-        this.http.get(this.template, {
-          responseType: 'arraybuffer'
-        }).subscribe({
-          next: (buffer: ArrayBuffer) => {
-            const workbook = read(buffer);
-            const sheets = workbook.SheetNames
-            const worksheet = workbook.Sheets[workbook.SheetNames[3]];
-            const raw_data = utils.sheet_to_json(worksheet, {header: 1});
-            this.productivityData = raw_data
-          }
-        })
+        if (res?.data) {
+          this.sicCodeData = res.data
+        }
       }
     })
 
-
-    this.http.get(`${this.url}/items/content/${sicCodeId}`).subscribe({
+    this.http.get(`${this.url}/items/productivity_data`).subscribe({
       next: (res: any) => {
-        this.template = `${this.url}/assets/${res.data.file}?token=${this.storage.get('access_token')}`
-
-        this.http.get(this.template, {
-          responseType: 'arraybuffer'
-        }).subscribe({
-          next: (buffer: ArrayBuffer) => {
-            const workbook = read(buffer);
-            const sheets = workbook.SheetNames
-            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-            const raw_data = utils.sheet_to_json(worksheet, {header: 1});
-            this.sicCodeData = raw_data as Array<[number | string]>
-          }
-        })
+        if (res?.data) {
+          this.productivityData = res.data
+        }
       }
     })
   }
@@ -692,7 +715,8 @@ export class PetLoginProtected implements OnInit {
 
   ngOnInit() {
     this.getCompanies()
-    this.getTemplate()
+    // this.getTemplate()
+    this.getProductivityData()
   }
 
 }
