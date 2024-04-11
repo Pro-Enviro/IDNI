@@ -49,7 +49,7 @@ import {
   WaterUsage,
   CompanyTravel,
   GroupItem,
-  BoughtInParts, SubTable
+  BoughtInParts
 } from "./pet-tool-classes";
 
 
@@ -62,6 +62,7 @@ import {
 })
 
 export class PetLoginProtected implements OnInit {
+  url:string = 'https://app.idni.eco'
   // Admin
   selectedCompany!: number;
   companies: any;
@@ -111,7 +112,6 @@ export class PetLoginProtected implements OnInit {
   otherMaterials: OtherMaterials[] = ['Composites', 'Textiles', 'Cement', 'Aggregate', 'Sand', 'Glass', 'Chemicals', 'Hardwood', 'Softwood']
   materialFormats: MaterialFormats[] = ['Sheet', 'Profile', 'Filament/Fibre', 'Ingot/Billet', 'Natural State', 'Powder', 'Granule', 'Liquid', 'Gas', 'Recyclate']
 
-
   data: any = []
   twoDecimalPlaces = {minimumFractionDigits: 0, maximumFractionDigits: 2,}
   productivityData!: any// Excel spreadsheet
@@ -127,12 +127,13 @@ export class PetLoginProtected implements OnInit {
   markEnd: number | undefined
   isConsultant: boolean = false;
 
+
+
   constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService, private global: GlobalService) {}
 
 
   onSelectCompany = () => {
     if (!this.selectedCompany) this.selectedCompany = this.companies[0]
-    // console.log(this.selectedCompany)
     // Reset table
     this.turnover = 0
     this.employees = 0;
@@ -461,13 +462,16 @@ export class PetLoginProtected implements OnInit {
 
   getTemplate = () => {
     // Change content id to match correct selected template
-    let id = 20;
-    let sicCodeId = 21
+    // let id = 20;
+    // let sicCodeId = 21
+
+    let id = 1
+    let sicCodeId = 2
 
     // TODO: Protect backend links with .env?
-    this.http.get(`https://ecp.proenviro.co.uk/items/content/${id}`).subscribe({
+    this.http.get(`${this.url}/items/content/${id}`).subscribe({
       next: (res: any) => {
-        this.template = `https://ecp.proenviro.co.uk/assets/${res.data.file}?token=${this.storage.get('access_token')}`
+        this.template = `${this.url}/assets/${res.data.file}?token=${this.storage.get('access_token')}`
 
         this.http.get(this.template, {
           responseType: 'arraybuffer'
@@ -484,9 +488,9 @@ export class PetLoginProtected implements OnInit {
     })
 
 
-    this.http.get(`https://ecp.proenviro.co.uk/items/content/${sicCodeId}`).subscribe({
+    this.http.get(`${this.url}/items/content/${sicCodeId}`).subscribe({
       next: (res: any) => {
-        this.template = `https://ecp.proenviro.co.uk/assets/${res.data.file}?token=${this.storage.get('access_token')}`
+        this.template = `${this.url}/assets/${res.data.file}?token=${this.storage.get('access_token')}`
 
         this.http.get(this.template, {
           responseType: 'arraybuffer'
@@ -557,7 +561,6 @@ export class PetLoginProtected implements OnInit {
       let foundType = this.data.findIndex((tableRow: any) => tableRow.name === extracted.type)
 
       if (foundType === -1) return;
-
 
       this.data[foundType].totalUnits = extracted.totalValue
       this.data[foundType].cost = extracted.totalCost
