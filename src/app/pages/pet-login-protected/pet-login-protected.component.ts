@@ -51,6 +51,7 @@ import {
   GroupItem,
   BoughtInParts
 } from "./pet-tool-classes";
+import {SidebarModule} from "primeng/sidebar";
 
 
 
@@ -58,13 +59,14 @@ import {
 @Component({
   selector: 'app-pet-login-protected',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CarouselTplComponent, FooterComponent, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective],
+  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CarouselTplComponent, FooterComponent, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective, SidebarModule],
   templateUrl: './pet-login-protected.component.html',
   styleUrl: './pet-login-protected.component.scss'
 })
 
 export class PetLoginProtected implements OnInit {
   url:string = 'https://app.idni.eco'
+  sidebarVisible: boolean = false
   // Admin
   selectedCompany!: number;
   companies: any;
