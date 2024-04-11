@@ -426,15 +426,16 @@ export class PetComponent implements OnInit {
 
 
   getProductivityData = () => {
-    this.http.get(`${this.url}/items/sic_codes`).subscribe({
+    this.http.get(`${this.url}/items/sic_codes?limit=-1`).subscribe({
       next: (res: any) => {
         if (res?.data) {
           this.sicCodeData = res.data
+          console.log(this.sicCodeData)
         }
       }
     })
 
-    this.http.get(`${this.url}/items/productivity_data`).subscribe({
+    this.http.get(`${this.url}/items/productivity_data?limit=-1`).subscribe({
       next: (res: any) => {
         if (res?.data) {
           this.productivityData = res.data
