@@ -88,7 +88,7 @@ export class DashboardComponent {
           },
 
           {
-            label:'<span class="material-symbols-outlined">data_thresholding</span> PET',
+            label:'<span class="material-symbols-outlined">timeline</span> PET',
             routerLink:'/dashboard/pet',
             escape: false
           },
@@ -143,7 +143,7 @@ export class DashboardComponent {
                 routerLink: '/dashboard/co2emissions'
               },
               {
-                label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Breakdown of CO2e (tonnes) by scope',
+                label:'<span class="material-symbols-outlined material-icon">data_usage</span>Breakdown of CO2e (tonnes) by scope',
                 escape: false,
                 routerLink: '/dashboard/co2emissionsbyscope'
               }
