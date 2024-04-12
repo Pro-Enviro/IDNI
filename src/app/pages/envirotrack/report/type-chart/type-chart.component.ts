@@ -111,6 +111,12 @@ export class TypeChartComponent implements OnInit {
     this.dataArray.push(this.envirotrackData)
 
     this.chartOption = {
+      title: {
+        text: 'Breakdown of CO2e (tonnes) by emissions source',
+        left: 'center',
+        top: 30,
+
+      },
       legend: {
         height: 120,
         bottom: '5',
