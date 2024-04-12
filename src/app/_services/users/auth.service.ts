@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import {Router} from "@angular/router";
-import {BehaviorSubject, map} from "rxjs";
+import {BehaviorSubject, map, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../storage.service";
 import {GlobalService} from "../global.service";
+import {readRole, readRoles} from "@directus/sdk";
 
 export interface Credentials {
   email: string;
@@ -112,11 +113,16 @@ export class AuthService {
 
   refreshToken =  async () => {
     const result =  await this.client.refresh()
+
     this.storage.set('access_token', result.access_token)
     this.storage.set('expires', result.expires)
     this.storage.set('refresh_token', result.refresh_token)
 
     return result.access_token;
+  }
+
+  getUserRoles = () => {
+    return this.http.get(`${this.url}roles?filter[name]=user`);
   }
 
 }

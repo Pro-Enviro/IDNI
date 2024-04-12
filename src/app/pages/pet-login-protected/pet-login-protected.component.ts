@@ -51,6 +51,7 @@ import {
   GroupItem,
   BoughtInParts
 } from "./pet-tool-classes";
+import {SidebarModule} from "primeng/sidebar";
 
 
 
@@ -58,13 +59,14 @@ import {
 @Component({
   selector: 'app-pet-login-protected',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CarouselTplComponent, FooterComponent, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective],
+  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CarouselTplComponent, FooterComponent, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective, SidebarModule],
   templateUrl: './pet-login-protected.component.html',
   styleUrl: './pet-login-protected.component.scss'
 })
 
 export class PetLoginProtected implements OnInit {
   url:string = 'https://app.idni.eco'
+  sidebarVisible: boolean = false
   // Admin
   selectedCompany!: number;
   companies: any;
@@ -164,6 +166,7 @@ export class PetLoginProtected implements OnInit {
               if (res.data) {
                 this.companies = res.data
                 this.selectedCompany = res.data[0].id
+                this.onSelectCompany()
               }
             }
           })
@@ -171,10 +174,11 @@ export class PetLoginProtected implements OnInit {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
               this.companies = res.data;
+              this.selectedCompany = res.data[0].id
               this.isConsultant = true;
             }
           })
-        }
+      }
 
       }
     })
@@ -182,9 +186,11 @@ export class PetLoginProtected implements OnInit {
 
 
   getPETReport = (id: number) => {
+    if (!id) return;
     this.db.getPetData(id).subscribe({
       next: (res: any) => {
         if (res.data.PET_Data) {
+          console.log('Getting pet data')
           const data: PetToolData = JSON.parse(res.data.PET_Data)
           this.data = data.defaultData || []
           this.employees = data.employees || 0
@@ -203,6 +209,7 @@ export class PetLoginProtected implements OnInit {
 
         } else {
           // If no saved data
+          console.log('New tables')
           this.generateClasses('Cost of Energy', TableRow, energyNames)
           this.generateClasses('Cost of Raw Materials', MaterialRow)
           this.generateClasses('Cost of Bought in Goods - Consumables and bought in parts', BoughtInParts)
@@ -511,7 +518,7 @@ export class PetLoginProtected implements OnInit {
   // }
 
   getProductivityData = () => {
-    this.http.get(`${this.url}/items/sic_codes`).subscribe({
+    this.http.get(`${this.url}/items/sic_codes?limit=-1`).subscribe({
       next: (res: any) => {
         if (res?.data) {
           this.sicCodeData = res.data
@@ -532,6 +539,7 @@ export class PetLoginProtected implements OnInit {
     this.fuels = []
 
     if (this.selectedCompany) {
+
       this.track.getFuelData(this.selectedCompany).subscribe({
         next: (res: any) => {
           if (res?.data?.fuel_data) {

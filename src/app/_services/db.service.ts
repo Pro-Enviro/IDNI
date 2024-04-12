@@ -47,15 +47,12 @@ export class DbService {
     data: any,
     userData?: any
   ) {
-
-
-
     return this.http.post(`${this.url}/items/companies/?fields=${fields.map((field) => field).toString()}.*`, {
       ...data,
       "users": {
         "create": [
           {
-            "directus_users_id": {...userData}
+            "directus_users_id": {...userData, role: '3aade202-9caf-4869-b876-eef6b79119c6'}
           }
         ]
       }

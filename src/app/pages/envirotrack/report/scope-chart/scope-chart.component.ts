@@ -66,6 +66,12 @@ export class ScopeChartComponent implements OnInit {
     this.dataArray.push(this.envirotrackData)
 
     this.chartOption = {
+      title: {
+        text: 'Breakdown of CO2e (tonnes) by scope',
+        left: 'center',
+        top: 30,
+
+      },
       legend: {
         left: 'left',
         orient: 'horizontal',

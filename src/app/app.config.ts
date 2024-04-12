@@ -1,5 +1,5 @@
 
-import {APP_INITIALIZER, ApplicationConfig} from '@angular/core';
+import {APP_INITIALIZER, ApplicationConfig, importProvidersFrom} from '@angular/core';
 import {provideRouter, ROUTES} from '@angular/router';
 import {provideAnimations} from "@angular/platform-browser/animations";
 import {
@@ -14,9 +14,10 @@ import {routes} from "./app.routes";
 import {AuthService} from "./_services/users/auth.service";
 import {GlobalService} from "./_services/global.service";
 import {HttpInterceptorService} from "./_helpers/http-interceptor.service";
+import {NgxEchartsModule} from "ngx-echarts";
 
 
-function initializeAppFactory(httpClient: HttpClient, storage: StorageService): () => Observable<any> {
+/*function initializeAppFactory(httpClient: HttpClient, storage: StorageService): () => Observable<any> {
   return () => httpClient.get("https://app.idni.eco/items/page?filter[show_on_menu][_eq]=true&filter[status][_eq]=published&fields=alias,pagetitle,id")
     .pipe(
       map((x:any) => x.data),
@@ -25,7 +26,7 @@ function initializeAppFactory(httpClient: HttpClient, storage: StorageService): 
         storage.updateMenu(pages)
       })
     );
-}
+}*/
 
 
 export const appConfig: ApplicationConfig = {
@@ -33,12 +34,17 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([HttpInterceptorService])),
     provideRouter(routes),
     provideAnimations(),
-    {
+    importProvidersFrom(
+      NgxEchartsModule.forRoot({
+        echarts: () => import('echarts')
+      })
+    ),
+/*    {
       provide: APP_INITIALIZER,
       useFactory: initializeAppFactory,
       multi: true,
       deps: [HttpClient,StorageService]
-    },
+    },*/
     MessageService,
     AuthService,
     GlobalService,
