@@ -166,6 +166,7 @@ export class PetLoginProtected implements OnInit {
               if (res.data) {
                 this.companies = res.data
                 this.selectedCompany = res.data[0].id
+                this.onSelectCompany()
               }
             }
           })
@@ -187,6 +188,7 @@ export class PetLoginProtected implements OnInit {
     this.db.getPetData(id).subscribe({
       next: (res: any) => {
         if (res.data.PET_Data) {
+          console.log('Getting pet data')
           const data: PetToolData = JSON.parse(res.data.PET_Data)
           this.data = data.defaultData || []
           this.employees = data.employees || 0
@@ -205,6 +207,7 @@ export class PetLoginProtected implements OnInit {
 
         } else {
           // If no saved data
+          console.log('New tables')
           this.generateClasses('Cost of Energy', TableRow, energyNames)
           this.generateClasses('Cost of Raw Materials', MaterialRow)
           this.generateClasses('Cost of Bought in Goods - Consumables and bought in parts', BoughtInParts)

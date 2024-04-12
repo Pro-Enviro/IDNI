@@ -1,7 +1,7 @@
 <section>
-  <div class="flex align-items-center flex-column">
-    <div class="w-5 p-4 flex flex-column align-items-center">
-      <h3 class="header-style">The Productivity & Emissions Tool</h3>
+  <div class="flex align-items-start ">
+    <div class="w-5 p-0 pr-5 flex flex-column align-items-center text-sm line-height-2 text-justify">
+      <h3 class="header-style align-self-start">The Productivity & Emissions Tool</h3>
       <p>The ID-NI Productivity & Emissions Tool (PET) is a unique and powerful tool that is easy to use and quick to provide key insights for business improvement.  By measuring the various factors that impact Productivity we can also, when blended with some additional information, enable your business to begin to measure your Scope 1, 2 and 3 emissions at your site.</p>
       <p>The important distinction for our PET is that it is not just about measuring how productive you are, it is highlighting those main factors that are impacting that productivity score and therefore determining your performance.  Likewise we can calculate your emissions, using the same factors that determine your Productivity, to show how and where you are performing well or poorly.  The low hanging fruit will typically be those areas that are high cost and high emissions, by solving one you improve the other.</p>
       <p>Productivity is well understood and easily measured in a number ways by any economist.  As a business term, it is roughly understood but seldom calculated.  The Office of National Statistics have provided a clear model for how businesses should calculate their own Productivity based on their business Turnover on their particular site, the number of employees at that site and the total external costs incurred at that site.  The ID-NI Productivity & Emissions Tool PET goes a few steps further.  Our PET is designed to not only focus on the main Factors those external costs, bring clarity to those costs, allow the company to begin measurement to those costs, both financially and in emissions generated.</p>
@@ -33,29 +33,28 @@
         </div>
       </p-sidebar>
 
-      <p-button type="button" classClass="mr-2 btn-style"  (click)="sidebarVisible = true" icon="pi pi-arrow-left" label="Using the PET Tool"></p-button>
+      <p-button type="button" size="small" classClass="btn-dark mb-3" [style]="{marginTop:'30px'}" (click)="sidebarVisible = true" icon="pi pi-arrow-left" label="Using the PET Tool"></p-button>
+
+      <p-card header="{{isConsultant ? 'Select Company' : ''}}" styleClass="card-charts" class="col-12 mt-2">
+        <div  *ngIf="isConsultant">
+          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant" ></p-dropdown>
+        </div>
+
+        <div style="display: flex; flex-direction: column">
+          <label for="sic_code">SIC Code</label>
+          <input pInputText id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" [style]="{width: '15rem', marginTop: '0.5rem', fontSize: '12px'}" placeholder="Enter your SIC Code. E.g. 43999"/>
+          <p style="font-weight: 400" class="text-sm mt-5" *ngIf="sicCodeLetter.length">SIC Code Letter: <span class="font-bold">{{sicCodeLetter}}</span></p>
+        </div>
+      </p-card>
     </div>
 
 
-<!--  <div class="flex align-items-center flex-column">-->
+  <div class="flex flex-column align-items-center">
 <!--    <div class="col-3">-->
-      <p-card header="Select Company" styleClass="card-charts">
-
-        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant"></p-dropdown>
 
 
-        <div style="display: flex; flex-direction: column">
-          <label for="sic_code">SIC code</label>
-          <input pInputText id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" [style]="{width: '15rem', marginTop: '0.5rem', fontSize: '12px'}"/>
-          <p style="font-weight: 500" *ngIf="sicCodeLetter.length">SIC Code Letter: {{sicCodeLetter}}</p>
-        </div>
-      </p-card>
-<!--    </div>-->
-
-
-
-    <div class="card flex mt-5" >
-      <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines" [style]="{maxWidth: '50vw', width: '40vw'}" dataKey="parent.name"
+    <div class="card" >
+      <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines" [style]="{maxWidth: '60vw', width: '50vw'}" dataKey="parent.name"
                rowGroupMode="subheader" groupRowsBy="parent.name" [customSort]="true" *ngIf="selectedCompany">
 
         <ng-template pTemplate="header">
@@ -92,7 +91,7 @@
               <button type="button" pButton pRipple [pRowToggler]="groups"
                       class="p-button-text p-button p-button-plain p-button-sm mr-2"
                       [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-              <span class="font-bold ml-2 ">{{ groups.parent.name }}</span>
+              <span class="font-medium ml-2 text-xs">{{ groups.parent.name }}</span>
             </td>
             <td>
 
@@ -107,7 +106,7 @@
 
 
           <!--   Dynamic titles       -->
-          <tr *ngIf="expanded" style="border-bottom: 2px solid black; font-weight: 700" >
+          <tr *ngIf="expanded" style="border-bottom: 2px solid black; font-weight: 500" >
             <td *ngIf="groups.name !== undefined"></td>
             <td *ngIf="groups.unitsUom !== undefined">Unit Uom</td>
             <td *ngIf="groups.mode !== undefined">Mode</td>
@@ -145,7 +144,7 @@
                   <input pInputText type="text" [(ngModel)]="groups.name" class="p-inputtext-sm" />
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{ groups.name }}
+                  <p class="font-normal">{{ groups.name }}</p>
                 </ng-template>
               </p-cellEditor>
             </td>
@@ -222,7 +221,7 @@
           <tr>
             <td>Productivity Score</td>
             <td>
-<!--              {{calculateProductivityScore()}}-->
+              <!--              {{calculateProductivityScore()}}-->
               {{productivityScore.toLocaleString('en-US', twoDecimalPlaces)}}
             </td>
             <td></td>
@@ -296,21 +295,21 @@
 
           </tr>
           <tr style="background-color: #fff" *ngIf="groups.parent.addRows">
-            <td colspan="5">
-              <p-button icon="pi pi-plus" label="Add new row" (click)="createNewTableRow(groups)" styleClass="btn-dark mt-3 mb-3"></p-button>
+            <td colspan="6">
+              <p-button icon="pi pi-plus" size="small" label="Add new row" (click)="createNewTableRow(groups)" styleClass="btn-dark mt-3 mb-3"></p-button>
             </td>
           </tr>
         </ng-template>
 
       </p-table>
+    </div>
+  </div>
 
+  </div>
 
-
-      <div class="mt-5" style="overflow-x: hidden;" *ngIf="this.chartData">
-        <div class="flex justify-content-start">
-          <div echarts [options]="chartOptions" style="max-height: 50vh; height: 50vh; width: 40vw"></div>
-        </div>
-      </div>
+  <div class="mt-5" style="overflow-x: hidden;" *ngIf="this.chartData">
+    <div class="flex justify-content-start">
+      <div echarts [options]="chartOptions" style="max-height: 80vh; height: 70vh; width: 70vw"></div>
     </div>
   </div>
 </section>
