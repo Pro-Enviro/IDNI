@@ -174,10 +174,11 @@ export class PetLoginProtected implements OnInit {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
               this.companies = res.data;
+              this.selectedCompany = res.data[0].id
               this.isConsultant = true;
             }
           })
-        }
+      }
 
       }
     })
@@ -538,6 +539,7 @@ export class PetLoginProtected implements OnInit {
     this.fuels = []
 
     if (this.selectedCompany) {
+
       this.track.getFuelData(this.selectedCompany).subscribe({
         next: (res: any) => {
           if (res?.data?.fuel_data) {

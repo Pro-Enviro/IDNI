@@ -16,11 +16,11 @@ import {CardModule} from "primeng/card";
 import {DropdownModule} from "primeng/dropdown";
 import {DbService} from "../../_services/db.service";
 import {InputMaskModule} from "primeng/inputmask";
-import {NG_VALIDATORS} from '@angular/forms';
 import {NgClass} from "@angular/common";
 import {Message, MessageService} from "primeng/api";
 import {DividerModule} from "primeng/divider";
 import {Router, RouterLink} from "@angular/router";
+import {AuthService} from "../../_services/users/auth.service";
 
 
 @Component({
@@ -50,7 +50,7 @@ import {Router, RouterLink} from "@angular/router";
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent{
+export class RegisterComponent implements OnInit {
   first_name:string = '';
   last_name:string = '';
   email:string = '';
@@ -88,7 +88,6 @@ export class RegisterComponent{
   selectedOnSiteGeneration?:any;
   onSiteGeneration?:string;
   otherOnSiteGeneration:string = '';
-  messages!: Message[];
 
   energyTypes:any = [
     {name:'Oil', value:'oil'},
@@ -124,10 +123,7 @@ export class RegisterComponent{
     {name:'Other', value:'other'}
   ]
 
-
-
-  constructor(private db: DbService,private msg: MessageService , private router: Router) {
-  }
+  constructor(private db: DbService,private msg: MessageService , private router: Router, private auth: AuthService) {}
 
   onSubmit = () => {
     const userObj = {
@@ -175,7 +171,7 @@ export class RegisterComponent{
     }
 
     if (this.checkInputs()){
-      this.db.addCompany(['*'], formObj, userObj).subscribe({
+      this.db.addCompany(['*',], formObj, userObj).subscribe({
         next: (res) => {
         this.first_name = ''
           this.last_name = ''
@@ -214,6 +210,8 @@ export class RegisterComponent{
           this.policy_cosi = false
           this.policy_idni = false
           this.policy_bill = false
+
+          console.log(res)
 
           this.msg.add({
             severity:'success',
@@ -285,4 +283,17 @@ export class RegisterComponent{
   }
 
 
+  // getUserRoles = async () => {
+  //   this.auth.getUserRoles().subscribe({
+  //     next: (res: any) => {
+  //       if (!res) return;
+  //       console.log(res)
+  //       this.userRole = res.data
+  //     }
+  //   })
+  // }
+
+  ngOnInit(){
+    // this.getUserRoles()
+  }
 }
