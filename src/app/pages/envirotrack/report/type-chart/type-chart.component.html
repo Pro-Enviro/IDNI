@@ -1,6 +1,6 @@
 <p-card styleClass="card-charts">
   <div class="col-4">
-    <p-card header="Select Company" styleClass="card-select-panel">
+    <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant">
       <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id"
                   (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" ></p-dropdown>
 <!--      <p-multiSelect [options]="yearFilter" optionLabel="name" optionName="value" [(ngModel)]="selectedYears"-->
