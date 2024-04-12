@@ -185,6 +185,7 @@ export class PetLoginProtected implements OnInit {
 
 
   getPETReport = (id: number) => {
+    if (!id) return;
     this.db.getPetData(id).subscribe({
       next: (res: any) => {
         if (res.data.PET_Data) {

@@ -91,6 +91,7 @@ export class GenerateReportComponent implements OnInit {
             next: (res: any) => {
               this.companies = res.data;
               this.isConsultant = true
+
             }
           })
         }
@@ -102,8 +103,11 @@ export class GenerateReportComponent implements OnInit {
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getReportValues(this.selectedCompany)
   }
-  getReportValues = (selectedCompany: number) => {
 
+
+
+  getReportValues = (selectedCompany: number) => {
+    if (!selectedCompany) return;
     this.db.getRecommendations(selectedCompany).subscribe({
       next: (res: any) => {
         if (res?.data?.recommendations) {
