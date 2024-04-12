@@ -8,7 +8,7 @@
 
 
       <p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="w-5" >
-        <div class="p-5">
+        <div class="p-5 text-sm">
           <h3 class="header-style">Using the PET Tool</h3>
           <p>There are 4 levels of engagement using the PET tool.  At no stage will one business be able to identify and see another businesses data.  Levels 1 & 2 are free to use, Level 1 is available to everyone but only businesses that have agreed to share their data for the ID-NI project will be able to use Level 2.  Level 3 is also free to use but is only available to companies who have been selected as part of a regional cluster of companies.  Like level 2, level 3 requires that the company has agreed to share their data with the project.  All Level 2 companies who have submitted accurate data will receive charts profiling their energy usage, an indication of the Scope 2 emissions and an initial plan for decarbonisation.  Level 3 companies will received a more detailed decarbonisation plan highlighting how they can save money and reduce their Scope 1 and 2 emissions.  They will also have a 1 day site visit and an individual detailed report.  Level 4 is self funded but also requires the company to share their data with the project.  It is subject to negotiation between the  company and the assessor but cover something equivalent to a Level 3 assessment or may deliver a much more detailed decarbonisation strategy for the business or them signing up to the Science Based Targets Initiative SBTI at an additional cost.</p>
           <h3>Level 1</h3>
@@ -69,7 +69,7 @@
               <p>Turnover</p>
             </th>
             <th colspan="5">
-              <p-inputNumber inputId="turnover" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
+              <p-inputNumber inputId="turnover" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
                              [(ngModel)]="turnover" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
             </th>
 
@@ -79,7 +79,7 @@
               <p>Number Of Employees</p>
             </th>
             <th colspan="5">
-              <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
+              <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
                              [(ngModel)]="employees" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
             </th>
           </tr>
@@ -94,12 +94,11 @@
               <span class="font-medium ml-2 text-xs">{{ groups.parent.name }}</span>
             </td>
             <td>
-
-              <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '150px'}"
+              <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
                              [(ngModel)]="groups.parent.totalCost" (ngModelChange)="calculatePerEmployeeCost(groups)"></p-inputNumber>
             </td>
             <td colspan="4">
-              {{groups.parent.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}
+              <p class="ml-3" *ngIf="groups.parent.secondColumn !== 0">{{groups.parent.secondColumn.toLocaleString('en-US', twoDecimalPlaces)}}</p>
             </td>
             <!--            <td colspan="4"></td>-->
           </tr>
@@ -138,7 +137,7 @@
               <p-dropdown  [options]="materialFormats" class="p-inputtext-sm" [style]="{width:'120px'}" [(ngModel)]="groups.format"></p-dropdown>
             </td>
 
-            <td [pEditableColumn]="groups.name" pEditableColumnField="name" *ngIf="groups.parent.name !== 'Cost of Raw Materials'">
+            <td [pEditableColumn]="groups.name" pEditableColumnField="name" *ngIf="groups.parent.name !== 'Cost of Raw Materials'" >
               <p-cellEditor>
                 <ng-template pTemplate="input">
                   <input pInputText type="text" [(ngModel)]="groups.name" class="p-inputtext-sm" />
@@ -212,14 +211,14 @@
         <ng-template pTemplate="footer">
 
           <tr>
-            <td>Total External Cost</td>
+            <td class="pl-2 py-2 font-semibold">Total External Cost</td>
             <td>
               {{externalCost}}
             </td>
             <td></td>
           </tr>
           <tr>
-            <td>Productivity Score</td>
+            <td class="pl-2 py-2 font-semibold">Productivity Score</td>
             <td>
               <!--              {{calculateProductivityScore()}}-->
               {{productivityScore.toLocaleString('en-US', twoDecimalPlaces)}}
@@ -229,41 +228,41 @@
           <tr>
           </tr>
           <tr>
-            <td>ONS Productivity Comparison</td>
+            <td class="pl-2 py-2 font-semibold">ONS Productivity Comparison</td>
             <td >{{productivityPercentile}}</td>
             <td></td>
           </tr>
           <tr>
-            <td>Innovation - % of Turnover from Products <3 years</td>
+            <td class="pl-2 py-2 font-semibold">Innovation - % of Turnover from Products <3 years</td>
             <td>
               <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
                              [(ngModel)]="innovationPercent"
               ></p-inputNumber>
             </td>
             <td>
-              {{ (turnover * (innovationPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}
+              <p class="ml-3" *ngIf="innovationPercent !== 0">{{ (turnover * (innovationPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}</p>
             </td>
           </tr>
           <tr>
-            <td>Training - % of Staff in Training (On the Job, PT-FE, Prof'snl or Post Grad)</td>
+            <td class="pl-2 py-2 font-semibold">Training - % of Staff in Training (On the Job, PT-FE, Prof'snl or Post Grad)</td>
             <td>
               <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
                              [(ngModel)]="staffTrainingPercent"
               ></p-inputNumber>
             </td>
             <td>
-              {{ (employees * (staffTrainingPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}
+              <p class="ml-3" *ngIf="staffTrainingPercent !== 0">{{ (employees * (staffTrainingPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}</p>
             </td>
           </tr>
           <tr>
-            <td>Export - % of Turnover from Export</td>
+            <td class="pl-2 py-2 font-semibold">Export - % of Turnover from Export</td>
             <td>
               <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
                              [(ngModel)]="exportPercent"
               ></p-inputNumber>
             </td>
             <td>
-              {{ (turnover * (exportPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}
+              <p class="ml-3" *ngIf="exportPercent !== 0"> {{ (turnover * (exportPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}</p>
             </td>
           </tr>
           <tr>
