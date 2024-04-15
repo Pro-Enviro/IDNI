@@ -295,7 +295,7 @@
           </tr>
           <tr style="background-color: #fff" *ngIf="groups.parent.addRows">
             <td colspan="6" class="pl-2">
-              <p-button icon="pi pi-plus" size="small" label="Add new row" (click)="createNewTableRow(groups)" styleClass="btn-dark mt-3 mb-3"></p-button>
+              <p-button icon="pi pi-plus" size="small" label="Add new {{groups.buttonName}}" (click)="createNewTableRow(groups)" styleClass="btn-dark mt-3 mb-3"></p-button>
             </td>
           </tr>
         </ng-template>

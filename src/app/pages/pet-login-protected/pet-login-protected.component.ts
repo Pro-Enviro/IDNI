@@ -92,7 +92,7 @@ export class PetLoginProtected implements OnInit {
   otherExternalCostsRow = {
     name: 'Other External Costs (Legal, rental, accounting etc)',
     totalCost: 0,
-    secondColumn: 0
+    secondColumn: 0,
   }
   // TableRows
   rows: TableRow[] = []
@@ -399,7 +399,6 @@ export class PetLoginProtected implements OnInit {
       ['50', p50],
       ['75', p75],
       ['90', p90],
-      // ['100', null]
       ['100', p90 * 1.5]
     ]
 

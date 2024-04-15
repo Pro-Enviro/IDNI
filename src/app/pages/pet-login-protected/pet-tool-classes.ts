@@ -13,6 +13,7 @@ import {
 export class SubTable {
   cost: number = 0
   secondColumn: number = 0
+
   parent: { name: string, addRows: boolean, totalCost: number, secondColumn: number } = {
     name: '',
     totalCost: 0,
@@ -23,6 +24,7 @@ export class SubTable {
 
 export class MaterialRow extends SubTable {
   name: string = 'Material Type'
+  buttonName: string = 'Raw Material'
   type: MaterialTypes = 'Steel'
   subtype: SteelMaterials | OtherMetals | Plastics | OtherMaterials | undefined
   format: MaterialFormats | undefined
@@ -34,25 +36,30 @@ export class MaterialRow extends SubTable {
 
 export class BoughtInParts extends SubTable {
   name: string = 'Description of Part'
+  buttonName: string = 'Bought in Goods'
   noOfParts: number = 0
   unitOfCost: UnitsOfCost = 'Select'
   regionOfOrigin: RegionsOfOrigin = 'UK'
+
 }
 
 export class WaterUsage extends SubTable {
-  name: string = 'Water Usage description '
+  name: string = 'Water Usage description'
+  buttonName: string = 'Water Usage'
   totalUnits: number = 0
   unitsUom: UnitsUom = 'Select'
 }
 
 export class Waste extends SubTable {
   name: string = 'Description of Waste stream'
+  buttonName: string = 'Waste Stream'
   unitsUom: UnitsUom = 'Select'
   totalUnits: number = 0
 }
 
 export class RoadFreight extends SubTable {
   name: string = 'Road Freight description'
+  buttonName: string = 'Road Freight'
   mode: ModeOfTransport = 'Select'
   fuelType: FuelTypes = 'Select'
   approxMileage: number = 0
@@ -60,6 +67,7 @@ export class RoadFreight extends SubTable {
 
 export class OtherFreightTransportation extends SubTable {
   name: string = 'Other Freight description'
+  buttonName: string = 'Other Freight'
   otherModes: OtherModesOfTransport = 'Select'
   route: Routes = 'Select'
   approxMileage = 0
@@ -67,12 +75,14 @@ export class OtherFreightTransportation extends SubTable {
 
 export class CompanyTravel extends SubTable {
   name: string = 'Company Travel description'
+  buttonName: string = 'Company Travel'
   companyModeOfTransport: CompanyModesOfTransport = 'Select'
   approxMileage: number = 0;
 }
 
 export class StaffCommute {
   name: string = 'Staff Commute description'
+  buttonName: string = 'Staff Commute'
   staffCommute: StaffCommuteModes = 'Select'
   percentStaff: number = 0
   distance: number = 0
@@ -93,6 +103,7 @@ export class TableRow {
   cost: number = 0
   unitOfCost: UnitsOfCost = 'Select'
   regionOfOrigin: RegionsOfOrigin = 'UK'
+  buttonName: string = ''
   parent?: { name: string, secondColumn: number, totalCost: number } = {
     name: '',
     secondColumn: 0,
@@ -112,4 +123,5 @@ export class GroupItem {
 
 export class OtherExternalCosts extends SubTable {
   name: string = ''
+  buttonName: string = 'Other External Cost'
 }
