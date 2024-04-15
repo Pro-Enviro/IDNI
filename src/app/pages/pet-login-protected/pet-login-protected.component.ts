@@ -36,7 +36,7 @@ import {
   CompanyModesOfTransport,
   ModeOfTransport,
   Plastics,
-  StaffCommuteModes, PetToolData,
+  StaffCommuteModes, PetToolData, years,
 } from "./pet-tool-types";
 import {
   TableRow,
@@ -115,7 +115,8 @@ export class PetLoginProtected implements OnInit {
   plastics: Plastics[] = ['ABS', 'PA', 'PET', 'PP', 'PU', 'POM', 'PEEK', 'PE', 'PVC', 'PPS', 'Elastomers', 'Composites', 'Textiles']
   otherMaterials: OtherMaterials[] = ['Composites', 'Textiles', 'Cement', 'Aggregate', 'Sand', 'Glass', 'Chemicals', 'Hardwood', 'Softwood']
   materialFormats: MaterialFormats[] = ['Sheet', 'Profile', 'Filament/Fibre', 'Ingot/Billet', 'Natural State', 'Powder', 'Granule', 'Liquid', 'Gas', 'Recyclate']
-
+  years = years
+  selectedYear: string = years[0] || '2024'
   data: any = []
   twoDecimalPlaces = {minimumFractionDigits: 0, maximumFractionDigits: 2,}
   productivityData!: any// Excel spreadsheet
@@ -130,7 +131,7 @@ export class PetLoginProtected implements OnInit {
   markStart: number | undefined
   markEnd: number | undefined
   isConsultant: boolean = false;
-
+  allPetData: PetToolData[] = []
 
 
 
@@ -184,26 +185,34 @@ export class PetLoginProtected implements OnInit {
     })
   }
 
+  onSelectYear = () => {
+    // WIP
+    console.log(this.data)
+  }
+
 
   getPETReport = (id: number) => {
     if (!id) return;
+
     this.db.getPetData(id).subscribe({
       next: (res: any) => {
-        if (res.data.PET_Data) {
-          console.log('Getting pet data')
-          const data: PetToolData = JSON.parse(res.data.PET_Data)
-          this.data = data.defaultData || []
-          this.employees = data.employees || 0
-          this.turnover = data.turnover || 0
-          this.staffTrainingPercent = data.staffTrainingPercent || 0
-          this.sicCode = data.sicNumber || ''
-          this.sicCodeLetter = data.sicLetter || ''
-          this.productivityScore = data.productivityScore || 0
-          this.innovationPercent = data.innovationPercent || 0
-          this.exportPercent = data.exportPercent || 0
-          this.productivityPercentile = data.productivityPercentile || ''
-          this.markStart = data.markStart || 0
-          this.markEnd = data.markEnd || 0
+        console.log(res)
+        if (res.data.length) {
+          let data = res.data;
+          this.allPetData = res.data;
+
+          this.data = data[0].defaultData || []
+          this.employees = data[0].number_of_employees || 0
+          this.turnover = data[0].turnover || 0
+          this.staffTrainingPercent = data[0].training_percent || 0
+          this.sicCode = data[0].sic_number || ''
+          this.sicCodeLetter = data[0].sic_letter || ''
+          this.productivityScore = data[0].productivity_score || 0
+          this.innovationPercent = data[0].innovation_percent || 0
+          this.exportPercent = data[0].export_percent || 0
+          this.productivityPercentile = data[0].productivity_comparison || ''
+          this.markStart = data[0].mark_start || 0
+          this.markEnd = data[0].mark_end || 0
 
           this.calculateProductivityComparison()
 
@@ -683,18 +692,19 @@ export class PetLoginProtected implements OnInit {
 
   savePETdata = () => {
     const objectToSave: PetToolData = {
-      sicNumber: this.sicCode,
-      sicLetter: this.sicCodeLetter,
+      // defaultData: this.data,
+      company_id: this.selectedCompany,
+      sic_number: this.sicCode,
+      sic_letter: this.sicCodeLetter,
       turnover: this.turnover,
-      employees: this.employees,
-      defaultData: this.data,
-      productivityScore: this.productivityScore,
-      innovationPercent: this.innovationPercent,
-      staffTrainingPercent: this.staffTrainingPercent,
-      exportPercent: this.exportPercent,
-      productivityPercentile: this.productivityPercentile,
-      markStart: this.markStart,
-      markEnd: this.markEnd,
+      number_of_employees: this.employees,
+      productivity_score: this.productivityScore,
+      innovation_percent: this.innovationPercent,
+      training_percent: this.staffTrainingPercent,
+      export_percent: this.exportPercent,
+      productivity_comparison: this.productivityPercentile,
+      mark_start: this.markStart,
+      mark_end: this.markEnd,
     }
 
 
@@ -704,18 +714,22 @@ export class PetLoginProtected implements OnInit {
     if (!token) return;
 
 
-    this.db.savePetData(this.selectedCompany, {
-      PET_Data: JSON.stringify(objectToSave)
-    },).subscribe({
-      next: (res: any) => {
-        this.msg.add({
-          severity: 'success',
-          detail: 'Data saved'
-        })
-      },
-      error: (error) => console.log(error)
-    })
-  }
+    // Check if already saved - if not post a new row to pet_data
+    // if () {
+    //
+    // } else {
+      this.db.savePetData(this.selectedCompany, objectToSave).subscribe({
+        next: (res: any) => {
+          this.msg.add({
+            severity: 'success',
+            detail: 'Data saved'
+          })
+        },
+        error: (error) => console.log(error)
+      })
+    }
+
+  // }
 
 
   ngOnInit() {

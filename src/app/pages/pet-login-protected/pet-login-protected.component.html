@@ -45,6 +45,11 @@
           <input pInputText id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" [style]="{width: '15rem', marginTop: '0.5rem', fontSize: '12px'}" placeholder="Enter your SIC Code. E.g. 43999"/>
           <p style="font-weight: 400" class="text-sm mt-5" *ngIf="sicCodeLetter.length">SIC Code Letter: <span class="font-bold">{{sicCodeLetter}}</span></p>
         </div>
+
+        <div>
+          <p-dropdown [options]="years" [(ngModel)]="selectedYear"  (ngModelChange)="onSelectYear()" [style]="{ width: '15rem', marginBottom: '2rem'}" ></p-dropdown>
+        </div>
+
       </p-card>
     </div>
 
@@ -59,7 +64,7 @@
 
         <ng-template pTemplate="header">
           <tr>
-            <th class="font-semibold p-3 col-5">Productivity Factors Year 2024</th>
+            <th class="font-semibold p-3 col-5">Productivity Factors Year {{selectedYear}}</th>
             <th class="font-semibold p-3 col-1">Value</th>
             <th class="font-semibold p-3" colspan="4">Per Employee Cost</th>
             <!--            <th ></th>-->
@@ -106,7 +111,12 @@
 
           <!--   Dynamic titles       -->
           <tr *ngIf="expanded" style="border-bottom: 2px solid black; font-weight: 500" >
-            <td *ngIf="groups.name !== undefined"></td>
+            <td *ngIf="groups.name !== undefined && groups.parent.name !== 'Cost of Raw Materials'"></td>
+            <td *ngIf="groups.parent.name === 'Cost of Raw Materials'">
+              <span class="mr-4 ml-1 text-xs">General Material</span>
+              <span class="mr-5 text-xs">Specific Material</span>
+              <span class="text-xs">Format</span>
+            </td>
             <td *ngIf="groups.unitsUom !== undefined">Unit Uom</td>
             <td *ngIf="groups.mode !== undefined">Mode</td>
             <td *ngIf="groups.fuelType !== undefined">Fuel Type</td>

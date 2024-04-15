@@ -15,18 +15,20 @@ export type OtherMaterials = 'Composites' | 'Textiles' | 'Cement' | 'Aggregate' 
 export type MaterialFormats = 'Sheet' |  'Profile' |  'Filament/Fibre' |  'Ingot/Billet' |  'Natural State' |  'Powder' |  'Granule' |  'Liquid' |  'Gas' |  'Recyclate'
 
 export interface PetToolData {
-  defaultData: {}[]
-  employees: number
-  exportPercent: number
-  markEnd: number | undefined
-  markStart: number | undefined
-  productivityPercentile: string
-  productivityScore: number
-  sicLetter: string
-  sicNumber: string
-  staffTrainingPercent: number
+  defaultData?: {}[],
+  company_id: number
+  number_of_employees: number
+  export_percent: number
+  mark_end: number | undefined
+  mark_start: number | undefined
+  productivity_comparison: string
+  productivity_score: number
+  sic_letter: string
+  sic_number: string
+  training_percent: number
   turnover: number,
-  innovationPercent: number
+  innovation_percent: number
 }
 
 export const energyNames: string[] = ['Electricity', 'Natural Gas (Grid)', 'Natural Gas off Grid', 'Bio Gas Off Grid', 'LPG', 'Oil', 'Kerosene', 'Bio Fuels', 'Bio Mass', 'Coal for Industrial use', 'Other']
+export const years: string[] = ['2024','2023','2022']

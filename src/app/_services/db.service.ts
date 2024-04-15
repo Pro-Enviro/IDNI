@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
+import {PetToolData} from "../pages/pet-login-protected/pet-tool-types";
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +27,11 @@ export class DbService {
   }
 
   getPetData = (id: number) =>{
-    return this.http.get(`${this.url}/items/companies/${id}?fields=PET_Data`)
+    return this.http.get(`${this.url}/items/pet_data?filter[company_id][_eq]=${id}`)
   }
 
-  savePetData = (id: number, data: { PET_Data: string }) => {
-    return this.http.patch(`${this.url}/items/companies/${id}?fields=PET_Data`, data)
+  savePetData = (id: number, data: PetToolData) => {
+    return this.http.post(`${this.url}/items/pet_data`, data)
   }
 
   getRecommendations = (companyId: number) => {
