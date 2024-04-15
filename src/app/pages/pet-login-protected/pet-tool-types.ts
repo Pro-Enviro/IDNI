@@ -28,6 +28,16 @@ export interface PetToolData {
   training_percent: number
   turnover: number,
   innovation_percent: number
+
+  cost_of_energy: string
+  cost_of_raw_materials: string
+  cost_of_bought_in_goods: string
+  water_usage: string
+  waste: string
+  road_freight: string
+  other_freight: string
+  company_travel: string
+  staff_commute: string
 }
 
 export const energyNames: string[] = ['Electricity', 'Natural Gas (Grid)', 'Natural Gas off Grid', 'Bio Gas Off Grid', 'LPG', 'Oil', 'Kerosene', 'Bio Fuels', 'Bio Mass', 'Coal for Industrial use', 'Other']

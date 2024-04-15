@@ -214,6 +214,8 @@ export class PetLoginProtected implements OnInit {
           this.markStart = data[0].mark_start || 0
           this.markEnd = data[0].mark_end || 0
 
+          // this.data.push(JSON.parse(data[0].cost_of_raw_materials))
+
           this.calculateProductivityComparison()
 
         } else {
@@ -705,8 +707,20 @@ export class PetLoginProtected implements OnInit {
       productivity_comparison: this.productivityPercentile,
       mark_start: this.markStart,
       mark_end: this.markEnd,
+      cost_of_energy: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Cost of Energy')),
+      cost_of_raw_materials: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Cost of Raw Materials')),
+      cost_of_bought_in_goods: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Cost of Bought in Goods - Consumables and bought in parts')),
+      water_usage: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Water Usage')),
+      waste: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Waste')),
+      road_freight: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Road Freight')),
+      other_freight: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Other Freight')),
+      company_travel: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Company Travel')),
+      staff_commute: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Staff Commute')),
     }
 
+
+
+    return console.log(objectToSave)
 
     if (!this.selectedCompany) return;
 
