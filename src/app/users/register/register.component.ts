@@ -219,6 +219,16 @@ export class RegisterComponent implements OnInit {
             detail:'You have successfully registered.'
           })
           this.router.navigate(['successful-registration'])
+        },
+        error:(err) => {
+         const errorMsg = err.error.errors[0].message
+          if(errorMsg === 'Value for field "email" in collection "directus_users" has to be unique.'){
+            return this.msg.add({
+              severity:'error',
+              summary: 'User Already Exists !',
+              detail:'Please, register with another email address !'
+            })
+          }
         }
       })
     } else{
