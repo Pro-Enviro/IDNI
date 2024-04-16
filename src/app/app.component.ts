@@ -10,13 +10,16 @@ import {FooterComponent} from "./_partials/footer/footer.component";
 import {MessageService} from "primeng/api";
 import {MessagesModule} from "primeng/messages";
 import {ToastModule} from "primeng/toast";
+import {RegisterComponent} from "./users/register/register.component";
+import {RegisterSuccessPageComponent} from "./users/register/register-success-page/register-success-page.component";
+import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
   providers: [MessageService],
-  imports: [CommonModule, RouterOutlet, HeaderTopComponent, HeroComponent, InfoComponent, LandingPageComponent, PetComponent, FooterComponent, MessagesModule, ToastModule],
+  imports: [CommonModule, RouterOutlet, HeaderTopComponent, HeroComponent, InfoComponent, LandingPageComponent, PetComponent, FooterComponent, MessagesModule, ToastModule, RegisterComponent, RegisterSuccessPageComponent, DashboardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

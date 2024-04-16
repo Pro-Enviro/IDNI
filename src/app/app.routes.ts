@@ -93,8 +93,10 @@ import {RegisterSuccessPageComponent} from "./users/register/register-success-pa
 
 
 export const routes: Routes = [
+/*
 
-  {path: '', component: LandingPageComponent},
+
+  //{path: '', component: LandingPageComponent},
   {path:'home',component: LandingPageComponent},
   {path:'data-privacy-policy',component:DataPrivacyComponent},
   {path: 'pet', component: PetComponent},
@@ -148,10 +150,12 @@ export const routes: Routes = [
 
     ]
   },
+*/
 
 
 
-  {path:'dashboard',component:DashboardComponent, canActivate: [authGuard], canActivateChild: [authGuard], children: [
+
+/*  {path:'',component:DashboardComponent, canActivate: [authGuard], canActivateChild: [authGuard], children: [
       {path: '', component: DasboardWidgetsComponent},
       {path: 'import', component: ImportEnvirotrackComponent},
       {path: 'fuel-data', component: DataCaptureSpreadsheetFuelsComponent},
@@ -174,7 +178,7 @@ export const routes: Routes = [
 
     ]
   },
-  {path: '**', redirectTo: ''}
+  {path: '**', redirectTo: ''}*/
 ];
 
 
