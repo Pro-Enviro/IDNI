@@ -98,7 +98,7 @@
       <div class="field flex flex-column p-2">
         <label>Website</label>
         <p-inputGroup>
-          <p-inputGroupAddon>
+          <p-inputGroupAddon [style]="{ height: '41px', minWidth:'20px' }">
             <i class="pi pi-globe"></i>
           </p-inputGroupAddon>
           <input id="website_url" type="text" pInputText name="website_url" [(ngModel)]="website_url"/>
@@ -217,21 +217,23 @@
 
   <div class="container p-3">
     <h2 class="header-style">Privacy Policy</h2>
-    <div class="">
+    <div class="flex">
       <p-checkbox [binary]="true" inputId="policy" name="policy" [(ngModel)]="policy" value="policy" [required]="true"></p-checkbox>
       <label class="pl-2">I agree with the terms and conditions<span style="color:#006633;padding-left:5px">*</span></label>
     </div>
-    <div class="pt-3">
+    <div class="pt-3 flex">
       <p-checkbox [binary]="true" inputId="policy_cosi" name="policy" [(ngModel)]="policy_cosi" value="policy_cosi" [required]="true"></p-checkbox>
       <label class="pl-2">I agree to be part of COSI/Cluster.</label>
     </div>
-    <div class="pt-3">
+    <div class="pt-3 flex">
       <p-checkbox [binary]="true" inputId="policy_bill" name="policy_bill" [(ngModel)]="policy_bill" value="policy_bill" [required]="true"></p-checkbox>
       <label class="pl-2">Your company/organisation is content to provide some initial high-level electricity and/or gas data to the IDNI project.<span style="color:#006633;padding-left:5px">*</span></label>
+    </div>
+    <div class="pl-5">
       <p><small>This data will need to be in the form of a maximum of 12 months energy usage data, such as half-hourly energy usage information,which will you find on your utility bill, or by contacting your utility bill provider.
         If this is not available, a spreadsheet of the similar information may be acceptable.</small></p>
     </div>
-    <div class="">
+    <div class="flex">
       <p-checkbox [binary]="true" inputId="policy_idni" name="policy_idni" [(ngModel)]="policy_idni" value="policy_idni" [required]="true"></p-checkbox>
       <label class="pl-2"> Your company/organisation is content to allow the IDNI partnership team to collate and assess any data collected as part of this project and to share the findings of any data analysis anonymously to allow collective decarbonisation plans to be developed?<span style="color:#006633;padding-left:5px">*</span></label>
       @if(policy_idni && policy && policy_bill){
