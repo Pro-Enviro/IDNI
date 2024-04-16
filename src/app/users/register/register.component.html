@@ -111,108 +111,6 @@
     </div>
   </div>
 
-<!--  <div class="container p-3">-->
-<!--    <div class="pet-card">-->
-<!--      <h3 style="font-size: 1.5rem;">Energy Costs Information</h3>-->
-<!--      <p style="color:#85bfba">Please fill in the information if applicable !</p>-->
-<!--      <div class="field flex flex-column p-3">-->
-<!--        <label>Energy Cost</label>-->
-<!--        <div class="grid">-->
-<!--          <div class="lg:col-4 sm:col-12 p-2">-->
-<!--            <p-dropdown [options]="energyTypes" [(ngModel)]="selectedEnergyType" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Energy Type" appendTo="body" styleClass="mr-5"></p-dropdown>-->
-<!--          </div>-->
-<!--          <div class="lg:col-4 sm:col-12 p-2">-->
-<!--            <p-inputNumber id="energyTypeCost" name="energyTypeCost" inputId="integeronly" [(ngModel)]="energyTypeCost"></p-inputNumber>-->
-<!--          </div>-->
-<!--          <div class="lg:col-4 sm:col-12 p-2">-->
-<!--            <input id="otherEnergyType" type="text" name="otherEnergyType" [(ngModel)]="otherEnergyType" pInputText placeholder="Other Energy Type">-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="bottom-line mt-3"></div>-->
-<!--      </div>-->
-
-
-<!--      <div class="flex flex-column p-3">-->
-<!--        <label>Additional Energy Costs</label>-->
-<!--        <div class="field flex flex-column pt-3">-->
-<!--          <div class="grid">-->
-<!--            <div class="lg:col-6 sm:col-12 p-2">-->
-<!--              <p-dropdown [options]="energyCost" [(ngModel)]="selectedEnergyCost" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Additional Energy Costs" appendTo="body" styleClass="mr-5"></p-dropdown>-->
-<!--            </div>-->
-<!--            <div class="lg:col-6 sm:col-12 p-2">-->
-<!--              <p-inputNumber id="energyCostAdditional" name="energyCostAdditional" inputId="integeronly" [(ngModel)]="energyCostAdditional"></p-inputNumber>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="bottom-line mt-2"></div>-->
-<!--      </div>-->
-
-<!--      <div class="flex flex-column p-3">-->
-<!--        <label>Additional Energy Information</label>-->
-<!--        <div class="field flex flex-column pt-3">-->
-<!--          <div class="grid">-->
-<!--            <div class="lg:col-6 sm:col-12 p-2">-->
-<!--              <p-dropdown [options]="energyInfo" [(ngModel)]="selectedEnergyInfo" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Energy Information" appendTo="body" styleClass="mr-5"></p-dropdown>-->
-<!--            </div>-->
-<!--            <div class="lg:col-6 sm:col-12 p-2">-->
-<!--              <p-inputNumber id="additionalEnergyInfo" name="additionalEnergyInfo" inputId="integeronly" [(ngModel)]="additionalEnergyInfo"></p-inputNumber>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="bottom-line mt-2"></div>-->
-<!--      </div>-->
-
-<!--      <div class="flex flex-column p-3">-->
-<!--        <label>Onsite Generation</label>-->
-<!--        <div class="field flex flex-column pt-3">-->
-<!--          <div class="grid">-->
-<!--            <div class="lg:col-4 sm:col-12 p-2">-->
-<!--              <p-dropdown [options]="generationOptions" [(ngModel)]="selectedOnSiteGeneration" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Onsite Generation" appendTo="body" styleClass="mr-5"></p-dropdown>-->
-<!--            </div>-->
-<!--            <div class="lg:col-4 sm:col-12 p-2">-->
-<!--              <p-inputNumber id="onSiteGeneration" name="onSiteGeneration" inputId="integeronly" [(ngModel)]="onSiteGeneration"></p-inputNumber>-->
-<!--            </div>-->
-<!--            <div class="lg:col-4 sm:col-12 p-2">-->
-<!--              <input class="ml-3" id="otherOnSiteGeneration" type="text" name="otherOnSiteGeneration" [(ngModel)]="otherOnSiteGeneration" pInputText placeholder="Other Onsite Generation">-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-
-  <div class="container p-3">
-    <div class="pet-card">
-      <h3 style="font-size: 1.5rem;">Additional Information</h3>
-      <p style="color:#85bfba">Please fill in the information if applicable !</p>
-      <div class="field flex flex-column p-2">
-        <label>Total annual carbon emissions</label>
-        <input id="carbon_emissions" type="text" name="carbon_emissions" pInputText class="text-base" [(ngModel)]="carbon_emissions">
-      </div>
-
-      <div class="field flex flex-column p-2">
-        <label>Existing or anticipated land/planning/development issues or proposals</label>
-        <p><small>(or opportunities, such as spare land seeking a tenant)</small></p>
-        <input type="text" id="development_issues" name="development_issues" pInputText class="text-base" [(ngModel)]="development_issues">
-      </div>
-
-      <div class="field flex flex-column p-2">
-        <label>Specific decarbonisation challenges anticipated</label>
-        <p><small>(e.g., industrial operations that cannot be electrified)</small></p>
-        <input type="text" id="challenges" name="challenges" pInputText class="text-base" [(ngModel)]="challenges">
-      </div>
-
-      <div class="field flex flex-column p-2">
-        <label>Existing decarbonisation plans in place</label>
-        <input id="decarb_plans" type="text" name="decarb_plans" pInputText class="text-base" [(ngModel)]="decarb_plans">
-      </div>
-
-      <div class="field flex flex-column p-2">
-        <label>Circular economy opportunities/waste streams currently seen as problematic with rough volumes</label>
-        <input id="economy_opportunitie" type="text" name="economy_opportunities" pInputText class="text-base" [(ngModel)]="economy_opportunities">
-      </div>
-    </div>
-  </div>
 
   <div class="container p-3">
     <h2 class="header-style">Privacy Policy</h2>
@@ -281,3 +179,106 @@
     <p-button styleClass="btn-style mt-3" label="Submit" icon="pi pi-send" (onClick)="onSubmit()" [disabled]="!checkInputs()"></p-button>
   </div>
 
+
+  <!--  <div class="container p-3">-->
+  <!--    <div class="pet-card">-->
+  <!--      <h3 style="font-size: 1.5rem;">Energy Costs Information</h3>-->
+  <!--      <p style="color:#85bfba">Please fill in the information if applicable !</p>-->
+  <!--      <div class="field flex flex-column p-3">-->
+  <!--        <label>Energy Cost</label>-->
+  <!--        <div class="grid">-->
+  <!--          <div class="lg:col-4 sm:col-12 p-2">-->
+  <!--            <p-dropdown [options]="energyTypes" [(ngModel)]="selectedEnergyType" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Energy Type" appendTo="body" styleClass="mr-5"></p-dropdown>-->
+  <!--          </div>-->
+  <!--          <div class="lg:col-4 sm:col-12 p-2">-->
+  <!--            <p-inputNumber id="energyTypeCost" name="energyTypeCost" inputId="integeronly" [(ngModel)]="energyTypeCost"></p-inputNumber>-->
+  <!--          </div>-->
+  <!--          <div class="lg:col-4 sm:col-12 p-2">-->
+  <!--            <input id="otherEnergyType" type="text" name="otherEnergyType" [(ngModel)]="otherEnergyType" pInputText placeholder="Other Energy Type">-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--        <div class="bottom-line mt-3"></div>-->
+  <!--      </div>-->
+
+
+  <!--      <div class="flex flex-column p-3">-->
+  <!--        <label>Additional Energy Costs</label>-->
+  <!--        <div class="field flex flex-column pt-3">-->
+  <!--          <div class="grid">-->
+  <!--            <div class="lg:col-6 sm:col-12 p-2">-->
+  <!--              <p-dropdown [options]="energyCost" [(ngModel)]="selectedEnergyCost" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Additional Energy Costs" appendTo="body" styleClass="mr-5"></p-dropdown>-->
+  <!--            </div>-->
+  <!--            <div class="lg:col-6 sm:col-12 p-2">-->
+  <!--              <p-inputNumber id="energyCostAdditional" name="energyCostAdditional" inputId="integeronly" [(ngModel)]="energyCostAdditional"></p-inputNumber>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--        <div class="bottom-line mt-2"></div>-->
+  <!--      </div>-->
+
+  <!--      <div class="flex flex-column p-3">-->
+  <!--        <label>Additional Energy Information</label>-->
+  <!--        <div class="field flex flex-column pt-3">-->
+  <!--          <div class="grid">-->
+  <!--            <div class="lg:col-6 sm:col-12 p-2">-->
+  <!--              <p-dropdown [options]="energyInfo" [(ngModel)]="selectedEnergyInfo" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Energy Information" appendTo="body" styleClass="mr-5"></p-dropdown>-->
+  <!--            </div>-->
+  <!--            <div class="lg:col-6 sm:col-12 p-2">-->
+  <!--              <p-inputNumber id="additionalEnergyInfo" name="additionalEnergyInfo" inputId="integeronly" [(ngModel)]="additionalEnergyInfo"></p-inputNumber>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--        <div class="bottom-line mt-2"></div>-->
+  <!--      </div>-->
+
+  <!--      <div class="flex flex-column p-3">-->
+  <!--        <label>Onsite Generation</label>-->
+  <!--        <div class="field flex flex-column pt-3">-->
+  <!--          <div class="grid">-->
+  <!--            <div class="lg:col-4 sm:col-12 p-2">-->
+  <!--              <p-dropdown [options]="generationOptions" [(ngModel)]="selectedOnSiteGeneration" optionValue="value" optionLabel="name" [showClear]="true" placeholder="Select Onsite Generation" appendTo="body" styleClass="mr-5"></p-dropdown>-->
+  <!--            </div>-->
+  <!--            <div class="lg:col-4 sm:col-12 p-2">-->
+  <!--              <p-inputNumber id="onSiteGeneration" name="onSiteGeneration" inputId="integeronly" [(ngModel)]="onSiteGeneration"></p-inputNumber>-->
+  <!--            </div>-->
+  <!--            <div class="lg:col-4 sm:col-12 p-2">-->
+  <!--              <input class="ml-3" id="otherOnSiteGeneration" type="text" name="otherOnSiteGeneration" [(ngModel)]="otherOnSiteGeneration" pInputText placeholder="Other Onsite Generation">-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
+
+  <!--  <div class="container p-3">-->
+  <!--    <div class="pet-card">-->
+  <!--      <h3 style="font-size: 1.5rem;">Additional Information</h3>-->
+  <!--      <p style="color:#85bfba">Please fill in the information if applicable !</p>-->
+  <!--      <div class="field flex flex-column p-2">-->
+  <!--        <label>Total annual carbon emissions</label>-->
+  <!--        <input id="carbon_emissions" type="text" name="carbon_emissions" pInputText class="text-base" [(ngModel)]="carbon_emissions">-->
+  <!--      </div>-->
+
+  <!--      <div class="field flex flex-column p-2">-->
+  <!--        <label>Existing or anticipated land/planning/development issues or proposals</label>-->
+  <!--        <p><small>(or opportunities, such as spare land seeking a tenant)</small></p>-->
+  <!--        <input type="text" id="development_issues" name="development_issues" pInputText class="text-base" [(ngModel)]="development_issues">-->
+  <!--      </div>-->
+
+  <!--      <div class="field flex flex-column p-2">-->
+  <!--        <label>Specific decarbonisation challenges anticipated</label>-->
+  <!--        <p><small>(e.g., industrial operations that cannot be electrified)</small></p>-->
+  <!--        <input type="text" id="challenges" name="challenges" pInputText class="text-base" [(ngModel)]="challenges">-->
+  <!--      </div>-->
+
+  <!--      <div class="field flex flex-column p-2">-->
+  <!--        <label>Existing decarbonisation plans in place</label>-->
+  <!--        <input id="decarb_plans" type="text" name="decarb_plans" pInputText class="text-base" [(ngModel)]="decarb_plans">-->
+  <!--      </div>-->
+
+  <!--      <div class="field flex flex-column p-2">-->
+  <!--        <label>Circular economy opportunities/waste streams currently seen as problematic with rough volumes</label>-->
+  <!--        <input id="economy_opportunitie" type="text" name="economy_opportunities" pInputText class="text-base" [(ngModel)]="economy_opportunities">-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
