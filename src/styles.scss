@@ -318,6 +318,8 @@ a{
       background: $lightColor-100;
       color: $darkColor;
       border: 1px solid $darkColor;
+      width: 3rem;
+      height: 39px;
     }
     .p-button:not(:disabled):hover {
       background: $lightColor-100;
