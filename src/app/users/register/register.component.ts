@@ -175,7 +175,7 @@ export class RegisterComponent implements OnInit {
         next: (res) => {
         this.first_name = ''
           this.last_name = ''
-          this.email = ''
+          //this.email = ''
           this.phone_number = ''
           this.password = ''
           this.confirm_password = ''
@@ -218,7 +218,7 @@ export class RegisterComponent implements OnInit {
             summary:'Success',
             detail:'You have successfully registered.'
           })
-          this.router.navigate(['successful-registration'])
+          window.location.assign(`successful-registration.html?email=${this.email}`)
         },
         error:(err) => {
          const errorMsg = err.error.errors[0].message
