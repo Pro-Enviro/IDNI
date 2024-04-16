@@ -19,6 +19,7 @@ import {EChartsOption} from "echarts";
 import {MessageService} from "primeng/api";
 import {DbService} from "../../_services/db.service";
 import {GlobalService} from "../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
 
 import {
   energyNames, UnitsUom,
@@ -50,7 +51,8 @@ import {
   GroupItem,
   BoughtInParts
 } from "./pet-tool-classes";
-import {SidebarModule} from "primeng/sidebar";
+import {AutoCompleteCompleteEvent} from "primeng/autocomplete";
+
 
 
 
@@ -95,9 +97,6 @@ export class PetLoginProtected implements OnInit {
   }
   // TableRows
   rows: TableRow[] = []
-  energyRows: TableRow[] = []
-  gridAllocationRows: TableRow[] = []
-  onSiteRows: TableRow[] = []
   // For Primeng dropdowns
   unitsUom: UnitsUom[] = ['Select', 'litres', 'kg', 'kWh', 'tonnes', 'cubic metres', 'km', 'miles', 'million litres']
   regionOfOrigin: RegionsOfOrigin[] = ['UK', 'EU', 'US', 'Asia']
@@ -120,7 +119,7 @@ export class PetLoginProtected implements OnInit {
   twoDecimalPlaces = {minimumFractionDigits: 0, maximumFractionDigits: 2,}
   productivityData!: any// Excel spreadsheet
   sicCodeData!: any // Excel Spreadsheet
-  sicCode: string = ''
+  sicCode: any = {}
   sicCodeLetter: string = ''
   fuels = []
   externalCost: number = 0
@@ -132,24 +131,16 @@ export class PetLoginProtected implements OnInit {
   isConsultant: boolean = false;
   allPetData: PetToolData[] = []
   selectedPetId: number | undefined
-
+  filteredSicCodes: any[] = []
 
   constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService, private global: GlobalService) {}
 
-
   onSelectCompany = () => {
     if (!this.selectedCompany) this.selectedCompany = this.companies[0]
+
     // Reset table
-    this.turnover = 0
-    this.employees = 0;
-    this.productivityScore = 0;
-    this.innovationPercent = 0;
-    this.rows = []
-    this.energyRows = []
-    this.gridAllocationRows = []
-    this.onSiteRows = []
-    this.data = []
-    this.fuels = []
+    this.resetTableValues()
+    this.allPetData = []
 
     // Get sites report or generate new rows
     this.getPETReport(this.selectedCompany)
@@ -194,7 +185,20 @@ export class PetLoginProtected implements OnInit {
     } else {
       this.generateNewTable()
     }
+  }
 
+  resetTableValues = () => {
+    this.data = []
+    this.employees = 0
+    this.turnover = 0
+    this.innovationPercent = 0
+    this.staffTrainingPercent = 0
+    this.exportPercent = 0
+    this.productivityScore = 0
+    this.productivityPercentile = ''
+    this.sicCode = ''
+    this.sicCodeLetter = ''
+    this.fuels = []
   }
 
   fillTable = (petData: PetToolData) => {
@@ -206,7 +210,7 @@ export class PetLoginProtected implements OnInit {
     this.employees = Number(petData.number_of_employees || 0)
     this.turnover = Number(petData.turnover || 0)
     this.staffTrainingPercent = Number(petData.training_percent || 0)
-    this.sicCode = petData.sic_code || ''
+    this.sicCode = JSON.parse(petData.sic_code) || {}
     this.sicCodeLetter = petData.sic_letter || ''
     this.productivityScore = Number(petData.productivity_score || 0)
     this.innovationPercent = Number(petData.innovation_percent || 0)
@@ -233,14 +237,8 @@ export class PetLoginProtected implements OnInit {
 
 
   generateNewTable = () => {
-    this.data = []
-    this.employees = 0
-    this.turnover = 0
-    this.innovationPercent = 0
-    this.staffTrainingPercent = 0
-    this.exportPercent = 0
-    this.productivityScore = 0
-    this.productivityPercentile = ''
+
+    this.resetTableValues()
 
     this.generateClasses('Cost of Energy', TableRow, energyNames)
     this.generateClasses('Cost of Raw Materials', MaterialRow)
@@ -275,11 +273,13 @@ export class PetLoginProtected implements OnInit {
   }
 
   sicCodeToLetter = () => {
-    if (this.sicCode.length < 5) {
+
+    console.log(this.sicCode.sector)
+    if (this.sicCode.sector < 5) {
       return;
     }
     // Select correct SIC code letter
-    const foundRow = this.sicCodeData.find((row: any) => row.sector === this.sicCode)
+    const foundRow = this.sicCodeData.find((row: any) => row.sector === this.sicCode.sector)
 
     if (foundRow) {
       this.sicCodeLetter = foundRow.sic_number
@@ -715,7 +715,6 @@ export class PetLoginProtected implements OnInit {
       other_external_costs: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Other External Costs (Legal, rental, accounting etc)')),
     }
 
-
     // console.log(this.data)
     // return console.log(objectToSave)
 
@@ -730,14 +729,14 @@ export class PetLoginProtected implements OnInit {
       console.log('Handle patch')
       this.db.patchPetData(this.selectedPetId, objectToSave).subscribe({
         next: (res: any) => {
-          console.log(res)
           this.msg.add({
             severity: 'success',
             detail: 'Data saved'
           })
 
           // Replace data in petDataArray with res
-          // this.allPetData =
+          const getIdFromPetData = this.allPetData.findIndex((petRow: PetToolData) => petRow.id === this.selectedPetId)
+          this.allPetData.splice(getIdFromPetData, 1, res.data)
         }
       })
     } else {
@@ -747,11 +746,29 @@ export class PetLoginProtected implements OnInit {
             severity: 'success',
             detail: 'Data saved'
           })
+
+          this.allPetData.push(res.data)
         },
         error: (error) => console.log(error)
       })
     }
 
+  }
+
+  filterSicCode(event: AutoCompleteCompleteEvent) {
+    let filtered: any[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < (this.sicCodeData as any[]).length; i++) {
+      let sicCode = (this.sicCodeData as any[])[i];
+      if (sicCode.sector.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(sicCode);
+      }
+      // else if (sicCode.details.toLowercase().indexOf(query.toLowerCase()) == 0) {
+      // }
+    }
+
+    this.filteredSicCodes = filtered;
   }
 
 
