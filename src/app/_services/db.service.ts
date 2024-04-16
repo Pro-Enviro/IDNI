@@ -30,8 +30,12 @@ export class DbService {
     return this.http.get(`${this.url}/items/pet_data?filter[company_id][_eq]=${id}`)
   }
 
-  savePetData = (id: number, data: PetToolData) => {
+  savePetData = (data: PetToolData) => {
     return this.http.post(`${this.url}/items/pet_data`, data)
+  }
+
+  patchPetData = (id: number, data: PetToolData) => {
+    return this.http.patch(`${this.url}/items/pet_data/${id}`, data)
   }
 
   getRecommendations = (companyId: number) => {

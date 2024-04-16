@@ -131,7 +131,7 @@ export class PetLoginProtected implements OnInit {
   markEnd: number | undefined
   isConsultant: boolean = false;
   allPetData: PetToolData[] = []
-
+  selectedPetId: number | undefined
 
 
   constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService, private global: GlobalService) {}
@@ -190,6 +190,7 @@ export class PetLoginProtected implements OnInit {
 
     if (selectedYear){
       this.fillTable(selectedYear)
+      this.selectedPetId = selectedYear.id
     } else {
       this.generateNewTable()
     }
@@ -201,7 +202,7 @@ export class PetLoginProtected implements OnInit {
 
     console.log(petData)
     this.data = []
-
+    this.selectedPetId = petData.id
     this.employees = Number(petData.number_of_employees || 0)
     this.turnover = Number(petData.turnover || 0)
     this.staffTrainingPercent = Number(petData.training_percent || 0)
@@ -232,8 +233,6 @@ export class PetLoginProtected implements OnInit {
 
 
   generateNewTable = () => {
-    console.log('New tables')
-
     this.data = []
     this.employees = 0
     this.turnover = 0
@@ -524,51 +523,6 @@ export class PetLoginProtected implements OnInit {
     return total !== undefined ? total : 0
   }
 
-  // getTemplate = () => {
-  //   // Change content id to match correct selected template
-  //
-  //   let id = 1
-  //   let sicCodeId = 2
-  //
-  //   // TODO: Protect backend links with .env?
-  //   this.http.get(`${this.url}/items/content/${id}`).subscribe({
-  //     next: (res: any) => {
-  //       this.template = `${this.url}/assets/${res.data.file}?token=${this.storage.get('access_token')}`
-  //
-  //       this.http.get(this.template, {
-  //         responseType: 'arraybuffer'
-  //       }).subscribe({
-  //         next: (buffer: ArrayBuffer) => {
-  //           const workbook = read(buffer);
-  //           const sheets = workbook.SheetNames
-  //           const worksheet = workbook.Sheets[workbook.SheetNames[3]];
-  //           const raw_data = utils.sheet_to_json(worksheet, {header: 1});
-  //           this.productivityData = raw_data
-  //         }
-  //       })
-  //     }
-  //   })
-  //
-  //
-  //   this.http.get(`${this.url}/items/content/${sicCodeId}`).subscribe({
-  //     next: (res: any) => {
-  //       this.template = `${this.url}/assets/${res.data.file}?token=${this.storage.get('access_token')}`
-  //
-  //       this.http.get(this.template, {
-  //         responseType: 'arraybuffer'
-  //       }).subscribe({
-  //         next: (buffer: ArrayBuffer) => {
-  //           const workbook = read(buffer);
-  //           const sheets = workbook.SheetNames
-  //           const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-  //           const raw_data = utils.sheet_to_json(worksheet, {header: 1});
-  //           this.sicCodeData = raw_data as Array<[number | string]>
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
-
   getProductivityData = () => {
     this.http.get(`${this.url}/items/sic_codes?limit=-1`).subscribe({
       next: (res: any) => {
@@ -772,10 +726,22 @@ export class PetLoginProtected implements OnInit {
 
 
     // Check if already saved - if not post a new row to pet_data
-    // if (true) {
-    //   console.log('Handle patch')
-    // } else {
-      this.db.savePetData(this.selectedCompany, objectToSave).subscribe({
+    if (this.selectedPetId) {
+      console.log('Handle patch')
+      this.db.patchPetData(this.selectedPetId, objectToSave).subscribe({
+        next: (res: any) => {
+          console.log(res)
+          this.msg.add({
+            severity: 'success',
+            detail: 'Data saved'
+          })
+
+          // Replace data in petDataArray with res
+          // this.allPetData =
+        }
+      })
+    } else {
+      this.db.savePetData(objectToSave).subscribe({
         next: (res: any) => {
           this.msg.add({
             severity: 'success',
@@ -784,14 +750,13 @@ export class PetLoginProtected implements OnInit {
         },
         error: (error) => console.log(error)
       })
-    // }
+    }
 
   }
 
 
   ngOnInit() {
     this.getCompanies()
-    // this.getTemplate()
     this.getProductivityData()
   }
 

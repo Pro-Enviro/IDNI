@@ -15,6 +15,7 @@ export type OtherMaterials = 'Composites' | 'Textiles' | 'Cement' | 'Aggregate' 
 export type MaterialFormats = 'Sheet' |  'Profile' |  'Filament/Fibre' |  'Ingot/Billet' |  'Natural State' |  'Powder' |  'Granule' |  'Liquid' |  'Gas' |  'Recyclate'
 
 export interface PetToolData {
+  id?:number
   defaultData?: {}[],
   company_id: number
   number_of_employees: number

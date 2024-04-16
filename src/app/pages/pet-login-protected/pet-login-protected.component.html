@@ -64,7 +64,9 @@
 
         <ng-template pTemplate="header">
           <tr>
-            <th class="font-semibold p-3 col-5">Productivity Factors Year {{selectedYear}}</th>
+            <th class="font-semibold p-3 col-5">Productivity Factors Year
+                <p-dropdown [options]="years" [(ngModel)]="selectedYear"  (ngModelChange)="onSelectYear()" class="ml-2 mb-2" [style]="{ width: '10rem'}" ></p-dropdown>
+              </th>
             <th class="font-semibold p-3 col-1">Value</th>
             <th class="font-semibold p-3" colspan="4">Per Employee Cost</th>
             <!--            <th ></th>-->
