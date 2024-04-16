@@ -1,6 +1,7 @@
 
   <div class="container p-3">
-    <p-card styleClass="p-card-bck" header="User Information">
+    <div class="pet-card">
+      <h3 style="font-size: 1.5rem;">User Information</h3>
       <div class="field flex flex-column p-2">
         <label>First Name<span style="color:#85bfba;padding-left:5px">*</span></label>
         <input type="text" id="first_name" name="first_name" pInputText class="text-base" [(ngModel)]="first_name">
@@ -11,9 +12,10 @@
       </div>
       <div class="formgrid grid p-2">
         <div class="field lg:col-6 sm:col-12">
+<!--          height41px min-width 20px-->
           <label>Email<span style="color:#85bfba;padding-left:5px">*</span></label>
           <p-inputGroup>
-            <p-inputGroupAddon>
+            <p-inputGroupAddon [style]="{ height: '41px', minWidth:'20px' }">
               <i class="pi pi-envelope"></i>
             </p-inputGroupAddon>
             <input type="text" id="email" name="email" pInputText [(ngModel)]="email" pattern="[^ @]*@[^ @]*" emailDomain/>
@@ -22,18 +24,19 @@
         <div class="field lg:col-6 sm:col-12">
           <label>Phone<span style="color:#85bfba;padding-left:5px">*</span></label>
           <p-inputGroup>
-            <p-inputGroupAddon>
+            <p-inputGroupAddon [style]="{ height: '41px', minWidth:'20px' }">
               <i class="pi pi-phone"></i>
             </p-inputGroupAddon>
             <input pInputText id="phone_number" type="text" name="phone_number" [(ngModel)]="phone_number"/>
           </p-inputGroup>
         </div>
       </div>
-    </p-card>
+    </div>
   </div>
 
   <div class="container p-3">
-    <p-card styleClass="p-card-bck" header="Company Information">
+    <div class="pet-card">
+      <h3 style="font-size: 1.5rem;">Company Information</h3>
       <div class="field flex flex-column p-2">
         <label>Company Name<span style="color:#85bfba;padding-left:5px">*</span></label>
         <input type="text" id="company_name" name="company_name" pInputText class="text-base" [(ngModel)]="company_name">
@@ -72,7 +75,7 @@
       </div>
 
       <div class="formgrid grid p-2">
-        <div class="field lg:col-6 sm:col-12">
+        <div class="field lg:col-6 sm:col-12 flex flex-column">
           <label>Total number of people employed by your business?</label>
           <p-inputNumber id="employees" name="employees" inputId="integeronly" [(ngModel)]="employees"></p-inputNumber>
         </div>
@@ -95,7 +98,7 @@
       <div class="field flex flex-column p-2">
         <label>Website</label>
         <p-inputGroup>
-          <p-inputGroupAddon>
+          <p-inputGroupAddon [style]="{ height: '41px', minWidth:'20px' }">
             <i class="pi pi-globe"></i>
           </p-inputGroupAddon>
           <input id="website_url" type="text" pInputText name="website_url" [(ngModel)]="website_url"/>
@@ -106,11 +109,12 @@
         <label>Describe the primary business activity?</label>
         <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" [(ngModel)]="company_description"></textarea>
       </div>
-    </p-card>
+    </div>
   </div>
 
   <div class="container p-3">
-    <p-card styleClass="p-card-bck" header="Energy Costs Information">
+    <div class="pet-card">
+      <h3 style="font-size: 1.5rem;">Energy Costs Information</h3>
       <p style="color:#85bfba">Please fill in the information if applicable !</p>
       <div class="field flex flex-column p-3">
         <label>Energy Cost</label>
@@ -175,11 +179,12 @@
           </div>
         </div>
       </div>
-    </p-card>
+    </div>
   </div>
 
   <div class="container p-3">
-    <p-card styleClass="p-card-bck" header="Additional Information">
+    <div class="pet-card">
+      <h3 style="font-size: 1.5rem;">Additional Information</h3>
       <p style="color:#85bfba">Please fill in the information if applicable !</p>
       <div class="field flex flex-column p-2">
         <label>Total annual carbon emissions</label>
@@ -207,26 +212,28 @@
         <label>Circular economy opportunities/waste streams currently seen as problematic with rough volumes</label>
         <input id="economy_opportunitie" type="text" name="economy_opportunities" pInputText class="text-base" [(ngModel)]="economy_opportunities">
       </div>
-    </p-card>
+    </div>
   </div>
 
   <div class="container p-3">
     <h2 class="header-style">Privacy Policy</h2>
-    <div class="">
+    <div class="flex">
       <p-checkbox [binary]="true" inputId="policy" name="policy" [(ngModel)]="policy" value="policy" [required]="true"></p-checkbox>
       <label class="pl-2">I agree with the terms and conditions<span style="color:#006633;padding-left:5px">*</span></label>
     </div>
-    <div class="pt-3">
+    <div class="pt-3 flex">
       <p-checkbox [binary]="true" inputId="policy_cosi" name="policy" [(ngModel)]="policy_cosi" value="policy_cosi" [required]="true"></p-checkbox>
       <label class="pl-2">I agree to be part of COSI/Cluster.</label>
     </div>
-    <div class="pt-3">
+    <div class="pt-3 flex">
       <p-checkbox [binary]="true" inputId="policy_bill" name="policy_bill" [(ngModel)]="policy_bill" value="policy_bill" [required]="true"></p-checkbox>
       <label class="pl-2">Your company/organisation is content to provide some initial high-level electricity and/or gas data to the IDNI project.<span style="color:#006633;padding-left:5px">*</span></label>
+    </div>
+    <div class="pl-5">
       <p><small>This data will need to be in the form of a maximum of 12 months energy usage data, such as half-hourly energy usage information,which will you find on your utility bill, or by contacting your utility bill provider.
         If this is not available, a spreadsheet of the similar information may be acceptable.</small></p>
     </div>
-    <div class="">
+    <div class="flex">
       <p-checkbox [binary]="true" inputId="policy_idni" name="policy_idni" [(ngModel)]="policy_idni" value="policy_idni" [required]="true"></p-checkbox>
       <label class="pl-2"> Your company/organisation is content to allow the IDNI partnership team to collate and assess any data collected as part of this project and to share the findings of any data analysis anonymously to allow collective decarbonisation plans to be developed?<span style="color:#006633;padding-left:5px">*</span></label>
       @if(policy_idni && policy && policy_bill){
