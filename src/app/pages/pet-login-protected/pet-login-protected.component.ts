@@ -761,14 +761,17 @@ export class PetLoginProtected implements OnInit {
 
     for (let i = 0; i < (this.sicCodeData as any[]).length; i++) {
       let sicCode = (this.sicCodeData as any[])[i];
+      let sicCodeDetail = (this.sicCodeData as any[]) [i]
       if (sicCode.sector.toLowerCase().indexOf(query.toLowerCase()) == 0) {
         filtered.push(sicCode);
       }
-      // else if (sicCode.details.toLowercase().indexOf(query.toLowerCase()) == 0) {
-      // }
+      if (sicCodeDetail.details.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(sicCodeDetail);
+      }
     }
 
     this.filteredSicCodes = filtered;
+
   }
 
 
