@@ -276,7 +276,6 @@ export class PetLoginProtected implements OnInit {
 
   sicCodeToLetter = () => {
 
-    console.log(this.sicCode.sector)
     if (this.sicCode.sector < 5) {
       return;
     }

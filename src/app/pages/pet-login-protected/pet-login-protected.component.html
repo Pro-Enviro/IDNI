@@ -240,14 +240,14 @@
         <ng-template pTemplate="footer">
 
           <tr>
-            <td class="pl-2 py-2 font-semibold">Total External Cost</td>
+            <td class="pl-2 py-2 font-medium text-md">Total External Cost</td>
             <td class="pl-2">
               {{externalCost}}
             </td>
             <td></td>
           </tr>
           <tr>
-            <td class="pl-2 py-2 font-semibold">Productivity Score</td>
+            <td class="pl-2 py-2 font-medium text-md">Productivity Score</td>
             <td class="pl-2">
               <!--              {{calculateProductivityScore()}}-->
               {{productivityScore.toLocaleString('en-US', twoDecimalPlaces)}}
@@ -257,12 +257,12 @@
           <tr>
           </tr>
           <tr>
-            <td class="pl-2 py-2 font-semibold">ONS Productivity Comparison</td>
+            <td class="pl-2 py-2 font-medium text-md">ONS Productivity Comparison</td>
             <td class="pl-2">{{productivityPercentile}}</td>
             <td></td>
           </tr>
           <tr>
-            <td class="pl-2 py-2 font-semibold">Innovation - % of Turnover from Products <3 years</td>
+            <td class="pl-2 py-2 font-medium text-md">Innovation - % of Turnover from Products <3 years</td>
             <td>
               <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
                              [(ngModel)]="innovationPercent"
@@ -273,7 +273,7 @@
             </td>
           </tr>
           <tr>
-            <td class="pl-2 py-2 font-semibold">Training - % of Staff in Training (On the Job, PT-FE, Prof'snl or Post Grad)</td>
+            <td class="pl-2 py-2 font-medium text-md">Training - % of Staff in Training (On the Job, PT-FE, Prof'snl or Post Grad)</td>
             <td>
               <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
                              [(ngModel)]="staffTrainingPercent"
@@ -284,7 +284,7 @@
             </td>
           </tr>
           <tr>
-            <td class="pl-2 py-2 font-semibold">Export - % of Turnover from Export</td>
+            <td class="pl-2 py-2 font-medium text-md">Export - % of Turnover from Export</td>
             <td>
               <p-inputNumber class="p-inputtext-sm" [inputStyle]="{width: '150px'}" suffix="%"
                              [(ngModel)]="exportPercent"
