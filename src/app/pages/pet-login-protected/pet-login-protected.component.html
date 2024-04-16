@@ -90,7 +90,7 @@
           </tr>
         </ng-template>
 
-        <ng-template pTemplate="groupheader" let-groups let-rowIndex="rowIndex" let-expanded="expanded">
+        <ng-template pTemplate="groupheader" let-groups let-rowIndex="rowIndex" let-expanded="expanded" *ngIf="data">
           <tr >
             <td class="expandable-rows" style="min-width: 400px" >
               <button type="button" pButton pRipple [pRowToggler]="groups"

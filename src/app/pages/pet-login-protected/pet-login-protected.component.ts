@@ -13,7 +13,6 @@ import {DropdownModule} from "primeng/dropdown";
 import {SharedComponents} from "../envirotrack/shared-components";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../../_services/storage.service";
-import {read, utils} from 'xlsx'
 import {EnvirotrackService} from "../envirotrack/envirotrack.service";
 import {NgxEchartsDirective} from "ngx-echarts";
 import {EChartsOption} from "echarts";
@@ -127,7 +126,7 @@ export class PetLoginProtected implements OnInit {
   externalCost: number = 0
   productivityPercentile: string = ''
   chartOptions!: EChartsOption | null;
-  chartData: [string, (string | number)][] = []
+  chartData: [string, (string | number)][] | null = []
   markStart: number | undefined
   markEnd: number | undefined
   isConsultant: boolean = false;
@@ -186,8 +185,12 @@ export class PetLoginProtected implements OnInit {
   }
 
   onSelectYear = () => {
-    // WIP
-    console.log(this.data)
+    const selectedYear = this.allPetData.filter((petDataRow: PetToolData) => petDataRow.year === this.selectedYear)
+    console.log(selectedYear)
+  }
+
+  fillTable = () => {
+
   }
 
 
@@ -196,25 +199,35 @@ export class PetLoginProtected implements OnInit {
 
     this.db.getPetData(id).subscribe({
       next: (res: any) => {
-        console.log(res)
         if (res.data.length) {
           let data = res.data;
           this.allPetData = res.data;
 
           this.data = data[0].defaultData || []
-          this.employees = data[0].number_of_employees || 0
-          this.turnover = data[0].turnover || 0
-          this.staffTrainingPercent = data[0].training_percent || 0
+          this.employees = parseInt(data[0].number_of_employees || 0)
+          this.turnover = parseFloat(data[0].turnover || 0)
+          this.staffTrainingPercent = parseFloat(data[0].training_percent || 0)
           this.sicCode = data[0].sic_number || ''
           this.sicCodeLetter = data[0].sic_letter || ''
-          this.productivityScore = data[0].productivity_score || 0
-          this.innovationPercent = data[0].innovation_percent || 0
-          this.exportPercent = data[0].export_percent || 0
+          this.productivityScore = parseFloat(data[0].productivity_score || 0)
+          this.innovationPercent = parseFloat(data[0].innovation_percent || 0)
+          this.exportPercent = parseFloat(data[0].export_percent || 0)
           this.productivityPercentile = data[0].productivity_comparison || ''
-          this.markStart = data[0].mark_start || 0
-          this.markEnd = data[0].mark_end || 0
+          this.markStart = parseFloat(data[0].mark_start || 0)
+          this.markEnd = parseFloat(data[0].mark_end || 0)
+          this.selectedYear = data[0].year || '2024'
 
-          // this.data.push(JSON.parse(data[0].cost_of_raw_materials))
+          // All dynamic rows added back from save
+          const energy = JSON.parse(data[0].cost_of_energy)
+          const rawMats = JSON.parse(data[0].cost_of_raw_materials)
+          const boughtInGoods = JSON.parse(data[0].cost_of_bought_in_goods)
+          const roadFreight = JSON.parse(data[0].road_freight)
+          const otherFreight = JSON.parse(data[0].other_freight)
+          const staffCommute = JSON.parse(data[0].staff_commute)
+          const waste = JSON.parse(data[0].waste)
+          const waterUsage = JSON.parse(data[0].water_usage)
+
+          this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waste, ...waterUsage, ...roadFreight, ...otherFreight, ...staffCommute )
 
           this.calculateProductivityComparison()
 
@@ -238,14 +251,17 @@ export class PetLoginProtected implements OnInit {
 
   sicCodeToLetter = () => {
     if (this.sicCode.length < 5) {
-      this.sicCodeLetter = ''
       return;
     }
     // Select correct SIC code letter
     const foundRow = this.sicCodeData.find((row: any) => row.sector === this.sicCode)
 
-    if (foundRow) this.sicCodeLetter = foundRow.sic_number
-    else this.sicCodeLetter = ''
+    if (foundRow) {
+      this.sicCodeLetter = foundRow.sic_number
+      this.calculatePerEmployeeCost()
+    } else {
+      this.sicCodeLetter = ''
+    }
   }
 
   generateClasses = (rowTitle: string, classToUse: any, namesArray?: string[]) => {
@@ -695,6 +711,7 @@ export class PetLoginProtected implements OnInit {
   savePETdata = () => {
     const objectToSave: PetToolData = {
       // defaultData: this.data,
+      year: this.selectedYear,
       company_id: this.selectedCompany,
       sic_number: this.sicCode,
       sic_letter: this.sicCodeLetter,
@@ -720,7 +737,7 @@ export class PetLoginProtected implements OnInit {
 
 
 
-    return console.log(objectToSave)
+    // return console.log(objectToSave)
 
     if (!this.selectedCompany) return;
 
@@ -729,8 +746,8 @@ export class PetLoginProtected implements OnInit {
 
 
     // Check if already saved - if not post a new row to pet_data
-    // if () {
-    //
+    // if (true) {
+    //   console.log('Handle patch')
     // } else {
       this.db.savePetData(this.selectedCompany, objectToSave).subscribe({
         next: (res: any) => {
@@ -741,9 +758,9 @@ export class PetLoginProtected implements OnInit {
         },
         error: (error) => console.log(error)
       })
-    }
+    // }
 
-  // }
+  }
 
 
   ngOnInit() {

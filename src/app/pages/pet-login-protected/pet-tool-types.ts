@@ -28,6 +28,7 @@ export interface PetToolData {
   training_percent: number
   turnover: number,
   innovation_percent: number
+  year: string
 
   cost_of_energy: string
   cost_of_raw_materials: string
