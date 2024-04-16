@@ -21,6 +21,7 @@ import {Message, MessageService} from "primeng/api";
 import {DividerModule} from "primeng/divider";
 import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "../../_services/users/auth.service";
+import {StorageService} from "../../_services/storage.service";
 
 
 @Component({
@@ -123,7 +124,12 @@ export class RegisterComponent implements OnInit {
     {name:'Other', value:'other'}
   ]
 
-  constructor(private db: DbService,private msg: MessageService , private router: Router, private auth: AuthService) {}
+  constructor(private db: DbService,private msg: MessageService , private router: Router, private auth: AuthService, private storage: StorageService) {
+    if (this.storage.get('directus-data') !== null) {
+      localStorage.clear()
+      window.location.reload()
+    }
+  }
 
   onSubmit = () => {
     const userObj = {

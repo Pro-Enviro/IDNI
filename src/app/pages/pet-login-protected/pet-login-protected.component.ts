@@ -204,7 +204,6 @@ export class PetLoginProtected implements OnInit {
   fillTable = (petData: PetToolData) => {
     if (!petData) return;
 
-    console.log(petData)
     this.data = []
     this.selectedPetId = petData.id
     this.employees = Number(petData.number_of_employees || 0)
