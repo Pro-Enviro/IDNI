@@ -24,7 +24,7 @@ export interface PetToolData {
   productivity_comparison: string
   productivity_score: number
   sic_letter: string
-  sic_number: string
+  sic_code: string
   training_percent: number
   turnover: number,
   innovation_percent: number
@@ -39,6 +39,7 @@ export interface PetToolData {
   other_freight: string
   company_travel: string
   staff_commute: string
+  other_external_costs: string
 }
 
 export const energyNames: string[] = ['Electricity', 'Natural Gas (Grid)', 'Natural Gas off Grid', 'Bio Gas Off Grid', 'LPG', 'Oil', 'Kerosene', 'Bio Fuels', 'Bio Mass', 'Coal for Industrial use', 'Other']

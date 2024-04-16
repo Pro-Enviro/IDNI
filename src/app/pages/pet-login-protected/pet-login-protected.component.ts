@@ -185,12 +185,76 @@ export class PetLoginProtected implements OnInit {
   }
 
   onSelectYear = () => {
-    const selectedYear = this.allPetData.filter((petDataRow: PetToolData) => petDataRow.year === this.selectedYear)
-    console.log(selectedYear)
+    if (!this.allPetData.length) return;
+    const selectedYear = this.allPetData.find((petDataRow: PetToolData) => petDataRow.year === this.selectedYear)
+
+    if (selectedYear){
+      this.fillTable(selectedYear)
+    } else {
+      this.generateNewTable()
+    }
+
   }
 
-  fillTable = () => {
+  fillTable = (petData: PetToolData) => {
+    if (!petData) return;
 
+    console.log(petData)
+    this.data = []
+
+    this.employees = Number(petData.number_of_employees || 0)
+    this.turnover = Number(petData.turnover || 0)
+    this.staffTrainingPercent = Number(petData.training_percent || 0)
+    this.sicCode = petData.sic_code || ''
+    this.sicCodeLetter = petData.sic_letter || ''
+    this.productivityScore = Number(petData.productivity_score || 0)
+    this.innovationPercent = Number(petData.innovation_percent || 0)
+    this.exportPercent = Number(petData.export_percent || 0)
+    this.productivityPercentile = petData.productivity_comparison || ''
+    this.markStart = Number(petData.mark_start || 0)
+    this.markEnd = Number(petData.mark_end || 0)
+    this.selectedYear = petData.year || '2024'
+
+    // All dynamic rows added back from save
+    const energy = JSON.parse(petData.cost_of_energy)
+    const rawMats = JSON.parse(petData.cost_of_raw_materials)
+    const boughtInGoods = JSON.parse(petData.cost_of_bought_in_goods)
+    const roadFreight = JSON.parse(petData.road_freight)
+    const otherFreight = JSON.parse(petData.other_freight)
+    const companyTravel = JSON.parse(petData.company_travel)
+    const staffCommute = JSON.parse(petData.staff_commute)
+    const waste = JSON.parse(petData.waste)
+    const waterUsage = JSON.parse(petData.water_usage)
+    const otherCosts = JSON.parse(petData.other_external_costs)
+
+    this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waterUsage,...waste, ...roadFreight, ...otherFreight, ...companyTravel, ...staffCommute, ...otherCosts)
+  }
+
+
+  generateNewTable = () => {
+    console.log('New tables')
+
+    this.data = []
+    this.employees = 0
+    this.turnover = 0
+    this.innovationPercent = 0
+    this.staffTrainingPercent = 0
+    this.exportPercent = 0
+    this.productivityScore = 0
+    this.productivityPercentile = ''
+
+    this.generateClasses('Cost of Energy', TableRow, energyNames)
+    this.generateClasses('Cost of Raw Materials', MaterialRow)
+    this.generateClasses('Cost of Bought in Goods - Consumables and bought in parts', BoughtInParts)
+    this.generateClasses('Water Usage', WaterUsage)
+    this.generateClasses('Waste', Waste)
+    this.generateClasses('Road Freight', RoadFreight)
+    this.generateClasses('Other Freight', OtherFreightTransportation)
+    this.generateClasses('Company Travel', CompanyTravel)
+    this.generateClasses('Staff Commute', StaffCommute)
+    this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
+
+    this.calculateTotalExternalCost()
   }
 
 
@@ -200,50 +264,12 @@ export class PetLoginProtected implements OnInit {
     this.db.getPetData(id).subscribe({
       next: (res: any) => {
         if (res.data.length) {
-          let data = res.data;
           this.allPetData = res.data;
-
-          this.data = data[0].defaultData || []
-          this.employees = parseInt(data[0].number_of_employees || 0)
-          this.turnover = parseFloat(data[0].turnover || 0)
-          this.staffTrainingPercent = parseFloat(data[0].training_percent || 0)
-          this.sicCode = data[0].sic_number || ''
-          this.sicCodeLetter = data[0].sic_letter || ''
-          this.productivityScore = parseFloat(data[0].productivity_score || 0)
-          this.innovationPercent = parseFloat(data[0].innovation_percent || 0)
-          this.exportPercent = parseFloat(data[0].export_percent || 0)
-          this.productivityPercentile = data[0].productivity_comparison || ''
-          this.markStart = parseFloat(data[0].mark_start || 0)
-          this.markEnd = parseFloat(data[0].mark_end || 0)
-          this.selectedYear = data[0].year || '2024'
-
-          // All dynamic rows added back from save
-          const energy = JSON.parse(data[0].cost_of_energy)
-          const rawMats = JSON.parse(data[0].cost_of_raw_materials)
-          const boughtInGoods = JSON.parse(data[0].cost_of_bought_in_goods)
-          const roadFreight = JSON.parse(data[0].road_freight)
-          const otherFreight = JSON.parse(data[0].other_freight)
-          const staffCommute = JSON.parse(data[0].staff_commute)
-          const waste = JSON.parse(data[0].waste)
-          const waterUsage = JSON.parse(data[0].water_usage)
-
-          this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waste, ...waterUsage, ...roadFreight, ...otherFreight, ...staffCommute )
-
+          this.fillTable(this.allPetData[0])
           this.calculateProductivityComparison()
-
         } else {
           // If no saved data
-          console.log('New tables')
-          this.generateClasses('Cost of Energy', TableRow, energyNames)
-          this.generateClasses('Cost of Raw Materials', MaterialRow)
-          this.generateClasses('Cost of Bought in Goods - Consumables and bought in parts', BoughtInParts)
-          this.generateClasses('Water Usage', WaterUsage)
-          this.generateClasses('Waste', Waste)
-          this.generateClasses('Road Freight', RoadFreight)
-          this.generateClasses('Other Freight', OtherFreightTransportation)
-          this.generateClasses('Company Travel', CompanyTravel)
-          this.generateClasses('Staff Commute', StaffCommute)
-          this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
+          this.generateNewTable()
         }
       }
     })
@@ -710,10 +736,9 @@ export class PetLoginProtected implements OnInit {
 
   savePETdata = () => {
     const objectToSave: PetToolData = {
-      // defaultData: this.data,
       year: this.selectedYear,
       company_id: this.selectedCompany,
-      sic_number: this.sicCode,
+      sic_code: this.sicCode,
       sic_letter: this.sicCodeLetter,
       turnover: this.turnover,
       number_of_employees: this.employees,
@@ -733,10 +758,11 @@ export class PetLoginProtected implements OnInit {
       other_freight: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Other Freight')),
       company_travel: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Company Travel')),
       staff_commute: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Staff Commute')),
+      other_external_costs: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Other External Costs (Legal, rental, accounting etc)')),
     }
 
 
-
+    // console.log(this.data)
     // return console.log(objectToSave)
 
     if (!this.selectedCompany) return;
