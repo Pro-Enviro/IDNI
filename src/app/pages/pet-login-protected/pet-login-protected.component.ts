@@ -199,6 +199,9 @@ export class PetLoginProtected implements OnInit {
     this.sicCode = ''
     this.sicCodeLetter = ''
     this.fuels = []
+
+    this.chartData = null
+    this.chartOptions = null;
   }
 
   fillTable = (petData: PetToolData) => {

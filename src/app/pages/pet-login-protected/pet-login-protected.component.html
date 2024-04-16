@@ -41,8 +41,7 @@
         </div>
 
         <div style="display: flex; flex-direction: column">
-          <label for="sic_code">SIC Code</label>
-<!--          <input pInputText id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" [style]="{width: '15rem', marginTop: '0.5rem', fontSize: '12px'}" placeholder="Enter your SIC Code. E.g. 43999"/>-->
+          <label class="text-xs" for="sic_code">SIC Code</label>
             <p-autoComplete
               [forceSelection]="true"
               (onSelect)="sicCodeToLetter()"
@@ -58,14 +57,14 @@
             >
                 <ng-template let-sicCode pTemplate="item">
                   <div class="flex align-items-center gap-2">
-                    <div class="text-xs">{{sicCode.sector}}</div>
-                    <div class="text-xs">{{sicCode.details}}</div>
+                    <div class="text-xs font-semibold">{{sicCode.sector}}</div>
+                    <div class="text-xs ml-1">{{sicCode.details}}</div>
                   </div>
                 </ng-template>
             </p-autoComplete>
 
-          <p style="font-weight: 400" class="text-xs mt-3" *ngIf="sicCode.details">{{sicCode.details}}</p>
-          <p style="font-weight: 400" class="text-xs mt-1" *ngIf="sicCodeLetter.length">SIC Code Letter: <span class="font-bold">{{sicCodeLetter}}</span></p>
+          <p class="text-xs font-medium mt-3 p-2 border-round bg-indigo-50" *ngIf="sicCode.details">{{sicCode.details}}</p>
+          <p class="text-xs font-medium mt-1 p-2 border-round bg-indigo-50" *ngIf="sicCodeLetter.length">SIC Code Letter: <span class="font-bold ml-1">{{sicCodeLetter}}</span></p>
         </div>
 
       </p-card>
