@@ -218,9 +218,7 @@ export class RegisterComponent implements OnInit {
             summary:'Success',
             detail:'You have successfully registered.'
           })
-          console.log('nav')
           window.location.assign('successful-registration.html');
-          window.location.assign('data-privacy-policy.html');
           //this.router.navigate(['successful-registration'])
         }
       })
