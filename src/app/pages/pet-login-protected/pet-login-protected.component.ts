@@ -243,7 +243,7 @@ export class PetLoginProtected implements OnInit {
     this.resetTableValues()
 
     this.generateClasses('Cost of Energy', TableRow, energyNames)
-    this.generateClasses('Cost of Raw Materials', MaterialRow)
+    const rawMats = this.generateClasses('Cost of Raw Materials', MaterialRow)
     this.generateClasses('Cost of Bought in Goods - Consumables and bought in parts', BoughtInParts)
     this.generateClasses('Water Usage', WaterUsage)
     this.generateClasses('Waste', Waste)
@@ -252,6 +252,11 @@ export class PetLoginProtected implements OnInit {
     this.generateClasses('Company Travel', CompanyTravel)
     this.generateClasses('Staff Commute', StaffCommute)
     this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
+
+    // Generate extra rows for Raw Materials
+    for (let i = 0; i < 9; i++ ){
+      this.createNewTableRow(rawMats)
+    }
 
     this.calculateTotalExternalCost()
   }
@@ -301,10 +306,13 @@ export class PetLoginProtected implements OnInit {
         }
         return newClass;
       })
-      this.data.push(...classArray)
+        this.data.push(...classArray)
+      return classArray
     } else {
       let newClass = new classToUse()
+      if (rowTitle === 'Cost of Raw Materials') newClass.parent.addRows = false
       this.generateRows(newClass, rowTitle, true)
+      return newClass
     }
   }
 
@@ -324,7 +332,6 @@ export class PetLoginProtected implements OnInit {
   }
 
   createNewTableRow = (group: any) => {
-
     let copy = {...group, name: `${group.parent.name} description`, cost: 0}
     let findObject = this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)
 

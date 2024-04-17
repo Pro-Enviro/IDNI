@@ -24,7 +24,6 @@ export class SubTable {
 
 export class MaterialRow extends SubTable {
   name: string = 'Material Type'
-  buttonName: string = 'Raw Material'
   type: MaterialTypes = 'Steel'
   subtype: SteelMaterials | OtherMetals | Plastics | OtherMaterials | undefined
   format: MaterialFormats | undefined
@@ -32,6 +31,7 @@ export class MaterialRow extends SubTable {
   totalUnits: number = 0
   regionOfOrigin: RegionsOfOrigin = 'UK'
   scrappageAndWaste?: number = 0
+
 }
 
 export class BoughtInParts extends SubTable {
