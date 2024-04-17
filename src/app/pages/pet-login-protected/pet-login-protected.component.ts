@@ -234,7 +234,6 @@ export class PetLoginProtected implements OnInit {
     const waterUsage = JSON.parse(petData.water_usage)
     const otherCosts = JSON.parse(petData.other_external_costs)
 
-
     this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waterUsage,...waste, ...roadFreight, ...otherFreight, ...companyTravel, ...staffCommute, ...otherCosts)
 
     this.calculateProductivityScore()
