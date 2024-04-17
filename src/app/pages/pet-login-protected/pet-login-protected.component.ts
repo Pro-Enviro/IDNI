@@ -176,7 +176,7 @@ export class PetLoginProtected implements OnInit {
   }
 
   onSelectYear = () => {
-    if (!this.allPetData.length) return;
+    if (!this.allPetData.length) return this.generateNewTable();
     const selectedYear = this.allPetData.find((petDataRow: PetToolData) => petDataRow.year === this.selectedYear)
 
     if (selectedYear){
@@ -234,7 +234,11 @@ export class PetLoginProtected implements OnInit {
     const waterUsage = JSON.parse(petData.water_usage)
     const otherCosts = JSON.parse(petData.other_external_costs)
 
+
     this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waterUsage,...waste, ...roadFreight, ...otherFreight, ...companyTravel, ...staffCommute, ...otherCosts)
+
+    this.calculateProductivityScore()
+
   }
 
 

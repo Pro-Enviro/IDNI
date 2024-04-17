@@ -40,16 +40,16 @@
           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant" ></p-dropdown>
         </div>
 
-        <div style="display: flex; flex-direction: column">
-          <label class="text-xs" for="sic_code">SIC Code</label>
+        <div class="flex flex-column">
+          <label class="text-xs font-semibold" for="sic_code">SIC Code</label>
             <p-autoComplete
               [forceSelection]="true"
               (onSelect)="sicCodeToLetter()"
               [(ngModel)]="sicCode"
               [suggestions]="filteredSicCodes"
               (completeMethod)="filterSicCode($event)"
-              [style]="{marginTop: '0.5rem', fontSize: '12px'}"
-              [inputStyle]="{fontSize: '12px', width:'20rem'}"
+              [style]="{marginTop: '0.5rem', fontSize: '12px', width: '100%'}"
+              [inputStyle]="{fontSize: '12px', width: '100%' }"
               optionLabel="sector"
               placeholder="Enter your SIC Code. E.g. 43999"
               showTransitionOptions=".3s cubic-bezier(0, 0, 0.2, 1)"
@@ -63,8 +63,8 @@
                 </ng-template>
             </p-autoComplete>
 
-          <p class="text-xs font-medium mt-3 p-2 border-round bg-indigo-50" *ngIf="sicCode.details">{{sicCode.details}}</p>
-          <p class="text-xs font-medium mt-1 p-2 border-round bg-indigo-50" *ngIf="sicCodeLetter.length">SIC Code Letter: <span class="font-bold ml-1">{{sicCodeLetter}}</span></p>
+          <p class="text-xs font-medium mt-3 p-2 py-3 border-round bg-indigo-50 shadow-1" *ngIf="sicCode.details">{{sicCode.details}}</p>
+          <p class="text-xs font-normal mt-1 p-2 py-3 border-round bg-indigo-50 shadow-1" *ngIf="sicCodeLetter.length">SIC Code Letter: <span class="font-bold ml-1">{{sicCodeLetter}}</span></p>
         </div>
 
       </p-card>
@@ -174,7 +174,7 @@
             <td [pEditableColumn]="groups.name" pEditableColumnField="name" *ngIf="groups.parent.name !== 'Cost of Raw Materials'" >
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="groups.name" class="p-inputtext-sm" />
+                  <input pInputText type="text" [(ngModel)]="groups.name" style="font-size: 12px" />
                 </ng-template>
                 <ng-template pTemplate="output">
                   <p class="font-normal pl-2">{{ groups.name }}</p>
@@ -308,7 +308,7 @@
 
         <ng-template pTemplate="groupfooter" let-groups >
           <tr class="p-rowgroup-footer" style="background-color: #fff" >
-            <td style="text-align: right">Totals</td>
+            <td style="text-align: right" class="py-2 pr-1">Totals</td>
             <td *ngIf="groups.unitsUom !== undefined"></td>
             <td *ngIf="groups.mode !== undefined"></td>
             <td *ngIf="groups.fuelType !== undefined"></td>
