@@ -1,20 +1,20 @@
 
   <div class="container p-3">
     <div class="pet-card">
-      <h3 style="font-size: 1.5rem;">User Information</h3>
+      <h3 class="header-style">User Information</h3>
       <div class="field flex flex-column p-2">
         <label>First Name<span style="color:#85bfba;padding-left:5px">*</span></label>
-        <input type="text" id="first_name" name="first_name" pInputText class="text-base" [(ngModel)]="first_name">
+        <input type="text" id="first_name" name="first_name" pInputText class="text-base border-round" [(ngModel)]="first_name">
       </div>
       <div class="field flex flex-column p-2">
         <label>Surname<span style="color:#85bfba;padding-left:5px">*</span></label>
-        <input type="text" id="last_name" name="last_name" pInputText class="text-base" [(ngModel)]="last_name">
+        <input type="text" id="last_name" name="last_name" pInputText class="text-base border-round" [(ngModel)]="last_name">
       </div>
       <div class="formgrid grid p-2">
         <div class="field lg:col-6 sm:col-12">
           <label>Email<span style="color:#85bfba;padding-left:5px">*</span></label>
           <p-inputGroup>
-            <p-inputGroupAddon [style]="{ height: '41px', minWidth:'20px' }">
+            <p-inputGroupAddon>
               <i class="pi pi-envelope"></i>
             </p-inputGroupAddon>
             <input type="text" id="email" name="email" pInputText [(ngModel)]="email" pattern="[^ @]*@[^ @]*" emailDomain/>
@@ -23,7 +23,7 @@
         <div class="field lg:col-6 sm:col-12">
           <label>Phone<span style="color:#85bfba;padding-left:5px">*</span></label>
           <p-inputGroup>
-            <p-inputGroupAddon [style]="{ height: '41px', minWidth:'20px' }">
+            <p-inputGroupAddon>
               <i class="pi pi-phone"></i>
             </p-inputGroupAddon>
             <input pInputText id="phone_number" type="text" name="phone_number" [(ngModel)]="phone_number"/>
@@ -35,34 +35,34 @@
 
   <div class="container p-3">
     <div class="pet-card">
-      <h3 style="font-size: 1.5rem;">Company Information</h3>
+      <h3 class="header-style">Company Information</h3>
       <div class="field flex flex-column p-2">
         <label>Company Name<span style="color:#85bfba;padding-left:5px">*</span></label>
-        <input type="text" id="company_name" name="company_name" pInputText class="text-base" [(ngModel)]="company_name">
+        <input type="text" id="company_name" name="company_name" pInputText class="text-base border-round" [(ngModel)]="company_name">
       </div>
 
       <div class="formgrid grid p-2">
         <div class="field lg:col-6 sm:col-12 flex flex-column">
           <label>Address<span style="color:#85bfba;padding-left:5px">*</span></label>
-          <input id="address" name="address" type="text" pInputText  [(ngModel)]="address">
+          <input id="address" name="address" type="text" pInputText  [(ngModel)]="address" class="border-round">
         </div>
 
         <div class="field lg:col-6 sm:col-12 flex flex-column">
           <label>Postcode<span style="color:#85bfba;padding-left:5px">*</span></label>
-          <input id="postcode" name="postcode" pInputText type="text" [(ngModel)]="postcode">
+          <input id="postcode" name="postcode" pInputText type="text" [(ngModel)]="postcode" class="border-round">
         </div>
       </div>
 
       <div class="field flex flex-column p-2">
         <label>Unique Property Reference Number (UPRN)</label>
         <small><i>if known</i></small>
-        <input id="uprn" type="text" name="uprn" pInputText [(ngModel)]="uprn">
+        <input id="uprn" type="text" name="uprn" pInputText [(ngModel)]="uprn" class="border-round">
       </div>
 
       <div class="formgrid grid p-2">
         <div class="field lg:col-6 sm:col-12">
           <label>To which local authority do you pay your business rates?</label>
-          <input id="local_auth" type="text" name="local_auth" pInputText [(ngModel)]="local_auth">
+          <input id="local_auth" type="text" name="local_auth" pInputText [(ngModel)]="local_auth" class="border-round">
         </div>
 
         <div class="field lg:col-6 sm:col-12">
@@ -76,18 +76,18 @@
       <div class="formgrid grid p-2">
         <div class="field lg:col-6 sm:col-12 flex flex-column">
           <label>Total number of people employed by your business?</label>
-          <p-inputNumber id="employees" name="employees" inputId="integeronly" [(ngModel)]="employees"></p-inputNumber>
+          <p-inputNumber id="employees" name="employees" inputId="integeronly" [(ngModel)]="employees" styleClass="border-round"></p-inputNumber>
         </div>
         <div class="field lg:col-6 sm:col-12">
           <label>Please,provide your most recent annual turnover figure (£)</label>
-          <p-inputNumber id="turnover" [(ngModel)]="turnover" inputId="currency-gbp" mode="currency" currency="GBP" name="turnover"></p-inputNumber>
+          <p-inputNumber id="turnover" [(ngModel)]="turnover" inputId="currency-gbp" mode="currency" currency="GBP" name="turnover" styleClass="border-round"></p-inputNumber>
         </div>
       </div>
 
       <div class="formgrid grid p-2">
         <div class="field lg:col-6 sm:col-12 flex flex-column">
           <label>Sector</label>
-          <input id="sector" type="text" name="sector" [(ngModel)]="sector" pInputText>
+          <input id="sector" type="text" name="sector" [(ngModel)]="sector" pInputText class="border-round">
         </div>
         <div class="field lg:col-6 sm:col-12 flex flex-column">
           <label>Sic Code</label>
@@ -97,7 +97,7 @@
       <div class="field flex flex-column p-2">
         <label>Website</label>
         <p-inputGroup>
-          <p-inputGroupAddon [style]="{ height: '41px', minWidth:'20px' }">
+          <p-inputGroupAddon>
             <i class="pi pi-globe"></i>
           </p-inputGroupAddon>
           <input id="website_url" type="text" pInputText name="website_url" [(ngModel)]="website_url"/>

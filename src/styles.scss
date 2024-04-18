@@ -197,6 +197,10 @@ a{
   background-image:linear-gradient(105deg, #f5faf9,#f4f9f7,#f4f9f8,#f4f9f9);
   }
 
+.p-inputgroup-addon {
+  min-width: 3rem;
+  height: 40px;
+}
   //---------------------------------------------------FORM-------------------------------------------------------------
 .panelmenu-style-footer{
   .p-panelmenu-header-content {
