@@ -5,15 +5,17 @@
   <div class="container">
     <div class="grid">
       <div class="col-12">
-        <p-card *ngIf="!fileContent && isConsultant" header="Select Company" [style]="{width: '70%', margin: 'auto', marginTop:'5rem'}" styleClass="card-charts" >
+        <div class="pet-card" *ngIf="!fileContent && isConsultant">
+          <h3 class="title">Select Company</h3>
           <p-dropdown [options]="companies" optionLabel="name" optionValue="id" [(ngModel)]="selectedCompany" [style]="{ width: '12rem'}" [disabled]="!isConsultant"></p-dropdown>
-        </p-card>
+        </div>
 <!--        <p-card *ngIf="!fileContent && selectedName" header="Select Company" [style]="{width: '70%', margin: 'auto', marginTop:'5rem'}" styleClass="card-charts">-->
 <!--          {{selectedName}}-->
 <!--        </p-card>-->
       </div>
       <div class="col-12">
-        <p-card header="File Upload" *ngIf="!fileContent" [style]="{width: '70%', margin: 'auto', marginTop:'4rem'}" styleClass="card-charts">
+        <div class="pet-card" *ngIf="!fileContent" [style]="{width: '70%', margin: 'auto', marginTop:'4rem'}">
+          <h3 class="title">File Upload</h3>
           <p-fileUpload name="file[]" [customUpload]="true"
                         (onSelect)="getFileType($event)"
                         (uploadHandler)="onUpload($event)"
@@ -28,55 +30,60 @@
               </ul>
             </ng-template>
           </p-fileUpload>
-        </p-card>
+        </div>
 
-        <p-card *ngIf="uploadedFiles.length && isConsultant" styleClass="card-charts mt-5" >
+        <div class="pet-card mt-5" *ngIf="uploadedFiles.length && isConsultant">
           <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()" class="btn-select"></p-selectButton>
-        </p-card>
+        </div>
 
-        <p-card *ngIf="uploadedFiles.length && !isConsultant" styleClass="card-charts mt-5" >
+        <div class="pet-card mt-5" *ngIf="uploadedFiles.length && !isConsultant">
           <p-button *ngIf="isXlsx" styleClass="btn-dark m-1"  label="Send Data" (click)="sendDataToProEnviro()"></p-button>
           <p>Send data to Pro Enviro to process</p>
-        </p-card>
+        </div>
 
         <ng-container *ngIf="fileContent">
-          <p-card  #table  header="Half-Hourly Data (HHD)" styleClass="card-charts mt-4">
+          <div class="pet-card mt-4"  #table>
+            <h3 class="title">Half-Hourly Data (HHD)</h3>
             <div class="grid">
               <div class="col-3" pDroppable (onDrop)="dropMpan()">
-                 <p-card header="MPAN Number" styleClass="envirotrack-import">
+                 <div class="enviro-card">
+                   <h3 class="title">MPAN Number</h3>
                   <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="selectedMpan">
                     <li class="p-2 border-round shadow-1">
                       {{selectedMpan.name}}
                     </li>
                   </ul>
-                </p-card>
+                </div>
               </div>
               <div class="col-3" pDroppable (onDrop)="dropStartDate()">
-                <p-card header="Date Column" styleClass="envirotrack-import">
+                <div class="enviro-card">
+                  <h3 class="title">Date Column</h3>
                   <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="selectedStartDate" >
                     <li class="p-2 border-round shadow-1">
                       {{selectedStartDate.name}}
                     </li>
                   </ul>
-                </p-card>
+                </div>
               </div>
               <div class="col-3" pDroppable (onDrop)="dropFirstData()">
-                <p-card header="Data Start Point" styleClass="envirotrack-import">
+                <div class="enviro-card">
+                  <h3 class="title">Data Start Point</h3>
                   <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="selectedDataStart" >
                     <li class="p-2 border-round shadow-1">
                       {{selectedDataStart.name}}
                     </li>
                   </ul>
-                </p-card>
+                </div>
               </div>
               <div class="col-3">
-                <p-card header="Data Type" styleClass="envirotrack-import">
+                <div class="enviro-card">
+                  <h3 class="title">Data Type</h3>
                   <ul class="list-none flex flex-column gap-2 p-0 m-0">
                     <li class="">
                       <p-toggleButton [(ngModel)]="reactiveData" onLabel="kVAr" offLabel="kWh" [style]="{ width: '10em', background:'#356c6b',color:'#ffffff'}"></p-toggleButton>
                     </li>
                   </ul>
-                </p-card>
+                </div>
               </div>
             </div>
 
@@ -93,7 +100,7 @@
             <div class="pt-3">
               <button pButton class="btn-style pt-3" icon="pi pi-cog" label="Process" (click)="processData()"></button>
             </div>
-          </p-card>
+          </div>
         </ng-container>
       </div>
     </div>
