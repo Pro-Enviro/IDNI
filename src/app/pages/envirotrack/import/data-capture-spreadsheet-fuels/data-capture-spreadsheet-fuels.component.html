@@ -3,13 +3,15 @@
 <section>
     <div class="grid p-6">
        <div class="col-5" >
-         <p-card header="Select Company" styleClass="card-charts">
+         <div class="pet-card">
+           <h3 class="title">Select Company</h3>
            <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
-         </p-card>
+         </div>
        </div>
 
       <div class="col-12">
-        <p-card header="Non HH Data" styleClass="card-charts">
+        <div class="pet-card">
+          <h3 class="title">Non HH Data</h3>
           <div class="pb-5">
             <button pButton (click)="addFuelType()" label="Add New Fuel Type" icon="pi pi-plus" class="btn-style"></button>
           </div>
@@ -37,12 +39,12 @@
 
               <div class="flex justify-content-end p-3">
                 <button pButton class="btn-style mr-2" pRipple icon="pi pi-file-excel" (click)="exportExcel(fuel)"></button>
-                <p-button (click)="deleteFuelType($event, fuel)" icon="pi pi-times" styleClass="btn-dark"></p-button>
+                <p-button (click)="deleteFuelType($event, fuel)" icon="pi pi-times" styleClass="btn-dark p-2 border-round"></p-button>
               </div>
               <div class="flex justify-content-start p-3">
                 <button pButton class="btn-style mr-2" icon="pi pi-plus" label="Import Spreadsheet"
                         (click)="importSpreadsheet(fuel)"></button>
-                <button pButton class="btn-outline mr-2" icon="pi pi-pencil" label="Edit Column"
+                <button pButton class="btn-outline-upload mr-2" icon="pi pi-pencil" label="Edit Column"
                         (click)="editFuelType(fuel)"></button>
               </div>
               <p-table [value]="fuel.rows" styleClass="p-datatable-sm" #table [style]="{padding: 0}"
@@ -86,7 +88,7 @@
                     </td>
                   </tr>
                 </ng-template>
-                <ng-template pTemplate="footer">
+                <ng-template pTemplate="footer" style="background: none">
                   <div class="flex">
                     <button pButton icon="pi pi-plus" class="btn-dark" (click)="addNewRow(fuel)"
                             [style]="{marginTop: '1rem'}"></button>
@@ -98,7 +100,7 @@
               </p-table>
             </p-tabPanel>
           </p-tabView>
-        </p-card>
+        </div>
 
       </div>
     </div>
