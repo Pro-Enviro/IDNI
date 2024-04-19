@@ -207,13 +207,14 @@ export class PetLoginProtected implements OnInit {
   fillTable = (petData: PetToolData) => {
     if (!petData) return;
 
+    console.log(petData)
 
     this.data = []
     this.selectedPetId = petData.id
     this.employees = Number(petData.number_of_employees || 0)
     this.turnover = Number(petData.turnover || 0)
     this.staffTrainingPercent = Number(petData.training_percent || 0)
-    this.sicCode = JSON.parse(petData.sic_code) || {}
+    this.sicCode = petData?.sic_code !== '' ? JSON.parse(petData?.sic_code) : ''
     this.sicCodeLetter = petData.sic_letter || ''
     this.productivityScore = Number(petData.productivity_score || 0)
     this.innovationPercent = Number(petData.innovation_percent || 0)
@@ -234,6 +235,7 @@ export class PetLoginProtected implements OnInit {
     const waste = JSON.parse(petData.waste)
     const waterUsage = JSON.parse(petData.water_usage)
     const otherCosts = JSON.parse(petData.other_external_costs)
+
 
     this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waterUsage,...waste, ...roadFreight, ...otherFreight, ...companyTravel, ...staffCommute, ...otherCosts)
 
@@ -338,7 +340,9 @@ export class PetLoginProtected implements OnInit {
   }
 
   createNewTableRow = (group: any) => {
-    let copy = {...group, name: `${group.parent.name} description`, cost: 0}
+    console.log(group.parent.name)
+    let copy = {...group, name: `${group.parent.name} description`}
+    group.parent.name !== 'Staff Commute' ? group.cost = 0 : null
     let findObject = this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)
 
     if (findObject === -1) return;
@@ -730,7 +734,7 @@ export class PetLoginProtected implements OnInit {
     }
 
 
-    // console.log(this.data)
+    console.log(objectToSave)
     // return console.log(objectToSave)
 
     if (!this.selectedCompany) return;
