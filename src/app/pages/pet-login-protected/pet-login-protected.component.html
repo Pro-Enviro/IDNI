@@ -189,7 +189,7 @@
                 <p-dropdown [options]="fuelTypes" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.fuelType"></p-dropdown>
               </td>
               <td *ngIf="groups.unitsUom">
-                <p-dropdown [options]="unitsUom" class="p-inputtext-sm" [style]="{width: '120px'}"></p-dropdown>
+                <p-dropdown [options]="unitsUom" [(ngModel)]="groups.unitsUom" class="p-inputtext-sm" [style]="{width: '120px'}"></p-dropdown>
               </td>
 
               <td *ngIf="groups.noOfParts !== undefined">

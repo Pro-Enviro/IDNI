@@ -176,13 +176,14 @@ export class PetLoginProtected implements OnInit {
   }
 
   onSelectYear = () => {
-    if (!this.allPetData.length) return this.generateNewTable();
+    if (!this.allPetData.length) return
     const selectedYear = this.allPetData.find((petDataRow: PetToolData) => petDataRow.year === this.selectedYear)
 
     if (selectedYear){
       this.fillTable(selectedYear)
       this.selectedPetId = selectedYear.id
     } else {
+      console.log('No selected year')
       this.generateNewTable()
     }
   }
@@ -206,6 +207,9 @@ export class PetLoginProtected implements OnInit {
 
   fillTable = (petData: PetToolData) => {
     if (!petData) return;
+
+
+    console.log('Filling table')
 
     this.data = []
     this.selectedPetId = petData.id
@@ -234,6 +238,8 @@ export class PetLoginProtected implements OnInit {
     const waterUsage = JSON.parse(petData.water_usage)
     const otherCosts = JSON.parse(petData.other_external_costs)
 
+    console.log(rawMats)
+
     this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waterUsage,...waste, ...roadFreight, ...otherFreight, ...companyTravel, ...staffCommute, ...otherCosts)
 
     this.calculateProductivityScore()
@@ -243,6 +249,7 @@ export class PetLoginProtected implements OnInit {
 
   generateNewTable = () => {
 
+    console.log('Generating new table')
     this.resetTableValues()
 
     this.generateClasses('Cost of Energy', TableRow, energyNames)
@@ -258,6 +265,7 @@ export class PetLoginProtected implements OnInit {
 
     // Generate extra rows for Raw Materials
     for (let i = 0; i < 9; i++ ){
+      console.log(rawMats)
       this.createNewTableRow(rawMats)
     }
 
@@ -268,6 +276,8 @@ export class PetLoginProtected implements OnInit {
   getPETReport = (id: number) => {
     if (!id) return;
 
+    console.log('Getting PET data')
+
     this.db.getPetData(id).subscribe({
       next: (res: any) => {
         if (res.data.length) {
@@ -276,6 +286,7 @@ export class PetLoginProtected implements OnInit {
           this.calculateProductivityComparison()
         } else {
           // If no saved data
+          console.log('No Saved data')
           this.generateNewTable()
         }
       }
@@ -726,6 +737,8 @@ export class PetLoginProtected implements OnInit {
       other_external_costs: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Other External Costs (Legal, rental, accounting etc)')),
     }
 
+    console.log(objectToSave)
+
     // console.log(this.data)
     // return console.log(objectToSave)
 
@@ -745,9 +758,9 @@ export class PetLoginProtected implements OnInit {
             detail: 'Data saved'
           })
 
-          // Replace data in petDataArray with res
-          const getIdFromPetData = this.allPetData.findIndex((petRow: PetToolData) => petRow.id === this.selectedPetId)
-          this.allPetData.splice(getIdFromPetData, 1, res.data)
+          // // Replace data in petDataArray with res
+          // const getIdFromPetData = this.allPetData.findIndex((petRow: PetToolData) => petRow.id === this.selectedPetId)
+          // this.allPetData.splice(getIdFromPetData, 1, res.data)
         }
       })
     } else {
