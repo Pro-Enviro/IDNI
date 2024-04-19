@@ -179,6 +179,9 @@ a{
   @media only screen and (min-width: 1200px) { .container { max-width: 1140px; } }
   @media only screen and (min-width: 1400px) { .container { max-width: 1320px; } }
 
+//.p-dropdown-label{
+//  font-size: 16px !important;
+//}
 
   //-----------------------------------------------LOGIN----------------------------------------------------------------
 
@@ -663,7 +666,7 @@ a{
   }
 
 
-//sections
+//---------------------------------------------------SECTIONS-----------------------------------------------------------
 .faq-bg{
   background-size: cover;
 }
@@ -692,6 +695,33 @@ a{
     color:#ffffff;
     font-size: 2rem;
     padding-right: 3.5rem;
+  }
+}
+
+.pet-card{
+  background-color:#FDFDFD;
+  color: #4b5563;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  padding: 1.5rem;
+}
+
+.pet-section{
+  background-image: url("https://id-ni.eco/assets/images/svg/curve-grey.svg");
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-size: 48rem;
+  position: relative;
+  h2{
+    color:#6d6d6d;
+    font-size: 1.8rem;
+    width: 10%;
+    position: absolute;
+    bottom:0;
+    top:5px;
+    left:25px;
+    right:0;
+    line-height:1.6;
   }
 }
 
