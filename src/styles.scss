@@ -203,6 +203,10 @@ a{
   }
 }
 
+.p-orderlist .p-orderlist-header {
+  padding: 1.2rem !important;
+}
+
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
   background: #ffffff;
   border-color: $primeColor;
@@ -391,21 +395,6 @@ a{
     padding:30px;
   }
 
-  .orderlist-style{
-    flex: 1 1 auto;
-    .p-orderlist .p-orderlist-header {
-      background: #f9fafb;
-      color: #374151;
-      border: 1px solid #e5e7eb;
-      border-bottom-width: 1px;
-      border-bottom-style: solid;
-      border-bottom-color: rgb(229, 231, 235);
-      padding: 1.25rem;
-      border-bottom: 0 none;
-      border-top-right-radius: 6px;
-      border-top-left-radius: 6px;
-    }
-  }
 
 //--------------------------------------------------------CHAT SYSTEM---------------------------------------------------
 

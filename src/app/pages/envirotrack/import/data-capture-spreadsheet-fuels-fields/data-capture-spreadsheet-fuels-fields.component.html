@@ -1,18 +1,20 @@
 <div class="p-3">
-  <h3 style="font-size: 1.4rem;" class="flex justify-content-start">Add Fuel Type</h3>
-  <p-autoComplete [dropdown]="true" [(ngModel)]="selectedFuelType" [suggestions]="filteredFuelTypes"
-                  (completeMethod)="searchFuelTypes($event)"
-                  (onSelect)="changeSelectedFuelType()"
-                  *ngIf="!editMode" class="btn-dropdown" scrollHeight="370px"
+  <div class="pl-4">
+    <h3 style="font-size: 1.4rem;" class="flex justify-content-start font-semibold">Add Fuel Type</h3>
+    <p-autoComplete [dropdown]="true" [(ngModel)]="selectedFuelType" [suggestions]="filteredFuelTypes"
+                    (completeMethod)="searchFuelTypes($event)"
+                    (onSelect)="changeSelectedFuelType()"
+                    *ngIf="!editMode" class="btn-dropdown" scrollHeight="370px"
 
-  ></p-autoComplete>
+    ></p-autoComplete>
+  </div>
   <div class="grid" style="margin-top: 2rem" *ngIf="selectedFuelType">
     <div class="col-6" style="height: 100%">
       <p-orderList header="Selected Columns" [value]="requiredCols" styleClass="drop-column orderlist-style" pDroppable
-                   (onDrop)="drop()" [dragdrop]="false" class="btn-date">
+                   (onDrop)="drop()" [dragdrop]="false">
         <ng-template let-col pTemplate="item">
-          <p-card *ngIf="col.draggable" styleClass="m-1" pDraggable (onDragStart)="dragBStart(col)"
-                  (onDragEnd)="dragBEnd()" class="cards">
+          <div class="pet-card m-1 cards" *ngIf="col.draggable"  pDraggable (onDragStart)="dragBStart(col)"
+                  (onDragEnd)="dragBEnd()">
             <div class="grid" style="display: flex; align-items: center">
               <div class="col">
                 {{ col.name }}
@@ -48,25 +50,25 @@
               </ng-container>
 
             </div>
-          </p-card>
-          <p-card *ngIf="!col.draggable" styleClass="m-1" [style]="{backgroundColor: 'rgba(0,0,0,0.02)'}">
+          </div>
+          <div class="pet-card m-1" *ngIf="!col.draggable" [style]="{backgroundColor: 'rgba(0,0,0,0.02)'}">
             <div class="grid">
               <div class="col">
                 {{ col.name }}
               </div>
             </div>
-          </p-card>
+          </div>
         </ng-template>
       </p-orderList>
 
       <p-panel header="Columns to Total" class="col-6">
         <div class="grid">
           <ng-container *ngFor="let col of requiredCols; index as i">
-            <div class="flex flex-row">
+            <div class="flex">
               <p-checkbox *ngIf="col.type === 'number' && col.name !== 'Total'" [style]="{marginLeft: '2rem'}"
                           [(ngModel)]="col.total"
                           [binary]="true" inputId="binary"></p-checkbox>
-              <p *ngIf="col.type === 'number' && col.name !== 'Total'" class="ml-1">{{ col.name }} </p>
+              <label *ngIf="col.type === 'number' && col.name !== 'Total'" class="pl-2">{{ col.name }} </label>
             </div>
 
           </ng-container>
@@ -83,7 +85,7 @@
 
     <div class="col-6" style="position: fixed; top: 120px; right: 10px">
 
-      <button pButton label="{{editMode ? 'Update' : 'Done'}}" icon="pi pi-save" class="btn-dark" (click)="close()"
+      <button pButton label="{{editMode ? 'Update' : 'Done'}}" icon="pi pi-save" class="btn-dark-upload" (click)="close()"
               style="margin-bottom: 2rem; margin-left: 1rem"></button>
 
       <p-panel header="Available Columns" styleClass="drag-column" pDroppable (onDrop)="dropB()" class="drop-column"
