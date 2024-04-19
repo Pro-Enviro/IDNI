@@ -184,6 +184,7 @@ export class PetLoginProtected implements OnInit {
       this.selectedPetId = selectedYear.id
     } else {
       this.generateNewTable()
+      this.selectedPetId = undefined
     }
   }
 
