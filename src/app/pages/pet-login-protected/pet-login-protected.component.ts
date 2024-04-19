@@ -759,8 +759,8 @@ export class PetLoginProtected implements OnInit {
           })
 
           // // Replace data in petDataArray with res
-          // const getIdFromPetData = this.allPetData.findIndex((petRow: PetToolData) => petRow.id === this.selectedPetId)
-          // this.allPetData.splice(getIdFromPetData, 1, res.data)
+          const getIdFromPetData = this.allPetData.findIndex((petRow: PetToolData) => petRow.id === this.selectedPetId)
+          this.allPetData.splice(getIdFromPetData, 1, res.data)
         }
       })
     } else {
