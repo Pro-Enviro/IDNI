@@ -202,7 +202,7 @@
               </td>
 
               <td *ngIf="groups.otherModes !== undefined">
-                <p-dropdown [options]="otherModesOfTransport" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.mode"></p-dropdown>
+                <p-dropdown [options]="otherModesOfTransport" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.otherModes"></p-dropdown>
               </td>
               <td *ngIf="groups.companyModeOfTransport !== undefined">
                 <p-dropdown [options]="companyModesOfTransport" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.companyModeOfTransport"></p-dropdown>
