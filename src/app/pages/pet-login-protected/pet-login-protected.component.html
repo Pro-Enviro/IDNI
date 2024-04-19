@@ -202,16 +202,16 @@
               </td>
 
               <td *ngIf="groups.otherModes !== undefined">
-                <p-dropdown [options]="otherModesOfTransport" class="p-inputtext-sm" [style]="{width: '120px'}"></p-dropdown>
+                <p-dropdown [options]="otherModesOfTransport" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.mode"></p-dropdown>
               </td>
               <td *ngIf="groups.companyModeOfTransport !== undefined">
-                <p-dropdown [options]="companyModesOfTransport" class="p-inputtext-sm" [style]="{width: '120px'}"></p-dropdown>
+                <p-dropdown [options]="companyModesOfTransport" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.companyModeOfTransport"></p-dropdown>
               </td>
               <td *ngIf="groups.staffCommute !== undefined">
-                <p-dropdown [options]="staffCommute" class="p-inputtext-sm" [style]="{width: '120px'}"></p-dropdown>
+                <p-dropdown [options]="staffCommute" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.staffCommute"></p-dropdown>
               </td>
               <td *ngIf="groups.route !== undefined">
-                <p-dropdown [options]="routes" class="p-inputtext-sm" [style]="{width: '120px'}"></p-dropdown>
+                <p-dropdown [options]="routes" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.route"></p-dropdown>
               </td>
               <td *ngIf="groups.cost !== undefined">
                 <p-inputNumber [(ngModel)]="groups.cost" class="p-inputtext-sm"
@@ -225,7 +225,7 @@
                                [inputStyle]="{width: '100px'}"></p-inputNumber>
               </td>
               <td *ngIf="groups.regionOfOrigin">
-                <p-dropdown [options]="regionOfOrigin" class="p-inputtext-sm" [style]="{width: '120px'}"></p-dropdown>
+                <p-dropdown [options]="regionOfOrigin" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.regionOfOrigin"></p-dropdown>
               </td>
               <td *ngIf="groups.scrappageAndWaste !== undefined">
                 <p-inputNumber [(ngModel)]="groups.scrappageAndWaste" class="p-inputtext-sm"
