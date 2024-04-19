@@ -237,7 +237,9 @@ export class PetLoginProtected implements OnInit {
     const otherCosts = JSON.parse(petData.other_external_costs)
 
 
+
     this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waterUsage,...waste, ...roadFreight, ...otherFreight, ...companyTravel, ...staffCommute, ...otherCosts)
+    console.log(this.data)
 
     this.calculateProductivityScore()
 
@@ -246,6 +248,7 @@ export class PetLoginProtected implements OnInit {
 
   generateNewTable = () => {
 
+    console.log('Generating new table')
     this.resetTableValues()
 
     this.generateClasses('Cost of Energy', TableRow, energyNames)
@@ -342,7 +345,7 @@ export class PetLoginProtected implements OnInit {
   createNewTableRow = (group: any) => {
     console.log(group.parent.name)
     let copy = {...group, name: `${group.parent.name} description`}
-    group.parent.name !== 'Staff Commute' ? group.cost = 0 : null
+    group.parent.name !== 'Staff Commute' ? copy.cost = 0 : null
     let findObject = this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)
 
     if (findObject === -1) return;
@@ -734,6 +737,7 @@ export class PetLoginProtected implements OnInit {
     }
 
 
+    console.log(this.selectedYear)
     console.log(objectToSave)
     // return console.log(objectToSave)
 
