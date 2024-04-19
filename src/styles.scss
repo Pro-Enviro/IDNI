@@ -86,6 +86,17 @@ a{
   }
 }
 
+.btn-select-months{
+  .p-selectbutton .p-button.p-highlight{
+    background-color: $primeColor;
+    border:none;
+  }
+  .p-button{
+    width: 130px;
+    height: 38px;
+  }
+}
+
  .btn-style{
    background-color: $primeColor;
    border:$primeColor;
@@ -308,23 +319,25 @@ a{
     background-color: $lightColor-100;
   }
 
-  .date-btn{
-    .p-datepicker table td.p-datepicker-today > span {
-      background: $primeColor;
-      color: white;
-      border-color: $primeColor;
-    }
-    .p-button {
-      background: $lightColor-100;
-      color: $darkColor;
-      border: 1px solid $darkColor;
-    }
-    .p-button:not(:disabled):hover {
-      background: $lightColor-100;
-      color: $darkColor;
-      border-color: $darkColor;
-    }
+.date-btn{
+  .p-datepicker table td.p-datepicker-today > span {
+    background: $primeColor;
+    color: white;
+    border-color: $primeColor;
   }
+  .p-button {
+    background: $lightColor-100;
+    color: $darkColor;
+    border: 1px solid $darkColor;
+    width: 3rem;
+    height: 39px;
+  }
+  .p-button:not(:disabled):hover {
+    background: $lightColor-100;
+    color: $darkColor;
+    border-color: $darkColor;
+  }
+}
 
     .p-checkbox .p-checkbox-box .p-icon {
       background-color: $primeColor;

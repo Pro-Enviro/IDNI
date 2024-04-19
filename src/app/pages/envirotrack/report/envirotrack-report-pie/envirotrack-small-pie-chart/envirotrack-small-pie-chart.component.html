@@ -21,13 +21,13 @@
       <div class="col-12">
 
           <div class="flex pb-3">
-            <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select"></p-selectButton>
+            <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months"></p-selectButton>
           </div>
-          <div class="flex justify-content-start">
+          <div class="flex justify-content-start pt-2">
             <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
           </div>
 
-          <div echarts *ngIf="chartData.length" [options]="chartOptions" style="display: block; box-sizing: border-box; height: 600px; width: 800px;"></div>
+          <div echarts *ngIf="chartData.length" [options]="chartOptions" style="display: block; box-sizing: border-box; height: 600px; width: 800px;margin-top:3rem"></div>
           <p *ngIf="!chartData.length">Add data to see this chart</p>
       </div>
     </div>
