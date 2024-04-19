@@ -738,8 +738,8 @@ export class PetLoginProtected implements OnInit {
     }
 
 
-    console.log(this.selectedYear)
-    console.log(objectToSave)
+    // console.log(this.selectedYear)
+    // console.log(objectToSave)
     // return console.log(objectToSave)
 
     if (!this.selectedCompany) return;
