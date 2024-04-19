@@ -98,6 +98,33 @@ a{
   }
 }
 
+.btn-style-upload{
+  background-color: $primeColor;
+  border:$primeColor;
+  color:#283938;
+  .p-button{
+    width: 130px;
+    height: 50px;
+  }
+}
+
+.btn-dark-upload{
+  background-color: $darkColor;
+  border:$darkColor;
+  color:white;
+  padding: 15px;
+  border-radius: 6px !important;
+}
+
+.btn-outline-upload{
+  background-color: #f4f9f8;
+  border:1px solid #2e5757;
+  color:#2e5757;
+  margin-right: 5px;
+  padding:15px;
+  border-radius: 6px !important;
+}
+
  .btn-style{
    background-color: $primeColor;
    border:$primeColor;
@@ -718,7 +745,7 @@ a{
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   border-radius: 6px;
   padding: 1.5rem;
-  height:50%;
+  height:110%;
   .title{
     font-size: 1.5rem;
     font-weight: 700;

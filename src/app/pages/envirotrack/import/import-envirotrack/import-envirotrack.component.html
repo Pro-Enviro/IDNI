@@ -5,7 +5,7 @@
   <div class="container">
     <div class="grid">
       <div class="col-12">
-        <div class="pet-card" *ngIf="!fileContent && isConsultant">
+        <div class="pet-card" *ngIf="!fileContent && isConsultant" [style]="{width: '70%', margin: 'auto', marginTop:'4rem'}">
           <h3 class="title">Select Company</h3>
           <p-dropdown [options]="companies" optionLabel="name" optionValue="id" [(ngModel)]="selectedCompany" [style]="{ width: '12rem'}" [disabled]="!isConsultant"></p-dropdown>
         </div>
@@ -20,10 +20,10 @@
                         (onSelect)="getFileType($event)"
                         (uploadHandler)="onUpload($event)"
                         [multiple]="false"
-                        chooseStyleClass="btn-style"
-                        cancelStyleClass="btn-dark"
-                        uploadStyleClass="btn-outline">
-            <ng-template pTemplate="content">
+                        chooseStyleClass="btn-style-upload"
+                        cancelStyleClass="btn-dark-upload"
+                        uploadStyleClass="btn-outline-upload">
+            <ng-template pTemplate="content" style="padding:30px">
 
               <ul *ngIf="uploadedFiles.length">
                 <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
@@ -80,7 +80,7 @@
                   <h3 class="title">Data Type</h3>
                   <ul class="list-none flex flex-column gap-2 p-0 m-0">
                     <li class="">
-                      <p-toggleButton [(ngModel)]="reactiveData" onLabel="kVAr" offLabel="kWh" [style]="{ width: '10em', background:'#356c6b',color:'#ffffff'}"></p-toggleButton>
+                      <p-toggleButton [(ngModel)]="reactiveData" onLabel="kVAr" offLabel="kWh" [style]="{ width: '10em', background:'#356c6b',color:'#ffffff',padding:'6px'}"></p-toggleButton>
                     </li>
                   </ul>
                 </div>
