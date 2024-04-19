@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import {Router} from "@angular/router";
-import {BehaviorSubject, map, of} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../storage.service";
 import {GlobalService} from "../global.service";
-import {readRole, readRoles} from "@directus/sdk";
 
 export interface Credentials {
   email: string;

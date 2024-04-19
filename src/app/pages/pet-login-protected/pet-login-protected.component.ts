@@ -5,8 +5,6 @@ import {SelectButtonModule} from "primeng/selectbutton";
 import {TableModule} from "primeng/table";
 import {InputNumberModule} from "primeng/inputnumber";
 import {ButtonModule} from "primeng/button";
-import {CarouselTplComponent} from "../../_partials/carousel-tpl/carousel-tpl.component";
-import {FooterComponent} from "../../_partials/footer/footer.component";
 import {RippleModule} from "primeng/ripple";
 import {CommonModule, JsonPipe} from "@angular/common";
 import {DropdownModule} from "primeng/dropdown";
@@ -59,7 +57,7 @@ import {SidebarModule} from "primeng/sidebar";
 @Component({
   selector: 'app-pet-login-protected',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CarouselTplComponent, FooterComponent, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective, SidebarModule],
+  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective, SidebarModule],
   templateUrl: './pet-login-protected.component.html',
   styleUrl: './pet-login-protected.component.scss'
 })

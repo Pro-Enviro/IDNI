@@ -10,7 +10,7 @@ import {
 import {MessageService} from "primeng/api";
 import {map, Observable, tap} from "rxjs";
 import {StorageService} from "./_services/storage.service";
-//import {routes} from "./app.routes";
+import {routes} from "./app.routes";
 import {AuthService} from "./_services/users/auth.service";
 import {GlobalService} from "./_services/global.service";
 import {HttpInterceptorService} from "./_helpers/http-interceptor.service";
@@ -32,7 +32,7 @@ import {NgxEchartsModule} from "ngx-echarts";
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withInterceptors([HttpInterceptorService])),
-    //provideRouter(routes),
+    provideRouter(routes),
     provideAnimations(),
     importProvidersFrom(
       NgxEchartsModule.forRoot({
