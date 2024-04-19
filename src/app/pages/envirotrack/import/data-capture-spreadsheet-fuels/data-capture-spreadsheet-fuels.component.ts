@@ -159,7 +159,6 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
 
   addFuelType = () => {
     this.ref = this.dialog.open(DataCaptureSpreadsheetFuelsFieldsComponent, {
-      header: 'Add Fuel Type',
       width: '90vw',
       height: '90vh',
     })

@@ -197,6 +197,9 @@ a{
     color: #ffffff;
     background: $primeColor;
     border: 1px solid $primeColor;
+    padding: 10px;
+    margin-bottom: 6px;
+    border-radius: 6px;
   }
 }
 
@@ -343,8 +346,8 @@ a{
   .p-panel .p-panel-header {
     border: 1px solid #e5e7eb;
     padding: 1.25rem;
-    background: $primeColor;
-    color: $headerColor;
+    background: #FBFBFB;
+    //color: $headerColor;
    font-weight: 700;
     font-size: 1.125rem;
   }
@@ -384,10 +387,25 @@ a{
     }
 
   .p-panel .p-panel-content {
-    background: $lightColor-50;
+    background: #f3f3f3;
     padding:30px;
   }
 
+  .orderlist-style{
+    flex: 1 1 auto;
+    .p-orderlist .p-orderlist-header {
+      background: #f9fafb;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+      border-bottom-color: rgb(229, 231, 235);
+      padding: 1.25rem;
+      border-bottom: 0 none;
+      border-top-right-radius: 6px;
+      border-top-left-radius: 6px;
+    }
+  }
 
 //--------------------------------------------------------CHAT SYSTEM---------------------------------------------------
 
