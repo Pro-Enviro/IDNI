@@ -3,7 +3,12 @@
     <div class="col-6">
       <div class="pet-card-dark" *ngIf="isConsultant">
         <h3 class="title">Select Company</h3>
-        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" ></p-dropdown>
+        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id"
+                    (ngModelChange)="onSelectCompany()"
+                    [style]="{ width: '12rem'}"
+                    [disabled]="!isConsultant"
+                    styleClass="table-dropdown"
+                    scrollHeight="340px"></p-dropdown>
       </div>
     </div>
     <div class="col-6">
