@@ -1,7 +1,8 @@
 <div class="col-6">
-  <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant">
-    <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"></p-dropdown>
-  </p-card>
+  <div class="pet-card" *ngIf="isConsultant">
+    <h3 class="title">Select Company</h3>
+    <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" styleClass="table-dropdown" scrollHeight="340px"></p-dropdown>
+  </div>
 </div>
 
 <p-dialog [(visible)]="modelVisible" [modal]="true" [style]="{width: '60vw'}">
@@ -20,12 +21,12 @@
   </div>
 
 
-<p-tabView [style]="{width:'75vw', marginBottom: '2rem', paddingBottom: '5rem', minHeight: '75vh'}" (onChange)="sortRecommendations()">
+<p-tabView (onChange)="sortRecommendations()">
 
 
   <!--RECOMMENDATIONS-->
   <p-tabPanel header="Recommendation Summary">
-  <p-table [value]="recommendations" styleClass="p-datatable-sm scrollfix reco-table" [style]="{marginTop: '1rem', fontSize: '0.8rem'}">
+  <p-table [value]="recommendations" styleClass="p-datatable-sm scrollfix reco-table">
       <ng-template pTemplate="header">
         <tr>
           <th>No.</th>
@@ -95,7 +96,7 @@
         </tr>
         <tr>
           <td></td>
-          <td><button label="Add New Recommendation" pButton class="p-button p-button-outlined btn btn-dark w-full mr-2" icon="pi pi-plus" (click)="addNewRecommendation()"></button></td>
+          <td><button label="Add New Recommendation" pButton class="btn-dark-upload w-full mr-2" icon="pi pi-plus" (click)="addNewRecommendation()"></button></td>
           <td colspan="8"></td>
         </tr>
 
@@ -105,7 +106,7 @@
   </p-tabPanel>
 
   <div class="flex justify-content-start pt-4 pl-2">
-    <button type="submit" icon="pi pi-save" label="Save" pButton class="btn" (click)="saveForm()"></button>
+    <button type="submit" icon="pi pi-save" label="Save" pButton class="btn-style" (click)="saveForm()"></button>
   </div>
 </p-tabView>
 
