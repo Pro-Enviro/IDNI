@@ -2,16 +2,16 @@
   <div class="grid">
     <div class="col-6 p-4">
       <div class="pet-card-dark" *ngIf="isConsultant">
-        <h3 class="title">Select Company</h3>
+        <h3 class="title pb-3">Select Company</h3>
         <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
         <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"
-                    styleClass="table-dropdown" scrollHeight="340px"></p-dropdown>
+                    styleClass="table-dropdown" scrollHeight="350px"></p-dropdown>
       </div>
     </div>
     <div class="col-6 p-4">
       <div *ngIf="mpan.length">
         <div class="pet-card-dark p-3">
-          <h3 class="title">Select Mpan</h3>
+          <h3 class="title pb-3">Select Mpan</h3>
           <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
         </div>
       </div>
@@ -49,7 +49,7 @@
               <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months ml-5"></p-selectButton>
               <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn mr-5"></p-calendar>
             </div>
-            <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>
+            <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px"></div>
           </ng-container>
 
         </ng-template>

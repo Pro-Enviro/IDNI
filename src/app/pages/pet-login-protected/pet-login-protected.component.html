@@ -39,7 +39,7 @@
   <div class="flex justify-content-between p-5">
     <div class="flex-1 mr-3 mt-3">
           <div class="pet-card">
-            <h3 class="title pb-2">{{isConsultant ? 'Select Company' : ''}}</h3>
+            <h3 class="title pb-3">{{isConsultant ? 'Select Company' : ''}}</h3>
             <div  *ngIf="isConsultant">
               <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" styleClass="table-dropdown" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
                           [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant" scrollHeight="350px"></p-dropdown>
@@ -52,7 +52,7 @@
           </div>
     </div>
     <div class="flex-1">
-        <div class="card">
+        <div class="">
           <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines" [style]="{maxWidth: '60vw', width: '50vw'}" dataKey="parent.name"
                    rowGroupMode="subheader" groupRowsBy="parent.name" [customSort]="true" *ngIf="selectedCompany">
 

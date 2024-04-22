@@ -1,6 +1,6 @@
 <div class="col-6">
   <div class="pet-card" *ngIf="isConsultant">
-    <h3 class="title">Select Company</h3>
+    <h3 class="title pb-3">Select Company</h3>
     <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"
                 styleClass="table-dropdown" scrollHeight="350px"></p-dropdown>
   </div>

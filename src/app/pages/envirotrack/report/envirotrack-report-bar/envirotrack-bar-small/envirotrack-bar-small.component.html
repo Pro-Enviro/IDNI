@@ -2,7 +2,7 @@
   <div class="grid">
     <div class="col-6">
       <div class="pet-card-dark" *ngIf="isConsultant">
-        <h3 class="title">Select Company</h3>
+        <h3 class="title pb-3">Select Company</h3>
         <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id"
                     (ngModelChange)="onSelectCompany()"
                     [style]="{ width: '12rem'}"
@@ -14,7 +14,7 @@
     <div class="col-6">
       <div class="" *ngIf="mpan.length">
         <div class="pet-card-dark">
-          <h3 class="title">Select Mpan</h3>
+          <h3 class="title pb-3">Select Mpan</h3>
           <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
         </div>
       </div>
