@@ -1,11 +1,12 @@
-<p-card styleClass="card-charts">
-  <div class="col-4">
-    <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant">
+<div class="pet-card">
+  <div class="col-4 p-4">
+    <div class="pet-card-dark" *ngIf="isConsultant">
+      <h3 class="title">Select Company</h3>
       <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id"
-                  (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" ></p-dropdown>
+                  (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" styleClass="table-dropdown" scrollHeight="340px"></p-dropdown>
 <!--      <p-multiSelect [options]="yearFilter" optionLabel="name" optionName="value" [(ngModel)]="selectedYears"-->
 <!--                     (ngModelChange)="onYearFilter()"></p-multiSelect>-->
-    </p-card>
+    </div>
   </div>
 
   <div echarts *ngIf="dataArray.length" [options]="chartOption" [initOpts]="{ renderer: 'svg' }" class="chart" [id]="'chartId'"
@@ -13,4 +14,4 @@
   <div *ngIf="!dataArray.length">
     <p>No fuel data uploaded.</p>
   </div>
-</p-card>
+</div>
