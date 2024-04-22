@@ -207,13 +207,13 @@ a{
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
   color: #565656;
   background: white;
-  font-size: 18px !important;
+  font-size: 16px !important;
 }
 
 .table-dropdown{
   ul{
     margin-left: 16px !important;
-    width: 150px;
+    width: 180px;
   }
 }
 
@@ -333,6 +333,9 @@ a{
 }
 
 .p-panelmenu {
+  a{
+    text-decoration: none;
+  }
   .p-panelmenu-header .p-panelmenu-header-content {
     border: none;
     background: $lightColor-50;
@@ -345,11 +348,12 @@ a{
     color: #4b5563;
     border-top: 0;
   }
+  .p-panelmenu-header .p-panelmenu-header-content .p-panelmenu-header-action {
+    padding: 8px !important;
+    color: #4b5563;
+  }
 }
 
-.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-panelmenu-header-action {
-  padding: 8px !important;
-}
 
   .card-charts{
     background-color:#FDFDFD;

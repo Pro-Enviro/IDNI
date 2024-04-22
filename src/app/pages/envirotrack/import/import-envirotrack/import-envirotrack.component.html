@@ -33,7 +33,7 @@
         </div>
 
         <div class="pet-card mt-5" *ngIf="uploadedFiles.length && isConsultant">
-          <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()" class="btn-select" [style]="{padding:'10px'}"></p-selectButton>
+          <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()" class="btn-select-fuel"></p-selectButton>
         </div>
 
         <div class="pet-card mt-5" *ngIf="uploadedFiles.length && !isConsultant">
