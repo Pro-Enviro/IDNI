@@ -19,10 +19,17 @@
     list-style: none;
   }
 
-tfoot.p-datatable-tfoot.ng-star-inserted {
-  background: white;
-  color: #0a0a0a;
-}
+  table {
+    border-collapse: separate !important;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 0;
+  }
+
+  tfoot.p-datatable-tfoot.ng-star-inserted {
+    background: white;
+    color: #0a0a0a;
+  }
 
   h2{
     color: $primeColor;
