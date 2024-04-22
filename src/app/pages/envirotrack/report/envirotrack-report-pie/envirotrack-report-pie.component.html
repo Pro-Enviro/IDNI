@@ -1,7 +1,7 @@
 <div class="pet-card">
   <div class="grid">
     <div class="col-6 p-4">
-      <div class="pet-card" *ngIf="isConsultant">
+      <div class="pet-card-dark" *ngIf="isConsultant">
         <h3 class="title">Select Company</h3>
         <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
         <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" styleClass="table-dropdown" scrollHeight="340px"></p-dropdown>
