@@ -246,7 +246,12 @@ export class ImportEnvirotrackComponent {
         }
       },
       files: ''
-    },{responseType: "text"})
+    },{responseType: "text"}).subscribe({
+      next:(res) => {
+        console.log(res)
+      },
+      error: (error: any) =>console.log(error)
+    })
   }
 
 
