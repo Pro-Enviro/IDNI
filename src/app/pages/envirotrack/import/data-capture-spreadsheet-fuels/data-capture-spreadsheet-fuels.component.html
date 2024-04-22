@@ -5,13 +5,13 @@
        <div class="col-5" >
          <div class="pet-card">
            <h3 class="title">Select Company</h3>
-           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" scrollHeight="340px" styleClass="table-dropdown"></p-dropdown>
+           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" scrollHeight="350px" styleClass="table-dropdown"></p-dropdown>
          </div>
        </div>
 
       <div class="col-12">
         <div class="pet-card">
-          <h3 class="title">Non HH Data</h3>
+          <h3 class="title mb-3">Non HH Data</h3>
           <div class="pb-5">
             <button pButton (click)="addFuelType()" label="Add New Fuel Type" icon="pi pi-plus" class="btn-style"></button>
           </div>

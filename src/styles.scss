@@ -97,6 +97,14 @@ a{
   padding: 1.5rem;
 }
 
+.p-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  padding: 28px !important;
+  font-size: 22rem;
+}
   //----------------------------------------------------BUTTON----------------------------------------------------------
 
 .btn-select{
@@ -159,7 +167,8 @@ a{
    background-color: $primeColor;
    border:$primeColor;
    color:#283938;
-   border-radius: 12px;
+   padding: 15px;
+   border-radius: 6px !important;
    &:hover{
      background-color:$darkColor;
      color:white;

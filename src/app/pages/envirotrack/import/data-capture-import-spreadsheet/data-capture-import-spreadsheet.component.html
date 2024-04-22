@@ -20,7 +20,7 @@
 </div>
 
 
-<div class="pet-card mt-4" *ngIf="isXlsx">
+<div class="pet-card pt-4" *ngIf="isXlsx">
   <h3 class="title">Select the sheet to import</h3>
   <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()" class="btn-select-fuel"></p-selectButton>
 
