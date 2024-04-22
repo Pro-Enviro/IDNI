@@ -26,6 +26,10 @@
     border-radius: 0;
   }
 
+  td.expandable-rows{
+    height:46.2px !important;
+  }
+
   tfoot.p-datatable-tfoot.ng-star-inserted {
     background: white;
     color: #0a0a0a;
@@ -207,8 +211,8 @@ a{
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
   color: #565656;
-  background: white;
-  font-size: 18px !important;
+  background: $lightColor-50;
+  font-size: 16px !important;
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {

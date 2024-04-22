@@ -41,7 +41,8 @@
           <div class="pet-card">
             <h3 class="title pb-2">{{isConsultant ? 'Select Company' : ''}}</h3>
             <div  *ngIf="isConsultant">
-              <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" styleClass="table-dropdown" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant" scrollHeight="340px"></p-dropdown>
+              <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" styleClass="table-dropdown" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
+                          [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant" scrollHeight="350px"></p-dropdown>
             </div>
             <div style="display: flex; flex-direction: column">
               <label for="sic_code">SIC Code</label>
@@ -57,9 +58,9 @@
 
             <ng-template pTemplate="header">
               <tr>
-                <th class="font-semibold p-3 col-5">Productivity Factors Year 2024</th>
-                <th class="font-semibold p-3 col-1">Value</th>
-                <th class="font-semibold p-3" colspan="4">Per Employee Cost</th>
+                <th class="font-bold p-3 col-5">Productivity Factors Year 2024</th>
+                <th class="font-bold p-3 col-1">Value</th>
+                <th class="font-bold p-3" colspan="4">Per Employee Cost</th>
                 <!--            <th ></th>-->
               </tr>
               <tr>
