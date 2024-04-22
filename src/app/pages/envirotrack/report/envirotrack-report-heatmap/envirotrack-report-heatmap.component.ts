@@ -342,6 +342,8 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
 
   initContourChart = (data: any) => {
 
+
+
     this.chartData.sort((a: any, b: any) => moment(a[0], 'YYYY-MM-DD') > moment(b[0], 'YYYY-MM-DD'));
 
 

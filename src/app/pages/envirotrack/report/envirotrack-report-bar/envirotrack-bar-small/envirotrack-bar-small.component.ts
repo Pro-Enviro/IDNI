@@ -112,7 +112,9 @@ export class EnvirotrackBarSmallComponent implements OnInit {
       tooltip: {
         extraCssText: 'text-transform: capitalize',
         trigger: 'item',
-        formatter: `{a} <br />{b}: {c}`,
+        formatter: (params: any) => {
+          return `<span class="font-bold">${moment(params.value[0]).format('YYYY-MM-DD')}:</span>  ${params.value[1].toLocaleString('en-US')}`
+        },
         axisPointer: {
           type: 'cross',
           label: {
