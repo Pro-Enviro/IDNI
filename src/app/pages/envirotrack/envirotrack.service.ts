@@ -67,6 +67,7 @@ export class EnvirotrackService {
     )
   }
 
+  
   lookup = (mpan: string, date: string, id: number) => {
     return this.http.get(`${this.url}/items/envirotrack?filter[mpan][_eq]=${mpan}&filter[date][_eq]=${date}&filter[company][_eq]=${id}`)
   }
