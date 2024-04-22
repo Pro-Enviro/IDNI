@@ -2,7 +2,7 @@
   <div class="pet-card" *ngIf="isConsultant">
     <h3 class="title">Select Company</h3>
     <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"
-                styleClass="table-dropdown" scrollHeight="340px"></p-dropdown>
+                styleClass="table-dropdown" scrollHeight="350px"></p-dropdown>
   </div>
 </div>
 
@@ -48,7 +48,7 @@
               </td>
 
               <td>
-                <p-dropdown [options]="changeOptions" class="p-inputtext-sm" [style]="{width: '180px'}" [(ngModel)]="rec.changeType" appendTo="body"></p-dropdown>
+                <p-dropdown [options]="changeOptions" class="p-inputtext-sm" [style]="{width: '180px'}" [(ngModel)]="rec.changeType" appendTo="body" styleClass="table-dropdown" scrollHeight="450px"></p-dropdown>
               </td>
               <td>
                 <p-inputNumber [inputStyle]="{'width':'100px'}" class="p-inputtext-sm"
@@ -69,7 +69,7 @@
                                [(ngModel)]="rec.estimatedCarbonSaving" class="p-inputtext-sm"></p-inputNumber>
               </td>
               <td>
-                <p-dropdown [options]="percentOptions" class="p-inputtext-sm" [(ngModel)]="rec.marginOfErrorSavings" appendTo="body"></p-dropdown>
+                <p-dropdown [options]="percentOptions" class="p-inputtext-sm" [(ngModel)]="rec.marginOfErrorSavings" appendTo="body" [style]="{width: '120px'}" styleClass="table-dropdown" scrollHeight="310px"></p-dropdown>
               </td>
               <td>
                 <button pButton class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-trash"
