@@ -19,6 +19,11 @@
     list-style: none;
   }
 
+tfoot.p-datatable-tfoot.ng-star-inserted {
+  background: white;
+  color: #0a0a0a;
+}
+
   h2{
     color: $primeColor;
     font-size: 2rem;
@@ -99,6 +104,17 @@ a{
   .p-button{
     width: 130px;
     height: 38px;
+  }
+}
+
+.btn-select-fuel{
+  .p-selectbutton .p-button.p-highlight{
+    background-color: $primeColor;
+    border:none;
+    padding:20px !important;
+  }
+  .p-button{
+   padding:20px !important;
   }
 }
 
@@ -1228,10 +1244,3 @@ footer{
     }
   }
 }
-
-
-
-
-
-
-

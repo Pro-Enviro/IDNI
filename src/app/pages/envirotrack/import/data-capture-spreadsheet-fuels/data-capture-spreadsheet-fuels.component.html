@@ -88,13 +88,12 @@
                     </td>
                   </tr>
                 </ng-template>
-                <ng-template pTemplate="footer" style="background: none">
+                <ng-template pTemplate="footer">
                   <div class="flex">
-                    <button pButton icon="pi pi-plus" class="btn-dark" (click)="addNewRow(fuel)"
-                            [style]="{marginTop: '1rem'}"></button>
+                    <button pButton icon="pi pi-plus" class="btn-dark-upload ml-2 mt-3" (click)="addNewRow(fuel)"></button>
                   </div>
                   <div class="pt-5 pb-5">
-                    <button pButton icon="pi pi-save" label="Save" class="btn-style" (click)="saveFuel()"></button>
+                    <button pButton icon="pi pi-save" label="Save" class="btn-style mt-3" (click)="saveFuel()"></button>
                   </div>
                 </ng-template>
               </p-table>

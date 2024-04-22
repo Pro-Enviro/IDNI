@@ -1,61 +1,75 @@
-<p-card header="File Upload" *ngIf="!fileContent" styleClass="card-charts">
-  <p-fileUpload name="file[]" [customUpload]="true"
-                (onSelect)="getFileType($event)"
-                (uploadHandler)="onUpload($event)"
-                [multiple]="false"
-                chooseStyleClass="btn-style-upload"
-                cancelStyleClass="btn-dark-upload"
-                uploadStyleClass="btn-outline-upload">
-    <ng-template pTemplate="content">
-      <ul *ngIf="uploadedFiles.length">
-        <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
-      </ul>
-    </ng-template>
-  </p-fileUpload>
-</p-card>
+<div class="p-4">
+  <h3 class="font-semibold pb-3" style="font-size: 1.4rem;">Spreadsheet Data Import</h3>
 
-<p-card *ngIf="isXlsx" header="Select the sheet to import" styleClass="card-charts mt-4">
-  <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()"
-                  class="btn-select"></p-selectButton>
-</p-card>
-<ng-container *ngIf="fileContent">
-  <p-card #table header="Data" styleClass="card-select-panel mt-4">
-    <div class="flex flex-wrap">
-      <ng-container *ngFor="let column of fuelColumns">
-        <div  pDroppable (onDrop)="dropColumnTitle(column)">
-          <p-card class="dropbox-panel" styleClass="envirotrack-import" header="{{column.name}}" [style]="{height: '100%',width: '10rem',marginBottom: '7px', marginLeft: '7px'}">
-            <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="column.draggedCell">
-              <li class="p-2 border-round shadow-1" (click)="removeCell(column)" style="cursor: pointer; overflow: hidden">
-                {{column.draggedCell.name}}
-              </li>
-            </ul>
-          </p-card>
-        </div>
-      </ng-container>
-    </div>
-
-    <p-table [value]="fileContent.slice(0,10)" [tableStyle]="{ 'min-width': '50rem', width: '100%' }">
-      <ng-template pTemplate="body" let-row let-r="rowIndex">
-        <tr *ngIf="r === 0">
-          <td *ngFor="let cell of row.slice(0,30); index as c" >
-            <div pDraggable (onDragStart)="dragStart(cell, r, c)" (onDragEnd)="dragEnd()" style="font-weight: 600; cursor: pointer">{{ cell }}</div>
-          </td>
-        </tr>
-        <tr *ngIf="r !== 0">
-          <td *ngFor="let cell of row.slice(0,30); index as c" >
-            <div pDraggable (onDragStart)="dragStart(cell, r, c)" (onDragEnd)="dragEnd()">{{ cell }}</div>
-          </td>
-        </tr>
+  <div class="pet-card" *ngIf="!fileContent">
+    <h3 class="title">File Upload</h3>
+    <p-fileUpload name="file[]" [customUpload]="true"
+                  (onSelect)="getFileType($event)"
+                  (uploadHandler)="onUpload($event)"
+                  [multiple]="false"
+                  chooseStyleClass="btn-style-upload"
+                  cancelStyleClass="btn-dark-upload"
+                  uploadStyleClass="btn-outline-upload">
+      <ng-template pTemplate="content">
+        <ul *ngIf="uploadedFiles.length">
+          <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+        </ul>
       </ng-template>
-    </p-table>
+    </p-fileUpload>
+  </div>
+</div>
 
-    <div class="mt-2 flex">
-      <button pButton class="btn-style" icon="pi pi-cog" label="Process" (click)="processData()"></button>
-      <button pButton label="Save & Close" icon="pi pi-save" class="btn-dark ml-2" (click)="close()" [disabled]="!processed"></button>
+
+<div class="pet-card mt-4" *ngIf="isXlsx">
+  <h3 class="title">Select the sheet to import</h3>
+  <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()" class="btn-select-fuel"></p-selectButton>
+
+  <ng-container *ngIf="fileContent">
+    <div class="pet-card mt-4" #table>
+      <h3 class="title">Data</h3>
+      <div class="flex flex-wrap">
+        <ng-container *ngFor="let column of fuelColumns">
+          <div  pDroppable (onDrop)="dropColumnTitle(column)">
+          <div class="grid">
+            <div class="col-3">
+              <div class="pet-card" [style]="{height: '100%',width: '15rem',marginBottom: '7px', marginLeft: '7px'}">
+                <h3 class="title">{{column.name}}</h3>
+                <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="column.draggedCell">
+                  <li class="p-2 border-round shadow-1" (click)="removeCell(column)" style="cursor: pointer; overflow: hidden">
+                    {{column.draggedCell.name}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <p-table [value]="fileContent.slice(0,10)" [tableStyle]="{ 'min-width': '50rem', width: '100%' }">
+        <ng-template pTemplate="body" let-row let-r="rowIndex">
+          <tr *ngIf="r === 0">
+            <td *ngFor="let cell of row.slice(0,30); index as c" >
+              <div pDraggable (onDragStart)="dragStart(cell, r, c)" (onDragEnd)="dragEnd()" style="font-weight: 600; cursor: pointer">{{ cell }}</div>
+            </td>
+          </tr>
+          <tr *ngIf="r !== 0">
+            <td *ngFor="let cell of row.slice(0,30); index as c" >
+              <div pDraggable (onDragStart)="dragStart(cell, r, c)" (onDragEnd)="dragEnd()">{{ cell }}</div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <div class="mt-2 flex">
+        <button pButton class="btn-style" icon="pi pi-cog" label="Process" (click)="processData()"></button>
+        <button pButton label="Save & Close" icon="pi pi-save" class="btn-dark-upload ml-2" (click)="close()" [disabled]="!processed"></button>
+      </div>
     </div>
-  </p-card>
 
-</ng-container>
+  </ng-container>
+</div>
+
 
 
 
