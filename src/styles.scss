@@ -199,6 +199,25 @@ a{
   }
 }
 
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+  color: #565656;
+  background: white;
+  font-size: 18px !important;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  color: #565656;
+  background: white;
+  font-size: 18px !important;
+}
+
+.table-dropdown{
+  ul{
+    margin-left: 16px !important;
+    width: 150px;
+  }
+}
+
 .btn-gradient{
   background-color:#458785;
   border:1px solid #458785;

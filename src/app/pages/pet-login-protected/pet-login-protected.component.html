@@ -38,16 +38,17 @@
    </div>
   <div class="flex justify-content-between p-5">
     <div class="flex-1 mr-3 mt-3">
-          <p-card header="{{isConsultant ? 'Select Company' : ''}}" styleClass="card-charts">
+          <div class="pet-card">
+            <h3 class="title pb-2">{{isConsultant ? 'Select Company' : ''}}</h3>
             <div  *ngIf="isConsultant">
-              <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant"></p-dropdown>
+              <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" styleClass="table-dropdown" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant" scrollHeight="340px"></p-dropdown>
             </div>
             <div style="display: flex; flex-direction: column">
               <label for="sic_code">SIC Code</label>
               <input pInputText id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" [style]="{width: '15rem', marginTop: '0.5rem', fontSize: '12px'}" placeholder="Enter your SIC Code. E.g. 43999"/>
               <p style="font-weight: 400" class="text-sm mt-5" *ngIf="sicCodeLetter.length">SIC Code Letter: <span class="font-bold">{{sicCodeLetter}}</span></p>
             </div>
-          </p-card>
+          </div>
     </div>
     <div class="flex-1">
         <div class="card">
@@ -125,11 +126,11 @@
             <ng-template pTemplate="rowexpansion" let-groups let-editing="editing" >
               <tr style="background-color: #fff; overflow-x: scroll" >
                 <td *ngIf="groups.parent.name === 'Cost of Raw Materials'">
-                  <p-dropdown  [options]="materialTypes" class="p-inputtext-sm" [style]="{width: '120px', marginRight: '0.2rem'}" [(ngModel)]="groups.type" ></p-dropdown>
-                  <p-dropdown  [options]="steelMaterials" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Steel'"></p-dropdown>
-                  <p-dropdown  [options]="otherMetals" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Other Metals'"></p-dropdown>
-                  <p-dropdown  [options]="plastics" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Plastics'"></p-dropdown>
-                  <p-dropdown  [options]="otherMaterials" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Other Materials'"></p-dropdown>
+                  <p-dropdown  [options]="materialTypes" [style]="{width: '120px', marginRight: '0.2rem'}" [(ngModel)]="groups.type" styleClass="table-dropdown" scrollHeight="500px"></p-dropdown>
+                  <p-dropdown  [options]="steelMaterials" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Steel'" scrollHeight="440px" styleClass="table-dropdown"></p-dropdown>
+                  <p-dropdown  [options]="otherMetals" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Other Metals'" scrollHeight="320px" styleClass="table-dropdown"></p-dropdown>
+                  <p-dropdown  [options]="plastics" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Plastics'" scrollHeight="320px" styleClass="table-dropdown"></p-dropdown>
+                  <p-dropdown  [options]="otherMaterials" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Other Materials'" scrollHeight="500px" styleClass="table-dropdown"></p-dropdown>
                   <p-dropdown  [options]="materialFormats" class="p-inputtext-sm" [style]="{width:'120px'}" [(ngModel)]="groups.format"></p-dropdown>
                 </td>
 
@@ -145,13 +146,13 @@
                 </td>
 
                 <td *ngIf="groups.mode">
-                  <p-dropdown [options]="modeOfTransport" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.mode"></p-dropdown>
+                  <p-dropdown [options]="modeOfTransport" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.mode" scrollHeight="240px" styleClass="table-dropdown"></p-dropdown>
                 </td>
                 <td *ngIf="groups.fuelType">
-                  <p-dropdown [options]="fuelTypes" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.fuelType"></p-dropdown>
+                  <p-dropdown [options]="fuelTypes" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.fuelType" scrollHeight="540px" styleClass="table-dropdown"></p-dropdown>
                 </td>
                 <td *ngIf="groups.unitsUom">
-                  <p-dropdown [options]="unitsUom" class="p-inputtext-sm" [style]="{width: '120px'}"></p-dropdown>
+                  <p-dropdown [options]="unitsUom" class="p-inputtext-sm" [style]="{width: '120px'}" scrollHeight="340px" styleClass="table-dropdown"></p-dropdown>
                 </td>
 
                 <td *ngIf="groups.noOfParts !== undefined">
@@ -164,30 +165,30 @@
                 </td>
 
                 <td *ngIf="groups.otherModes !== undefined">
-                  <p-dropdown [options]="otherModesOfTransport" class="p-inputtext-sm" [style]="{width: '120px'}"></p-dropdown>
+                  <p-dropdown [options]="otherModesOfTransport" class="p-inputtext-sm" [style]="{width: '120px'}" scrollHeight="340px" styleClass="table-dropdown"></p-dropdown>
                 </td>
                 <td *ngIf="groups.companyModeOfTransport !== undefined">
-                  <p-dropdown [options]="companyModesOfTransport" class="p-inputtext-sm" [style]="{width: '120px'}"></p-dropdown>
+                  <p-dropdown [options]="companyModesOfTransport" class="p-inputtext-sm" [style]="{width: '120px'}" scrollHeight="340px" styleClass="table-dropdown"></p-dropdown>
                 </td>
                 <td *ngIf="groups.staffCommute !== undefined">
-                  <p-dropdown [options]="staffCommute" class="p-inputtext-sm" [style]="{width: '120px'}"></p-dropdown>
+                  <p-dropdown [options]="staffCommute" class="p-inputtext-sm" [style]="{width: '120px'}" scrollHeight="340px" styleClass="table-dropdown"></p-dropdown>
                 </td>
                 <td *ngIf="groups.route !== undefined">
-                  <p-dropdown [options]="routes" class="p-inputtext-sm" [style]="{width: '120px'}"></p-dropdown>
+                  <p-dropdown [options]="routes" class="p-inputtext-sm" [style]="{width: '120px'}" scrollHeight="340px" styleClass="table-dropdown"></p-dropdown>
                 </td>
                 <td *ngIf="groups.cost !== undefined">
                   <p-inputNumber [(ngModel)]="groups.cost" class="p-inputtext-sm"
                                  [inputStyle]="{width: '100px'}" (ngModelChange)="calculateGroupTotalCost(groups)"></p-inputNumber>
                 </td>
                 <td *ngIf="groups.unitOfCost">
-                  <p-dropdown [options]="unitsOfCost" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.unitOfCost"></p-dropdown>
+                  <p-dropdown [options]="unitsOfCost" class="p-inputtext-sm" [style]="{width: '120px'}" [(ngModel)]="groups.unitOfCost" scrollHeight="340px" styleClass="table-dropdown"></p-dropdown>
                 </td>
                 <td *ngIf="groups.approxMileage !== undefined">
                   <p-inputNumber [(ngModel)]="groups.approxMileage" class="p-inputtext-sm"
                                  [inputStyle]="{width: '100px'}"></p-inputNumber>
                 </td>
                 <td *ngIf="groups.regionOfOrigin">
-                  <p-dropdown [options]="regionOfOrigin" class="p-inputtext-sm" [style]="{width: '120px'}"></p-dropdown>
+                  <p-dropdown [options]="regionOfOrigin" class="p-inputtext-sm" [style]="{width: '120px'}" scrollHeight="340px" styleClass="table-dropdown"></p-dropdown>
                 </td>
                 <td *ngIf="groups.scrappageAndWaste !== undefined">
                   <p-inputNumber [(ngModel)]="groups.scrappageAndWaste" class="p-inputtext-sm"
@@ -263,7 +264,7 @@
               </tr>
               <tr>
                 <td colspan="4" class="p-3">
-                  <p-button label="Save" *ngIf="selectedCompany" (click)="savePETdata()" styleClass="btn-dark" icon="pi pi-save"></p-button>
+                  <button pButton icon="pi pi-save" label="Save" class="btn-dark-upload" *ngIf="selectedCompany" (click)="savePETdata()"></button>
                 </td>
               </tr>
             </ng-template>
@@ -290,7 +291,7 @@
               </tr>
               <tr style="background-color: #fff" *ngIf="groups.parent.addRows">
                 <td colspan="6" class="pl-2">
-                  <p-button icon="pi pi-plus" size="small" label="Add new row" (click)="createNewTableRow(groups)" styleClass="btn-dark mt-3 mb-3"></p-button>
+                  <button pButton icon="pi pi-plus" label="Add new row" (click)="createNewTableRow(groups)" class="btn-dark-upload mt-3 mb-3"></button>
                 </td>
               </tr>
             </ng-template>
