@@ -35,7 +35,7 @@
           <ng-container *ngIf="chartModel">
             <div class="">
               <div class="flex justify-content-between mb-6">
-                <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-fuel ml-5"></p-selectButton>
+                <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months ml-5"></p-selectButton>
                 <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn mr-5"></p-calendar>
               </div>
               <div class="h-full">
@@ -46,7 +46,7 @@
           </ng-container>
           <ng-container *ngIf="!chartModel">
             <div class="flex justify-content-between mb-6">
-              <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-fuel ml-5"></p-selectButton>
+              <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months ml-5"></p-selectButton>
               <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn mr-5"></p-calendar>
             </div>
             <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>
