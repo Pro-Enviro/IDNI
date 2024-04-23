@@ -6,6 +6,8 @@ import { Router, RouterLink} from "@angular/router";
 import {AuthService, Credentials} from "../../_services/users/auth.service";
 import {FormsModule} from "@angular/forms";
 import {GlobalService} from "../../_services/global.service";
+import {from, of} from "rxjs";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-login',
@@ -28,13 +30,29 @@ export class LoginComponent {
   };
 
   constructor(
-    private  auth: AuthService
-  ) {
-  }
+    private  auth: AuthService,
+    private msg: MessageService
+  ) {}
 
   login = () => {
     //if(this.credentials)
-    this.auth.login({...this.credentials, ...{mode: 'cookie'}})
+
+    if (/Edg/.test(navigator.userAgent)) {
+      return this.msg.add({
+        severity:'warn',
+        detail: 'Please use another browser. Microsoft Edge is not supported.'
+      })
+    }
+
+    from(this.auth.login({...this.credentials, ...{mode: 'cookie'}})).subscribe({
+      error: (err) => {
+        return this.msg.add({
+          severity: 'warn',
+          detail: 'Invalid credentials'
+        })
+      }
+    })
+
   }
 
 }

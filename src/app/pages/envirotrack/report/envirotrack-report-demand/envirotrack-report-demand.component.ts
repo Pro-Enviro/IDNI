@@ -151,17 +151,19 @@ export class EnvirotrackReportDemandComponent implements OnInit {
             borderWidth: 1,
           }
         }
-      },{
-        name: 'ASC',
-        type: 'line',
-        data: this.asc,
-        emphasis: {
-          itemStyle: {
-            borderColor: '#333',
-            borderWidth: 1,
-          }
-        }
-      }]
+      },
+      //   {
+      //   name: 'ASC',
+      //   type: 'line',
+      //   data: this.asc,
+      //   emphasis: {
+      //     itemStyle: {
+      //       borderColor: '#333',
+      //       borderWidth: 1,
+      //     }
+      //   }
+      // }
+      ]
     }
   }
 

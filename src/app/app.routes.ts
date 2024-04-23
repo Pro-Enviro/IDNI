@@ -88,6 +88,7 @@ import {DataPrivacyComponent} from "./pages/data-privacy/data-privacy.component"
 import {GenerateReportComponent} from "./pages/reports/generate-report/generate-report.component";
 
 import {RegisterSuccessPageComponent} from "./users/register/register-success-page/register-success-page.component";
+import {ForgotPasswordComponent} from "./users/forgot-password/forgot-password.component";
 
 
 
@@ -139,6 +140,7 @@ export const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
   {path: 'registration-form', component: RegistrationFormComponent},
+  // {path:'forgotpassword', component: ForgotPasswordComponent},
   {path:'successful-registration',component:RegisterSuccessPageComponent},
   {path:'chat',component: ChatDialogTplComponent},
   {path:'live-chat',component:LiveChatTplComponent},

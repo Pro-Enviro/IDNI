@@ -4,7 +4,8 @@ import {BehaviorSubject, map, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../storage.service";
 import {GlobalService} from "../global.service";
-import {readRole, readRoles} from "@directus/sdk";
+import {passwordRequest, readRole, readRoles} from "@directus/sdk";
+import {MessageService} from "primeng/api";
 
 export interface Credentials {
   email: string;
@@ -23,7 +24,7 @@ export class AuthService {
     private global: GlobalService,
     private http: HttpClient,
     private storage: StorageService,
-    private route: Router
+    private route: Router,
   ) {
     this.client = this.global.client
 
@@ -49,6 +50,8 @@ export class AuthService {
     this.global.updateCompanyId(0)
 
     const result = await this.client.login(credentials.email, credentials.password)
+
+
     const token = await this.client.getToken()
 
     this.storage.set('access_token', token)
@@ -74,11 +77,15 @@ export class AuthService {
                 this.global.updateCompanyName(res.data[0].name)
               }
             },
-            error: (error: any) => console.log(error)
+            error: (error: any) => {
+              console.log(error)
+            }
           })
         }
       },
-      error: (err: any) => console.log(err)
+      error: (err: any) => {
+        console.log(err)
+      }
     })
 
     this.global.isSignedIn.next(true);
@@ -119,6 +126,12 @@ export class AuthService {
     this.storage.set('refresh_token', result.refresh_token)
 
     return result.access_token;
+  }
+
+  resetPassword = async (email: string) => {
+    // Dont't use - This sends a generic directus email, not an IDNI one
+    // const result = await this.client.request(passwordRequest(email))
+    // return result
   }
 
   getUserRoles = () => {
