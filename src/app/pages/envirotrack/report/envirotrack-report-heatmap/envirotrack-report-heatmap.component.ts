@@ -122,6 +122,8 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
       },
       toolbox: {
         show: true,
+        right:'0',
+        top:'0',
         feature: {
           saveAsImage: {
             show: true
@@ -133,7 +135,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         min: 0,
         max: Math.round(this.max),
         left: 'right',
-        top: 'center',
+        top: '50',
         calculable: true,
         realtime: false,
         splitNumber: 25,

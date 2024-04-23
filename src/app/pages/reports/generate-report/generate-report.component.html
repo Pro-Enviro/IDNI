@@ -1,113 +1,111 @@
 <div class="col-6">
-  <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant">
-    <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"></p-dropdown>
-  </p-card>
+  <div class="pet-card" *ngIf="isConsultant">
+    <h3 class="title pb-3">Select Company</h3>
+    <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"
+                styleClass="table-dropdown" scrollHeight="350px"></p-dropdown>
+  </div>
 </div>
 
 <p-dialog [(visible)]="modelVisible" [modal]="true" [style]="{width: '60vw'}">
   <div class="grid generated-report" style="{padding: 1rem}">
     <div [innerHTML]="docxInHtml" class="col-10"></div>
-
   </div>
 </p-dialog>
-
 
  <!--Buttons-->
   <div class="flex justify-content-between">
     <div class="flex justify-content-start">
     </div>
-
   </div>
 
+  <div class="pet-card p-4" style="background:white">
+    <p-tabView (onChange)="sortRecommendations()">
+      <!--RECOMMENDATIONS-->
+      <p-tabPanel header="Recommendation Summary">
+      <p-table [value]="recommendations">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>No.</th>
+              <th [style]="{width: '350px', fontSize: '0.8rem'}">Recommendation</th>
+              <th [style]="{width: '200px', fontSize: '0.8rem'}">Type of Change</th>
+              <th [style]="{width: '100px', fontSize: '0.8rem'}">Estimated Annual energy saving (kWh/yr)</th>
+              <th [style]="{width: '100px', fontSize: '0.8rem'}">Estimated Annual saving (£ exc VAT/yr)</th>
+              <th [style]="{width: '100px', fontSize: '0.8rem'}">Estimated cost to implement (£ excl. VAT)</th>
+              <th [style]="{width: '100px', fontSize: '0.8rem'}">Payback Period</th>
+              <th [style]="{width: '100px', fontSize: '0.8rem'}">Estimated Annual carbon saving
+                (tCo2e/yr)
+              </th>
+              <th [style]="{width:'150px'}">Margin Of Error %</th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rec let-i="rowIndex">
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>
+    <!--            <p>{{ rec.recommendationTitle }}</p>-->
+                <textarea rows="2" cols="30" pInputTextarea [(ngModel)]="rec.recommendation" style="resize: none" class="p-inputtext-sm w-full mr-2"></textarea>
+              </td>
 
-<p-tabView [style]="{width:'75vw', marginBottom: '2rem', paddingBottom: '5rem', minHeight: '75vh'}" (onChange)="sortRecommendations()">
+              <td>
+                <p-dropdown [options]="changeOptions" class="p-inputtext-sm" [style]="{width: '180px'}" [(ngModel)]="rec.changeType" appendTo="body" styleClass="table-dropdown" scrollHeight="450px"></p-dropdown>
+              </td>
+              <td>
+                <p-inputNumber [inputStyle]="{'width':'100px'}" class="p-inputtext-sm"
+                               [(ngModel)]="rec.estimatedEnergySaving"></p-inputNumber>
+              </td>
+              <td>
+                <p-inputNumber [inputStyle]="{'width':'100px'}" class="p-inputtext-sm"
+                               [(ngModel)]="rec.estimatedSaving"></p-inputNumber>
+              </td>
+              <td>
+                <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.estimatedCost" class="p-inputtext-sm"></p-inputNumber>
+              </td>
+              <td>
+                <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.paybackPeriod" class="p-inputtext-sm"></p-inputNumber>
+              </td>
+              <td>
+                <p-inputNumber [inputStyle]="{'width':'100px'}"
+                               [(ngModel)]="rec.estimatedCarbonSaving" class="p-inputtext-sm"></p-inputNumber>
+              </td>
+              <td>
+                <p-dropdown [options]="percentOptions" class="p-inputtext-sm" [(ngModel)]="rec.marginOfErrorSavings" appendTo="body" [style]="{width: '120px'}" styleClass="table-dropdown" scrollHeight="310px"></p-dropdown>
+              </td>
+              <td>
+                <button pButton class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-trash"
+                        (click)="deleteRecommendation(rec)"></button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="footer">
+            <tr>
+              <td></td>
+              <td>Totals</td>
+              <td>{{ getTotal('estimatedEnergySaving') }} kWh/ yr</td>
+              <td>£ {{ getTotal('estimatedSaving').toFixed(2) }}</td>
+              <td>£ {{ getTotal('estimatedCost').toFixed(2) }}</td>
+              <td></td>
+              <td>{{ getTotal('estimatedCarbonSaving').toFixed(2) }}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><button label="Add New Recommendation" pButton class="btn-dark-upload w-full mr-2" icon="pi pi-plus" (click)="addNewRecommendation()"></button></td>
+              <td colspan="8"></td>
+            </tr>
 
+          </ng-template>
+        </p-table>
 
-  <!--RECOMMENDATIONS-->
-  <p-tabPanel header="Recommendation Summary">
-  <p-table [value]="recommendations" styleClass="p-datatable-sm scrollfix reco-table" [style]="{marginTop: '1rem', fontSize: '0.8rem'}">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>No.</th>
-          <th [style]="{width: '350px', fontSize: '0.8rem'}">Recommendation</th>
-          <th [style]="{width: '200px', fontSize: '0.8rem'}">Type of Change</th>
-          <th [style]="{width: '100px', fontSize: '0.8rem'}">Estimated Annual energy saving (kWh/yr)</th>
-          <th [style]="{width: '100px', fontSize: '0.8rem'}">Estimated Annual saving (£ exc VAT/yr)</th>
-          <th [style]="{width: '100px', fontSize: '0.8rem'}">Estimated cost to implement (£ excl. VAT)</th>
-          <th [style]="{width: '100px', fontSize: '0.8rem'}">Payback Period</th>
-          <th [style]="{width: '100px', fontSize: '0.8rem'}">Estimated Annual carbon saving
-            (tCo2e/yr)
-          </th>
-          <th [style]="{width:'150px'}">Margin Of Error %</th>
-          <th></th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-rec let-i="rowIndex">
-        <tr>
-          <td>{{ i + 1 }}</td>
-          <td>
-<!--            <p>{{ rec.recommendationTitle }}</p>-->
-            <textarea rows="2" cols="30" pInputTextarea [(ngModel)]="rec.recommendation" style="resize: none" class="p-inputtext-sm w-full mr-2"></textarea>
-          </td>
+      </p-tabPanel>
 
-          <td>
-            <p-dropdown [options]="changeOptions" class="p-inputtext-sm" [style]="{width: '180px'}" [(ngModel)]="rec.changeType" appendTo="body"></p-dropdown>
-          </td>
-          <td>
-            <p-inputNumber [inputStyle]="{'width':'100px'}" class="p-inputtext-sm"
-                           [(ngModel)]="rec.estimatedEnergySaving"></p-inputNumber>
-          </td>
-          <td>
-            <p-inputNumber [inputStyle]="{'width':'100px'}" class="p-inputtext-sm"
-                           [(ngModel)]="rec.estimatedSaving"></p-inputNumber>
-          </td>
-          <td>
-            <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.estimatedCost" class="p-inputtext-sm"></p-inputNumber>
-          </td>
-          <td>
-            <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.paybackPeriod" class="p-inputtext-sm"></p-inputNumber>
-          </td>
-          <td>
-            <p-inputNumber [inputStyle]="{'width':'100px'}"
-                           [(ngModel)]="rec.estimatedCarbonSaving" class="p-inputtext-sm"></p-inputNumber>
-          </td>
-          <td>
-            <p-dropdown [options]="percentOptions" class="p-inputtext-sm" [(ngModel)]="rec.marginOfErrorSavings" appendTo="body"></p-dropdown>
-          </td>
-          <td>
-            <button pButton class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-trash"
-                    (click)="deleteRecommendation(rec)"></button>
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="footer">
-        <tr>
-          <td></td>
-          <td>Totals</td>
-          <td>{{ getTotal('estimatedEnergySaving') }} kWh/ yr</td>
-          <td>£ {{ getTotal('estimatedSaving').toFixed(2) }}</td>
-          <td>£ {{ getTotal('estimatedCost').toFixed(2) }}</td>
-          <td></td>
-          <td>{{ getTotal('estimatedCarbonSaving').toFixed(2) }}</td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td><button label="Add New Recommendation" pButton class="p-button p-button-outlined btn btn-dark w-full mr-2" icon="pi pi-plus" (click)="addNewRecommendation()"></button></td>
-          <td colspan="8"></td>
-        </tr>
-
-      </ng-template>
-    </p-table>
-
-  </p-tabPanel>
-
-  <div class="flex justify-content-start pt-4 pl-2">
-    <button type="submit" icon="pi pi-save" label="Save" pButton class="btn" (click)="saveForm()"></button>
+      <div class="flex justify-content-start pt-4 pl-2">
+        <button type="submit" icon="pi pi-save" label="Save" pButton class="btn-style" (click)="saveForm()"></button>
+      </div>
+    </p-tabView>
   </div>
-</p-tabView>
 
 
 

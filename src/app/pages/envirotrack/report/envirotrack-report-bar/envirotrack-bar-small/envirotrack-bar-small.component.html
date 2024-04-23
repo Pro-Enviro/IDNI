@@ -1,26 +1,33 @@
-<p-card styleClass="card-charts">
+<div class="pet-card" style="height:100%">
   <div class="grid">
     <div class="col-6">
-      <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant">
-        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" ></p-dropdown>
-      </p-card>
+      <div class="pet-card-dark" *ngIf="isConsultant">
+        <h3 class="title pb-3">Select Company</h3>
+        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id"
+                    (ngModelChange)="onSelectCompany()"
+                    [style]="{ width: '12rem'}"
+                    [disabled]="!isConsultant"
+                    styleClass="table-dropdown"
+                    scrollHeight="350px"></p-dropdown>
+      </div>
     </div>
     <div class="col-6">
       <div class="" *ngIf="mpan.length">
-        <p-card header="Select Mpan" styleClass="card-select-panel">
+        <div class="pet-card-dark">
+          <h3 class="title pb-3">Select Mpan</h3>
           <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
-        </p-card>
+        </div>
       </div>
     </div>
     <div class="col-12">
       <div class="flex pb-3">
-        <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select"></p-selectButton>
+        <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months"></p-selectButton>
       </div>
-      <div class="flex justify-content-start">
+      <div class="flex justify-content-start pt-2">
         <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
       </div>
-        <div echarts *ngIf="chartData.length" [options]="chartOptions" style="display: block; box-sizing: border-box; height: 530px; width: 800px;"></div>
+        <div echarts *ngIf="chartData.length" [options]="chartOptions" style="display: block; box-sizing: border-box; height: 530px; width: 800px;margin-top:1rem"></div>
       <p *ngIf="!chartData.length">Add data to see this chart</p>
     </div>
   </div>
-</p-card>
+</div>

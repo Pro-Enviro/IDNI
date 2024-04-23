@@ -159,7 +159,6 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
 
   addFuelType = () => {
     this.ref = this.dialog.open(DataCaptureSpreadsheetFuelsFieldsComponent, {
-      header: 'Add Fuel Type',
       width: '90vw',
       height: '90vh',
     })
@@ -472,7 +471,7 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     const copiedFuel = _.cloneDeep(fuel)
 
     this.ref = this.dialog.open(DataCaptureImportSpreadsheetComponent, {
-      header: 'Spreadsheet Data Import',
+      header: '',
       width: '90vw',
       height: '90vh',
       maximizable: true,

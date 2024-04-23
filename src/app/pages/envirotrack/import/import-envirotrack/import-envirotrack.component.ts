@@ -8,7 +8,6 @@ import {lastValueFrom} from "rxjs";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
-import {TopPageImgTplComponent} from "../../../../_partials/top-page-img-tpl/top-page-img-tpl.component";
 import {HttpClient} from "@angular/common/http";
 import {GlobalService} from "../../../../_services/global.service";
 
@@ -39,8 +38,7 @@ interface HHDData {
   styleUrl: './import-envirotrack.component.scss',
   imports: [
     SharedModules,
-    SharedComponents,
-    TopPageImgTplComponent
+    SharedComponents
   ]
 })
 

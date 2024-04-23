@@ -3,7 +3,7 @@ import {ButtonModule} from "primeng/button";
 import {CalendarModule} from "primeng/calendar";
 import {CheckboxModule} from "primeng/checkbox";
 import {ChipsModule} from "primeng/chips";
-import {FormBuilder, FormGroup, FormsModule, NgForm, Validators} from "@angular/forms";
+import {FormsModule} from "@angular/forms";
 import {InputGroupAddonModule} from "primeng/inputgroupaddon";
 import {InputGroupModule} from "primeng/inputgroup";
 import {InputNumberModule} from "primeng/inputnumber";
@@ -11,13 +11,12 @@ import {InputTextModule} from "primeng/inputtext";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {PanelModule} from "primeng/panel";
 import {PasswordModule} from "primeng/password";
-import {TopPageImgTplComponent} from "../../_partials/top-page-img-tpl/top-page-img-tpl.component";
 import {CardModule} from "primeng/card";
 import {DropdownModule} from "primeng/dropdown";
 import {DbService} from "../../_services/db.service";
 import {InputMaskModule} from "primeng/inputmask";
 import {NgClass} from "@angular/common";
-import {Message, MessageService} from "primeng/api";
+import {MessageService} from "primeng/api";
 import {DividerModule} from "primeng/divider";
 import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "../../_services/users/auth.service";
@@ -40,7 +39,6 @@ import {StorageService} from "../../_services/storage.service";
     InputTextareaModule,
     PanelModule,
     PasswordModule,
-    TopPageImgTplComponent,
     CardModule,
     DropdownModule,
     InputMaskModule,
