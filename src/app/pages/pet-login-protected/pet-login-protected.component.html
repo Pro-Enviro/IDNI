@@ -1,4 +1,7 @@
 <section>
+  <div class="container flex justify-content-end pb-2">
+    <p-button type="button" styleClass="btn-style" (click)="sidebarVisible = true" icon="pi pi-spin pi-cog" label="Using the PET Tool"></p-button>
+  </div>
   <div class="container">
     <h3 class="header-style text-center">The Productivity & Emissions Tool</h3>
     <p>The ID-NI Productivity & Emissions Tool (PET) is a unique and powerful tool that is easy to use and quick to provide key insights for business improvement.  By measuring the various factors that impact Productivity we can also, when blended with some additional information, enable your business to begin to measure your Scope 1, 2 and 3 emissions at your site.</p>
@@ -33,11 +36,8 @@
       <p>Level 2 access will require the company to agree to share their data with the project.  The company will provide the same productivity information as outlined in Level 1 but must also send or upload their ½ hourly energy data ( Electric and or Gas).  As the complete each of the productivity factors they will be prompted to provide additional information.  For example when they put in their total energy cost and send the 1/2 hourly data they will then be asked to breakdown the different types of energy and fuels they use at their site.  In transport they will be asked to identify the different modes of transport they use.</p>
     </div>
   </p-sidebar>
-  <div class="container flex justify-content-end pb-2">
-    <p-button type="button" styleClass="btn-style" (click)="sidebarVisible = true" icon="pi pi-spin pi-cog" label="Using the PET Tool"></p-button>
-  </div>
   <div class="grid flex justify-content-center flex-wrap">
-    <div class="col-3 p-3 mt-3">
+    <div class="col-5 p-3 mt-3">
       <div class="pet-card flex align-items-center justify-content-center flex-column">
         <h3 class="title">{{isConsultant ? 'Select Company' : ''}}</h3>
         <div  *ngIf="isConsultant">
@@ -299,11 +299,10 @@
           </p-table>
         </div>
   </div>
-  <div class="">
+
     <div class="" style="" *ngIf="this.chartData">
       <div class="flex justify-content-start">
         <div echarts [options]="chartOptions" style="max-height: 80vh; height: 70vh; width: 70vw"></div>
       </div>
     </div>
-  </div>
 </section>
