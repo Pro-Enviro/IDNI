@@ -346,11 +346,6 @@ export class ImportEnvirotrackComponent {
         }
       }
     }
-    //
-    // this.msg.add({
-    //   severity: 'success',
-    //   detail:'All data uploaded'
-    // })
 
     try {
       console.log('Trying')
