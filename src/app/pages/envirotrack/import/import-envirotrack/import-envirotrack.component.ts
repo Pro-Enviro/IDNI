@@ -251,7 +251,7 @@ export class ImportEnvirotrackComponent {
 
 
   processData = async () => {
-    if (!this.selectedMpan) {
+    if (!this.selectedMpan || isNaN(this.selectedMpan)) {
       this.msg.add({
         severity: 'error',
         summary: 'No mpan number selected',
@@ -275,6 +275,9 @@ export class ImportEnvirotrackComponent {
       });
       return;
     }
+
+    console.log(this.selectedMpan);
+
     for (const [index, row] of this.fileContent.entries()) {
       if (index >= this.selectedDataStart.row) {
         let date;
