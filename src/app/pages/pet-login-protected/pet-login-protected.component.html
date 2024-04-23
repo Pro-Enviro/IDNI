@@ -37,7 +37,7 @@
     <p-button type="button" styleClass="btn-style" (click)="sidebarVisible = true" icon="pi pi-spin pi-cog" label="Using the PET Tool"></p-button>
   </div>
   <div class="grid flex justify-content-center flex-wrap">
-    <div class="col-4 p-3 mt-3">
+    <div class="col-3 p-3 mt-3">
       <div class="pet-card flex align-items-center justify-content-center flex-column">
         <h3 class="title">{{isConsultant ? 'Select Company' : ''}}</h3>
         <div  *ngIf="isConsultant">
@@ -53,7 +53,7 @@
   </div>
   <div class="flex justify-content-center p-5">
         <div class="">
-          <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines" [style]="{maxWidth: '60vw', width: '50vw'}" dataKey="parent.name"
+          <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines" [tableStyle]="{'min-width': '70rem'}" dataKey="parent.name"
                    rowGroupMode="subheader" groupRowsBy="parent.name" [customSort]="true" *ngIf="selectedCompany">
 
             <ng-template pTemplate="header">
