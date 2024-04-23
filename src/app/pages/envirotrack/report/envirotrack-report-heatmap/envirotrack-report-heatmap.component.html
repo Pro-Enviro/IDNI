@@ -7,9 +7,9 @@
       </p-card>
     </div>
     <div class="col-6">
-      <div *ngIf="mpan.length">
-        <p-card header="Select Mpan" styleClass="card-select-panel">
-          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+      <div >
+        <p-card header="Select Mpan" styleClass="card-select-panel" >
+          <p-selectButton [disabled]="!mpan.length" [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
         </p-card>
       </div>
     </div>
@@ -46,8 +46,11 @@
               <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select"></p-selectButton>
               <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
             </div>
-            <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>
+            <div echarts *ngIf="chartOptions" [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>
+
           </ng-container>
+
+
 
         </ng-template>
       </p-card>
@@ -55,4 +58,5 @@
   </div>
 
 </p-card>
+
 

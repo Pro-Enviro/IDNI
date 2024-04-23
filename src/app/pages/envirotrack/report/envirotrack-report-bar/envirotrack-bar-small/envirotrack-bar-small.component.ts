@@ -85,19 +85,7 @@ export class EnvirotrackBarSmallComponent implements OnInit {
           fontSize: this.screenWidth >= 1441 ? 16: 12
         }
       },
-      graphic: {
-        type: 'image',
-        left: 10,
-        top: 0,
-        z: 100,
-        style: {
-          image: '/assets/img/pro-enviro-logo-email.png',
-          x: 0,
-          y: 0,
-          width: this.screenWidth >= 1441 ? 200: 120,
-          height: this.screenWidth >= 1441 ? 50 : 30
-        }
-      },
+
       xAxis: {
         type: 'category',
         data: this.chartX,
@@ -112,7 +100,9 @@ export class EnvirotrackBarSmallComponent implements OnInit {
       tooltip: {
         extraCssText: 'text-transform: capitalize',
         trigger: 'item',
-        formatter: `{a} <br />{b}: {c}`,
+        formatter: (params: any) => {
+          return `<span class="font-bold">${moment(params.value[0]).format('YYYY-MM-DD')}:</span>  ${params.value[1].toLocaleString('en-US')}`
+        },
         axisPointer: {
           type: 'cross',
           label: {

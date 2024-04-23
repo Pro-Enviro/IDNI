@@ -87,7 +87,7 @@ export class EnvirotrackReportPieComponent implements OnInit {
         bottom:'100'
       },
       title: {
-        text: 'Electricity Consumption, kWh',
+        text: 'Electricity Consumption, % split by Day of the Week',
         left: 'center',
         top:30,
         textStyle:{
