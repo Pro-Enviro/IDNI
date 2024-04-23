@@ -47,6 +47,8 @@ export class EnvirotrackReportBase1Component implements OnInit {
   ) {}
 
   initChart = () => {
+
+
     this.chartOptions = {
       legend: {
         show: true,
@@ -185,6 +187,9 @@ export class EnvirotrackReportBase1Component implements OnInit {
   }
 
   getData = (id: number) => {
+
+    if (!id) return;
+
     this.mpan = [];
     this.months = [];
     this.chartData = [];
@@ -193,6 +198,7 @@ export class EnvirotrackReportBase1Component implements OnInit {
     this.track.getData(id).subscribe({
         next: (res) => {
           res.forEach((row: any) => {
+
             row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
             if(row.hhd.length){
               row.total = row.hhd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0))
@@ -219,7 +225,8 @@ export class EnvirotrackReportBase1Component implements OnInit {
           this.firstYear = moment(this.months[0]).year()
 
           for(let i:number = moment().year(); i >= this.firstYear; i-- ){
-            if(this.data.filter((x:any) => x.date === `${i}-12-25`).length){
+
+            if(this.data.filter((x:any) => moment(x.date).format('YYYY-MM-DD') === `${i}-12-25`).length){
               this.lastYear = i;
               this.dateFilter = i;
               break;
@@ -227,7 +234,8 @@ export class EnvirotrackReportBase1Component implements OnInit {
           }
 
           this.filterData()
-        }
+        },
+        error: (error: any) => console.log(error)
       }
     )
   }
@@ -249,7 +257,10 @@ export class EnvirotrackReportBase1Component implements OnInit {
     } else {
       lowDay = 0
     }
-    let cDay = this.data.filter((x:any) => x.date === `${this.dateFilter}-12-25`)[0]
+
+
+    let cDay = this.data.filter((x:any) => moment(x.date).format('YYYY-MM-DD') === `${this.dateFilter}-12-25`)[0]
+
     if(cDay === undefined){
       this.msg.add({
         severity: 'warn',

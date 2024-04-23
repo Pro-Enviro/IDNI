@@ -32,8 +32,7 @@ export class LoginComponent {
   constructor(
     private  auth: AuthService,
     private msg: MessageService
-  ) {
-  }
+  ) {}
 
   login = () => {
     //if(this.credentials)
