@@ -749,7 +749,9 @@ export class PetLoginProtected implements OnInit {
 
 
     // Check if already saved - if not post a new row to pet_data
+    console.log(this.selectedPetId)
     if (this.selectedPetId) {
+      console.log('PATCHING')
       this.db.patchPetData(this.selectedPetId, objectToSave).subscribe({
         next: (res: any) => {
           this.msg.add({
@@ -763,6 +765,7 @@ export class PetLoginProtected implements OnInit {
         }
       })
     } else {
+      console.log('POSTING')
       this.db.savePetData(objectToSave).subscribe({
         next: (res: any) => {
           this.msg.add({
@@ -771,6 +774,7 @@ export class PetLoginProtected implements OnInit {
           })
 
           this.allPetData.push(res.data)
+          this.selectedPetId = res.data.id
         },
         error: (error) => console.log(error)
       })
