@@ -38,7 +38,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   chartData: any = [];
   chartX: string[] = [];
   chartY: string[] = [];
-  chartOptions!: echarts.EChartsOption;
+  chartOptions!: echarts.EChartsOption | null;
   max: number = 0;
   dateFilter: number = 12;
   defaultFilters: object[] = [{
@@ -73,17 +73,14 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   selectedMpan!: string;
   testChart!: any;
   chartModel: boolean = true;
-  isAdmin: boolean = false;
   screenWidth: any;
   isConsultant: boolean = false
 
   constructor(
     private track: EnvirotrackService,
-    public plotlyService: PlotlyService,
     private dialog: DialogService,
     private global: GlobalService
   ) {
-    // this.isAdmin = this.auth.isAdmin()
   }
 
   onPlotClick = (event: any) => {
@@ -98,44 +95,10 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   }
 
 
-  // saveChartAsBase64 = () => {
-  //   if (!this.chartOptions) return;
-  //   // Create temporary chart that uses echarts.instanceOf
-  //   const div = document.createElement('div')
-  //   div.style.width = '1200px'
-  //   div.style.height = '1200px'
-  //
-  //   const temporaryChart = echarts.init(div)
-  //
-  //   temporaryChart.setOption({...this.chartOptions, animation: false})
-  //
-  //   const data = temporaryChart.getDataURL({
-  //     backgroundColor: '#fff',
-  //     pixelRatio: 4
-  //   })
-  //   return data;
-  //
-  // }
-
-  // saveDetailedChartAsBase64 = () => {
-  //   const plotlyRef: any = this.plotlyService.getInstanceByDivId('plotlyChart')
-  //
-  //   if (!plotlyRef) {
-  //     return null;
-  //     // return this.saveChartAsBase64();
-  //
-  //   }
-  //
-  //   return this.plotlyService.getPlotly().then((res: any) => {
-  //     return res.toImage(plotlyRef, {format: 'png', width: 800, height: 600}).then((dataUrl: any) => {
-  //       return dataUrl;
-  //     })
-  //   });
-  // }
-
-
   initChart = () => {
     // @ts-ignore
+
+
     this.chartOptions = {
       tooltip: {
         extraCssText: 'text-transform: capitalize',
@@ -145,7 +108,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
           type: 'cross',
           label: {
             backgroundColor: '#6a7985'
-          }
+        }
         }
       },
       width: this.screenWidth >= 1441 ? 950 : this.screenWidth >= 1281 ? 500 : 380,
@@ -155,19 +118,6 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         top: 0,
         textStyle:{
           fontSize: this.screenWidth >= 1441 ? 16 : 12
-        }
-      },
-      graphic: {
-        type: 'image',
-        left: 10,
-        top: 0,
-        z: 100,
-        style: {
-          image: '/assets/img/pro-enviro-logo-email.png',
-          x: 0,
-          y: 0,
-          width: this.screenWidth >= 1441 ? 200 : 120,
-          height: this.screenWidth >= 1441 ? 50 : 30
         }
       },
       toolbox: {
@@ -238,6 +188,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         }
       ]
     }
+
   }
 
   getCompanies = () => {
@@ -265,22 +216,13 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
 
       }
     })
-
-    // this.track.getCompanies().subscribe({
-    //     next: (res: any) => {
-    //       this.companies = res.data;
-    //       this.selectedCompany = res.data[0].id
-    //       this.onSelectCompany()
-    //     }
-    //   })
   }
 
   onSelectCompany = () => {
     this.chartData = [];
+    this.chartOptions = null;
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
-
-    console.log()
   }
 
   getTimes = () => {
@@ -290,9 +232,13 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   }
 
   getData = (id: number) => {
+
+    if (!id) return;
+
     this.mpan = [];
     this.months = [];
     this.chartData = [];
+    this.chartOptions = null;
     this.chartX = [];
     this.chartY = [];
     this.track.getData(id).subscribe({
@@ -300,6 +246,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
           res.forEach((row: any) => {
             row.hhd = JSON.parse(row.hhd.replaceAll('"', '').replaceAll("'", '')).map((x: number) => x ? x : 0)
             this.months.push(row.date)
+
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
 
@@ -310,6 +257,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
             this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
           // }
 
+
           this.data = res
           this.getTimes()
           this.months.sort();
@@ -317,6 +265,8 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
           this.months.sort((a: string, b: string) => (a.split('/')[2] > b.split('/')[2]) ? 1 : ((b.split('/')[2] > a.split('/')[2]) ? -1 : 0))
           this.minDate = new Date(this.months[0])
           this.maxDate = new Date(this.months[this.months.length - 1])
+
+
           this.filterData()
         },
         error: (err: any) => console.log(err)
@@ -384,16 +334,18 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
 
     let arr: number[] = this.chartData.map((x: any) => x[2])
     this.max = Math.max(...arr)
+
+
+
     this.initChart()
     this.initContourChart(this.chartData)
 
   }
 
   initContourChart = (data: any) => {
-    this.chartData.map((row: any) => {
-      row[0] = moment(row[0]).format('YYYY-MM-DD')
-      return row;
-    })
+
+
+
     this.chartData.sort((a: any, b: any) => moment(a[0], 'YYYY-MM-DD') > moment(b[0], 'YYYY-MM-DD'));
 
 
@@ -408,9 +360,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         colorscale: 'Jet',
         contours: {
           coloring: 'heatmap',
-
         },
-
         line: {
           color: '#000',
           dash: 'solid',
@@ -485,6 +435,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
       this.selectedCompany = this.track.selectedCompany.value
       this.getData(this.selectedCompany)
     }
+
     this.screenWidth = window.innerWidth
   }
 }

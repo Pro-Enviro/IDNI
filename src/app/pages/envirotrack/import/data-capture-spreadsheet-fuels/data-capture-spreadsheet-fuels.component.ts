@@ -210,7 +210,7 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
       const worksheet = xlsx.utils.json_to_sheet(fuelRows);
       const workbook = {Sheets: {data: worksheet}, SheetNames: ['data']};
       const excelBuffer: any = xlsx.write(workbook, {bookType: 'xlsx', type: 'array'});
-      this.saveAsExcelFile(excelBuffer, `${this.selectedCompany.name} ${fuel.type} ${moment(new Date()).format('DD-MM-YYYY')}`);
+      this.saveAsExcelFile(excelBuffer, `Fuel Data - ${fuel.type} - ${moment(new Date()).format('DD-MM-YYYY')}`);
     });
   }
 
@@ -419,8 +419,10 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
                 fuelType.rows.map((col: any) => {
                   const findStartDate = col.findIndex((col: any) => col.name === 'Start Date')
                   const findEndDate = col.findIndex((col: any) => col.name === 'End Date')
+                  const units = col.findIndex((col: any) => col.name === 'Unit')
                   col[findStartDate].value ? col[findStartDate].value = new Date(col[findStartDate].value) : new Date()
                   col[findEndDate].value ? col[findEndDate].value = new Date(col[findEndDate].value) : new Date()
+                  col[units].value === '' ? col[units].value = 'kWh' : col[units].value
                 })
               })
 
@@ -479,6 +481,8 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     this.ref.onClose.subscribe({
       next: (spreadsheetData: any) => {
         if (spreadsheetData) {
+
+
 
           this.fuels = this.fuels.map((fuelType: any) => {
             if (fuelType.type === spreadsheetData.newFuelData.type) {

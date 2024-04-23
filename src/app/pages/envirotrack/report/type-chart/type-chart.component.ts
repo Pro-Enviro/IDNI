@@ -69,7 +69,7 @@ export class TypeChartComponent implements OnInit {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
               this.companies = res.data;
-              this.isConsultant = false;
+              this.isConsultant = true;
             }
           })
         }

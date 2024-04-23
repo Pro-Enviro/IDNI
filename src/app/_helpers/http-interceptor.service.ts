@@ -59,7 +59,7 @@ export const HttpInterceptorService: HttpInterceptorFn = (
     // If the user has no token (not logged in)
     return next(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log('ERROR 2: ', error)
+        // console.log('ERROR 2: ', error)
         if ([401, 403].includes(error.status)) {
           // auto logout if 401 or 403 response returned from api
           if (error.status === 401) {
@@ -82,7 +82,6 @@ export const HttpInterceptorService: HttpInterceptorFn = (
           detail: 'You are unauthorized.'
         })
 
-        console.log('HERE')
 
         return throwError(() => error);
       }))

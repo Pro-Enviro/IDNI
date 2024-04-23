@@ -18,13 +18,34 @@ import {ScopeChartComponent} from "./pages/envirotrack/report/scope-chart/scope-
 import {GenerateReportComponent} from "./pages/reports/generate-report/generate-report.component";
 import {AppComponent} from "./app.component";
 import {DashboardComponent} from "./pages/dashboard/dashboard.component";
+import {RegisterSuccessPageComponent} from "./users/register/register-success-page/register-success-page.component";
+import {ForgotPasswordComponent} from "./users/forgot-password/forgot-password.component";
+
 
 
 
 
 export const routes: Routes = [
   {path: 'login', component: LoginComponent},
-  {path:'dashboard',component: DashboardComponent, canActivate: [authGuard], canActivateChild: [authGuard], children: [
+
+  //{path:'dashboard',component: DashboardComponent, canActivate: [authGuard], canActivateChild: [authGuard], children: [
+
+//   {path: 'registration', component: RegisterComponent},
+//   {path: 'registration-form', component: RegistrationFormComponent},
+//   // {path:'forgotpassword', component: ForgotPasswordComponent},
+//   {path:'successful-registration',component:RegisterSuccessPageComponent},
+//   {path:'chat',component: ChatDialogTplComponent},
+//   {path:'live-chat',component:LiveChatTplComponent},
+
+//   {
+//     path: 'envirotrack', children: [
+
+//     ]
+//   },
+
+
+
+  {path:'dashboard',component:DashboardComponent, canActivate: [authGuard], canActivateChild: [authGuard], children: [
       {path: '', component: DasboardWidgetsComponent},
       {path: 'import', component: ImportEnvirotrackComponent},
       {path: 'fuel-data', component: DataCaptureSpreadsheetFuelsComponent},

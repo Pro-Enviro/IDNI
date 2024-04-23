@@ -86,7 +86,9 @@ export class ScopeChartComponent implements OnInit {
         show: true,
         feature: {
           saveAsImage: {
-            show: true
+            show: true,
+            name: 'Breakdown of CO2e (tonnes) by scope',
+            type: 'png'
           }
         }
       },

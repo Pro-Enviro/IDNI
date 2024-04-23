@@ -1,3 +1,4 @@
+
 <div class="pet-card">
   <div class="col-4 p-4">
     <div class="pet-card-dark" *ngIf="isConsultant">
@@ -9,7 +10,7 @@
     </div>
   </div>
 
-  <div echarts *ngIf="dataArray.length" [options]="chartOption" [initOpts]="{ renderer: 'svg' }" class="chart" [id]="'chartId'"
+  <div echarts [options]="chartOption"  class="chart" [id]="'chartId'"
        style="max-height: 800px; height: 800px;"></div>
   <div *ngIf="!dataArray.length">
     <p>No fuel data uploaded.</p>
