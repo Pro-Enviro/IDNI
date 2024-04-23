@@ -4,7 +4,7 @@ import {BehaviorSubject, map, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../storage.service";
 import {GlobalService} from "../global.service";
-import {readRole, readRoles} from "@directus/sdk";
+import {passwordRequest, readRole, readRoles} from "@directus/sdk";
 import {MessageService} from "primeng/api";
 
 export interface Credentials {
@@ -126,6 +126,12 @@ export class AuthService {
     this.storage.set('refresh_token', result.refresh_token)
 
     return result.access_token;
+  }
+
+  resetPassword = async (email: string) => {
+    // Dont't use - This sends a generic directus email, not an IDNI one
+    // const result = await this.client.request(passwordRequest(email))
+    // return result
   }
 
   getUserRoles = () => {
