@@ -224,7 +224,8 @@ export class RegisterComponent implements OnInit {
             summary:'Success',
             detail:'You have successfully registered.'
           })
-          this.router.navigate(['successful-registration'])
+          //this.router.navigate(['successful-registration'])
+          window.location.assign('dashboard.html')
         }
       })
     } else{
