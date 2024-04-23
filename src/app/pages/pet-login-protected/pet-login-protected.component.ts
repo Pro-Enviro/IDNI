@@ -201,15 +201,12 @@ export class PetLoginProtected implements OnInit {
     this.sicCodeLetter = ''
     this.fuels = []
     this.externalCost = 0;
-
     this.chartData = null
     this.chartOptions = null;
   }
 
   fillTable = (petData: PetToolData) => {
     if (!petData) return;
-
-    // console.log(petData)
 
     this.data = []
     this.selectedPetId = petData.id
@@ -754,7 +751,7 @@ export class PetLoginProtected implements OnInit {
     // Check if already saved - if not post a new row to pet_data
     console.log(this.selectedPetId)
     if (this.selectedPetId) {
-      console.log('PATCHING')
+      // console.log('PATCHING')
       this.db.patchPetData(this.selectedPetId, objectToSave).subscribe({
         next: (res: any) => {
           this.msg.add({
@@ -768,7 +765,7 @@ export class PetLoginProtected implements OnInit {
         }
       })
     } else {
-      console.log('POSTING')
+      // console.log('POSTING')
       this.db.savePetData(objectToSave).subscribe({
         next: (res: any) => {
           this.msg.add({
