@@ -33,24 +33,26 @@
       <p>Level 2 access will require the company to agree to share their data with the project.  The company will provide the same productivity information as outlined in Level 1 but must also send or upload their ½ hourly energy data ( Electric and or Gas).  As the complete each of the productivity factors they will be prompted to provide additional information.  For example when they put in their total energy cost and send the 1/2 hourly data they will then be asked to breakdown the different types of energy and fuels they use at their site.  In transport they will be asked to identify the different modes of transport they use.</p>
     </div>
   </p-sidebar>
-   <div class="container flex justify-content-end mt-2 mb-3">
-     <p-button type="button" styleClass="btn-style" (click)="sidebarVisible = true" icon="pi pi-spin pi-cog" label="Using the PET Tool"></p-button>
-   </div>
-  <div class="flex justify-content-between p-5">
-    <div class="flex-1 mr-3 mt-3">
-          <p-card header="{{isConsultant ? 'Select Company' : ''}}" styleClass="card-charts">
-            <div  *ngIf="isConsultant">
-              <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant"></p-dropdown>
-            </div>
-            <div style="display: flex; flex-direction: column">
-              <label for="sic_code">SIC Code</label>
-              <input pInputText id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" [style]="{width: '15rem', marginTop: '0.5rem', fontSize: '12px'}" placeholder="Enter your SIC Code. E.g. 43999"/>
-              <p style="font-weight: 400" class="text-sm mt-5" *ngIf="sicCodeLetter.length">SIC Code Letter: <span class="font-bold">{{sicCodeLetter}}</span></p>
-            </div>
-          </p-card>
+  <div class="container flex justify-content-end pb-2">
+    <p-button type="button" styleClass="btn-style" (click)="sidebarVisible = true" icon="pi pi-spin pi-cog" label="Using the PET Tool"></p-button>
+  </div>
+  <div class="grid flex justify-content-center flex-wrap">
+    <div class="col-4 p-3 mt-3">
+      <div class="pet-card flex align-items-center justify-content-center flex-column">
+        <h3 class="title">{{isConsultant ? 'Select Company' : ''}}</h3>
+        <div  *ngIf="isConsultant">
+          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant"></p-dropdown>
+        </div>
+        <div class="flex flex-column">
+          <label for="sic_code">SIC Code</label>
+          <input pInputText id="sic_code" [(ngModel)]="sicCode" (ngModelChange)="sicCodeToLetter()" [style]="{width: '15rem', marginTop: '0.5rem', fontSize: '12px'}" placeholder="Enter your SIC Code. E.g. 43999"/>
+          <p style="font-weight: 400" class="text-sm mt-5" *ngIf="sicCodeLetter.length">SIC Code Letter: <span class="font-bold">{{sicCodeLetter}}</span></p>
+        </div>
+      </div>
     </div>
-    <div class="flex-1">
-        <div class="card">
+  </div>
+  <div class="flex justify-content-center p-5">
+        <div class="">
           <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines" [style]="{maxWidth: '60vw', width: '50vw'}" dataKey="parent.name"
                    rowGroupMode="subheader" groupRowsBy="parent.name" [customSort]="true" *ngIf="selectedCompany">
 
@@ -296,7 +298,6 @@
             </ng-template>
           </p-table>
         </div>
-    </div>
   </div>
   <div class="">
     <div class="" style="" *ngIf="this.chartData">
