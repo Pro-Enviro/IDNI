@@ -37,6 +37,14 @@ export class LoginComponent {
 
   login = () => {
     //if(this.credentials)
+
+    if (/Edg/.test(navigator.userAgent)) {
+      return this.msg.add({
+        severity:'warn',
+        detail: 'Please use another browser. Microsoft Edge is not supported.'
+      })
+    }
+
     from(this.auth.login({...this.credentials, ...{mode: 'cookie'}})).subscribe({
       error: (err) => {
         return this.msg.add({
