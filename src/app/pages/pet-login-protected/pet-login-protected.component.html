@@ -387,9 +387,9 @@
       <p>Level 2 access will require the company to agree to share their data with the project.  The company will provide the same productivity information as outlined in Level 1 but must also send or upload their ½ hourly energy data ( Electric and or Gas).  As the complete each of the productivity factors they will be prompted to provide additional information.  For example when they put in their total energy cost and send the 1/2 hourly data they will then be asked to breakdown the different types of energy and fuels they use at their site.  In transport they will be asked to identify the different modes of transport they use.</p>
     </div>
   </p-sidebar>
-  <div class="grid">
-    <div class="col-5">
-      <div class="pet-card">
+  <div class="grid flex justify-content-center flex-wrap">
+    <div class="col-5 p-3 mt-3">
+      <div class="pet-card flex align-items-center justify-content-center flex-column">
         <h3 class="title pb-3">{{isConsultant ? 'Select Company' : ''}}</h3>
         <div  *ngIf="isConsultant">
           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant" ></p-dropdown>
@@ -423,8 +423,9 @@
       </div>
     </div>
   </div>
-  <div class="card" >
-    <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines" [style]="{maxWidth: '60vw', width: '50vw'}" dataKey="parent.name"
+  <div class="flex justify-content-center flex-wrap mt-3">
+  <div class="">
+    <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines" [tableStyle]="{'min-width': '70rem'}" dataKey="parent.name"
              rowGroupMode="subheader" groupRowsBy="parent.name" [customSort]="true" *ngIf="selectedCompany">
 
       <ng-template pTemplate="header">
@@ -681,6 +682,7 @@
         </tr>
       </ng-template>
     </p-table>
+  </div>
   </div>
   <div class="" style=" margin-top: 100px" *ngIf="this.chartData">
     <p *ngIf="chartOptions" class="text-xs">Source: ONS by sector (latest year: 2021)</p>
