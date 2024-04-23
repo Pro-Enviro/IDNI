@@ -30,6 +30,7 @@ export interface PetToolData {
   turnover: number,
   innovation_percent: number
   year: string
+  total_external_costs: number | undefined
 
   cost_of_energy: string
   cost_of_raw_materials: string

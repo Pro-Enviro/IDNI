@@ -122,7 +122,7 @@ export class PetLoginProtected implements OnInit {
   sicCode: any = {}
   sicCodeLetter: string = ''
   fuels = []
-  externalCost: number = 0
+  externalCost: number | undefined
   productivityPercentile: string = ''
   chartOptions!: EChartsOption | null;
   chartData: [string, (string | number)][] | null = []
@@ -200,6 +200,7 @@ export class PetLoginProtected implements OnInit {
     this.sicCode = ''
     this.sicCodeLetter = ''
     this.fuels = []
+    this.externalCost = 0;
 
     this.chartData = null
     this.chartOptions = null;
@@ -208,7 +209,7 @@ export class PetLoginProtected implements OnInit {
   fillTable = (petData: PetToolData) => {
     if (!petData) return;
 
-    // console.log(petData)
+    console.log(petData)
 
     this.data = []
     this.selectedPetId = petData.id
@@ -224,6 +225,7 @@ export class PetLoginProtected implements OnInit {
     this.markStart = Number(petData.mark_start || 0)
     this.markEnd = Number(petData.mark_end || 0)
     this.selectedYear = petData.year || '2024'
+    this.externalCost = Number(petData.total_external_costs) || 0
 
     // All dynamic rows added back from save
     const energy = JSON.parse(petData.cost_of_energy)
@@ -415,7 +417,7 @@ export class PetLoginProtected implements OnInit {
   calculateProductivityScore = () => {
     // (Turnover - Total external costs) / no. of employees
     if (!this.employees || !this.turnover) return;
-    const totalExternalCost: number = this.externalCost
+    const totalExternalCost: number = this.externalCost as number
     let result = (this.turnover - totalExternalCost) / this.employees
     this.productivityScore = result ? result : 0;
 
@@ -725,6 +727,7 @@ export class PetLoginProtected implements OnInit {
       productivity_comparison: this.productivityPercentile,
       mark_start: this.markStart,
       mark_end: this.markEnd,
+      total_external_costs: this.externalCost,
       cost_of_energy: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Cost of Energy')),
       cost_of_raw_materials: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Cost of Raw Materials')),
       cost_of_bought_in_goods: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Cost of Bought in Goods - Consumables and bought in parts')),
