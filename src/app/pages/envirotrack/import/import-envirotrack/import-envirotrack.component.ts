@@ -360,6 +360,8 @@ export class ImportEnvirotrackComponent {
         detail: 'Data saved to database'
       });
       this.uploadingData = false;
+      this.uploadedFiles = []
+      this.fileContent = null
       if(skippedRows){
         // this.msg.add({
         //   severity: 'warn',
