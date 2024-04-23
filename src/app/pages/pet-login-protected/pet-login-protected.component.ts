@@ -52,6 +52,7 @@ import {
   BoughtInParts
 } from "./pet-tool-classes";
 import {SidebarModule} from "primeng/sidebar";
+import {ChartModule} from "primeng/chart";
 
 
 
@@ -59,7 +60,8 @@ import {SidebarModule} from "primeng/sidebar";
 @Component({
   selector: 'app-pet-login-protected',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CarouselTplComponent, FooterComponent, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective, SidebarModule],
+  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CarouselTplComponent, FooterComponent, RippleModule, JsonPipe, DropdownModule,
+    SharedComponents, NgxEchartsDirective, SidebarModule, ChartModule],
   templateUrl: './pet-login-protected.component.html',
   styleUrl: './pet-login-protected.component.scss'
 })
@@ -717,6 +719,7 @@ export class PetLoginProtected implements OnInit {
       error: (error) => console.log(error)
     })
   }
+
 
 
   ngOnInit() {
