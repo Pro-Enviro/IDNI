@@ -90,8 +90,11 @@
               </ng-template>
             </p-table>
 
+
+            <p-progressBar class="my-5" *ngIf="uploadingData" mode="indeterminate" [style]="{ height: '6px' }"></p-progressBar>
+
             <div class="pt-3">
-              <button pButton class="btn-style pt-3" icon="pi pi-cog" label="Process" (click)="processData()"></button>
+              <button pButton class="btn-style pt-3" icon="pi pi-cog" label="{{uploadingData ? 'Uploading Data' :'Process'}}" [disabled]="uploadingData"  (click)="processData()"></button>
             </div>
           </p-card>
         </ng-container>

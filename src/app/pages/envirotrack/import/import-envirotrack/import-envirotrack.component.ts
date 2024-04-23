@@ -72,6 +72,7 @@ export class ImportEnvirotrackComponent {
   userLevel: number = 2
   selectedName: string = ''
   isConsultant: boolean = false;
+  uploadingData: boolean = false;
 
   constructor(
     private track: EnvirotrackService,
@@ -251,7 +252,8 @@ export class ImportEnvirotrackComponent {
 
 
   processData = async () => {
-    if (!this.selectedMpan || isNaN(this.selectedMpan)) {
+  console.log(this.selectedMpan)
+    if (!this.selectedMpan || !this.selectedMpan?.name.toString().length  ) {
       this.msg.add({
         severity: 'error',
         summary: 'No mpan number selected',
@@ -276,7 +278,6 @@ export class ImportEnvirotrackComponent {
       return;
     }
 
-    console.log(this.selectedMpan);
 
     for (const [index, row] of this.fileContent.entries()) {
       if (index >= this.selectedDataStart.row) {
@@ -296,7 +297,7 @@ export class ImportEnvirotrackComponent {
         if (date.isValid()) {
           this.hhd.push({
             company_id: this.selectedCompany,
-            mpan: parseInt(this.selectedMpan.name).toString(),
+            mpan: this.selectedMpan.name.toString(),
             date: date,
             hhd: row.slice(this.selectedDataStart.col, (this.selectedDataStart.col + 1 + 47)).map((x: number | string) => typeof x === 'string' ? parseFloat(x) : x),
             reactive_data: this.reactiveData
@@ -307,6 +308,7 @@ export class ImportEnvirotrackComponent {
     //TODO change Post request to be bulk
     let newHhd: any[] = [];
     let skippedRows: number = 0;
+    this.uploadingData = true;
     for (const [index, row] of this.hhd.entries()) {
       try {
         row.hhd = JSON.stringify(row.hhd)
@@ -333,28 +335,36 @@ export class ImportEnvirotrackComponent {
         });
       }
       if (index === this.hhd.length - 1) {
+        console.log('this hhd length is at the end')
         if (!newHhd.length) {
           /*this.msg.add({
             severity: 'error',
             summary: 'No Data to add',
             detail: 'Data already in database'
           });*/
-          return;
+          // return;
         }
       }
     }
+    //
+    // this.msg.add({
+    //   severity: 'success',
+    //   detail:'All data uploaded'
+    // })
+
     try {
+      console.log('Trying')
       await lastValueFrom(this.track.uploadData(newHhd, this.selectedCompany!));
       this.msg.add({
         severity: 'success',
         detail: 'Data saved to database'
       });
-      console.log(skippedRows)
+      this.uploadingData = false;
       if(skippedRows){
-        this.msg.add({
-          severity: 'warn',
-          detail: `${skippedRows}`
-        })
+        // this.msg.add({
+        //   severity: 'warn',
+        //   detail: `${skippedRows}`
+        // })
       }
       //window.location.reload();
     } catch (err: any) {
