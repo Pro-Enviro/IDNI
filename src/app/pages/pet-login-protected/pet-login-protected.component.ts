@@ -209,7 +209,7 @@ export class PetLoginProtected implements OnInit {
   fillTable = (petData: PetToolData) => {
     if (!petData) return;
 
-    console.log(petData)
+    // console.log(petData)
 
     this.data = []
     this.selectedPetId = petData.id
