@@ -19,7 +19,7 @@ import {EChartsOption} from "echarts";
 import {MessageService} from "primeng/api";
 import {DbService} from "../../_services/db.service";
 import {GlobalService} from "../../_services/global.service";
-import {SidebarModule} from "primeng/sidebar";
+
 
 import {
   energyNames, UnitsUom,
@@ -65,7 +65,7 @@ import {AutoCompleteCompleteEvent} from "primeng/autocomplete";
   selector: 'app-pet-login-protected',
   standalone: true,
   imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CarouselTplComponent, FooterComponent, RippleModule, JsonPipe, DropdownModule,
-    SharedComponents, NgxEchartsDirective, SidebarModule, ChartModule],
+    SharedComponents, NgxEchartsDirective, SidebarModule],
   templateUrl: './pet-login-protected.component.html',
   styleUrl: './pet-login-protected.component.scss'
 })
