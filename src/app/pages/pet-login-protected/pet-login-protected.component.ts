@@ -208,7 +208,7 @@ export class PetLoginProtected implements OnInit {
   fillTable = (petData: PetToolData) => {
     if (!petData) return;
 
-    console.log(petData)
+    // console.log(petData)
 
     this.data = []
     this.selectedPetId = petData.id
@@ -240,7 +240,7 @@ export class PetLoginProtected implements OnInit {
 
 
     this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waterUsage,...waste, ...roadFreight, ...otherFreight, ...companyTravel, ...staffCommute, ...otherCosts)
-    console.log(this.data)
+    // console.log(this.data)
 
     this.calculateProductivityScore()
 
