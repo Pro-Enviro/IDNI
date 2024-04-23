@@ -39,6 +39,7 @@ export const HttpInterceptorService: HttpInterceptorFn = (
             return from(auth.refreshToken()).pipe(
               switchMap((token: any) => {
                 const newRequest = addTokenHeader(req, token)
+                window.location.reload()
                 return next(newRequest)
               })
             )
