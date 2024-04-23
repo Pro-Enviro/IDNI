@@ -48,3 +48,8 @@
 :host ::ng-deep .p-dropdown-trigger  {
   width: 2rem !important;
 }
+
+:host ::ng-deep .p-autocomplete-empty-message {
+  padding: 0.2rem;
+  font-size: 12px
+}

@@ -211,7 +211,7 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
       const worksheet = xlsx.utils.json_to_sheet(fuelRows);
       const workbook = {Sheets: {data: worksheet}, SheetNames: ['data']};
       const excelBuffer: any = xlsx.write(workbook, {bookType: 'xlsx', type: 'array'});
-      this.saveAsExcelFile(excelBuffer, `${this.selectedCompany.name} ${fuel.type} ${moment(new Date()).format('DD-MM-YYYY')}`);
+      this.saveAsExcelFile(excelBuffer, `Fuel Data - ${fuel.type} - ${moment(new Date()).format('DD-MM-YYYY')}`);
     });
   }
 

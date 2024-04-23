@@ -232,10 +232,7 @@ export class ImportEnvirotrackComponent {
   }
 
   sendDataToProEnviro(){
-    this.msg.add({
-      severity: 'success',
-      detail: 'Data sent'
-    })
+
     return this.http.post(`${this.url}/Mailer`,{
       subject: 'Pro Enviro Envirotrack sent',
       to: 'adam.shelley@proenviro.co.uk', // WIP: Update with correct email address
@@ -246,7 +243,16 @@ export class ImportEnvirotrackComponent {
         }
       },
       files: ''
-    },{responseType: "text"})
+    },{responseType: "text"}).subscribe({
+      next:(res) => {
+        console.log(res)
+        this.msg.add({
+          severity: 'success',
+          detail: 'Data sent'
+        })
+      },
+      error: (error: any) =>console.log(error)
+    })
   }
 
 

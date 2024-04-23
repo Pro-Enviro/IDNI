@@ -13,13 +13,13 @@ import {DropdownModule} from "primeng/dropdown";
 import {SharedComponents} from "../envirotrack/shared-components";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../../_services/storage.service";
-import {read, utils} from 'xlsx'
 import {EnvirotrackService} from "../envirotrack/envirotrack.service";
 import {NgxEchartsDirective} from "ngx-echarts";
 import {EChartsOption} from "echarts";
 import {MessageService} from "primeng/api";
 import {DbService} from "../../_services/db.service";
 import {GlobalService} from "../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
 
 import {
   energyNames, UnitsUom,
@@ -36,7 +36,7 @@ import {
   CompanyModesOfTransport,
   ModeOfTransport,
   Plastics,
-  StaffCommuteModes, PetToolData,
+  StaffCommuteModes, PetToolData, years,
 } from "./pet-tool-types";
 import {
   TableRow,
@@ -51,7 +51,8 @@ import {
   GroupItem,
   BoughtInParts
 } from "./pet-tool-classes";
-import {SidebarModule} from "primeng/sidebar";
+import {AutoCompleteCompleteEvent} from "primeng/autocomplete";
+
 
 
 
@@ -92,13 +93,10 @@ export class PetLoginProtected implements OnInit {
   otherExternalCostsRow = {
     name: 'Other External Costs (Legal, rental, accounting etc)',
     totalCost: 0,
-    secondColumn: 0
+    secondColumn: 0,
   }
   // TableRows
   rows: TableRow[] = []
-  energyRows: TableRow[] = []
-  gridAllocationRows: TableRow[] = []
-  onSiteRows: TableRow[] = []
   // For Primeng dropdowns
   unitsUom: UnitsUom[] = ['Select', 'litres', 'kg', 'kWh', 'tonnes', 'cubic metres', 'km', 'miles', 'million litres']
   regionOfOrigin: RegionsOfOrigin[] = ['UK', 'EU', 'US', 'Asia']
@@ -115,41 +113,34 @@ export class PetLoginProtected implements OnInit {
   plastics: Plastics[] = ['ABS', 'PA', 'PET', 'PP', 'PU', 'POM', 'PEEK', 'PE', 'PVC', 'PPS', 'Elastomers', 'Composites', 'Textiles']
   otherMaterials: OtherMaterials[] = ['Composites', 'Textiles', 'Cement', 'Aggregate', 'Sand', 'Glass', 'Chemicals', 'Hardwood', 'Softwood']
   materialFormats: MaterialFormats[] = ['Sheet', 'Profile', 'Filament/Fibre', 'Ingot/Billet', 'Natural State', 'Powder', 'Granule', 'Liquid', 'Gas', 'Recyclate']
-
+  years = years
+  selectedYear: string = years[0] || '2024'
   data: any = []
   twoDecimalPlaces = {minimumFractionDigits: 0, maximumFractionDigits: 2,}
   productivityData!: any// Excel spreadsheet
   sicCodeData!: any // Excel Spreadsheet
-  sicCode: string = ''
+  sicCode: any = {}
   sicCodeLetter: string = ''
   fuels = []
-  externalCost: number = 0
+  externalCost: number | undefined
   productivityPercentile: string = ''
   chartOptions!: EChartsOption | null;
-  chartData: [string, (string | number)][] = []
+  chartData: [string, (string | number)][] | null = []
   markStart: number | undefined
   markEnd: number | undefined
   isConsultant: boolean = false;
-
-
-
+  allPetData: PetToolData[] = []
+  selectedPetId: number | undefined
+  filteredSicCodes: any[] = []
 
   constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService, private global: GlobalService) {}
 
-
   onSelectCompany = () => {
     if (!this.selectedCompany) this.selectedCompany = this.companies[0]
+
     // Reset table
-    this.turnover = 0
-    this.employees = 0;
-    this.productivityScore = 0;
-    this.innovationPercent = 0;
-    this.rows = []
-    this.energyRows = []
-    this.gridAllocationRows = []
-    this.onSiteRows = []
-    this.data = []
-    this.fuels = []
+    this.resetTableValues()
+    this.allPetData = []
 
     // Get sites report or generate new rows
     this.getPETReport(this.selectedCompany)
@@ -184,57 +175,135 @@ export class PetLoginProtected implements OnInit {
     })
   }
 
+  onSelectYear = () => {
+    if (!this.allPetData.length) return
+    const selectedYear = this.allPetData.find((petDataRow: PetToolData) => petDataRow.year === this.selectedYear)
+
+    if (selectedYear){
+      this.fillTable(selectedYear)
+      this.selectedPetId = selectedYear.id
+    } else {
+      this.generateNewTable()
+      this.selectedPetId = undefined
+    }
+  }
+
+  resetTableValues = () => {
+    this.data = []
+    this.employees = 0
+    this.turnover = 0
+    this.innovationPercent = 0
+    this.staffTrainingPercent = 0
+    this.exportPercent = 0
+    this.productivityScore = 0
+    this.productivityPercentile = ''
+    this.sicCode = ''
+    this.sicCodeLetter = ''
+    this.fuels = []
+    this.externalCost = 0;
+    this.chartData = null
+    this.chartOptions = null;
+  }
+
+  fillTable = (petData: PetToolData) => {
+    if (!petData) return;
+
+    this.data = []
+    this.selectedPetId = petData.id
+    this.employees = Number(petData.number_of_employees || 0)
+    this.turnover = Number(petData.turnover || 0)
+    this.staffTrainingPercent = Number(petData.training_percent || 0)
+    this.sicCode = petData?.sic_code !== '' ? JSON.parse(petData?.sic_code) : ''
+    this.sicCodeLetter = petData.sic_letter || ''
+    this.productivityScore = Number(petData.productivity_score || 0)
+    this.innovationPercent = Number(petData.innovation_percent || 0)
+    this.exportPercent = Number(petData.export_percent || 0)
+    this.productivityPercentile = petData.productivity_comparison || ''
+    this.markStart = Number(petData.mark_start || 0)
+    this.markEnd = Number(petData.mark_end || 0)
+    this.selectedYear = petData.year || '2024'
+    this.externalCost = Number(petData.total_external_costs) || 0
+
+    // All dynamic rows added back from save
+    const energy = JSON.parse(petData.cost_of_energy)
+    const rawMats = JSON.parse(petData.cost_of_raw_materials)
+    const boughtInGoods = JSON.parse(petData.cost_of_bought_in_goods)
+    const roadFreight = JSON.parse(petData.road_freight)
+    const otherFreight = JSON.parse(petData.other_freight)
+    const companyTravel = JSON.parse(petData.company_travel)
+    const staffCommute = JSON.parse(petData.staff_commute)
+    const waste = JSON.parse(petData.waste)
+    const waterUsage = JSON.parse(petData.water_usage)
+    const otherCosts = JSON.parse(petData.other_external_costs)
+
+
+
+    this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waterUsage,...waste, ...roadFreight, ...otherFreight, ...companyTravel, ...staffCommute, ...otherCosts)
+    // console.log(this.data)
+
+    this.calculateProductivityScore()
+
+  }
+
+
+  generateNewTable = () => {
+
+    console.log('Generating new table')
+    this.resetTableValues()
+
+    this.generateClasses('Cost of Energy', TableRow, energyNames)
+    const rawMats = this.generateClasses('Cost of Raw Materials', MaterialRow)
+    this.generateClasses('Cost of Bought in Goods - Consumables and bought in parts', BoughtInParts)
+    this.generateClasses('Water Usage', WaterUsage)
+    this.generateClasses('Waste', Waste)
+    this.generateClasses('Road Freight', RoadFreight)
+    this.generateClasses('Other Freight', OtherFreightTransportation)
+    this.generateClasses('Company Travel', CompanyTravel)
+    this.generateClasses('Staff Commute', StaffCommute)
+    this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
+
+    // Generate extra rows for Raw Materials
+    for (let i = 0; i < 9; i++ ){
+      this.createNewTableRow(rawMats)
+    }
+
+    this.calculateTotalExternalCost()
+  }
+
 
   getPETReport = (id: number) => {
     if (!id) return;
+
+
     this.db.getPetData(id).subscribe({
       next: (res: any) => {
-        if (res.data.PET_Data) {
-          console.log('Getting pet data')
-          const data: PetToolData = JSON.parse(res.data.PET_Data)
-          this.data = data.defaultData || []
-          this.employees = data.employees || 0
-          this.turnover = data.turnover || 0
-          this.staffTrainingPercent = data.staffTrainingPercent || 0
-          this.sicCode = data.sicNumber || ''
-          this.sicCodeLetter = data.sicLetter || ''
-          this.productivityScore = data.productivityScore || 0
-          this.innovationPercent = data.innovationPercent || 0
-          this.exportPercent = data.exportPercent || 0
-          this.productivityPercentile = data.productivityPercentile || ''
-          this.markStart = data.markStart || 0
-          this.markEnd = data.markEnd || 0
-
+        if (res.data.length) {
+          this.allPetData = res.data;
+          this.fillTable(this.allPetData[0])
           this.calculateProductivityComparison()
-
         } else {
           // If no saved data
-          console.log('New tables')
-          this.generateClasses('Cost of Energy', TableRow, energyNames)
-          this.generateClasses('Cost of Raw Materials', MaterialRow)
-          this.generateClasses('Cost of Bought in Goods - Consumables and bought in parts', BoughtInParts)
-          this.generateClasses('Water Usage', WaterUsage)
-          this.generateClasses('Waste', Waste)
-          this.generateClasses('Road Freight', RoadFreight)
-          this.generateClasses('Other Freight', OtherFreightTransportation)
-          this.generateClasses('Company Travel', CompanyTravel)
-          this.generateClasses('Staff Commute', StaffCommute)
-          this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
+
+          this.generateNewTable()
         }
       }
     })
   }
 
   sicCodeToLetter = () => {
-    if (this.sicCode.length < 5) {
-      this.sicCodeLetter = ''
+
+    if (this.sicCode.sector < 5) {
       return;
     }
     // Select correct SIC code letter
-    const foundRow = this.sicCodeData.find((row: any) => row.sector === this.sicCode)
+    const foundRow = this.sicCodeData.find((row: any) => row.sector === this.sicCode.sector)
 
-    if (foundRow) this.sicCodeLetter = foundRow.sic_number
-    else this.sicCodeLetter = ''
+    if (foundRow) {
+      this.sicCodeLetter = foundRow.sic_number
+      this.calculatePerEmployeeCost()
+    } else {
+      this.sicCodeLetter = ''
+    }
   }
 
   generateClasses = (rowTitle: string, classToUse: any, namesArray?: string[]) => {
@@ -248,10 +317,13 @@ export class PetLoginProtected implements OnInit {
         }
         return newClass;
       })
-      this.data.push(...classArray)
+        this.data.push(...classArray)
+      return classArray
     } else {
       let newClass = new classToUse()
+      if (rowTitle === 'Cost of Raw Materials') newClass.parent.addRows = false
       this.generateRows(newClass, rowTitle, true)
+      return newClass
     }
   }
 
@@ -271,8 +343,9 @@ export class PetLoginProtected implements OnInit {
   }
 
   createNewTableRow = (group: any) => {
-
-    let copy = {...group, name: `${group.parent.name} description`, cost: 0}
+    console.log(group.parent.name)
+    let copy = {...group, name: `${group.parent.name} description`}
+    group.parent.name !== 'Staff Commute' ? copy.cost = 0 : null
     let findObject = this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)
 
     if (findObject === -1) return;
@@ -341,7 +414,7 @@ export class PetLoginProtected implements OnInit {
   calculateProductivityScore = () => {
     // (Turnover - Total external costs) / no. of employees
     if (!this.employees || !this.turnover) return;
-    const totalExternalCost: number = this.externalCost
+    const totalExternalCost: number = this.externalCost as number
     let result = (this.turnover - totalExternalCost) / this.employees
     this.productivityScore = result ? result : 0;
 
@@ -399,7 +472,6 @@ export class PetLoginProtected implements OnInit {
       ['50', p50],
       ['75', p75],
       ['90', p90],
-      // ['100', null]
       ['100', p90 * 1.5]
     ]
 
@@ -471,51 +543,6 @@ export class PetLoginProtected implements OnInit {
 
     return total !== undefined ? total : 0
   }
-
-  // getTemplate = () => {
-  //   // Change content id to match correct selected template
-  //
-  //   let id = 1
-  //   let sicCodeId = 2
-  //
-  //   // TODO: Protect backend links with .env?
-  //   this.http.get(`${this.url}/items/content/${id}`).subscribe({
-  //     next: (res: any) => {
-  //       this.template = `${this.url}/assets/${res.data.file}?token=${this.storage.get('access_token')}`
-  //
-  //       this.http.get(this.template, {
-  //         responseType: 'arraybuffer'
-  //       }).subscribe({
-  //         next: (buffer: ArrayBuffer) => {
-  //           const workbook = read(buffer);
-  //           const sheets = workbook.SheetNames
-  //           const worksheet = workbook.Sheets[workbook.SheetNames[3]];
-  //           const raw_data = utils.sheet_to_json(worksheet, {header: 1});
-  //           this.productivityData = raw_data
-  //         }
-  //       })
-  //     }
-  //   })
-  //
-  //
-  //   this.http.get(`${this.url}/items/content/${sicCodeId}`).subscribe({
-  //     next: (res: any) => {
-  //       this.template = `${this.url}/assets/${res.data.file}?token=${this.storage.get('access_token')}`
-  //
-  //       this.http.get(this.template, {
-  //         responseType: 'arraybuffer'
-  //       }).subscribe({
-  //         next: (buffer: ArrayBuffer) => {
-  //           const workbook = read(buffer);
-  //           const sheets = workbook.SheetNames
-  //           const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-  //           const raw_data = utils.sheet_to_json(worksheet, {header: 1});
-  //           this.sicCodeData = raw_data as Array<[number | string]>
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
 
   getProductivityData = () => {
     this.http.get(`${this.url}/items/sic_codes?limit=-1`).subscribe({
@@ -684,20 +711,36 @@ export class PetLoginProtected implements OnInit {
 
   savePETdata = () => {
     const objectToSave: PetToolData = {
-      sicNumber: this.sicCode,
-      sicLetter: this.sicCodeLetter,
+      year: this.selectedYear,
+      company_id: this.selectedCompany,
+      sic_code: this.sicCode,
+      sic_letter: this.sicCodeLetter,
       turnover: this.turnover,
-      employees: this.employees,
-      defaultData: this.data,
-      productivityScore: this.productivityScore,
-      innovationPercent: this.innovationPercent,
-      staffTrainingPercent: this.staffTrainingPercent,
-      exportPercent: this.exportPercent,
-      productivityPercentile: this.productivityPercentile,
-      markStart: this.markStart,
-      markEnd: this.markEnd,
+      number_of_employees: this.employees,
+      productivity_score: this.productivityScore,
+      innovation_percent: this.innovationPercent,
+      training_percent: this.staffTrainingPercent,
+      export_percent: this.exportPercent,
+      productivity_comparison: this.productivityPercentile,
+      mark_start: this.markStart,
+      mark_end: this.markEnd,
+      total_external_costs: this.externalCost,
+      cost_of_energy: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Cost of Energy')),
+      cost_of_raw_materials: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Cost of Raw Materials')),
+      cost_of_bought_in_goods: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Cost of Bought in Goods - Consumables and bought in parts')),
+      water_usage: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Water Usage')),
+      waste: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Waste')),
+      road_freight: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Road Freight')),
+      other_freight: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Other Freight')),
+      company_travel: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Company Travel')),
+      staff_commute: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Staff Commute')),
+      other_external_costs: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Other External Costs (Legal, rental, accounting etc)')),
     }
 
+
+    // console.log(this.selectedYear)
+    // console.log(objectToSave)
+    // return console.log(objectToSave)
 
     if (!this.selectedCompany) return;
 
@@ -705,23 +748,62 @@ export class PetLoginProtected implements OnInit {
     if (!token) return;
 
 
-    this.db.savePetData(this.selectedCompany, {
-      PET_Data: JSON.stringify(objectToSave)
-    },).subscribe({
-      next: (res: any) => {
-        this.msg.add({
-          severity: 'success',
-          detail: 'Data saved'
-        })
-      },
-      error: (error) => console.log(error)
-    })
+    // Check if already saved - if not post a new row to pet_data
+    console.log(this.selectedPetId)
+    if (this.selectedPetId) {
+      // console.log('PATCHING')
+      this.db.patchPetData(this.selectedPetId, objectToSave).subscribe({
+        next: (res: any) => {
+          this.msg.add({
+            severity: 'success',
+            detail: 'Data saved'
+          })
+
+          // // Replace data in petDataArray with res
+          const getIdFromPetData = this.allPetData.findIndex((petRow: PetToolData) => petRow.id === this.selectedPetId)
+          this.allPetData.splice(getIdFromPetData, 1, res.data)
+        }
+      })
+    } else {
+      // console.log('POSTING')
+      this.db.savePetData(objectToSave).subscribe({
+        next: (res: any) => {
+          this.msg.add({
+            severity: 'success',
+            detail: 'Data saved'
+          })
+
+          this.allPetData.push(res.data)
+          this.selectedPetId = res.data.id
+        },
+        error: (error) => console.log(error)
+      })
+    }
+
+  }
+
+  filterSicCode(event: AutoCompleteCompleteEvent) {
+    let filtered: any[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < (this.sicCodeData as any[]).length; i++) {
+      let sicCode = (this.sicCodeData as any[])[i];
+      let sicCodeDetail = (this.sicCodeData as any[]) [i]
+      if (sicCode.sector.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(sicCode);
+      }
+      if (sicCodeDetail.details.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(sicCodeDetail);
+      }
+    }
+
+    this.filteredSicCodes = filtered;
+
   }
 
 
   ngOnInit() {
     this.getCompanies()
-    // this.getTemplate()
     this.getProductivityData()
   }
 
