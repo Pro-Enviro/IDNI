@@ -6,6 +6,7 @@ import {DialogService} from "primeng/dynamicdialog";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
 
 
 @Component({
@@ -16,7 +17,8 @@ import {GlobalService} from "../../../../_services/global.service";
   ],
   imports: [
     SharedComponents,
-    SharedModules
+    SharedModules,
+    SidebarModule
   ],
   templateUrl: './envirotrack-report-scatter.component.html',
   styleUrls: ['./envirotrack-report-scatter.component.scss']
@@ -33,6 +35,7 @@ export class EnvirotrackReportScatterComponent implements OnInit {
   chartOptions!: echarts.EChartsOption;
   max: number = 0;
   dateFilter: number = 12;
+  scatterGuide: boolean = false;
   defaultFilters: object[] = [{
     name: 'All Data',
     value: 0

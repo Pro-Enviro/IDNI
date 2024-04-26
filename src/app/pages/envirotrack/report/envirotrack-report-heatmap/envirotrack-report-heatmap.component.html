@@ -3,7 +3,7 @@
     <div class="col-4">
       <div class="pet-card-dark p-3">
         <h3 class="title pb-3">Electricity Consumption Chart Guide</h3>
-        <p-button type="button" styleClass="btn-style" (click)="sidebarVisible2 = true" icon="pi pi-chart-bar" label="Guide"></p-button>
+        <p-button type="button" styleClass="btn-style" (click)="heatmapGuide = true" icon="pi pi-chart-bar" label="Guide"></p-button>
       </div>
     </div>
     <div class="col-4">
@@ -58,8 +58,6 @@
             <div echarts *ngIf="chartOptions" [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>
           </ng-container>
 
-
-
         </ng-template>
       </p-card>
     </div>
@@ -68,7 +66,7 @@
 </p-card>
 
 
-<p-sidebar [(visible)]="sidebarVisible2" position="right" styleClass="w-3">
+<p-sidebar [(visible)]="heatmapGuide" position="right" styleClass="w-3">
   <div class="container">
     <h3 class="header-style">Electricity Consumption Chart Guide</h3>
     <p>The "Electricity Consumption" chart displays half-hourly data for each day.<br>

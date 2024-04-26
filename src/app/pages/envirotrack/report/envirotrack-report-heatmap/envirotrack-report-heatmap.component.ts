@@ -43,7 +43,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   chartOptions!: echarts.EChartsOption | null;
   max: number = 0;
   dateFilter: number = 12;
-  sidebarVisible2: boolean = false;
+  heatmapGuide: boolean = false;
   defaultFilters: object[] = [{
     name: 'All Data',
     value: 0
