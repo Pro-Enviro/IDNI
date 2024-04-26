@@ -8,11 +8,12 @@ import {SharedModules} from "../../../../shared-module";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {SharedComponents} from "../../shared-components";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
 
 @Component({
   selector: 'app-envirotrack-report-base1',
   standalone: true,
-  imports: [SharedModules, SharedComponents],
+  imports: [SharedModules, SharedComponents, SidebarModule],
   templateUrl: './envirotrack-report-base1.component.html',
   styleUrls: ['./envirotrack-report-base1.component.scss']
 })
@@ -39,7 +40,7 @@ export class EnvirotrackReportBase1Component implements OnInit {
   selectedMpan!: string;
   screenWidth: any;
   isConsultant: boolean = false;
-
+  baseGuide: boolean = false;
   constructor(
     private track: EnvirotrackService,
     private msg: MessageService,
