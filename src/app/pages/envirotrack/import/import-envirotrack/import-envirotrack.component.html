@@ -2,6 +2,86 @@
 <!--<app-top-page-img-tpl></app-top-page-img-tpl>-->
 
 <section>
+  <div class="flex justify-content-end">
+    <div class="flex flex-column">
+    <p-sidebar [(visible)]="accessData" position="right" styleClass="w-5">
+      <div class="container p-3">
+        <h3 class="header-style">How to access the half hourly electricity data?</h3>
+        <p>This can only be obtained if your energy company records your consumption data on a half hourly basis. To obtain half-hourly meter data, you need to either download it or contact your electricity or utility provider to request it. They should be able to provide you with access to your half-hourly consumption data upon request.</p>
+        <ul>
+          <h4 class="font-italic font-normal">Guide on how to access your half-hourly data:</h4>
+          <li>
+            <h4>•	Identify whether you have a half-hourly meter</h4>
+            <div class="grid">
+              <div class="col-4">
+                <img src="https://id-ni.eco/assets/images/dash-info/mapn-img.png" height="90px" alt="">
+              </div>
+              <div class="col"></div>
+              <div class="col-6">
+                <p>Look for the complete MPAN number in one of your electricity bills in this format: <br>
+                  If the first two numbers are ‘00’, then you have a half-hourly meter. If it anything else, then it is not half-hourly.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <h4>•	Contact Your Utility Provider</h4>
+            Start by reaching out to your electricity or utility provider. They should have information on whether your meter supports half-hourly data recording and how you can access it.
+          </li>
+          <li>
+            <h4>•	Request Access</h4>
+            Once you've confirmed that your meter supports half-hourly data recording, check first if you can download the half-hourly data from your online energy account, if not then send a request to your energy supplier.
+          </li>
+          <li>
+            <h4>•	Provide Information</h4>
+            Depending on your provider's procedures, you may need to provide some information such as your account details, meter number, and possibly consent to access the data.
+          </li>
+          <li>
+            <h4>•	Access the Data</h4>
+            After you've completed any necessary steps, you should be able to access your half-hourly meter data. This may be through an online portal downloadable file, by email, or through other means provided by your utility company.
+          </li>
+          <li>
+            <h4>•	Analyse the Data</h4>
+            Once you have access to your half-hourly meter data, you can analyse it to gain insights into your electricity usage patterns. This can be useful for identifying opportunities to reduce energy consumption, optimise energy usage, or for other purposes such as billing verification.
+          </li>
+        </ul>
+        <p-divider></p-divider>
+        <h3 class="pt-4 header-style">What data to get?</h3>
+        <p>When obtaining half-hourly meter data, you receive information about your electricity consumption in half-hour intervals throughout the day.
+          By analysing this half-hourly meter data, you can gain insights into your electricity usage patterns, identify opportunities for energy efficiency improvements,
+          and optimise your energy consumption to reduce costs or environmental impact.
+        </p>
+        <ul>
+          <h4 class="font-italic font-normal">Data points you might expect to receive:</h4>
+          <li>
+            <h4>•	Date and Time Stamp</h4>
+            Each data point should include a timestamp indicating the date and time the measurement was taken. This allows you to track consumption patterns over specific periods.
+          </li>
+          <li>
+            <h4>•	Meter Reading</h4>
+            The actual electricity consumption recorded by the meter during each half-hour interval. This is usually measured in kilowatt-hours (kWh) or megawatt-hours (MWh), depending on the scale of your consumption.
+          </li>
+          <li>
+            <h4>•	Meter ID or Serial Number</h4>
+            A unique identifier for your meter, which helps ensure that the data corresponds to your specific meter and account.
+          </li>
+          <li>
+            <h4>•	Quality Flags or Indicators</h4>
+            Some datasets may include quality flags or indicators to denote the reliability of each measurement. This can help you identify and filter out any anomalous or unreliable data points.
+          </li>
+          <li>
+            <h4>•	Tariff Information</h4>
+            Information about the tariff or pricing structure applicable to each half-hour interval. This can be useful for understanding how your electricity costs vary throughout the day based on time-of-use pricing or other factors.
+          </li>
+        </ul>
+      </div>
+    </p-sidebar>
+    <p-button type="button" styleClass="btn-style mb-4" (click)="accessData = true" icon="pi pi-file" label="Access to Half-Hourly Electricity Data"></p-button>
+
+    <p-sidebar [(visible)]="dataGuide" position="right"></p-sidebar>
+    <p-button type="button" styleClass="btn-dark-upload" (click)="dataGuide = true" icon="pi pi-arrow-left" label="Upload Half-Hourly Data Guide"></p-button>
+    </div>
+  </div>
   <div class="container">
     <div class="grid">
       <div class="col-12">

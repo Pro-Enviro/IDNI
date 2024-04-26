@@ -10,6 +10,8 @@ import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {HttpClient} from "@angular/common/http";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
+import {DividerModule} from "primeng/divider";
 
 
 interface Sheet {
@@ -38,7 +40,9 @@ interface HHDData {
   styleUrl: './import-envirotrack.component.scss',
   imports: [
     SharedModules,
-    SharedComponents
+    SharedComponents,
+    SidebarModule,
+    DividerModule
   ]
 })
 
@@ -71,7 +75,8 @@ export class ImportEnvirotrackComponent {
   selectedName: string = ''
   isConsultant: boolean = false;
   uploadingData: boolean = false;
-
+  accessData: boolean = false;
+  dataGuide:boolean = false;
   constructor(
     private track: EnvirotrackService,
     private global: GlobalService,
