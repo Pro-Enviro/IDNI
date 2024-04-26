@@ -54,7 +54,7 @@ export class DashboardComponent {
             escape: false
           },
           {
-            label:'<span class="material-symbols-outlined">flowsheet</span> Non-Half-Hourly Data</p>',
+            label:'<span class="material-symbols-outlined">flowsheet</span> Non Half-Hourly Data</p>',
             routerLink:'/dashboard/fuel-data',
             escape: false,
             visible: this.showFuelData
