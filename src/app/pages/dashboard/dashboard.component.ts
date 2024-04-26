@@ -60,7 +60,7 @@ export class DashboardComponent {
             visible: this.showFuelData
           },
           {
-            label:'<span class="material-symbols-outlined">add_chart</span> Data Upload',
+            label:'<span class="material-symbols-outlined">add_chart</span> Half-Hourly Data Upload',
             escape: false,
             routerLink:'/dashboard/import'
           },
