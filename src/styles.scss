@@ -280,16 +280,6 @@ a{
   color: $darkColor;
 }
 
-//.p-inputgroup-addon {
-//  background: #f3f4f6;
-//  color: #6b7280;
-//  border-top: 1px solid #d1d5db;
-//  border-left: 1px solid #d1d5db;
-//  border-bottom: 1px solid #d1d5db;
-//  padding: .75rem;
-//  min-width: 3rem;
-//  height: 40px;
-//}
 
   //CONTAINER
   .container { margin-left: auto; margin-right: auto; }
@@ -465,6 +455,14 @@ a{
     background: #f3f3f3;
     padding:30px;
   }
+
+.p-inputgroup-addon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  min-width: 20px;
+}
 
 
 //--------------------------------------------------------CHAT SYSTEM---------------------------------------------------

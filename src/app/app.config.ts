@@ -32,7 +32,7 @@ import {NgxEchartsModule} from "ngx-echarts";
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withInterceptors([HttpInterceptorService])),
-    provideRouter(routes),
+    //provideRouter(routes),
     provideAnimations(),
     importProvidersFrom(
       NgxEchartsModule.forRoot({
