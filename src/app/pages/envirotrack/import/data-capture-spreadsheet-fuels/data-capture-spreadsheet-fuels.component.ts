@@ -15,6 +15,7 @@ import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
 
 export class Fields {
   type: string = '';
@@ -32,6 +33,7 @@ export class Fields {
   imports: [
     SharedModules,
     SharedComponents,
+    SidebarModule,
   ]
 })
 export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
@@ -45,6 +47,7 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
   display: boolean = false;
   selectedItem: any = {}
   nameChange: string = ''
+  fuelGuide:boolean = false;
   isConsultantLevel = false
 
   constructor(
