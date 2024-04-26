@@ -1,13 +1,13 @@
 <section>
   <div class="pet-card">
     <div class="grid">
-      <div class="col-4">
+      <div class="col-5">
         <div class="pet-card-dark">
           <h3 class="title pb-3">Breakdown of CO2e by Scope Chart Guide</h3>
           <p-button type="button" styleClass="btn-style" (click)="scopeGuide = true" icon="pi pi-chart-pie" label="Guide"></p-button>
         </div>
       </div>
-      <div class="col-4">
+      <div class="col-5">
         <div class="pet-card-dark" *ngIf="isConsultant">
           <h3 class="title pb-3">Select Company</h3>
           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
