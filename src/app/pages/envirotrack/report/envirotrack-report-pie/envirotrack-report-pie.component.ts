@@ -7,11 +7,12 @@ import * as echarts from "echarts";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
 
 @Component({
   selector: 'app-envirotrack-report-pie',
   standalone: true,
-  imports: [SharedModules, SharedComponents],
+    imports: [SharedModules, SharedComponents, SidebarModule],
   templateUrl: './envirotrack-report-pie.component.html',
   styleUrls: ['./envirotrack-report-pie.component.scss']
 })
@@ -27,6 +28,7 @@ export class EnvirotrackReportPieComponent implements OnInit {
   chartOptions!: EChartsOption;
   max: number = 0;
   dateFilter: number = 12;
+  pieGuide:boolean = false;
   defaultFilters: object[] = [{
     name: 'All Data',
     value: 0
