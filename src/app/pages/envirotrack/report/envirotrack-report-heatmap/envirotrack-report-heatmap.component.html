@@ -1,6 +1,12 @@
 <p-card styleClass="card-charts">
   <div class="grid">
-    <div class="col-6 p-4">
+    <div class="col-4">
+      <div class="pet-card-dark p-3">
+        <h3 class="title pb-3">Electricity Consumption Chart Guide</h3>
+        <p-button type="button" styleClass="btn-style" (click)="sidebarVisible2 = true" icon="pi pi-chart-bar" label="Guide"></p-button>
+      </div>
+    </div>
+    <div class="col-4">
       <div class="pet-card-dark" *ngIf="isConsultant">
         <h3 class="title pb-3">Select Company</h3>
         <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
@@ -8,16 +14,15 @@
                     styleClass="table-dropdown" scrollHeight="350px"></p-dropdown>
       </div>
     </div>
-    <div class="col-6 p-4">
+    <div class="col-4">
       <div *ngIf="mpan.length">
         <div class="pet-card-dark p-3">
           <h3 class="title pb-3">Select Mpan</h3>
-          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select-months"></p-selectButton>
         </div>
       </div>
     </div>
     <div class="col-12">
-
       <p-card styleClass="card-style-none">
         <ng-template pTemplate="header">
           <div class="flex w-full p-4">
@@ -28,6 +33,7 @@
             <div class="flex-shrink-1 pt-3">
               <p-toggleButton onLabel="Detailed" offLabel="Simplified" styleClass="btn-dark-upload" [(ngModel)]="chartModel"></p-toggleButton>
             </div>
+
           </div>
         </ng-template>
 
@@ -61,4 +67,16 @@
 
 </p-card>
 
+
+<p-sidebar [(visible)]="sidebarVisible2" position="right" styleClass="w-3">
+  <div class="container">
+    <h3 class="header-style">Electricity Consumption Chart Guide</h3>
+    <p>The "Electricity Consumption" chart displays half-hourly data for each day.<br>
+      Each vertical slice of the chart represents one day – from bottom to top it shows the half-hourly consumption pattern from midnight to midnight for one day.
+      You may notice a regular weekly pattern – often outlined by lower consumption on the weekends.<br>
+      By hovering over specific data points on the chart, a panel appears, providing details such as the date (x), time (y), and the corresponding kWh value (z) of that data point.
+    </p>
+  </div>
+
+</p-sidebar>
 
