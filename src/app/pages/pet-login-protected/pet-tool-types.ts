@@ -13,6 +13,7 @@ export type OtherMetals = 'Aluminium 1000'| 'Aluminium 2000'| 'Aluminium 6000'| 
 export type Plastics = 'ABS'| 'PA'| 'PET'| 'PP'| 'PU'| 'POM'| 'PEEK'| 'PE'| 'PVC'| 'PPS'| 'Elastomers'| 'Composites'| 'Textiles'
 export type OtherMaterials = 'Composites' | 'Textiles' | 'Cement' | 'Aggregate' | 'Sand' | 'Glass' | 'Chemicals' | 'Hardwood' | 'Softwood'
 export type MaterialFormats = 'Sheet' |  'Profile' |  'Filament/Fibre' |  'Ingot/Billet' |  'Natural State' |  'Powder' |  'Granule' |  'Liquid' |  'Gas' |  'Recyclate'
+export type TravelOptions = 'Company Travel' | 'Staff Commute'
 
 export interface PetToolData {
   id?:number

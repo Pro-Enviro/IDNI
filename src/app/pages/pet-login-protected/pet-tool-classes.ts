@@ -6,7 +6,7 @@ import {
   OtherMaterials,
   OtherMetals, OtherModesOfTransport,
   Plastics, RegionsOfOrigin, Routes, StaffCommuteModes,
-  SteelMaterials, UnitsOfCost,
+  SteelMaterials, TravelOptions, UnitsOfCost,
   UnitsUom
 } from "./pet-tool-types";
 
@@ -78,6 +78,8 @@ export class CompanyTravel extends SubTable {
   buttonName: string = 'Company Travel'
   companyModeOfTransport: CompanyModesOfTransport = 'Select'
   approxMileage: number = 0;
+  type: TravelOptions = 'Company Travel'
+  subtype: CompanyTravel | StaffCommute | undefined
 }
 
 export class StaffCommute {

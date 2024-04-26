@@ -34,7 +34,7 @@ import {
   CompanyModesOfTransport,
   ModeOfTransport,
   Plastics,
-  StaffCommuteModes, PetToolData, years,
+  StaffCommuteModes, PetToolData, years, TravelOptions,
 } from "./pet-tool-types";
 import {
   TableRow,
@@ -50,8 +50,6 @@ import {
   BoughtInParts
 } from "./pet-tool-classes";
 import {AutoCompleteCompleteEvent} from "primeng/autocomplete";
-
-
 
 
 
@@ -111,6 +109,7 @@ export class PetLoginProtected implements OnInit {
   plastics: Plastics[] = ['ABS', 'PA', 'PET', 'PP', 'PU', 'POM', 'PEEK', 'PE', 'PVC', 'PPS', 'Elastomers', 'Composites', 'Textiles']
   otherMaterials: OtherMaterials[] = ['Composites', 'Textiles', 'Cement', 'Aggregate', 'Sand', 'Glass', 'Chemicals', 'Hardwood', 'Softwood']
   materialFormats: MaterialFormats[] = ['Sheet', 'Profile', 'Filament/Fibre', 'Ingot/Billet', 'Natural State', 'Powder', 'Granule', 'Liquid', 'Gas', 'Recyclate']
+  travelOptions: TravelOptions[] = ['Company Travel', 'Staff Commute']
   years = years
   selectedYear: string = years[0] || '2024'
   data: any = []
@@ -256,8 +255,8 @@ export class PetLoginProtected implements OnInit {
     this.generateClasses('Waste', Waste)
     this.generateClasses('Road Freight', RoadFreight)
     this.generateClasses('Other Freight', OtherFreightTransportation)
-    this.generateClasses('Company Travel', CompanyTravel)
-    this.generateClasses('Staff Commute', StaffCommute)
+    this.generateClasses('Company Travel', CompanyTravel, ['Staff Commute'])
+    // this.generateClasses('Staff Commute', StaffCommute)
     this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
 
     // Generate extra rows for Raw Materials
