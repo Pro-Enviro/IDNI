@@ -235,7 +235,7 @@ export class PetLoginProtected implements OnInit {
 
 
 
-    this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waterUsage,...waste, ...roadFreight, ...otherFreight, ...companyTravel, ...staffCommute, ...otherCosts)
+    this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waterUsage,...waste, ...roadFreight, ...otherFreight, ...companyTravel, ...otherCosts)
     // console.log(this.data)
 
     this.calculateProductivityScore()
