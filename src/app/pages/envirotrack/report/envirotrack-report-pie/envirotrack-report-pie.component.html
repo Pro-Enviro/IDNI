@@ -1,16 +1,23 @@
 <div class="pet-card">
   <div class="grid">
-    <div class="col-6 p-4">
+    <div class="col-4">
+      <div class="pet-card-dark">
+        <h3 class="title">Electricity Consumption</h3>
+        <h4> % split by Day of the Week Chart Guide</h4>
+        <p-button type="button" styleClass="btn-style" (click)="pieGuide = true" icon="pi pi-chart-pie" label="Guide"></p-button>
+      </div>
+    </div>
+    <div class="col-4">
       <div class="pet-card-dark" *ngIf="isConsultant">
         <h3 class="title pb-3">Select Company</h3>
         <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
         <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" styleClass="table-dropdown" scrollHeight="350px"></p-dropdown>
       </div>
     </div>
-    <div class="col-6 p-4">
+    <div class="col-4">
       <div class="pet-card-dark" *ngIf="mpan.length">
           <h3 class="title pb-3">Select Mpan</h3>
-          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select-months"></p-selectButton>
       </div>
     </div>
     <div class="col-12">
@@ -24,3 +31,13 @@
     </div>
   </div>
 </div>
+
+<p-sidebar [(visible)]="pieGuide" position="right" styleClass="w-3">
+  <div class="container">
+    <h3 class="header-style">Electricity Consumption,% split by Day of the Week Chart Guide</h3>
+    <p>The pie chart splits the percentage of the total kWh by each day of the week for a specific period. Each day of the week is represented as a separate segment of the pie chart.
+      The size of each segment corresponds to the proportion of the total energy that was consumed on that day of the week for that selected period.
+      Each segment is labelled with the name of the day and the percentage of total energy consumption that was used on that day of the week.
+    </p>
+  </div>
+</p-sidebar>

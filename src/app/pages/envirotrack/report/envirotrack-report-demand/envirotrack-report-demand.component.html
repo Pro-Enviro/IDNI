@@ -1,6 +1,12 @@
 <div class="pet-card">
   <div class="grid">
-    <div class="col-6 p-4">
+    <div class="col-4">
+      <div class="pet-card-dark">
+        <h3 class="title">Maximum Demand Chart Guide</h3>
+        <p-button type="button" styleClass="btn-style" (click)="maxGuide = true" icon="pi pi-chart-line" label="Guide"></p-button>
+      </div>
+    </div>
+    <div class="col-4">
       <div class="pet-card-dark" *ngIf="isConsultant">
         <h3 class="title pb-3">Select Company</h3>
         <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
@@ -9,10 +15,10 @@
 
       </div>
     </div>
-    <div class="col-6 p-4">
+    <div class="col-4">
         <div class="pet-card-dark" *ngIf="mpan.length">
           <h3 class="title pb-3">Select Mpan</h3>
-          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select-months"></p-selectButton>
         </div>
     </div>
     <div class="col-12">
@@ -26,3 +32,12 @@
     </div>
   </div>
 </div>
+
+<p-sidebar [(visible)]="maxGuide" position="right" styleClass="w-3">
+  <div class="container">
+    <h3 class="header-style">Maximum Demand Chart Guide</h3>
+    <p>The data points of the maximum demand chart are simply calculated from the maximum kWh used in a single half-hourly period for each day of the period, then multiplied by 2
+      to get the maximum demand in a half hour period in kW. The chart therefore shows the highest load that occurred each day on a half-hourly basis.
+    </p>
+  </div>
+</p-sidebar>

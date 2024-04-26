@@ -27,7 +27,7 @@
         <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
       </div>
         <div echarts *ngIf="chartData.length" [options]="chartOptions" style="display: block; box-sizing: border-box; height: 530px; width: 800px;margin-top:1rem"></div>
-      <p *ngIf="!chartData.length">Add data to see this chart</p>
+      <p *ngIf="!chartData.length">To add data, please navigate to "Half-Hourly Data Upload".</p>
     </div>
   </div>
 </div>

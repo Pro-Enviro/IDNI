@@ -1,6 +1,13 @@
 <div class="pet-card">
   <div class="grid">
-    <div class="col-6 p-4">
+    <div class="col-4">
+      <div class="pet-card-dark">
+        <h3 class="title">Electricity Consumption</h3>
+        <h4>kWh Split by the Day of the Week Chart Guide</h4>
+        <p-button type="button" styleClass="btn-style" (click)="scatterGuide = true" icon="pi pi-chart-bar" label="Guide"></p-button>
+      </div>
+    </div>
+    <div class="col-4">
       <div class="pet-card-dark" *ngIf="isConsultant">
         <h3 class="title pb-3">Select Company</h3>
         <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
@@ -9,11 +16,11 @@
         ></p-dropdown>
       </div>
     </div>
-    <div class="col-6 p-4">
+    <div class="col-4">
       <div class="" *ngIf="mpan.length">
         <div class="pet-card-dark">
           <h3 class="title pb-3">Select Mpan</h3>
-          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select-months"></p-selectButton>
         </div>
       </div>
     </div>
@@ -30,3 +37,12 @@
     </div>
   </div>
 </div>
+
+<p-sidebar [(visible)]="scatterGuide" position="right" styleClass="w-3">
+  <div class="container">
+    <h3 class="header-style">Electricity Consumption, kWh Split by the Day of the Week Chart Guide</h3>
+    <p>The scatter chart presents the total energy consumption per day over the selected period. It also differentiates by the days of the week by using different colour data points.
+      Hovering over the data points, we will get information about the day, date, and kWh of that data point.
+    </p>
+  </div>
+</p-sidebar>

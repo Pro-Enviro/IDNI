@@ -6,14 +6,16 @@ import {EnvirotrackService} from "../../envirotrack.service";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
 
 @Component({
   selector: 'app-envirotrack-report-avg',
   standalone: true,
-  imports: [
-    SharedModules,
-    SharedComponents
-  ],
+    imports: [
+        SharedModules,
+        SharedComponents,
+        SidebarModule
+    ],
   templateUrl: './envirotrack-report-avg.component.html',
   styleUrls: ['./envirotrack-report-avg.component.scss']
 })
@@ -29,6 +31,7 @@ export class EnvirotrackReportAvgComponent implements OnInit {
   chartOptions!: echarts.EChartsOption;
   max: number = 0;
   dateFilter: number = 12;
+  avgGuide: boolean = false;
   defaultFilters: object[] = [{
     name: 'All Data',
     value: 0

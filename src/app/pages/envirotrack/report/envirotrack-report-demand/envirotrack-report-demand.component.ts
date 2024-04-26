@@ -5,10 +5,11 @@ import {EnvirotrackService} from "../../envirotrack.service";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
 @Component({
   selector: 'app-envirotrack-report-demand',
   standalone: true,
-  imports: [SharedModules, SharedComponents],
+    imports: [SharedModules, SharedComponents, SidebarModule],
   templateUrl: './envirotrack-report-demand.component.html',
   styleUrls: ['./envirotrack-report-demand.component.scss']
 })
@@ -24,6 +25,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
   chartOptions!: echarts.EChartsOption;
   max: number = 0;
   dateFilter: number = 12;
+  maxGuide:boolean = false;
   defaultFilters: object[] = [{
     name: 'All Data',
     value: 0

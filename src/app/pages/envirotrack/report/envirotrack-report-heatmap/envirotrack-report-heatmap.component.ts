@@ -8,6 +8,7 @@ import {EnvirotrackDayLineComponent} from "../envirotrack-day-line/envirotrack-d
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
 
 PlotlyViaCDNModule.setPlotlyVersion('latest')
 
@@ -24,7 +25,8 @@ PlotlyViaCDNModule.setPlotlyVersion('latest')
     SharedModules,
     SharedComponents,
     PlotlySharedModule,
-    PlotlyViaCDNModule
+    PlotlyViaCDNModule,
+    SidebarModule
   ],
   styleUrls: ['./envirotrack-report-heatmap.component.scss']
 })
@@ -41,6 +43,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   chartOptions!: echarts.EChartsOption | null;
   max: number = 0;
   dateFilter: number = 12;
+  heatmapGuide: boolean = false;
   defaultFilters: object[] = [{
     name: 'All Data',
     value: 0

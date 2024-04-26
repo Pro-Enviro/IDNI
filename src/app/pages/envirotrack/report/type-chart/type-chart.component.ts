@@ -8,6 +8,7 @@ import {CommonModule} from "@angular/common";
 import {SharedModules} from "../../../../shared-module";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
 
 @Component({
   selector: 'app-type-chart',
@@ -17,7 +18,8 @@ import {GlobalService} from "../../../../_services/global.service";
   imports: [
     SharedComponents,
     SharedModules,
-    MultiSelectModule
+    MultiSelectModule,
+    SidebarModule
   ]
 })
 export class TypeChartComponent implements OnInit {
@@ -35,6 +37,7 @@ export class TypeChartComponent implements OnInit {
   companies: any;
   selectedCompany!: number;
   fuels: any[] = []
+  emissionGuide: boolean = false;
   envirotrackData: any = {}
 
   fltr1: any = [];

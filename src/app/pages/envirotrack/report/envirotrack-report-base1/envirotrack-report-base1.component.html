@@ -1,16 +1,22 @@
 <div class="pet-card">
   <div class="grid">
-    <div class="col-6 p-4">
+    <div class="col-4">
+      <div class="pet-card-dark">
+        <h3 class="title pb-3">Christmas Day vs Lowest Day <br>of the Year Consumption Chart Guide</h3>
+        <p-button type="button" styleClass="btn-style" (click)="baseGuide = true" icon="pi pi-chart-line" label="Guide"></p-button>
+      </div>
+    </div>
+    <div class="col-4">
       <div class="pet-card-dark" *ngIf="isConsultant">
         <h3 class="title pb-3">Select Company</h3>
         <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
         <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" styleClass="table-dropdown" scrollHeight="350px"></p-dropdown>
       </div>
     </div>
-    <div class="col-6 p-4">
+    <div class="col-4">
       <div class="pet-card-dark" *ngIf="mpan.length">
         <h3 class="title pb-3">Select Mpan</h3>
-          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select-months"></p-selectButton>
       </div>
     </div>
     <div class="col-12">
@@ -21,3 +27,12 @@
     </div>
   </div>
 </div>
+
+<p-sidebar [(visible)]="baseGuide" position="right" styleClass="w-3">
+  <div class="container">
+    <h3 class="header-style">Christmas Day vs Lowest Day of the Year Consumption Chart Guide</h3>
+    <p>The chart displays two baselines: one for Christmas Day and another for the day with the lowest consumption of the year – for the selected calendar year.
+      The blue baseline represents the half-hourly usage on Christmas Day, while the green line represents the same for the lowest day of the year.
+    </p>
+  </div>
+</p-sidebar>

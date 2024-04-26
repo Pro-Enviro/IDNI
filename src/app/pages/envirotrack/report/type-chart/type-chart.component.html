@@ -1,18 +1,36 @@
-
-<div class="pet-card">
-  <div class="col-4 p-4">
-    <div class="pet-card-dark" *ngIf="isConsultant">
-      <h3 class="title pb-3">Select Company</h3>
-      <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id"
-                  (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" styleClass="table-dropdown" scrollHeight="350px"></p-dropdown>
-<!--      <p-multiSelect [options]="yearFilter" optionLabel="name" optionName="value" [(ngModel)]="selectedYears"-->
-<!--                     (ngModelChange)="onYearFilter()"></p-multiSelect>-->
+<section>
+  <div class="pet-card">
+    <div class="grid">
+      <div class="col-4">
+        <div class="pet-card-dark">
+          <h3 class="title">Breakdown of CO2e by Emissions Source Chart Guide</h3>
+          <p-button type="button" styleClass="btn-style" (click)="emissionGuide = true" icon="pi pi-chart-pie" label="Guide"></p-button>
+        </div>
+      </div>
+      <div class="col-4 p-4">
+        <div class="pet-card-dark" *ngIf="isConsultant">
+          <h3 class="title pb-3">Select Company</h3>
+          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id"
+                      (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" styleClass="table-dropdown" scrollHeight="350px"></p-dropdown>
+          <!--      <p-multiSelect [options]="yearFilter" optionLabel="name" optionName="value" [(ngModel)]="selectedYears"-->
+          <!--                     (ngModelChange)="onYearFilter()"></p-multiSelect>-->
+        </div>
+      </div>
+      <div class="col-12">
+        <div echarts [options]="chartOption"  class="chart" [id]="'chartId'"
+             style="max-height: 800px; height: 800px;"></div>
+        <div *ngIf="!dataArray.length">
+          <p>To add data, please navigate to "Non Half-Hourly Data".</p>
+        </div>
+      </div>
     </div>
   </div>
+</section>
 
-  <div echarts [options]="chartOption"  class="chart" [id]="'chartId'"
-       style="max-height: 800px; height: 800px;"></div>
-  <div *ngIf="!dataArray.length">
-    <p>No fuel data uploaded.</p>
+<p-sidebar [(visible)]="emissionGuide" position="right" styleClass="w-3">
+  <div class="container">
+    <h3 class="header-style">Breakdown of CO2e by Emissions Source (tonnes) Chart Guide</h3>
+    <p>The pie chart presents the breakdown of CO2e (tonnes) by emissions source. Hover over the individual segments and you are presented with a panel which shows the fuel/activity type and the percentage of consumption.
+    </p>
   </div>
-</div>
+</p-sidebar>

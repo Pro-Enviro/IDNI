@@ -7,6 +7,7 @@ import {SharedModules} from "../../../../shared-module";
 import {MultiSelectModule} from "primeng/multiselect";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
 
 @Component({
   selector: 'app-scope-chart',
@@ -16,7 +17,8 @@ import {GlobalService} from "../../../../_services/global.service";
   imports: [
     SharedComponents,
     SharedModules,
-    MultiSelectModule
+    MultiSelectModule,
+    SidebarModule
   ]
 })
 export class ScopeChartComponent implements OnInit {
@@ -37,6 +39,7 @@ export class ScopeChartComponent implements OnInit {
   datas: any;
   dataArray: any;
   isConsultant: boolean = false;
+  scopeGuide:boolean = false;
 
 
   constructor(

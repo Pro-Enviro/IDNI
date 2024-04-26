@@ -54,13 +54,13 @@ export class DashboardComponent {
             escape: false
           },
           {
-            label:'<span class="material-symbols-outlined">flowsheet</span> Non Half-Hourly Data',
+            label:'<span class="material-symbols-outlined">flowsheet</span> Non Half-Hourly Data</p>',
             routerLink:'/dashboard/fuel-data',
             escape: false,
             visible: this.showFuelData
           },
           {
-            label:'<span class="material-symbols-outlined">add_chart</span> Data Upload',
+            label:'<span class="material-symbols-outlined">add_chart</span> Half-Hourly Data Upload',
             escape: false,
             routerLink:'/dashboard/import'
           },
