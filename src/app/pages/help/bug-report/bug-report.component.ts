@@ -54,6 +54,7 @@ export class BugReportComponent implements OnInit {
           severity: 'success',
           detail: 'Bug Report submitted. Thank You.'
         })
+        this.myForm.reset()
         // Redirect user?
       },
       error: (error: any) => {
