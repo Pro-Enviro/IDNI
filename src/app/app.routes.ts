@@ -20,6 +20,9 @@ import {AppComponent} from "./app.component";
 import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 import {RegisterSuccessPageComponent} from "./users/register/register-success-page/register-success-page.component";
 import {ForgotPasswordComponent} from "./users/forgot-password/forgot-password.component";
+import {BugReportComponent} from "./pages/help/bug-report/bug-report.component";
+import {FaqsComponent} from "./pages/help/faqs/faqs.component";
+import {ContactUsComponent} from "./pages/contact-us/contact-us.component";
 
 
 
@@ -61,6 +64,9 @@ export const routes: Routes = [
       {path: 'demand', component: EnvirotrackReportDemandComponent },
       {path: 'co2emissions', component:  TypeChartComponent},
       {path: 'co2emissionsbyscope', component: ScopeChartComponent },
+      {path:'bug-report',component:BugReportComponent},
+      {path:'faqs',component:FaqsComponent},
+      {path:'contact-us',component:ContactUsComponent}
     ]},
   {path: '**', redirectTo: 'dashboard'},
   {path: '', component: AppComponent},

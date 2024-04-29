@@ -47,6 +47,7 @@ export class DashboardComponent {
         }
       },
       complete: () => {
+        // @ts-ignore
         this.envirotrackReport  =[
           {
             label:'<span class="material-symbols-outlined">dashboard</span> Dashboard',
@@ -126,7 +127,28 @@ export class DashboardComponent {
                 routerLink: '/dashboard/co2emissionsbyscope'
               }
             ]
-          }
+          },
+          {
+            label:'<span class="material-symbols-outlined">help</span> Help',
+          escape: false,
+          routerLink:'/dashboard/help',
+          items:[
+            {
+              label:'<span class="material-symbols-outlined">problem</span> Bug Report',
+              escape: false,
+              routerLink: '/dashboard/bug-report'
+            },
+            {
+              label:'<span class="material-symbols-outlined">live_help</span> FAQ\'s',
+              escape: false,
+              routerLink: '/dashboard/faqs'
+            },
+            {
+              label:'<span class="material-symbols-outlined">contact_mail</span> Contact Us',
+              escape: false,
+              routerLink: '/dashboard/contact-us'
+            }
+          ]}
 
         ]
       }
