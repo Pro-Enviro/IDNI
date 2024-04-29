@@ -15,7 +15,7 @@
   </div>
   <div>
     <label>
-      stepsToReproduce:
+      Steps to Reproduce:
       <textarea formControlName="stepsToReproduce" placeholder="Outline steps on how to reproduce the issue (If possible)"></textarea>
     </label>
   </div>
@@ -23,7 +23,7 @@
     <label>
       Screenshots:
 
-      <p-fileUpload name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" [multiple]="true" accept="image/*" [maxFileSize]="1000000">
+      <p-fileUpload [multiple]="true" accept="image/*" [maxFileSize]="1000000" #fileUpload [customUpload]="true" (uploadHandler)="uploadHandler($event)">
         <ng-template pTemplate="content">
           <ul *ngIf="uploadedFiles.length">
             <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
