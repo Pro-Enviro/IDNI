@@ -50,7 +50,11 @@ export class BugReportComponent implements OnInit {
     this.db.uploadBugReport(this.myForm.value).subscribe({
       next: (res: any) => {
         console.log(res)
-        // Redirect user
+        this.msg.add({
+          severity: 'success',
+          detail: 'Bug Report submitted. Thank You.'
+        })
+        // Redirect user?
       },
       error: (error: any) => {
         this.msg.add({
