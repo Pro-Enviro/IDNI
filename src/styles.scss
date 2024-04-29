@@ -942,9 +942,9 @@ a{
   }
 
 .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
-  background: $primeColor;
-  border-color: #2e5757;
-  color: $headerColor;
+  //background: $primeColor;
+  //border-color: #2e5757;
+  //color: $headerColor;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -952,8 +952,8 @@ a{
 .p-accordion .p-accordion-header .p-accordion-header-link {
   padding: 1.25rem;
   border: 1px solid #e5e7eb;
-  color: $headerColor;
-  background: #F3F9F8;
+  //color: $headerColor;
+  background: #fcfcfc;
   font-weight: 700;
   border-radius: 6px;
   transition: box-shadow 0.2s;
