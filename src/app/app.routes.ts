@@ -22,10 +22,7 @@ import {RegisterSuccessPageComponent} from "./users/register/register-success-pa
 import {ForgotPasswordComponent} from "./users/forgot-password/forgot-password.component";
 import {BugReportComponent} from "./pages/help/bug-report/bug-report.component";
 import {FaqsComponent} from "./pages/help/faqs/faqs.component";
-import {ContactUsComponent} from "./pages/contact-us/contact-us.component";
-
-
-
+import {ContactUsComponent} from "./pages/help/contact-us/contact-us.component";
 
 
 export const routes: Routes = [
