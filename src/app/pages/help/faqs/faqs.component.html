@@ -1,151 +1,28 @@
-<section>
-  <div class="container">
-    <div class="pet-card px-4 py-8 md:px-6 lg:px-8">
-      <div class="text-700 text-center">
-        <div class="font-bold mb-3" style="color:#85bfba">Common FAQS</div>
-        <div class="text-900 font-bold text-5xl pb-5">Frequently Asked Questions</div>
-        <div class="text-700 text-lg mb-5">Below you will find answers to the most common questions you may have. <br>If you still can't find the answer you are looking for, just
-          <a routerLink="dashboard/contact-us">Contact us!</a>
+@if(content){
+  <section>
+    <div class="container">
+      <div class="pet-card px-4 py-8 md:px-6 lg:px-8">
+        <div class="text-700 text-center">
+          <div class="font-bold mb-3" style="color:#85bfba">Common FAQS</div>
+<!--          <div class="text-900 font-bold text-5xl pb-5">Frequently Asked Questions</div>-->
+          <div class="text-900 font-bold text-5xl pb-5">{{content.title}}</div>
+          <div class="text-700 text-lg mb-5">Below you will find answers to the most common questions you may have. <br>If you still can't find the answer you are looking for, just
+            <a routerLink="dashboard/contact-us">Contact us!</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <div class="container pt-5">
+      <p-accordion [activeIndex]="0">
+        @for(item of content.faqs_items; track $index){
+          <p-accordionTab [header]="item.question">
+            <div [innerHTML]="item.answer"></div>
+          </p-accordionTab>
+        }
+      </p-accordion>
+    </div>
+  </section>
+}
 
-  <div class="container pt-4">
-    <p-accordion [activeIndex]="0">
-      <p-accordionTab header="How to access the half hourly electricity data?">
-        <p>
-          This can only be obtained if your energy company records your consumption data on a half hourly basis.
-          To obtain half-hourly meter data, you need to either download it or contact your electricity or utility provider to request it. They should be able to provide you with access to your half-hourly consumption data upon request.
-        </p>
-      </p-accordionTab>
-      <p-accordionTab header="What steps to take to access your half-hourly data?">
-       <ul>
-         <li>
-           <h4 class="text-lg">•	Identify whether you have a half-hourly meter</h4>
-           <div class="grid">
-             <div class="col-4">
-               <img src="https://id-ni.eco/assets/images/dash-info/mapn-img.png" height="90px" alt="">
-             </div>
-             <div class="col-6">
-               <p>Look for the complete MPAN number in one of your electricity bills in this format: <br>
-                 If the first two numbers are ‘00’, then you have a half-hourly meter. If it anything else, then it is not half-hourly.
-               </p>
-             </div>
-           </div>
-         </li>
-         <li class="p-2">
-           <h4 class="text-lg">•	Contact Your Utility Provider</h4>
-           Start by reaching out to your electricity or utility provider. They should have information on whether your meter supports half-hourly data recording and how you can access it.
-         </li>
-         <li class="p-2">
-           <h4 class="text-lg">•	Request Access</h4>
-           Once you've confirmed that your meter supports half-hourly data recording, check first if you can download the half-hourly data from your online energy account, if not then send a request to your energy supplier.
-         </li>
-         <li class="p-2">
-           <h4 class="text-lg">•	Provide Information</h4>
-           Depending on your provider's procedures, you may need to provide some information such as your account details, meter number, and possibly consent to access the data.
-         </li>
-         <li class="p-2">
-           <h4 class="text-lg">•	Access the Data</h4>
-           After you've completed any necessary steps, you should be able to access your half-hourly meter data. This may be through an online portal downloadable file, by email, or through other means provided by your utility company.
-         </li>
-         <li class="p-2">
-           <h4 class="text-lg">•	Analyse the Data</h4>
-           Once you have access to your half-hourly meter data, you can analyse it to gain insights into your electricity usage patterns. This can be useful for identifying opportunities to reduce energy consumption, optimise energy usage, or for other purposes such as billing verification.
-         </li>
-       </ul>
-      </p-accordionTab>
-      <p-accordionTab header="How to upload half-hourly data ?">
-        <p class="p-2">To import the Half-Hourly Data you need to follow these steps:</p>
-        <ul>
-          <li class="p-1">1. Select the company from the dropdown panel.</li>
-          <li class="p-1">2. Click on the "Choose" button located in "File Upload" panel.</li>
-          <li class="p-1"> 3. Select the file that you would like to upload.</li>
-          <li class="p-1">4. Click the "Upload" button.</li>
-          <li class="p-1">5. A new panel called "Half-Hourly Data (HHD)" wil appearing, displaying a table holding information for : mpan number, date and data share point.The table below will contain a preview of your spreadsheet.
-            Drag the column titles from the spreadsheet preview to the corresponding panels, this ensures the data processed correctly</li>
-          <li class="p-1">6. Click the “Process” button when the above is complete.</li>
-          <li class="p-1">7. A message will appear if the data was successfully uploaded and processed. You can now close the page or navigate away.</li>
-        </ul>
-      </p-accordionTab>
-      <p-accordionTab header="What data to get?">
-        <p>
-          When obtaining half-hourly meter data, you receive information about your electricity consumption in half-hour intervals throughout the day.
-          By analysing this half-hourly meter data, you can gain insights into your electricity usage patterns, identify opportunities for energy efficiency improvements,
-          and optimise your energy consumption to reduce costs or environmental impact.
-        </p>
-      </p-accordionTab>
-      <p-accordionTab header="What data points you might expect to receive ?">
-       <ul>
-         <li class="p-2">
-           <h4 class="text-lg">•	Date and Time Stamp</h4>
-           Each data point should include a timestamp indicating the date and time the measurement was taken. This allows you to track consumption patterns over specific periods.
-         </li>
-         <li class="p-2">
-           <h4 class="text-lg">•	Meter Reading</h4>
-           The actual electricity consumption recorded by the meter during each half-hour interval. This is usually measured in kilowatt-hours (kWh) or megawatt-hours (MWh), depending on the scale of your consumption.
-         </li>
-         <li class="p-2">
-           <h4 class="text-lg">•	Meter ID or Serial Number</h4>
-           A unique identifier for your meter, which helps ensure that the data corresponds to your specific meter and account.
-         </li>
-         <li class="p-2">
-           <h4 class="text-lg">•	Quality Flags or Indicators</h4>
-           Some datasets may include quality flags or indicators to denote the reliability of each measurement. This can help you identify and filter out any anomalous or unreliable data points.
-         </li>
-         <li class="p-2">
-           <h4 class="text-lg">•	Tariff Information</h4>
-           Information about the tariff or pricing structure applicable to each half-hour interval. This can be useful for understanding how your electricity costs vary throughout the day based on time-of-use pricing or other factors.
-         </li>
-       </ul>
-      </p-accordionTab>
-      <p-accordionTab header="What is non half-hourly data ?">
-        <p>The ‘Non Half-Hourly’ section is where you can add or upload data recorded from bills, including the individual monthly energy/fuel usage, rates, and costs.</p>
-      </p-accordionTab>
-      <p-accordionTab header="How to Upload Non Half-Hourly Data Step by Step ?">
-        <p class="p-2">To import the Half-Hourly Data you need to follow these steps:</p>
-        <ul>
-          <li class="p-1">1. Click on "Add New Fuel Type" and select the fuel type from the dropdown menu.</li>
-          <li class="p-1">2. Select the columns that are required for your dataset. Drag and Drop columns from the “Available Columns” panel to the “Selected Columns” panel to include them.
-            If custom columns are required this can be achieved with the “Custom Column” panel. Once a custom column is created it can be dragged from the “Available Columns”.Totals can be automatically calculated.
-            In the “Columns to Total” panel, select the checkboxes of columns that should be used in calculating the final total.</li>
-          <li class="p-1">3. The table will appear below with your selected columns.</li>
-          <li class="p-1">4. To edit the columns, click on the “Edit Column” button. This will allow editing, adding new columns, and updating the total calculation.</li>
-          <li class="p-1">5.  Click "Update".</li>
-        </ul>
-      </p-accordionTab>
-      <p-accordionTab header="How to Upload Non Half-Hourly Data from a Spreadsheet ?">
-        <p class="p-2">To import the Half-Hourly Data from a spreadsheet you need to follow these steps:</p>
-        <ul>
-          <li class="p-1">1. Click on "Add New Fuel Type" and select the fuel type from the dropdown menu.</li>
-          <li class="p-1">2. Select the columns that are required for your dataset. Drag and Drop columns from the “Available Columns” panel to the “Selected Columns” panel to include them.
-            If custom columns are required this can be achieved with the “Custom Column” panel. Once a custom column is created it can be dragged from the “Available Columns”.
-            Totals can be automatically calculated. In the “Columns to Total” panel, select the checkboxes of columns that should be used in calculating the final total. </li>
-          <li class="p-1">3. The table will appear below with your selected columns.</li>
-          <li class="p-1">4. Click on “Import Spreadsheet”.</li>
-          <li class="p-1">5.  Select the “Choose” button and select a file to upload.</li>
-          <li class="p-1">6. Click “Upload”.</li>
-          <li class="p-1">7. Select the required sheet to import data from.</li>
-          <li class="p-1">8. Drag and Drop columns from the spreadsheet to the corresponding panels. This ensures the data is imported correctly.</li>
-          <li class="p-1">9. Click “Process”. After this is completed a success message will appear. Click “Save” at the bottom of the page to confirm your import.</li>
-          <li class="p-1">10. You can now navigate away or close the page.</li>
-        </ul>
-      </p-accordionTab>
-      <p-accordionTab header="What is The Productivity & Emissions Tool (PET) ?">
-        <p>The ID-NI Productivity & Emissions Tool (PET) is a unique and powerful tool that is easy to use and quick to provide key insights for business improvement.
-          By measuring the various factors that impact Productivity we can also,
-          when blended with some additional information, enable your business to begin to measure your Scope 1, 2 and 3 emissions at your site.</p>
-        <p>The important distinction for our PET is that it is not just about measuring how productive you are, it is highlighting those main factors that are impacting that productivity score and therefore determining your performance. Likewise we can calculate your emissions, using the same factors that determine your Productivity, to show how and where you are performing well or poorly.
-          The low hanging fruit will typically be those areas that are high cost and high emissions, by solving one you improve the other.</p>
-        <p>
-         Productivity is well understood and easily measured in a number ways by any economist. As a business term,
-          it is roughly understood but seldom calculated. The Office of National Statistics have provided a clear model for how businesses should calculate their own Productivity based on their business Turnover on
-          their particular site, the number of employees at that site and the total external costs incurred at that site. The ID-NI Productivity & Emissions Tool PET goes a few steps further.
-          Our PET is designed to not only focus on the main Factors those external costs, bring clarity to those costs, allow the company to begin measurement to those costs, both financially and in emissions generated.
-        </p>
-      </p-accordionTab>
-    </p-accordion>
-  </div>
-</section>
+
 
