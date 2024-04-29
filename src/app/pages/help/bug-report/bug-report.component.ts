@@ -1,40 +1,39 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-bug-report',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ],
   templateUrl: './bug-report.component.html',
   styleUrl: './bug-report.component.scss'
 })
 export class BugReportComponent implements OnInit {
 
-  myForm: FormGroup = new FormGroup({});
+  myForm!: FormGroup;
 
-  email: FormControl<string | null > = new FormControl('')
-  issue: FormControl<string | null > = new FormControl('')
-  stepsToReproduce: FormControl<string | null > = new FormControl('')
-  screenshots: FormControl<File[] | null > = new FormControl([])
-  deviceUsed: FormControl<string | null > = new FormControl('')
-  browserUsed: FormControl<string | null > = new FormControl('')
-
-  constructor() {}
+  constructor(private fb: FormBuilder) {}
 
   onSubmit(form: FormGroup) {
-    console.log(form.value)
+    console.log('valid?', form.valid)
+    console.log(form.value);
+
+    // Submit to db
+    // Redirect user
   }
 
   ngOnInit(){
-    this.myForm = new FormGroup({
-      email: new FormControl(''),
-      issue: new FormControl(''),
-      stepsToReproduce: new FormControl(''),
-      screenshots: new FormControl([]),
-      deviceUsed: new FormControl(''),
-      browserUsed: new FormControl('')
+    this.myForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      issue: ['', Validators.required],
+      stepsToReproduce: '',
+      screenshots: [],
+      deviceUsed: '',
+      browserUsed: ''
     });
 
   }

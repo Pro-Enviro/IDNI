@@ -5,12 +5,13 @@
       Email:
       <input formControlName="email" placeholder="Your email">
     </label>
+
   </div>
   <div>
     <label>
       Issue:
     </label>
-    <textarea formControlName="message" placeholder="Explain the issue in as much detail as required"></textarea>
+    <textarea formControlName="issue" placeholder="Explain the issue in as much detail as required"></textarea>
   </div>
   <div>
     <label>
@@ -33,8 +34,8 @@
   <div>
     <label>
       Browser:
-      <input formControlName="browser" placeholder="Your message">
+      <input formControlName="browserUsed" placeholder="Your message">
     </label>
   </div>
-  <button type="submit">Send</button>
+  <button type="submit" [disabled]="myForm.invalid">Send</button>
 </form>
