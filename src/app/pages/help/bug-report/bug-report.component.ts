@@ -2,7 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgForOf, NgIf} from "@angular/common";
 import {SharedComponents} from "../../envirotrack/shared-components";
-import {uploadFiles} from "@directus/sdk";
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {DbService} from "../../../_services/db.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-bug-report',
@@ -11,7 +13,8 @@ import {uploadFiles} from "@directus/sdk";
     ReactiveFormsModule,
     NgIf,
     SharedComponents,
-    NgForOf
+    NgForOf,
+    InputTextareaModule
   ],
   templateUrl: './bug-report.component.html',
   styleUrl: './bug-report.component.scss'
@@ -21,23 +24,42 @@ export class BugReportComponent implements OnInit {
   myForm!: FormGroup;
   uploadedFiles: any = [];
 
-  constructor(private fb: FormBuilder) {}
-
-
+  constructor(private fb: FormBuilder,private db: DbService, private msg: MessageService) {}
 
 
   uploadHandler = (event: any) => {
-      // this.uploadFiles.forEach((file: any) => this.myForm.append('screenshots', file))
+    event.files.forEach((file: any) => this.uploadedFiles.push(file))
   }
 
   onSubmit(form: FormGroup) {
 
-    console.log(this.uploadedFiles)
-    console.log('valid?', form.valid)
-    console.log(form.value);
+    // Add users uploaded files to form object
+    if (this.uploadedFiles.length > 0) {
+      this.myForm.patchValue({'screenshots': this.uploadedFiles})
+    }
+
+    if (!form.valid) {
+      return this.msg.add({
+        severity: 'error',
+        detail: 'Email and Issue must be filled in.',
+
+      })
+    }
 
     // Submit to db
-    // Redirect user
+    this.db.uploadBugReport(this.myForm.value).subscribe({
+      next: (res: any) => {
+        console.log(res)
+        // Redirect user
+      },
+      error: (error: any) => {
+        this.msg.add({
+          severity: 'error',
+          detail: 'Failed to submit bug report. Please try again.'
+        })
+      },
+    })
+
   }
 
   ngOnInit(){

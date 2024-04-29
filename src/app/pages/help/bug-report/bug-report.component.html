@@ -1,48 +1,57 @@
 
-<form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
-  <div>
-    <label>
-      Email:
-      <input formControlName="email" placeholder="Your email">
-    </label>
+<div class="flex flex-column justify-content-center">
+<p-card class="flex flex-column w-5 ml-5">
+  <h2>Bug Report</h2>
 
-  </div>
-  <div>
-    <label>
-      Issue:
-    </label>
-    <textarea formControlName="issue" placeholder="Explain the issue in as much detail as required"></textarea>
-  </div>
-  <div>
-    <label>
-      Steps to Reproduce:
-      <textarea formControlName="stepsToReproduce" placeholder="Outline steps on how to reproduce the issue (If possible)"></textarea>
-    </label>
-  </div>
-  <div>
-    <label>
-      Screenshots:
 
-      <p-fileUpload [multiple]="true" accept="image/*" [maxFileSize]="1000000" #fileUpload [customUpload]="true" (uploadHandler)="uploadHandler($event)">
-        <ng-template pTemplate="content">
-          <ul *ngIf="uploadedFiles.length">
-            <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
-          </ul>
-        </ng-template>
-      </p-fileUpload>
-    </label>
-  </div>
-  <div>
-    <label>
-      Device Used:
-      <input formControlName="deviceUsed" placeholder="Your message">
-    </label>
-  </div>
-  <div>
-    <label>
-      Browser:
-      <input formControlName="browserUsed" placeholder="Your message">
-    </label>
-  </div>
-  <button type="submit" [disabled]="myForm.invalid">Send</button>
-</form>
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+    <div>
+      <label class="flex flex-column text-sm">
+        Email:
+        <input pInputText formControlName="email" placeholder="Your email" class="mt-1">
+      </label>
+
+    </div>
+    <div class="mt-3">
+      <label class="flex flex-column text-sm">
+        Issue:
+      </label>
+      <textarea  pInputTextarea formControlName="issue" placeholder="Explain the issue in as much detail as required"  class="mt-1 w-full" rows="5"></textarea>
+    </div>
+    <div class="mt-3">
+      <label  class="flex flex-column text-sm">
+        Steps to Reproduce:
+        <textarea pInputTextarea formControlName="stepsToReproduce"
+                  placeholder="Outline steps on how to reproduce the issue (If possible)"  class="mt-1" rows="5"></textarea>
+      </label>
+    </div>
+    <div class="mt-3" >
+      <label  class="flex flex-column text-sm">
+        Screenshots:
+
+        <p-fileUpload [multiple]="true" accept="image/*" [maxFileSize]="1000000" #fileUpload [customUpload]="true" class="mt-1"
+                      (uploadHandler)="uploadHandler($event)">
+          <ng-template pTemplate="content">
+            <ul *ngIf="uploadedFiles.length">
+              <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+            </ul>
+          </ng-template>
+        </p-fileUpload>
+      </label>
+    </div>
+    <div class="mt-3">
+      <label  class="flex flex-column text-sm">
+        Device Used:
+        <input pInputText formControlName="deviceUsed" placeholder="Your message"  class="mt-1">
+      </label>
+    </div>
+    <div class="mt-3">
+      <label  class="flex flex-column text-sm">
+        Browser:
+        <input pInputText formControlName="browserUsed" placeholder="Your message"  class="mt-1">
+      </label>
+    </div>
+    <p-button styleClass="btn mt-2" type="submit" [disabled]="myForm.invalid">Submit Bug Report</p-button>
+  </form>
+</p-card>
+</div>

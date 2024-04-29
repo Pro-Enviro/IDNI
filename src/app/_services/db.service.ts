@@ -67,4 +67,9 @@ export class DbService {
 
   }
 
+  uploadBugReport = (bugReport: any) => {
+    console.log(bugReport)
+    return this.http.post(`${this.url}/items/bug_reports`, bugReport)
+  }
+
 }
