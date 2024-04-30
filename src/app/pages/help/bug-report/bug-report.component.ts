@@ -52,13 +52,13 @@ export class BugReportComponent implements OnInit {
     if (!form.valid) {
       return this.msg.add({
         severity: 'error',
-        detail: 'Email and Issue must be filled in.',
-
+        detail: 'Email and Issue must be filled in.'
       })
     }
 
     if (this.uploadedFiles.length > 0) {
-      this.myForm.patchValue({'screenshots': this.fileIds})
+      // this.myForm.patchValue({'screenshots': this.fileIds})
+
     }
 
     // Submit to db
@@ -80,7 +80,6 @@ export class BugReportComponent implements OnInit {
         })
       },
     })
-
   }
 
   ngOnInit(){
