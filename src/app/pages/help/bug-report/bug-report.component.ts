@@ -36,6 +36,8 @@ export class BugReportComponent implements OnInit {
     event.files.forEach((file: any) => this.uploadedFiles.push(file))
     if (this.uploadedFiles.length > 0) {
       const formData = new FormData();
+      // Uploading a file requires a certain format before pushed to DB
+      // the folder UUID refers to 'bug_report_screenshots' in file repository
       this.uploadedFiles.forEach((file: any) => {
         formData.append('folder', '1367f1b6-f680-4cb9-8eb9-8352f0e715fb')
         formData.append('file[]', file)
@@ -48,8 +50,6 @@ export class BugReportComponent implements OnInit {
           } else if (res.id) {
             this.fileIds = res.id
           }
-
-
           fileUpload.clear()
         }
       })
@@ -65,35 +65,29 @@ export class BugReportComponent implements OnInit {
       })
     }
 
+    // Formatting of the api body needs to be different depending on if 1 file was uploaded or multiple
+    // this format will attach the fileIds from the pre-uploaded screenshots to the body object
+    // direct_files_id is required to make it link correctly
     if (this.uploadedFiles.length === 1 ) {
-      console.log('Only one file')
       this.myForm.patchValue({'files':  [{directus_files_id: this.fileIds}]})
     } else if (this.uploadedFiles.length > 1 && this.uploadedFiles.length < 4) {
-      console.log('many files')
-
       let mappedIds = this.fileIds.map((fileId: string) => {
         return {
           directus_files_id: fileId
         }
       })
-      console.log(mappedIds)
-
-      // this.myForm.patchValue({'files': [{directus_files_id: this.fileIds[0]}, {directus_files_id: this.fileIds[1]}, {directus_files_id: this.fileIds[2]}]})
       this.myForm.patchValue({'files': mappedIds})
     }
 
     // Submit to db
     this.db.uploadBugReport(this.myForm.value).subscribe({
       next: (res: any) => {
-        console.log(res)
         this.msg.add({
           severity: 'success',
           detail: 'Bug Report submitted. Thank You.'
         })
         this.uploadedFiles = []
         this.myForm.reset()
-
-        // Redirect user?
       },
       error: (error: any) => {
         this.msg.add({
