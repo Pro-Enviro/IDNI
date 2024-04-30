@@ -4,7 +4,7 @@ import {MenuItem, MessageService} from "primeng/api";
 import { Papa } from "ngx-papaparse";
 import moment from "moment";
 import 'moment/locale/en-gb';
-import {lastValueFrom} from "rxjs";
+import {from, lastValueFrom} from "rxjs";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
@@ -12,6 +12,7 @@ import {HttpClient} from "@angular/common/http";
 import {GlobalService} from "../../../../_services/global.service";
 import {SidebarModule} from "primeng/sidebar";
 import {DividerModule} from "primeng/divider";
+import {FileUpload} from "primeng/fileupload";
 
 
 interface Sheet {
@@ -47,6 +48,7 @@ interface HHDData {
 })
 
 export class ImportEnvirotrackComponent {
+
   url: string = 'https://app.idni.eco';
   draggedCell: any | null;
   companies: object[] = [];
@@ -73,10 +75,14 @@ export class ImportEnvirotrackComponent {
   sheetData: any;
   userLevel: number = 2
   selectedName: string = ''
+  selectedEmail: string = ''
   isConsultant: boolean = false;
   uploadingData: boolean = false;
   accessData: boolean = false;
   dataGuide:boolean = false;
+  fileIds: string[] = []
+
+
   constructor(
     private track: EnvirotrackService,
     private global: GlobalService,
@@ -128,7 +134,7 @@ export class ImportEnvirotrackComponent {
     });
   }
 
-  onUpload = async (event: any) => {
+  onUpload = async (event: any, fileUploadComponent: FileUpload) => {
     if (!this.selectedCompany) {
       this.msg.add({
         severity: 'error',
@@ -145,11 +151,34 @@ export class ImportEnvirotrackComponent {
     for (let file of event.files) {
       this.uploadedFiles.push(file);
     }
+
+    this.uploadHandler(event, fileUploadComponent)
     this.msg.add({
       severity: 'success',
       detail: 'File Uploaded',
     });
   }
+
+
+  uploadHandler = (event: any, fileUploadComponent: FileUpload) => {
+    this.uploadedFiles = []
+    event.files.forEach((file: any) => this.uploadedFiles.push(file))
+    if (this.uploadedFiles.length > 0) {
+      const formData = new FormData();
+      this.uploadedFiles.forEach((file: any) => {
+        formData.append('file[]', file)
+      });
+
+
+      from(this.global.uploadBugReportScreenshots(formData)).subscribe({
+        next: (res: any) => {
+          this.fileIds = res.id
+          fileUploadComponent.clear()
+        }
+      })
+    }
+  }
+
 
   resultSet = (data: any, type: string) => {
     if (type === 'csv') {
@@ -204,6 +233,7 @@ export class ImportEnvirotrackComponent {
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {
         if (res.role.name === 'user'){
+          this.selectedEmail = res.email
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
               if (res.data){
@@ -223,30 +253,21 @@ export class ImportEnvirotrackComponent {
 
       }
     })
-
-    // this.track.getCompanies().subscribe({
-    //   next: (res: any) => {
-    //     if (res?.data?.length) {
-    //       this.companies = res.data
-    //     }
-    //
-    //   },
-    //   error: (err) => console.log(err)
-    // })
   }
 
   sendDataToProEnviro(){
 
     return this.http.post(`${this.url}/Mailer`,{
       subject: 'Pro Enviro Envirotrack sent',
-      to: 'adam.shelley@proenviro.co.uk', // WIP: Update with correct email address
+      to: ['adam.shelley@proenviro.co.uk'], // WIP: Update with correct email address
       template: {
-        name: "New_envirotrack upload",
+        name: "data_uploaded",
         data: {
-          company: this.selectedName
+          "company": this.selectedCompany,
+          "user": this.selectedEmail
         }
       },
-      files: ''
+      "files": [this.fileIds]
     },{responseType: "text"}).subscribe({
       next:(res) => {
         console.log(res)
@@ -255,13 +276,17 @@ export class ImportEnvirotrackComponent {
           detail: 'Data sent'
         })
       },
-      error: (error: any) =>console.log(error)
+      error: (error: any) =>console.log(error),
+      complete: () => {
+        this.uploadedFiles = []
+        this.fileContent = null;
+
+      }
     })
   }
 
 
   processData = async () => {
-  console.log(this.selectedMpan)
     if (!this.selectedMpan || !this.selectedMpan?.name.toString().length  ) {
       this.msg.add({
         severity: 'error',

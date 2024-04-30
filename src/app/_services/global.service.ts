@@ -43,7 +43,6 @@ export class GlobalService {
   uploadBugReportScreenshots = async (screenshots: any) => {
     const result = await this.client.request(uploadFiles(screenshots))
     return result;
-
   }
 
   initSession = () => {
