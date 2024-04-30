@@ -240,7 +240,7 @@
   <div class="container p-3">
     <h2 class="header-style">Privacy Policy</h2>
     <div class="flex">
-      <p-checkbox [binary]="true" inputId="policy" name="policy"  value="policy" [required]="true" formControlName="policy" ></p-checkbox>
+      <p-checkbox [binary]="true" inputId="policy" name="policy"  value="policy"  formControlName="policy" ></p-checkbox>
       <label class="pl-2">I agree with the terms and conditions<span style="color:#006633;padding-left:5px">*</span></label>
     </div>
     <div *ngIf="myForm.get('policy')?.invalid && (myForm.get('policy')?.dirty || myForm.get('policy')?.touched)">
@@ -251,7 +251,7 @@
       <label class="pl-2">I agree to be part of COSI/Cluster.</label>
     </div>
     <div class="pt-3 flex">
-      <p-checkbox [binary]="true" inputId="policy_bill" name="policy_bill"  value="policy_bill" [required]="true" formControlName="policy_bill" ></p-checkbox>
+      <p-checkbox [binary]="true" inputId="policy_bill" name="policy_bill"  value="policy_bill"  formControlName="policy_bill"  ></p-checkbox>
       <label class="pl-2">Your company/organisation is content to provide some initial high-level electricity and/or gas data to the IDNI project.<span style="color:#006633;padding-left:5px">*</span></label>
     </div>
     <div class="pl-5">
@@ -262,7 +262,7 @@
       <span class="mt-1 text-xs text-red-900">Please confirm that you are happy to share high-level data.</span>
     </div>
     <div class="">
-      <p-checkbox [binary]="true" inputId="policy_idni" name="policy_idni"  value="policy_idni" [required]="true" formControlName="policy_idni"></p-checkbox>
+      <p-checkbox [binary]="true" inputId="policy_idni" name="policy_idni"  value="policy_idni"  formControlName="policy_idni"></p-checkbox>
       <label class="pl-2"> Your company/organisation is content to allow the IDNI partnership team to collate and assess any data collected as part of this project and to share the findings of any data analysis anonymously to allow collective decarbonisation plans to be developed?<span style="color:#006633;padding-left:5px">*</span></label>
 
       <div *ngIf="myForm.get('policy_idni')?.invalid && (myForm.get('policy_idni')?.dirty || myForm.get('policy_idni')?.touched)">
@@ -270,7 +270,7 @@
       </div>
 
 
-      @if(policy_idni && policy && policy_bill){
+      @if(checkPolicyLevel()){
         <div class="grid p-4 m-3" style="background:#fcfcfc">
           <div class="lg:col-6 sm:col-12">
             <div class="field flex flex-column pr-3">
@@ -308,12 +308,17 @@
               </p-password>
             </div>
           </div>
+          <div *ngIf="myForm.get('password')?.invalid && (myForm.get('password')?.dirty || myForm.get('password')?.touched)">
+            <span class="mt-1 text-xs text-red-900">Passwords do not match. </span>
+          </div>
         </div>
       }
     </div>
 
     <p><small>Please read the <a href="/data-privacy-policy.html" style="color:#85bfba">Data Privacy Policy</a> for full information.</small></p>
 <!--    <p-button styleClass="btn-style mt-3" label="Submit" icon="pi pi-send" (onClick)="onSubmit()" [disabled]="!checkInputs()"></p-button>-->
+
+    {{ myForm.status | json }}
     <p-button  type="submit" styleClass="btn-style mt-3"  icon="pi pi-send" label="Submit" ></p-button>
   </div>
 
