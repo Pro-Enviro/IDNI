@@ -96,14 +96,14 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit = (form: FormGroup) => {
-
-    console.log('FORM SUBMISSION')
-    console.log(this.myForm.value)
-    console.log('valid:', form.valid)
-
     // Check for required/valid fields
     if (!this.myForm.valid) {
       this.myForm.markAllAsTouched();
+
+      // Password Confirm validators
+      if (this.myForm.controls['password'].value !== this.myForm.controls['confirm_password'].value){
+        return this.myForm.controls['password'].setErrors({'not_matching': true});
+      }
 
       return this.msg.add({
         severity: 'warn',
@@ -111,13 +111,7 @@ export class RegisterComponent implements OnInit {
       })
     }
 
-    // Password Confirm validators
-    if (this.myForm.controls['password'].value !== this.myForm.controls['confirm_password'].value){
-      return this.myForm.controls['password'].setErrors({'not_matching': true});
-    }
-
     // Pick out user details required
-
     const user = {
       first_name: this.myForm.controls['first_name'].value,
       last_name: this.myForm.controls['last_name'].value,
@@ -128,7 +122,6 @@ export class RegisterComponent implements OnInit {
     }
 
     console.log(user)
-
     console.log('Sending to DB')
 
     // Send to backend to create company/user
