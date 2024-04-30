@@ -88,7 +88,7 @@ export class RegisterComponent implements OnInit {
     {name: 'Other', value: 'other'}
   ]
 
-  constructor(private msg: MessageService, private fb: FormBuilder, private storage: StorageService) {
+  constructor(private msg: MessageService, private fb: FormBuilder, private storage: StorageService, private db: DbService) {
     if (this.storage.get('directus-data') !== null) {
       localStorage.clear()
       window.location.reload()
@@ -125,11 +125,12 @@ export class RegisterComponent implements OnInit {
     console.log('Sending to DB')
 
     // Send to backend to create company/user
-    // this.db.addCompany(['*'], this.myForm.value, user).subscribe({
-    //   next: (res) => {
-    //       this.myForm.reset()
-    //   }
-    // })
+    this.db.addCompany(['*'], this.myForm.value, user).subscribe({
+      next: (res: any) => {
+        this.myForm.reset()
+        window.location.assign('dashboard.html')
+      }
+    })
   }
 
 
