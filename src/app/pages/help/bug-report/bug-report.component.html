@@ -29,7 +29,7 @@
       <label  class="flex flex-column text-sm">
         Screenshots:
 
-        <p-fileUpload [multiple]="true" accept="image/*" [maxFileSize]="1000000" [customUpload]="true" class="mt-1 text-sm" (uploadHandler)="uploadHandler($event)">
+        <p-fileUpload #fileUpload [multiple]="true" accept="image/*" [maxFileSize]="1000000" [fileLimit]="3" [customUpload]="true" class="mt-1 text-sm" (uploadHandler)="uploadHandler($event,fileUpload)">
           <ng-template pTemplate="content">
             <ul *ngIf="uploadedFiles.length" >
               <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>

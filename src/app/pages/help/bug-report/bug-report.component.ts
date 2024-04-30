@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgForOf, NgIf} from "@angular/common";
 import {SharedComponents} from "../../envirotrack/shared-components";
 import {InputTextareaModule} from "primeng/inputtextarea";
@@ -7,6 +7,7 @@ import {DbService} from "../../../_services/db.service";
 import {MessageService} from "primeng/api";
 import {GlobalService} from "../../../_services/global.service";
 import {from} from "rxjs";
+import {FileUpload} from "primeng/fileupload";
 
 @Component({
   selector: 'app-bug-report',
@@ -30,18 +31,26 @@ export class BugReportComponent implements OnInit {
   constructor(private fb: FormBuilder,private db: DbService, private msg: MessageService, private global: GlobalService) {}
 
 
-  uploadHandler = (event: any) => {
+  uploadHandler = (event: any, fileUpload: FileUpload) => {
     this.uploadedFiles = []
     event.files.forEach((file: any) => this.uploadedFiles.push(file))
     if (this.uploadedFiles.length > 0) {
       const formData = new FormData();
       this.uploadedFiles.forEach((file: any) => {
+        formData.append('folder', '1367f1b6-f680-4cb9-8eb9-8352f0e715fb')
         formData.append('file[]', file)
       });
-      from(this.global.uploadBugReportScreenshots(formData)).subscribe({
+
+        from(this.global.uploadBugReportScreenshots(formData)).subscribe({
         next: (res: any) => {
-          console.log(res)
-          this.fileIds = res.map((file: any) => file.id);
+          if (res.length > 1 ) {
+            this.fileIds = res.map((file: any) => file.id);
+          } else if (res.id) {
+            this.fileIds = res.id
+          }
+
+
+          fileUpload.clear()
         }
       })
     }
@@ -56,9 +65,21 @@ export class BugReportComponent implements OnInit {
       })
     }
 
-    if (this.uploadedFiles.length > 0) {
-      // this.myForm.patchValue({'screenshots': this.fileIds})
+    if (this.uploadedFiles.length === 1 ) {
+      console.log('Only one file')
+      this.myForm.patchValue({'files':  [{directus_files_id: this.fileIds}]})
+    } else if (this.uploadedFiles.length > 1 && this.uploadedFiles.length < 4) {
+      console.log('many files')
 
+      let mappedIds = this.fileIds.map((fileId: string) => {
+        return {
+          directus_files_id: fileId
+        }
+      })
+      console.log(mappedIds)
+
+      // this.myForm.patchValue({'files': [{directus_files_id: this.fileIds[0]}, {directus_files_id: this.fileIds[1]}, {directus_files_id: this.fileIds[2]}]})
+      this.myForm.patchValue({'files': mappedIds})
     }
 
     // Submit to db
@@ -71,6 +92,7 @@ export class BugReportComponent implements OnInit {
         })
         this.uploadedFiles = []
         this.myForm.reset()
+
         // Redirect user?
       },
       error: (error: any) => {
@@ -86,8 +108,8 @@ export class BugReportComponent implements OnInit {
     this.myForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       issue: ['', Validators.required],
+      files: [],
       steps_to_reproduce: '',
-      screenshots: [],
       device_used: '',
       browser: ''
     });
