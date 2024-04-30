@@ -166,6 +166,7 @@ export class ImportEnvirotrackComponent {
     if (this.uploadedFiles.length > 0) {
       const formData = new FormData();
       this.uploadedFiles.forEach((file: any) => {
+        formData.append('folder', '0956c625-8a2c-4a0e-8567-c1de4ac2258b');
         formData.append('file[]', file)
       });
 

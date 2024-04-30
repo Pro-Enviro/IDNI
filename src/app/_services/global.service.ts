@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {authentication, createDirectus, graphql, rest, readMe, uploadFiles} from "@directus/sdk";
+import {authentication, createDirectus, graphql, rest, readMe, uploadFiles, readFolders} from "@directus/sdk";
 import {BehaviorSubject, from} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "./storage.service";
@@ -42,6 +42,11 @@ export class GlobalService {
 
   uploadBugReportScreenshots = async (screenshots: any) => {
     const result = await this.client.request(uploadFiles(screenshots))
+    return result;
+  }
+
+  listDirectusFolders = async () => {
+    const result = await this.client.request(readFolders())
     return result;
   }
 
