@@ -1,14 +1,21 @@
-
+<form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)" >
   <div class="container p-3">
     <div class="pet-card">
       <h3 style="font-size: 1.5rem;">User Information</h3>
       <div class="field flex flex-column p-2">
         <label>First Name<span style="color:#85bfba;padding-left:5px">*</span></label>
-        <input type="text" id="first_name" name="first_name" pInputText class="text-base" [(ngModel)]="first_name">
+        <input type="text" id="first_name" name="first_name" pInputText class="text-base" formControlName="first_name" >
+        <div *ngIf="myForm.get('first_name')?.invalid && (myForm.get('first_name')?.dirty || myForm.get('first_name')?.touched)">
+          <span class="mt-1 text-xs text-red-900"> Please provide a first name.</span>
+        </div>
       </div>
+
       <div class="field flex flex-column p-2">
         <label>Surname<span style="color:#85bfba;padding-left:5px">*</span></label>
-        <input type="text" id="last_name" name="last_name" pInputText class="text-base" [(ngModel)]="last_name">
+        <input type="text" id="last_name" name="last_name" pInputText class="text-base" formControlName="last_name">
+        <div *ngIf="myForm.get('last_name')?.invalid && (myForm.get('last_name')?.dirty || myForm.get('last_name')?.touched)">
+          <span class="mt-1 text-xs text-red-900"> Please provide a last name.</span>
+        </div>
       </div>
       <div class="formgrid grid p-2">
         <div class="field lg:col-6 sm:col-12">
@@ -17,8 +24,11 @@
             <p-inputGroupAddon>
               <i class="pi pi-envelope"></i>
             </p-inputGroupAddon>
-            <input type="text" id="email" name="email" pInputText [(ngModel)]="email" pattern="[^ @]*@[^ @]*" emailDomain/>
+            <input type="text" id="email" name="email" pInputText pattern="[^ @]*@[^ @]*" emailDomain formControlName="email"/>
           </p-inputGroup>
+          <div *ngIf="myForm.get('email')?.invalid && (myForm.get('email')?.dirty || myForm.get('email')?.touched)">
+            <span class="mt-1 text-xs text-red-900"> Please provide an email.</span>
+          </div>
         </div>
         <div class="field lg:col-6 sm:col-12">
           <label>Phone<span style="color:#85bfba;padding-left:5px">*</span></label>
@@ -26,8 +36,12 @@
             <p-inputGroupAddon>
               <i class="pi pi-phone"></i>
             </p-inputGroupAddon>
-            <input pInputText id="phone_number" type="text" name="phone_number" [(ngModel)]="phone_number"/>
+            <input pInputText id="phone_number" type="text" name="phone_number" formControlName="phone_number"/>
+
           </p-inputGroup>
+          <div *ngIf="myForm.get('phone_number')?.invalid && (myForm.get('phone_number')?.dirty || myForm.get('phone_number')?.touched)">
+            <span class="mt-1 text-xs text-red-900"> Please provide a Phone number.</span>
+          </div>
         </div>
       </div>
     </div>
@@ -38,37 +52,46 @@
       <h3 style="font-size: 1.5rem;">Company Information</h3>
       <div class="field flex flex-column p-2">
         <label>Company Name<span style="color:#85bfba;padding-left:5px">*</span></label>
-        <input type="text" id="company_name" name="company_name" pInputText class="text-base" [(ngModel)]="company_name">
+        <input type="text" id="company_name" name="company_name" pInputText class="text-base"formControlName="company_name" >
+        <div *ngIf="myForm.get('company_name')?.invalid && (myForm.get('company_name')?.dirty || myForm.get('company_name')?.touched)">
+          <span class="mt-1 text-xs text-red-900"> Please provide a Company Name.</span>
+        </div>
       </div>
 
       <div class="formgrid grid p-2">
         <div class="field lg:col-6 sm:col-12 flex flex-column">
           <label>Address<span style="color:#85bfba;padding-left:5px">*</span></label>
-          <input id="address" name="address" type="text" pInputText  [(ngModel)]="address">
+          <input id="address" name="address" type="text" pInputText formControlName="address">
+          <div *ngIf="myForm.get('address')?.invalid && (myForm.get('address')?.dirty || myForm.get('address')?.touched)">
+            <span class="mt-1 text-xs text-red-900"> Please provide an Address.</span>
+          </div>
         </div>
 
         <div class="field lg:col-6 sm:col-12 flex flex-column">
           <label>Postcode<span style="color:#85bfba;padding-left:5px">*</span></label>
-          <input id="postcode" name="postcode" pInputText type="text" [(ngModel)]="postcode">
+          <input id="postcode" name="postcode" pInputText type="text" formControlName="postcode">
+          <div *ngIf="myForm.get('postcode')?.invalid && (myForm.get('postcode')?.dirty || myForm.get('postcode')?.touched)">
+            <span class="mt-1 text-xs text-red-900"> Please provide a Postcode.</span>
+          </div>
         </div>
       </div>
 
       <div class="field flex flex-column p-2">
         <label>Unique Property Reference Number (UPRN)</label>
         <small><i>if known</i></small>
-        <input id="uprn" type="text" name="uprn" pInputText [(ngModel)]="uprn">
+        <input id="uprn" type="text" name="uprn" pInputText formControlName="uprn" >
       </div>
 
       <div class="formgrid grid p-2">
         <div class="field lg:col-6 sm:col-12">
           <label>To which local authority do you pay your business rates?<span style="color:#85bfba;padding-left:5px">*</span></label>
-          <input id="local_auth" type="text" name="local_auth" pInputText [(ngModel)]="local_auth">
+          <input id="local_auth" type="text" name="local_auth" pInputText formControlName="local_auth">
         </div>
 
         <div class="field lg:col-6 sm:col-12">
           <div class="flex flex-column">
             <label class="mb-2">Business established year</label>
-            <p-calendar [(ngModel)]="est_year" [showIcon]="true" styleClass="date-btn" view="year" dateFormat="yy" inputId="yearpicker"></p-calendar>
+            <p-calendar  [showIcon]="true" styleClass="date-btn" view="year" dateFormat="yy" inputId="yearpicker" formControlName="est_year"></p-calendar>
           </div>
         </div>
       </div>
@@ -76,22 +99,22 @@
       <div class="formgrid grid p-2">
         <div class="field lg:col-6 sm:col-12 flex flex-column">
           <label>Total number of people employed by your business?</label>
-          <p-inputNumber id="employees" name="employees" inputId="integeronly" [(ngModel)]="employees"></p-inputNumber>
+          <p-inputNumber id="employees" name="employees" inputId="integeronly" formControlName="employees"></p-inputNumber>
         </div>
         <div class="field lg:col-6 sm:col-12">
           <label>Please,provide your most recent annual turnover figure (£)</label>
-          <p-inputNumber id="turnover" [(ngModel)]="turnover" inputId="currency-gbp" mode="currency" currency="GBP" name="turnover"></p-inputNumber>
+          <p-inputNumber id="turnover"  inputId="currency-gbp" mode="currency" currency="GBP" name="turnover" formControlName="turnover"></p-inputNumber>
         </div>
       </div>
 
       <div class="formgrid grid p-2">
         <div class="field lg:col-6 sm:col-12 flex flex-column">
           <label>Sector</label>
-          <input id="sector" type="text" name="sector" [(ngModel)]="sector" pInputText>
+          <input id="sector" type="text" name="sector"  pInputText formControlName="sector">
         </div>
         <div class="field lg:col-6 sm:col-12 flex flex-column">
           <label>Sic Code</label>
-          <p-chips [(ngModel)]="sic_code" separator=","></p-chips>
+          <p-chips  separator="," formControlName="sic_code"></p-chips>
         </div>
       </div>
       <div class="field flex flex-column p-2">
@@ -100,13 +123,13 @@
           <p-inputGroupAddon>
             <i class="pi pi-globe"></i>
           </p-inputGroupAddon>
-          <input id="website_url" type="text" pInputText name="website_url" [(ngModel)]="website_url"/>
+          <input id="website_url" type="text" pInputText name="website_url" formControlName="website_url"/>
         </p-inputGroup>
 
       </div>
       <div class="field flex flex-column p-2">
         <label>Describe the primary business activity?</label>
-        <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" [(ngModel)]="company_description"></textarea>
+        <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" formControlName="company_description"></textarea>
       </div>
     </div>
   </div>
@@ -217,30 +240,42 @@
   <div class="container p-3">
     <h2 class="header-style">Privacy Policy</h2>
     <div class="flex">
-      <p-checkbox [binary]="true" inputId="policy" name="policy" [(ngModel)]="policy" value="policy" [required]="true"></p-checkbox>
+      <p-checkbox [binary]="true" inputId="policy" name="policy"  value="policy" [required]="true" formControlName="policy" ></p-checkbox>
       <label class="pl-2">I agree with the terms and conditions<span style="color:#006633;padding-left:5px">*</span></label>
     </div>
+    <div *ngIf="myForm.get('policy')?.invalid && (myForm.get('policy')?.dirty || myForm.get('policy')?.touched)">
+      <span class="mt-1 text-xs text-red-900"> Please confirm that you agree with the Terms & Conditions.</span>
+    </div>
     <div class="pt-3 flex">
-      <p-checkbox [binary]="true" inputId="policy_cosi" name="policy" [(ngModel)]="policy_cosi" value="policy_cosi" [required]="true"></p-checkbox>
+      <p-checkbox [binary]="true" inputId="policy_cosi" name="policy"  value="policy_cosi"  formControlName="policy_cosi"></p-checkbox>
       <label class="pl-2">I agree to be part of COSI/Cluster.</label>
     </div>
     <div class="pt-3 flex">
-      <p-checkbox [binary]="true" inputId="policy_bill" name="policy_bill" [(ngModel)]="policy_bill" value="policy_bill" [required]="true"></p-checkbox>
+      <p-checkbox [binary]="true" inputId="policy_bill" name="policy_bill"  value="policy_bill" [required]="true" formControlName="policy_bill" ></p-checkbox>
       <label class="pl-2">Your company/organisation is content to provide some initial high-level electricity and/or gas data to the IDNI project.<span style="color:#006633;padding-left:5px">*</span></label>
     </div>
     <div class="pl-5">
       <p><small>This data will need to be in the form of a maximum of 12 months energy usage data, such as half-hourly energy usage information,which will you find on your utility bill, or by contacting your utility bill provider.
         If this is not available, a spreadsheet of the similar information may be acceptable.</small></p>
     </div>
+    <div *ngIf="myForm.get('policy_bill')?.invalid && (myForm.get('policy_bill')?.dirty || myForm.get('policy_bill')?.touched)">
+      <span class="mt-1 text-xs text-red-900">Please confirm that you are happy to share high-level data.</span>
+    </div>
     <div class="">
-      <p-checkbox [binary]="true" inputId="policy_idni" name="policy_idni" [(ngModel)]="policy_idni" value="policy_idni" [required]="true"></p-checkbox>
+      <p-checkbox [binary]="true" inputId="policy_idni" name="policy_idni"  value="policy_idni" [required]="true" formControlName="policy_idni"></p-checkbox>
       <label class="pl-2"> Your company/organisation is content to allow the IDNI partnership team to collate and assess any data collected as part of this project and to share the findings of any data analysis anonymously to allow collective decarbonisation plans to be developed?<span style="color:#006633;padding-left:5px">*</span></label>
+
+      <div *ngIf="myForm.get('policy_idni')?.invalid && (myForm.get('policy_idni')?.dirty || myForm.get('policy_idni')?.touched)">
+        <span class="mt-1 text-xs text-red-900">Please confirm that you are willing to share data with IDNI.</span>
+      </div>
+
+
       @if(policy_idni && policy && policy_bill){
         <div class="grid p-4 m-3" style="background:#fcfcfc">
           <div class="lg:col-6 sm:col-12">
             <div class="field flex flex-column pr-3">
               <label>Password<span style="color:#85bfba;padding-left:5px">*</span></label>
-              <p-password [(ngModel)]="password" [toggleMask]="true" weakLabel="The password is weak" mediumLabel="The password is medium" strongLabel="The password is strong">
+              <p-password  [toggleMask]="true" weakLabel="The password is weak" mediumLabel="The password is medium" strongLabel="The password is strong" formControlName="password" >
                 <ng-template pTemplate="footer">
                   <p-divider></p-divider>
                   <p class="mt-2">The password must contain:</p>
@@ -258,7 +293,7 @@
           <div class="lg:col-6 sm:col-12">
             <div class="field field flex flex-column">
               <label>Confirm Password<span style="color:#85bfba;padding-left:5px">*</span></label>
-              <p-password [(ngModel)]="confirm_password" [toggleMask]="true" weakLabel="The password is weak" mediumLabel="The password is medium" strongLabel="The password is strong">
+              <p-password [toggleMask]="true" weakLabel="The password is weak" mediumLabel="The password is medium" strongLabel="The password is strong" formControlName="confirm_password">
                 <ng-template pTemplate="footer">
                   <p-divider></p-divider>
                   <p class="mt-2">The password must contain:</p>
@@ -278,6 +313,8 @@
     </div>
 
     <p><small>Please read the <a href="/data-privacy-policy.html" style="color:#85bfba">Data Privacy Policy</a> for full information.</small></p>
-    <p-button styleClass="btn-style mt-3" label="Submit" icon="pi pi-send" (onClick)="onSubmit()" [disabled]="!checkInputs()"></p-button>
+<!--    <p-button styleClass="btn-style mt-3" label="Submit" icon="pi pi-send" (onClick)="onSubmit()" [disabled]="!checkInputs()"></p-button>-->
+    <p-button  type="submit" styleClass="btn-style mt-3"  icon="pi pi-send" label="Submit" ></p-button>
   </div>
 
+</form>

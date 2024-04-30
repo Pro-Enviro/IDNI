@@ -23,15 +23,17 @@ import {ForgotPasswordComponent} from "./users/forgot-password/forgot-password.c
 import {BugReportComponent} from "./pages/help/bug-report/bug-report.component";
 import {FaqsComponent} from "./pages/help/faqs/faqs.component";
 import {ContactUsComponent} from "./pages/help/contact-us/contact-us.component";
+import {RegisterComponent} from "./users/register/register.component";
+import {RegistrationFormComponent} from "./users/register/registration-form/registration-form.component";
 
 
 export const routes: Routes = [
   {path: 'login', component: LoginComponent},
-
+  {path: 'registration', component: RegisterComponent},
+  {path: 'registration-form', component: RegistrationFormComponent},
   //{path:'dashboard',component: DashboardComponent, canActivate: [authGuard], canActivateChild: [authGuard], children: [
 
-//   {path: 'registration', component: RegisterComponent},
-//   {path: 'registration-form', component: RegistrationFormComponent},
+
 //   // {path:'forgotpassword', component: ForgotPasswordComponent},
 //   {path:'successful-registration',component:RegisterSuccessPageComponent},
 //   {path:'chat',component: ChatDialogTplComponent},
