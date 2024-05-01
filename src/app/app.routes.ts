@@ -63,7 +63,7 @@ export const routes: Routes = [
       {path: 'co2emissionsbyscope', component: ScopeChartComponent },
       {path:'bug-report',component:BugReportComponent},
       {path:'faqs',component:FaqsComponent},
-      {path:'contact-us',component:ContactUsComponent}
+      // {path:'contact-us',component:ContactUsComponent}
     ]},
   {path: '**', redirectTo: 'dashboard'},
   {path: '', component: AppComponent},

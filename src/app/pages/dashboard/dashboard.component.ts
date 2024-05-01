@@ -143,11 +143,11 @@ export class DashboardComponent {
               escape: false,
               routerLink: '/dashboard/faqs'
             },
-            {
-              label:'<span class="material-symbols-outlined">contact_mail</span> Contact Us',
-              escape: false,
-              routerLink: '/dashboard/contact-us'
-            }
+            // {
+            //   label:'<span class="material-symbols-outlined">contact_mail</span> Contact Us',
+            //   escape: false,
+            //   routerLink: '/dashboard/contact-us'
+            // }
           ]}
 
         ]
