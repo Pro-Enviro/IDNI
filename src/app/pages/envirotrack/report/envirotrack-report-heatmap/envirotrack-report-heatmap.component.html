@@ -1,75 +1,77 @@
-<p-card styleClass="card-charts">
-  <div class="grid">
-    <div class="col-4">
-      <p-card header="Electricity Consumption Chart Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
-        <p-button type="button" styleClass="btn-style" (click)="heatmapGuide = true" icon="pi pi-chart-bar" label="Guide"></p-button>
-      </p-card>
-    </div>
-    <div class="col-4">
-      <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant" [style]="{ height: '100%' }">
-        <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
-        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"
-                     scrollHeight="350px"></p-dropdown>
-      </p-card>
-    </div>
-    <div class="col-4">
-      <div *ngIf="mpan.length">
-        <p-card header="Select Mpan" styleClass="card-select-panel" [style]="{ height: '14vh' }">
-          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+<section>
+  <p-card styleClass="card-charts">
+    <div class="grid">
+      <div class="col-4">
+        <p-card header="Electricity Consumption Chart Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
+          <p-button type="button" styleClass="btn-style" (click)="heatmapGuide = true" icon="pi pi-chart-bar" label="Guide"></p-button>
         </p-card>
       </div>
-    </div>
-    <div class="col-12">
-      <p-card styleClass="card-style-none">
-        <ng-template pTemplate="header">
-          <div class="flex w-full p-4">
-            <div class="flex-grow-1">
-              <h3 *ngIf="chartModel" class="text-2xl font-semibold">Energy Footprint</h3>
-              <h3 *ngIf="!chartModel" class="text-2xl font-semibold">Energy Footprint</h3>
-            </div>
-            <div class="flex-shrink-1 pt-3">
-              <p-toggleButton onLabel="Detailed" offLabel="Simplified" styleClass="btn-dark" [(ngModel)]="chartModel"></p-toggleButton>
-            </div>
+      <div class="col-4">
+        <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant" [style]="{ height: '100%' }">
+          <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
+          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"
+                      scrollHeight="370px"></p-dropdown>
+        </p-card>
+      </div>
+      <div class="col-4">
+        <div *ngIf="mpan.length">
+          <p-card header="Select Mpan" styleClass="card-select-panel" [style]="{ height: '14vh' }">
+            <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+          </p-card>
+        </div>
+      </div>
+      <div class="col-12">
+        <p-card styleClass="card-style-none">
+          <ng-template pTemplate="header">
+            <div class="flex w-full p-4">
+              <div class="flex-grow-1">
+                <h3 *ngIf="chartModel" class="text-2xl font-semibold">Energy Footprint</h3>
+                <h3 *ngIf="!chartModel" class="text-2xl font-semibold">Energy Footprint</h3>
+              </div>
+              <div class="flex-shrink-1 pt-3">
+                <p-toggleButton onLabel="Detailed" offLabel="Simplified" styleClass="btn-dark" [(ngModel)]="chartModel"></p-toggleButton>
+              </div>
 
-          </div>
-        </ng-template>
+            </div>
+          </ng-template>
 
-        <ng-template pTemplate="body">
-          <ng-container *ngIf="chartModel">
-            <div class="">
+          <ng-template pTemplate="body">
+            <ng-container *ngIf="chartModel">
+              <div class="">
+                <div class="flex justify-content-between mb-6">
+                  <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select ml-5"></p-selectButton>
+                  <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn mr-5"></p-calendar>
+                </div>
+                <div class="h-full">
+                  <plotly-plot  divId="plotlyChart" *ngIf="testChart" [data]="testChart.data" [layout]="testChart.layout" [useResizeHandler]="true"
+                                [style]="{position: 'relative',width: '100%', height: '65vh', marginTop: '3rem'}" (plotlyClick)="onPlotClick($event)"></plotly-plot>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!chartModel">
               <div class="flex justify-content-between mb-6">
                 <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select ml-5"></p-selectButton>
                 <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn mr-5"></p-calendar>
               </div>
-              <div class="h-full">
-                <plotly-plot  divId="plotlyChart" *ngIf="testChart" [data]="testChart.data" [layout]="testChart.layout" [useResizeHandler]="true"
-                              [style]="{position: 'relative',width: '100%', height: '65vh', marginTop: '3rem'}" (plotlyClick)="onPlotClick($event)"></plotly-plot>
-              </div>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="!chartModel">
-            <div class="flex justify-content-between mb-6">
-              <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select ml-5"></p-selectButton>
-              <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn mr-5"></p-calendar>
-            </div>
-            <div echarts *ngIf="chartOptions" [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>
-          </ng-container>
+              <div echarts *ngIf="chartOptions" [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>
+            </ng-container>
 
-        </ng-template>
-      </p-card>
+          </ng-template>
+        </p-card>
+      </div>
     </div>
-  </div>
-</p-card>
+  </p-card>
 
 
-<p-sidebar [(visible)]="heatmapGuide" position="right" styleClass="w-3">
-  <div class="container p-5">
-    <h3 class="header-style">Electricity Consumption Chart Guide</h3>
-    <p>The "Electricity Consumption" chart displays half-hourly data for each day.<br>
-      Each vertical slice of the chart represents one day – from bottom to top it shows the half-hourly consumption pattern from midnight to midnight for one day.
-      You may notice a regular weekly pattern – often outlined by lower consumption on the weekends.<br>
-      By hovering over specific data points on the chart, a panel appears, providing details such as the date (x), time (y), and the corresponding kWh value (z) of that data point.
-    </p>
-  </div>
-</p-sidebar>
+  <p-sidebar [(visible)]="heatmapGuide" position="right" styleClass="w-3">
+    <div class="container p-5">
+      <h3 class="header-style">Electricity Consumption Chart Guide</h3>
+      <p>The "Electricity Consumption" chart displays half-hourly data for each day.<br>
+        Each vertical slice of the chart represents one day – from bottom to top it shows the half-hourly consumption pattern from midnight to midnight for one day.
+        You may notice a regular weekly pattern – often outlined by lower consumption on the weekends.<br>
+        By hovering over specific data points on the chart, a panel appears, providing details such as the date (x), time (y), and the corresponding kWh value (z) of that data point.
+      </p>
+    </div>
+  </p-sidebar>
+</section>
 

@@ -1,36 +1,38 @@
-<p-card styleClass="card-charts">
-  <div class="grid">
-    <div class="col-4">
-      <p-card header="Christmas Day vs Lowest Day of the Year Consumption Chart Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
-        <p-button type="button" styleClass="btn-style" (click)="baseGuide = true" icon="pi pi-chart-line" label="Guide"></p-button>
-      </p-card>
-    </div>
-    <div class="col-4">
-      <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant" [style]="{ height: '100%' }">
-        <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
-        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
-                    [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="350px"></p-dropdown>
-      </p-card>
-    </div>
-    <div class="col-4">
-      <p-card header="Select Mpan" styleClass="card-select-panel" *ngIf="mpan.length" [style]="{ height: '100%' }">
+<section>
+  <p-card styleClass="card-charts">
+    <div class="grid">
+      <div class="col-4">
+        <p-card header="Christmas Day vs Lowest Day of the Year Consumption Chart Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
+          <p-button type="button" styleClass="btn-style" (click)="baseGuide = true" icon="pi pi-chart-line" label="Guide"></p-button>
+        </p-card>
+      </div>
+      <div class="col-4">
+        <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant" [style]="{ height: '100%' }">
+          <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
+          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
+                      [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px"></p-dropdown>
+        </p-card>
+      </div>
+      <div class="col-4">
+        <p-card header="Select Mpan" styleClass="card-select-panel" *ngIf="mpan.length" [style]="{ height: '100%' }">
           <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
-      </p-card>
+        </p-card>
+      </div>
+      <div class="col-12">
+        <p-card styleClass="card-style-none">
+          <p-selectButton *ngIf="defaultFilters.length" [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select ml-5"></p-selectButton>
+          <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px"></div>
+        </p-card>
+      </div>
     </div>
-    <div class="col-12">
-      <p-card styleClass="card-style-none">
-        <p-selectButton *ngIf="defaultFilters.length" [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select ml-5"></p-selectButton>
-        <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px"></div>
-      </p-card>
-    </div>
-  </div>
-</p-card>
+  </p-card>
 
-<p-sidebar [(visible)]="baseGuide" position="right" styleClass="w-3">
-  <div class="container p-5">
-    <h3 class="header-style">Christmas Day vs Lowest Day of the Year Consumption Chart Guide</h3>
-    <p>The chart displays two baselines: one for Christmas Day and another for the day with the lowest consumption of the year – for the selected calendar year.
-      The blue baseline represents the half-hourly usage on Christmas Day, while the green line represents the same for the lowest day of the year.
-    </p>
-  </div>
-</p-sidebar>
+  <p-sidebar [(visible)]="baseGuide" position="right" styleClass="w-3">
+    <div class="container p-5">
+      <h3 class="header-style">Christmas Day vs Lowest Day of the Year Consumption Chart Guide</h3>
+      <p>The chart displays two baselines: one for Christmas Day and another for the day with the lowest consumption of the year – for the selected calendar year.
+        The blue baseline represents the half-hourly usage on Christmas Day, while the green line represents the same for the lowest day of the year.
+      </p>
+    </div>
+  </p-sidebar>
+</section>

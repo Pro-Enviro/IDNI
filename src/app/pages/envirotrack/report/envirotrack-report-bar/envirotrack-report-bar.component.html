@@ -1,38 +1,40 @@
-<p-card styleClass="card-charts">
-  <div class="grid">
-    <div class="col-4">
-      <p-card styleClass="card-select-panel" header="Electricity Consumption Chart Guide" [style]="{ height: '100%' }">
-        <p-button type="button" styleClass="btn-style" (click)="barGuide = true" icon="pi pi-chart-bar" label="Guide"></p-button>
-      </p-card>
-    </div>
-    <div class="col-4">
-      <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant" [style]="{ height: '100%' }">
-        <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
-        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="350px"></p-dropdown>
-      </p-card>
-    </div>
-    <div class="col-4">
+<section>
+  <p-card styleClass="card-charts">
+    <div class="grid">
+      <div class="col-4">
+        <p-card styleClass="card-select-panel" header="Electricity Consumption Chart Guide" [style]="{ height: '100%' }">
+          <p-button type="button" styleClass="btn-style" (click)="barGuide = true" icon="pi pi-chart-bar" label="Guide"></p-button>
+        </p-card>
+      </div>
+      <div class="col-4">
+        <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant" [style]="{ height: '100%' }">
+          <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
+          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px"></p-dropdown>
+        </p-card>
+      </div>
+      <div class="col-4">
         <p-card header="Select Mpan" styleClass="card-select-panel" *ngIf="mpan.length" [style]="{ height: '100%' }">
           <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
         </p-card>
+      </div>
+      <div class="col-12">
+        <p-card styleClass="card-style-none">
+          <div class="flex justify-content-between mb-6">
+            <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select ml-1"></p-selectButton>
+            <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn mr-1"></p-calendar>
+          </div>
+          <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>
+        </p-card>
+      </div>
     </div>
-    <div class="col-12">
-      <p-card styleClass="card-style-none">
-        <div class="flex justify-content-between mb-6">
-          <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select ml-5"></p-selectButton>
-          <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn mr-5"></p-calendar>
-        </div>
-        <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>
-      </p-card>
-    </div>
-  </div>
-</p-card>
+  </p-card>
 
-<p-sidebar [(visible)]="barGuide" position="right" styleClass="w-3">
-  <div class="container p-5">
-    <h3 class="header-style">Electricity Consumption Chart Guide</h3>
-    <p>The bar chart presents the same data as the scatter chart above - total energy consumption per day.
-      The only difference is that each day is represented by a bar instead of a coloured data point. Days of the week are not differentiated in this chart.
-    </p>
-  </div>
-</p-sidebar>
+  <p-sidebar [(visible)]="barGuide" position="right" styleClass="w-3">
+    <div class="container p-5">
+      <h3 class="header-style">Electricity Consumption Chart Guide</h3>
+      <p>The bar chart presents the same data as the scatter chart above - total energy consumption per day.
+        The only difference is that each day is represented by a bar instead of a coloured data point. Days of the week are not differentiated in this chart.
+      </p>
+    </div>
+  </p-sidebar>
+</section>
