@@ -97,9 +97,9 @@ export class RegisterComponent implements OnInit {
 
   checkPasswordsMatch = () => {
     if (this.myForm.controls['password'].value !== this.myForm.controls['confirm_password'].value){
-      return this.myForm.controls['password'].setErrors({'not_matching': true});
+      return this.myForm.controls['confirm_password'].setErrors({'not_matching': true});
     } else {
-       this.myForm.controls['password'].updateValueAndValidity()
+       this.myForm.controls['confirm_password'].updateValueAndValidity()
     }
     this.myForm.markAllAsTouched()
   }
@@ -111,7 +111,7 @@ export class RegisterComponent implements OnInit {
 
       // Password Confirm validators
       if (this.myForm.controls['password'].value !== this.myForm.controls['confirm_password'].value){
-        return this.myForm.controls['password'].setErrors({'not_matching': true});
+        return this.myForm.controls['confirm_password'].setErrors({'not_matching': true});
       }
 
       return this.msg.add({

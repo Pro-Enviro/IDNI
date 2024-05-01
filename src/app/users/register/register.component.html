@@ -311,11 +311,13 @@
 <!--          <div *ngIf="myForm.get('password')?.invalid && (myForm.get('password')?.dirty || myForm.get('password')?.touched)">-->
 <!--            <span class="mt-1 text-xs text-red-900"> {{ myForm.get('password')?.errors | json }} </span>-->
 <!--          </div>-->
+          <div class="flex flex-column">
           <div *ngIf="myForm.get('password')?.invalid && myForm.get('password')?.hasError('pattern')">
             <span class="mt-1 text-xs text-red-900">Your password needs 1 Capital letter, 1 number, and 1 special character (# ! ? $ % &)</span>
           </div>
-          <div *ngIf="myForm.get('password')?.invalid && myForm.get('password')?.hasError('not_matching')">
+          <div *ngIf="myForm.get('confirm_password')?.invalid && myForm.get('confirm_password')?.hasError('not_matching')">
              <span class="mt-1 text-xs text-red-900">Your passwords are not matching</span>
+          </div>
           </div>
         </div>
       }
