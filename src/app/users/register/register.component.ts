@@ -95,6 +95,11 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  checkPasswordsMatch = () => {
+
+    this.myForm.markAllAsTouched()
+  }
+
   onSubmit = (form: FormGroup) => {
     // Check for required/valid fields
     if (!this.myForm.valid) {

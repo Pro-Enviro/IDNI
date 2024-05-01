@@ -20,7 +20,6 @@ import {DbService} from "../../../_services/db.service";
   standalone: true,
     imports: [
         RegisterComponent,
-        // TopPageImgTplComponent,
         ButtonModule,
         CalendarModule,
         CheckboxModule,
