@@ -103,7 +103,7 @@ export class BugReportComponent implements OnInit {
   sendNotificationToProEnviro = () => {
     return this.http.post(`${this.url}/Mailer`,{
       subject: 'New Bug Report',
-      to: ['adam.shelley@proenviro.co.uk'], // WIP: Update with correct email address
+      to: ['it@proenviro.co.uk'], // WIP: Update with correct email address
       template: {
         name: "data_uploaded",
         data: {
