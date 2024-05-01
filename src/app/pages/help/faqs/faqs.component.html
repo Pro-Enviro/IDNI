@@ -1,1 +1,28 @@
-<p>faqs works!</p>
+@if(content){
+  <section>
+    <div class="container">
+      <div class="pet-card px-4 py-8 md:px-6 lg:px-8">
+        <div class="text-700 text-center">
+          <div class="font-bold mb-3" style="color:#85bfba">Common FAQS</div>
+<!--          <div class="text-900 font-bold text-5xl pb-5">Frequently Asked Questions</div>-->
+          <div class="text-900 font-bold text-5xl pb-5">{{content.title}}</div>
+          <div class="text-700 text-lg mb-5">Below you will find answers to the most common questions you may have. <br>If you still can't find the answer you are looking for, just
+            <a routerLink="dashboard/contact-us">Contact us!</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container pt-5">
+      <p-accordion [activeIndex]="0">
+        @for(item of content.faqs_items; track $index){
+          <p-accordionTab [header]="item.question">
+            <div [innerHTML]="item.answer"></div>
+          </p-accordionTab>
+        }
+      </p-accordion>
+    </div>
+  </section>
+}
+
+
+
