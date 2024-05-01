@@ -5,23 +5,21 @@
   <div class="p-5">
     <div class="grid">
       <div class="col-6">
-        <div class="pet-card-dark">
-          <h3 class="title pb-3">Half-Hourly Data Guide</h3>
+        <p-card header="Half-Hourly Data Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
           <div class="flex flex-row">
             <p-button type="button" styleClass="btn-style mr-4" (click)="accessData = true" icon="pi pi-file"
                       label="Access to Half-Hourly Electricity Data"></p-button>
             <p-button type="button" styleClass="btn-dark-upload" (click)="dataGuide = true" icon="pi pi-cloud-upload"
                       label="Upload Half-Hourly Data Guide"></p-button>
           </div>
-        </div>
+        </p-card>
       </div>
       <div class="col-6">
-        <div class="pet-card-dark" *ngIf="!fileContent && isConsultant">
-          <h3 class="title pb-3">Select Company</h3>
+        <p-card header="Select Company" styleClass="card-select-panel" *ngIf="!fileContent && isConsultant" [style]="{ height: '100%' }">
           <p-dropdown [options]="companies" optionLabel="name" optionValue="id" [(ngModel)]="selectedCompany"
-                      [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="350px"
-                      styleClass="table-dropdown"></p-dropdown>
-        </div>
+                      [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px"
+          ></p-dropdown>
+        </p-card>
         <!--        <p-card *ngIf="!fileContent && selectedName" header="Select Company" [style]="{width: '70%', margin: 'auto', marginTop:'5rem'}" styleClass="card-charts">-->
         <!--          {{selectedName}}-->
         <!--        </p-card>-->
@@ -33,9 +31,9 @@
                         (onSelect)="getFileType($event)"
                         (uploadHandler)="onUpload($event, uploader)"
                         [multiple]="false"
-                        chooseStyleClass="btn-style-upload"
-                        cancelStyleClass="btn-dark-upload"
-                        uploadStyleClass="btn-outline-upload">
+                        chooseStyleClass="btn-style"
+                        cancelStyleClass="btn-dark"
+                        uploadStyleClass="btn-outline">
             <ng-template pTemplate="content" style="padding:30px">
 
               <ul *ngIf="uploadedFiles.length" style="list-style:none">
@@ -47,7 +45,7 @@
 
         <div class="pet-card mt-5" *ngIf="uploadedFiles.length && isConsultant">
           <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()"
-                          class="btn-select-fuel"></p-selectButton>
+                          class="btn-select"></p-selectButton>
         </div>
 
         <div class="pet-card mt-5" *ngIf="uploadedFiles.length && !isConsultant">
@@ -57,8 +55,7 @@
         </div>
 
         <ng-container *ngIf="fileContent">
-          <div class="pet-card mt-4" #table>
-            <h3 class="title">Half-Hourly Data (HHD)</h3>
+          <p-card header="Half-Hourly Data (HHD)" styleClass="card-charts mt-4" #table>
             <div class="grid">
               <div class="col-3" pDroppable (onDrop)="dropMpan()">
                 <div class="enviro-card">
@@ -96,7 +93,7 @@
                   <ul class="list-none flex flex-column gap-2 p-0 m-0">
                     <li class="">
                       <p-toggleButton [(ngModel)]="reactiveData" onLabel="kVAr" offLabel="kWh"
-                                      [style]="{ width: '10em', background:'#356c6b',color:'#ffffff',padding:'6px'}"></p-toggleButton>
+                                      [style]="{ width: '10em', background:'#356c6b',color:'#ffffff'}"></p-toggleButton>
                     </li>
                   </ul>
                 </div>
@@ -122,7 +119,7 @@
                       label="{{uploadingData ? 'Uploading Data' :'Process'}}" [disabled]="uploadingData"
                       (click)="processData()"></button>
             </div>
-          </div>
+          </p-card>
         </ng-container>
       </div>
     </div>
