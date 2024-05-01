@@ -3,21 +3,18 @@
 <section>
     <div class="grid p-6">
       <div class="col-5">
-        <div class="pet-card-dark">
-          <h3 class="title pb-3">Non Half-Hourly Data Guide</h3>
+        <p-card header="Non Half-Hourly Data Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
           <p-button type="button" styleClass="btn-style" (click)="fuelGuide = true" icon="pi pi-table" label="Guide"></p-button>
-        </div>
+        </p-card>
       </div>
        <div class="col-5">
-         <div class="pet-card-dark">
-           <h3 class="title pb-3">Select Company</h3>
-           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" scrollHeight="350px" styleClass="table-dropdown"></p-dropdown>
-         </div>
+         <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" scrollHeight="370px"></p-dropdown>
+         </p-card>
        </div>
 
       <div class="col-12">
-        <div class="pet-card">
-          <h3 class="title mb-3">Non Half-Hourly Data</h3>
+        <p-card header="Non Half-Hourly Data" styleClass="card-charts">
           <div class="pb-5">
             <button pButton (click)="addFuelType()" label="Add New Fuel Type" icon="pi pi-plus" class="btn-style"></button>
           </div>
@@ -105,7 +102,7 @@
               </p-table>
             </p-tabPanel>
           </p-tabView>
-        </div>
+        </p-card>
 
       </div>
     </div>
