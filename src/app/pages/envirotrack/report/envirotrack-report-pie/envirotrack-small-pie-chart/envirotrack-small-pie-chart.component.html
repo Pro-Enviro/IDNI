@@ -1,31 +1,29 @@
- <div class="pet-card" style="height:100%">
+ <p-card styleClass="card-charts">
     <div class="grid">
       <div class="col-6" >
-        <div class="pet-card-dark" *ngIf="isConsultant">
-          <h3 class="title pb-1">Select Company</h3>
+        <p-card *ngIf="isConsultant" header="Select Company" styleClass="card-select-panel">
           <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
                       [style]="{ width: '12rem'}"
                       [disabled]="!isConsultant"
                       styleClass="table-dropdown"
                       scrollHeight="350px"></p-dropdown>
-        </div>
+        </p-card>
 <!--        <p-card styleClass="card-select-panel" *ngIf="!isConsultant && selectedCompany"  >-->
 <!--         <p *ngIf="!isConsultant && selectedCompany">{{selectedName}}</p>-->
 <!--        </p-card>-->
       </div>
       <div class="col-6">
         <div class="flex-1" *ngIf="mpan.length">
-          <div class="pet-card-dark">
-            <h3 class="title pb-1">Select Mpan</h3>
-            <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select-months"></p-selectButton>
-          </div>
+          <p-card header="Select Mpan" styleClass="card-select-panel">
+            <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+          </p-card>
         </div>
       </div>
       <div class="col-12">
 
           <div class="flex pb-3">
-            <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months"></p-selectButton>
+            <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select"></p-selectButton>
           </div>
           <div class="flex justify-content-start pt-2">
             <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
@@ -35,4 +33,4 @@
           <p *ngIf="!chartData.length">To add data, please navigate to "Half-Hourly Data Upload".</p>
       </div>
     </div>
- </div>
+ </p-card>
