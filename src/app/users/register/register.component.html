@@ -275,7 +275,7 @@
           <div class="lg:col-6 sm:col-12">
             <div class="field flex flex-column pr-3">
               <label>Password<span style="color:#85bfba;padding-left:5px">*</span></label>
-              <p-password  [toggleMask]="true" weakLabel="The password is weak" mediumLabel="The password is medium" strongLabel="The password is strong" formControlName="password" >
+              <p-password  [toggleMask]="true" weakLabel="The password is weak" mediumLabel="The password is medium" strongLabel="The password is strong" formControlName="password"  (onBlur)="checkPasswordsMatch()">
                 <ng-template pTemplate="footer">
                   <p-divider></p-divider>
                   <p class="mt-2">The password must contain:</p>
@@ -293,7 +293,7 @@
           <div class="lg:col-6 sm:col-12">
             <div class="field field flex flex-column">
               <label>Confirm Password<span style="color:#85bfba;padding-left:5px">*</span></label>
-              <p-password [toggleMask]="true" weakLabel="The password is weak" mediumLabel="The password is medium" strongLabel="The password is strong" formControlName="confirm_password">
+              <p-password [toggleMask]="true" weakLabel="The password is weak" mediumLabel="The password is medium" strongLabel="The password is strong" formControlName="confirm_password" (onBlur)="checkPasswordsMatch()">
                 <ng-template pTemplate="footer">
                   <p-divider></p-divider>
                   <p class="mt-2">The password must contain:</p>
@@ -308,8 +308,11 @@
               </p-password>
             </div>
           </div>
-          <div *ngIf="myForm.get('password')?.invalid && (myForm.get('password')?.dirty || myForm.get('password')?.touched)">
-            <span class="mt-1 text-xs text-red-900"> {{ myForm.get('password')?.errors | json }} </span>
+<!--          <div *ngIf="myForm.get('password')?.invalid && (myForm.get('password')?.dirty || myForm.get('password')?.touched)">-->
+<!--            <span class="mt-1 text-xs text-red-900"> {{ myForm.get('password')?.errors | json }} </span>-->
+<!--          </div>-->
+          <div *ngIf="myForm.get('password')?.invalid && myForm.get('password')?.hasError('pattern')">
+            <span class="mt-1 text-xs text-red-900">Your password needs 1 Capital letter, 1 number, and 1 special character (# ! ? $ % &)</span>
           </div>
           <div *ngIf="myForm.get('password')?.invalid && myForm.get('password')?.hasError('not_matching')">
              <span class="mt-1 text-xs text-red-900">Your passwords are not matching</span>
