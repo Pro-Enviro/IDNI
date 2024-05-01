@@ -6,7 +6,6 @@
           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
                       [style]="{ width: '12rem'}"
                       [disabled]="!isConsultant"
-                      styleClass="table-dropdown"
                       scrollHeight="350px"></p-dropdown>
         </p-card>
 <!--        <p-card styleClass="card-select-panel" *ngIf="!isConsultant && selectedCompany"  >-->
