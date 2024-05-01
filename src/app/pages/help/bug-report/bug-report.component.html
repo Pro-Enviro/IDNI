@@ -1,1 +1,56 @@
-<p>bug-report works!</p>
+
+<div class="flex flex-column align-items-center">
+<p-card class="flex flex-column col-5">
+  <h2>Bug Report</h2>
+
+
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+    <div>
+      <label class="flex flex-column text-sm">
+        Email:
+        <input pInputText formControlName="email" placeholder="Your email" class="mt-1 text-sm">
+      </label>
+
+    </div>
+    <div class="mt-3">
+      <label class="flex flex-column text-sm">
+        Issue:
+      </label>
+      <textarea  pInputTextarea formControlName="issue" placeholder="Explain the issue in as much detail as required"  class="mt-1 w-full text-sm" rows="5"></textarea>
+    </div>
+    <div class="mt-3">
+      <label  class="flex flex-column text-sm">
+        Steps to Reproduce:
+        <textarea pInputTextarea formControlName="steps_to_reproduce"
+                  placeholder="Outline steps on how to reproduce the issue (If possible)"  class="mt-1 text-sm" rows="5"></textarea>
+      </label>
+    </div>
+    <div class="mt-3" >
+      <label  class="flex flex-column text-sm">
+        Screenshots:
+
+        <p-fileUpload #fileUpload [multiple]="true" accept="image/*" [maxFileSize]="1000000" [fileLimit]="3" [customUpload]="true" class="mt-1 text-sm" (uploadHandler)="uploadHandler($event,fileUpload)">
+          <ng-template pTemplate="content">
+            <ul *ngIf="uploadedFiles.length" >
+              <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+            </ul>
+          </ng-template>
+        </p-fileUpload>
+      </label>
+    </div>
+    <div class="mt-3">
+      <label  class="flex flex-column text-sm">
+        Device Used:
+        <input pInputText formControlName="device_used" placeholder="Your message"  class="mt-1 text-sm">
+      </label>
+    </div>
+    <div class="mt-3">
+      <label  class="flex flex-column text-sm">
+        Browser:
+        <input pInputText formControlName="browser" placeholder="Your message"  class="mt-1 text-sm">
+      </label>
+    </div>
+    <p-button styleClass="btn mt-2" type="submit" [disabled]="myForm.invalid">Submit Bug Report</p-button>
+  </form>
+</p-card>
+</div>

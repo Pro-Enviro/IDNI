@@ -175,9 +175,9 @@ export class RegisterComponent implements OnInit {
     }
 
     if (this.checkInputs()){
-      this.db.addCompany(['*',], formObj, userObj).subscribe({
+      this.db.addCompany(['*'], formObj, userObj).subscribe({
         next: (res) => {
-        this.first_name = ''
+          this.first_name = ''
           this.last_name = ''
           this.email = ''
           this.phone_number = ''
@@ -215,15 +215,15 @@ export class RegisterComponent implements OnInit {
           this.policy_idni = false
           this.policy_bill = false
 
-          console.log(res)
+            console.log(res)
 
-          this.msg.add({
-            severity:'success',
-            summary:'Success',
-            detail:'You have successfully registered.'
-          })
-          //this.router.navigate(['successful-registration'])
-          window.location.assign('dashboard.html')
+            this.msg.add({
+              severity:'success',
+              summary:'Success',
+              detail:'You have successfully registered.'
+            })
+            //this.router.navigate(['successful-registration'])
+            window.location.assign('dashboard.html')
         }
       })
     } else{
@@ -239,10 +239,10 @@ export class RegisterComponent implements OnInit {
     if (!reg.test(this.email)) {
       return false;
     }
-    if (this?.first_name?.length < 3) {
+    if (this.first_name.length < 3) {
       return false;
     }
-    if (this?.last_name?.length < 4) {
+    if (this.last_name.length < 4) {
       return false;
     }
     if (this?.phone_number?.length < 8) {

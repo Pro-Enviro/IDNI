@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
 import {PetToolData} from "../pages/pet-login-protected/pet-tool-types";
+import {uploadFiles} from "@directus/sdk";
 
 @Injectable({
   providedIn: 'root'
@@ -66,5 +67,11 @@ export class DbService {
     )
 
   }
+
+  uploadBugReport = (bugReport: any) => {
+    return this.http.post(`${this.url}/items/bug_reports`, bugReport)
+  }
+
+
 
 }
