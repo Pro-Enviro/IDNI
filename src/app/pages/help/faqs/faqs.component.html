@@ -7,7 +7,7 @@
 <!--          <div class="text-900 font-bold text-5xl pb-5">Frequently Asked Questions</div>-->
           <div class="text-900 font-bold text-5xl pb-5">{{content.title}}</div>
           <div class="text-700 text-lg mb-5">Below you will find answers to the most common questions you may have. <br>If you still can't find the answer you are looking for, just
-            <a routerLink="dashboard/contact-us">Contact us!</a>
+            <a routerLink="/dashboard/contact-us">Contact us!</a>
           </div>
         </div>
       </div>
@@ -19,7 +19,7 @@
             <div [innerHTML]="item.answer"></div>
           </p-accordionTab>
         }
-      </p-accordion>
+      </p-accordion>/
     </div>
   </section>
 }
