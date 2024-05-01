@@ -182,8 +182,12 @@ export class RegisterComponent implements OnInit {
     const policy_idni = this.myForm.controls['policy_idni'].value
 
 
+    // Will match capital letter / lower case / special / number
+    const match = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
+
+
     if (policy && policy_bill && policy_idni) {
-      this.myForm.controls['password'].setValidators([Validators.required, Validators.minLength(8)])
+      this.myForm.controls['password'].setValidators([Validators.required, Validators.minLength(8), Validators.pattern(match)])
       this.myForm.controls['confirm_password'].setValidators([Validators.required,  Validators.minLength(8)])
       this.myForm.markAllAsTouched()
       return true;
