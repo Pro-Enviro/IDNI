@@ -1,20 +1,17 @@
 <section>
-  <div class="pet-card">
+  <p-card styleClass="card-charts">
     <div class="grid">
       <div class="col-5">
-        <div class="pet-card-dark">
-          <h3 class="title pb-3">Breakdown of CO2e by Scope Chart Guide</h3>
+        <p-card header="Breakdown of CO2e by Scope Chart Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
           <p-button type="button" styleClass="btn-style" (click)="scopeGuide = true" icon="pi pi-chart-pie" label="Guide"></p-button>
-        </div>
+        </p-card>
       </div>
       <div class="col-5">
-        <div class="pet-card-dark" *ngIf="isConsultant">
-          <h3 class="title pb-3">Select Company</h3>
+        <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }" *ngIf="isConsultant">
           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
-                      [style]="{ width: '12rem'}" [disabled]="!isConsultant"
-                      styleClass="table-dropdown" scrollHeight="350px"></p-dropdown>
+                      [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px"></p-dropdown>
           <!--    <p-multiSelect [options]="yearFilter" optionLabel="name" optionName="value" [(ngModel)]="selectedYears" (ngModelChange)="onYearFilter($event)"></p-multiSelect>-->
-        </div>
+        </p-card>
       </div>
       <div class="col-12">
         <div echarts [options]="chartOption" class="Scope Chart" style="max-height: 600px; height: 600px" [id]="'chartId'"></div>
@@ -24,7 +21,7 @@
       </div>
     </div>
 
-  </div>
+  </p-card>
 </section>
 
 <p-sidebar [(visible)]="scopeGuide" position="right" styleClass="w-3">
