@@ -8,6 +8,7 @@ import {MessageService} from "primeng/api";
 import {GlobalService} from "../../../_services/global.service";
 import {from} from "rxjs";
 import {FileUpload} from "primeng/fileupload";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-bug-report',
@@ -23,12 +24,12 @@ import {FileUpload} from "primeng/fileupload";
   styleUrl: './bug-report.component.scss'
 })
 export class BugReportComponent implements OnInit {
-
+  url: string = 'https://app.idni.eco';
   myForm!: FormGroup;
   uploadedFiles: any = [];
   fileIds: string[] = []
 
-  constructor(private fb: FormBuilder,private db: DbService, private msg: MessageService, private global: GlobalService) {}
+  constructor(private fb: FormBuilder,private db: DbService, private msg: MessageService, private global: GlobalService, private http: HttpClient) {}
 
 
   uploadHandler = (event: any, fileUpload: FileUpload) => {
@@ -86,6 +87,7 @@ export class BugReportComponent implements OnInit {
           severity: 'success',
           detail: 'Bug Report submitted. Thank You.'
         })
+        this.sendNotificationToProEnviro()
         this.uploadedFiles = []
         this.myForm.reset()
       },
@@ -95,6 +97,25 @@ export class BugReportComponent implements OnInit {
           detail: 'Failed to submit bug report. Please try again.'
         })
       },
+    })
+  }
+
+  sendNotificationToProEnviro = () => {
+    return this.http.post(`${this.url}/Mailer`,{
+      subject: 'New Bug Report',
+      to: ['adam.shelley@proenviro.co.uk'], // WIP: Update with correct email address
+      template: {
+        name: "data_uploaded",
+        data: {
+          "user": this.myForm.value.email
+        }
+      },
+      "files": [this.fileIds]
+    },{responseType: "text"}).subscribe({
+      next:(res) => {
+        console.log(res)
+      },
+      error: (error: any) =>console.log(error),
     })
   }
 
@@ -109,5 +130,6 @@ export class BugReportComponent implements OnInit {
     });
 
   }
+
 
 }
