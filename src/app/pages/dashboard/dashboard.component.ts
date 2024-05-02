@@ -12,6 +12,8 @@ import {EnvirotrackSmallPieChartComponent} from "../envirotrack/report/envirotra
 import {EnvirotrackBarSmallComponent} from "../envirotrack/report/envirotrack-report-bar/envirotrack-bar-small/envirotrack-bar-small.component";
 import {PanelMenuModule} from "primeng/panelmenu";
 import {GlobalService} from "../../_services/global.service";
+import {DividerModule} from "primeng/divider";
+import {RippleModule} from "primeng/ripple";
 import {MessagesModule} from "primeng/messages";
 
 
@@ -30,12 +32,16 @@ import {MessagesModule} from "primeng/messages";
     EnvirotrackSmallPieChartComponent,
     EnvirotrackBarSmallComponent,
     PanelMenuModule,
+    DividerModule,
+    RippleModule,
+    PanelMenuModule,
     MessagesModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
+  sidebarVisible: boolean = false;
   showFuelData: boolean = true;
   envirotrackReport : MenuItem[] =[]
   messages: Message[] = [{severity: 'warn', summary: 'Using Microsoft Edge', detail: 'This website works best on Firefox or Chrome'}]
