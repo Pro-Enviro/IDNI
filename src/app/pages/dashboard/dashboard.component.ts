@@ -3,7 +3,7 @@ import {SidebarModule} from "primeng/sidebar";
 import {RouterLink} from "@angular/router";
 import {ButtonModule} from "primeng/button";
 import {MenubarModule} from "primeng/menubar";
-import {MenuItem} from "primeng/api";
+import {MenuItem, Message} from "primeng/api";
 import {EnvirotrackReportPieComponent} from "../envirotrack/report/envirotrack-report-pie/envirotrack-report-pie.component";
 import {NgxEchartsDirective} from "ngx-echarts";
 import {EnvirotrackReportHeatmapComponent} from "../envirotrack/report/envirotrack-report-heatmap/envirotrack-report-heatmap.component";
@@ -12,6 +12,7 @@ import {EnvirotrackSmallPieChartComponent} from "../envirotrack/report/envirotra
 import {EnvirotrackBarSmallComponent} from "../envirotrack/report/envirotrack-report-bar/envirotrack-bar-small/envirotrack-bar-small.component";
 import {PanelMenuModule} from "primeng/panelmenu";
 import {GlobalService} from "../../_services/global.service";
+import {MessagesModule} from "primeng/messages";
 
 
 @Component({
@@ -28,16 +29,16 @@ import {GlobalService} from "../../_services/global.service";
     EnvirotrackReportBarComponent,
     EnvirotrackSmallPieChartComponent,
     EnvirotrackBarSmallComponent,
-    PanelMenuModule
+    PanelMenuModule,
+    MessagesModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
   showFuelData: boolean = true;
-
-
   envirotrackReport : MenuItem[] =[]
+  messages: Message[] = [{severity: 'warn', summary: 'Using Microsoft Edge', detail: 'This website works best on Firefox or Chrome'}]
 
   constructor(private global: GlobalService) {
     this.global.getCurrentUser().subscribe({

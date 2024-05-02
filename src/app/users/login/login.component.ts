@@ -31,17 +31,15 @@ export class LoginComponent {
 
   constructor(
     private  auth: AuthService,
-    private msg: MessageService
+    private msg: MessageService,
+    private global: GlobalService,
   ) {}
 
   login = () => {
     //if(this.credentials)
 
     if (/Edg/.test(navigator.userAgent)) {
-      return this.msg.add({
-        severity:'warn',
-        detail: 'Please use another browser. Microsoft Edge is not supported.'
-      })
+      this.global.updateUsingMicrosoftEdge(true)
     }
 
     from(this.auth.login({...this.credentials, ...{mode: 'cookie'}})).subscribe({
