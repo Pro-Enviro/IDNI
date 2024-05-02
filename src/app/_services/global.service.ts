@@ -22,7 +22,7 @@ export class GlobalService {
   companyAssignedId: BehaviorSubject<number | null> = new BehaviorSubject<any>(null)
   companyName: BehaviorSubject<string | null> = new BehaviorSubject<any>(null)
   isSignedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
-  usingMicrosoftEdge: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+
   client: any;
   url: any = `https://app.idni.eco`
 
@@ -39,7 +39,6 @@ export class GlobalService {
   updateCompanyId = (value: number) => this.companyAssignedId.next(value)
   updateCompanyName = (value: string) => this.companyName.next(value)
   onSignedIn = this.isSignedIn.asObservable();
-  updateUsingMicrosoftEdge = (value: boolean) => this.usingMicrosoftEdge.next(value)
 
   uploadBugReportScreenshots = async (screenshots: any) => {
     const result = await this.client.request(uploadFiles(screenshots))

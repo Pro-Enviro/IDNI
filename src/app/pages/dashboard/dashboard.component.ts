@@ -15,6 +15,7 @@ import {GlobalService} from "../../_services/global.service";
 import {DividerModule} from "primeng/divider";
 import {RippleModule} from "primeng/ripple";
 import {MessagesModule} from "primeng/messages";
+import {NgIf} from "@angular/common";
 
 
 @Component({
@@ -35,7 +36,8 @@ import {MessagesModule} from "primeng/messages";
     DividerModule,
     RippleModule,
     PanelMenuModule,
-    MessagesModule
+    MessagesModule,
+    NgIf
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -49,9 +51,12 @@ export class DashboardComponent {
 
   constructor(private global: GlobalService) {
 
-    if (this.global.usingMicrosoftEdge) {
+    // Check for Microsoft Edges
+    if (/Edg/.test(navigator.userAgent)) {
       this.showWarningBanner = true;
     }
+
+    console.log(this.showWarningBanner)
 
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {

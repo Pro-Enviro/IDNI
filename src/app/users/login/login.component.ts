@@ -38,9 +38,7 @@ export class LoginComponent {
   login = () => {
     //if(this.credentials)
 
-    if (/Edg/.test(navigator.userAgent)) {
-      this.global.updateUsingMicrosoftEdge(true)
-    }
+
 
     from(this.auth.login({...this.credentials, ...{mode: 'cookie'}})).subscribe({
       error: (err) => {
