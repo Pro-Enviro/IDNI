@@ -363,13 +363,13 @@ a{
   }
   .p-panelmenu-header .p-panelmenu-header-content {
     border: none;
-    background: $lightColor-50;
+    background: #FDFDFD;
     transition: box-shadow 0.2s;
   }
   .p-panelmenu-content {
     padding-left: 15px;
     border: none;
-    background: $lightColor-50;
+    //background: $lightColor-50;
     color: #4b5563;
     border-top: 0;
   }
@@ -651,11 +651,18 @@ a{
   }
 }
 
+  .dashboard-btn{
+    display:none;
+  }
+
 .sidenav {
   height: 100%;
-  background-color: $lightColor-50;
   overflow-x: hidden;
   padding:20px;
+  background-color:#FDFDFD;
+  color: #4b5563;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
   a {
     font-size:18.5px;
     padding:10px;
@@ -682,6 +689,51 @@ a{
     font-weight:700;
     padding-right:10px;
     font-size:1.8rem;
+  }
+  .envirotrack-menu{
+    padding-top:30px;
+    padding-bottom:30px
+  }
+
+}
+
+.sidenav-sidebar {
+  //height: 100%;
+  overflow-x: hidden;
+  padding:20px;
+  background-color:#FDFDFD;
+  color: #4b5563;
+  border-radius: 6px;
+  a {
+    font-size:18.5px;
+    padding:10px;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  a:hover {
+    background-color:$lightColor-100;
+    text-decoration: none;
+    border-radius:10px;
+  }
+  a:focus{
+    background-color:$lightColor-100;
+    text-decoration: none;
+    border-radius:10px;
+  }
+  a:active{
+    background-color:$lightColor-100;
+    text-decoration: none;
+    border-radius:10px;
+  }
+  span.material-symbols-outlined {
+    color: $primeColor;
+    font-weight:700;
+    padding-right:10px;
+    font-size:1.8rem;
+  }
+  .envirotrack-menu{
+    padding-top:30px;
+    padding-bottom:30px
   }
 
 }
@@ -1294,31 +1346,15 @@ footer{
     }
 
   }
-//--------------------------HERO----------------------------
-@media screen and (max-width: 1440px) and (min-width: 900px){
-  .hero{
-    .bg-arrow{
-      width:50vw;
-    }
-  }
-}
+//--------------------------SIDENAV----------------------------
+
 @media screen and (max-width: 1280px) and (min-width: 800px){
-  .hero{
-    .bg-arrow{
-      width:60vw;
-    }
+  .sidenav{
+    display:none;
   }
-}
-@media screen and (max-width: 700px) and (min-width: 200px){
-  .hero{
-    .bg-arrow{
-      width:100vw;
-      .content{
-        width:120%;
-        .hero-heading{
-          font-size:1rem;
-        }
-      }
-    }
+  .dashboard-btn{
+    display:block;
   }
+
 }
+

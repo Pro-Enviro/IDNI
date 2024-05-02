@@ -14,6 +14,8 @@ import {PanelMenuModule} from "primeng/panelmenu";
 import {GlobalService} from "../../_services/global.service";
 import {DividerModule} from "primeng/divider";
 import {RippleModule} from "primeng/ripple";
+import {ToggleButtonModule} from "primeng/togglebutton";
+import {FormsModule} from "@angular/forms";
 
 
 @Component({
@@ -32,14 +34,17 @@ import {RippleModule} from "primeng/ripple";
     EnvirotrackBarSmallComponent,
     PanelMenuModule,
     DividerModule,
-    RippleModule
+    RippleModule,
+    ToggleButtonModule,
+    FormsModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-  sidebarVisible: boolean = false;
+  sideMenu: boolean = false;
   showFuelData: boolean = true;
+  checked: boolean = false;
 
 
   envirotrackReport : MenuItem[] =[]
