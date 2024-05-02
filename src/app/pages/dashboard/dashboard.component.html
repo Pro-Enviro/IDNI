@@ -15,7 +15,7 @@
 
        <div class="p-4">
          <section>
-           <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
+           <p-messages *ngIf="showWarningBanner" [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
            <router-outlet></router-outlet>
          </section>
        </div>

@@ -44,9 +44,15 @@ export class DashboardComponent {
   sidebarVisible: boolean = false;
   showFuelData: boolean = true;
   envirotrackReport : MenuItem[] =[]
+  showWarningBanner: boolean = false;
   messages: Message[] = [{severity: 'warn', summary: 'Using Microsoft Edge', detail: 'This website works best on Firefox or Chrome'}]
 
   constructor(private global: GlobalService) {
+
+    if (this.global.usingMicrosoftEdge) {
+      this.showWarningBanner = true;
+    }
+
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {
         if (res.role.name === 'user'){
