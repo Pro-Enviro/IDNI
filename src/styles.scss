@@ -1224,21 +1224,36 @@ footer{
   .top-image-wrapper{
     position: relative;
     display:inline-block;
+    .top-image img{
+      background-repeat: no-repeat;
+      background-size: cover;
+      max-width:100%;
+      //height:49vh;
+      position: relative;
+    }
+    .top-image-line{
+      position: absolute;
+      background-image: url("https://id-ni.eco/assets/images/svg/line-topimage.svg");
+      //width: 100.1%;
+      //height: 114%;
+      background-repeat: no-repeat;
+      background-position: bottom;
+      background-size: cover;
+      right: -1%;
+      bottom:-3%;
+      left: 0;
+      top: 10%;
+    }
   }
 
-   .top-image img{
-     //height: 30vh;
-     background-repeat: no-repeat;
-     background-size: cover;
-     max-width:100%;
-     position: relative;
-   }
 
-  .top-image-wrapper svg {
-    position: absolute;
-    bottom:0;
-    top:15%;
-  }
+
+  //.top-image-wrapper svg {
+  //  position: absolute;
+  //  bottom:0;
+  //  top:15%;
+  //}
+
 
 //----------------------------------------------------MEDIA QUERY-------------------------------------------------------
 
