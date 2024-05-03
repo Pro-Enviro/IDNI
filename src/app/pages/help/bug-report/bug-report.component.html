@@ -14,10 +14,9 @@
 
 
 <div class="flex flex-column align-items-center pt-5">
-<p-card class="flex flex-column col-5">
+<p-card class="flex flex-column col-6">
   <h2>Bug Report Form</h2>
-
-  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)" class="p-2">
     <div>
       <label class="flex flex-column text-sm">
         Email:
