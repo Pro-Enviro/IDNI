@@ -5,7 +5,7 @@
     <div class="top-image-line"></div>
   </div>
 
-<div class="grid pt-2" style="background-color: #FCFCFC">
+<div class="grid pt-2" style="background-color: #fcfcfc">
     <div class="col-12">
       <div class="flex justify-content-start p-2 dashboard-menu">
         <p-button (click)="sideMenu = true" icon="pi pi-home" styleClass="btn-outline ml-3" label="Menu"></p-button>
@@ -15,7 +15,9 @@
 <!--    <app-stat-containers-tpl></app-stat-containers-tpl>-->
        <div class="p-4">
          <section>
-           <router-outlet></router-outlet>
+           <div class="p-3">
+             <router-outlet></router-outlet>
+           </div>
          </section>
        </div>
     </div>
