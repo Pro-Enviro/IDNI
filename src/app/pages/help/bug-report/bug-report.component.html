@@ -1,8 +1,21 @@
+<div class="container">
+  <div class="pet-card px-4 py-8 md:px-6 lg:px-8">
+    <div class="text-700 text-center">
+      <div class="font-bold mb-3" style="color:#85bfba"><i class="pi pi-file"></i> Bug Report Section</div>
+      <div class="text-900 font-bold text-5xl pb-5">Bug Report Form</div>
+      <div class="text-700 text-lg mb-5">
+       Use the form below to report any issues within the portal's functionality. Please, fill the fields to describe the problem and include steps to reproduce it.
+        Additionally, users are encouraged to attach screenshots to provide visual context if necessary, aiding in the comprehensive understanding and resolution of the reported issue.
+      </div>
+    </div>
+  </div>
+</div>
 
-<div class="flex flex-column align-items-center">
+
+
+<div class="flex flex-column align-items-center pt-5">
 <p-card class="flex flex-column col-5">
   <h2>Bug Report</h2>
-
 
   <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
     <div>
@@ -29,7 +42,12 @@
       <label  class="flex flex-column text-sm">
         Screenshots:
 
-        <p-fileUpload #fileUpload [multiple]="true" accept="image/*" [maxFileSize]="1000000" [fileLimit]="3" [customUpload]="true" class="mt-1 text-sm" (uploadHandler)="uploadHandler($event,fileUpload)">
+        <p-fileUpload #fileUpload [multiple]="true" accept="image/*" [maxFileSize]="1000000" [fileLimit]="3" [customUpload]="true" class="mt-1 text-sm"
+                      (uploadHandler)="uploadHandler($event,fileUpload)"
+                      chooseStyleClass="btn-style"
+                      cancelStyleClass="btn-dark"
+                      uploadStyleClass="btn-outline"
+        >
           <ng-template pTemplate="content">
             <ul *ngIf="uploadedFiles.length" >
               <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
@@ -50,7 +68,9 @@
         <input pInputText formControlName="browser" placeholder="Your message"  class="mt-1 text-sm">
       </label>
     </div>
-    <p-button styleClass="btn mt-2" type="submit" [disabled]="myForm.invalid">Submit Bug Report</p-button>
+    <div class="pt-3">
+      <p-button styleClass="btn-style mt-2" type="submit" [disabled]="myForm.invalid">Submit Bug Report</p-button>
+    </div>
   </form>
 </p-card>
 </div>
