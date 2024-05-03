@@ -42,7 +42,7 @@ import {FormsModule} from "@angular/forms";
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-  sideMenu: boolean = false;
+  //sideMenu: boolean = false;
   showFuelData: boolean = true;
   checked: boolean = false;
 
