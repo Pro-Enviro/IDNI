@@ -18,12 +18,13 @@
     </div>
     <div class="col-12">
       <div class="flex pb-3">
-        <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select"></p-selectButton>
+        <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months"></p-selectButton>
       </div>
       <div class="flex justify-content-start pt-2">
-        <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
+        <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn mb-3"></p-calendar>
       </div>
-        <div echarts *ngIf="chartData.length" [options]="chartOptions" style="display: block; box-sizing: border-box; height: 530px; width: 800px;margin-top:1.5rem"></div>
+<!--        <div echarts *ngIf="chartData.length" [options]="chartOptions" style="display: block; box-sizing: border-box; height: 530px; width: 800px;margin-top:1.5rem"></div>-->
+      <div echarts *ngIf="chartData.length" [options]="chartOptions"  style="width: 105%; min-height: 570px;margin-top:1rem"></div>
       <p *ngIf="!chartData.length">To add data, please navigate to "Half-Hourly Data Upload".</p>
     </div>
   </div>
