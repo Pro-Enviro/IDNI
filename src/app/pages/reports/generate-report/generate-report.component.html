@@ -1,11 +1,13 @@
 <section>
   <p-card>
-    <div class="col-6">
-      <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant" [style]="{ height: '100%' }">
-        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"
-                    scrollHeight="370px"></p-dropdown>
-      </p-card>
-    </div>
+   <div class="grid">
+     <div class="col-4">
+       <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant" [style]="{ height: '100%' }">
+         <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"
+                     scrollHeight="370px"></p-dropdown>
+       </p-card>
+     </div>
+   </div>
 
     <p-dialog [(visible)]="modelVisible" [modal]="true" [style]="{width: '60vw'}">
       <div class="grid generated-report" style="{padding: 1rem}">
@@ -20,10 +22,10 @@
     </div>
 
     <div class="mt-5">
-      <p-tabView (onChange)="sortRecommendations()" [style]="{width:'75vw', marginBottom: '2rem', paddingBottom: '5rem', minHeight: '75vh'}">
+      <p-tabView (onChange)="sortRecommendations()">
         <!--RECOMMENDATIONS-->
         <p-tabPanel header="Recommendation Summary">
-          <p-table [value]="recommendations" styleClass="p-datatable-sm scrollfix reco-table" [style]="{marginTop: '1rem', fontSize: '0.8rem'}">
+          <p-table [value]="recommendations" styleClass="p-datatable-sm scrollfix reco-table" [tableStyle]="{'min-width': '60rem'}">
             <ng-template pTemplate="header">
               <tr>
                 <th>No.</th>
@@ -33,10 +35,8 @@
                 <th [style]="{width: '100px', fontSize: '0.8rem'}">Estimated Annual saving (£ exc VAT/yr)</th>
                 <th [style]="{width: '100px', fontSize: '0.8rem'}">Estimated cost to implement (£ excl. VAT)</th>
                 <th [style]="{width: '100px', fontSize: '0.8rem'}">Payback Period</th>
-                <th [style]="{width: '100px', fontSize: '0.8rem'}">Estimated Annual carbon saving
-                  (tCo2e/yr)
-                </th>
-                <th [style]="{width:'150px'}">Margin Of Error %</th>
+                <th [style]="{width: '100px', fontSize: '0.8rem'}">Estimated Annual carbon saving (tCo2e/yr)</th>
+                <th [style]="{width:'150px',fontSize: '0.9rem'}">Margin Of Error %</th>
                 <th></th>
               </tr>
             </ng-template>
