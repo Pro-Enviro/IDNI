@@ -8,13 +8,16 @@
 
     ></p-autoComplete>
   </div>
+  <div class="flex justify-content-end">
+    <button pButton label="{{editMode ? 'Update' : 'Done'}}" icon="pi pi-save" class="btn-dark-upload" (click)="close()" style="margin-bottom: 2rem; margin-left: 1rem"></button>
+  </div>
   <div class="grid" style="margin-top: 2rem" *ngIf="selectedFuelType">
-    <div class="col-6" style="height: 100%">
+    <div class="col-6">
       <p-orderList header="Selected Columns" [value]="requiredCols" styleClass="drop-column orderlist-style" pDroppable
                    (onDrop)="drop()" [dragdrop]="false">
         <ng-template let-col pTemplate="item">
           <div class="pet-card m-1 cards" *ngIf="col.draggable"  pDraggable (onDragStart)="dragBStart(col)"
-                  (onDragEnd)="dragBEnd()">
+               (onDragEnd)="dragBEnd()">
             <div class="grid" style="display: flex; align-items: center">
               <div class="col">
                 {{ col.name }}
@@ -60,7 +63,32 @@
           </div>
         </ng-template>
       </p-orderList>
-
+    </div>
+    <div class="col-6">
+      <p-panel header="Available Columns" styleClass="drag-column" pDroppable (onDrop)="dropB()" class="drop-column"
+               [style]="{maxHeight: '400px', overflow: 'scroll'}">
+        <div *ngFor="let col of optionalCols; index as i" style="max-height: 500px">
+          <div class="pet-card m-2" *ngIf="col.draggable" pDraggable (onDragStart)="dragStart(col)"
+               [style]="{cursor: 'pointer'}"
+               (onDragEnd)="dragEnd()">
+            {{ col.name }}
+          </div>
+          <div class="pet-card m-2" *ngIf="!col.draggable">{{ col.name }}</div>
+        </div>
+      </p-panel>
+      <p-panel header="Custom Columns" [style]="{marginTop: '0.5rem'}">
+        <div class="flex flex-column">
+          <label class="pb-3">Column Name</label>
+          <input pInputText [(ngModel)]="newColumn" class="w-4 mb-2">
+        </div>
+        <div class="pt-3">
+          <button pButton class="btn-style" icon="pi pi-plus" label="Create Column" (click)="addToOptionalColumns()"></button>
+        </div>
+      </p-panel>
+    </div>
+  </div>
+  <div class="grid" *ngIf="selectedFuelType">
+    <div class="col-6">
       <p-panel header="Columns to Total" class="col-6">
         <div class="grid">
           <ng-container *ngFor="let col of requiredCols; index as i">
@@ -74,7 +102,8 @@
           </ng-container>
         </div>
       </p-panel>
-
+    </div>
+    <div class="col-6">
       <p-panel header="Data Team Admin" [style]="{marginTop: '0.5rem'}" class="col-5"  #panel>
         <div class="flex flex-column">
           <label class="mb-3">Choose a custom Conversion Factor</label>
@@ -82,35 +111,112 @@
         </div>
       </p-panel>
     </div>
-
-    <div class="col-6" style="position: fixed; top: 120px; right: 10px">
-
-      <button pButton label="{{editMode ? 'Update' : 'Done'}}" icon="pi pi-save" class="btn-dark-upload" (click)="close()"
-              style="margin-bottom: 2rem; margin-left: 1rem"></button>
-
-      <p-panel header="Available Columns" styleClass="drag-column" pDroppable (onDrop)="dropB()" class="drop-column"
-               [style]="{maxHeight: '400px', overflow: 'scroll'}">
-        <div *ngFor="let col of optionalCols; index as i" style="max-height: 500px">
-          <div class="pet-card m-2" *ngIf="col.draggable" pDraggable (onDragStart)="dragStart(col)"
-                  [style]="{cursor: 'pointer'}"
-                  (onDragEnd)="dragEnd()">
-            {{ col.name }}
-          </div>
-          <div class="pet-card m-2" *ngIf="!col.draggable">{{ col.name }}</div>
-        </div>
-      </p-panel>
-
-      <p-panel header="Custom Columns" [style]="{marginTop: '0.5rem'}">
-        <div class="flex flex-column">
-          <label class="pb-3">Column Name</label>
-          <input pInputText [(ngModel)]="newColumn" class="w-4 mb-2">
-        </div>
-        <div class="pt-3">
-          <button pButton class="btn-style" icon="pi pi-plus" label="Create Column" (click)="addToOptionalColumns()"></button>
-        </div>
-      </p-panel>
-    </div>
   </div>
+
+
+<!--  <div class="grid" style="margin-top: 2rem" *ngIf="selectedFuelType">-->
+<!--    <div class="col-6" style="height: 100%">-->
+<!--      <p-orderList header="Selected Columns" [value]="requiredCols" styleClass="drop-column orderlist-style" pDroppable-->
+<!--                   (onDrop)="drop()" [dragdrop]="false">-->
+<!--        <ng-template let-col pTemplate="item">-->
+<!--          <div class="pet-card m-1 cards" *ngIf="col.draggable"  pDraggable (onDragStart)="dragBStart(col)"-->
+<!--                  (onDragEnd)="dragBEnd()">-->
+<!--            <div class="grid" style="display: flex; align-items: center">-->
+<!--              <div class="col">-->
+<!--                {{ col.name }}-->
+<!--              </div>-->
+<!--              <ng-container *ngIf="col.math">-->
+
+<!--                <div class="col">-->
+<!--                  <p-checkbox label="Calculate" [(ngModel)]="col.checked" [binary]="true" inputId="binary"></p-checkbox>-->
+<!--                </div>-->
+<!--                <div class="grid" style="display: flex; align-items: center; justify-content: center "-->
+<!--                     *ngIf="col.checked">-->
+<!--                  <div class="col">-->
+<!--                    <p-dropdown appendTo="body" [options]="requiredCols" optionLabel="name"-->
+<!--                                optionValue="name" [(ngModel)]="col.option1" scrollHeight="380px"></p-dropdown>-->
+<!--                  </div>-->
+<!--                  <div class="col">-->
+<!--                    <p-dropdown [(ngModel)]="col.selectedMath" [options]="mathOptions" appendTo="body"-->
+<!--                                scrollHeight="380px">-->
+
+<!--                      <ng-template pTemplate="selectedItem">-->
+<!--                        <i class="pi pi-{{col.selectedMath}}"></i>-->
+<!--                      </ng-template>-->
+<!--                      <ng-template pTemplate="item" let-option>-->
+<!--                        <i class="pi pi-{{option}}"></i>-->
+<!--                      </ng-template>-->
+<!--                    </p-dropdown>-->
+<!--                  </div>-->
+<!--                  <div class="col">-->
+<!--                    <p-dropdown appendTo="body" [options]="requiredCols" optionLabel="name"-->
+<!--                                optionValue="name" [(ngModel)]="col.option2" scrollHeight="380px"></p-dropdown>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </ng-container>-->
+
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="pet-card m-1" *ngIf="!col.draggable" [style]="{backgroundColor: 'rgba(0,0,0,0.02)'}">-->
+<!--            <div class="grid">-->
+<!--              <div class="col">-->
+<!--                {{ col.name }}-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </ng-template>-->
+<!--      </p-orderList>-->
+
+<!--      <p-panel header="Columns to Total" class="col-6">-->
+<!--        <div class="grid">-->
+<!--          <ng-container *ngFor="let col of requiredCols; index as i">-->
+<!--            <div class="flex">-->
+<!--              <p-checkbox *ngIf="col.type === 'number' && col.name !== 'Total'" [style]="{marginLeft: '2rem'}"-->
+<!--                          [(ngModel)]="col.total"-->
+<!--                          [binary]="true" inputId="binary"></p-checkbox>-->
+<!--              <label *ngIf="col.type === 'number' && col.name !== 'Total'" class="pl-2">{{ col.name }} </label>-->
+<!--            </div>-->
+
+<!--          </ng-container>-->
+<!--        </div>-->
+<!--      </p-panel>-->
+
+<!--      <p-panel header="Data Team Admin" [style]="{marginTop: '0.5rem'}" class="col-5"  #panel>-->
+<!--        <div class="flex flex-column">-->
+<!--          <label class="mb-3">Choose a custom Conversion Factor</label>-->
+<!--          <p-dropdown [appendTo]="panel" [options]="fuelTypes" [(ngModel)]="customConversionFactor" scrollHeight="350px" [showClear]="true"></p-dropdown>-->
+<!--        </div>-->
+<!--      </p-panel>-->
+<!--    </div>-->
+<!--    -->
+<!--    <div class="col-6" style="position: fixed; top: 120px; right: 10px">-->
+
+<!--      <button pButton label="{{editMode ? 'Update' : 'Done'}}" icon="pi pi-save" class="btn-dark-upload" (click)="close()"-->
+<!--              style="margin-bottom: 2rem; margin-left: 1rem"></button>-->
+
+<!--      <p-panel header="Available Columns" styleClass="drag-column" pDroppable (onDrop)="dropB()" class="drop-column"-->
+<!--               [style]="{maxHeight: '400px', overflow: 'scroll'}">-->
+<!--        <div *ngFor="let col of optionalCols; index as i" style="max-height: 500px">-->
+<!--          <div class="pet-card m-2" *ngIf="col.draggable" pDraggable (onDragStart)="dragStart(col)"-->
+<!--                  [style]="{cursor: 'pointer'}"-->
+<!--                  (onDragEnd)="dragEnd()">-->
+<!--            {{ col.name }}-->
+<!--          </div>-->
+<!--          <div class="pet-card m-2" *ngIf="!col.draggable">{{ col.name }}</div>-->
+<!--        </div>-->
+<!--      </p-panel>-->
+
+<!--      <p-panel header="Custom Columns" [style]="{marginTop: '0.5rem'}">-->
+<!--        <div class="flex flex-column">-->
+<!--          <label class="pb-3">Column Name</label>-->
+<!--          <input pInputText [(ngModel)]="newColumn" class="w-4 mb-2">-->
+<!--        </div>-->
+<!--        <div class="pt-3">-->
+<!--          <button pButton class="btn-style" icon="pi pi-plus" label="Create Column" (click)="addToOptionalColumns()"></button>-->
+<!--        </div>-->
+<!--      </p-panel>-->
+<!--    </div>-->
+<!--  </div>-->
 </div>
 
 <div *ngIf="!selectedFuelType" style="display: flex; align-items: center; justify-content: center">
