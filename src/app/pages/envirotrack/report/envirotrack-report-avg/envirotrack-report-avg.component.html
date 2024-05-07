@@ -19,11 +19,11 @@
       </div>
       <div class="col-12">
         <p-card styleClass="card-style-none">
-          <div class="toggle-buttons flex" style="margin-bottom: 2rem">
-            <div class="select-container flex-1">
-              <p-selectButton *ngIf="defaultFilters.length" [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select ml-1"></p-selectButton>
+          <div class="flex justify-content-between" style="margin-bottom: 2rem">
+            <div class="flex justify-content-start">
+              <p-selectButton *ngIf="defaultFilters.length" [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months ml-1"></p-selectButton>
             </div>
-            <div class="flex-end">
+            <div class="flex justify-content-end">
               <p-toggleButton onLabel="Hide Expected Operating Hours" offLabel="Show Expected Operating Hours" [(ngModel)]="shift" (click)="filterData()" styleClass="btn-dark"></p-toggleButton>
             </div>
           </div>
