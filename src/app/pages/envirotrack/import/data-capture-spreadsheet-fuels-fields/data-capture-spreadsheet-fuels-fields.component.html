@@ -8,8 +8,8 @@
 
     ></p-autoComplete>
   </div>
-  <div class="flex justify-content-end">
-    <button pButton label="{{editMode ? 'Update' : 'Done'}}" icon="pi pi-save" class="btn-dark-upload" (click)="close()" style="margin-bottom: 2rem; margin-left: 1rem"></button>
+  <div class="flex justify-content-end p-2">
+    <button pButton label="{{editMode ? 'Update' : 'Done'}}" icon="pi pi-save" class="btn-dark-upload" (click)="close()"></button>
   </div>
   <div class="grid" style="margin-top: 2rem" *ngIf="selectedFuelType">
     <div class="col-6">
