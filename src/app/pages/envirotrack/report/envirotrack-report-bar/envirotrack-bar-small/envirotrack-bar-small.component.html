@@ -1,6 +1,6 @@
 <p-card styleClass="card-charts" [style]="{ height: '100%' }">
     <div class="grid">
-      <div class="lg:col-12 xl:col-6">
+      <div class="lg:col-12 xl:col-6 md:col-6">
         <p-card *ngIf="isConsultant" header="Select Company" styleClass="card-select-panel">
           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id"
                       (ngModelChange)="onSelectCompany()"
@@ -9,7 +9,7 @@
                       scrollHeight="350px"></p-dropdown>
         </p-card>
       </div>
-      <div class="lg:col-12 xl:col-6">
+      <div class="lg:col-12 xl:col-6 md:col-6">
         <div class="" *ngIf="mpan.length">
           <p-card header="Select Mpan" styleClass="card-select-panel">
             <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>

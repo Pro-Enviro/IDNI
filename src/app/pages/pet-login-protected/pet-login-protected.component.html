@@ -49,9 +49,8 @@
   </div>
   <div class="flex justify-content-center flex-wrap mt-3">
   <div style="overflow-x:scroll">
-<!--    [tableStyle]="{'min-width': '70rem'}"-->
     <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines"  dataKey="parent.name"
-             rowGroupMode="subheader" groupRowsBy="parent.name" [customSort]="true" *ngIf="selectedCompany">
+             rowGroupMode="subheader" groupRowsBy="parent.name" [customSort]="true" *ngIf="selectedCompany" [tableStyle]="{'min-width': '70rem'}">
 
       <ng-template pTemplate="header">
         <tr>

@@ -1,10 +1,11 @@
+
 <div class="p-3">
   <div class="pl-4">
     <h3 style="font-size: 1.4rem;" class="flex justify-content-start font-semibold">Add Fuel Type</h3>
     <p-autoComplete [dropdown]="true" [(ngModel)]="selectedFuelType" [suggestions]="filteredFuelTypes"
                     (completeMethod)="searchFuelTypes($event)"
                     (onSelect)="changeSelectedFuelType()"
-                    *ngIf="!editMode" class="btn-dropdown" scrollHeight="370px"
+                    *ngIf="!editMode" class="btn-dropdown"  appendTo="body"
 
     ></p-autoComplete>
   </div>
@@ -12,7 +13,7 @@
     <button pButton label="{{editMode ? 'Update' : 'Done'}}" icon="pi pi-save" class="btn-dark-upload" (click)="close()"></button>
   </div>
   <div class="grid" style="margin-top: 2rem" *ngIf="selectedFuelType">
-    <div class="col-6">
+    <div class="lg:col-6 md:col-12">
       <p-orderList header="Selected Columns" [value]="requiredCols" styleClass="drop-column orderlist-style" pDroppable
                    (onDrop)="drop()" [dragdrop]="false">
         <ng-template let-col pTemplate="item">
@@ -64,7 +65,7 @@
         </ng-template>
       </p-orderList>
     </div>
-    <div class="col-6">
+    <div class="lg:col-6 md:col-12">
       <p-panel header="Available Columns" styleClass="drag-column" pDroppable (onDrop)="dropB()" class="drop-column"
                [style]="{maxHeight: '400px', overflow: 'scroll'}">
         <div *ngFor="let col of optionalCols; index as i" style="max-height: 500px">
@@ -130,3 +131,4 @@
 <div *ngIf="!selectedFuelType" style="display: flex; align-items: center; justify-content: center">
   <p>Select a fuel type</p>
 </div>
+
