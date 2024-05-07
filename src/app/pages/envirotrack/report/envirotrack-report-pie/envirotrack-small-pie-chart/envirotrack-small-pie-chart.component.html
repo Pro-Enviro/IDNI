@@ -1,6 +1,6 @@
  <p-card styleClass="card-charts p-2" [style]="{ height: '100%' }">
     <div class="grid">
-      <div class="col-6" >
+      <div class="lg:col-6" >
         <p-card *ngIf="isConsultant" header="Select Company" styleClass="card-select-panel">
           <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"

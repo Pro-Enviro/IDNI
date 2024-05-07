@@ -15,7 +15,7 @@
       </div>
       <div class="col-4">
         <div *ngIf="mpan.length">
-          <p-card header="Select Mpan" styleClass="card-select-panel" [style]="{ height: '16vh'}">
+          <p-card header="Select Mpan" styleClass="card-select-panel" [style]="{ height: '25vh'}">
             <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
           </p-card>
         </div>
