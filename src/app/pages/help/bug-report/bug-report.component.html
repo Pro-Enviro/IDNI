@@ -5,7 +5,7 @@
       <div class="text-900 font-bold text-5xl pb-5">Bug Report Form</div>
       <div class="text-700 text-lg mb-5">
        Use the form below to report any issues within the portal's functionality. Please, fill the fields to describe the problem and include steps to reproduce it.
-        Additionally, users are encouraged to attach screenshots to provide visual context if necessary, aiding in the comprehensive understanding and resolution of the reported issue.
+        Additionally, we encouraged you to attach screenshots to provide visual context if necessary, aiding in the comprehensive understanding and resolution of the reported issue.
       </div>
     </div>
   </div>
@@ -13,9 +13,10 @@
 
 
 
-<div class="flex flex-column align-items-center pt-5">
-<p-card class="flex flex-column col-6">
-  <h2>Bug Report Form</h2>
+<div class="grid pt-5 flex justify-content-center">
+  <div class="col-6">
+
+<p-card header="Bug Report Form" styleClass="card-charts">
   <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)" class="p-2">
     <div>
       <label class="flex flex-column text-sm">
@@ -68,8 +69,9 @@
       </label>
     </div>
     <div class="pt-3">
-      <p-button styleClass="btn-style mt-2" type="submit" [disabled]="myForm.invalid">Submit Bug Report</p-button>
+      <p-button styleClass="btn-style mt-2" type="submit" [disabled]="myForm.invalid" icon="pi pi-cloud-upload" label="Submit Bug Report"></p-button>
     </div>
   </form>
 </p-card>
+  </div>
 </div>

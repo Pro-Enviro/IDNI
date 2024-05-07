@@ -141,7 +141,7 @@ export class DashboardComponent {
           {
             label:'<span class="material-symbols-outlined">help</span> Help',
           escape: false,
-          routerLink:'/dashboard/help',
+          //routerLink:'/dashboard/help',
           items:[
             {
               label:'<span class="material-symbols-outlined">problem</span> Bug Report',
