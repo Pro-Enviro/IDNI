@@ -13,9 +13,10 @@
   </div>
   <div class="grid flex justify-content-center flex-wrap">
     <div class="col-5 p-3 mt-3">
-      <p-card header="{{isConsultant ? 'Select Company' : ''}}" class="flex justify-content-center" [style]="{ width: '20vw', padding:'20px' }" styleClass="card-charts">
+      <p-card header="{{isConsultant ? 'Select Company' : ''}}" styleClass="flex justify-content-center card-charts p-2">
         <div  *ngIf="isConsultant" class="p-1">
-          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant" ></p-dropdown>
+          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
+                      [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant" scrollHeight="300px"></p-dropdown>
         </div>
         <div class="flex flex-column p-1">
           <label class="text-xl font-semibold" for="sic_code">SIC Code</label>
@@ -47,8 +48,9 @@
     </div>
   </div>
   <div class="flex justify-content-center flex-wrap mt-3">
-  <div class="">
-    <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines" [tableStyle]="{'min-width': '70rem'}" dataKey="parent.name"
+  <div style="overflow-x:scroll">
+<!--    [tableStyle]="{'min-width': '70rem'}"-->
+    <p-table [value]="data" styleClass="pet-table p-datatable-sm p-datatable-gridlines"  dataKey="parent.name"
              rowGroupMode="subheader" groupRowsBy="parent.name" [customSort]="true" *ngIf="selectedCompany">
 
       <ng-template pTemplate="header">
