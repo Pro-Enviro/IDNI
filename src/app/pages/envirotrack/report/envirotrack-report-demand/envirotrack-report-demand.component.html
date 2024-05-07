@@ -1,27 +1,31 @@
 <section>
   <p-card styleClass="card-charts">
     <div class="grid">
-      <div class="col-4">
+      <div class="lg:col-4 md:col-12">
         <p-card header="Maximum Demand Chart Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
           <p-button type="button" styleClass="btn-style" (click)="maxGuide = true" icon="pi pi-chart-line" label="Guide"></p-button>
         </p-card>
       </div>
-      <div class="col-4">
+      <div class="lg:col-4 md:col-6">
         <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }" *ngIf="isConsultant">
           <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px"></p-dropdown>
         </p-card>
       </div>
-      <div class="col-4">
+      <div class="lg:col-4 md:col-6">
         <p-card header="Select Mpan" styleClass="card-select-panel" [style]="{ height: '100%' }" *ngIf="mpan.length">
           <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
         </p-card>
       </div>
       <div class="col-12">
         <p-card styleClass="card-style-none">
-          <div class="demand-chart-buttons flex justify-content-between mb-6">
-            <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months ml-1"></p-selectButton>
-            <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn mr-1"></p-calendar>
+          <div class="grid mb-6">
+            <div class="lg:col-10 md:col-12">
+              <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months ml-1"></p-selectButton>
+            </div>
+            <div class="lg:col-2 md:col-12">
+              <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn mr-1"></p-calendar>
+            </div>
           </div>
           <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px"></div>
         </p-card>
@@ -29,7 +33,7 @@
     </div>
   </p-card>
 
-  <p-sidebar [(visible)]="maxGuide" position="right" styleClass="w-4">
+  <p-sidebar [(visible)]="maxGuide" position="right" styleClass="lg:w-4 md:w-5">
     <div class="container p-5">
       <h3 class="header-style">Maximum Demand Chart Guide</h3>
       <p>The data points of the maximum demand chart are simply calculated from the maximum kWh used in a single half-hourly period for each day of the period, then multiplied by 2

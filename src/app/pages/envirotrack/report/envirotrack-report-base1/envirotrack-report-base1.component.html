@@ -1,19 +1,19 @@
 <section>
   <p-card styleClass="card-charts">
     <div class="grid">
-      <div class="col-4">
+      <div class="lg:col-4 md:col-12">
         <p-card header="Christmas Day vs Lowest Day of the Year Consumption Chart Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
           <p-button type="button" styleClass="btn-style" (click)="baseGuide = true" icon="pi pi-chart-line" label="Guide"></p-button>
         </p-card>
       </div>
-      <div class="col-4">
+      <div class="lg:col-4 md:col-6">
         <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant" [style]="{ height: '100%' }">
           <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
                       [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px"></p-dropdown>
         </p-card>
       </div>
-      <div class="col-4">
+      <div class="lg:col-4 md:col-6">
         <p-card header="Select Mpan" styleClass="card-select-panel" *ngIf="mpan.length" [style]="{ height: '100%' }">
           <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
         </p-card>
@@ -27,7 +27,7 @@
     </div>
   </p-card>
 
-  <p-sidebar [(visible)]="baseGuide" position="right" styleClass="w-4">
+  <p-sidebar [(visible)]="baseGuide" position="right" styleClass="lg:w-4 md:w-5">
     <div class="container p-5">
       <h3 class="header-style">Christmas Day vs Lowest Day of the Year Consumption Chart Guide</h3>
       <p>The chart displays two baselines: one for Christmas Day and another for the day with the lowest consumption of the year – for the selected calendar year.

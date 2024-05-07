@@ -1,7 +1,7 @@
 <section>
   <p-card>
    <div class="grid">
-     <div class="col-4">
+     <div class="lg:col-4 md:col-6">
        <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant" [style]="{ height: '100%' }">
          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"
                      scrollHeight="370px"></p-dropdown>
