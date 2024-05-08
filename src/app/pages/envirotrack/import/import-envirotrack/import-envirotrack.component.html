@@ -129,7 +129,7 @@
 
 <div class="flex justify-content-end">
   <div class="flex flex-column">
-    <p-sidebar [(visible)]="accessData" position="right" styleClass="w-5">
+    <p-sidebar [(visible)]="accessData" position="right" styleClass="lg:w-5 md:w-6">
       <div class="container p-5">
         <h3 class="header-style">How to access the half hourly electricity data?</h3>
         <p>This can only be obtained if your energy company records your consumption data on a half hourly basis. To
@@ -242,23 +242,23 @@
     </p-sidebar>
 
 
-    <p-sidebar [(visible)]="dataGuide" position="right" styleClass="w-5">
+    <p-sidebar [(visible)]="dataGuide" position="right" styleClass="lg:w-5 md:w-6">
       <div class="container p-5">
         <h3 class="header-style">Guide on how to import Half-Hourly Data</h3>
         <p>To import the Half-Hourly Data you need to follow these steps:</p>
         <uL>
-          <li>1. Select the company from the dropdown panel.</li>
-          <li>2. Click on the "Choose" button located in "File Upload" panel.</li>
-          <li>3. Select the file that you would like to upload.</li>
-          <li>4. Click the "Upload" button.</li>
+          <li class="p-1">1. Select the company from the dropdown panel.</li>
+          <li class="p-1">2. Click on the "Choose" button located in "File Upload" panel.</li>
+          <li class="p-1">3. Select the file that you would like to upload.</li>
+          <li class="p-1">4. Click the "Upload" button.</li>
           <!--          <li>5. Click ‘Send’ to share your data with Pro Enviro for data processing.</li>-->
-          <li>5. A new panel called "Half-Hourly Data (HHD)" wil appearing, displaying a table holding information for :
+          <li class="p-1">5. A new panel called "Half-Hourly Data (HHD)" wil appearing, displaying a table holding information for :
             mpan number, date and data share point.The table below will contain a preview of your spreadsheet.
             Drag the column titles from the spreadsheet preview to the corresponding panels, this ensures the data
             processed correctly.
           </li>
-          <li>6. Click the “Process” button when the above is complete.</li>
-          <li>7. A message will appear if the data was successfully uploaded and processed. You can now close the page or navigate away.</li>
+          <li class="p-1">6. Click the “Process” button when the above is complete.</li>
+          <li class="p-1">7. A message will appear if the data was successfully uploaded and processed. You can now close the page or navigate away.</li>
         </uL>
       </div>
     </p-sidebar>
