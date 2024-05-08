@@ -3,7 +3,7 @@ import {SidebarModule} from "primeng/sidebar";
 import {RouterLink} from "@angular/router";
 import {ButtonModule} from "primeng/button";
 import {MenubarModule} from "primeng/menubar";
-import {MenuItem} from "primeng/api";
+import {MenuItem, Message} from "primeng/api";
 import {EnvirotrackReportPieComponent} from "../envirotrack/report/envirotrack-report-pie/envirotrack-report-pie.component";
 import {NgxEchartsDirective} from "ngx-echarts";
 import {EnvirotrackReportHeatmapComponent} from "../envirotrack/report/envirotrack-report-heatmap/envirotrack-report-heatmap.component";
@@ -14,8 +14,13 @@ import {PanelMenuModule} from "primeng/panelmenu";
 import {GlobalService} from "../../_services/global.service";
 import {DividerModule} from "primeng/divider";
 import {RippleModule} from "primeng/ripple";
+
 import {ToggleButtonModule} from "primeng/togglebutton";
 import {FormsModule} from "@angular/forms";
+
+import {MessagesModule} from "primeng/messages";
+import {NgIf} from "@angular/common";
+
 
 
 @Component({
@@ -35,8 +40,14 @@ import {FormsModule} from "@angular/forms";
     PanelMenuModule,
     DividerModule,
     RippleModule,
+
     ToggleButtonModule,
     FormsModule
+
+    PanelMenuModule,
+    MessagesModule,
+    NgIf
+
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -44,12 +55,22 @@ import {FormsModule} from "@angular/forms";
 export class DashboardComponent {
   sideMenu: boolean = false;
   showFuelData: boolean = true;
+
   checked: boolean = false;
 
-
   envirotrackReport : MenuItem[] =[]
+  showWarningBanner: boolean = false;
+  messages: Message[] = [{severity: 'warn', summary: 'Using Microsoft Edge', detail: 'This website works best on Firefox or Chrome'}]
 
   constructor(private global: GlobalService) {
+
+    // Check for Microsoft Edges
+    if (/Edg/.test(navigator.userAgent)) {
+      this.showWarningBanner = true;
+    }
+
+    console.log(this.showWarningBanner)
+
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {
         if (res.role.name === 'user'){
