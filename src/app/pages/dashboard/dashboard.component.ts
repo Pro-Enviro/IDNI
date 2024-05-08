@@ -14,8 +14,13 @@ import {PanelMenuModule} from "primeng/panelmenu";
 import {GlobalService} from "../../_services/global.service";
 import {DividerModule} from "primeng/divider";
 import {RippleModule} from "primeng/ripple";
+
+import {ToggleButtonModule} from "primeng/togglebutton";
+import {FormsModule} from "@angular/forms";
+
 import {MessagesModule} from "primeng/messages";
 import {NgIf} from "@angular/common";
+
 
 
 @Component({
@@ -35,16 +40,24 @@ import {NgIf} from "@angular/common";
     PanelMenuModule,
     DividerModule,
     RippleModule,
+
+    ToggleButtonModule,
+    FormsModule
+
     PanelMenuModule,
     MessagesModule,
     NgIf
+
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-  sidebarVisible: boolean = false;
+  sideMenu: boolean = false;
   showFuelData: boolean = true;
+
+  checked: boolean = false;
+
   envirotrackReport : MenuItem[] =[]
   showWarningBanner: boolean = false;
   messages: Message[] = [{severity: 'warn', summary: 'Using Microsoft Edge', detail: 'This website works best on Firefox or Chrome'}]
@@ -149,7 +162,7 @@ export class DashboardComponent {
           {
             label:'<span class="material-symbols-outlined">help</span> Help',
           escape: false,
-          routerLink:'/dashboard/help',
+          //routerLink:'/dashboard/help',
           items:[
             {
               label:'<span class="material-symbols-outlined">problem</span> Bug Report',

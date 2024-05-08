@@ -32,7 +32,7 @@
           <div  pDroppable (onDrop)="dropColumnTitle(column)">
           <div class="grid">
             <div class="col-3">
-              <div class="pet-card" [style]="{height: '100%',width: '15rem',marginBottom: '7px', marginLeft: '7px'}">
+              <div class="pet-card-fuel" [style]="{height: '100%',width: '15rem',marginBottom: '7px', marginLeft: '7px'}">
                 <h3 class="title">{{column.name}}</h3>
                 <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="column.draggedCell">
                   <li class="p-2 border-round shadow-1" (click)="removeCell(column)" style="cursor: pointer; overflow: hidden">
@@ -46,7 +46,8 @@
         </ng-container>
       </div>
 
-      <p-table [value]="fileContent.slice(0,10)" [tableStyle]="{ 'min-width': '50rem', width: '100%' }">
+      <div style="overflow-x:scroll">
+      <p-table [value]="fileContent.slice(0,10)" [tableStyle]="{ 'min-width': '50rem',width: '100%'}">
         <ng-template pTemplate="body" let-row let-r="rowIndex">
           <tr *ngIf="r === 0">
             <td *ngFor="let cell of row.slice(0,30); index as c" >
@@ -60,6 +61,7 @@
           </tr>
         </ng-template>
       </p-table>
+      </div>
 
       <div class="mt-2 flex">
         <button pButton class="btn-style" icon="pi pi-cog" label="Process" (click)="processData()"></button>

@@ -1,24 +1,45 @@
-<div class="grid" style="background-color: #FCFCFC">
-    <div class="col-2">
-        <div class="sidenav">
-            <div class="flex flex-column envirotrack-menu mt-3">
-              <p-panelMenu [model]="envirotrackReport"></p-panelMenu>
-            </div>
-          <div class="mt-5">
-            <p-divider></p-divider>
-            <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple label="Knowledge Platform" icon="pi pi-globe" class="btn-dark"></button></a>
-          </div>
-          </div>
+  <div class="top-image-wrapper">
+    <div class="top-image">
+      <img src="https://id-ni.eco/assets/images/stock-images/camirus-topimage.jpeg" alt="">
     </div>
-    <div class="col-10">
-<!--    <app-stat-containers-tpl></app-stat-containers-tpl>-->
+    <div class="top-image-line"></div>
+  </div>
 
+<div class="grid pt-2" style="background-color: #fcfcfc">
+    <div class="col-12">
+      <div class="flex justify-content-start p-2 dashboard-menu">
+        <p-button (click)="sideMenu = true" icon="pi pi-home" styleClass="btn-outline ml-3" label="Menu"></p-button>
+      </div>
+    </div>
+    <div class="col-12">
+<!--    <app-stat-containers-tpl></app-stat-containers-tpl>-->
        <div class="p-4">
          <section>
+
+<!--            <div class="p-3">
+             <router-outlet></router-outlet>
+           </div> -->
+
            <p-messages *ngIf="showWarningBanner" [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
            <router-outlet></router-outlet>
+
          </section>
        </div>
     </div>
  </div>
 
+  <p-sidebar [(visible)]="sideMenu" styleClass="lg:w-4 xl:w-3 md:w-5">
+     <div class="sidenav-sidebar">
+       <div class="flex justify-content-start p-2 mt-4">
+         <img src="https://id-ni.eco/assets/images/logos/idni-logo.svg" alt="idni-logo" style="height:75px">
+       </div>
+       <p-divider></p-divider>
+       <div class="flex flex-column envirotrack-menu">
+         <p-panelMenu [model]="envirotrackReport"></p-panelMenu>
+       </div>
+       <div class="mt-5">
+         <p-divider></p-divider>
+         <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple label="Knowledge Platform" icon="pi pi-globe" class="btn-dark"></button></a>
+       </div>
+     </div>
+  </p-sidebar>
