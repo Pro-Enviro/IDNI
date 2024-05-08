@@ -40,10 +40,8 @@ import {NgIf} from "@angular/common";
     PanelMenuModule,
     DividerModule,
     RippleModule,
-
     ToggleButtonModule,
-    FormsModule
-
+    FormsModule,
     PanelMenuModule,
     MessagesModule,
     NgIf
