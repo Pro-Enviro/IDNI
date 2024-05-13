@@ -17,6 +17,7 @@
   $darkColor-900:#112122;
 
 
+
   li{
     list-style: none;
   }
@@ -655,11 +656,12 @@ a{
 .dashboard-menu{
   background:white;
   border:1px solid #f1f1f1;
+  display:none;
 }
 
-  .dashboard-btn{
-    display:block;
-  }
+  //.dashboard-btn{
+  //  display:block;
+  //}
 
 .sidenav {
   height: 100%;
@@ -1143,8 +1145,13 @@ a{
   .sidenav{
     display:none;
   }
-  .dashboard-btn{
+  .dashboard-menu{
     display:block;
+  }
+
+  .dashboard-items{
+    flex: 0 0 auto;
+    width: 100%;
   }
 
 }

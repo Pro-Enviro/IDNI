@@ -6,10 +6,13 @@
   </div>
 
 <div class="grid pt-2" style="background-color: #fcfcfc">
+  <div class="dashboard-menu col-12">
+    <div class="flex justify-content-start p-2">
+      <p-button (click)="sideMenu = true" icon="pi pi-home" styleClass="btn-outline ml-3" label="Menu"></p-button>
+    </div>
+  </div>
+
     <div class="col-3">
-<!--      <div class="flex justify-content-start p-2 dashboard-menu">-->
-<!--        <p-button (click)="sideMenu = true" icon="pi pi-home" styleClass="btn-outline ml-3" label="Menu"></p-button>-->
-<!--      </div>-->
       <div class="sidenav">
         <div class="flex justify-content-start p-2 mt-4">
           <img src="https://id-ni.eco/assets/images/logos/idni-logo.svg" alt="idni-logo" style="height:75px">
@@ -24,7 +27,7 @@
         </div>
       </div>
     </div>
-    <div class="col-9">
+    <div class="col-9 dashboard-items">
 <!--    <app-stat-containers-tpl></app-stat-containers-tpl>-->
        <div class="">
          <section>
