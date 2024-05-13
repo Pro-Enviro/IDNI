@@ -64,7 +64,7 @@ export class DashboardComponent {
   miniMenu: MenuItem[] = []
   showWarningBanner: boolean = false;
   messages: Message[] = [{severity: 'warn', summary: 'Using Microsoft Edge', detail: 'This website works best on Firefox or Chrome'}]
-  collapse: boolean = false;
+  showMenu: boolean = false;
 
   constructor(private global: GlobalService) {
 
