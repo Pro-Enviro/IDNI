@@ -260,7 +260,7 @@ export class ImportEnvirotrackComponent {
 
     return this.http.post(`${this.url}/Mailer`,{
       subject: 'Pro Enviro Envirotrack sent',
-      to: ['it@proenviro.co.uk'], // WIP: Update with correct email address
+      to: ['it@proenviro.co.uk', 'data@proenviro.co.uk'],
       template: {
         name: "data_uploaded",
         data: {
