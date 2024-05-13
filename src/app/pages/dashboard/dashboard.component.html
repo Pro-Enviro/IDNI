@@ -11,13 +11,13 @@
     <div class="top-image-line"></div>
   </div>
 
-<div class="flex justify-content-between pt-2" style="background-color: #fcfcfc">
+<div class="flex justify-content-start p-2" style="background-color: #fdfdfd">
   <div class="dashboard-menu col-12 mt-5">
     <div class="flex justify-content-start p-2">
       <p-button (click)="sideMenu = true" icon="pi pi-home" styleClass="btn-outline ml-3" label="Menu"></p-button>
     </div>
   </div>
-  <div class="flex justify-content-start">
+  <div class="">
     <div class="sidenav-col h-full w-8" [class]="collapse ? 'collapse' : '' ">
       <div class="sidenav">
        <div class="flex justify-content-end mb-3">
@@ -41,7 +41,7 @@
       </div>
     </div>
   </div>
-    <div class="flex justify-content-end dashboard-items">
+    <div class="dashboard-items">
 <!--    <app-stat-containers-tpl></app-stat-containers-tpl>-->
          <section>
            <p-messages *ngIf="showWarningBanner" [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
