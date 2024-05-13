@@ -1141,18 +1141,28 @@ a{
 
 //--------------------------SIDENAV----------------------------
 
-@media screen and (max-width: 1280px) and (min-width: 800px){
-  .sidenav{
-    display:none;
-  }
-  .dashboard-menu{
-    display:block;
+  @media screen and (max-width: 1280px) and (min-width: 800px){
+    .sidenav{
+      display:none;
+    }
+    .dashboard-menu{
+      display:block;
+    }
+
+    .dashboard-items{
+      flex: 0 0 auto;
+      width: 100%;
+    }
   }
 
+@media screen and (max-width: 1920px) and (min-width: 1685px){
+ .sidenav-col{
+   flex: 0 0 auto;
+   width: 16.6667% !important;
+ }
   .dashboard-items{
     flex: 0 0 auto;
-    width: 100%;
+    width: 83.3333%;
   }
-
 }
 
