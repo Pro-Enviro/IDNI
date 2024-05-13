@@ -20,6 +20,7 @@ import {FormsModule} from "@angular/forms";
 
 import {MessagesModule} from "primeng/messages";
 import {NgIf} from "@angular/common";
+import {DialogModule} from "primeng/dialog";
 
 
 
@@ -44,7 +45,8 @@ import {NgIf} from "@angular/common";
     FormsModule,
     PanelMenuModule,
     MessagesModule,
-    NgIf
+    NgIf,
+    DialogModule
 
   ],
   templateUrl: './dashboard.component.html',
@@ -59,6 +61,7 @@ export class DashboardComponent {
   envirotrackReport : MenuItem[] =[]
   showWarningBanner: boolean = false;
   messages: Message[] = [{severity: 'warn', summary: 'Using Microsoft Edge', detail: 'This website works best on Firefox or Chrome'}]
+
 
   constructor(private global: GlobalService) {
 
