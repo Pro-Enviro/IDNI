@@ -111,11 +111,10 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
           type: 'cross',
           label: {
             backgroundColor: '#6a7985'
-        }
+           }
         }
       },
-      //width: this.screenWidth >= 1441 ? 950 : this.screenWidth >= 1281 ? 500 : 380,
-      //width: this.screenWidth >= 1441 ? 950 : this.screenWidth >= 1281 ? 700 : 250,
+      width: this.screenWidth >= 1441 ? 950 : this.screenWidth >= 1281 ? 500 : 380,
       title: {
         text: 'Electricity Consumption, kWh split by day of the week',
         left: 'center',
@@ -124,7 +123,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
           fontSize: this.screenWidth >= 1441 ? 16 : 12
         }
       },
-      toolbox: {
+        toolbox: {
         show: true,
         left:'0',
         top:'0',
