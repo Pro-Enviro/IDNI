@@ -82,6 +82,7 @@
                                      class="p-inputtext-sm" [inputStyle]="{width: '100px'}" *ngIf="col.type === 'number'"
                                      [(ngModel)]="col.value" (ngModelChange)="calculateCellValue(fuelRow)"></p-inputNumber>
                       <p-dropdown *ngIf="col.type === 'uom'" [options]="uomOptions"
+                                  (onChange)="changeAllUom($event, fuel)"
                                   [style]="{width: '120px', height: '2.5rem', marginBottom: '2px'}" [appendTo]="table"
                                   [(ngModel)]="col.value"></p-dropdown>
                     </td>

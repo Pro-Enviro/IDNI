@@ -16,6 +16,7 @@ import {SharedComponents} from "../../shared-components";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {GlobalService} from "../../../../_services/global.service";
 import {SidebarModule} from "primeng/sidebar";
+import {DropdownChangeEvent} from "primeng/dropdown";
 
 export class Fields {
   type: string = '';
@@ -128,6 +129,34 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     this.fetchedFuelData = []
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getFuelData()
+  }
+
+  changeAllUom = (event: DropdownChangeEvent, fuel: any) => {
+    this.confirmationService.confirm({
+      target: event.originalEvent.target as EventTarget,
+      message: `Do you want to change all units to ${event.value}?`,
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
+      accept: () => {
+
+        fuel.rows = fuel.rows.map((row: any, index: number) => {
+          const findUom = row.findIndex((r: any) => r.name === 'Unit')
+
+          setTimeout(() => {
+            row[findUom].value = event.value;
+          }, 100 * index)
+
+          return row;
+        })
+        this.confirmationService.close()
+      },
+      reject: () => {
+        this.confirmationService.close()
+      }
+    });
   }
 
   deleteFuelType = (event: any, fuel: any) => {
