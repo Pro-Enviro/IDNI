@@ -114,7 +114,8 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         }
         }
       },
-      width: this.screenWidth >= 1441 ? 950 : this.screenWidth >= 1281 ? 500 : 380,
+      //width: this.screenWidth >= 1441 ? 950 : this.screenWidth >= 1281 ? 500 : 380,
+      //width: this.screenWidth >= 1441 ? 950 : this.screenWidth >= 1281 ? 700 : 250,
       title: {
         text: 'Electricity Consumption, kWh split by day of the week',
         left: 'center',
@@ -125,7 +126,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
       },
       toolbox: {
         show: true,
-        right:'0',
+        left:'0',
         top:'0',
         feature: {
           saveAsImage: {
@@ -138,7 +139,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         min: 0,
         max: Math.round(this.max),
         left: 'right',
-        top: '50',
+        top: 'center',
         calculable: true,
         realtime: false,
         splitNumber: 25,

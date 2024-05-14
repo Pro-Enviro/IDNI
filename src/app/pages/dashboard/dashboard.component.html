@@ -21,13 +21,18 @@
     <div class="sidenav-col h-full lg:w-8" [class]="showMenu ? 'showMenu' : '' ">
       <div class="sidenav">
        <div class="flex justify-content-end mb-3">
-         <span *ngIf="showMenu" class="material-symbols-outlined flex" (click)="showMenu = !showMenu">arrow_circle_right</span>
-         <span *ngIf="!showMenu" class="material-symbols-outlined" (click)="showMenu = !showMenu">arrow_circle_left</span>
+           @if (showMenu){
+           <span class="material-symbols-outlined flex" (click)="showMenu = !showMenu">arrow_circle_right</span>
+           }@else{
+           <span class="material-symbols-outlined" (click)="showMenu = !showMenu">arrow_circle_left</span>
+           }
        </div>
-
         <div class="flex justify-content-start mt-4">
-          <img *ngIf="!showMenu" src="https://id-ni.eco/assets/images/logos/idni-logo.svg" alt="idni-logo" style="height:70px">
-          <img *ngIf="showMenu" src="https://id-ni.eco/assets/images/logos/idni-favicon-svg.svg" alt="idni-logo"  style="height:70px">
+            @if(!showMenu){
+              <img src="https://id-ni.eco/assets/images/logos/idni-logo.svg" alt="idni-logo" style="height:70px">
+            } @else{
+              <img src="https://id-ni.eco/assets/images/logos/idni-favicon-svg.svg" alt="idni-logo"  style="height:70px">
+            }
         </div>
         <p-divider></p-divider>
         <div class="flex flex-column envirotrack-menu">
@@ -35,8 +40,11 @@
         </div>
         <div class="mt-5">
           <p-divider></p-divider>
-          <a  *ngIf="!showMenu" href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple label="Knowledge Platform" icon="pi pi-globe" class="btn-dark"></button></a>
-          <a *ngIf="showMenu" href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple icon="pi pi-globe" class="btn-dark"></button></a>
+            @if(!showMenu){
+              <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple label="Knowledge Platform" icon="pi pi-globe" class="btn-dark"></button></a>
+            }@else{
+              <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple icon="pi pi-globe" class="btn-dark"></button></a>
+            }
         </div>
       </div>
     </div>
