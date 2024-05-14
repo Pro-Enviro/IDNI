@@ -109,36 +109,38 @@
 </section>
 
 
-<p-sidebar [(visible)]="fuelGuide" position="right" styleClass="lg:w-5 md:w-6">
+<p-sidebar [(visible)]="fuelGuide" position="right" styleClass="lg:w-5 md:w-7">
   <div class="container p-5">
     <h3 class="header-style">Non Half-Hourly Data Guide</h3>
     <p>The ‘Non Half-Hourly’ section is where you can add or upload data recorded from bills, including the individual monthly energy/fuel usage, rates, and costs.</p>
-    <h3 style="font-size:1.25rem" class="font-medium">How to Upload Non Half-Hourly Data Step by Step Guide</h3>
+    <p-divider></p-divider>
+    <h3 class="font-medium lg:text-xl md:text-lg">How to Upload Non Half-Hourly Data Step by Step Guide</h3>
     <ul>
-      <li class="p-1">1. Click on "Add New Fuel Type" and select the fuel type from the dropdown menu.</li>
-      <li class="p-1">2. Select the columns that are required for your dataset. Drag and Drop columns from the “Available Columns” panel to the “Selected Columns” panel to include them.<br>
+      <li class="pb-2">1. Click on "Add New Fuel Type" and select the fuel type from the dropdown menu.</li>
+      <li class="pb-2">2. Select the columns that are required for your dataset. Drag and Drop columns from the “Available Columns” panel to the “Selected Columns” panel to include them.<br>
         If custom columns are required this can be achieved with the “Custom Column” panel. Once a custom column is created it can be dragged from the “Available Columns”.<br>
         Totals can be automatically calculated. In the “Columns to Total” panel, select the checkboxes of columns that should be used in calculating the final total.
       </li>
-      <li class="p-1">3. The table will appear below with your selected columns.</li>
-      <li class="p-1">4. To edit the columns, click on the “Edit Column” button. This will allow editing, adding new columns, and updating the total calculation.</li>
-      <li class="p-1">5. Click "Update".</li>
+      <li class="pb-2">3. The table will appear below with your selected columns.</li>
+      <li class="pb-2">4. To edit the columns, click on the “Edit Column” button. This will allow editing, adding new columns, and updating the total calculation.</li>
+      <li class="pb-2">5. Click "Update".</li>
     </ul>
-    <h3 style="font-size:1.25rem" class="font-medium">How to Upload Non Half-Hourly Data from a Spreadsheet Guide</h3>
+    <p-divider></p-divider>
+    <h3 class="font-medium lg:text-xl md:text-lg">How to Upload Non Half-Hourly Data from a Spreadsheet Guide</h3>
     <ul>
-      <li class="p-1">1. Click on "Add New Fuel Type" and select the fuel type from the dropdown menu.</li>
-      <li class="p-1">2. Select the columns that are required for your dataset. Drag and Drop columns from the “Available Columns” panel to the “Selected Columns” panel to include them.<br>
+      <li class="pb-2">1. Click on "Add New Fuel Type" and select the fuel type from the dropdown menu.</li>
+      <li class="pb-2">2. Select the columns that are required for your dataset. Drag and Drop columns from the “Available Columns” panel to the “Selected Columns” panel to include them.<br>
         If custom columns are required this can be achieved with the “Custom Column” panel. Once a custom column is created it can be dragged from the “Available Columns”.<br>
         Totals can be automatically calculated. In the “Columns to Total” panel, select the checkboxes of columns that should be used in calculating the final total.
     </li>
-      <li class="p-1">3. The table will appear below with your selected columns.</li>
-      <li class="p-1">4. Click on “Import Spreadsheet”.</li>
-      <li class="p-1">5. Select the “Choose” button and select a file to upload.</li>
-      <li class="p-1">6. Click “Upload”.</li>
-      <li class="p-1">7. Select the required sheet to import data from.</li>
-      <li class="p-1">8. Drag and Drop columns from the spreadsheet to the corresponding panels. This ensures the data is imported correctly.</li>
-      <li class="p-1">9. Click “Process”. After this is completed a success message will appear. Click “Save” at the bottom of the page to confirm your import.</li>
-      <li class="p-1">10. You can now navigate away or close the page.</li>
+      <li class="pb-2">3. The table will appear below with your selected columns.</li>
+      <li class="pb-2">4. Click on “Import Spreadsheet”.</li>
+      <li class="pb-2">5. Select the “Choose” button and select a file to upload.</li>
+      <li class="pb-2">6. Click “Upload”.</li>
+      <li class="pb-2">7. Select the required sheet to import data from.</li>
+      <li class="pb-2">8. Drag and Drop columns from the spreadsheet to the corresponding panels. This ensures the data is imported correctly.</li>
+      <li class="pb-2">9. Click “Process”. After this is completed a success message will appear. Click “Save” at the bottom of the page to confirm your import.</li>
+      <li class="pb-2">10. You can now navigate away or close the page.</li>
     </ul>
   </div>
 </p-sidebar>
