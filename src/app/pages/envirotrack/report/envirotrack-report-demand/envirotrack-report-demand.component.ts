@@ -183,6 +183,19 @@ export class EnvirotrackReportDemandComponent implements OnInit {
               }
             }
           })
+        } else if (res.role.name === 'consultant') {
+
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                console.log(res.data)
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+                this.isConsultant = true
+                this.onSelectCompany()
+              }
+            }
+          })
         } else {
           this.track.getCompanies().subscribe({
             next: (res: any) => {

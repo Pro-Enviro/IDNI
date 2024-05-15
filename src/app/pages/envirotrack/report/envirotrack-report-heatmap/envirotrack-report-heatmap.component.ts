@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as echarts from "echarts";
 import {EnvirotrackService} from "../../envirotrack.service";
 import moment from "moment/moment";
-import { PlotlyService, PlotlySharedModule, PlotlyViaCDNModule} from "angular-plotly.js";
+import {PlotlyService, PlotlySharedModule, PlotlyViaCDNModule} from "angular-plotly.js";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {EnvirotrackDayLineComponent} from "../envirotrack-day-line/envirotrack-day-line.component";
 import {SharedModules} from "../../../../shared-module";
@@ -111,7 +111,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
           type: 'cross',
           label: {
             backgroundColor: '#6a7985'
-        }
+          }
         }
       },
       width: this.screenWidth >= 1441 ? 950 : this.screenWidth >= 1281 ? 500 : 380,
@@ -119,14 +119,14 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         text: 'Electricity Consumption, kWh split by day of the week',
         left: 'center',
         top: 0,
-        textStyle:{
+        textStyle: {
           fontSize: this.screenWidth >= 1441 ? 16 : 12
         }
       },
       toolbox: {
         show: true,
-        right:'0',
-        top:'0',
+        right: '0',
+        top: '0',
         feature: {
           saveAsImage: {
             show: true
@@ -208,6 +208,19 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
               }
             }
           })
+        } else if (res.role.name === 'consultant') {
+
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                console.log(res.data)
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+                this.isConsultant = true
+                this.onSelectCompany()
+              }
+            }
+          })
         } else {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
@@ -257,7 +270,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
           // if (this.global.selectedMpan.value) {
           //   this.selectedMpan = this.global.selectedMpan.value
           // } else {
-            this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
+          this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
           // }
 
 
@@ -316,7 +329,6 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         this.chartX = this.months.filter((x: any) => moment(x).isBetween(start, end))
 
 
-
       } else {
         this.chartX = this.months
         this.filteredData = this.data
@@ -339,14 +351,12 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
     this.max = Math.max(...arr)
 
 
-
     this.initChart()
     this.initContourChart(this.chartData)
 
   }
 
   initContourChart = (data: any) => {
-
 
 
     this.chartData.sort((a: any, b: any) => moment(a[0], 'YYYY-MM-DD') > moment(b[0], 'YYYY-MM-DD'));
@@ -415,7 +425,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         },
         images: [
           { // Adjust coords of logo depending on screen size
-            x: this.screenWidth >= 1441 ? 0 : this.screenWidth >= 1281 ?-0.1 : -0.18,
+            x: this.screenWidth >= 1441 ? 0 : this.screenWidth >= 1281 ? -0.1 : -0.18,
             y: this.screenWidth >= 1441 ? 1.24 : this.screenWidth >= 1281 ? 1.26 : 1.29,
             sizex: 0.15,
             sizey: 0.15,

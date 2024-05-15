@@ -159,6 +159,18 @@ export class PetLoginProtected implements OnInit {
               }
             }
           })
+        }
+        else if (res.role.name === 'consultant'){
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              console.log(res)
+              if (res.data) {
+                this.companies = res.data
+                this.selectedCompany = res.data[0].id
+                this.isConsultant = true
+              }
+            }
+          })
         } else {
           this.track.getCompanies().subscribe({
             next: (res: any) => {

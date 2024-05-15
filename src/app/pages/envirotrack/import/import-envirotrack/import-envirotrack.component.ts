@@ -242,7 +242,19 @@ export class ImportEnvirotrackComponent {
                 this.selectedCompany = res.data[0].id
               }
             }
+          }) }
+        else if (res.role.name === 'consultant'){
+
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                console.log(res.data)
+                this.companies = res.data
+                this.isConsultant = true
+              }
+            }
           })
+
         } else {
           this.track.getCompanies().subscribe({
             next:(res: any) => {
