@@ -258,7 +258,6 @@ export class PetLoginProtected implements OnInit {
 
   generateNewTable = () => {
 
-    console.log('Generating new table')
     this.resetTableValues()
 
     this.generateClasses('Cost of Energy', TableRow, energyNames)
@@ -353,7 +352,7 @@ export class PetLoginProtected implements OnInit {
   }
 
   createNewTableRow = (group: any) => {
-    console.log(group.parent.name)
+
     let copy = {...group, name: `${group.parent.name} description`}
     group.parent.name !== 'Staff Commute' ? copy.cost = 0 : null
     let findObject = this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)

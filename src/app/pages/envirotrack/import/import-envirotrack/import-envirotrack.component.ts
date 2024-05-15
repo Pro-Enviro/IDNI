@@ -244,11 +244,9 @@ export class ImportEnvirotrackComponent {
             }
           }) }
         else if (res.role.name === 'consultant'){
-
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
               if (res.data) {
-                console.log(res.data)
                 this.companies = res.data
                 this.isConsultant = true
               }
