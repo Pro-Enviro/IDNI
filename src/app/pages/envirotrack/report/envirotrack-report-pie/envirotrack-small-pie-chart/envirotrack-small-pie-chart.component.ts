@@ -45,16 +45,16 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
   defaultFilters: object[] = [{
     name: 'All Data',
     value: 0
-  },{
+  }, {
     name: 'Past 12 months',
     value: 12
-  },{
+  }, {
     name: 'Past 6 months',
     value: 6
-  },{
+  }, {
     name: 'Past 3 months',
     value: 3
-  },{
+  }, {
     name: 'Past 1 months',
     value: 1
   }];
@@ -83,14 +83,14 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
         top: 50,
         left: 'center'
       },
-      grid:{
-        bottom:'100'
+      grid: {
+        bottom: '100'
       },
       title: {
         text: 'Electricity Consumption, kWh',
         left: 'center',
-        top:10,
-        textStyle:{
+        top: 10,
+        textStyle: {
           fontSize: this.screenWidth >= 1441 ? 16 : 12,
         }
       },
@@ -120,8 +120,8 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
       },
       toolbox: {
         show: true,
-        left:'0',
-        top:'20',
+        left: '0',
+        top: '20',
         feature: {
           saveAsImage: {
             show: true
@@ -129,10 +129,10 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
         }
       },
       series: [{
-        top:100,
+        top: 100,
         type: 'pie',
         data: this.chartData,
-        radius: this.screenWidth >= 1441 ? [50,200] : [30,100],
+        radius: this.screenWidth >= 1441 ? [50, 200] : [30, 100],
         label: {
           formatter: '{b}  {per|{d}%}',
           fontSize: 14,
@@ -156,40 +156,53 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
     }
   }
 
-  getCompanies = () =>{
+  getCompanies = () => {
 
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        if (res.role.name === 'user'){
+        if (res.role.name === 'user') {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
-              if (res.data){
+              if (res.data) {
                 this.companies = res.data
                 this.selectedCompany = this.companies[0].id
                 this.onSelectCompany()
               }
             }
           })
+
+        } else if (res.role.name === 'consultant'){
+
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                console.log(res.data)
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+                this.isConsultant = true
+                this.onSelectCompany()
+              }
+            }
+          })
         } else {
           this.track.getCompanies().subscribe({
-            next:(res: any) => {
+            next: (res: any) => {
               this.companies = res.data;
               this.isConsultant = true
             }
           })
         }
-
       }
     })
 
-      //
-      // this.track.getCompanies().subscribe({
-      //   next: (res: any)=>{
-      //     if (res.data) {
-      //       this.companies = res.data
-      //     }
-      //   }
-      // })
+    //
+    // this.track.getCompanies().subscribe({
+    //   next: (res: any)=>{
+    //     if (res.data) {
+    //       this.companies = res.data
+    //     }
+    //   }
+    // })
 
 
   }
@@ -201,8 +214,8 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
   }
 
   getTimes = () => {
-    for(let i = 0; i < 48; i++){
-      this.chartY.push(moment('00:00', 'HH:mm').add(i*30, 'minutes').format('HH:mm'))
+    for (let i = 0; i < 48; i++) {
+      this.chartY.push(moment('00:00', 'HH:mm').add(i * 30, 'minutes').format('HH:mm'))
     }
   }
 
@@ -213,11 +226,12 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
     this.chartX = [];
     this.chartY = [];
     this.track.getData(id).subscribe({
-        next: (res) => {;
+        next: (res) => {
+          ;
           res.forEach((row: any) => {
-            row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
+            row.hhd = JSON.parse(row.hhd.replaceAll('"', '').replaceAll("'", '')).map((x: number) => x ? x : 0)
             this.months.push(row.date)
-            !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan):  null;
+            !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
 
           // if (this.global.selectedMpan?.value) {
@@ -229,10 +243,10 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
           this.data = res
           this.getTimes()
           this.months.sort();
-          this.months.sort((a:string,b:string) => (a.split('/')[1] > b.split('/')[1]) ? 1 : ((b.split('/')[1] > a.split('/')[1]) ? -1 : 0))
-          this.months.sort((a:string,b:string) => (a.split('/')[2] > b.split('/')[2]) ? 1 : ((b.split('/')[2] > a.split('/')[2]) ? -1 : 0))
+          this.months.sort((a: string, b: string) => (a.split('/')[1] > b.split('/')[1]) ? 1 : ((b.split('/')[1] > a.split('/')[1]) ? -1 : 0))
+          this.months.sort((a: string, b: string) => (a.split('/')[2] > b.split('/')[2]) ? 1 : ((b.split('/')[2] > a.split('/')[2]) ? -1 : 0))
           this.minDate = new Date(this.months[0])
-          this.maxDate = new Date(this.months[this.months.length-1])
+          this.maxDate = new Date(this.months[this.months.length - 1])
           this.filterData()
         }
       }
@@ -240,15 +254,15 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
   }
 
 
-  filterData = () =>{
+  filterData = () => {
 
-    if(this.dateRange != undefined && this.dateRange[1]){
-      this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
-      this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
-    }else {
-      if(this.dateFilter){
-        this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.months[this.months.length-1]).subtract(this.dateFilter,'months'), moment(this.months[this.months.length-1])))
-        this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.months[this.months.length-1]).subtract(this.dateFilter,'months'), moment(this.months[this.months.length-1])))
+    if (this.dateRange != undefined && this.dateRange[1]) {
+      this.filteredData = this.data.filter((x: any) => moment(x.date).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
+      this.chartX = this.months.filter((x: any) => moment(x).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
+    } else {
+      if (this.dateFilter) {
+        this.filteredData = this.data.filter((x: any) => moment(x.date).isBetween(moment(this.months[this.months.length - 1]).subtract(this.dateFilter, 'months'), moment(this.months[this.months.length - 1])))
+        this.chartX = this.months.filter((x: any) => moment(x).isBetween(moment(this.months[this.months.length - 1]).subtract(this.dateFilter, 'months'), moment(this.months[this.months.length - 1])))
       } else {
         this.chartX = this.months
         this.filteredData = this.data
@@ -263,16 +277,15 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
     let friday: any[] = [];
     let saturday: any[] = [];
     let sunday: any[] = [];
-    this.filteredData = this.filteredData.filter((x:any) => x.mpan === this.selectedMpan)
-
+    this.filteredData = this.filteredData.filter((x: any) => x.mpan === this.selectedMpan)
 
 
     this.filteredData.forEach((row: any) => {
-      row.hhd.forEach((hh: any, i:number) => {
+      row.hhd.forEach((hh: any, i: number) => {
         hh = hh ? hh : 0;
         row.hhd[i] = !isNaN(parseInt(hh.toString())) ? hh : 0
       })
-      if(row.hhd.length) {
+      if (row.hhd.length) {
         switch (moment(row.date).format('dddd')) {
           case 'Monday':
             monday.push(row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0)))
@@ -301,21 +314,20 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
       }
     })
     this.chartData = [
-      { name: 'Sunday', value: sunday.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) ) },
-      { name: 'Monday', value: monday.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) ) },
-      { name: 'Tuesday', value: tuesday.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) ) },
-      { name: 'Wednesday', value: wednesday.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) ) },
-      { name: 'Thursday', value: thursday.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) ) },
-      { name: 'Friday', value: friday.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) ) },
-      { name: 'Saturday', value: saturday.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )}
+      {name: 'Sunday', value: sunday.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0))},
+      {name: 'Monday', value: monday.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0))},
+      {name: 'Tuesday', value: tuesday.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0))},
+      {name: 'Wednesday', value: wednesday.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0))},
+      {name: 'Thursday', value: thursday.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0))},
+      {name: 'Friday', value: friday.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0))},
+      {name: 'Saturday', value: saturday.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0))}
     ]
 
 
-    let arr: number[] = this.chartData.map((x:any) => x[2])
+    let arr: number[] = this.chartData.map((x: any) => x[2])
     this.max = Math.max(...arr)
     this.initChart()
   }
-
 
 
   fetchDataByRole = () => {
