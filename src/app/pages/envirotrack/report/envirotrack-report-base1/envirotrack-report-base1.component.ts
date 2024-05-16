@@ -41,6 +41,8 @@ export class EnvirotrackReportBase1Component implements OnInit {
   screenWidth: any;
   isConsultant: boolean = false;
   baseGuide: boolean = false;
+  showChart: boolean = false;
+
   constructor(
     private track: EnvirotrackService,
     private msg: MessageService,
@@ -191,11 +193,17 @@ export class EnvirotrackReportBase1Component implements OnInit {
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
+    this.showChart = false;
+    this.chartData = [];
+    this.chartX = [];
+    this.chartY = [];
+
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
   }
 
   getTimes = () =>{
+    if (this.chartX.length === 48) return
     for(let i = 0; i < 48; i++){
       this.chartX.push(moment('00:00', 'HH:mm').add(i*30, 'minutes').format('HH:mm'))
     }
@@ -273,8 +281,8 @@ export class EnvirotrackReportBase1Component implements OnInit {
       lowDay = 0
     }
 
-
     let cDay = this.data.filter((x:any) => moment(x.date).format('YYYY-MM-DD') === `${this.dateFilter}-12-25`)[0]
+
 
     if(cDay === undefined){
       this.msg.add({
@@ -283,6 +291,9 @@ export class EnvirotrackReportBase1Component implements OnInit {
       })
       return
     }
+
+    this.showChart = true;
+
     this.chartData =  [{
       type: 'line',
       name: cDay.date,
