@@ -430,6 +430,8 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     return fuelRow[rowIndex].value = moment(endDate).diff(moment(startDate), 'days', false)
   }
 
+
+
   deleteRow = (fuelRow: any, index: number) => {
     fuelRow.rows.splice(index, 1)
   }
@@ -520,6 +522,12 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
           this.fuels = this.fuels.map((fuelType: any) => {
             if (fuelType.type === spreadsheetData.newFuelData.type) {
               fuelType.rows = spreadsheetData.newFuelData.rows
+              fuelType.rows = fuelType.rows.map((row:any) => {
+              const unitRow = row.find((col:any)=> col.name === 'Unit')
+                unitRow.value = 'kWh'
+
+                return row
+              })
             }
             return fuelType;
           })

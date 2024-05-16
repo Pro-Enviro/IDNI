@@ -64,6 +64,7 @@
                 <ng-template pTemplate="body" let-fuelRow let-i=rowIndex>
                   <tr style="width: 150px">
                     <td *ngFor="let col of fuelRow">
+<!--                      {{fuelRow | json}}-->
                       <p-calendar
                         *ngIf="col.type === 'date'"
                         [style]="{width: '150px', height: '2.5rem', marginBottom: '0'}"
