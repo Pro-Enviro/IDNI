@@ -515,9 +515,6 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     this.ref.onClose.subscribe({
       next: (spreadsheetData: any) => {
         if (spreadsheetData) {
-          console.log(spreadsheetData)
-
-
 
           this.fuels = this.fuels.map((fuelType: any) => {
             if (fuelType.type === spreadsheetData.newFuelData.type) {
