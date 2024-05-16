@@ -232,7 +232,7 @@ export class DataCaptureImportSpreadsheetComponent implements OnInit {
       // Loop through columns to check if value needs to be appended
       columnsToUse = columnsToUse.map((column: any) => {
         const rowIndexToTake = column?.draggedCell?.col
-        if (rowIndexToTake) {
+        if (rowIndexToTake !== undefined) {
           // Handle date format from CSV
 
           if (column.type === 'date') {
