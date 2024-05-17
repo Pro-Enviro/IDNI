@@ -297,15 +297,25 @@ export class ImportEnvirotrackComponent {
 
     console.log(fileUUIDS)
 
-    this.track.saveFilesData(this.selectedCompany, {uploaded_files: fileUUIDS}).subscribe({
-      next: (res:any) => {
-        console.log('uploaded')
-        this.uploadedFiles = []
-      },
-      error: (err:any) => {
-        console.log(err)
-      },
-    })
+
+    try {
+      this.track.saveFilesData(this.selectedCompany, {uploaded_files: fileUUIDS}).subscribe({
+        next: (res:any) => {
+          console.log('uploaded')
+          this.uploadedFiles = []
+        },
+        error: (err:any) => {
+          console.log(err)
+        },
+      })
+
+    } catch {
+      this.msg.add({
+        severity: 'warn',
+        detail:'You have already uploaded files'
+      })
+    }
+
 
 
 
