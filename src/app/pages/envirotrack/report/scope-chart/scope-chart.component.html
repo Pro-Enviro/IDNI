@@ -7,17 +7,26 @@
         </p-card>
       </div>
       <div class="lg:col-5 md:col-6">
-        <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }" *ngIf="isConsultant">
-          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
-                      [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px"></p-dropdown>
-          <!--    <p-multiSelect [options]="yearFilter" optionLabel="name" optionName="value" [(ngModel)]="selectedYears" (ngModelChange)="onYearFilter($event)"></p-multiSelect>-->
-        </p-card>
+        @if(isConsultant){
+          <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+            <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" scrollHeight="370px"></p-dropdown>
+          </p-card>
+        } @else if (!isConsultant){
+          <p-card header="Selected Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+            <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select" [unselectable]="true"></p-selectButton>
+          </p-card>
+        }
       </div>
       <div class="col-12" *ngIf="showChart">
-        <div echarts [options]="chartOption" class="Scope Chart" style="max-height: 600px; height: 600px" [id]="'chartId'"></div>
-        <div *ngIf="!dataArray.length">
+        @if(showChart){
+          <div echarts [options]="chartOption" class="Scope Chart" style="max-height: 600px; height: 600px" [id]="'chartId'"></div>
+        }@else{
           <p>To add data, please go to "Menu" and select "Non Half-Hourly Data".</p>
-        </div>
+        }
+
+<!--        <div *ngIf="!dataArray.length">-->
+<!--          <p>To add data, please go to "Menu" and select "Non Half-Hourly Data".</p>-->
+<!--        </div>-->
       </div>
     </div>
 
