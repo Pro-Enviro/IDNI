@@ -40,6 +40,7 @@ export class ScopeChartComponent implements OnInit {
   dataArray: any;
   isConsultant: boolean = false;
   scopeGuide:boolean = false;
+  showChart: boolean = false
 
 
   constructor(
@@ -62,7 +63,10 @@ export class ScopeChartComponent implements OnInit {
       name: 'Outside of Scopes',
       value: 0
     }];
+
+    this.envirotrackData = {}
   }
+
 
   initChart(){
 
@@ -154,7 +158,6 @@ export class ScopeChartComponent implements OnInit {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
               if (res.data) {
-                console.log(res.data)
                 this.companies = res.data
                 this.selectedCompany = this.companies[0].id
                 this.isConsultant = true
@@ -186,20 +189,31 @@ export class ScopeChartComponent implements OnInit {
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
     this.dataArray = []
+    this.fuels = []
+    this.envirotrackData = {}
+
+    console.log(this.selectedCompany)
+
     this.track.updateSelectedCompany(this.selectedCompany)
-    this.getFuelData(this.selectedCompany)
     this.getData(this.selectedCompany)
+    this.getFuelData(this.selectedCompany)
   }
 
   getFuelData = (selectedCompanyId: number) => {
     this.fuels = []
     this.dataArray = []
 
+
     if (selectedCompanyId) {
       this.track.getFuelData(selectedCompanyId).subscribe({
         next: (res:any) => {
           if (res?.data?.fuel_data) {
             this.fuels = JSON.parse(res.data?.fuel_data)
+
+          } else {
+            this.fuels = []
+            this.dataArray = []
+
           }
         },
         error: (err) => console.log(err),
@@ -210,8 +224,15 @@ export class ScopeChartComponent implements OnInit {
 
   formatDataCorrectly = () => {
     this.dataArray = []
-    if (!this.fuels.length) return;
+
+
+    if (!this.fuels.length) this.showChart = false
+    if (!this.fuels.length) return ;
     // loop through fuel types and just get total of all values/units/ total cost/
+
+    if (this.fuels.length) {
+      this.showChart = true;
+    }
 
     let extractedData = this.fuels.map((fuel: any) => {
 
@@ -262,7 +283,6 @@ export class ScopeChartComponent implements OnInit {
   getData = (id: number) => {
     this.track.getData(id).subscribe({
         next: (res) => {
-
           if (res){
             let grandTotal = 0;
             res.forEach((row: any) => {

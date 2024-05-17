@@ -284,13 +284,16 @@ export class TypeChartComponent implements OnInit {
       }
     })
 
+    console.log(this.dataArray)
+
     this.initChart()
 
   }
 
+
   // Envirotrack data
   getData = (id: number) => {
-    console.log(this.dataArray)
+
     this.track.getData(id).subscribe({
         next: (res) => {
           if (res){
