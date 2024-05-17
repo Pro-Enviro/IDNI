@@ -14,7 +14,7 @@
           </p-card>
         } @else if (!isConsultant){
           <p-card header="Selected Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
-                  <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+                  <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select" [unselectable]="true"></p-selectButton>
           </p-card>
         }
       </div>
@@ -41,8 +41,25 @@
           </ng-template>
 
           <ng-template pTemplate="body">
-            <ng-container *ngIf="chartModel">
-              <div class="">
+            @if(chartModel){
+              <ng-container>
+                <div class="">
+                  <div class="grid mb-6">
+                    <div class="lg:col-10 md:col-12">
+                      <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months"></p-selectButton>
+                    </div>
+                    <div class="lg:col-2 md:col-12">
+                      <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
+                    </div>
+                  </div>
+                  <div class="h-full">
+                    <plotly-plot  divId="plotlyChart" *ngIf="testChart" [data]="testChart.data" [layout]="testChart.layout" [useResizeHandler]="true"
+                                  [style]="{position: 'relative',width: '100%', height: '65vh', marginTop: '3rem'}" (plotlyClick)="onPlotClick($event)"></plotly-plot>
+                  </div>
+                </div>
+              </ng-container>
+            }@else if(!chartModel){
+              <ng-container>
                 <div class="grid mb-6">
                   <div class="lg:col-10 md:col-12">
                     <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months"></p-selectButton>
@@ -51,24 +68,9 @@
                     <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
                   </div>
                 </div>
-                <div class="h-full">
-                  <plotly-plot  divId="plotlyChart" *ngIf="testChart" [data]="testChart.data" [layout]="testChart.layout" [useResizeHandler]="true"
-                                [style]="{position: 'relative',width: '100%', height: '65vh', marginTop: '3rem'}" (plotlyClick)="onPlotClick($event)"></plotly-plot>
-                </div>
-              </div>
-            </ng-container>
-            <ng-container *ngIf="!chartModel">
-              <div class="grid mb-6">
-                <div class="lg:col-10 md:col-12">
-                  <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months"></p-selectButton>
-                </div>
-                <div class="lg:col-2 md:col-12">
-                  <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
-                </div>
-              </div>
-              <div echarts *ngIf="chartOptions" [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>
-            </ng-container>
-
+                <div echarts *ngIf="chartOptions" [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>
+              </ng-container>
+            }
           </ng-template>
         </p-card>
       </div>

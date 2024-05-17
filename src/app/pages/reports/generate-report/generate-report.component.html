@@ -8,7 +8,7 @@
          </p-card>
        } @else if (!isConsultant){
          <p-card header="Selected Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
-           <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+           <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select" [unselectable]="true"></p-selectButton>
          </p-card>
        }
 
