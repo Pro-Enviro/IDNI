@@ -9,7 +9,7 @@
                         scrollHeight="350px"></p-dropdown>
           </p-card>
         } @else if (!isConsultant){
-          <p-card header="Select Company" styleClass="card-select-panel">
+          <p-card header="Selected Company" styleClass="card-select-panel">
             <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
           </p-card>
         }
