@@ -308,7 +308,6 @@ export class ImportEnvirotrackComponent {
     })
 
 
-    return;
 
      // Send an email to pro enviro to alert about uploaded data
 
