@@ -132,6 +132,9 @@ export class ScopeChartComponent implements OnInit {
   }
 
   getDataArray(data:any){
+
+    if (!data) return;
+
     data.filter((x:any) => x.scope === 'Scope 1').map((x:any) => moment(x.endDate).year() > 2018 ? this.dataArray[0].value += x.kgCO2e : null);
     data.filter((x:any) => x.scope === 'Scope 2').map((x:any) => moment(x.endDate).year() > 2018 ? this.dataArray[1].value += x.kgCO2e: null);
     data.filter((x:any) => x.scope === 'Scope 3').map((x:any) => moment(x.endDate).year() > 2018 ? this.dataArray[2].value += x.kgCO2e: null);
