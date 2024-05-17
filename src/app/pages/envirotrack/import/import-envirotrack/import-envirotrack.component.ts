@@ -163,7 +163,6 @@ export class ImportEnvirotrackComponent {
 
 
   uploadHandler = (event: any, fileUploadComponent: FileUpload) => {
-    console.log('Upload Handler')
     this.uploadedFiles = []
     event.files.forEach((file: any) => this.uploadedFiles.push(file))
     if (this.uploadedFiles.length > 0) {
@@ -198,7 +197,7 @@ export class ImportEnvirotrackComponent {
   getSheetData = () => {
     const sheet = this.sheetData.find((x: any) => x.name === this.selectedSheet);
     this.fileContent = sheet?.data;
-    console.log(this.fileContent);
+
   }
 
   getFileType = (event: any) => {
@@ -344,7 +343,6 @@ export class ImportEnvirotrackComponent {
       "files": [this.fileIds]
     },{responseType: "text"}).subscribe({
       next:(res) => {
-        console.log(res)
         this.msg.add({
           severity: 'success',
           detail: 'Data sent'
@@ -443,7 +441,6 @@ export class ImportEnvirotrackComponent {
         });
       }
       if (index === this.hhd.length - 1) {
-        console.log('this hhd length is at the end')
         if (!newHhd.length) {
           /*this.msg.add({
             severity: 'error',
@@ -456,7 +453,6 @@ export class ImportEnvirotrackComponent {
     }
 
     try {
-      console.log('Trying')
       await lastValueFrom(this.track.uploadData(newHhd, this.selectedCompany!));
       this.msg.add({
         severity: 'success',
