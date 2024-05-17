@@ -192,8 +192,6 @@ export class ScopeChartComponent implements OnInit {
     this.fuels = []
     this.envirotrackData = {}
 
-    console.log(this.selectedCompany)
-
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
     this.getFuelData(this.selectedCompany)
