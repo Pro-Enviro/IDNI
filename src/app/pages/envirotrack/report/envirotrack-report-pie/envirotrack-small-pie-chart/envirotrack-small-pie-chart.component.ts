@@ -166,6 +166,8 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
               if (res.data) {
                 this.companies = res.data
                 this.selectedCompany = this.companies[0].id
+                //this.selectedCompany=this.companies[0].name
+                console.log(this.companies[0].name)
                 this.onSelectCompany()
               }
             }
