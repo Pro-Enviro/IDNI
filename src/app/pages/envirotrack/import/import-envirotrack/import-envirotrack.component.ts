@@ -163,6 +163,7 @@ export class ImportEnvirotrackComponent {
 
 
   uploadHandler = (event: any, fileUploadComponent: FileUpload) => {
+    console.log('Upload Handler')
     this.uploadedFiles = []
     event.files.forEach((file: any) => this.uploadedFiles.push(file))
     if (this.uploadedFiles.length > 0) {
@@ -175,9 +176,6 @@ export class ImportEnvirotrackComponent {
 
       from(this.global.uploadDataForCompany(formData)).subscribe({
         next: (res: any) => {
-
-          console.log(res)
-
           if (res.length > 1 ) {
             this.fileIds = res.map((file: any) => file.id);
           } else if (res.id) {

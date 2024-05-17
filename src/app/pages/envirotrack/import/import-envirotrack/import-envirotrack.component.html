@@ -49,12 +49,12 @@
         </div>
 
         <div class="pet-card mt-5" *ngIf="uploadedFiles.length && !isConsultant">
-          <p-button *ngIf="isXlsx" styleClass="btn-dark m-1" label="Send Data"
+          <p-button styleClass="btn-dark m-1" label="Send Data"
                     (click)="sendDataToProEnviro()"></p-button>
           <p>Send data to Pro Enviro to process</p>
         </div>
 
-        <ng-container *ngIf="fileContent">
+        <ng-container *ngIf="fileContent && isConsultant">
           <p-card header="Half-Hourly Data (HHD)" styleClass="card-charts mt-4" #table>
             <div class="grid">
               <div class="lg:col-3 md:col-6" pDroppable (onDrop)="dropMpan()">
