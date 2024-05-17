@@ -317,8 +317,6 @@ export class ImportEnvirotrackComponent {
     }
 
 
-
-
      // Send an email to pro enviro to alert about uploaded data
 
     return this.http.post(`${this.url}/Mailer`,{
