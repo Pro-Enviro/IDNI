@@ -68,6 +68,11 @@ export class DbService {
 
   }
 
+  checkUsersFiles = (id: number) => {
+    return this.http.get(`${this.url}/items/companies/${id}?fields=uploaded_files.*`)
+
+  }
+
   uploadBugReport = (bugReport: any) => {
     return this.http.post(`${this.url}/items/bug_reports`, bugReport)
   }

@@ -13,6 +13,7 @@ import {GlobalService} from "../../../../_services/global.service";
 import {SidebarModule} from "primeng/sidebar";
 import {DividerModule} from "primeng/divider";
 import {FileUpload} from "primeng/fileupload";
+import {DbService} from "../../../../_services/db.service";
 
 
 interface Sheet {
@@ -88,7 +89,8 @@ export class ImportEnvirotrackComponent {
     private global: GlobalService,
     private msg: MessageService,
     private papa: Papa,
-    private http: HttpClient
+    private http: HttpClient,
+    private db: DbService
   ) {
     moment.locale('en-gb')
     moment().format('L')
@@ -280,10 +282,10 @@ export class ImportEnvirotrackComponent {
 
     if (!this.selectedCompany || !this.uploadedFiles.length) return;
 
-    let fileUUIDS;
+    let fileUUIDS : {directus_files_id: any}[] = [];
     if (this.uploadedFiles.length === 1 ) {
       fileUUIDS = [{directus_files_id: this.fileIds}]
-    } else if (this.uploadedFiles.length > 1 && this.uploadedFiles.length < 4) {
+    } else if (this.uploadedFiles.length > 1 && this.uploadedFiles.length <= 10) {
       let mappedIds = this.fileIds.map((fileId: string) => {
             return {
               directus_files_id: fileId
@@ -293,18 +295,36 @@ export class ImportEnvirotrackComponent {
     }
 
 
-
     try {
-      this.track.saveFilesData(this.selectedCompany, {uploaded_files: fileUUIDS}).subscribe({
-        next: (res:any) => {
-          console.log('uploaded')
-          this.uploadedFiles = []
-        },
-        error: (err:any) => {
-          console.log(err)
-        },
-      })
+      // Check if existing files, if so add to current uuid array
+      this.db.checkUsersFiles(this.selectedCompany).subscribe({
 
+        next: (res: any) => {
+          if (res.data){
+            res.data.uploaded_files.forEach((file: any) => {
+              fileUUIDS.push({
+                directus_files_id: file.directus_files_id,
+              })
+            })
+          }
+        },
+
+        error: (err: any) => console.log(err),
+        complete: () => {
+
+          // Add the saved files to the company table in Directus
+          if (!this.selectedCompany) return;
+
+          this.track.saveFilesData(this.selectedCompany, {uploaded_files: fileUUIDS}).subscribe({
+            next: (res:any) => {
+              this.uploadedFiles = []
+            },
+            error: (err:any) => {
+              console.log(err)
+            },
+          })
+        }
+      })
     } catch {
       this.msg.add({
         severity: 'warn',
@@ -313,7 +333,6 @@ export class ImportEnvirotrackComponent {
     }
 
      // Send an email to pro enviro to alert about uploaded data
-
     return this.http.post(`${this.url}/Mailer`,{
       subject: 'Pro Enviro Envirotrack sent',
       to: ['it@proenviro.co.uk', 'data@proenviro.co.uk'],
