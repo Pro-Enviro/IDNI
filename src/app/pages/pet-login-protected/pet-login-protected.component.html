@@ -14,10 +14,17 @@
   <div class="grid flex justify-content-center flex-wrap">
     <div class="col-5 p-3 mt-3">
       <p-card header="{{isConsultant ? 'Select Company' : ''}}" styleClass="flex justify-content-center card-charts p-2">
-        <div  *ngIf="isConsultant" class="p-1">
-          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
-                      [style]="{ width: '15rem', marginBottom: '2rem'}" [disabled]="!isConsultant" scrollHeight="300px"></p-dropdown>
-        </div>
+        @if(isConsultant){
+          <div  class="p-1">
+            <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
+                        [style]="{ width: '15rem', marginBottom: '2rem'}" scrollHeight="300px"></p-dropdown>
+          </div>
+        }@else if(!isConsultant){
+          <div  class="mb-5 flex justify-content-center">
+          <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select-pet" [unselectable]="true"></p-selectButton>
+          </div>
+
+        }
         <div class="flex flex-column p-1">
           <label class="text-xl font-semibold" for="sic_code">SIC Code</label>
           <p-autoComplete

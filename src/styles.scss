@@ -116,6 +116,14 @@ a{
   }
 }
 
+.btn-select-pet{
+  .p-selectbutton .p-button.p-highlight{
+    background-color: #f1f1f1;
+    color:$darkColor-900;
+    border:none;
+  }
+}
+
 .btn-select-months{
   .p-selectbutton .p-button.p-highlight{
     background-color: $primeColor;
