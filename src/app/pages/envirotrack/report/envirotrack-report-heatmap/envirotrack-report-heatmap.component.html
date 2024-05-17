@@ -7,24 +7,31 @@
         </p-card>
       </div>
       <div class="lg:col-4 md:col-6">
-        <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant" [style]="{ height: '100%' }">
-          <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
-          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"
-                      scrollHeight="370px"></p-dropdown>
-        </p-card>
+        @if(isConsultant){
+          <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+            <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"
+                        scrollHeight="370px"></p-dropdown>
+          </p-card>
+        } @else if (!isConsultant){
+          <p-card header="Selected Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+                  <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+          </p-card>
+        }
       </div>
-      <div class="lg:col-4 md:col-6" *ngIf="mpan.length">
+      @if(mpan.length){
+        <div class="lg:col-4 md:col-6">
           <p-card header="Select Mpan" styleClass="card-select-panel" [style]="{ height: '100%'}">
             <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
           </p-card>
-      </div>
+        </div>
+      }
+
       <div class="col-12">
         <p-card styleClass="card-style-none">
           <ng-template pTemplate="header">
             <div class="flex w-full p-4">
               <div class="flex-grow-1">
-                <h3 *ngIf="chartModel" class="text-2xl font-semibold">Energy Footprint</h3>
-                <h3 *ngIf="!chartModel" class="text-2xl font-semibold">Energy Footprint</h3>
+                <h3 class="text-2xl font-semibold">Energy Footprint</h3>
               </div>
               <div class="flex-shrink-1 pt-3">
                 <p-toggleButton onLabel="Detailed" offLabel="Simplified" styleClass="btn-dark" [(ngModel)]="chartModel"></p-toggleButton>
