@@ -87,6 +87,7 @@ export class BugReportComponent implements OnInit {
           severity: 'success',
           detail: 'Bug Report submitted. Thank You.'
         })
+
         this.sendNotificationToProEnviro()
         this.uploadedFiles = []
         this.myForm.reset()

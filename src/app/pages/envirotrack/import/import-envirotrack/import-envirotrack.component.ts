@@ -171,9 +171,17 @@ export class ImportEnvirotrackComponent {
       });
 
 
-      from(this.global.uploadBugReportScreenshots(formData)).subscribe({
+      from(this.global.uploadDataForCompany(formData)).subscribe({
         next: (res: any) => {
-          this.fileIds = res.id
+
+          console.log(res)
+
+          if (res.length > 1 ) {
+            this.fileIds = res.map((file: any) => file.id);
+          } else if (res.id) {
+            this.fileIds = res.id
+          }
+
           fileUploadComponent.clear()
         }
       })
@@ -267,6 +275,42 @@ export class ImportEnvirotrackComponent {
   }
 
   sendDataToProEnviro(){
+
+    // Upload data to database and link to company
+
+    if (!this.selectedCompany || !this.uploadedFiles.length) return;
+
+
+    console.log(this.fileIds)
+    let fileUUIDS;
+    if (this.uploadedFiles.length === 1 ) {
+      fileUUIDS = [{directus_files_id: this.fileIds}]
+    } else if (this.uploadedFiles.length > 1 && this.uploadedFiles.length < 4) {
+      console.log(this.fileIds)
+      let mappedIds = this.fileIds.map((fileId: string) => {
+            return {
+              directus_files_id: fileId
+            }
+          })
+        fileUUIDS = mappedIds
+    }
+
+    console.log(fileUUIDS)
+
+    this.track.saveFilesData(this.selectedCompany, {uploaded_files: fileUUIDS}).subscribe({
+      next: (res:any) => {
+        console.log('uploaded')
+        this.uploadedFiles = []
+      },
+      error: (err:any) => {
+        console.log(err)
+      },
+    })
+
+
+    return;
+
+     // Send an email to pro enviro to alert about uploaded data
 
     return this.http.post(`${this.url}/Mailer`,{
       subject: 'Pro Enviro Envirotrack sent',

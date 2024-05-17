@@ -267,7 +267,7 @@ export class TypeChartComponent implements OnInit {
 
         // Check if not available
         if (findValue !== -1) totalValue += parseFloat(row[findValue].value)
-        if (findCost !== -1 ) totalCost += parseFloat(row[findCost].value)
+        if (findCost !== -1) totalCost += parseFloat(row[findCost].value)
         if (findUnit !== -1) unit = row[findUnit].value
 
       })
