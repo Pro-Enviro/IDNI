@@ -43,6 +43,7 @@ export class TypeChartComponent implements OnInit {
   fltr1: any = [];
 
   chartOption!: EChartsOption;
+  chartData: boolean = false;
 
   datas: any;
   dataArray: any;
@@ -73,7 +74,6 @@ export class TypeChartComponent implements OnInit {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
               if (res.data) {
-                console.log(res.data)
                 this.companies = res.data
                 this.selectedCompany = this.companies[0].id
                 this.isConsultant = true
@@ -105,9 +105,12 @@ export class TypeChartComponent implements OnInit {
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
     this.dataArray = []
+    this.envirotrackData = {}
+    // this.chartData = false;
+
     this.track.updateSelectedCompany(this.selectedCompany)
-    this.getFuelData(this.selectedCompany)
     this.getData(this.selectedCompany)
+    this.getFuelData(this.selectedCompany)
   }
 
   resetDataArray(){
@@ -247,6 +250,7 @@ export class TypeChartComponent implements OnInit {
   }
 
   formatDataCorrectly = () => {
+    if (!this.fuels.length) this.chartData = false
     if (!this.fuels.length) return;
     // loop through fuel types and just get total of all values/units/ total cost/
 
@@ -284,7 +288,9 @@ export class TypeChartComponent implements OnInit {
       }
     })
 
-    console.log(this.dataArray)
+
+
+    this.chartData = true;
 
     this.initChart()
 
@@ -316,7 +322,6 @@ export class TypeChartComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log('NG ON INIT')
     this.dataArray = []
     this.getCompanies()
     // this.resetDataArray();
