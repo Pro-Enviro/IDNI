@@ -21,9 +21,10 @@
           </div>
         }@else if(!isConsultant){
           <div  class="mb-5 flex justify-content-center">
-          <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select-pet" [unselectable]="true"></p-selectButton>
+            <p-card header="Selected Company" styleClass="flex justify-content-center card-charts p-2">
+              <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select-pet" [unselectable]="true"></p-selectButton>
+            </p-card>
           </div>
-
         }
         <div class="flex flex-column p-1">
           <label class="text-xl font-semibold" for="sic_code">SIC Code</label>
