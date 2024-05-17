@@ -64,6 +64,7 @@
                 <ng-template pTemplate="body" let-fuelRow let-i=rowIndex>
                   <tr style="width: 150px">
                     <td *ngFor="let col of fuelRow">
+<!--                      {{fuelRow | json}}-->
                       <p-calendar
                         *ngIf="col.type === 'date'"
                         [style]="{width: '150px', height: '2.5rem', marginBottom: '0'}"
@@ -82,6 +83,7 @@
                                      class="p-inputtext-sm" [inputStyle]="{width: '100px'}" *ngIf="col.type === 'number'"
                                      [(ngModel)]="col.value" (ngModelChange)="calculateCellValue(fuelRow)"></p-inputNumber>
                       <p-dropdown *ngIf="col.type === 'uom'" [options]="uomOptions"
+                                  (onChange)="changeAllUom($event, fuel)"
                                   [style]="{width: '120px', height: '2.5rem', marginBottom: '2px'}" [appendTo]="table"
                                   [(ngModel)]="col.value"></p-dropdown>
                     </td>
