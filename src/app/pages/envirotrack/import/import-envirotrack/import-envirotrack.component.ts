@@ -280,13 +280,10 @@ export class ImportEnvirotrackComponent {
 
     if (!this.selectedCompany || !this.uploadedFiles.length) return;
 
-
-    console.log(this.fileIds)
     let fileUUIDS;
     if (this.uploadedFiles.length === 1 ) {
       fileUUIDS = [{directus_files_id: this.fileIds}]
     } else if (this.uploadedFiles.length > 1 && this.uploadedFiles.length < 4) {
-      console.log(this.fileIds)
       let mappedIds = this.fileIds.map((fileId: string) => {
             return {
               directus_files_id: fileId
@@ -295,7 +292,6 @@ export class ImportEnvirotrackComponent {
         fileUUIDS = mappedIds
     }
 
-    console.log(fileUUIDS)
 
 
     try {
@@ -315,7 +311,6 @@ export class ImportEnvirotrackComponent {
         detail:'You have already uploaded files'
       })
     }
-
 
      // Send an email to pro enviro to alert about uploaded data
 
