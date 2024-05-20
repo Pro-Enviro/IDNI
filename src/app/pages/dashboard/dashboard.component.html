@@ -13,7 +13,7 @@
 
   <div class="dashboard-menu mt-5">
     <div class="flex justify-content-start p-2">
-      <p-button (click)="sideMenu = true" icon="pi pi-home" styleClass="btn-outline ml-3" label="Menu"></p-button>
+        <p-button (click)="sideMenu = true" icon="pi pi-home" styleClass="btn-outline ml-3" label="Menu"></p-button>
     </div>
   </div>
 <div class="flex justify-content-start p-2" style="background-color: #fdfdfd">
@@ -65,7 +65,7 @@
        </div>
        <p-divider></p-divider>
        <div class="flex flex-column envirotrack-menu">
-         <p-panelMenu [model]="menuBar"></p-panelMenu>
+         <p-panelMenu [model]="menuBar" (click)="sideMenu = false"></p-panelMenu>
        </div>
        <div class="mt-5">
          <p-divider></p-divider>
@@ -73,6 +73,7 @@
        </div>
      </div>
   </p-sidebar>
+
 
 
 

@@ -14,14 +14,13 @@ import {PanelMenuModule} from "primeng/panelmenu";
 import {GlobalService} from "../../_services/global.service";
 import {DividerModule} from "primeng/divider";
 import {RippleModule} from "primeng/ripple";
-
 import {ToggleButtonModule} from "primeng/togglebutton";
 import {FormsModule} from "@angular/forms";
-
 import {MessagesModule} from "primeng/messages";
 import {NgIf} from "@angular/common";
 import {DialogModule} from "primeng/dialog";
-import {TieredMenuModule} from "primeng/tieredmenu";
+import {MenuModule} from "primeng/menu";
+
 
 
 
@@ -48,8 +47,7 @@ import {TieredMenuModule} from "primeng/tieredmenu";
     MessagesModule,
     NgIf,
     DialogModule,
-    TieredMenuModule
-
+    MenuModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -57,14 +55,16 @@ import {TieredMenuModule} from "primeng/tieredmenu";
 export class DashboardComponent {
   sideMenu: boolean = false;
   showFuelData: boolean = true;
-
   checked: boolean = false;
-
   menuBar : MenuItem[] =[]
   miniMenu: MenuItem[] = []
+  items: MenuItem[] | undefined;
+
   showWarningBanner: boolean = false;
   messages: Message[] = [{severity: 'warn', summary: 'Using Microsoft Edge', detail: 'This website works best on Firefox or Chrome'}]
   showMenu: boolean = false;
+
+
 
   constructor(private global: GlobalService) {
 
@@ -100,7 +100,6 @@ export class DashboardComponent {
             escape: false,
             routerLink:'/dashboard/import'
           },
-
           {
             label:'<span class="material-symbols-outlined">timeline</span> PET',
             routerLink:'/dashboard/pet',
@@ -281,12 +280,8 @@ export class DashboardComponent {
             ]}
 
         ]
+
       }
     })
-
-
-
-
-
   }
 }
