@@ -17,6 +17,7 @@ import {EnvirotrackService} from "../../envirotrack.service";
 import {GlobalService} from "../../../../_services/global.service";
 import {SidebarModule} from "primeng/sidebar";
 import {DividerModule} from "primeng/divider";
+import {DropdownChangeEvent} from "primeng/dropdown";
 
 export class Fields {
   type: string = '';
@@ -130,6 +131,34 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     this.fetchedFuelData = []
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getFuelData()
+  }
+
+  changeAllUom = (event: DropdownChangeEvent, fuel: any) => {
+    this.confirmationService.confirm({
+      target: event.originalEvent.target as EventTarget,
+      message: `Do you want to change all units to ${event.value}?`,
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
+      accept: () => {
+
+        fuel.rows = fuel.rows.map((row: any, index: number) => {
+          const findUom = row.findIndex((r: any) => r.name === 'Unit')
+
+          setTimeout(() => {
+            row[findUom].value = event.value;
+          }, 100 * index)
+
+          return row;
+        })
+        this.confirmationService.close()
+      },
+      reject: () => {
+        this.confirmationService.close()
+      }
+    });
   }
 
   deleteFuelType = (event: any, fuel: any) => {
@@ -403,6 +432,8 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     return fuelRow[rowIndex].value = moment(endDate).diff(moment(startDate), 'days', false)
   }
 
+
+
   deleteRow = (fuelRow: any, index: number) => {
     fuelRow.rows.splice(index, 1)
   }
@@ -487,11 +518,15 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
       next: (spreadsheetData: any) => {
         if (spreadsheetData) {
 
-
-
           this.fuels = this.fuels.map((fuelType: any) => {
             if (fuelType.type === spreadsheetData.newFuelData.type) {
               fuelType.rows = spreadsheetData.newFuelData.rows
+              fuelType.rows = fuelType.rows.map((row:any) => {
+              const unitRow = row.find((col:any)=> col.name === 'Unit')
+                unitRow.value = 'kWh'
+
+                return row
+              })
             }
             return fuelType;
           })
