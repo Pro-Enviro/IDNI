@@ -82,6 +82,7 @@ export class ImportEnvirotrackComponent {
   accessData: boolean = false;
   dataGuide:boolean = false;
   fileIds: string[] = []
+  selectedCompanyName: any;
 
 
   constructor(
@@ -247,6 +248,7 @@ export class ImportEnvirotrackComponent {
               if (res.data){
                 this.companies = res.data
                 this.selectedCompany = res.data[0].id
+                this.selectedCompanyName = res.data[0].name
               }
             }
           }) }
@@ -276,7 +278,6 @@ export class ImportEnvirotrackComponent {
   sendDataToProEnviro(){
 
     // Upload data to database and link to company
-
     if (!this.selectedCompany || !this.uploadedFiles.length) return;
 
     let fileUUIDS : {directus_files_id: any}[] = [];
@@ -290,7 +291,6 @@ export class ImportEnvirotrackComponent {
           })
         fileUUIDS = mappedIds
     }
-
 
     try {
       // Check if existing files, if so add to current uuid array
@@ -329,6 +329,7 @@ export class ImportEnvirotrackComponent {
       })
     }
 
+
      // Send an email to pro enviro to alert about uploaded data
     return this.http.post(`${this.url}/Mailer`,{
       subject: 'Pro Enviro Envirotrack sent',
@@ -336,7 +337,7 @@ export class ImportEnvirotrackComponent {
       template: {
         name: "data_uploaded",
         data: {
-          "company": this.selectedCompany,
+          "company": this.selectedCompanyName,
           "user": this.selectedEmail
         }
       },
