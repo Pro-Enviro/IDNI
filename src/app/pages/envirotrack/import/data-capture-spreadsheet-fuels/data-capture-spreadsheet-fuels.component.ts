@@ -16,6 +16,7 @@ import {SharedComponents} from "../../shared-components";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {GlobalService} from "../../../../_services/global.service";
 import {SidebarModule} from "primeng/sidebar";
+import {DividerModule} from "primeng/divider";
 import {DropdownChangeEvent} from "primeng/dropdown";
 
 export class Fields {
@@ -35,6 +36,7 @@ export class Fields {
     SharedModules,
     SharedComponents,
     SidebarModule,
+    DividerModule,
   ]
 })
 export class DataCaptureSpreadsheetFuelsComponent implements OnInit {

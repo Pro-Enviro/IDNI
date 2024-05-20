@@ -14,12 +14,13 @@ import {PanelMenuModule} from "primeng/panelmenu";
 import {GlobalService} from "../../_services/global.service";
 import {DividerModule} from "primeng/divider";
 import {RippleModule} from "primeng/ripple";
-
 import {ToggleButtonModule} from "primeng/togglebutton";
 import {FormsModule} from "@angular/forms";
-
 import {MessagesModule} from "primeng/messages";
 import {NgIf} from "@angular/common";
+import {DialogModule} from "primeng/dialog";
+import {MenuModule} from "primeng/menu";
+
 
 
 
@@ -44,8 +45,9 @@ import {NgIf} from "@angular/common";
     FormsModule,
     PanelMenuModule,
     MessagesModule,
-    NgIf
-
+    NgIf,
+    DialogModule,
+    MenuModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -53,12 +55,16 @@ import {NgIf} from "@angular/common";
 export class DashboardComponent {
   sideMenu: boolean = false;
   showFuelData: boolean = true;
-
   checked: boolean = false;
+  menuBar : MenuItem[] =[]
+  miniMenu: MenuItem[] = []
+  items: MenuItem[] | undefined;
 
-  envirotrackReport : MenuItem[] =[]
   showWarningBanner: boolean = false;
   messages: Message[] = [{severity: 'warn', summary: 'Using Microsoft Edge', detail: 'This website works best on Firefox or Chrome'}]
+  showMenu: boolean = false;
+
+
 
   constructor(private global: GlobalService) {
 
@@ -77,14 +83,14 @@ export class DashboardComponent {
       },
       complete: () => {
         // @ts-ignore
-        this.envirotrackReport  =[
+        this.menuBar  =[
           {
             label:'<span class="material-symbols-outlined">dashboard</span> Dashboard',
             routerLink:'/dashboard',
             escape: false
           },
           {
-            label:'<span class="material-symbols-outlined">flowsheet</span> Non Half-Hourly Data</p>',
+            label:'<span class="material-symbols-outlined">flowsheet</span> Non Half-Hourly Data',
             routerLink:'/dashboard/fuel-data',
             escape: false,
             visible: this.showFuelData
@@ -94,7 +100,6 @@ export class DashboardComponent {
             escape: false,
             routerLink:'/dashboard/import'
           },
-
           {
             label:'<span class="material-symbols-outlined">timeline</span> PET',
             routerLink:'/dashboard/pet',
@@ -171,19 +176,112 @@ export class DashboardComponent {
               label:'<span class="material-symbols-outlined">live_help</span> FAQ\'s',
               escape: false,
               routerLink: '/dashboard/faqs'
-            },
-            // {
-            //   label:'<span class="material-symbols-outlined">contact_mail</span> Contact Us',
-            //   escape: false,
-            //   routerLink: '/dashboard/contact-us'
-            // }
+            }
           ]}
 
         ]
+
+
+        this.miniMenu  =[
+          {
+            label:'<span class="material-symbols-outlined">dashboard</span>',
+            routerLink:'/dashboard',
+            escape: false
+          },
+          {
+            label:'<span class="material-symbols-outlined">flowsheet</span>',
+            routerLink:'/dashboard/fuel-data',
+            escape: false,
+            visible: this.showFuelData
+          },
+          {
+            label:'<span class="material-symbols-outlined">add_chart</span>',
+            escape: false,
+            routerLink:'/dashboard/import'
+          },
+
+          {
+            label:'<span class="material-symbols-outlined">timeline</span>',
+            routerLink:'/dashboard/pet',
+            escape: false
+          },
+          {
+            label:'<span class="material-symbols-outlined">data_thresholding</span>',
+            routerLink:'/dashboard/recommendations',
+            escape: false
+          },
+          {
+            label:'<span class="material-symbols-outlined">query_stats</span> ',
+            escape: false,
+            routerLink:'/dashboard/heatmap',
+            items:[
+              {
+                label:'<span class="material-symbols-outlined material-icon">assessment</span>',
+                escape: false,
+                routerLink: '/dashboard/heatmap'
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">scatter_plot</span>',
+                escape: false,
+                routerLink: '/dashboard/scatter',
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">bar_chart</span>',
+                escape: false,
+                routerLink: '/dashboard/bar'
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">pie_chart</span>',
+                escape: false,
+                routerLink: '/dashboard/pie'
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">show_chart</span>',
+                escape: false,
+                routerLink: '/dashboard/base1'
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">stacked_line_chart</span>',
+                escape: false,
+                routerLink: '/dashboard/avg'
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">data_exploration</span>',
+                escape: false,
+                routerLink: '/dashboard/demand'
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">pie_chart</span>',
+                escape: false,
+                routerLink: '/dashboard/co2emissions'
+              },
+              {
+                label:'<span class="material-symbols-outlined material-icon">data_usage</span>',
+                escape: false,
+                routerLink: '/dashboard/co2emissionsbyscope'
+              }
+            ]
+          },
+          {
+            label:'<span class="material-symbols-outlined">help</span>',
+            escape: false,
+            //routerLink:'/dashboard/help',
+            items:[
+              {
+                label:'<span class="material-symbols-outlined">problem</span>',
+                escape: false,
+                routerLink: '/dashboard/bug-report'
+              },
+              {
+                label:'<span class="material-symbols-outlined">live_help</span>',
+                escape: false,
+                routerLink: '/dashboard/faqs'
+              }
+            ]}
+
+        ]
+
       }
     })
-
-
-
   }
 }

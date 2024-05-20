@@ -1,4 +1,4 @@
-<section>
+<section class="p-2">
   <div class="container flex justify-content-end mt-2 mb-4">
     <p-button type="button" styleClass="btn-style" (click)="sidebarVisible = true" icon="pi pi-spin pi-cog" label="Using the PET Tool"></p-button>
   </div>
@@ -316,10 +316,12 @@
       <div echarts [options]="chartOptions" style="max-height: 80vh; height: 70vh; width: 70vw"></div>
     </div>
   </div>
-  <p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="w-5 md:w-6">
-    <div class="p-3">
+
+  <p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="w-5 md:w-7">
+    <div class="p-4">
       <h3 class="header-style">Using the PET Tool</h3>
       <p>There are 4 levels of engagement using the PET tool.  At no stage will one business be able to identify and see another businesses data.  Levels 1 & 2 are free to use, Level 1 is available to everyone but only businesses that have agreed to share their data for the ID-NI project will be able to use Level 2.  Level 3 is also free to use but is only available to companies who have been selected as part of a regional cluster of companies.  Like level 2, level 3 requires that the company has agreed to share their data with the project.  All Level 2 companies who have submitted accurate data will receive charts profiling their energy usage, an indication of the Scope 2 emissions and an initial plan for decarbonisation.  Level 3 companies will received a more detailed decarbonisation plan highlighting how they can save money and reduce their Scope 1 and 2 emissions.  They will also have a 1 day site visit and an individual detailed report.  Level 4 is self funded but also requires the company to share their data with the project.  It is subject to negotiation between the  company and the assessor but cover something equivalent to a Level 3 assessment or may deliver a much more detailed decarbonisation strategy for the business or them signing up to the Science Based Targets Initiative SBTI at an additional cost.</p>
+      <p-divider></p-divider>
       <h3 class="header-style mt-5">Level 1</h3>
       <p>The open access level 1, PET tool is located on the ID-NI Knowledge Sharing Platform.  It only  has the Productivity capability available.  If a company inputs their data at Level 1 access their data will not be stored.  Unless when prompted they agree to share their data, as which point they are granted Level 2 access.  If they do not agree then not data will be stored and only their productivity information will be used to see how productive they are compared to other companies of a similar size or from the same sector are performing.  They will be asked to complete the following fields</p>
       <ul>
@@ -337,6 +339,7 @@
         <li class="font-semibold">Note: Do not include internal salary and labour costs</li>
       </ul>
       <p>From this we will be able to calculate your current productivity score for this site and show how you are performing compared to the average company in you sector or of a similar size.</p>
+      <p-divider></p-divider>
       <h3 class="header-style mt-5">Level 2</h3>
       <p>Level 2 access will require the company to agree to share their data with the project.  The company will provide the same productivity information as outlined in Level 1 but must also send or upload their ½ hourly energy data ( Electric and or Gas).  As the complete each of the productivity factors they will be prompted to provide additional information.  For example when they put in their total energy cost and send the 1/2 hourly data they will then be asked to breakdown the different types of energy and fuels they use at their site.  In transport they will be asked to identify the different modes of transport they use.</p>
     </div>

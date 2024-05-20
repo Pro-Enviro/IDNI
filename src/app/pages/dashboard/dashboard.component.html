@@ -1,41 +1,71 @@
   <div class="top-image-wrapper">
     <div class="top-image">
-      <img src="https://id-ni.eco/assets/images/stock-images/camirus-topimage.jpeg" alt="">
+        <img srcset="
+            https://id-ni.eco/assets/images/stock-images/camirus-topimage.jpeg  1024w,
+            https://id-ni.eco/assets/images/stock-images/camirus-topimage.jpeg 640w"
+             sizes="(min-width: 36em) 33.3vw, 100vw"
+             src="https://id-ni.eco/assets/images/stock-images/camirus-topimage.jpeg"
+             alt=""
+        />
     </div>
     <div class="top-image-line"></div>
   </div>
 
-<div class="grid pt-2" style="background-color: #fcfcfc">
-    <div class="col-12">
-      <div class="flex justify-content-start p-2 dashboard-menu">
+  <div class="dashboard-menu mt-5">
+    <div class="flex justify-content-start p-2">
         <p-button (click)="sideMenu = true" icon="pi pi-home" styleClass="btn-outline ml-3" label="Menu"></p-button>
+    </div>
+  </div>
+<div class="flex justify-content-start p-2" style="background-color: #fdfdfd">
+  <div class="">
+    <div class="sidenav-col h-full lg:w-8" [class]="showMenu ? 'showMenu' : '' ">
+      <div class="sidenav">
+       <div class="flex justify-content-end mb-3">
+           @if (showMenu){
+           <span class="material-symbols-outlined flex" (click)="showMenu = !showMenu">arrow_circle_right</span>
+           }@else{
+           <span class="material-symbols-outlined" (click)="showMenu = !showMenu">arrow_circle_left</span>
+           }
+       </div>
+        <div class="flex justify-content-start mt-4">
+            @if(!showMenu){
+              <img src="https://id-ni.eco/assets/images/logos/idni-logo.svg" alt="idni-logo" style="height:70px">
+            } @else{
+              <img src="https://id-ni.eco/assets/images/logos/idni-favicon-svg.svg" alt="idni-logo"  style="height:70px">
+            }
+        </div>
+        <p-divider></p-divider>
+        <div class="flex flex-column envirotrack-menu">
+          <p-panelMenu [model]="showMenu ? miniMenu : menuBar"></p-panelMenu>
+        </div>
+        <div class="mt-5">
+          <p-divider></p-divider>
+            @if(!showMenu){
+              <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple label="Knowledge Platform" icon="pi pi-globe" class="btn-dark"></button></a>
+            }@else{
+              <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple icon="pi pi-globe" class="btn-dark"></button></a>
+            }
+        </div>
       </div>
     </div>
-    <div class="col-12">
+  </div>
+    <div class="dashboard-items">
+      <section class="pr-5">
 <!--    <app-stat-containers-tpl></app-stat-containers-tpl>-->
-       <div class="p-4">
-         <section>
-
-<!--            <div class="p-3">
-             <router-outlet></router-outlet>
-           </div> -->
-
            <p-messages *ngIf="showWarningBanner" [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
            <router-outlet></router-outlet>
-
-         </section>
-       </div>
+      </section>
     </div>
  </div>
 
-  <p-sidebar [(visible)]="sideMenu" styleClass="lg:w-4 xl:w-3 md:w-5">
+  <p-sidebar [(visible)]="sideMenu" styleClass="lg:w-4 md:w-5">
      <div class="sidenav-sidebar">
        <div class="flex justify-content-start p-2 mt-4">
          <img src="https://id-ni.eco/assets/images/logos/idni-logo.svg" alt="idni-logo" style="height:75px">
        </div>
        <p-divider></p-divider>
        <div class="flex flex-column envirotrack-menu">
-         <p-panelMenu [model]="envirotrackReport"></p-panelMenu>
+         <p-panelMenu [model]="menuBar" (click)="sideMenu = false"></p-panelMenu>
        </div>
        <div class="mt-5">
          <p-divider></p-divider>
@@ -43,3 +73,10 @@
        </div>
      </div>
   </p-sidebar>
+
+
+
+
+
+
+
