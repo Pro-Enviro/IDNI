@@ -63,7 +63,8 @@ export class DashboardComponent {
   showWarningBanner: boolean = false;
   messages: Message[] = [{severity: 'warn', summary: 'Using Microsoft Edge', detail: 'This website works best on Firefox or Chrome'}]
   showMenu: boolean = false;
-
+  dropMenu:boolean=false;
+  helpMenu:boolean=false;
 
 
   constructor(private global: GlobalService) {
@@ -284,4 +285,6 @@ export class DashboardComponent {
       }
     })
   }
+
+  protected readonly onclick = onclick;
 }
