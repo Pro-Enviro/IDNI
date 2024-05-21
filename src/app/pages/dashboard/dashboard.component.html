@@ -87,6 +87,14 @@
                <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/co2emissionsbyscope">Breakdown of CO2e (tonnes) by scope</a></li>
              }
            </ul>
+           <ul [class]="helpMenu ? 'helpMenu' : '' ">
+             <span>Help</span>
+             <span class="material-symbols-outlined flex" (click)="helpMenu = !helpMenu">arrow_circle_right</span>
+             @if(helpMenu){
+               <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/bug-report">Bug Report</a></li>
+               <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/faqs">FAQ's</a></li>
+             }
+           </ul>
 
 
 
