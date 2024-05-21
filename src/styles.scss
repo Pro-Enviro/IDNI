@@ -718,27 +718,27 @@ a{
   background-color:#FDFDFD;
   color: #4b5563;
   border-radius: 6px;
-  a {
-    font-size:18.5px;
-    padding:10px;
-    text-decoration: none;
-    font-weight: 500;
-  }
-  a:hover {
-    background-color:$lightColor-100;
-    text-decoration: none;
-    border-radius:10px;
-  }
-  a:focus{
-    background-color:$lightColor-100;
-    text-decoration: none;
-    border-radius:10px;
-  }
-  a:active{
-    background-color:$lightColor-100;
-    text-decoration: none;
-    border-radius:10px;
-  }
+  //a {
+  //  font-size:18.5px;
+  //  padding:10px;
+  //  text-decoration: none;
+  //  font-weight: 500;
+  //}
+  //a:hover {
+  //  background-color:$lightColor-100;
+  //  text-decoration: none;
+  //  border-radius:10px;
+  //}
+  //a:focus{
+  //  background-color:$lightColor-100;
+  //  text-decoration: none;
+  //  border-radius:10px;
+  //}
+  //a:active{
+  //  background-color:$lightColor-100;
+  //  text-decoration: none;
+  //  border-radius:10px;
+  //}
   span.material-symbols-outlined {
     color: $primeColor;
     font-weight:700;
@@ -746,8 +746,17 @@ a{
     font-size:1.8rem;
   }
   .envirotrack-menu{
+    margin-left:-40px;
     padding-top:30px;
-    padding-bottom:30px
+    padding-bottom:30px;
+    width:150%;
+    .list-menu{
+      li{
+        font-size:21px;
+        padding-bottom:20px;
+        font-weight: 500;
+      }
+    }
   }
 
 }
