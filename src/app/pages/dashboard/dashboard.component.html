@@ -65,7 +65,36 @@
        </div>
        <p-divider></p-divider>
        <div class="flex flex-column envirotrack-menu">
-         <p-panelMenu [model]="menuBar" (click)="sideMenu = false"></p-panelMenu>
+<!--         <p-panelMenu [model]="menuBar"></p-panelMenu>-->
+         <ul>
+           <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard">Dashboard</a></li>
+           <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/fuel-data">Non Half-Hourly Data</a></li>
+           <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/import">Half-Hourly Data Upload</a></li>
+           <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/pet">PET</a></li>
+           <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/recommendations">Recommendations</a></li>
+           <ul [class]="dropMenu ? 'dropMenu' : '' ">
+             <span>Reports</span>
+             <span class="material-symbols-outlined flex" (click)="dropMenu = !dropMenu">arrow_circle_right</span>
+             @if(dropMenu){
+               <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/heatmap">Electricity Consumption, kWh per half-hour</a></li>
+               <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/scatter">Electricity Consumption, kWh split by day of the week</a></li>
+               <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/bar">Electricity Consumption, kWh</a></li>
+               <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/pie">Electricity Consumption, % split by day of the week</a></li>
+               <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/base1">Christmas Day vs Lowest Day of the year consumption</a></li>
+               <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/avg">Average Daily Consumption, kWh per half hour</a></li>
+               <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/demand">Maximum Demand</a></li>
+               <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/co2emissions">Breakdown of CO2e (tonnes) by emissions source</a></li>
+               <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/co2emissionsbyscope">Breakdown of CO2e (tonnes) by scope</a></li>
+             }
+           </ul>
+
+
+
+
+         </ul>
+
+
+
        </div>
        <div class="mt-5">
          <p-divider></p-divider>
