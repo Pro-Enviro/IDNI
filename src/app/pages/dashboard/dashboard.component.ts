@@ -20,6 +20,7 @@ import {MessagesModule} from "primeng/messages";
 import {NgIf} from "@angular/common";
 import {DialogModule} from "primeng/dialog";
 import {MenuModule} from "primeng/menu";
+import {StatContainersTplComponent} from "./stat-containers-tpl/stat-containers-tpl.component";
 
 
 
@@ -47,7 +48,8 @@ import {MenuModule} from "primeng/menu";
     MessagesModule,
     NgIf,
     DialogModule,
-    MenuModule
+    MenuModule,
+    StatContainersTplComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'

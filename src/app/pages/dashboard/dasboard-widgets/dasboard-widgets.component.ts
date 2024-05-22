@@ -9,6 +9,7 @@ import {GlobalService} from "../../../_services/global.service";
 import {StorageService} from "../../../_services/storage.service";
 import {NgIf} from "@angular/common";
 import {EnvirotrackService} from "../../envirotrack/envirotrack.service";
+import {StatContainersTplComponent} from "../stat-containers-tpl/stat-containers-tpl.component";
 
 @Component({
   selector: 'app-dasboard-widgets',
@@ -16,7 +17,8 @@ import {EnvirotrackService} from "../../envirotrack/envirotrack.service";
   imports: [
     EnvirotrackBarSmallComponent,
     EnvirotrackSmallPieChartComponent,
-    NgIf
+    NgIf,
+    StatContainersTplComponent
   ],
   templateUrl: './dasboard-widgets.component.html',
   styleUrl: './dasboard-widgets.component.scss'
