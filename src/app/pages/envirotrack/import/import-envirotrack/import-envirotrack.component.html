@@ -30,7 +30,7 @@
           <p-fileUpload #uploader name="file[]" [customUpload]="true"
                         (onSelect)="getFileType($event)"
                         (uploadHandler)="onUpload($event, uploader)"
-                        [multiple]="false"
+                        [multiple]="true"
                         chooseStyleClass="btn-style"
                         cancelStyleClass="btn-dark"
                         uploadStyleClass="btn-outline">

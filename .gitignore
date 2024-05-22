@@ -38,6 +38,8 @@ testem.log
 /typings
 *.psd
 .psd
+/src/environments/environment.development.ts
+/src/environments/environment.ts
 
 # System files
 .DS_Store

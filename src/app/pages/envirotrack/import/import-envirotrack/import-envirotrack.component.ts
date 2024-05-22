@@ -4,7 +4,7 @@ import {MenuItem, MessageService} from "primeng/api";
 import { Papa } from "ngx-papaparse";
 import moment from "moment";
 import 'moment/locale/en-gb';
-import {from, lastValueFrom} from "rxjs";
+import {concatMap, from, lastValueFrom, map, mergeMap, of, switchMap, toArray} from "rxjs";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
@@ -13,6 +13,7 @@ import {GlobalService} from "../../../../_services/global.service";
 import {SidebarModule} from "primeng/sidebar";
 import {DividerModule} from "primeng/divider";
 import {FileUpload} from "primeng/fileupload";
+import {TrelloService} from "../../../../_services/trello.service";
 
 
 interface Sheet {
@@ -81,6 +82,7 @@ export class ImportEnvirotrackComponent {
   accessData: boolean = false;
   dataGuide:boolean = false;
   fileIds: string[] = []
+   selectedCompanyName: string = '';
 
 
   constructor(
@@ -88,7 +90,8 @@ export class ImportEnvirotrackComponent {
     private global: GlobalService,
     private msg: MessageService,
     private papa: Papa,
-    private http: HttpClient
+    private http: HttpClient,
+    private trello: TrelloService
   ) {
     moment.locale('en-gb')
     moment().format('L')
@@ -240,6 +243,7 @@ export class ImportEnvirotrackComponent {
               if (res.data){
                 this.companies = res.data
                 this.selectedCompany = res.data[0].id
+                this.selectedCompanyName = res.data[0].name
               }
             }
           })
@@ -258,32 +262,64 @@ export class ImportEnvirotrackComponent {
 
   sendDataToProEnviro(){
 
-    return this.http.post(`${this.url}/Mailer`,{
-      subject: 'Pro Enviro Envirotrack sent',
-      to: ['it@proenviro.co.uk', 'data@proenviro.co.uk'],
-      template: {
-        name: "data_uploaded",
-        data: {
-          "company": this.selectedCompany,
-          "user": this.selectedEmail
-        }
-      },
-      "files": [this.fileIds]
-    },{responseType: "text"}).subscribe({
-      next:(res) => {
-        console.log(res)
-        this.msg.add({
-          severity: 'success',
-          detail: 'Data sent'
-        })
-      },
-      error: (error: any) =>console.log(error),
-      complete: () => {
-        this.uploadedFiles = []
-        this.fileContent = null;
+    this.sendDataToTrello()
 
-      }
-    })
+    // return this.http.post(`${this.url}/Mailer`,{
+    //   subject: 'Pro Enviro Envirotrack sent',
+    //   to: ['it@proenviro.co.uk', 'data@proenviro.co.uk'],
+    //   template: {
+    //     name: "data_uploaded",
+    //     data: {
+    //       "company": this.selectedCompany,
+    //       "user": this.selectedEmail
+    //     }
+    //   },
+    //   "files": [this.fileIds]
+    // },{responseType: "text"}).subscribe({
+    //   next:(res) => {
+    //     console.log(res)
+    //     this.msg.add({
+    //       severity: 'success',
+    //       detail: 'Data sent'
+    //     })
+    //   },
+    //   error: (error: any) =>console.log(error),
+    //   complete: () => {
+    //     this.uploadedFiles = []
+    //     this.fileContent = null;
+    //
+    //   }
+    // })
+  }
+
+  sendDataToTrello = ()=>  {
+    // Trello card options
+    const jsonObj = {
+      name: `(IDNI Data Upload) - ${this.selectedCompanyName}`,
+      desc: `A request to upload the attached data to IDNI. Company: ${this.selectedCompanyName} https://idni.eco/portal/dashboard`,
+      // idMembers: '5d5bb1ed7dd38d8e8f9cb633', // Memphis' ID
+    }
+
+    // New card created on Trello. The ID is returned in the result, which is then used to add attachments and checklists to the card
+    // IDs passed through observables, Create Card -> Upload all attachments -> Create Checklist -> Post Checklist Item
+    this.trello.postNewCardToTrello(jsonObj).pipe(
+      mergeMap((res: any) =>
+        // Force the uploadedFiles to be an observable
+        from(this.uploadedFiles).pipe(
+          concatMap((file: any) => {
+            // Attach each file to Form Data for upload
+            const form = new FormData();
+            form.append('file', file);
+            return this.trello.postAttachmentToCard(res, form);
+          }),
+          toArray(), // Awaits all files uploaded then creates a checklist
+          switchMap(() => this.trello.postCheckListToCard(res, { name: 'TODO' }))
+        )
+      ),
+      // Add checklist item after checklist is created
+      mergeMap((res2: any) => this.trello.addCheckListItemToCheckList(res2))
+    ).subscribe()
+
   }
 
 
@@ -407,6 +443,8 @@ export class ImportEnvirotrackComponent {
       });
     }
   }
+
+
 }
 
 
