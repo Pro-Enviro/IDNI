@@ -34,7 +34,7 @@ export class ScopeChartComponent implements OnInit {
   filteredData: any;
   selectedTypes:any;
   envirotrackData: any = {}
-  chartOption!: EChartsOption;
+  chartOption: EChartsOption | undefined;
   fuels: any[] = []
   datas: any;
   dataArray: any;
@@ -194,6 +194,8 @@ export class ScopeChartComponent implements OnInit {
     this.dataArray = []
     this.fuels = []
     this.envirotrackData = {}
+    this.chartOption = undefined;
+
 
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
