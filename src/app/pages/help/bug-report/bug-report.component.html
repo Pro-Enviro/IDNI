@@ -1,76 +1,78 @@
-<div class="container">
-  <div class="pet-card px-4 py-8 md:px-6 lg:px-8">
-    <div class="text-700 text-center">
-      <div class="font-bold mb-3" style="color:#85bfba"><i class="pi pi-file"></i> Bug Report Section</div>
-      <div class="text-900 font-bold text-5xl pb-5">Bug Report Form</div>
-      <div class="text-700 text-lg mb-5">
-       Use the form below to report any issues within the portal's functionality. Please, fill the fields to describe the problem and include steps to reproduce it.
-        Additionally, we encouraged you to attach screenshots to provide visual context if necessary, aiding in the comprehensive understanding and resolution of the reported issue.
+<section>
+  <p-card styleClass="card-charts" [style]="{ width: '82vw' }">
+    <div class="container">
+      <div class="pet-card px-4 py-8 md:px-6 lg:px-8">
+        <div class="text-700 text-center">
+          <div class="font-bold mb-3" style="color:#85bfba"><i class="pi pi-file"></i> Bug Report Section</div>
+          <div class="text-900 font-bold text-5xl pb-5">Bug Report Form</div>
+          <div class="text-700 text-lg mb-5">
+           Use the form below to report any issues within the portal's functionality. Please, fill the fields to describe the problem and include steps to reproduce it.
+            Additionally, we encouraged you to attach screenshots to provide visual context if necessary, aiding in the comprehensive understanding and resolution of the reported issue.
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
+    <div class="grid pt-5 flex justify-content-center">
+      <div class="col-7">
+        <p-card header="Bug Report Form" styleClass="card-charts">
+          <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)" class="p-2">
+            <div>
+              <label class="flex flex-column text-sm">
+                Email:
+                <input pInputText formControlName="email" placeholder="Your email" class="mt-1 text-sm">
+              </label>
 
+            </div>
+            <div class="mt-3">
+              <label class="flex flex-column text-sm">
+                Issue:
+              </label>
+              <textarea  pInputTextarea formControlName="issue" placeholder="Explain the issue in as much detail as required"  class="mt-1 w-full text-sm" rows="5"></textarea>
+            </div>
+            <div class="mt-3">
+              <label  class="flex flex-column text-sm">
+                Steps to Reproduce:
+                <textarea pInputTextarea formControlName="steps_to_reproduce"
+                          placeholder="Outline steps on how to reproduce the issue (If possible)"  class="mt-1 text-sm" rows="5"></textarea>
+              </label>
+            </div>
+            <div class="mt-3" >
+              <label  class="flex flex-column text-sm">
+                Screenshots:
 
-<div class="grid pt-5 flex justify-content-center">
-  <div class="col-7">
-    <p-card header="Bug Report Form" styleClass="card-charts">
-      <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)" class="p-2">
-        <div>
-          <label class="flex flex-column text-sm">
-            Email:
-            <input pInputText formControlName="email" placeholder="Your email" class="mt-1 text-sm">
-          </label>
-
-        </div>
-        <div class="mt-3">
-          <label class="flex flex-column text-sm">
-            Issue:
-          </label>
-          <textarea  pInputTextarea formControlName="issue" placeholder="Explain the issue in as much detail as required"  class="mt-1 w-full text-sm" rows="5"></textarea>
-        </div>
-        <div class="mt-3">
-          <label  class="flex flex-column text-sm">
-            Steps to Reproduce:
-            <textarea pInputTextarea formControlName="steps_to_reproduce"
-                      placeholder="Outline steps on how to reproduce the issue (If possible)"  class="mt-1 text-sm" rows="5"></textarea>
-          </label>
-        </div>
-        <div class="mt-3" >
-          <label  class="flex flex-column text-sm">
-            Screenshots:
-
-            <p-fileUpload #fileUpload [multiple]="true" accept="image/*" [maxFileSize]="1000000" [fileLimit]="3" [customUpload]="true" class="mt-1 text-sm"
-                          (uploadHandler)="uploadHandler($event,fileUpload)"
-                          chooseStyleClass="btn-style"
-                          cancelStyleClass="btn-dark"
-                          uploadStyleClass="btn-outline"
-            >
-              <ng-template pTemplate="content">
-                <ul *ngIf="uploadedFiles.length" >
-                  <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
-                </ul>
-              </ng-template>
-            </p-fileUpload>
-          </label>
-        </div>
-        <div class="mt-3">
-          <label  class="flex flex-column text-sm">
-            Device Used:
-            <input pInputText formControlName="device_used" placeholder="Your message"  class="mt-1 text-sm">
-          </label>
-        </div>
-        <div class="mt-3">
-          <label  class="flex flex-column text-sm">
-            Browser:
-            <input pInputText formControlName="browser" placeholder="Your message"  class="mt-1 text-sm">
-          </label>
-        </div>
-        <div class="pt-3">
-          <p-button styleClass="btn-style mt-2" type="submit" [disabled]="myForm.invalid" icon="pi pi-cloud-upload" label="Submit Bug Report"></p-button>
-        </div>
-      </form>
-    </p-card>
-  </div>
-</div>
+                <p-fileUpload #fileUpload [multiple]="true" accept="image/*" [maxFileSize]="1000000" [fileLimit]="3" [customUpload]="true" class="mt-1 text-sm"
+                              (uploadHandler)="uploadHandler($event,fileUpload)"
+                              chooseStyleClass="btn-style"
+                              cancelStyleClass="btn-dark"
+                              uploadStyleClass="btn-outline"
+                >
+                  <ng-template pTemplate="content">
+                    <ul *ngIf="uploadedFiles.length" >
+                      <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+                    </ul>
+                  </ng-template>
+                </p-fileUpload>
+              </label>
+            </div>
+            <div class="mt-3">
+              <label  class="flex flex-column text-sm">
+                Device Used:
+                <input pInputText formControlName="device_used" placeholder="Your message"  class="mt-1 text-sm">
+              </label>
+            </div>
+            <div class="mt-3">
+              <label  class="flex flex-column text-sm">
+                Browser:
+                <input pInputText formControlName="browser" placeholder="Your message"  class="mt-1 text-sm">
+              </label>
+            </div>
+            <div class="pt-3">
+              <p-button styleClass="btn-style mt-2" type="submit" [disabled]="myForm.invalid" icon="pi pi-cloud-upload" label="Submit Bug Report"></p-button>
+            </div>
+          </form>
+        </p-card>
+      </div>
+    </div>
+  </p-card>
+</section>
