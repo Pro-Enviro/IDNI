@@ -160,7 +160,7 @@ export class TypeChartComponent implements OnInit {
           name: 'tCO2e By emissions source',
           data: this.dataArray.filter((x:any) => x.value),
           type: 'pie',
-          radius: [20,150],
+          radius: [20,180],
           itemStyle: {
             borderRadius: 5
           },
