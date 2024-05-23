@@ -1,49 +1,7 @@
 <!-- This component is making the links in header unclickable -->
 <!--<app-top-page-img-tpl></app-top-page-img-tpl>-->
 
-<section>
 
-<!--   <div class="p-5">
-    <div class="grid">
-      <div class="col-6">
-        <p-card header="Half-Hourly Data Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
-          <div class="flex flex-column">
-            <p-button type="button" styleClass="btn-style mb-4" (click)="accessData = true" icon="pi pi-file"
-                      label="Access to Half-Hourly Electricity Data"></p-button>
-            <p-button type="button" styleClass="btn-dark-upload" (click)="dataGuide = true" icon="pi pi-cloud-upload"
-                      label="Upload Half-Hourly Data Guide"></p-button>
-          </div>
-        </p-card>
-      </div>
-      <div class="col-6">
-        <p-card header="Select Company" styleClass="card-select-panel" *ngIf="!fileContent && isConsultant" [style]="{ height: '100%' }">
-          <p-dropdown [options]="companies" optionLabel="name" optionValue="id" [(ngModel)]="selectedCompany"
-                      [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px"
-          ></p-dropdown>
-        </p-card>
-
-        <!--        <p-card *ngIf="!fileContent && selectedName" header="Select Company" [style]="{width: '70%', margin: 'auto', marginTop:'5rem'}" styleClass="card-charts">-->
-        <!--          {{selectedName}}-->
-        <!--        </p-card>-->
-      </div>
-      <div class="col-12 mt-5">
-        <div class="pet-card lg:col-6 md:col-12" *ngIf="!fileContent" [style]="{margin: 'auto', marginTop:'4rem'}">
-          <h3 class="title pb-3">File Upload</h3>
-          <p-fileUpload #uploader name="file[]" [customUpload]="true"
-                        (onSelect)="getFileType($event)"
-                        (uploadHandler)="onUpload($event, uploader)"
-                        [multiple]="true"
-                        chooseStyleClass="btn-style"
-                        cancelStyleClass="btn-dark"
-                        uploadStyleClass="btn-outline">
-            <ng-template pTemplate="content" style="padding:30px">
-
-              <ul *ngIf="uploadedFiles.length" style="list-style:none">
-                <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
-              </ul>
-            </ng-template>
-          </p-fileUpload> -->
-          
   <p-card header="Half-Hourly Data Upload" styleClass="card-charts" [style]="{ width: '83.5vw' }">
     <div class="p-5">
       <div class="grid">
@@ -168,7 +126,7 @@
       </div>
     </div>
   </p-card>
-</section>
+
 
 
 <div class="flex justify-content-end">
