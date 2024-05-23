@@ -1,12 +1,12 @@
 <section>
   <p-card styleClass="card-charts">
     <div class="grid">
-      <div class="lg:col-5 md:col-6">
+      <div class="lg:col-6 md:col-6">
         <p-card header="Breakdown of CO2e by Emissions Source Chart Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
           <p-button type="button" styleClass="btn-style" (click)="emissionGuide = true" icon="pi pi-chart-pie" label="Guide"></p-button>
         </p-card>
       </div>
-      <div class="lg:col-5 md:col-6">
+      <div class="lg:col-6 md:col-6">
         <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }" *ngIf="isConsultant">
           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id"
                       (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px"></p-dropdown>
@@ -17,7 +17,6 @@
       <div class="col-12" *ngIf="chartData">
         <div echarts [options]="chartOption"  class="chart" [id]="'chartId'"
              style="max-height: 800px; height: 800px;"></div>
-
       </div>
       <div *ngIf="!dataArray.length">
         <p>To add data, please go to "Menu" and select "Non Half-Hourly Data".</p>

@@ -112,6 +112,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
           label: {
             backgroundColor: '#6a7985'
           }
+
         }
       },
       width: this.screenWidth >= 1441 ? 950 : this.screenWidth >= 1281 ? 500 : 380,
@@ -123,10 +124,10 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
           fontSize: this.screenWidth >= 1441 ? 16 : 12
         }
       },
-      toolbox: {
+        toolbox: {
         show: true,
-        right: '0',
-        top: '0',
+        left:'0',
+        top:'0',
         feature: {
           saveAsImage: {
             show: true
@@ -138,7 +139,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         min: 0,
         max: Math.round(this.max),
         left: 'right',
-        top: '50',
+        top: 'center',
         calculable: true,
         realtime: false,
         splitNumber: 25,

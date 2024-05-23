@@ -50,6 +50,7 @@ import {
   BoughtInParts
 } from "./pet-tool-classes";
 import {AutoCompleteCompleteEvent} from "primeng/autocomplete";
+import {DividerModule} from "primeng/divider";
 
 
 
@@ -58,7 +59,7 @@ import {AutoCompleteCompleteEvent} from "primeng/autocomplete";
 @Component({
   selector: 'app-pet-login-protected',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective, SidebarModule],
+  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective, SidebarModule, DividerModule],
   templateUrl: './pet-login-protected.component.html',
   styleUrl: './pet-login-protected.component.scss'
 })
