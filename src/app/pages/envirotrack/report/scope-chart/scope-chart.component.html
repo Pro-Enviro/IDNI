@@ -18,30 +18,12 @@
           </p-card>
         }
       </div>
-      <div class="col-12" *ngIf="showChart">
-        @if(showChart){
-          <div echarts [options]="chartOption" class="Scope Chart" style="max-height: 600px; height: 600px" [id]="'chartId'"></div>
-        }@else{
-          <p>To add data, please go to "Menu" and select "Non Half-Hourly Data".</p>
-        }
 
-<!--        <div *ngIf="!dataArray.length">-->
-<!--          <p>To add data, please go to "Menu" and select "Non Half-Hourly Data".</p>-->
-<!--        </div>-->
-
-<!--       <div class="lg:col-6 md:col-6">
-        <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }" *ngIf="isConsultant">
-          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
-                      [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px"></p-dropdown>
-          <!--    <p-multiSelect [options]="yearFilter" optionLabel="name" optionName="value" [(ngModel)]="selectedYears" (ngModelChange)="onYearFilter($event)"></p-multiSelect>-->
-        </p-card>
-      </div>
       <div class="col-12" *ngIf="chartOption">
         <div echarts [options]="chartOption" class="Scope Chart" style="max-height: 600px; height: 600px" [id]="'chartId'"></div>
       </div>
       <div *ngIf="!dataArray.length">
         <p>To add data, please go to "Menu" and select "Non Half-Hourly Data".</p> -->
-
       </div>
     </div>
 
