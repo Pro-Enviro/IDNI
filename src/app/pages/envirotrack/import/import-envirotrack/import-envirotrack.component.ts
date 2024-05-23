@@ -264,32 +264,32 @@ export class ImportEnvirotrackComponent {
 
     this.sendDataToTrello()
 
-    // return this.http.post(`${this.url}/Mailer`,{
-    //   subject: 'Pro Enviro Envirotrack sent',
-    //   to: ['it@proenviro.co.uk', 'data@proenviro.co.uk'],
-    //   template: {
-    //     name: "data_uploaded",
-    //     data: {
-    //       "company": this.selectedCompany,
-    //       "user": this.selectedEmail
-    //     }
-    //   },
-    //   "files": [this.fileIds]
-    // },{responseType: "text"}).subscribe({
-    //   next:(res) => {
-    //     console.log(res)
-    //     this.msg.add({
-    //       severity: 'success',
-    //       detail: 'Data sent'
-    //     })
-    //   },
-    //   error: (error: any) =>console.log(error),
-    //   complete: () => {
-    //     this.uploadedFiles = []
-    //     this.fileContent = null;
-    //
-    //   }
-    // })
+    return this.http.post(`${this.url}/Mailer`,{
+      subject: 'Pro Enviro Envirotrack sent',
+      to: ['it@proenviro.co.uk', 'data@proenviro.co.uk'],
+      template: {
+        name: "data_uploaded",
+        data: {
+          "company": this.selectedCompany,
+          "user": this.selectedEmail
+        }
+      },
+      "files": [this.fileIds]
+    },{responseType: "text"}).subscribe({
+      next:(res) => {
+        console.log(res)
+        this.msg.add({
+          severity: 'success',
+          detail: 'Data sent'
+        })
+      },
+      error: (error: any) =>console.log(error),
+      complete: () => {
+        this.uploadedFiles = []
+        this.fileContent = null;
+
+      }
+    })
   }
 
   sendDataToTrello = ()=>  {
@@ -319,7 +319,6 @@ export class ImportEnvirotrackComponent {
       // Add checklist item after checklist is created
       mergeMap((res2: any) => this.trello.addCheckListItemToCheckList(res2))
     ).subscribe()
-
   }
 
 
