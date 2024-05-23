@@ -14,11 +14,12 @@
           <!--                     (ngModelChange)="onYearFilter()"></p-multiSelect>-->
         </p-card>
       </div>
-      <div class="col-12">
-        <div echarts [options]="chartOption"  class="chart" [id]="'chartId'" style="max-height: 800px; height: 800px;"></div>
-        <div *ngIf="!dataArray.length">
-          <p>To add data, please go to "Menu" and select "Non Half-Hourly Data".</p>
-        </div>
+      <div class="col-12" *ngIf="chartData">
+        <div echarts [options]="chartOption"  class="chart" [id]="'chartId'"
+             style="max-height: 800px; height: 800px;"></div>
+      </div>
+      <div *ngIf="!dataArray.length">
+        <p>To add data, please go to "Menu" and select "Non Half-Hourly Data".</p>
       </div>
     </div>
   </p-card>

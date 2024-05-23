@@ -160,6 +160,18 @@ export class PetLoginProtected implements OnInit {
               }
             }
           })
+        }
+        else if (res.role.name === 'consultant'){
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              console.log(res)
+              if (res.data) {
+                this.companies = res.data
+                this.selectedCompany = res.data[0].id
+                this.isConsultant = true
+              }
+            }
+          })
         } else {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
@@ -247,7 +259,6 @@ export class PetLoginProtected implements OnInit {
 
   generateNewTable = () => {
 
-    console.log('Generating new table')
     this.resetTableValues()
 
     this.generateClasses('Cost of Energy', TableRow, energyNames)
@@ -342,7 +353,7 @@ export class PetLoginProtected implements OnInit {
   }
 
   createNewTableRow = (group: any) => {
-    console.log(group.parent.name)
+
     let copy = {...group, name: `${group.parent.name} description`}
     group.parent.name !== 'Staff Commute' ? copy.cost = 0 : null
     let findObject = this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)

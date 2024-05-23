@@ -12,6 +12,7 @@
           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
                       [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px"></p-dropdown>
         </p-card>
+
       </div>
       <div class="lg:col-4 md:col-6">
         <p-card header="Select Mpan" styleClass="card-select-panel" *ngIf="mpan.length" [style]="{ height: '100%' }">

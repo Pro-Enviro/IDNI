@@ -108,7 +108,20 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
                 this.selectedCompany = res.data[0].id
               }
             }
+          }) }
+        else if (res.role.name === 'consultant'){
+
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+                this.isConsultantLevel = true
+                this.onSelectCompany()
+              }
+            }
           })
+
         } else {
           this.track.getCompanies().subscribe({
             next:(res: any) => {

@@ -13,6 +13,7 @@ import {GlobalService} from "../../../../_services/global.service";
 import {SidebarModule} from "primeng/sidebar";
 import {DividerModule} from "primeng/divider";
 import {FileUpload} from "primeng/fileupload";
+import {DbService} from "../../../../_services/db.service";
 
 
 interface Sheet {
@@ -81,6 +82,7 @@ export class ImportEnvirotrackComponent {
   accessData: boolean = false;
   dataGuide:boolean = false;
   fileIds: string[] = []
+  selectedCompanyName: any;
 
 
   constructor(
@@ -88,7 +90,8 @@ export class ImportEnvirotrackComponent {
     private global: GlobalService,
     private msg: MessageService,
     private papa: Papa,
-    private http: HttpClient
+    private http: HttpClient,
+    private db: DbService
   ) {
     moment.locale('en-gb')
     moment().format('L')
@@ -171,9 +174,14 @@ export class ImportEnvirotrackComponent {
       });
 
 
-      from(this.global.uploadBugReportScreenshots(formData)).subscribe({
+      from(this.global.uploadDataForCompany(formData)).subscribe({
         next: (res: any) => {
-          this.fileIds = res.id
+          if (res.length > 1 ) {
+            this.fileIds = res.map((file: any) => file.id);
+          } else if (res.id) {
+            this.fileIds = res.id
+          }
+
           fileUploadComponent.clear()
         }
       })
@@ -190,7 +198,7 @@ export class ImportEnvirotrackComponent {
   getSheetData = () => {
     const sheet = this.sheetData.find((x: any) => x.name === this.selectedSheet);
     this.fileContent = sheet?.data;
-    console.log(this.fileContent);
+
   }
 
   getFileType = (event: any) => {
@@ -240,9 +248,20 @@ export class ImportEnvirotrackComponent {
               if (res.data){
                 this.companies = res.data
                 this.selectedCompany = res.data[0].id
+                this.selectedCompanyName = res.data[0].name
+              }
+            }
+          }) }
+        else if (res.role.name === 'consultant'){
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                this.companies = res.data
+                this.isConsultant = true
               }
             }
           })
+
         } else {
           this.track.getCompanies().subscribe({
             next:(res: any) => {
@@ -258,20 +277,73 @@ export class ImportEnvirotrackComponent {
 
   sendDataToProEnviro(){
 
+    // Upload data to database and link to company
+    if (!this.selectedCompany || !this.uploadedFiles.length) return;
+
+    let fileUUIDS : {directus_files_id: any}[] = [];
+    if (this.uploadedFiles.length === 1 ) {
+      fileUUIDS = [{directus_files_id: this.fileIds}]
+    } else if (this.uploadedFiles.length > 1 && this.uploadedFiles.length <= 10) {
+      let mappedIds = this.fileIds.map((fileId: string) => {
+            return {
+              directus_files_id: fileId
+            }
+          })
+        fileUUIDS = mappedIds
+    }
+
+    try {
+      // Check if existing files, if so add to current uuid array
+      this.db.checkUsersFiles(this.selectedCompany).subscribe({
+
+        next: (res: any) => {
+          if (res.data){
+            res.data.uploaded_files.forEach((file: any) => {
+              fileUUIDS.push({
+                directus_files_id: file.directus_files_id,
+              })
+            })
+          }
+        },
+
+        error: (err: any) => console.log(err),
+        complete: () => {
+
+          // Add the saved files to the company table in Directus
+          if (!this.selectedCompany) return;
+
+          this.track.saveFilesData(this.selectedCompany, {uploaded_files: fileUUIDS}).subscribe({
+            next: (res:any) => {
+              this.uploadedFiles = []
+            },
+            error: (err:any) => {
+              console.log(err)
+            },
+          })
+        }
+      })
+    } catch {
+      this.msg.add({
+        severity: 'warn',
+        detail:'You have already uploaded files'
+      })
+    }
+
+
+     // Send an email to pro enviro to alert about uploaded data
     return this.http.post(`${this.url}/Mailer`,{
       subject: 'Pro Enviro Envirotrack sent',
       to: ['it@proenviro.co.uk', 'data@proenviro.co.uk'],
       template: {
         name: "data_uploaded",
         data: {
-          "company": this.selectedCompany,
+          "company": this.selectedCompanyName,
           "user": this.selectedEmail
         }
       },
       "files": [this.fileIds]
     },{responseType: "text"}).subscribe({
       next:(res) => {
-        console.log(res)
         this.msg.add({
           severity: 'success',
           detail: 'Data sent'
@@ -370,7 +442,6 @@ export class ImportEnvirotrackComponent {
         });
       }
       if (index === this.hhd.length - 1) {
-        console.log('this hhd length is at the end')
         if (!newHhd.length) {
           /*this.msg.add({
             severity: 'error',
@@ -383,7 +454,6 @@ export class ImportEnvirotrackComponent {
     }
 
     try {
-      console.log('Trying')
       await lastValueFrom(this.track.uploadData(newHhd, this.selectedCompany!));
       this.msg.add({
         severity: 'success',

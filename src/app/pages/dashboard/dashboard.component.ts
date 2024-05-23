@@ -74,7 +74,6 @@ export class DashboardComponent {
       this.showWarningBanner = true;
     }
 
-    console.log(this.showWarningBanner)
 
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {

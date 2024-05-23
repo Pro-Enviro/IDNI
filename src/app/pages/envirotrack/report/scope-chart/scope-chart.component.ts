@@ -40,6 +40,7 @@ export class ScopeChartComponent implements OnInit {
   dataArray: any;
   isConsultant: boolean = false;
   scopeGuide:boolean = false;
+  showChart: boolean = false
 
 
   constructor(
@@ -62,7 +63,10 @@ export class ScopeChartComponent implements OnInit {
       name: 'Outside of Scopes',
       value: 0
     }];
+
+    this.envirotrackData = {}
   }
+
 
   initChart(){
 
@@ -128,6 +132,9 @@ export class ScopeChartComponent implements OnInit {
   }
 
   getDataArray(data:any){
+
+    if (!data) return;
+
     data.filter((x:any) => x.scope === 'Scope 1').map((x:any) => moment(x.endDate).year() > 2018 ? this.dataArray[0].value += x.kgCO2e : null);
     data.filter((x:any) => x.scope === 'Scope 2').map((x:any) => moment(x.endDate).year() > 2018 ? this.dataArray[1].value += x.kgCO2e: null);
     data.filter((x:any) => x.scope === 'Scope 3').map((x:any) => moment(x.endDate).year() > 2018 ? this.dataArray[2].value += x.kgCO2e: null);
@@ -145,6 +152,18 @@ export class ScopeChartComponent implements OnInit {
               if (res.data) {
                 this.companies = res.data
                 this.selectedCompany = res.data[0].id
+                this.onSelectCompany()
+              }
+            }
+          })
+        } else if (res.role.name === 'consultant') {
+
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+                this.isConsultant = true
                 this.onSelectCompany()
               }
             }
@@ -173,20 +192,29 @@ export class ScopeChartComponent implements OnInit {
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
     this.dataArray = []
+    this.fuels = []
+    this.envirotrackData = {}
+
     this.track.updateSelectedCompany(this.selectedCompany)
-    this.getFuelData(this.selectedCompany)
     this.getData(this.selectedCompany)
+    this.getFuelData(this.selectedCompany)
   }
 
   getFuelData = (selectedCompanyId: number) => {
     this.fuels = []
     this.dataArray = []
 
+
     if (selectedCompanyId) {
       this.track.getFuelData(selectedCompanyId).subscribe({
         next: (res:any) => {
           if (res?.data?.fuel_data) {
             this.fuels = JSON.parse(res.data?.fuel_data)
+
+          } else {
+            this.fuels = []
+            this.dataArray = []
+
           }
         },
         error: (err) => console.log(err),
@@ -197,8 +225,15 @@ export class ScopeChartComponent implements OnInit {
 
   formatDataCorrectly = () => {
     this.dataArray = []
-    if (!this.fuels.length) return;
+
+
+    if (!this.fuels.length) this.showChart = false
+    if (!this.fuels.length) return ;
     // loop through fuel types and just get total of all values/units/ total cost/
+
+    if (this.fuels.length) {
+      this.showChart = true;
+    }
 
     let extractedData = this.fuels.map((fuel: any) => {
 
@@ -249,7 +284,6 @@ export class ScopeChartComponent implements OnInit {
   getData = (id: number) => {
     this.track.getData(id).subscribe({
         next: (res) => {
-
           if (res){
             let grandTotal = 0;
             res.forEach((row: any) => {
