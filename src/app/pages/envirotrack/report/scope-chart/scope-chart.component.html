@@ -17,7 +17,8 @@
 <!--        <div class="col-12">-->
 <!--          <div echarts [options]="chartOption" class="Scope Chart" style="max-height: 600px; height: 600px" [id]="'chartId'"></div>-->
 <!--        </div>-->
-<!--      }@else{-->
+<!--      }-->
+<!--      @if(!dataArray.length){-->
 <!--        <p>To add data, please go to "Menu" and select "Non Half-Hourly Data".</p>-->
 <!--      }-->
       <div class="col-12" *ngIf="chartOption">

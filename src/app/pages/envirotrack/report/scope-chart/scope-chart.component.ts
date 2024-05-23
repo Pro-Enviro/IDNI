@@ -104,7 +104,7 @@ export class ScopeChartComponent implements OnInit {
           name: 'Scope Data',
           data: this.dataArray.filter((x:any) => x.value),
           type: 'pie',
-          radius: [20,150],
+          radius: [20,180],
           itemStyle: {
             borderRadius: 5
           },
