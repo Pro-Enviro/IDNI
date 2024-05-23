@@ -386,6 +386,27 @@ a{
     background-color:#FDFDFD;
   }
 
+.help-card{
+  background-color:white;
+  padding:20px;
+}
+
+  .recom-charts{
+    background-color:#FDFDFD;
+    .title{
+      font-size:1.5rem;
+      padding:10px;
+    }
+  }
+
+  .recm-select-panel{
+    background-color:#fbfbfb;
+    .title{
+      font-size:1.3rem;
+
+    }
+  }
+
   .card-select-panel{
     background-color:#fbfbfb;
   }
@@ -675,7 +696,7 @@ a{
   color: #4b5563;
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   border-radius: 6px;
-  width: 130%;
+  width: 120%;
   //margin-left: 10px;
   a {
     font-size:18.5px;
@@ -1171,9 +1192,9 @@ a{
     }
   }
 
-@media screen and (max-width: 2500px) and (min-width: 1685px){
-  .sidenav-col{
-    //width: 60% !important;
+@media screen and (max-width: 1780px) and (min-width: 1440px){
+  .sidenav {
+    width: 140%;
   }
 }
 

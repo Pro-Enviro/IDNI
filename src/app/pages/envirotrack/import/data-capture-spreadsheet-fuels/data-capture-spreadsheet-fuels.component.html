@@ -1,7 +1,8 @@
 <!--<app-company-select (company)="getCompany($event)"></app-company-select>-->
 
 <section>
-    <div class="grid p-2">
+  <p-card header="Non Half-Hourly Data" styleClass="card-charts" [style]="{ width: '83.5vw' }">
+    <div class="grid p-2 mt-3">
       <div class="lg:col-5 md:col-6 sm:col-12">
         <p-card header="Non Half-Hourly Data Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
           <p-button type="button" styleClass="btn-style" (click)="fuelGuide = true" icon="pi pi-table" label="Guide"></p-button>
@@ -108,6 +109,7 @@
 
       </div>
     </div>
+  </p-card>
 </section>
 
 

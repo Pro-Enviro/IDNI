@@ -44,10 +44,10 @@
                     <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
                   </div>
                 </div>
-                <div class="h-full">
-                  <plotly-plot  divId="plotlyChart" *ngIf="testChart" [data]="testChart.data" [layout]="testChart.layout" [useResizeHandler]="true"
-                                [style]="{position: 'relative',width: '100%', height: '65vh', marginTop: '3rem'}" (plotlyClick)="onPlotClick($event)"></plotly-plot>
-                </div>
+                  <div class="h-full">
+                    <plotly-plot  divId="plotlyChart" *ngIf="testChart" [data]="testChart.data" [layout]="testChart.layout" [useResizeHandler]="true"
+                                  [style]="{position: 'relative',width: '100%', height: '65vh', marginTop: '3rem'}" (plotlyClick)="onPlotClick($event)"></plotly-plot>
+                  </div>
               </div>
             </ng-container>
             <ng-container *ngIf="!chartModel">
