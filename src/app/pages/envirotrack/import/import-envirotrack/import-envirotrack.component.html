@@ -2,7 +2,8 @@
 <!--<app-top-page-img-tpl></app-top-page-img-tpl>-->
 
 <section>
-  <div class="p-5">
+
+<!--   <div class="p-5">
     <div class="grid">
       <div class="col-6">
         <p-card header="Half-Hourly Data Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
@@ -41,110 +42,151 @@
                 <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
               </ul>
             </ng-template>
-          </p-fileUpload>
-        </div>
-
-        <div class="pet-card mt-5" *ngIf="uploadedFiles.length && isConsultant">
-          <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()"
-                          class="btn-select"></p-selectButton>
-        </div>
-
-        <div class="pet-card mt-5" *ngIf="uploadedFiles.length && !isConsultant">
-          <p-button *ngIf="isXlsx" styleClass="btn-dark m-1" label="Send Data"
-                    (click)="sendDataToProEnviro()"></p-button>
-          <p>Send data to Pro Enviro to process</p>
-        </div>
-
-        <ng-container *ngIf="fileContent">
-          <p-card header="Half-Hourly Data (HHD)" styleClass="card-charts mt-4" #table>
-            <div class="grid">
-              <div class="lg:col-3 md:col-6" pDroppable (onDrop)="dropMpan()">
-                <div class="enviro-card">
-                  <h3 class="title">MPAN Number</h3>
-                  <ul class="list-none flex flex-column gap-2 p-0 m-0 bg-white" *ngIf="selectedMpan">
-                    <li class="p-2 border-round shadow-1">
-                      {{ selectedMpan.name }}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="lg:col-3 md:col-6" pDroppable (onDrop)="dropStartDate()">
-                <div class="enviro-card">
-                  <h3 class="title">Date Column</h3>
-                  <ul class="list-none flex flex-column gap-2 p-0 m-0 bg-white" *ngIf="selectedStartDate">
-                    <li class="p-2 border-round shadow-1">
-                      {{ selectedStartDate.name }}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="lg:col-3 md:col-6" pDroppable (onDrop)="dropFirstData()">
-                <div class="enviro-card">
-                  <h3 class="title">Data Start Point</h3>
-                  <ul class="list-none flex flex-column gap-2 p-0 m-0 bg-white" *ngIf="selectedDataStart">
-                    <li class="p-2 border-round shadow-1">
-                      {{ selectedDataStart.name }}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="lg:col-3 md:col-6">
-                <div class="enviro-card">
-                  <h3 class="title">Data Type</h3>
-                  <ul class="list-none flex flex-column gap-2 p-0 m-0">
-                    <li class="">
-                      <p-toggleButton [(ngModel)]="reactiveData" onLabel="kVAr" offLabel="kWh"
-                                      [style]="{ width: '10em', background:'#356c6b',color:'#ffffff'}"></p-toggleButton>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p-table [value]="fileContent.slice(0,10)" [tableStyle]="{ 'min-width': '50rem' }">
-              <ng-template pTemplate="body" let-row let-r="rowIndex">
-                <tr>
-                  <td *ngFor="let cell of row.slice(0,15); index as c">
-                    <div pDraggable (onDragStart)="dragStart(cell, r, c)" (onDragEnd)="dragEnd()">{{ cell }}</div>
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
-
-
-            <p-progressBar class="my-5" *ngIf="uploadingData" mode="indeterminate"
-                           [style]="{ height: '6px' }"></p-progressBar>
-
-            <div class="pt-3">
-              <button pButton class="btn-style pt-3" icon="pi pi-cog"
-                      label="{{uploadingData ? 'Uploading Data' :'Process'}}" [disabled]="uploadingData"
-                      (click)="processData()"></button>
+          </p-fileUpload> -->
+          
+  <p-card header="Half-Hourly Data Upload" styleClass="card-charts" [style]="{ width: '83.5vw' }">
+    <div class="p-5">
+      <div class="grid">
+        <div class="col-6">
+          <p-card header="Half-Hourly Data Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
+            <div class="flex flex-column">
+              <p-button type="button" styleClass="btn-style mb-4" (click)="accessData = true" icon="pi pi-file"
+                        label="Access to Half-Hourly Electricity Data"></p-button>
+              <p-button type="button" styleClass="btn-dark-upload" (click)="dataGuide = true" icon="pi pi-cloud-upload"
+                        label="Upload Half-Hourly Data Guide"></p-button>
             </div>
           </p-card>
-        </ng-container>
+        </div>
+        <div class="col-6">
+          <p-card header="Select Company" styleClass="card-select-panel" *ngIf="!fileContent && isConsultant" [style]="{ height: '100%' }">
+            <p-dropdown [options]="companies" optionLabel="name" optionValue="id" [(ngModel)]="selectedCompany"
+                        [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px"
+            ></p-dropdown>
+          </p-card>
+          <!--        <p-card *ngIf="!fileContent && selectedName" header="Select Company" [style]="{width: '70%', margin: 'auto', marginTop:'5rem'}" styleClass="card-charts">-->
+          <!--          {{selectedName}}-->
+          <!--        </p-card>-->
+        </div>
+        <div class="col-12 mt-5">
+          <div class="pet-card lg:col-6 md:col-12" *ngIf="!fileContent" [style]="{margin: 'auto', marginTop:'4rem'}">
+            <h3 class="title pb-3">File Upload</h3>
+            <p-fileUpload #uploader name="file[]" [customUpload]="true"
+                          (onSelect)="getFileType($event)"
+                          (uploadHandler)="onUpload($event, uploader)"
+                          [multiple]="true"
+                          chooseStyleClass="btn-style"
+                          cancelStyleClass="btn-dark"
+                          uploadStyleClass="btn-outline">
+              <ng-template pTemplate="content" style="padding:30px">
+
+                <ul *ngIf="uploadedFiles.length" style="list-style:none">
+                  <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+                </ul>
+              </ng-template>
+            </p-fileUpload>
+          </div>
+
+          <div class="pet-card mt-5" *ngIf="uploadedFiles.length && isConsultant">
+            <p-selectButton [options]="availableSheets" [(ngModel)]="selectedSheet" (click)="getSheetData()"
+                            class="btn-select"></p-selectButton>
+          </div>
+
+          <div class="pet-card mt-5" *ngIf="uploadedFiles.length && !isConsultant">
+            <p-button styleClass="btn-dark m-1" label="Send Data"
+                      (click)="sendDataToProEnviro()"></p-button>
+            <p>Send data to Pro Enviro to process</p>
+          </div>
+
+          <ng-container *ngIf="fileContent && isConsultant">
+            <p-card header="Half-Hourly Data (HHD)" styleClass="card-charts mt-4" #table>
+              <div class="grid">
+                <div class="lg:col-3 md:col-6" pDroppable (onDrop)="dropMpan()">
+                  <div class="enviro-card">
+                    <h3 class="title">MPAN Number</h3>
+                    <ul class="list-none flex flex-column gap-2 p-0 m-0 bg-white" *ngIf="selectedMpan">
+                      <li class="p-2 border-round shadow-1">
+                        {{ selectedMpan.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="lg:col-3 md:col-6" pDroppable (onDrop)="dropStartDate()">
+                  <div class="enviro-card">
+                    <h3 class="title">Date Column</h3>
+                    <ul class="list-none flex flex-column gap-2 p-0 m-0 bg-white" *ngIf="selectedStartDate">
+                      <li class="p-2 border-round shadow-1">
+                        {{ selectedStartDate.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="lg:col-3 md:col-6" pDroppable (onDrop)="dropFirstData()">
+                  <div class="enviro-card">
+                    <h3 class="title">Data Start Point</h3>
+                    <ul class="list-none flex flex-column gap-2 p-0 m-0 bg-white" *ngIf="selectedDataStart">
+                      <li class="p-2 border-round shadow-1">
+                        {{ selectedDataStart.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="lg:col-3 md:col-6">
+                  <div class="enviro-card">
+                    <h3 class="title">Data Type</h3>
+                    <ul class="list-none flex flex-column gap-2 p-0 m-0">
+                      <li class="">
+                        <p-toggleButton [(ngModel)]="reactiveData" onLabel="kVAr" offLabel="kWh"
+                                        [style]="{ width: '10em', background:'#356c6b',color:'#ffffff'}"></p-toggleButton>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <p-table [value]="fileContent.slice(0,10)" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="body" let-row let-r="rowIndex">
+                  <tr>
+                    <td *ngFor="let cell of row.slice(0,15); index as c">
+                      <div pDraggable (onDragStart)="dragStart(cell, r, c)" (onDragEnd)="dragEnd()">{{ cell }}</div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+
+
+              <p-progressBar class="my-5" *ngIf="uploadingData" mode="indeterminate"
+                             [style]="{ height: '6px' }"></p-progressBar>
+
+              <div class="pt-3">
+                <button pButton class="btn-style pt-3" icon="pi pi-cog"
+                        label="{{uploadingData ? 'Uploading Data' :'Process'}}" [disabled]="uploadingData"
+                        (click)="processData()"></button>
+              </div>
+            </p-card>
+          </ng-container>
+        </div>
       </div>
     </div>
-  </div>
+  </p-card>
 </section>
 
 
 <div class="flex justify-content-end">
   <div class="flex flex-column">
-    <p-sidebar [(visible)]="accessData" position="right" styleClass="lg:w-5 md:w-6">
-      <div class="container p-5">
+    <p-sidebar [(visible)]="accessData" position="right" styleClass="lg:w-5 md:w-7">
+      <div class="container p-4">
         <h3 class="header-style">How to access the half hourly electricity data?</h3>
         <p>This can only be obtained if your energy company records your consumption data on a half hourly basis. To
           obtain half-hourly meter data, you need to either download it or contact your electricity or utility provider
           to request it. They should be able to provide you with access to your half-hourly consumption data upon
           request.</p>
         <ul>
-          <h4 class="font-italic font-normal" style="font-size:1.25rem">Guide on how to access your half-hourly data:</h4>
-          <li class="p-2">
+          <h4 class="font-italic font-normal lg:text-xl md:text-lg">Guide on how to access your half-hourly data:</h4>
+          <li class="p-1">
             <h4 class="text-lg">•	Identify whether you have a half-hourly meter</h4>
-
             <div class="grid">
               <div class="col-12">
-                <img src="https://id-ni.eco/assets/images/dash-info/mapn-img.png" height="90px" alt="">
+                <img src="https://id-ni.eco/assets/images/dash-info/mapn-img.png" style="max-width:100%" alt="">
               </div>
               <div class="col"></div>
               <div class="col-12">
@@ -155,47 +197,47 @@
               </div>
             </div>
           </li>
-          <li class="p-2">
+          <li class="p-1">
             <h4 class="text-lg">•	Contact Your Utility Provider</h4>
             Start by reaching out to your electricity or utility provider. They should have information on whether your meter supports half-hourly data recording and how you can access it.
           </li>
-          <li class="p-2">
+          <li class="p-1">
             <h4 class="text-lg">•	Request Access</h4>
             Once you've confirmed that your meter supports half-hourly data recording, check first if you can download the half-hourly data from your online energy account, if not then send a request to your energy supplier.
           </li>
-          <li class="p-2">
+          <li class="p-1">
             <h4 class="text-lg">•	Provide Information</h4>
             Depending on your provider's procedures, you may need to provide some information such as your account details, meter number, and possibly consent to access the data.
           </li>
-          <li class="p-2">
+          <li class="p-1">
             <h4 class="text-lg">•	Access the Data</h4>
             After you've completed any necessary steps, you should be able to access your half-hourly meter data. This may be through an online portal downloadable file, by email, or through other means provided by your utility company.
           </li>
-          <li class="p-2">
+          <li class="p-1">
             <h4 class="text-lg">•	Analyse the Data</h4>
             Once you have access to your half-hourly meter data, you can analyse it to gain insights into your electricity usage patterns. This can be useful for identifying opportunities to reduce energy consumption, optimise energy usage, or for other purposes such as billing verification.
-          <li>
+          <li class="p-1">
             <h4 class="text-lg">• Contact Your Utility Provider</h4>
             Start by reaching out to your electricity or utility provider. They should have information on whether your
             meter supports half-hourly data recording and how you can access it.
           </li>
-          <li>
+          <li class="p-1">
             <h4>• Request Access</h4>
             Once you've confirmed that your meter supports half-hourly data recording, check first if you can download
             the half-hourly data from your online energy account, if not then send a request to your energy supplier.
           </li>
-          <li>
+          <li class="p-1">
             <h4 class="text-lg">• Provide Information</h4>
             Depending on your provider's procedures, you may need to provide some information such as your account
             details, meter number, and possibly consent to access the data.
           </li>
-          <li>
+          <li class="p-1">
             <h4 class="text-lg">• Access the Data</h4>
             After you've completed any necessary steps, you should be able to access your half-hourly meter data. This
             may be through an online portal downloadable file, by email, or through other means provided by your utility
             company.
           </li>
-          <li>
+          <li class="p-1">
             <h4 class="text-lg">• Analyse the Data</h4>
             Once you have access to your half-hourly meter data, you can analyse it to gain insights into your
             electricity usage patterns. This can be useful for identifying opportunities to reduce energy consumption,
@@ -203,6 +245,7 @@
           </li>
         </ul>
         <p-divider></p-divider>
+
         <h3 class="pt-4 header-style">What data to get?</h3>
         <p>When obtaining half-hourly meter data, you receive information about your electricity consumption in
           half-hour intervals throughout the day.
@@ -211,7 +254,7 @@
           and optimise your energy consumption to reduce costs or environmental impact.
         </p>
         <ul>
-          <h4 class="font-italic font-normal" style="font-size:1.25rem">Data points you might expect to receive:</h4>
+          <h4 class="font-italic font-normal lg:text-xl md:text-lg">Data points you might expect to receive:</h4>
           <li>
             <h4 class="text-lg">• Date and Time Stamp</h4>
             Each data point should include a timestamp indicating the date and time the measurement was taken. This
@@ -243,23 +286,23 @@
     </p-sidebar>
 
 
-    <p-sidebar [(visible)]="dataGuide" position="right" styleClass="lg:w-5 md:w-6">
+    <p-sidebar [(visible)]="dataGuide" position="right" styleClass="lg:w-5 md:w-7">
       <div class="container p-5">
         <h3 class="header-style">Guide on how to import Half-Hourly Data</h3>
         <p>To import the Half-Hourly Data you need to follow these steps:</p>
         <uL>
-          <li class="p-1">1. Select the company from the dropdown panel.</li>
-          <li class="p-1">2. Click on the "Choose" button located in "File Upload" panel.</li>
-          <li class="p-1">3. Select the file that you would like to upload.</li>
-          <li class="p-1">4. Click the "Upload" button.</li>
+          <li class="pb-2">1. Select the company from the dropdown panel.</li>
+          <li class="pb-2">2. Click on the "Choose" button located in "File Upload" panel.</li>
+          <li class="pb-2">3. Select the file that you would like to upload.</li>
+          <li class="pb-2">4. Click the "Upload" button.</li>
           <!--          <li>5. Click ‘Send’ to share your data with Pro Enviro for data processing.</li>-->
-          <li class="p-1">5. A new panel called "Half-Hourly Data (HHD)" wil appearing, displaying a table holding information for :
+          <li class="pb-2">5. A new panel called "Half-Hourly Data (HHD)" wil appearing, displaying a table holding information for :
             mpan number, date and data share point.The table below will contain a preview of your spreadsheet.
             Drag the column titles from the spreadsheet preview to the corresponding panels, this ensures the data
             processed correctly.
           </li>
-          <li class="p-1">6. Click the “Process” button when the above is complete.</li>
-          <li class="p-1">7. A message will appear if the data was successfully uploaded and processed. You can now close the page or navigate away.</li>
+          <li class="pb-2">6. Click the “Process” button when the above is complete.</li>
+          <li class="">7. A message will appear if the data was successfully uploaded and processed. You can now close the page or navigate away.</li>
         </uL>
       </div>
     </p-sidebar>

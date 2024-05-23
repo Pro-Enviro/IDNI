@@ -32,7 +32,7 @@
                 <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months"></p-selectButton>
               }
             </div>
-            <div class="lg:col-2 md:col-12">
+            <div class="lg:col-12 md:col-12 flex justify-content-end mb-5">
               <p-toggleButton onLabel="Hide Expected Operating Hours" offLabel="Show Expected Operating Hours" [(ngModel)]="shift" (click)="filterData()" styleClass="btn-dark"></p-toggleButton>
             </div>
           </div>

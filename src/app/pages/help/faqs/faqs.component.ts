@@ -3,6 +3,7 @@ import {RouterLink} from "@angular/router";
 import {ButtonModule} from "primeng/button";
 import {AccordionModule} from "primeng/accordion";
 import {DbService} from "../../../_services/db.service";
+import {CardModule} from "primeng/card";
 
 @Component({
   selector: 'app-faqs',
@@ -10,7 +11,8 @@ import {DbService} from "../../../_services/db.service";
   imports: [
     RouterLink,
     ButtonModule,
-    AccordionModule
+    AccordionModule,
+    CardModule
   ],
   templateUrl: './faqs.component.html',
   styleUrl: './faqs.component.scss'
