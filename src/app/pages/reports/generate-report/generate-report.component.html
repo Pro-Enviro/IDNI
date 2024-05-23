@@ -3,10 +3,19 @@
     <h3 class="title">Recommendation Section</h3>
    <div class="grid">
      <div class="lg:col-4 md:col-6">
-       <p-card styleClass="recm-select-panel" *ngIf="isConsultant" [style]="{ height: '100%' }">
-         <h3 class="title">Select Company</h3>
-         <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px"></p-dropdown>
-       </p-card>
+
+       @if(isConsultant){
+         <p-card styleClass="recm-select-panel" [style]="{ height: '100%' }">
+           <h3 class="title">Select Company</h3>
+           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" scrollHeight="370px"></p-dropdown>
+         </p-card>
+       } @else if (!isConsultant){
+         <p-card styleClass="card-select-panel" [style]="{ height: '100%' }">
+           <h3 class="title">Selected Company</h3>
+           <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select" [unselectable]="true"></p-selectButton>
+         </p-card>
+       }
+
      </div>
    </div>
 

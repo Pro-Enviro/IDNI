@@ -6,13 +6,19 @@
           <p-button type="button" styleClass="btn-style" (click)="scopeGuide = true" icon="pi pi-chart-pie" label="Guide"></p-button>
         </p-card>
       </div>
-      <div class="lg:col-6 md:col-6">
-        <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }" *ngIf="isConsultant">
-          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
-                      [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px"></p-dropdown>
-          <!--    <p-multiSelect [options]="yearFilter" optionLabel="name" optionName="value" [(ngModel)]="selectedYears" (ngModelChange)="onYearFilter($event)"></p-multiSelect>-->
-        </p-card>
+
+      <div class="lg:col-5 md:col-6">
+        @if(isConsultant){
+          <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+            <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" scrollHeight="370px"></p-dropdown>
+          </p-card>
+        } @else if (!isConsultant){
+          <p-card header="Selected Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+            <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select" [unselectable]="true"></p-selectButton>
+          </p-card>
+        }
       </div>
+
       <div class="col-12" *ngIf="chartOption">
         <div echarts [options]="chartOption" class="Scope Chart" style="max-height: 600px; height: 600px" [id]="'chartId'"></div>
       </div>
