@@ -128,10 +128,8 @@ export class AuthService {
     return result.access_token;
   }
 
-  resetPassword = async (email: string) => {
-    // Dont't use - This sends a generic directus email, not an IDNI one
-    // const result = await this.client.request(passwordRequest(email))
-    // return result
+  requestPassword = (requestProps: {email: string, passwordResetLink: string}) => {
+    return this.http.post(`${this.url}auth/password/request`, requestProps);
   }
 
   getUserRoles = () => {

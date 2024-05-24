@@ -138,6 +138,7 @@ export const routes: Routes = [
   {path:'advisory-board',component:AdvisoryBoardComponent},
   {path:'stakeholders',component:StakeholdersComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'registration', component: RegisterComponent},
   {path: 'registration-form', component: RegistrationFormComponent},
   // {path:'forgotpassword', component: ForgotPasswordComponent},

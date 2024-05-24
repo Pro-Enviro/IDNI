@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {AuthService} from "../../_services/users/auth.service";
 import {from} from "rxjs";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-forgot-password',
@@ -15,15 +16,25 @@ import {from} from "rxjs";
 export class ForgotPasswordComponent {
     email: string = ''
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private msg: MessageService) {}
 
   resetPassword =() => {
       console.log('Resetting password')
-      // from(this.auth.resetPassword(this.email)).subscribe({
-      //   next:(res: any) => {
-      //     console.log(res)
-      //   },
-      //   error: (err: any) => console.log(err)
-      // })
+
+    if (!this.email.length) return this.msg.add({
+      severity: 'warn',
+      detail: 'Please enter your email'
+    })
+
+    this.auth.requestPassword({email:this.email, passwordResetLink: ''}).subscribe({
+      next: (res: any) => {
+        this.msg.add({
+          severity:'info',
+          detail: 'Please check your email.'
+        })
+      }
+    });
+
+
   }
 }
