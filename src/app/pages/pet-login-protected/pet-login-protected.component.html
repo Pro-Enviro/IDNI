@@ -119,6 +119,11 @@
               <span>Please enter your top 10 used materials.</span>
             </td>
           </tr>
+          <tr *ngIf="expanded && groups.parent.name === 'Cost of Bought in Goods - Consumables and bought in parts'">
+            <td colspan="7" class="p-3 text-xs font-normal">
+              <span>Please do not include capital equipment or purchase of production machinery.</span>
+            </td>
+          </tr>
           <tr *ngIf="expanded" style="border-bottom: 2px solid black; font-weight: 500" >
             <td *ngIf="groups.name !== undefined && groups.parent.name !== 'Cost of Raw Materials'"></td>
             <td *ngIf="groups.parent.name === 'Cost of Raw Materials'">
