@@ -342,7 +342,6 @@ export class PetLoginProtected implements OnInit {
 
   generateRows = (array: string[] | any, parentName: string, isClass?: boolean) => {
     if (isClass) {
-      console.log(array, parentName)
       if (parentName === 'Staff Commute') {
         array.parent.name = 'Company Travel'
       } else {
@@ -377,7 +376,6 @@ export class PetLoginProtected implements OnInit {
     let copy = {...staffCommute}
     let findObject = this.data.findLastIndex((item: any ) => item.parent.name === 'Company Travel');
 
-    console.log(this.data, findObject)
     if (findObject === -1) return;
     this.data.splice(findObject + 1, 0 , copy)
 
@@ -782,7 +780,6 @@ export class PetLoginProtected implements OnInit {
 
 
     // Check if already saved - if not post a new row to pet_data
-    console.log(this.selectedPetId)
     if (this.selectedPetId) {
       // console.log('PATCHING')
       this.db.patchPetData(this.selectedPetId, objectToSave).subscribe({
