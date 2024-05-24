@@ -269,7 +269,8 @@ export class PetLoginProtected implements OnInit {
     this.generateClasses('Road Freight', RoadFreight)
     this.generateClasses('Other Freight', OtherFreightTransportation)
     this.generateClasses('Company Travel', CompanyTravel)
-    this.generateClasses('Staff Commute', StaffCommute)
+    // this.generateClasses('Staff Commute', StaffCommute)
+
     this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
 
     // Generate extra rows for Raw Materials
@@ -322,6 +323,7 @@ export class PetLoginProtected implements OnInit {
         let newClass = new classToUse()
         newClass.name = name
         newClass.parent.name = rowTitle
+
         if (newClass.parent.addRows) {
           newClass.parent.addRows = true
         }
@@ -332,6 +334,7 @@ export class PetLoginProtected implements OnInit {
     } else {
       let newClass = new classToUse()
       if (rowTitle === 'Cost of Raw Materials') newClass.parent.addRows = false
+
       this.generateRows(newClass, rowTitle, true)
       return newClass
     }
@@ -339,8 +342,13 @@ export class PetLoginProtected implements OnInit {
 
   generateRows = (array: string[] | any, parentName: string, isClass?: boolean) => {
     if (isClass) {
-      array.parent.name = parentName
-      this.data.push(array)
+      console.log(array, parentName)
+      if (parentName === 'Staff Commute') {
+        array.parent.name = 'Company Travel'
+      } else {
+        array.parent.name = parentName
+        this.data.push(array)
+      }
     } else {
       array.forEach((name: string) => {
         let newGroupItem = new GroupItem()
@@ -360,6 +368,19 @@ export class PetLoginProtected implements OnInit {
 
     if (findObject === -1) return;
     this.data.splice(findObject + 1, 0, copy)
+
+
+  }
+
+  addNewStaffCommuteRow = (group: any) => {
+    const staffCommute = this.generateClasses('Staff Commute', StaffCommute)
+    let copy = {...staffCommute}
+    let findObject = this.data.findLastIndex((item: any ) => item.parent.name === 'Company Travel');
+
+    console.log(this.data, findObject)
+    if (findObject === -1) return;
+    this.data.splice(findObject + 1, 0 , copy)
+
   }
 
 
@@ -619,6 +640,8 @@ export class PetLoginProtected implements OnInit {
     })
 
 
+
+
     // Add to the data in the table
     extractedData.forEach((extracted: any) => {
 
@@ -816,6 +839,7 @@ export class PetLoginProtected implements OnInit {
     this.getCompanies()
     this.getProductivityData()
   }
+
 
 }
 
