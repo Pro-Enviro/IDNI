@@ -153,12 +153,12 @@
         <ng-template pTemplate="rowexpansion" let-groups let-editing="editing" >
           <tr style="background-color: #fff; overflow-x: scroll" >
             <td *ngIf="groups.parent.name === 'Cost of Raw Materials'">
-              <p-dropdown  [options]="materialTypes" class="p-inputtext-sm" [style]="{width: '120px', marginRight: '0.2rem'}" [(ngModel)]="groups.type" placeholder="Please Select"></p-dropdown>
-              <p-dropdown  [options]="steelMaterials" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Steel'" placeholder="Please Select"></p-dropdown>
-              <p-dropdown  [options]="otherMetals" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Other Metals'" placeholder="Please Select"></p-dropdown>
-              <p-dropdown  [options]="plastics" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Plastics'" placeholder="Please Select"></p-dropdown>
-              <p-dropdown  [options]="otherMaterials" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Other Materials'" placeholder="Please Select"></p-dropdown>
-              <p-dropdown  [options]="materialFormats" class="p-inputtext-sm" [style]="{width:'120px'}" [(ngModel)]="groups.format" placeholder="Please Select" scrollHeight="350px"></p-dropdown>
+              <p-dropdown  [options]="materialTypes" class="p-inputtext-sm" [style]="{width: '120px', marginRight: '0.2rem'}" [(ngModel)]="groups.type" placeholder="Please Select" [editable]="true" ></p-dropdown>
+              <p-dropdown  [options]="steelMaterials" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Steel'" placeholder="Please Select" [editable]="true"></p-dropdown>
+              <p-dropdown  [options]="otherMetals" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Other Metals'" placeholder="Please Select" [editable]="true"></p-dropdown>
+              <p-dropdown  [options]="plastics" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Plastics'" placeholder="Please Select" [editable]="true"></p-dropdown>
+              <p-dropdown  [options]="otherMaterials" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype" *ngIf="groups.type !== 'Steel' && groups.type !== 'Other Metals' && groups.type !== 'Plastics'" [editable]="true"  placeholder="Please Select"></p-dropdown>
+              <p-dropdown  [options]="materialFormats" class="p-inputtext-sm" [style]="{width:'120px'}" [(ngModel)]="groups.format" placeholder="Please Select" scrollHeight="350px" [editable]="true"></p-dropdown>
             </td>
 
             <td [pEditableColumn]="groups.name" pEditableColumnField="name" *ngIf="groups.parent.name !== 'Cost of Raw Materials'" >
