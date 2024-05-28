@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
 import {PetToolData} from "../pages/pet-login-protected/pet-tool-types";
 import {uploadFiles} from "@directus/sdk";
+import {ASCProps} from "../pages/envirotrack/import/supply/supply.component";
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,22 @@ export class DbService {
 
   patchPetData = (id: number, data: PetToolData) => {
     return this.http.patch(`${this.url}/items/pet_data/${id}`, data)
+  }
+
+  getASCData = (id: number) => {
+    return this.http.get(`${this.url}/items/asc_data?filter[companyId][_eq]=${id}`)
+  }
+
+  createASCData = (data: ASCProps) => {
+    return this.http.post(`${this.url}/items/asc_data`, data)
+  }
+
+  patchASCData = (id: number, data: ASCProps) => {
+    return this.http.patch(`${this.url}/items/asc_data/${id}`, data)
+  }
+
+  deleteASCData = (id: number) => {
+    return this.http.delete(`${this.url}/items/asc_data/${id}`)
   }
 
   getRecommendations = (companyId: number) => {

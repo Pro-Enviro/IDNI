@@ -6,6 +6,7 @@ import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {GlobalService} from "../../../../_services/global.service";
 import {SidebarModule} from "primeng/sidebar";
+import {DbService} from "../../../../_services/db.service";
 @Component({
   selector: 'app-envirotrack-report-demand',
   standalone: true,
@@ -51,7 +52,8 @@ export class EnvirotrackReportDemandComponent implements OnInit {
 
   constructor(
     private track: EnvirotrackService,
-    private global: GlobalService
+    private global: GlobalService,
+    private db: DbService
   ) {}
 
   // saveChartAsBase64 = () => {
@@ -154,17 +156,17 @@ export class EnvirotrackReportDemandComponent implements OnInit {
           }
         }
       },
-      //   {
-      //   name: 'ASC',
-      //   type: 'line',
-      //   data: this.asc,
-      //   emphasis: {
-      //     itemStyle: {
-      //       borderColor: '#333',
-      //       borderWidth: 1,
-      //     }
-      //   }
-      // }
+        {
+        name: 'ASC',
+        type: 'line',
+        data: this.asc,
+        emphasis: {
+          itemStyle: {
+            borderColor: '#333',
+            borderWidth: 1,
+          }
+        }
+      }
       ]
     }
   }
@@ -231,27 +233,36 @@ export class EnvirotrackReportDemandComponent implements OnInit {
 
   getAsc = (startDate: any, endDate: any) => {
     this.asc = [];
-    this.initChart()
-    // this.admin.fnGet(`items/energy_supply_info?filter[mpan][_eq]=${this.selectedMpan}`).subscribe({
-    //   next: (res: any) => {
-    //     this.supply = res.data
-    //     if(!this.supply.length) {
-    //       this.initChart()
-    //       return
-    //     }
-    //
-    //     this.supply.forEach((row:any) => {
-    //       row.start_date = moment(row.start_date)
-    //       row.end_date = !row.end_date ?  moment(this.months[this.months.length-1],'DD/MM/YYYY') : moment(row.end_date);
-    //     })
-    //     this.supply = this.supply.sort((a:any, b:any) => a.start_date.unix() - b.start_date.unix())
-    //     this.supply.forEach((row:any) => {
-    //       this.asc.push([row.start_date.isBefore(moment(startDate, 'DD/MM/YYYY')) ? startDate : row.start_date.format('DD/MM/YYYY'), row.asc], [row.end_date.format('DD/MM/YYYY'), row.asc])
-    //     })
-    //     this.asc[this.asc.length-1][0] = endDate
-    //     this.initChart()
-    //   }
-    // })
+    console.log(startDate, endDate)
+
+    this.db.getASCData(this.selectedCompany).subscribe({
+      next: (res: any) => {
+        this.supply = res.data
+        if (!res.data.length) {
+          this.initChart()
+        } else {
+          console.log(this.supply)
+
+          this.supply.forEach((row: any) => {
+            row.start_date = moment(row.start_date);
+            row.end_date = moment(row.end_date);
+          })
+
+          this.supply = this.supply.sort((a: any, b: any) => a.start_date.unix() - b.start_date.unix())
+          this.supply.forEach((row: any) => {
+            console.log(row)
+            let checkStart = row.start_date.isBefore(moment(startDate, 'DD/MM/YYYY'))
+            this.asc.push([ checkStart ? startDate : row.start_date.format('DD/MM/YYYY'), row.asc],[ row.end_date.format('DD/MM/YYYY'), row.asc])
+
+          })
+
+          this.asc[this.asc.length-1][0] = endDate
+
+          this.initChart()
+        }
+      }
+    })
+
   }
 
   getData = (id: number) => {
@@ -333,5 +344,6 @@ export class EnvirotrackReportDemandComponent implements OnInit {
     }
 
     this.screenWidth = window.innerWidth
+
   }
 }

@@ -14,6 +14,7 @@ import {SidebarModule} from "primeng/sidebar";
 import {DividerModule} from "primeng/divider";
 import {FileUpload} from "primeng/fileupload";
 import {DbService} from "../../../../_services/db.service";
+import {SupplyComponent} from "../supply/supply.component";
 
 
 interface Sheet {
@@ -39,12 +40,13 @@ interface HHDData {
   selector: 'app-import-envirotrack',
   standalone: true,
   templateUrl: './import-envirotrack.component.html',
-  styleUrl: './import-envirotrack.component.scss',
+  styleUrls: ['./import-envirotrack.component.scss'],
   imports: [
     SharedModules,
     SharedComponents,
     SidebarModule,
-    DividerModule
+    DividerModule,
+    SupplyComponent
   ]
 })
 
@@ -289,7 +291,7 @@ export class ImportEnvirotrackComponent {
               directus_files_id: fileId
             }
           })
-        fileUUIDS = mappedIds
+      fileUUIDS = mappedIds
     }
 
     try {
