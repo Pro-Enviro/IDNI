@@ -124,6 +124,7 @@ export class PetLoginProtected implements OnInit {
   externalCost: number | undefined
   productivityPercentile: string = ''
   chartOptions!: EChartsOption | null;
+  gaugeChartOptions!: EChartsOption | null;
   chartData: [string, (string | number)][] | null = []
   markStart: number | undefined
   markEnd: number | undefined
@@ -214,6 +215,7 @@ export class PetLoginProtected implements OnInit {
     this.externalCost = 0;
     this.chartData = null
     this.chartOptions = null;
+    this.gaugeChartOptions = null;
   }
 
   fillTable = (petData: PetToolData) => {
@@ -491,35 +493,43 @@ export class PetLoginProtected implements OnInit {
         this.markStart = 0
         this.markEnd = 1
         this.productivityPercentile = '10th Percentile'
+        this.initChartGauge(10)
         break;
       case 1 :
         this.markStart = 0
         this.markEnd = 2
         this.productivityPercentile = '25th Percentile'
+        this.initChartGauge(25)
         break;
       case 2:
         this.markStart = 0
         this.markEnd = 3
         this.productivityPercentile = '50th Percentile'
+        this.initChartGauge(50)
         break;
       case 3:
         this.markStart = 0
         this.markEnd = 4
         this.productivityPercentile = '75th Percentile'
+        this.initChartGauge(75)
         break;
       case 4:
         this.markStart = 0
         this.markEnd = 5
         this.productivityPercentile = '90th Percentile'
+        this.initChartGauge(90)
         break;
       default:
         this.markStart = 0
         this.markEnd = 0
         this.productivityPercentile = ''
+        this.initChartGauge(0)
         break;
     }
 
     this.initChart()
+
+
   }
 
   sumValues = (obj: any): number => <number>Object.values(obj).reduce((a: any, b: any) => a + b, 0);
@@ -633,6 +643,79 @@ export class PetLoginProtected implements OnInit {
       this.data[foundType].unitsUom = extracted.unit ? extracted.unit : 'kWh'
     })
   }
+
+  initChartGauge = (gaugeNum:number) => {
+    this.gaugeChartOptions = {
+      tooltip: {
+        formatter: '{a} <br/>{b} : {c}%'
+      },
+      title: {
+        text: `Percentiles for Sector ${this.sicCodeLetter}`,
+        left: 'center',
+
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {
+            show: true
+          }
+        }
+      },
+      series: [
+        {
+          type: 'gauge',
+          progress: {
+            show: true,
+            width: 18
+          },
+          axisLine: {
+            lineStyle: {
+              width: 18
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          splitLine: {
+            length: 15,
+            lineStyle: {
+              width: 2,
+              color: '#999'
+            }
+          },
+          axisLabel: {
+            distance: 25,
+            color: '#999',
+            fontSize: 20
+          },
+          anchor: {
+            show: true,
+            showAbove: true,
+            size: 25,
+            itemStyle: {
+              borderWidth: 10
+            }
+          },
+          title: {
+            show: false
+          },
+          detail: {
+            valueAnimation: true,
+            formatter: '{value}'
+          },
+          data: [
+            {
+              value:gaugeNum,
+              name:'Chart'
+            }
+          ]
+        }
+      ]
+    };
+  }
+
+
 
 
   initChart = () => {
