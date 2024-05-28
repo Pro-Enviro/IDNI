@@ -54,8 +54,6 @@ import {DividerModule} from "primeng/divider";
 
 
 
-
-
 @Component({
   selector: 'app-pet-login-protected',
   standalone: true,
@@ -361,14 +359,25 @@ export class PetLoginProtected implements OnInit {
 
   createNewTableRow = (group: any) => {
 
-    let copy = {...group, name: `${group.parent.name} description`}
-    group.parent.name !== 'Staff Commute' ? copy.cost = 0 : null
-    let findObject = this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)
+    // This will be company travel case
+    if (group.parent.name === 'Company Travel') {
+      const findLastCompanyTravel = this.data.find((item: any) => item.buttonName === 'Company Travel')
+      if (findLastCompanyTravel === -1) return;
+      let copy = {...findLastCompanyTravel, cost: 0, mileage: 0 }
 
+      let findObject = this.data.findLastIndex((item: any ) => item.parent.name === 'Company Travel');
+
+      if (findObject === -1) return;
+      this.data.splice(findObject + 1, 0 , copy)
+
+      return;
+    }
+
+    // If not company travel
+    let copy = {...group, name: `${group.parent.name} description`}
+    let findObject = this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)
     if (findObject === -1) return;
     this.data.splice(findObject + 1, 0, copy)
-
-
   }
 
   addNewStaffCommuteRow = (group: any) => {
@@ -378,8 +387,8 @@ export class PetLoginProtected implements OnInit {
 
     if (findObject === -1) return;
     this.data.splice(findObject + 1, 0 , copy)
-
   }
+
 
 
   calculatePerEmployeeCost = (groups?: any) => {
@@ -836,6 +845,7 @@ export class PetLoginProtected implements OnInit {
     this.getCompanies()
     this.getProductivityData()
   }
+
 
 
 }

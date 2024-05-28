@@ -78,6 +78,7 @@ export class CompanyTravel extends SubTable {
   buttonName: string = 'Company Travel'
   companyModeOfTransport: CompanyModesOfTransport = 'Select'
   approxMileage: number = 0;
+
 }
 
 export class StaffCommute {
