@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, signal, SimpleChanges, ViewChild} from '@angular/core';
 import {MessageService} from "primeng/api";
 import {GlobalService} from "../../../../_services/global.service";
 import {EditableRow, TableModule} from "primeng/table";
@@ -121,9 +121,6 @@ export class SupplyComponent implements OnInit, OnChanges {
   }
 
   getSupplyList = () => {
-
-    console.log(this.companiesFromParent)
-    console.log(this.selectedCompany)
 
     this.db.getASCData(this.selectedCompany).subscribe({
       next: (res: any) => {
