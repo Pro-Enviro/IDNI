@@ -359,7 +359,7 @@ export class PetLoginProtected implements OnInit {
 
   createNewTableRow = (group: any) => {
 
-    // This will be company travel case
+    // This will be the 'Company Travel' case
     if (group.parent.name === 'Company Travel') {
       const findLastCompanyTravel = this.data.find((item: any) => item.buttonName === 'Company Travel')
       if (findLastCompanyTravel === -1) return;
