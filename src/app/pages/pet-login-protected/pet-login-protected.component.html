@@ -247,17 +247,20 @@
                             [(ngModel)]="groups.route"></p-dropdown>
               </td>
               <td *ngIf="groups.cost !== undefined">
-                <p-inputNumber [(ngModel)]="groups.cost" class="p-inputtext-sm"
+                <p *ngIf="groups.cost === null">N/A</p>
+                <p-inputNumber *ngIf="groups.cost !== null" [(ngModel)]="groups.cost" class="p-inputtext-sm"
                                [inputStyle]="{width: '100px'}"
                                (ngModelChange)="calculateGroupTotalCost(groups)"></p-inputNumber>
               </td>
               <td *ngIf="groups.unitOfCost">
+
                 <p-dropdown [options]="unitsOfCost" class="p-inputtext-sm" [style]="{width: '120px'}"
                             [(ngModel)]="groups.unitOfCost"></p-dropdown>
               </td>
               <td *ngIf="groups.approxMileage !== undefined">
-                <p>Mileage</p>
-                <p-inputNumber [(ngModel)]="groups.approxMileage" class="p-inputtext-sm"
+
+                <p *ngIf="groups.approxMileage === null">N/A</p>
+                <p-inputNumber *ngIf="groups.approxMileage !== null" [(ngModel)]="groups.approxMileage" class="p-inputtext-sm"
                                [inputStyle]="{width: '100px'}"></p-inputNumber>
               </td>
               <td *ngIf="groups.regionOfOrigin">
@@ -269,13 +272,16 @@
                                [inputStyle]="{width: '100px'}"></p-inputNumber>
               </td>
               <td *ngIf="groups.percentStaff !== undefined">
-                <p>% Staff</p>
-                <p-inputNumber [(ngModel)]="groups.percentStaff" class="p-inputtext-sm"
+
+                <p *ngIf="groups.percentStaff === null">N/A </p>
+                <p-inputNumber *ngIf="groups.percentStaff !== null" [(ngModel)]="groups.percentStaff" class="p-inputtext-sm"
                                [inputStyle]="{width: '100px'}"></p-inputNumber>
               </td>
+
               <td *ngIf="groups.distance !== undefined">
-                <p>Distance</p>
-                <p-inputNumber [(ngModel)]="groups.distance" class="p-inputtext-sm"
+
+                <p *ngIf="groups.distance === null">N/A</p>
+                <p-inputNumber *ngIf="groups.distance !== null" [(ngModel)]="groups.distance" class="p-inputtext-sm"
                                [inputStyle]="{width: '100px'}"></p-inputNumber>
               </td>
             </tr>
@@ -354,7 +360,7 @@
           </ng-template>
 
           <ng-template pTemplate="groupfooter" let-groups>
-            {{groups| json}}
+
             <tr class="p-rowgroup-footer" style="background-color: #fff">
               <td style="text-align: right" class="py-2 pr-1">Totals</td>
               <td *ngIf="groups.unitsUom !== undefined"></td>
