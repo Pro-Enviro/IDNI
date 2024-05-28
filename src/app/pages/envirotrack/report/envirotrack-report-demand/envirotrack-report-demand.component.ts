@@ -242,7 +242,11 @@ export class EnvirotrackReportDemandComponent implements OnInit {
         } else {
 
 
+          this.supply = this.supply.filter((asc_data: any) => asc_data.mpan === this.selectedMpan)
+
           this.supply.forEach((row: any) => {
+
+
             row.start_date = moment(row.start_date);
             row.end_date = moment(row.end_date);
           })
@@ -277,6 +281,8 @@ export class EnvirotrackReportDemandComponent implements OnInit {
             this.months.push(moment(row.date).format('DD/MM/YYYY'))
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
+
+          console.log(this.mpan)
 
           // if (this.global.selectedMpan?.value) {
           //   this.selectedMpan = this.global.selectedMpan.value

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {MessageService} from "primeng/api";
 import {GlobalService} from "../../../../_services/global.service";
 import {EditableRow, TableModule} from "primeng/table";
@@ -34,7 +34,7 @@ export type ASCProps = {
   ],
   providers: [EditableRow]
 })
-export class SupplyComponent implements OnInit {
+export class SupplyComponent implements OnInit, OnChanges {
   @ViewChild('rowEdit') editingRow: any;
   @Input() companiesFromParent: any;
   companies!: any[];
@@ -121,6 +121,9 @@ export class SupplyComponent implements OnInit {
   }
 
   getSupplyList = () => {
+
+    console.log(this.companiesFromParent)
+    console.log(this.selectedCompany)
 
     this.db.getASCData(this.selectedCompany).subscribe({
       next: (res: any) => {
@@ -222,8 +225,19 @@ export class SupplyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getCompanies()
-    this.selectedCompany = this.companiesFromParent[0].id
+    if (this.selectedCompany){
+      this.selectedCompany = this.companiesFromParent
+      this.getSupplyList()
+    }
+  }
+
+  // For ADMIN level, detect when company id changes to fetch new data
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes["companiesFromParent"].currentValue === undefined) return;
+
+    this.selectedCompany = changes["companiesFromParent"].currentValue
     this.getSupplyList()
   }
+
+
 }
