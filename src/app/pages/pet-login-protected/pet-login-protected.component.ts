@@ -125,6 +125,7 @@ export class PetLoginProtected implements OnInit {
   productivityPercentile: string = ''
   chartOptions!: EChartsOption | null;
   gaugeChartOptions!: EChartsOption | null;
+  chartToggleBtn:boolean = true;
   chartData: [string, (string | number)][] | null = []
   markStart: number | undefined
   markEnd: number | undefined
