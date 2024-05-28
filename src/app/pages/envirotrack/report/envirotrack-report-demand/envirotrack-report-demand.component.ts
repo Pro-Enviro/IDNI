@@ -190,7 +190,6 @@ export class EnvirotrackReportDemandComponent implements OnInit {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
               if (res.data) {
-                console.log(res.data)
                 this.companies = res.data
                 this.selectedCompany = this.companies[0].id
                 this.isConsultant = true
@@ -233,7 +232,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
 
   getAsc = (startDate: any, endDate: any) => {
     this.asc = [];
-    console.log(startDate, endDate)
+
 
     this.db.getASCData(this.selectedCompany).subscribe({
       next: (res: any) => {
@@ -241,7 +240,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
         if (!res.data.length) {
           this.initChart()
         } else {
-          console.log(this.supply)
+
 
           this.supply.forEach((row: any) => {
             row.start_date = moment(row.start_date);
@@ -250,7 +249,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
 
           this.supply = this.supply.sort((a: any, b: any) => a.start_date.unix() - b.start_date.unix())
           this.supply.forEach((row: any) => {
-            console.log(row)
+
             let checkStart = row.start_date.isBefore(moment(startDate, 'DD/MM/YYYY'))
             this.asc.push([ checkStart ? startDate : row.start_date.format('DD/MM/YYYY'), row.asc],[ row.end_date.format('DD/MM/YYYY'), row.asc])
 

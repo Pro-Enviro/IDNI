@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import { MessageService} from "primeng/api";
+import {MessageService} from "primeng/api";
 import {GlobalService} from "../../../../_services/global.service";
 import {EditableRow, TableModule} from "primeng/table";
 
@@ -34,15 +34,15 @@ export type ASCProps = {
   ],
   providers: [EditableRow]
 })
-export class SupplyComponent implements OnInit{
+export class SupplyComponent implements OnInit {
   @ViewChild('rowEdit') editingRow: any;
-  @Input() companiesFromParent:  any;
+  @Input() companiesFromParent: any;
   companies!: any[];
   selectedCompany!: number;
   mpan: string = '';
   selectedMpan!: string;
   supplyList: any;
-  newMpan!:number;
+  newMpan!: number;
   startDate!: Date;
   endDate!: Date
   asc!: number
@@ -55,7 +55,7 @@ export class SupplyComponent implements OnInit{
 
   }
 
-  onSelectCompany = () =>{
+  onSelectCompany = () => {
     this.getMpan(this.selectedCompany)
 
   }
@@ -125,7 +125,7 @@ export class SupplyComponent implements OnInit{
     this.db.getASCData(this.selectedCompany).subscribe({
       next: (res: any) => {
         this.supplyList = res.data;
-        this.supplyList.forEach((row:any) => {
+        this.supplyList.forEach((row: any) => {
           row.start_date = moment(row.start_date);
           row.end_date = moment(row.end_date)
         });
@@ -141,25 +141,33 @@ export class SupplyComponent implements OnInit{
 
   addSupply = () => {
 
-    if(!this.mpan || !this.startDate || !this.selectedCompany || !this.asc){
+    if (!this.mpan || !this.startDate || !this.selectedCompany || !this.asc) {
       return
     }
 
     const data: ASCProps = {
-        companyId: this.selectedCompany,
-        mpan: this.mpan,
-        start_date: this.startDate,
-        end_date: this.endDate,
-        asc: this.asc
+      companyId: this.selectedCompany,
+      mpan: this.mpan,
+      start_date: this.startDate,
+      end_date: this.endDate,
+      asc: this.asc
     }
 
 
     this.db.createASCData(data).subscribe({
       next: (res: any) => {
-        this.msg.add({
-          severity: 'success',
-          detail: 'Saved'
-        })
+
+        if (res.data) {
+          this.msg.add({
+            severity: 'success',
+            detail: 'Saved'
+          })
+
+          res.data.start_date = moment(res.data.start_date)
+          res.data.end_date = moment(res.data.end_dates)
+
+          this.supplyList.push(res.data)
+        }
       },
       error: (error: any) => {
         console.log(error)
@@ -170,6 +178,7 @@ export class SupplyComponent implements OnInit{
 
     this.db.deleteASCData(id).subscribe({
       next: (res: any) => {
+
         this.msg.add({
           severity: 'success',
           detail: 'ASC Removed'
@@ -178,8 +187,9 @@ export class SupplyComponent implements OnInit{
       error: (err) => {
         console.log(err)
       }
-
     })
+
+    this.supplyList = this.supplyList.filter((asc_data: any) => asc_data.id !== id)
 
   }
 
@@ -204,14 +214,14 @@ export class SupplyComponent implements OnInit{
   }
 
   onSupplyEditInit = (supply: any) => {
-    this.clonedList[supply.id as string] = { ...supply };
+    this.clonedList[supply.id as string] = {...supply};
   }
   onSupplyEditCancel = (supply: any, index: number) => {
     this.supplyList[index] = this.clonedList[supply.id as string];
     delete this.clonedList[supply.id as string];
   }
 
-  ngOnInit():void {
+  ngOnInit(): void {
     // this.getCompanies()
     this.selectedCompany = this.companiesFromParent[0].id
     this.getSupplyList()
