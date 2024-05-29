@@ -3,12 +3,15 @@ import {FormsModule} from "@angular/forms";
 import {AuthService} from "../../_services/users/auth.service";
 import {from, of} from "rxjs";
 import {MessageService} from "primeng/api";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
+import {ButtonModule} from "primeng/button";
+import {InputTextModule} from "primeng/inputtext";
+import {RippleModule} from "primeng/ripple";
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, ButtonModule, InputTextModule, RippleModule, RouterLink],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss'
 })
