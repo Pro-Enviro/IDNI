@@ -52,6 +52,11 @@ export class ResetPasswordComponent {
         },
         error: (error: any) => console.log(error)
       })
+    } else {
+      return this.msg.add({
+        severity: 'error',
+        detail: 'Password does not match criteria'
+      })
     }
 
     this.router.navigate(['/login'])
