@@ -7,6 +7,9 @@ import {MessageService} from "primeng/api";
 import {ButtonModule} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
 import {RippleModule} from "primeng/ripple";
+import {PasswordModule} from "primeng/password";
+import {DividerModule} from "primeng/divider";
+
 
 @Component({
   selector: 'app-reset-password',
@@ -17,7 +20,9 @@ import {RippleModule} from "primeng/ripple";
     ReactiveFormsModule,
     ButtonModule,
     InputTextModule,
-    RippleModule
+    RippleModule,
+    PasswordModule,
+    DividerModule
   ],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss'
@@ -31,8 +36,19 @@ export class ResetPasswordComponent {
   constructor(private route: ActivatedRoute, private router: Router, private auth: AuthService, private _fb: FormBuilder, private msg: MessageService) {
 
     this.form = this._fb.group({
-        password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(50)])],
-        confirm: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(50)])]
+        password: ['',
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(50),
+            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]
+          )],
+        confirm:
+          ['', Validators.compose([
+            Validators.required, Validators.minLength(6),
+            Validators.maxLength(50),
+            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]
+          )]
       }
   )
 
