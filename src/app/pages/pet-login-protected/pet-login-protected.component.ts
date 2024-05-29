@@ -288,6 +288,37 @@ export class PetLoginProtected implements OnInit {
       next: (res: any) => {
         if (res.data.length) {
           this.allPetData = res.data;
+
+          // Adding custom options to the dropdown menu
+          this.allPetData.forEach((year: PetToolData) => {
+            const json = JSON.parse(year.cost_of_raw_materials)
+            json.forEach((row: any) => {
+              if (!this.materialTypes.includes(row.type)) {
+                this.materialTypes.push(row.type)
+              }
+
+              if (!this.steelMaterials.includes(row.subtype)) {
+                this.steelMaterials.push(row.subtype)
+              }
+
+              if (!this.otherMetals.includes(row.subtype)) {
+                this.otherMetals.push(row.subtype)
+              }
+
+              if (!this.plastics.includes(row.subtype)) {
+                this.plastics.push(row.subtype)
+              }
+
+              if (!this.otherMaterials.includes(row.subtype)) {
+                this.otherMaterials.push(row.subtype)
+              }
+
+              if (!this.materialFormats.includes(row.format)) {
+                this.materialFormats.push(row.format)
+              }
+            })
+          })
+
           this.fillTable(this.allPetData[0])
           this.calculateProductivityComparison()
         } else {

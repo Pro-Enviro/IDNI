@@ -18,7 +18,10 @@ export class ForgotPasswordComponent {
   constructor(private auth: AuthService) {}
 
   resetPassword =() => {
+
       console.log('Resetting password')
+
+
       // from(this.auth.resetPassword(this.email)).subscribe({
       //   next:(res: any) => {
       //     console.log(res)
