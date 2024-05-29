@@ -33,21 +33,22 @@ export class ResetPasswordComponent {
   token?: string;
   valid: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private auth: AuthService, private _fb: FormBuilder, private msg: MessageService) {
 
+  constructor(private route: ActivatedRoute, private router: Router, private auth: AuthService, private _fb: FormBuilder, private msg: MessageService) {
+    const match = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
     this.form = this._fb.group({
         password: ['',
           Validators.compose([
             Validators.required,
-            Validators.minLength(6),
+            Validators.minLength(8),
             Validators.maxLength(50),
-            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]
+            Validators.pattern(match)]
           )],
         confirm:
           ['', Validators.compose([
-            Validators.required, Validators.minLength(6),
+            Validators.required, Validators.minLength(8),
             Validators.maxLength(50),
-            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]
+            Validators.pattern(match)]
           )]
       }
   )
@@ -63,10 +64,27 @@ export class ResetPasswordComponent {
 
 
   checkMatch = () => {
-    this.valid = this.form.value.password != this.form.value.confirm ? false: true;
+    //this.valid = this.form.value.password != this.form.value.confirm ? false: true;
+
+    if(this.form.controls['password'].value !== this.form.controls['confirm'].value){
+      return this.form.controls['confirm'].setErrors({'not_matching':true})
+    }else {
+      this.form.controls['confirm'].updateValueAndValidity()
+    }
+    this.form.markAllAsTouched()
   }
 
   resetPassword = () => {
+    if(!this.form.valid){
+      this.form.markAllAsTouched()
+    }
+
+    if(this.form.controls['password'].value !== this.form.controls['confirm'].value){
+      return this.form.controls['confirm'].setErrors({'not_matching':true})
+    }
+
+
+
     if (this.valid) {
       if (!this.token) {
         return this.msg.add({
