@@ -85,7 +85,7 @@ export class ResetPasswordComponent {
 
 
 
-    if (this.valid) {
+    if(this.form.valid) {
       if (!this.token) {
         return this.msg.add({
           severity:'error',
