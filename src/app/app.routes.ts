@@ -140,7 +140,7 @@ export const routes: Routes = [
   {path:'stakeholders',component:StakeholdersComponent},
   {path: 'login', component: LoginComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
-  {path: 'reset-password', component: ResetPasswordComponent},
+  {path: 'admin/reset-password', component: ResetPasswordComponent},
   {path: 'registration', component: RegisterComponent},
   {path: 'registration-form', component: RegistrationFormComponent},
   // {path:'forgotpassword', component: ForgotPasswordComponent},

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {AuthService} from "../../_services/users/auth.service";
-import {from} from "rxjs";
+import {from, of} from "rxjs";
 import {MessageService} from "primeng/api";
 
 @Component({
@@ -24,7 +24,7 @@ export class ForgotPasswordComponent {
       detail: 'Please enter your email'
     })
 
-    this.auth.requestPassword({email:this.email, passwordResetLink: 'http://localhost:3000/reset-password'}).subscribe({
+   this.auth.requestPassword({email:this.email, passwordResetUrl: 'http://localhost:3000/reset-password'}).subscribe({
       next: (res: any) => {
         this.msg.add({
           severity:'info',

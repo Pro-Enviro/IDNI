@@ -15,7 +15,7 @@ import {AuthService} from "../../_services/users/auth.service";
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss'
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent {
 
   form!: FormGroup;
   token?: string;
@@ -27,28 +27,30 @@ export class ResetPasswordComponent implements OnInit {
         password: ['', Validators.required],
         confirm: ['', Validators.required]
       }
-    )
+  )
+
+    this.token = this.route.snapshot.queryParams['token'];
 
   }
 
 
-  checkMatch = ($event: KeyboardEvent) => {
+  checkMatch = () => {
     this.valid = this.form.value.password != this.form.value.confirm ? false: true;
   }
 
   resetPassword = () => {
-    console.log('Resetting password')
-
     if (this.valid) {
-      // this.auth.resetPassword({token: this.token, password: this.form.value.password}).subscribe({})
+      if (!this.token) return;
+
+      this.auth.resetPassword({token: this.token, password: this.form.value.password}).subscribe({
+        next: (res: any) => {
+          console.log('Resetting password')
+          console.log(res)
+        },
+        error: (error: any) => console.log(error)
+      })
     }
 
-    // this.router.navigate(['/auth/login'])
-  }
-
-  ngOnInit = () => {
-    console.log('NG ON INIT')
-    this.token = this.route.snapshot.queryParams['token'];
-    console.log('token', this.token)
+    this.router.navigate(['/auth/login'])
   }
 }

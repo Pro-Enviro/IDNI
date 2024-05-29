@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Router} from "@angular/router";
-import {BehaviorSubject, map, of} from "rxjs";
+import {BehaviorSubject, from, map, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../storage.service";
 import {GlobalService} from "../global.service";
@@ -128,8 +128,12 @@ export class AuthService {
     return result.access_token;
   }
 
-  requestPassword = (requestProps: {email: string, passwordResetLink: string}) => {
+  requestPassword =  (requestProps: {email: string, passwordResetUrl: string}) => {
     return this.http.post(`${this.url}auth/password/request`, requestProps);
+  }
+
+  resetPassword = (resetProps: {token:string, password: string}) => {
+    return this.http.post(`${this.url}auth/password/reset`, resetProps);
   }
 
   getUserRoles = () => {
