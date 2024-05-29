@@ -3,6 +3,7 @@ import {SharedModules} from "../../shared-module";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../_services/users/auth.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-reset-password',
@@ -21,7 +22,7 @@ export class ResetPasswordComponent {
   token?: string;
   valid: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private auth: AuthService, private _fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private router: Router, private auth: AuthService, private _fb: FormBuilder, private msg: MessageService) {
 
     this.form = this._fb.group({
         password: ['', Validators.required],
@@ -44,8 +45,10 @@ export class ResetPasswordComponent {
 
       this.auth.resetPassword({token: this.token, password: this.form.value.password}).subscribe({
         next: (res: any) => {
-          console.log('Resetting password')
-          console.log(res)
+          this.msg.add({
+            severity: 'success',
+            detail: 'Password reset'
+          })
         },
         error: (error: any) => console.log(error)
       })
