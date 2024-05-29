@@ -247,8 +247,8 @@
                             [(ngModel)]="groups.route"></p-dropdown>
               </td>
               <td *ngIf="groups.cost !== undefined">
-                <p *ngIf="groups.cost === null">N/A</p>
-                <p-inputNumber *ngIf="groups.cost !== null" [(ngModel)]="groups.cost" class="p-inputtext-sm"
+
+                <p-inputNumber [(ngModel)]="groups.cost" class="p-inputtext-sm"
                                [inputStyle]="{width: '100px'}"
                                (ngModelChange)="calculateGroupTotalCost(groups)"></p-inputNumber>
               </td>
