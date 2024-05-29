@@ -32,6 +32,11 @@ export class ResetPasswordComponent {
 
     this.token = this.route.snapshot.queryParams['token'];
 
+
+    if (!this.token){
+      this.router.navigate(['/forgot-password'])
+    }
+
   }
 
 
@@ -41,7 +46,12 @@ export class ResetPasswordComponent {
 
   resetPassword = () => {
     if (this.valid) {
-      if (!this.token) return;
+      if (!this.token) {
+        return this.msg.add({
+          severity:'error',
+          detail: 'Unauthorised'
+        })
+      };
 
       this.auth.resetPassword({token: this.token, password: this.form.value.password}).subscribe({
         next: (res: any) => {
