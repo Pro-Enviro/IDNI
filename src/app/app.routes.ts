@@ -89,6 +89,7 @@ import {GenerateReportComponent} from "./pages/reports/generate-report/generate-
 
 import {RegisterSuccessPageComponent} from "./users/register/register-success-page/register-success-page.component";
 import {ForgotPasswordComponent} from "./users/forgot-password/forgot-password.component";
+import {ResetPasswordComponent} from "./users/reset-password/reset-password.component";
 
 
 
@@ -139,6 +140,7 @@ export const routes: Routes = [
   {path:'stakeholders',component:StakeholdersComponent},
   {path: 'login', component: LoginComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
+  {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'registration', component: RegisterComponent},
   {path: 'registration-form', component: RegistrationFormComponent},
   // {path:'forgotpassword', component: ForgotPasswordComponent},

@@ -7,9 +7,7 @@ import {MessageService} from "primeng/api";
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [
-    FormsModule
-  ],
+  imports: [FormsModule],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss'
 })
@@ -26,7 +24,7 @@ export class ForgotPasswordComponent {
       detail: 'Please enter your email'
     })
 
-    this.auth.requestPassword({email:this.email, passwordResetLink: ''}).subscribe({
+    this.auth.requestPassword({email:this.email, passwordResetLink: 'http://localhost:3000/reset-password'}).subscribe({
       next: (res: any) => {
         this.msg.add({
           severity:'info',
