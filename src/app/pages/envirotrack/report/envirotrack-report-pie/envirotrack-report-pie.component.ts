@@ -257,7 +257,7 @@ export class EnvirotrackReportPieComponent implements OnInit {
     if(this.dateRange != undefined && this.dateRange[1]){
       this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
       this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
-    }else {
+    }else{
       if(this.dateFilter){
         this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.months[this.months.length-1]).subtract(this.dateFilter,'months'), moment(this.months[this.months.length+1])))
         this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.months[this.months.length-1]).subtract(this.dateFilter,'months'), moment(this.months[this.months.length+1])))
@@ -266,6 +266,7 @@ export class EnvirotrackReportPieComponent implements OnInit {
         this.filteredData = this.data
       }
     }
+
 
 
     let monday: any[] = [];
