@@ -127,7 +127,7 @@
     </div>
   </p-card>
 
-
+<app-supply *ngIf="companies.length" [companiesFromParent]="selectedCompany"></app-supply>
 
 <div class="flex justify-content-end">
   <div class="flex flex-column">
@@ -267,7 +267,6 @@
   </div>
 </div>
 
-<app-supply *ngIf="companies.length" [companiesFromParent]="selectedCompany"></app-supply>
 
 
 
