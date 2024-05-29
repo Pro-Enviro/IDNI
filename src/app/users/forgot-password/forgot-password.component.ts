@@ -3,6 +3,7 @@ import {FormsModule} from "@angular/forms";
 import {AuthService} from "../../_services/users/auth.service";
 import {from, of} from "rxjs";
 import {MessageService} from "primeng/api";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-forgot-password',
@@ -14,7 +15,7 @@ import {MessageService} from "primeng/api";
 export class ForgotPasswordComponent {
     email: string = ''
 
-  constructor(private auth: AuthService, private msg: MessageService) {}
+  constructor(private auth: AuthService, private msg: MessageService, private router: Router) {}
 
   resetPassword =() => {
       console.log('Resetting password')
@@ -30,7 +31,9 @@ export class ForgotPasswordComponent {
           severity:'info',
           detail: 'Please check your email.'
         })
+        this.router.navigate(['/login'])
       }
+
     });
 
 

@@ -51,6 +51,6 @@ export class ResetPasswordComponent {
       })
     }
 
-    this.router.navigate(['/auth/login'])
+    this.router.navigate(['/login'])
   }
 }
