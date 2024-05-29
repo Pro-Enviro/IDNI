@@ -25,8 +25,8 @@ export class ResetPasswordComponent {
   constructor(private route: ActivatedRoute, private router: Router, private auth: AuthService, private _fb: FormBuilder, private msg: MessageService) {
 
     this.form = this._fb.group({
-        password: ['', Validators.required],
-        confirm: ['', Validators.required]
+        password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(50)])],
+        confirm: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(50)])]
       }
   )
 
