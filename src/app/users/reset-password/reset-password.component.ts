@@ -35,6 +35,9 @@ export class ResetPasswordComponent {
 
 
   constructor(private route: ActivatedRoute, private router: Router, private auth: AuthService, private _fb: FormBuilder, private msg: MessageService) {
+
+    localStorage.clear()
+
     const match = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
     this.form = this._fb.group({
         password: ['',
@@ -74,15 +77,21 @@ export class ResetPasswordComponent {
     this.form.markAllAsTouched()
   }
 
-  resetPassword = () => {
-    if(!this.form.valid){
+  resetPassword = (form: FormGroup) => {
+    if (!this.form.valid) {
       this.form.markAllAsTouched()
+
+
+    if (this.form.controls['password'].value !== this.form.controls['confirm'].value) {
+      return this.form.controls['confirm'].setErrors({'not_matching': true})
     }
 
-    if(this.form.controls['password'].value !== this.form.controls['confirm'].value){
-      return this.form.controls['confirm'].setErrors({'not_matching':true})
-    }
+    return this.msg.add({
+      severity:'warn',
+      detail: 'Please fill out all fields'
+    })
 
+  }
 
 
     if(this.form.valid) {
@@ -102,12 +111,14 @@ export class ResetPasswordComponent {
         },
         error: (error: any) => console.log(error)
       })
-    } else {
-      return this.msg.add({
-        severity: 'error',
-        detail: 'Password does not match criteria'
-      })
     }
+
+    // else {
+    //   return this.msg.add({
+    //     severity: 'error',
+    //     detail: 'Password does not match criteria'
+    //   })
+    // }
 
     this.router.navigate(['/login'])
   }
