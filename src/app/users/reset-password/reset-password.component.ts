@@ -4,6 +4,9 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../_services/users/auth.service";
 import {MessageService} from "primeng/api";
+import {ButtonModule} from "primeng/button";
+import {InputTextModule} from "primeng/inputtext";
+import {RippleModule} from "primeng/ripple";
 
 @Component({
   selector: 'app-reset-password',
@@ -11,7 +14,10 @@ import {MessageService} from "primeng/api";
   imports: [
     SharedModules,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ButtonModule,
+    InputTextModule,
+    RippleModule
   ],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss'
