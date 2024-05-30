@@ -3,6 +3,8 @@ import {CardModule} from "primeng/card";
 import {InplaceModule} from "primeng/inplace";
 import {InputTextModule} from "primeng/inputtext";
 import {FormsModule} from "@angular/forms";
+import {InputGroupModule} from "primeng/inputgroup";
+import {InputGroupAddonModule} from "primeng/inputgroupaddon";
 
 @Component({
   selector: 'app-user-profile',
@@ -11,11 +13,16 @@ import {FormsModule} from "@angular/forms";
     CardModule,
     InplaceModule,
     InputTextModule,
-    FormsModule
+    FormsModule,
+    InputGroupModule,
+    InputGroupAddonModule
   ],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
 export class UserProfileComponent {
-  first_name:any;
+  first_name?:any;
+  last_name?:any;
+  email?:any;
+  contact_number?:any;
 }
