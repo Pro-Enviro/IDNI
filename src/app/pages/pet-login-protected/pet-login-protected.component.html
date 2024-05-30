@@ -42,8 +42,12 @@
                                   optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select-pet"
                                   [unselectable]="true"></p-selectButton>
                 </div>
+
               </p-card>
             </div>
+
+
+
           }
           <div class="flex flex-column p-1">
             <label class="text-xl font-semibold" for="sic_code">SIC Code</label>
@@ -72,6 +76,9 @@
                *ngIf="sicCode.details">{{ sicCode.details }}</p>
             <p class="text-xs font-normal mt-1 p-2 py-3 border-round bg-indigo-50 shadow-1"
                *ngIf="sicCodeLetter.length">SIC Code Letter: <span class="font-bold ml-1">{{ sicCodeLetter }}</span></p>
+          </div>
+          <div>
+            <a routerLink="/dashboard/import" pButton>Go to Data Upload (Mila style me!)</a>
           </div>
         </p-card>
       </div>
@@ -193,7 +200,7 @@
                             [editable]="true" placeholder="Please Select"></p-dropdown>
                 <p-dropdown [options]="materialFormats" class="p-inputtext-sm" [style]="{width:'120px'}"
                             [(ngModel)]="groups.format" placeholder="Please Select" scrollHeight="350px"
-                            [editable]="true"></p-dropdown>
+                            ></p-dropdown>
               </td>
 
               <td [pEditableColumn]="groups.name" pEditableColumnField="name"

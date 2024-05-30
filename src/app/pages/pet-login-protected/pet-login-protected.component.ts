@@ -297,9 +297,11 @@ export class PetLoginProtected implements OnInit {
                 this.materialTypes.push(row.type)
               }
 
+
               if (!this.steelMaterials.includes(row.subtype)) {
                 this.steelMaterials.push(row.subtype)
               }
+
 
               if (!this.otherMetals.includes(row.subtype)) {
                 this.otherMetals.push(row.subtype)
@@ -313,9 +315,12 @@ export class PetLoginProtected implements OnInit {
                 this.otherMaterials.push(row.subtype)
               }
 
-              if (!this.materialFormats.includes(row.format)) {
-                this.materialFormats.push(row.format)
-              }
+              // Remove any rogue undefined vals
+              this.steelMaterials = this.steelMaterials.filter(item => item !== undefined)
+              this.otherMaterials = this.otherMaterials.filter(item => item !== undefined)
+              this.otherMetals = this.otherMetals.filter(item => item !== undefined)
+              this.plastics = this.plastics.filter(item => item !== undefined)
+
             })
           })
 
