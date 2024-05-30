@@ -109,6 +109,10 @@ export class BugReportComponent implements OnInit {
         name: "bug-report",
         data: {
           "user": this.myForm.value.email,
+          "issue":this.myForm.value.issue,
+          "steps_to_reproduce": this.myForm.value.steps_to_reproduce,
+          "device_used":this.myForm.value.device_used,
+          "browser":this.myForm.value.browser
 
         }
       },
