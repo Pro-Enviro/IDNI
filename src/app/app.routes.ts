@@ -36,8 +36,8 @@ export const routes: Routes = [
 
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'admin/reset-password', component: ResetPasswordComponent},
-  {path: 'registration', component: RegisterComponent},
-  {path: 'registration-form', component: RegistrationFormComponent},
+  // {path: 'registration', component: RegisterComponent},
+  // {path: 'registration-form', component: RegistrationFormComponent},
   // {path:'forgotpassword', component: ForgotPasswordComponent},
   {path:'successful-registration',component:RegisterSuccessPageComponent},
   // {path:'chat',component: ChatDialogTplComponent},
