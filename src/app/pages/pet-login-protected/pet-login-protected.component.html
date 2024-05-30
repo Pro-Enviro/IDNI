@@ -402,12 +402,27 @@
         </p-table>
       </div>
     </div>
-    <div class="" style=" margin-top: 100px" *ngIf="this.chartData">
-      <p *ngIf="chartOptions" class="text-xs">Source: ONS by sector (latest year: 2021)</p>
-      <div class="flex justify-content-start">
-        <div echarts [options]="chartOptions" style="max-height: 80vh; height: 70vh; width: 70vw"></div>
-      </div>
-    </div>
+    @if(this.chartData){
+     <div class="grid mt-7">
+       <div class="xl:col-6 lg:col-12 md:col-12">
+         <p-card>
+           <p *ngIf="chartOptions" class="text-xs">Source: ONS by sector (latest year: 2021)</p>
+           <div class="flex justify-content-start">
+             <!--           <div echarts [options]="chartOptions" style="max-height: 70vh; height: 70vh; width: 70vw"></div>-->
+             <div echarts [options]="chartOptions" style="width: 105%; min-height: 570px;margin-top:1rem"></div>
+           </div>
+         </p-card>
+       </div>
+       <div class="xl:col-6 lg:col-12 md:col-12">
+         <p-card>
+           <p *ngIf="gaugeChartOptions" class="text-xs">Source: ONS by sector (latest year: 2021)</p>
+           <div class="flex justify-content-start">
+             <div echarts [options]="gaugeChartOptions" style="width: 100%; min-height: 570px;margin-top:1rem"></div>
+           </div>
+         </p-card>
+       </div>
+     </div>
+    }
   </p-card>
 </section>
 
