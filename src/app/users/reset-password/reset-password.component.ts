@@ -88,7 +88,6 @@ export class ResetPasswordComponent {
     }
 
 
-    console.log(form.valid)
 
     if (form.valid) {
       if (!this.token) {
@@ -111,6 +110,7 @@ export class ResetPasswordComponent {
           }, 1000)
         },
         error: (error: any) => {
+          // Triggered if user has an old token etc.
           if (error.status === 403) {
             this.msg.add( {
               severity: 'error',
