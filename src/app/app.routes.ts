@@ -65,7 +65,7 @@ export const routes: Routes = [
       {path:'faqs',component:FaqsComponent},
       // {path:'contact-us',component:ContactUsComponent}
     ]},
-  {path: '**', redirectTo: ''},
+  {path: '**', redirectTo: 'dashboard'},
   {path: '', component: AppComponent},
 ];
 
