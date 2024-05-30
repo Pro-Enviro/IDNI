@@ -88,7 +88,9 @@ export class ResetPasswordComponent {
     }
 
 
-    if (this.form.valid) {
+    console.log(form.valid)
+
+    if (form.valid) {
       if (!this.token) {
         return this.msg.add({
           severity: 'error',
@@ -103,12 +105,24 @@ export class ResetPasswordComponent {
             severity: 'success',
             detail: 'Password reset'
           })
+
+          setTimeout(() => {
+            this.router.navigate(['/login'])
+          }, 1000)
         },
-        error: (error: any) => console.log(error)
+        error: (error: any) => {
+          if (error.status === 403) {
+            this.msg.add( {
+              severity: 'error',
+              summary: 'Failed to reset password',
+              detail:'Please try again'
+            })
+          }
+        }
       })
     }
 
 
-    this.router.navigate(['/login'])
+
   }
 }
