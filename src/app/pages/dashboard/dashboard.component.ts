@@ -85,6 +85,22 @@ export class DashboardComponent {
         // @ts-ignore
         this.menuBar  =[
           {
+            label:'<span class="material-symbols-outlined">account_box</span> Account',
+            escape:false,
+            items:[
+              {
+                label:'<span class="material-symbols-outlined">person</span> User Profile',
+                routerLink: '',
+                escape:false
+              },
+              {
+                label:'<span class="material-symbols-outlined">source_environment</span> Company Profile',
+                routerLink: '',
+                escape:false
+              }
+            ]
+          },
+          {
             label:'<span class="material-symbols-outlined">dashboard</span> Dashboard',
             routerLink:'/dashboard',
             escape: false
