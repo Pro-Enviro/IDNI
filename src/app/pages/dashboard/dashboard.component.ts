@@ -90,12 +90,12 @@ export class DashboardComponent {
             items:[
               {
                 label:'<span class="material-symbols-outlined">person</span> User Profile',
-                routerLink: '',
+                routerLink: '/dashboard/user-profile',
                 escape:false
               },
               {
                 label:'<span class="material-symbols-outlined">source_environment</span> Company Profile',
-                routerLink: '',
+                routerLink: '/dashboard/company-profile',
                 escape:false
               }
             ]
