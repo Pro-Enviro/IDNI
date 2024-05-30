@@ -28,5 +28,4 @@ export class AppComponent{
     customElements.define('dashboard-app', NewElement1)
   }
 
-
 }

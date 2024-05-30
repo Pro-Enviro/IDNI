@@ -106,9 +106,10 @@ export class BugReportComponent implements OnInit {
       subject: 'New Bug Report',
       to: ['it@proenviro.co.uk'], // WIP: Update with correct email address
       template: {
-        name: "data_uploaded",
+        name: "bug-report",
         data: {
-          "user": this.myForm.value.email
+          "user": this.myForm.value.email,
+
         }
       },
       "files": [this.fileIds]
