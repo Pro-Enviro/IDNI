@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Router} from "@angular/router";
-import {BehaviorSubject} from "rxjs";
+
+import {BehaviorSubject, from, map, of} from "rxjs";
+
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../storage.service";
 import {GlobalService} from "../global.service";
@@ -129,10 +131,12 @@ export class AuthService {
     return result.access_token;
   }
 
-  resetPassword = async (email: string) => {
-    // Dont't use - This sends a generic directus email, not an IDNI one
-    // const result = await this.client.request(passwordRequest(email))
-    // return result
+  requestPassword =  (requestProps: {email: string, passwordResetUrl: string}) => {
+    return this.http.post(`${this.url}auth/password/request`, requestProps);
+  }
+
+  resetPassword = (resetProps: {token:string, password: string}) => {
+    return this.http.post(`${this.url}auth/password/reset`, resetProps);
   }
 
   getUserRoles = () => {

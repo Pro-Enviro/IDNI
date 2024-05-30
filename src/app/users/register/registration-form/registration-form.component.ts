@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {TopPageImgTplComponent} from "../../../_partials/top-page-img-tpl/top-page-img-tpl.component";
+
 import {RegisterComponent} from "../register.component";
 import {ButtonModule} from "primeng/button";
 import {CalendarModule} from "primeng/calendar";
@@ -20,7 +20,7 @@ import {DbService} from "../../../_services/db.service";
   standalone: true,
     imports: [
         RegisterComponent,
-        TopPageImgTplComponent,
+
         ButtonModule,
         CalendarModule,
         CheckboxModule,
