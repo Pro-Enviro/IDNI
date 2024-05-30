@@ -20,7 +20,7 @@
             <label for="last_name">Last Name</label>
             <p-inputGroup>
               <p-inputGroupAddon>
-                <i class="pi pi-user"></i>
+                <span class="material-symbols-outlined">group</span>
               </p-inputGroupAddon>
               <input id="last_name" type="text" class="w-full p-3" [ngModel]="last_name" pInputText>
             </p-inputGroup>
@@ -31,10 +31,10 @@
         <div class="col-6">
 <!--          EMAIL-->
           <div class="field flex flex-column">
-            <label for="email">Email</label>
+            <label for="contact_number">Contact Email</label>
             <p-inputGroup>
               <p-inputGroupAddon>
-                <i class="pi pi-user"></i>
+                <span class="material-symbols-outlined">mail</span>
               </p-inputGroupAddon>
               <input id="email" type="text" class="w-full p-3" [ngModel]="email" pInputText>
             </p-inputGroup>
@@ -45,7 +45,7 @@
             <label for="contact_number">Contact Number</label>
             <p-inputGroup>
               <p-inputGroupAddon>
-                <i class="pi pi-user"></i>
+                <span class="material-symbols-outlined">call</span>
               </p-inputGroupAddon>
               <input id="contact_number" type="text" class="w-full p-3" [ngModel]="contact_number" pInputText>
             </p-inputGroup>
@@ -53,7 +53,9 @@
 
         </div>
       </div>
-
+      <div>
+        <p-button label="Save Changes" icon="pi pi-save" styleClass="btn-style"></p-button>
+      </div>
     </p-card>
   </div>
 </section>
