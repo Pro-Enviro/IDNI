@@ -26,6 +26,8 @@ import {ResetPasswordComponent} from "./users/reset-password/reset-password.comp
 import {BugReportComponent} from "./pages/help/bug-report/bug-report.component";
 import {FaqsComponent} from "./pages/help/faqs/faqs.component";
 import {ContactUsComponent} from "./pages/help/contact-us/contact-us.component";
+import {RegisterComponent} from "./users/register/register.component";
+import {RegistrationFormComponent} from "./users/register/registration-form/registration-form.component";
 
 
 
@@ -38,8 +40,8 @@ export const routes: Routes = [
   {path: 'registration-form', component: RegistrationFormComponent},
   // {path:'forgotpassword', component: ForgotPasswordComponent},
   {path:'successful-registration',component:RegisterSuccessPageComponent},
-  {path:'chat',component: ChatDialogTplComponent},
-  {path:'live-chat',component:LiveChatTplComponent},
+  // {path:'chat',component: ChatDialogTplComponent},
+  // {path:'live-chat',component:LiveChatTplComponent},
 
 
   //{path:'dashboard',component: DashboardComponent, canActivate: [authGuard], canActivateChild: [authGuard], children: [
