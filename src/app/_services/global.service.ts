@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import {authentication, createDirectus, graphql, rest, readMe, uploadFiles, readFolders} from "@directus/sdk";
 import {BehaviorSubject, from} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import {StorageService} from "./storage.service";
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +8,14 @@ import {StorageService} from "./storage.service";
 
 export class Storage {
   get() {
-    return JSON.parse(localStorage.getItem("directus-data") || '');
+    let ret;
+    try {
+      ret = JSON.parse(localStorage.getItem("directus-data") || '');
+    } catch (error) {
+      localStorage.clear()
+      window.location.reload()
+    }
+    return ret
   }
   set(data: any) {
     localStorage.setItem("directus-data", JSON.stringify(data));
@@ -60,5 +65,6 @@ export class GlobalService {
   initSession = () => {
     const storage: Storage = new Storage()
     this.client = createDirectus('https://app.idni.eco').with(authentication('json', {storage})).with(rest()).with(graphql())
+
   }
 }
