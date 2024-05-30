@@ -1,1 +1,35 @@
-<p>user-profile works!</p>
+<section>
+  <div class="container">
+    <p-card header="User Profile" styleClass="card-select-panel" [style]="{ width: '75vw' }">
+      <div class="grid mt-3">
+        <div class="col-6">
+          <label>First Name</label>
+          <p-inplace [closable]="true">
+            <ng-template pTemplate="display">
+              <div class="flex justify-content-end inplace-style">
+                <p-button icon="pi pi-user-edit" [rounded]="true" [text]="true" [raised]="true" severity="info" />
+              </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <input type="text" [ngModel]="first_name" pInputText />
+            </ng-template>
+          </p-inplace>
+        </div>
+        <div class="col-6">
+          <label>Last Name</label>
+          <p-inplace [closable]="true">
+            <ng-template pTemplate="display">
+              <div class="flex justify-content-end inplace-style">
+                <p-button icon="pi pi-user-edit" [rounded]="true" [text]="true" [raised]="true" severity="info" />
+              </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <input type="text" [ngModel]="first_name" pInputText />
+            </ng-template>
+          </p-inplace>
+        </div>
+      </div>
+
+    </p-card>
+  </div>
+</section>
