@@ -26,12 +26,12 @@
         }
       </div>
       <div class="col-12">
-        @if(showChart){
+<!--        @if(showChart){-->
           <p-card styleClass="card-style-none">
             <p-selectButton *ngIf="defaultFilters.length" [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select ml-5"></p-selectButton>
             <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px"></div>
           </p-card>
-        }
+<!--        }-->
       </div>
     </div>
   </p-card>

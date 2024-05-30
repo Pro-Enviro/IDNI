@@ -249,6 +249,7 @@ export class EnvirotrackReportBase1Component implements OnInit {
 
           for(let i:number = moment().year(); i >= this.firstYear; i-- ){
 
+
             if(this.data.filter((x:any) => moment(x.date).format('YYYY-MM-DD') === `${i}-12-25`).length){
               this.lastYear = i;
               this.dateFilter = i;
@@ -274,6 +275,7 @@ export class EnvirotrackReportBase1Component implements OnInit {
       })
     }
     let tmp = this.data.filter((x:any) => moment(x.date).year() === this.dateFilter)
+
     let lowDay
     if(tmp.length) {
        lowDay = tmp.reduce((x: any, y: any) => x.total < y.total ? x : y)
@@ -284,11 +286,18 @@ export class EnvirotrackReportBase1Component implements OnInit {
     let cDay = this.data.filter((x:any) => moment(x.date).format('YYYY-MM-DD') === `${this.dateFilter}-12-25`)[0]
 
 
+
+
     if(cDay === undefined){
       this.msg.add({
         severity: 'warn',
         detail: 'No data found for Christmas Day'
       })
+
+
+      this.chartData = []
+      this.chartOptions = {}
+
       return
     }
 
