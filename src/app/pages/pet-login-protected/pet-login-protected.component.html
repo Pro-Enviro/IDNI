@@ -170,11 +170,11 @@
               <td *ngIf="groups.route !== undefined">Route</td>
               <td *ngIf="groups.cost !== undefined">Cost</td>
               <td *ngIf="groups.unitOfCost !== undefined">Unit of cost</td>
-              <td *ngIf="groups.approxMileage !== undefined">Approx Mileage</td>
+              <td *ngIf="groups.approxMileage !== undefined"><p class="flex flex-column"><span>Approx Mileage </span><span class="text-xs text-gray-500">(if required)</span></p></td>
               <td *ngIf="groups.regionOfOrigin !== undefined">Region of Origin</td>
               <td *ngIf="groups.scrappageAndWaste !== undefined">% Scrappage & Waste in Prod</td>
-              <td *ngIf="groups.percentStaff !== undefined">% Staff</td>
-              <td style="width: 100px" *ngIf="groups.distance !== undefined">Average Distance (Miles)</td>
+              <td *ngIf="groups.percentStaff !== undefined" ><p class="flex flex-column"><span>% Staff </span><span class="text-xs text-gray-500">(if required)</span></p></td>
+              <td style="width: 100px" *ngIf="groups.distance !== undefined" ><p class="flex flex-column"><span>Average Distance (miles) </span><span class="text-xs text-gray-500">(if required)</span></p></td>
             </tr>
           </ng-template>
 
@@ -266,8 +266,8 @@
               </td>
               <td *ngIf="groups.approxMileage !== undefined">
 
-                <p *ngIf="groups.approxMileage === null">N/A</p>
-                <p-inputNumber *ngIf="groups.approxMileage !== null" [(ngModel)]="groups.approxMileage" class="p-inputtext-sm"
+<!--                <p *ngIf="groups.approxMileage === null">N/A</p>-->
+                <p-inputNumber [(ngModel)]="groups.approxMileage" class="p-inputtext-sm"
                                [inputStyle]="{width: '100px'}"></p-inputNumber>
               </td>
               <td *ngIf="groups.regionOfOrigin">
@@ -280,15 +280,15 @@
               </td>
               <td *ngIf="groups.percentStaff !== undefined">
 
-                <p *ngIf="groups.percentStaff === null">N/A </p>
-                <p-inputNumber *ngIf="groups.percentStaff !== null" [(ngModel)]="groups.percentStaff" class="p-inputtext-sm"
+<!--                <p *ngIf="groups.percentStaff === null">N/A </p>-->
+                <p-inputNumber  [(ngModel)]="groups.percentStaff" class="p-inputtext-sm"
                                [inputStyle]="{width: '100px'}"></p-inputNumber>
               </td>
 
               <td *ngIf="groups.distance !== undefined">
 
-                <p *ngIf="groups.distance === null">N/A</p>
-                <p-inputNumber *ngIf="groups.distance !== null" [(ngModel)]="groups.distance" class="p-inputtext-sm"
+<!--                <p *ngIf="groups.distance === null">N/A</p>-->
+                <p-inputNumber  [(ngModel)]="groups.distance" class="p-inputtext-sm"
                                [inputStyle]="{width: '100px'}"></p-inputNumber>
               </td>
             </tr>

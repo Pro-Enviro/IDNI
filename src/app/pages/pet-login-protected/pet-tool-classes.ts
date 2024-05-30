@@ -78,8 +78,8 @@ export class CompanyTravel extends SubTable {
   buttonName: string = 'Company Travel'
   companyModeOfTransport: CompanyModesOfTransport = 'Select'
   approxMileage: number = 0;
-  percentStaff: null = null;
-  distance: null = null
+  percentStaff: number = 0;
+  distance: number = 0
 }
 
 export class StaffCommute {
@@ -89,8 +89,8 @@ export class StaffCommute {
   percentStaff: number = 0
   distance: number = 0
   secondColumn: number = 0
-  approxMileage: null = null;
-  cost: null = null
+  approxMileage: number = 0
+  cost: number = 0
   parent: { name: string, addRows: boolean, totalCost: number, secondColumn: number } = {
     name: '',
     totalCost: 0,
