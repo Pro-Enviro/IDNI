@@ -85,7 +85,7 @@ export class DashboardComponent {
         // @ts-ignore
         this.menuBar  =[
           {
-            label:'<span class="material-symbols-outlined">account_box</span> Account',
+            label:'<span class="material-symbols-outlined">manage_accounts</span> Account',
             escape:false,
             items:[
               {
@@ -200,17 +200,17 @@ export class DashboardComponent {
 
         this.miniMenu  =[
           {
-            label:'<span class="material-symbols-outlined">account_box</span>',
+            label:'<span class="material-symbols-outlined">manage_accounts</span>',
             escape:false,
             items:[
               {
                 label:'<span class="material-symbols-outlined">person</span>',
-                routerLink: '',
+                routerLink: '/dashboard/user-profile',
                 escape:false
               },
               {
                 label:'<span class="material-symbols-outlined">source_environment</span>',
-                routerLink: '',
+                routerLink: '/dashboard/company-profile',
                 escape:false
               }
             ]
