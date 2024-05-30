@@ -163,7 +163,6 @@ export class EnvirotrackReportBase1Component implements OnInit {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
               if (res.data) {
-                console.log(res.data)
                 this.companies = res.data
                 this.selectedCompany = this.companies[0].id
                 this.isConsultant = true
@@ -255,7 +254,9 @@ export class EnvirotrackReportBase1Component implements OnInit {
               this.dateFilter = i;
               break;
             }
+
           }
+
 
           this.filterData()
         },
@@ -268,13 +269,28 @@ export class EnvirotrackReportBase1Component implements OnInit {
   filterData = () =>{
     this.defaultFilters = [];
     this.data = this.data.filter((x:any) => x.mpan === this.selectedMpan)
+
     for(let i: number = this.firstYear; i <= this.lastYear; i++){
-      this.defaultFilters.push({
-        name: i,
-        value: i
-      })
+
+      // find year in data
+      const found = this.data.find((row: any) => moment(row.date).year() === i)
+
+
+      if (found){
+        this.defaultFilters.push({
+          name: i,
+          value: i
+        })
+      }
     }
+
+
+    // Filter date filters if data doesn't exist
+
+
+
     let tmp = this.data.filter((x:any) => moment(x.date).year() === this.dateFilter)
+
 
     let lowDay
     if(tmp.length) {
@@ -293,7 +309,6 @@ export class EnvirotrackReportBase1Component implements OnInit {
         severity: 'warn',
         detail: 'No data found for Christmas Day'
       })
-
 
       this.chartData = []
       this.chartOptions = {}
