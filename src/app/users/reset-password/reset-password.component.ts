@@ -78,22 +78,11 @@ export class ResetPasswordComponent {
   }
 
   resetPassword = (form: FormGroup) => {
-
-    console.log(this.form)
-    console.log(this.form.valid)
-
     if (!form.valid) {
-      console.log(this.form.valid)
-
 
       if (this.form.controls['password'].value !== this.form.controls['confirm'].value) {
          this.form.controls['confirm'].setErrors({'not_matching': true})
       }
-
-      // this.msg.add({
-      //   severity: 'warn',
-      //   detail: 'Please fill out all fields'
-      // })
 
       return this.form.markAllAsTouched()
     }
@@ -108,24 +97,18 @@ export class ResetPasswordComponent {
       }
       ;
 
-      // this.auth.resetPassword({token: this.token, password: this.form.value.password}).subscribe({
-      //   next: (res: any) => {
-      //     this.msg.add({
-      //       severity: 'success',
-      //       detail: 'Password reset'
-      //     })
-      //   },
-      //   error: (error: any) => console.log(error)
-      // })
+      this.auth.resetPassword({token: this.token, password: this.form.value.password}).subscribe({
+        next: (res: any) => {
+          this.msg.add({
+            severity: 'success',
+            detail: 'Password reset'
+          })
+        },
+        error: (error: any) => console.log(error)
+      })
     }
 
-    // else {
-    //   return this.msg.add({
-    //     severity: 'error',
-    //     detail: 'Password does not match criteria'
-    //   })
-    // }
 
-    // this.router.navigate(['/login'])
+    this.router.navigate(['/login'])
   }
 }
