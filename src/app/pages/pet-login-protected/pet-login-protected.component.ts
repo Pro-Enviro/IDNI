@@ -302,7 +302,6 @@ export class PetLoginProtected implements OnInit {
                 this.steelMaterials.push(row.subtype)
               }
 
-
               if (!this.otherMetals.includes(row.subtype)) {
                 this.otherMetals.push(row.subtype)
               }
@@ -315,7 +314,7 @@ export class PetLoginProtected implements OnInit {
                 this.otherMaterials.push(row.subtype)
               }
 
-              // Remove any rogue undefined vals
+              // Remove any undefined vals
               this.steelMaterials = this.steelMaterials.filter(item => item !== undefined)
               this.otherMaterials = this.otherMaterials.filter(item => item !== undefined)
               this.otherMetals = this.otherMetals.filter(item => item !== undefined)
