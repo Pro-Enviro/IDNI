@@ -8,11 +8,12 @@ import {SharedModules} from "../../../../shared-module";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {SharedComponents} from "../../shared-components";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
 
 @Component({
   selector: 'app-envirotrack-report-base1',
   standalone: true,
-  imports: [SharedModules, SharedComponents],
+  imports: [SharedModules, SharedComponents, SidebarModule],
   templateUrl: './envirotrack-report-base1.component.html',
   styleUrls: ['./envirotrack-report-base1.component.scss']
 })
@@ -39,6 +40,8 @@ export class EnvirotrackReportBase1Component implements OnInit {
   selectedMpan!: string;
   screenWidth: any;
   isConsultant: boolean = false;
+  baseGuide: boolean = false;
+  showChart: boolean = false;
 
   constructor(
     private track: EnvirotrackService,
@@ -154,6 +157,20 @@ export class EnvirotrackReportBase1Component implements OnInit {
               }
             }
           })
+
+        } else if (res.role.name === 'consultant') {
+
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                console.log(res.data)
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+                this.isConsultant = true
+                this.onSelectCompany()
+              }
+            }
+          })
         } else {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
@@ -176,11 +193,17 @@ export class EnvirotrackReportBase1Component implements OnInit {
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
+    this.showChart = false;
+    this.chartData = [];
+    this.chartX = [];
+    this.chartY = [];
+
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
   }
 
   getTimes = () =>{
+    if (this.chartX.length === 48) return
     for(let i = 0; i < 48; i++){
       this.chartX.push(moment('00:00', 'HH:mm').add(i*30, 'minutes').format('HH:mm'))
     }
@@ -258,8 +281,8 @@ export class EnvirotrackReportBase1Component implements OnInit {
       lowDay = 0
     }
 
-
     let cDay = this.data.filter((x:any) => moment(x.date).format('YYYY-MM-DD') === `${this.dateFilter}-12-25`)[0]
+
 
     if(cDay === undefined){
       this.msg.add({
@@ -268,6 +291,9 @@ export class EnvirotrackReportBase1Component implements OnInit {
       })
       return
     }
+
+    this.showChart = true;
+
     this.chartData =  [{
       type: 'line',
       name: cDay.date,

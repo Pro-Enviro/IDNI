@@ -36,7 +36,9 @@
               "primeflex/themes/primeone-light.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/foundation/js/foundation/index.js"
+            ]
           },
           "configurations": {
             "production": {

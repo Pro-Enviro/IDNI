@@ -15,6 +15,9 @@ import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
+import {DividerModule} from "primeng/divider";
+import {DropdownChangeEvent} from "primeng/dropdown";
 
 export class Fields {
   type: string = '';
@@ -32,6 +35,8 @@ export class Fields {
   imports: [
     SharedModules,
     SharedComponents,
+    SidebarModule,
+    DividerModule,
   ]
 })
 export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
@@ -45,6 +50,7 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
   display: boolean = false;
   selectedItem: any = {}
   nameChange: string = ''
+  fuelGuide:boolean = false;
   isConsultantLevel = false
 
   constructor(
@@ -102,7 +108,20 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
                 this.selectedCompany = res.data[0].id
               }
             }
+          }) }
+        else if (res.role.name === 'consultant'){
+
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+                this.isConsultantLevel = true
+                this.onSelectCompany()
+              }
+            }
           })
+
         } else {
           this.track.getCompanies().subscribe({
             next:(res: any) => {
@@ -125,6 +144,34 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     this.fetchedFuelData = []
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getFuelData()
+  }
+
+  changeAllUom = (event: DropdownChangeEvent, fuel: any) => {
+    this.confirmationService.confirm({
+      target: event.originalEvent.target as EventTarget,
+      message: `Do you want to change all units to ${event.value}?`,
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
+      accept: () => {
+
+        fuel.rows = fuel.rows.map((row: any, index: number) => {
+          const findUom = row.findIndex((r: any) => r.name === 'Unit')
+
+          setTimeout(() => {
+            row[findUom].value = event.value;
+          }, 100 * index)
+
+          return row;
+        })
+        this.confirmationService.close()
+      },
+      reject: () => {
+        this.confirmationService.close()
+      }
+    });
   }
 
   deleteFuelType = (event: any, fuel: any) => {
@@ -159,7 +206,6 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
 
   addFuelType = () => {
     this.ref = this.dialog.open(DataCaptureSpreadsheetFuelsFieldsComponent, {
-      header: 'Add Fuel Type',
       width: '90vw',
       height: '90vh',
     })
@@ -399,6 +445,8 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     return fuelRow[rowIndex].value = moment(endDate).diff(moment(startDate), 'days', false)
   }
 
+
+
   deleteRow = (fuelRow: any, index: number) => {
     fuelRow.rows.splice(index, 1)
   }
@@ -472,7 +520,7 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     const copiedFuel = _.cloneDeep(fuel)
 
     this.ref = this.dialog.open(DataCaptureImportSpreadsheetComponent, {
-      header: 'Spreadsheet Data Import',
+      header: '',
       width: '90vw',
       height: '90vh',
       maximizable: true,
@@ -483,11 +531,15 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
       next: (spreadsheetData: any) => {
         if (spreadsheetData) {
 
-
-
           this.fuels = this.fuels.map((fuelType: any) => {
             if (fuelType.type === spreadsheetData.newFuelData.type) {
               fuelType.rows = spreadsheetData.newFuelData.rows
+              fuelType.rows = fuelType.rows.map((row:any) => {
+              const unitRow = row.find((col:any)=> col.name === 'Unit')
+                unitRow.value = 'kWh'
+
+                return row
+              })
             }
             return fuelType;
           })

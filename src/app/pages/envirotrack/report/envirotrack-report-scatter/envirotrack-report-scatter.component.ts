@@ -6,6 +6,7 @@ import {DialogService} from "primeng/dynamicdialog";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
 
 
 @Component({
@@ -16,7 +17,8 @@ import {GlobalService} from "../../../../_services/global.service";
   ],
   imports: [
     SharedComponents,
-    SharedModules
+    SharedModules,
+    SidebarModule
   ],
   templateUrl: './envirotrack-report-scatter.component.html',
   styleUrls: ['./envirotrack-report-scatter.component.scss']
@@ -33,6 +35,7 @@ export class EnvirotrackReportScatterComponent implements OnInit {
   chartOptions!: echarts.EChartsOption;
   max: number = 0;
   dateFilter: number = 12;
+  scatterGuide: boolean = false;
   defaultFilters: object[] = [{
     name: 'All Data',
     value: 0
@@ -178,6 +181,19 @@ export class EnvirotrackReportScatterComponent implements OnInit {
               }
             }
           })
+        } else if (res.role.name === 'consultant') {
+
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                console.log(res.data)
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+                this.isConsultant = true
+                this.onSelectCompany()
+              }
+            }
+          })
         } else {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
@@ -254,8 +270,8 @@ export class EnvirotrackReportScatterComponent implements OnInit {
       this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
     }else {
       if(this.dateFilter){
-        this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.months[this.months.length-1]).subtract(this.dateFilter,'months'), moment(this.months[this.months.length-1])))
-        this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.months[this.months.length-1]).subtract(this.dateFilter,'months'), moment(this.months[this.months.length-1])))
+        this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.months[this.months.length-1]).subtract(this.dateFilter,'months'), moment(this.months[this.months.length+1])))
+        this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.months[this.months.length-1]).subtract(this.dateFilter,'months'), moment(this.months[this.months.length+1])))
       } else {
         this.chartX = this.months
         this.filteredData = this.data

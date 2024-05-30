@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
 import {PetToolData} from "../pages/pet-login-protected/pet-tool-types";
+import {uploadFiles} from "@directus/sdk";
+import {ASCProps} from "../pages/envirotrack/import/supply/supply.component";
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +40,22 @@ export class DbService {
     return this.http.patch(`${this.url}/items/pet_data/${id}`, data)
   }
 
+  getASCData = (id: number) => {
+    return this.http.get(`${this.url}/items/asc_data?filter[companyId][_eq]=${id}`)
+  }
+
+  createASCData = (data: ASCProps) => {
+    return this.http.post(`${this.url}/items/asc_data`, data)
+  }
+
+  patchASCData = (id: number, data: ASCProps) => {
+    return this.http.patch(`${this.url}/items/asc_data/${id}`, data)
+  }
+
+  deleteASCData = (id: number) => {
+    return this.http.delete(`${this.url}/items/asc_data/${id}`)
+  }
+
   getRecommendations = (companyId: number) => {
     return this.http.get(`${this.url}/items/companies/${companyId}?fields=recommendations`)
   }
@@ -66,5 +84,16 @@ export class DbService {
     )
 
   }
+
+  checkUsersFiles = (id: number) => {
+    return this.http.get(`${this.url}/items/companies/${id}?fields=uploaded_files.*`)
+
+  }
+
+  uploadBugReport = (bugReport: any) => {
+    return this.http.post(`${this.url}/items/bug_reports`, bugReport)
+  }
+
+
 
 }

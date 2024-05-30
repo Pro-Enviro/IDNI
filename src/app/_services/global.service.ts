@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {authentication, createDirectus, graphql, rest, readMe} from "@directus/sdk";
+import {authentication, createDirectus, graphql, rest, readMe, uploadFiles, readFolders} from "@directus/sdk";
 import {BehaviorSubject, from} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "./storage.service";
@@ -22,6 +22,7 @@ export class GlobalService {
   companyAssignedId: BehaviorSubject<number | null> = new BehaviorSubject<any>(null)
   companyName: BehaviorSubject<string | null> = new BehaviorSubject<any>(null)
   isSignedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+
   client: any;
   url: any = `https://app.idni.eco`
 
@@ -38,6 +39,23 @@ export class GlobalService {
   updateCompanyId = (value: number) => this.companyAssignedId.next(value)
   updateCompanyName = (value: string) => this.companyName.next(value)
   onSignedIn = this.isSignedIn.asObservable();
+
+  uploadBugReportScreenshots = async (screenshots: any) => {
+    const result = await this.client.request(uploadFiles(screenshots))
+    return result;
+  }
+
+  uploadDataForCompany = async (dataFiles: any) => {
+    const result = await this.client.request(uploadFiles(dataFiles))
+    return result
+  }
+
+
+  // Helper function to show folders UUID's
+  listDirectusFolders = async () => {
+    const result = await this.client.request(readFolders())
+    return result;
+  }
 
   initSession = () => {
     const storage: Storage = new Storage()

@@ -44,13 +44,13 @@ export class EnvirotrackBarSmallComponent implements OnInit {
   defaultFilters: object[] = [{
     name: 'All Data',
     value: 0
-  },{
+  }, {
     name: 'Past 12 months',
     value: 12
-  },{
+  }, {
     name: 'Past 6 months',
     value: 6
-  },{
+  }, {
     name: 'Past 3 months',
     value: 3
   }];
@@ -67,7 +67,8 @@ export class EnvirotrackBarSmallComponent implements OnInit {
     private track: EnvirotrackService,
     private global: GlobalService,
     private storage: StorageService
-  ) {}
+  ) {
+  }
 
 
   initChart = () => {
@@ -81,8 +82,8 @@ export class EnvirotrackBarSmallComponent implements OnInit {
       title: {
         text: 'Electricity Consumption, kWh',
         left: 'center',
-        textStyle:{
-          fontSize: this.screenWidth >= 1441 ? 16: 12
+        textStyle: {
+          fontSize: this.screenWidth >= 1441 ? 16 : 12
         }
       },
 
@@ -112,7 +113,7 @@ export class EnvirotrackBarSmallComponent implements OnInit {
       },
       toolbox: {
         show: true,
-        left:'0',
+        left: '0',
         feature: {
           saveAsImage: {
             show: true
@@ -142,24 +143,37 @@ export class EnvirotrackBarSmallComponent implements OnInit {
     }
   }
 
-  getCompanies = () =>{
+  getCompanies = () => {
 
 
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        if (res.role.name === 'user'){
+        if (res.role.name === 'user') {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
-              if (res.data){
+              if (res.data) {
                 this.companies = res.data
                 this.selectedCompany = this.companies[0].id
                 this.onSelectCompany()
               }
             }
           })
+        } else if (res.role.name === 'consultant') {
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                console.log(res.data)
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+                this.isConsultant = true
+                this.onSelectCompany()
+              }
+            }
+          })
+
         } else {
           this.track.getCompanies().subscribe({
-            next:(res: any) => {
+            next: (res: any) => {
               this.companies = res.data;
               this.isConsultant = true;
             }
@@ -189,9 +203,9 @@ export class EnvirotrackBarSmallComponent implements OnInit {
     this.selectedCompany ? this.getData(this.selectedCompany) : null
   }
 
-  getTimes = () =>{
-    for(let i = 0; i < 48; i++){
-      this.chartY.push(moment('00:00', 'HH:mm').add(i*30, 'minutes').format('HH:mm'))
+  getTimes = () => {
+    for (let i = 0; i < 48; i++) {
+      this.chartY.push(moment('00:00', 'HH:mm').add(i * 30, 'minutes').format('HH:mm'))
     }
   }
 
@@ -204,7 +218,7 @@ export class EnvirotrackBarSmallComponent implements OnInit {
     this.track.getData(id).subscribe({
         next: (res) => {
           res.forEach((row: any) => {
-            row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
+            row.hhd = JSON.parse(row.hhd.replaceAll('"', '').replaceAll("'", '')).map((x: number) => x ? x : 0)
             this.months.push(row.date)
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
@@ -218,10 +232,10 @@ export class EnvirotrackBarSmallComponent implements OnInit {
           this.data = res
           this.getTimes()
           this.months.sort();
-          this.months.sort((a:string,b:string) => (a.split('/')[1] > b.split('/')[1]) ? 1 : ((b.split('/')[1] > a.split('/')[1]) ? -1 : 0))
-          this.months.sort((a:string,b:string) => (a.split('/')[2] > b.split('/')[2]) ? 1 : ((b.split('/')[2] > a.split('/')[2]) ? -1 : 0))
+          this.months.sort((a: string, b: string) => (a.split('/')[1] > b.split('/')[1]) ? 1 : ((b.split('/')[1] > a.split('/')[1]) ? -1 : 0))
+          this.months.sort((a: string, b: string) => (a.split('/')[2] > b.split('/')[2]) ? 1 : ((b.split('/')[2] > a.split('/')[2]) ? -1 : 0))
           this.minDate = new Date(this.months[0])
-          this.maxDate = new Date(this.months[this.months.length-1])
+          this.maxDate = new Date(this.months[this.months.length - 1])
           this.filterData()
         }
       }
@@ -229,34 +243,34 @@ export class EnvirotrackBarSmallComponent implements OnInit {
   }
 
 
-  filterData = () =>{
+  filterData = () => {
 
     this.chartData = [];
-    if(this.dateRange != undefined && this.dateRange[1]){
-      this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
-      this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
-    }else {
-      if(this.dateFilter){
-        this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.months[this.months.length-1]).subtract(this.dateFilter,'months'), moment(this.months[this.months.length-1])))
-        this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.months[this.months.length-1]).subtract(this.dateFilter,'months'), moment(this.months[this.months.length-1])))
+    if (this.dateRange != undefined && this.dateRange[1]) {
+      this.filteredData = this.data.filter((x: any) => moment(x.date).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
+      this.chartX = this.months.filter((x: any) => moment(x).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
+    } else {
+      if (this.dateFilter) {
+        this.filteredData = this.data.filter((x: any) => moment(x.date).isBetween(moment(this.months[this.months.length - 1]).subtract(this.dateFilter, 'months'), moment(this.months[this.months.length + 1])))
+        this.chartX = this.months.filter((x: any) => moment(x).isBetween(moment(this.months[this.months.length - 1]).subtract(this.dateFilter, 'months'), moment(this.months[this.months.length + 1])))
       } else {
         this.chartX = this.months
         this.filteredData = this.data
       }
     }
-    this.filteredData = this.filteredData.filter((x:any) => x.mpan === this.selectedMpan)
+    this.filteredData = this.filteredData.filter((x: any) => x.mpan === this.selectedMpan)
     this.filteredData.forEach((row: any) => {
-      row.hhd.forEach((hh: any, i:number) => {
+      row.hhd.forEach((hh: any, i: number) => {
         hh = hh ? hh : 0;
         row.hhd[i] = !isNaN(parseInt(hh.toString())) ? hh : 0
       })
-      if(row.hhd.length){
-        this.chartData.push([row.date, row.hhd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
+      if (row.hhd.length) {
+        this.chartData.push([row.date, row.hhd.reduce((x: number, y: number) => (x ? x : 0) + (y ? y : 0))])
       }
 
     })
 
-    let arr: number[] = this.chartData.map((x:any) => x[2])
+    let arr: number[] = this.chartData.map((x: any) => x[2])
     this.max = Math.max(...arr)
     this.initChart()
   }

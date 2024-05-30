@@ -1,61 +1,56 @@
-<!--<div class="grid">-->
-<!--    <div class="col-6">-->
-<!--      <p-card header="Select Company" styleClass="card-charts">-->
-<!--        &lt;!&ndash;        <p-selectButton class="btn-select" [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"></p-selectButton>&ndash;&gt;-->
-<!--        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>-->
-<!--      </p-card>-->
-<!--    </div>-->
-<!--    <div class="col-6">-->
-<!--      <div class="flex-1" *ngIf="mpan.length">-->
-<!--        <p-card header="Select Mpan" styleClass="card-charts">-->
-<!--          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
-<!--        </p-card>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="col-12">-->
-<!--      <p-card styleClass="card-charts">-->
-<!--        <div class="toggle-buttons flex" style="margin-bottom: 2rem">-->
-<!--          <div class="select-container flex-1">-->
-<!--            <p-selectButton *ngIf="defaultFilters.length" [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="select btn-select"></p-selectButton>-->
-<!--          </div>-->
-<!--          <div class="flex-end">-->
-<!--            <p-toggleButton onLabel="Hide Expected Operating Hours" offLabel="Show Expected Operating Hours" [style]="{ background:'#356c6b',color:'#ffffff'}" [(ngModel)]="shift" (click)="filterData()"></p-toggleButton>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>-->
-<!--      </p-card>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<p-card styleClass="card-charts">
-  <div class="grid">
-    <div class="col-6">
-      <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant">
-
-        <!--        <p-selectButton class="btn-select" [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"></p-selectButton>-->
-        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"></p-dropdown>
-
-      </p-card>
-    </div>
-    <div class="col-6">
-      <div class="flex-1" *ngIf="mpan.length">
-        <p-card header="Select Mpan" styleClass="card-select-panel">
-          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+<section>
+  <p-card styleClass="card-charts">
+    <div class="grid">
+      <div class="lg:col-4 md:col-12">
+        <p-card header="Average Daily Consumption Chart Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
+          <p-button type="button" styleClass="btn-style" (click)="avgGuide = true" icon="pi pi-chart-line" label="Guide"></p-button>
+        </p-card>
+      </div>
+      <div class="lg:col-4 md:col-6">
+        @if(isConsultant){
+          <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+            <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" scrollHeight="370px"></p-dropdown>
+          </p-card>
+        } @else if (!isConsultant){
+          <p-card header="Selected Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+            <p-selectButton class="btn-select" [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [unselectable]="true"></p-selectButton>
+          </p-card>
+        }
+      </div>
+      <div class="lg:col-4 md:col-6">
+        @if(mpan.length){
+          <p-card header="Select Mpan" styleClass="card-select-panel" [style]="{ height: '100%' }">
+            <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+          </p-card>
+        }
+      </div>
+      <div class="col-12">
+        <p-card styleClass="card-style-none">
+          <div class="grid">
+            <div class="lg:col-10 md:col-12">
+              @if(defaultFilters.length){
+                <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months"></p-selectButton>
+              }
+            </div>
+            <div class="lg:col-12 md:col-12 flex justify-content-end mb-5">
+              <p-toggleButton onLabel="Hide Expected Operating Hours" offLabel="Show Expected Operating Hours" [(ngModel)]="shift" (click)="filterData()" styleClass="btn-dark"></p-toggleButton>
+            </div>
+          </div>
+          <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>
         </p-card>
       </div>
     </div>
-    <div class="col-12">
-      <p-card styleClass="card-style-none">
-        <div class="toggle-buttons flex" style="margin-bottom: 2rem">
-          <div class="select-container flex-1">
-            <p-selectButton *ngIf="defaultFilters.length" [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="select btn-select"></p-selectButton>
-          </div>
-          <div class="flex-end">
-            <p-toggleButton onLabel="Hide Expected Operating Hours" offLabel="Show Expected Operating Hours" [style]="{ background:'#356c6b',color:'#ffffff'}" [(ngModel)]="shift" (click)="filterData()"></p-toggleButton>
-          </div>
-        </div>
-        <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>
-      </p-card>
+  </p-card>
+
+  <p-sidebar [(visible)]="avgGuide" position="right" styleClass="lg:w-4 md:w-6">
+    <div class="container p-5">
+      <h3 class="header-style">Average Daily Consumption, kWh per Half-Hour Chart Guide</h3>
+      <p>This chart presents the average half-hourly consumption profile per day of the week.
+        The horizontal axis of the chart represents the time of day.
+        The vertical axis shows the scale of electricity consumption in kWh.<br>
+        Viewers can observe key features such as peak consumption times,
+        differences in consumption patterns between weekdays and weekends, and any other notable trends or variations.
+      </p>
     </div>
-  </div>
-</p-card>
+  </p-sidebar>
+</section>

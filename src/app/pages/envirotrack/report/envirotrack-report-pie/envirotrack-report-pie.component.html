@@ -1,26 +1,54 @@
-<p-card styleClass="card-charts">
-  <div class="grid">
-    <div class="col-6">
-      <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant">
-        <!--      <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
-        <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"></p-dropdown>
-      </p-card>
-    </div>
-    <div class="col-6">
-      <div class="flex-1" *ngIf="mpan.length">
-        <p-card header="Select Mpan" styleClass="card-select-panel">
-          <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+<section>
+  <p-card styleClass="card-charts">
+    <div class="grid">
+      <div class="lg:col-4 md:col-12">
+        <p-card styleClass="card-select-panel" header="Electricity Consumption" subheader="% split by Day of the Week Chart Guide" [style]="{ height: '100%' }">
+          <p-button type="button" styleClass="btn-style" (click)="pieGuide = true" icon="pi pi-chart-pie" label="Guide"></p-button>
+        </p-card>
+      </div>
+      <div class="lg:col-4 md:col-6">
+
+          @if(isConsultant){
+            <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+              <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
+                          [style]="{ width: '12rem'}" scrollHeight="370px"></p-dropdown>
+            </p-card>
+          } @else if(!isConsultant){
+            <p-card header="Selected Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+                    <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select" [unselectable]="true"></p-selectButton>
+            </p-card>
+          }
+      </div>
+      <div class="lg:col-4 md:col-6">
+          @if(mpan.length){
+            <p-card header="Select Mpan" styleClass="card-select-panel" [style]="{ height: '100%' }">
+              <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
+            </p-card>
+          }
+      </div>
+      <div class="col-12">
+        <p-card styleClass="card-style-none">
+          <div class="grid mb-6">
+            <div class="lg:col-10 md:col-12">
+              <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select-months"></p-selectButton>
+            </div>
+            <div class="lg:col-2 md:col-12">
+              <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
+            </div>
+          </div>
+          <div echarts [options]="chartOptions" style="max-height: 70vh; height: 800px;"></div>
         </p-card>
       </div>
     </div>
-    <div class="col-12">
-      <p-card styleClass="card-style-none">
-        <div class="flex justify-content-between mb-3">
-          <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select"></p-selectButton>
-          <p-calendar  [minDate]="minDate" [maxDate]="maxDate" [(ngModel)]="dateRange" dateFormat="dd\mm\yy" selectionMode="range" (ngModelChange)="filterData()" [showIcon]="true" styleClass="date-btn"></p-calendar>
-        </div>
-        <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px;"></div>
-      </p-card>
+  </p-card>
+
+  <p-sidebar [(visible)]="pieGuide" position="right" styleClass="lg:w-4 md:w-6">
+    <div class="container p-5">
+      <h3 class="header-style">Electricity Consumption,% split by Day of the Week Chart Guide</h3>
+      <p>The pie chart splits the percentage of the total kWh by each day of the week for a specific period. Each day of the week is represented as a separate segment of the pie chart.
+        The size of each segment corresponds to the proportion of the total energy that was consumed on that day of the week for that selected period.
+        Each segment is labelled with the name of the day and the percentage of total energy consumption that was used on that day of the week.
+      </p>
     </div>
-  </div>
-</p-card>
+  </p-sidebar>
+</section>

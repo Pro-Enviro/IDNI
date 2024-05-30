@@ -6,14 +6,16 @@ import {EnvirotrackService} from "../../envirotrack.service";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
 
 @Component({
   selector: 'app-envirotrack-report-avg',
   standalone: true,
-  imports: [
-    SharedModules,
-    SharedComponents
-  ],
+    imports: [
+        SharedModules,
+        SharedComponents,
+        SidebarModule
+    ],
   templateUrl: './envirotrack-report-avg.component.html',
   styleUrls: ['./envirotrack-report-avg.component.scss']
 })
@@ -29,6 +31,7 @@ export class EnvirotrackReportAvgComponent implements OnInit {
   chartOptions!: echarts.EChartsOption;
   max: number = 0;
   dateFilter: number = 12;
+  avgGuide: boolean = false;
   defaultFilters: object[] = [{
     name: 'All Data',
     value: 0
@@ -174,6 +177,19 @@ export class EnvirotrackReportAvgComponent implements OnInit {
               }
             }
           })
+        } else if (res.role.name === 'consultant') {
+
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                console.log(res.data)
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+                this.isConsultant = true
+                this.onSelectCompany()
+              }
+            }
+          })
         } else {
           this.track.getCompanies().subscribe({
             next: (res: any) => {
@@ -265,7 +281,7 @@ export class EnvirotrackReportAvgComponent implements OnInit {
       this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
     }else {
       if(this.dateFilter){
-        this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.months[this.months.length-1]).subtract(this.dateFilter,'months'), moment(this.months[this.months.length-1])))
+        this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.months[this.months.length-1]).subtract(this.dateFilter,'months'), moment(this.months[this.months.length+1])))
       } else {
         this.filteredData = this.data
       }

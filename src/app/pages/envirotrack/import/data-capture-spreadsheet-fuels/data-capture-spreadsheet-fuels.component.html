@@ -1,15 +1,21 @@
 <!--<app-company-select (company)="getCompany($event)"></app-company-select>-->
 
 <section>
-    <div class="grid p-6">
-       <div class="col-5" >
-         <p-card header="Select Company" styleClass="card-charts">
-           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"></p-dropdown>
+  <p-card header="Non Half-Hourly Data" styleClass="card-charts" [style]="{ width: '83.5vw' }">
+    <div class="grid p-2 mt-3">
+      <div class="lg:col-5 md:col-6 sm:col-12">
+        <p-card header="Non Half-Hourly Data Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
+          <p-button type="button" styleClass="btn-style" (click)="fuelGuide = true" icon="pi pi-table" label="Guide"></p-button>
+        </p-card>
+      </div>
+       <div class="lg:col-5 md:col-6 sm:col-12">
+         <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" scrollHeight="370px"></p-dropdown>
          </p-card>
        </div>
 
       <div class="col-12">
-        <p-card header="Non HH Data" styleClass="card-charts">
+        <p-card header="Non Half-Hourly Data" styleClass="card-charts">
           <div class="pb-5">
             <button pButton (click)="addFuelType()" label="Add New Fuel Type" icon="pi pi-plus" class="btn-style"></button>
           </div>
@@ -37,12 +43,12 @@
 
               <div class="flex justify-content-end p-3">
                 <button pButton class="btn-style mr-2" pRipple icon="pi pi-file-excel" (click)="exportExcel(fuel)"></button>
-                <p-button (click)="deleteFuelType($event, fuel)" icon="pi pi-times" styleClass="btn-dark"></p-button>
+                <p-button (click)="deleteFuelType($event, fuel)" icon="pi pi-times" styleClass="btn-dark p-3 border-round"></p-button>
               </div>
               <div class="flex justify-content-start p-3">
                 <button pButton class="btn-style mr-2" icon="pi pi-plus" label="Import Spreadsheet"
                         (click)="importSpreadsheet(fuel)"></button>
-                <button pButton class="btn-outline mr-2" icon="pi pi-pencil" label="Edit Column"
+                <button pButton class="btn-outline-upload mr-2" icon="pi pi-pencil" label="Edit Column"
                         (click)="editFuelType(fuel)"></button>
               </div>
               <p-table [value]="fuel.rows" styleClass="p-datatable-sm" #table [style]="{padding: 0}"
@@ -59,6 +65,7 @@
                 <ng-template pTemplate="body" let-fuelRow let-i=rowIndex>
                   <tr style="width: 150px">
                     <td *ngFor="let col of fuelRow">
+<!--                      {{fuelRow | json}}-->
                       <p-calendar
                         *ngIf="col.type === 'date'"
                         [style]="{width: '150px', height: '2.5rem', marginBottom: '0'}"
@@ -77,6 +84,7 @@
                                      class="p-inputtext-sm" [inputStyle]="{width: '100px'}" *ngIf="col.type === 'number'"
                                      [(ngModel)]="col.value" (ngModelChange)="calculateCellValue(fuelRow)"></p-inputNumber>
                       <p-dropdown *ngIf="col.type === 'uom'" [options]="uomOptions"
+                                  (onChange)="changeAllUom($event, fuel)"
                                   [style]="{width: '120px', height: '2.5rem', marginBottom: '2px'}" [appendTo]="table"
                                   [(ngModel)]="col.value"></p-dropdown>
                     </td>
@@ -88,11 +96,10 @@
                 </ng-template>
                 <ng-template pTemplate="footer">
                   <div class="flex">
-                    <button pButton icon="pi pi-plus" class="btn-dark" (click)="addNewRow(fuel)"
-                            [style]="{marginTop: '1rem'}"></button>
+                    <button pButton icon="pi pi-plus" class="btn-dark-upload ml-2 mt-3" (click)="addNewRow(fuel)"></button>
                   </div>
                   <div class="pt-5 pb-5">
-                    <button pButton icon="pi pi-save" label="Save" class="btn-style" (click)="saveFuel()"></button>
+                    <button pButton icon="pi pi-save" label="Save" class="btn-style mt-3" (click)="saveFuel()"></button>
                   </div>
                 </ng-template>
               </p-table>
@@ -102,4 +109,42 @@
 
       </div>
     </div>
+  </p-card>
 </section>
+
+
+<p-sidebar [(visible)]="fuelGuide" position="right" styleClass="lg:w-5 md:w-7">
+  <div class="container p-5">
+    <h3 class="header-style">Non Half-Hourly Data Guide</h3>
+    <p>The ‘Non Half-Hourly’ section is where you can add or upload data recorded from bills, including the individual monthly energy/fuel usage, rates, and costs.</p>
+    <p-divider></p-divider>
+    <h3 class="font-medium lg:text-xl md:text-lg">How to Upload Non Half-Hourly Data Step by Step Guide</h3>
+    <ul>
+      <li class="pb-2">1. Click on "Add New Fuel Type" and select the fuel type from the dropdown menu.</li>
+      <li class="pb-2">2. Select the columns that are required for your dataset. Drag and Drop columns from the “Available Columns” panel to the “Selected Columns” panel to include them.<br>
+        If custom columns are required this can be achieved with the “Custom Column” panel. Once a custom column is created it can be dragged from the “Available Columns”.<br>
+        Totals can be automatically calculated. In the “Columns to Total” panel, select the checkboxes of columns that should be used in calculating the final total.
+      </li>
+      <li class="pb-2">3. The table will appear below with your selected columns.</li>
+      <li class="pb-2">4. To edit the columns, click on the “Edit Column” button. This will allow editing, adding new columns, and updating the total calculation.</li>
+      <li class="pb-2">5. Click "Update".</li>
+    </ul>
+    <p-divider></p-divider>
+    <h3 class="font-medium lg:text-xl md:text-lg">How to Upload Non Half-Hourly Data from a Spreadsheet Guide</h3>
+    <ul>
+      <li class="pb-2">1. Click on "Add New Fuel Type" and select the fuel type from the dropdown menu.</li>
+      <li class="pb-2">2. Select the columns that are required for your dataset. Drag and Drop columns from the “Available Columns” panel to the “Selected Columns” panel to include them.<br>
+        If custom columns are required this can be achieved with the “Custom Column” panel. Once a custom column is created it can be dragged from the “Available Columns”.<br>
+        Totals can be automatically calculated. In the “Columns to Total” panel, select the checkboxes of columns that should be used in calculating the final total.
+    </li>
+      <li class="pb-2">3. The table will appear below with your selected columns.</li>
+      <li class="pb-2">4. Click on “Import Spreadsheet”.</li>
+      <li class="pb-2">5. Select the “Choose” button and select a file to upload.</li>
+      <li class="pb-2">6. Click “Upload”.</li>
+      <li class="pb-2">7. Select the required sheet to import data from.</li>
+      <li class="pb-2">8. Drag and Drop columns from the spreadsheet to the corresponding panels. This ensures the data is imported correctly.</li>
+      <li class="pb-2">9. Click “Process”. After this is completed a success message will appear. Click “Save” at the bottom of the page to confirm your import.</li>
+      <li class="pb-2">10. You can now navigate away or close the page.</li>
+    </ul>
+  </div>
+</p-sidebar>

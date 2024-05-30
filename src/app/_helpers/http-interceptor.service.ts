@@ -36,15 +36,19 @@ export const HttpInterceptorService: HttpInterceptorFn = (
       catchError((error: HttpErrorResponse) => {
         if ([401, 403].includes(error.status)) {
           if (error.status === 401) {
+            console.log('401 - getting refresh token')
             return from(auth.refreshToken()).pipe(
               switchMap((token: any) => {
                 const newRequest = addTokenHeader(req, token)
+                console.log('New token request', newRequest)
+                window.location.reload()
+                console.log('NEXT REQUEST')
                 return next(newRequest)
               })
             )
           } else if (error.status === 403) {
             localStorage.clear()
-            router.navigate([''])
+            router.navigate(['login'])
           } else {
             router.navigate(['login'])
           }

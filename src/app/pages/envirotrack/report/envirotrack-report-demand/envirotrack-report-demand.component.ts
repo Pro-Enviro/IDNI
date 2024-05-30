@@ -5,10 +5,12 @@ import {EnvirotrackService} from "../../envirotrack.service";
 import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {GlobalService} from "../../../../_services/global.service";
+import {SidebarModule} from "primeng/sidebar";
+import {DbService} from "../../../../_services/db.service";
 @Component({
   selector: 'app-envirotrack-report-demand',
   standalone: true,
-  imports: [SharedModules, SharedComponents],
+    imports: [SharedModules, SharedComponents, SidebarModule],
   templateUrl: './envirotrack-report-demand.component.html',
   styleUrls: ['./envirotrack-report-demand.component.scss']
 })
@@ -24,6 +26,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
   chartOptions!: echarts.EChartsOption;
   max: number = 0;
   dateFilter: number = 12;
+  maxGuide:boolean = false;
   defaultFilters: object[] = [{
     name: 'All Data',
     value: 0
@@ -49,7 +52,8 @@ export class EnvirotrackReportDemandComponent implements OnInit {
 
   constructor(
     private track: EnvirotrackService,
-    private global: GlobalService
+    private global: GlobalService,
+    private db: DbService
   ) {}
 
   // saveChartAsBase64 = () => {
@@ -152,17 +156,17 @@ export class EnvirotrackReportDemandComponent implements OnInit {
           }
         }
       },
-      //   {
-      //   name: 'ASC',
-      //   type: 'line',
-      //   data: this.asc,
-      //   emphasis: {
-      //     itemStyle: {
-      //       borderColor: '#333',
-      //       borderWidth: 1,
-      //     }
-      //   }
-      // }
+        {
+        name: 'ASC',
+        type: 'line',
+        data: this.asc,
+        emphasis: {
+          itemStyle: {
+            borderColor: '#333',
+            borderWidth: 1,
+          }
+        }
+      }
       ]
     }
   }
@@ -177,6 +181,18 @@ export class EnvirotrackReportDemandComponent implements OnInit {
               if (res.data) {
                 this.companies = res.data
                 this.selectedCompany = res.data[0].id
+                this.onSelectCompany()
+              }
+            }
+          })
+        } else if (res.role.name === 'consultant') {
+
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              if (res.data) {
+                this.companies = res.data
+                this.selectedCompany = this.companies[0].id
+                this.isConsultant = true
                 this.onSelectCompany()
               }
             }
@@ -216,27 +232,40 @@ export class EnvirotrackReportDemandComponent implements OnInit {
 
   getAsc = (startDate: any, endDate: any) => {
     this.asc = [];
-    this.initChart()
-    // this.admin.fnGet(`items/energy_supply_info?filter[mpan][_eq]=${this.selectedMpan}`).subscribe({
-    //   next: (res: any) => {
-    //     this.supply = res.data
-    //     if(!this.supply.length) {
-    //       this.initChart()
-    //       return
-    //     }
-    //
-    //     this.supply.forEach((row:any) => {
-    //       row.start_date = moment(row.start_date)
-    //       row.end_date = !row.end_date ?  moment(this.months[this.months.length-1],'DD/MM/YYYY') : moment(row.end_date);
-    //     })
-    //     this.supply = this.supply.sort((a:any, b:any) => a.start_date.unix() - b.start_date.unix())
-    //     this.supply.forEach((row:any) => {
-    //       this.asc.push([row.start_date.isBefore(moment(startDate, 'DD/MM/YYYY')) ? startDate : row.start_date.format('DD/MM/YYYY'), row.asc], [row.end_date.format('DD/MM/YYYY'), row.asc])
-    //     })
-    //     this.asc[this.asc.length-1][0] = endDate
-    //     this.initChart()
-    //   }
-    // })
+
+
+    this.db.getASCData(this.selectedCompany).subscribe({
+      next: (res: any) => {
+        this.supply = res.data
+        if (!res.data.length) {
+          this.initChart()
+        } else {
+
+
+          this.supply = this.supply.filter((asc_data: any) => asc_data.mpan === this.selectedMpan)
+
+          this.supply.forEach((row: any) => {
+
+
+            row.start_date = moment(row.start_date);
+            row.end_date = moment(row.end_date);
+          })
+
+          this.supply = this.supply.sort((a: any, b: any) => a.start_date.unix() - b.start_date.unix())
+          this.supply.forEach((row: any) => {
+
+            let checkStart = row.start_date.isBefore(moment(startDate, 'DD/MM/YYYY'))
+            this.asc.push([ checkStart ? startDate : row.start_date.format('DD/MM/YYYY'), row.asc],[ row.end_date.format('DD/MM/YYYY'), row.asc])
+
+          })
+
+          this.asc[this.asc.length-1][0] = endDate
+
+          this.initChart()
+        }
+      }
+    })
+
   }
 
   getData = (id: number) => {
@@ -252,6 +281,8 @@ export class EnvirotrackReportDemandComponent implements OnInit {
             this.months.push(moment(row.date).format('DD/MM/YYYY'))
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
+
+          console.log(this.mpan)
 
           // if (this.global.selectedMpan?.value) {
           //   this.selectedMpan = this.global.selectedMpan.value
@@ -282,8 +313,11 @@ export class EnvirotrackReportDemandComponent implements OnInit {
       this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
     }else {
       if(this.dateFilter){
-        this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.months[this.months.length-1], 'DD/MM/YYYY').subtract(this.dateFilter,'months'), moment(this.months[this.months.length-1], 'DD/MM/YYYY')))
-        this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.months[this.months.length-1]).subtract(this.dateFilter,'months'), moment(this.months[this.months.length-1], 'DD/MM/YYYY')))
+        //this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.months[this.months.length-1], 'DD/MM/YYYY').subtract(this.dateFilter,'months'), moment(this.months[this.months.length-1], 'DD/MM/YYYY')))
+        //this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.months[this.months.length-1]).subtract(this.dateFilter,'months'), moment(this.months[this.months.length-1], 'DD/MM/YYYY')))
+
+        this.filteredData = this.data.filter((x: any) => moment(x.date).isBetween(moment(this.months[this.months.length - 1],'DD/MM/YYYY').subtract(this.dateFilter, 'months'), moment(this.months[this.months.length + 1])))
+        this.chartX = this.months.filter((x: any) => moment(x).isBetween(moment(this.months[this.months.length - 1],'DD/MM/YYYY').subtract(this.dateFilter, 'months'), moment(this.months[this.months.length + 1])))
       } else {
         this.chartX = this.months
         this.filteredData = this.data
@@ -318,5 +352,6 @@ export class EnvirotrackReportDemandComponent implements OnInit {
     }
 
     this.screenWidth = window.innerWidth
+
   }
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {MessageService} from "primeng/api";
-import {Router} from "@angular/router";
-import {BehaviorSubject, throwError} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 
 export interface menu{
   id: number,
@@ -19,8 +18,7 @@ export class StorageService {
   updateMenu = (value: menu[]) => this.menu.next(value);
 
   constructor(
-    private msg: MessageService,
-    private route: Router
+    private msg: MessageService
   ) {}
 
 

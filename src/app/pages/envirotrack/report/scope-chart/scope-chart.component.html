@@ -1,16 +1,39 @@
-<p-card styleClass="card-charts">
+<section>
+  <p-card styleClass="card-charts">
+    <div class="grid">
+      <div class="lg:col-6 md:col-6">
+        <p-card header="Breakdown of CO2e by Scope Chart Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
+          <p-button type="button" styleClass="btn-style" (click)="scopeGuide = true" icon="pi pi-chart-pie" label="Guide"></p-button>
+        </p-card>
+      </div>
 
+      <div class="lg:col-5 md:col-6">
+        @if(isConsultant){
+          <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+            <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" scrollHeight="370px"></p-dropdown>
+          </p-card>
+        } @else if (!isConsultant){
+          <p-card header="Selected Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+            <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select" [unselectable]="true"></p-selectButton>
+          </p-card>
+        }
+      </div>
 
-<div class="col-4">
+      <div class="col-12" *ngIf="chartOption">
+        <div echarts [options]="chartOption" class="Scope Chart" style="max-height: 600px; height: 600px" [id]="'chartId'"></div>
+      </div>
+      <div *ngIf="!dataArray.length">
+        <p>To add data, please go to "Menu" and select "Non Half-Hourly Data".</p>
+      </div>
+    </div>
 
-  <p-card header="Select Company" styleClass="card-select-panel" *ngIf="isConsultant">
-    <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" [disabled]="!isConsultant"></p-dropdown>
-<!--    <p-multiSelect [options]="yearFilter" optionLabel="name" optionName="value" [(ngModel)]="selectedYears" (ngModelChange)="onYearFilter($event)"></p-multiSelect>-->
   </p-card>
-</div>
-<div echarts [options]="chartOption"  class="Scope Chart" style="max-height: 600px; height: 600px" [id]="'chartId'"></div>
-  <div *ngIf="!dataArray.length">
-    <p>No fuel data uploaded.</p>
-  </div>
+</section>
 
-</p-card>
+<p-sidebar [(visible)]="scopeGuide" position="right" styleClass="lg:w-4 md:w-6">
+  <div class="container p-5">
+    <h3 class="header-style">Breakdown of CO2e by Emissions Source (tonnes) Chart Guide</h3>
+    <p>The pie chart presents the breakdown of CO2e (tonnes) by emissions source. Hover over the individual segments and you are presented with a panel which shows the fuel/activity type and the percentage of consumption.
+    </p>
+  </div>
+</p-sidebar>

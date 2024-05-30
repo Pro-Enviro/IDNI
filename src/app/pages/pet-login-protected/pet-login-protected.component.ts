@@ -5,8 +5,6 @@ import {SelectButtonModule} from "primeng/selectbutton";
 import {TableModule} from "primeng/table";
 import {InputNumberModule} from "primeng/inputnumber";
 import {ButtonModule} from "primeng/button";
-import {CarouselTplComponent} from "../../_partials/carousel-tpl/carousel-tpl.component";
-import {FooterComponent} from "../../_partials/footer/footer.component";
 import {RippleModule} from "primeng/ripple";
 import {CommonModule, JsonPipe} from "@angular/common";
 import {DropdownModule} from "primeng/dropdown";
@@ -52,15 +50,14 @@ import {
   BoughtInParts
 } from "./pet-tool-classes";
 import {AutoCompleteCompleteEvent} from "primeng/autocomplete";
-
-
+import {DividerModule} from "primeng/divider";
 
 
 
 @Component({
   selector: 'app-pet-login-protected',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, CarouselTplComponent, FooterComponent, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective, SidebarModule],
+  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective, SidebarModule, DividerModule],
   templateUrl: './pet-login-protected.component.html',
   styleUrl: './pet-login-protected.component.scss'
 })
@@ -108,7 +105,7 @@ export class PetLoginProtected implements OnInit {
   staffCommute: StaffCommuteModes[] = ['Select', 'On foot', 'Cycle', 'Public Transport', 'Car', 'Motorbike']
   unitsOfCost: UnitsOfCost[] = ['Cost/unit', 'Total Cost', 'Select']
   materialTypes: MaterialTypes[] = ['Steel', 'Other Metals', 'Plastics', 'Other Materials']
-  steelMaterials: SteelMaterials[] = ['Mild Steel', 'Carbon Steel', 'Tool Steel D2', 'Tool Steel H13', 'Tool Steel M2', 'Tool Steel S275', 'Tool Steel S325', 'Alloy Steel 4340', 'Alloy Steel 4140', 'Alloy Steel 4150', 'Alloy Steel 9310', 'Alloy Steel 52100', 'Stainless Steel 304', 'Stainless Steel 316', 'Duplex Steel']
+  steelMaterials: SteelMaterials[] = ['Mild Steel', 'Carbon Steel', 'Tool Steel D2', 'Tool Steel H13', 'Tool Steel M2', 'Tool Steel S275', 'Tool Steel S325', 'Alloy Steel 4340', 'Alloy Steel 4140', 'Alloy Steel 4150', 'Alloy Steel 9310', 'Alloy Steel 52100', 'Stainless Steel 304', 'Stainless Steel 316', 'Duplex Steel', 'Hardox series 400' , 'Hardox series 500' , 'Hardox series 600' , 'Inconel series 600' , 'Inconel series 700']
   otherMetals: OtherMetals[] = ['Aluminium 1000', 'Aluminium 2000', 'Aluminium 6000', 'Aluminium 7000', 'Duralumin', 'Aluminium Lithium', 'Copper', 'Bronze', 'Titanium', 'Lithium', 'Magnesium']
   plastics: Plastics[] = ['ABS', 'PA', 'PET', 'PP', 'PU', 'POM', 'PEEK', 'PE', 'PVC', 'PPS', 'Elastomers', 'Composites', 'Textiles']
   otherMaterials: OtherMaterials[] = ['Composites', 'Textiles', 'Cement', 'Aggregate', 'Sand', 'Glass', 'Chemicals', 'Hardwood', 'Softwood']
@@ -125,6 +122,7 @@ export class PetLoginProtected implements OnInit {
   externalCost: number | undefined
   productivityPercentile: string = ''
   chartOptions!: EChartsOption | null;
+  gaugeChartOptions!: EChartsOption | null;
   chartData: [string, (string | number)][] | null = []
   markStart: number | undefined
   markEnd: number | undefined
@@ -158,6 +156,18 @@ export class PetLoginProtected implements OnInit {
                 this.companies = res.data
                 this.selectedCompany = res.data[0].id
                 this.onSelectCompany()
+              }
+            }
+          })
+        }
+        else if (res.role.name === 'consultant'){
+          this.track.getUsersCompany(res.email).subscribe({
+            next: (res: any) => {
+              console.log(res)
+              if (res.data) {
+                this.companies = res.data
+                this.selectedCompany = res.data[0].id
+                this.isConsultant = true
               }
             }
           })
@@ -203,6 +213,7 @@ export class PetLoginProtected implements OnInit {
     this.externalCost = 0;
     this.chartData = null
     this.chartOptions = null;
+    this.gaugeChartOptions = null;
   }
 
   fillTable = (petData: PetToolData) => {
@@ -248,7 +259,6 @@ export class PetLoginProtected implements OnInit {
 
   generateNewTable = () => {
 
-    console.log('Generating new table')
     this.resetTableValues()
 
     this.generateClasses('Cost of Energy', TableRow, energyNames)
@@ -259,7 +269,8 @@ export class PetLoginProtected implements OnInit {
     this.generateClasses('Road Freight', RoadFreight)
     this.generateClasses('Other Freight', OtherFreightTransportation)
     this.generateClasses('Company Travel', CompanyTravel)
-    this.generateClasses('Staff Commute', StaffCommute)
+    // this.generateClasses('Staff Commute', StaffCommute)
+
     this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
 
     // Generate extra rows for Raw Materials
@@ -279,6 +290,41 @@ export class PetLoginProtected implements OnInit {
       next: (res: any) => {
         if (res.data.length) {
           this.allPetData = res.data;
+
+          // Adding custom options to the dropdown menu
+          this.allPetData.forEach((year: PetToolData) => {
+            const json = JSON.parse(year.cost_of_raw_materials)
+            json.forEach((row: any) => {
+              if (!this.materialTypes.includes(row.type)) {
+                this.materialTypes.push(row.type)
+              }
+
+
+              if (!this.steelMaterials.includes(row.subtype)) {
+                this.steelMaterials.push(row.subtype)
+              }
+
+              if (!this.otherMetals.includes(row.subtype)) {
+                this.otherMetals.push(row.subtype)
+              }
+
+              if (!this.plastics.includes(row.subtype)) {
+                this.plastics.push(row.subtype)
+              }
+
+              if (!this.otherMaterials.includes(row.subtype)) {
+                this.otherMaterials.push(row.subtype)
+              }
+
+              // Remove any undefined vals
+              this.steelMaterials = this.steelMaterials.filter(item => item !== undefined)
+              this.otherMaterials = this.otherMaterials.filter(item => item !== undefined)
+              this.otherMetals = this.otherMetals.filter(item => item !== undefined)
+              this.plastics = this.plastics.filter(item => item !== undefined)
+
+            })
+          })
+
           this.fillTable(this.allPetData[0])
           this.calculateProductivityComparison()
         } else {
@@ -312,6 +358,7 @@ export class PetLoginProtected implements OnInit {
         let newClass = new classToUse()
         newClass.name = name
         newClass.parent.name = rowTitle
+
         if (newClass.parent.addRows) {
           newClass.parent.addRows = true
         }
@@ -322,6 +369,7 @@ export class PetLoginProtected implements OnInit {
     } else {
       let newClass = new classToUse()
       if (rowTitle === 'Cost of Raw Materials') newClass.parent.addRows = false
+
       this.generateRows(newClass, rowTitle, true)
       return newClass
     }
@@ -329,8 +377,12 @@ export class PetLoginProtected implements OnInit {
 
   generateRows = (array: string[] | any, parentName: string, isClass?: boolean) => {
     if (isClass) {
-      array.parent.name = parentName
-      this.data.push(array)
+      if (parentName === 'Staff Commute') {
+        array.parent.name = 'Company Travel'
+      } else {
+        array.parent.name = parentName
+        this.data.push(array)
+      }
     } else {
       array.forEach((name: string) => {
         let newGroupItem = new GroupItem()
@@ -343,14 +395,37 @@ export class PetLoginProtected implements OnInit {
   }
 
   createNewTableRow = (group: any) => {
-    console.log(group.parent.name)
-    let copy = {...group, name: `${group.parent.name} description`}
-    group.parent.name !== 'Staff Commute' ? copy.cost = 0 : null
-    let findObject = this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)
 
+    // This will be the 'Company Travel' case
+    if (group.parent.name === 'Company Travel') {
+      const findLastCompanyTravel = this.data.find((item: any) => item.buttonName === 'Company Travel')
+      if (findLastCompanyTravel === -1) return;
+      let copy = {...findLastCompanyTravel, cost: 0, mileage: 0 }
+
+      let findObject = this.data.findLastIndex((item: any ) => item.parent.name === 'Company Travel');
+
+      if (findObject === -1) return;
+      this.data.splice(findObject + 1, 0 , copy)
+
+      return;
+    }
+
+    // If not company travel
+    let copy = {...group, name: `${group.parent.name} description`}
+    let findObject = this.data.findLastIndex((item: any) => item.parent.name === group.parent.name)
     if (findObject === -1) return;
     this.data.splice(findObject + 1, 0, copy)
   }
+
+  addNewStaffCommuteRow = (group: any) => {
+    const staffCommute = this.generateClasses('Staff Commute', StaffCommute)
+    let copy = {...staffCommute}
+    let findObject = this.data.findLastIndex((item: any ) => item.parent.name === 'Company Travel');
+
+    if (findObject === -1) return;
+    this.data.splice(findObject + 1, 0 , copy)
+  }
+
 
 
   calculatePerEmployeeCost = (groups?: any) => {
@@ -481,35 +556,43 @@ export class PetLoginProtected implements OnInit {
         this.markStart = 0
         this.markEnd = 1
         this.productivityPercentile = '10th Percentile'
+        this.initChartGauge(10)
         break;
       case 1 :
         this.markStart = 0
         this.markEnd = 2
         this.productivityPercentile = '25th Percentile'
+        this.initChartGauge(25)
         break;
       case 2:
         this.markStart = 0
         this.markEnd = 3
         this.productivityPercentile = '50th Percentile'
+        this.initChartGauge(50)
         break;
       case 3:
         this.markStart = 0
         this.markEnd = 4
         this.productivityPercentile = '75th Percentile'
+        this.initChartGauge(75)
         break;
       case 4:
         this.markStart = 0
         this.markEnd = 5
         this.productivityPercentile = '90th Percentile'
+        this.initChartGauge(90)
         break;
       default:
         this.markStart = 0
         this.markEnd = 0
         this.productivityPercentile = ''
+        this.initChartGauge(0)
         break;
     }
 
     this.initChart()
+
+
   }
 
   sumValues = (obj: any): number => <number>Object.values(obj).reduce((a: any, b: any) => a + b, 0);
@@ -609,6 +692,8 @@ export class PetLoginProtected implements OnInit {
     })
 
 
+
+
     // Add to the data in the table
     extractedData.forEach((extracted: any) => {
 
@@ -623,6 +708,79 @@ export class PetLoginProtected implements OnInit {
       this.data[foundType].unitsUom = extracted.unit ? extracted.unit : 'kWh'
     })
   }
+
+  initChartGauge = (gaugeNum:number) => {
+    this.gaugeChartOptions = {
+      tooltip: {
+        formatter: '{a} <br/>{b} : {c}%'
+      },
+      title: {
+        text: `Percentiles for Sector ${this.sicCodeLetter}`,
+        left: 'center',
+
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {
+            show: true
+          }
+        }
+      },
+      series: [
+        {
+          type: 'gauge',
+          progress: {
+            show: true,
+            width: 18
+          },
+          axisLine: {
+            lineStyle: {
+              width: 18
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          splitLine: {
+            length: 15,
+            lineStyle: {
+              width: 2,
+              color: '#999'
+            }
+          },
+          axisLabel: {
+            distance: 25,
+            color: '#999',
+            fontSize: 20
+          },
+          anchor: {
+            show: true,
+            showAbove: true,
+            size: 25,
+            itemStyle: {
+              borderWidth: 10
+            }
+          },
+          title: {
+            show: false
+          },
+          detail: {
+            valueAnimation: true,
+            formatter: '{value}'
+          },
+          data: [
+            {
+              value:gaugeNum,
+              name:'Chart'
+            }
+          ]
+        }
+      ]
+    };
+  }
+
+
 
 
   initChart = () => {
@@ -749,7 +907,6 @@ export class PetLoginProtected implements OnInit {
 
 
     // Check if already saved - if not post a new row to pet_data
-    console.log(this.selectedPetId)
     if (this.selectedPetId) {
       // console.log('PATCHING')
       this.db.patchPetData(this.selectedPetId, objectToSave).subscribe({
@@ -806,6 +963,8 @@ export class PetLoginProtected implements OnInit {
     this.getCompanies()
     this.getProductivityData()
   }
+
+
 
 }
 
