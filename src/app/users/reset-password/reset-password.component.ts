@@ -54,12 +54,12 @@ export class ResetPasswordComponent {
             Validators.pattern(match)]
           )]
       }
-  )
+    )
 
     this.token = this.route.snapshot.queryParams['token'];
 
 
-    if (!this.token){
+    if (!this.token) {
       this.router.navigate(['/forgot-password'])
     }
 
@@ -69,48 +69,54 @@ export class ResetPasswordComponent {
   checkMatch = () => {
     //this.valid = this.form.value.password != this.form.value.confirm ? false: true;
 
-    if(this.form.controls['password'].value !== this.form.controls['confirm'].value){
-      return this.form.controls['confirm'].setErrors({'not_matching':true})
-    }else {
+    if (this.form.controls['password'].value !== this.form.controls['confirm'].value) {
+      return this.form.controls['confirm'].setErrors({'not_matching': true})
+    } else {
       this.form.controls['confirm'].updateValueAndValidity()
     }
     this.form.markAllAsTouched()
   }
 
   resetPassword = (form: FormGroup) => {
-    if (!this.form.valid) {
-      this.form.markAllAsTouched()
+
+    console.log(this.form)
+    console.log(this.form.valid)
+
+    if (!form.valid) {
+      console.log(this.form.valid)
 
 
-    if (this.form.controls['password'].value !== this.form.controls['confirm'].value) {
-      return this.form.controls['confirm'].setErrors({'not_matching': true})
+      if (this.form.controls['password'].value !== this.form.controls['confirm'].value) {
+         this.form.controls['confirm'].setErrors({'not_matching': true})
+      }
+
+      // this.msg.add({
+      //   severity: 'warn',
+      //   detail: 'Please fill out all fields'
+      // })
+
+      return this.form.markAllAsTouched()
     }
 
-    return this.msg.add({
-      severity:'warn',
-      detail: 'Please fill out all fields'
-    })
 
-  }
-
-
-    if(this.form.valid) {
+    if (this.form.valid) {
       if (!this.token) {
         return this.msg.add({
-          severity:'error',
+          severity: 'error',
           detail: 'Unauthorised'
         })
-      };
+      }
+      ;
 
-      this.auth.resetPassword({token: this.token, password: this.form.value.password}).subscribe({
-        next: (res: any) => {
-          this.msg.add({
-            severity: 'success',
-            detail: 'Password reset'
-          })
-        },
-        error: (error: any) => console.log(error)
-      })
+      // this.auth.resetPassword({token: this.token, password: this.form.value.password}).subscribe({
+      //   next: (res: any) => {
+      //     this.msg.add({
+      //       severity: 'success',
+      //       detail: 'Password reset'
+      //     })
+      //   },
+      //   error: (error: any) => console.log(error)
+      // })
     }
 
     // else {
@@ -120,6 +126,6 @@ export class ResetPasswordComponent {
     //   })
     // }
 
-    this.router.navigate(['/login'])
+    // this.router.navigate(['/login'])
   }
 }
