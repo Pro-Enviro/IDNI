@@ -39,7 +39,7 @@ export const routes: Routes = [
   // {path: 'registration', component: RegisterComponent},
   // {path: 'registration-form', component: RegistrationFormComponent},
   // {path:'forgotpassword', component: ForgotPasswordComponent},
-  {path:'successful-registration',component:RegisterSuccessPageComponent},
+  // {path:'successful-registration',component:RegisterSuccessPageComponent},
   // {path:'chat',component: ChatDialogTplComponent},
   // {path:'live-chat',component:LiveChatTplComponent},
 
