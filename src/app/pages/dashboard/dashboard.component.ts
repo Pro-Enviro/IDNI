@@ -200,6 +200,22 @@ export class DashboardComponent {
 
         this.miniMenu  =[
           {
+            label:'<span class="material-symbols-outlined">account_box</span>',
+            escape:false,
+            items:[
+              {
+                label:'<span class="material-symbols-outlined">person</span>',
+                routerLink: '',
+                escape:false
+              },
+              {
+                label:'<span class="material-symbols-outlined">source_environment</span>',
+                routerLink: '',
+                escape:false
+              }
+            ]
+          },
+          {
             label:'<span class="material-symbols-outlined">dashboard</span>',
             routerLink:'/dashboard',
             escape: false
