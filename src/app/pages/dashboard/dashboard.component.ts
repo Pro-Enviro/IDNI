@@ -23,7 +23,7 @@ import {MenuModule} from "primeng/menu";
 import { createDirectus, authentication, rest, logout } from '@directus/sdk';
 import {from} from "rxjs";
 import {Router} from "@angular/router";
-
+import {AuthService} from "../../_services/users/auth.service";
 
 
 
@@ -71,7 +71,7 @@ export class DashboardComponent {
   helpMenu:boolean=false;
 
 
-  constructor(private global: GlobalService,private route: Router) {
+  constructor(private global: GlobalService,private route: Router,private auth: AuthService) {
 
     // Check for Microsoft Edges
     if (/Edg/.test(navigator.userAgent)) {
@@ -182,7 +182,8 @@ export class DashboardComponent {
                 routerLink: '/dashboard/faqs'
               }
             ]
-          }
+          },
+
 
         ]
 
@@ -291,13 +292,7 @@ export class DashboardComponent {
     })
   }
 
-  logout = async () => {
-    const result = this.client.request(logout('eGSCvt7eTuZILDwq7rN11v5-UxsWxPa_D2xKZF6MXYgEX2kZW3n5VVM-FzMFgMtu'));
-    this.client.logout()
-    this.route.navigate(['/login'])
-
+  handleLogOut = () => {
+    this.auth.logout()
   }
-
-  //protected readonly onclick = onclick;
-  //protected readonly logout = logout;
 }

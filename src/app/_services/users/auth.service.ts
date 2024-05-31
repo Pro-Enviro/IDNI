@@ -123,13 +123,12 @@ export class AuthService {
   //   this.route.navigate(['/login'])
   // }
 
-  logout = () => {
+  logout = async () => {
     if(this.storage.get('refresh_token')){
-      this.http.post<any>(`${this.url}/auth/logout`, {refresh_token: this.storage.get('refresh_token')}).subscribe();
+      const result = await this.client.request(logout('refresh_token'));
       this.isLoggedIn.next(false)
-      this.client.next(null);
       localStorage.clear();
-      this.route.navigate(['/auth/login']);
+      this.route.navigate(['login']);
       this.msg.add({
         severity: 'info',
         detail: 'Logged Out!'
