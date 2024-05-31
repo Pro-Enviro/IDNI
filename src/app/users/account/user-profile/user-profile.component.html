@@ -2,7 +2,7 @@
   <div class="container">
     <p-card header="User Profile" styleClass="card-select-panel" [style]="{ width: '75vw' }">
       <div class="grid nested-grid">
-        <form class="col-9" [formGroup]="userEditForm">
+        <form class="col-9" [formGroup]="userEditForm" (ngSubmit)="patchUserValues()">
           <div class="grid mt-3">
             <div class="col-6">
               <!--          FIRST NAME-->
@@ -13,7 +13,16 @@
                     <i class="pi pi-user"></i>
                   </p-inputGroupAddon>
                   <input id="first_name" type="text" class="w-full p-3" formControlName="first_name" pInputText>
+                  <br/>
                 </p-inputGroup>
+                <div
+                  *ngIf="userEditForm.get('first_name')?.invalid && (userEditForm.get('first_name')?.dirty || userEditForm.get('first_name')?.touched)"
+                >
+                  <div *ngIf="userEditForm.get('first_name')?.errors?.['required']" class="text-red-400 text-xs font-medium mt-2">
+                    First Name is required
+                  </div>
+
+                </div>
               </div>
             </div>
             <div class="col-6">
@@ -26,6 +35,14 @@
                   </p-inputGroupAddon>
                   <input id="last_name" type="text" class="w-full p-3" formControlName="last_name" pInputText>
                 </p-inputGroup>
+                <div
+                  *ngIf="userEditForm.get('last_name')?.invalid && (userEditForm.get('last_name')?.dirty || userEditForm.get('last_name')?.touched)"
+                >
+                  <div *ngIf="userEditForm.get('last_name')?.errors?.['required']" class="text-red-400 text-xs font-medium mt-2">
+                    Last Name is required
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
@@ -40,6 +57,16 @@
                   </p-inputGroupAddon>
                   <input id="email" type="text" class="w-full p-3" formControlName="email" pInputText>
                 </p-inputGroup>
+                <div
+                  *ngIf="userEditForm.get('email')?.invalid && (userEditForm.get('email')?.dirty || userEditForm.get('email')?.touched)"
+                >
+                  <div *ngIf="userEditForm.get('email')?.errors?.['required']" class="text-red-400 text-xs font-medium mt-2">
+                    Email is required
+                  </div>
+                  <div *ngIf="userEditForm.get('email')?.errors?.['email']" class="text-red-400 text-xs font-medium mt-2">
+                    Please enter a correct email
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-6">
@@ -51,23 +78,35 @@
                   </p-inputGroupAddon>
                   <input id="contact_number" type="text" class="w-full p-3" formControlName="contact_number" pInputText>
                 </p-inputGroup>
+                <div
+                  *ngIf="userEditForm.get('contact_number')?.invalid && (userEditForm.get('contact_number')?.dirty || userEditForm.get('contact_number')?.touched)"
+                >
+                  <div *ngIf="userEditForm.get('contact_number')?.errors?.['required']" class="text-red-400 text-xs font-medium mt-2">
+                    Contact Number is required.
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
+
+
+          <div>
+            <p-button label="Save Changes" icon="pi pi-save" styleClass="btn-style" type="submit"
+                      value="Submit"></p-button>
+          </div>
+
         </form>
         <div class="col-3">
           <p-avatar
             label="P"
             styleClass="mr-2"
             size="xlarge"
-            shape="circle" />
+            shape="circle"/>
         </div>
       </div>
 
 
-      <div>
-        <p-button label="Save Changes" icon="pi pi-save" styleClass="btn-style"></p-button>
-      </div>
     </p-card>
   </div>
 </section>

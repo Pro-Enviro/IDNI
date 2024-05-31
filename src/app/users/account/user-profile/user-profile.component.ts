@@ -2,17 +2,24 @@ import { Component } from '@angular/core';
 import {CardModule} from "primeng/card";
 import {InplaceModule} from "primeng/inplace";
 import {InputTextModule} from "primeng/inputtext";
-import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Form, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {InputGroupModule} from "primeng/inputgroup";
 import {InputGroupAddonModule} from "primeng/inputgroupaddon";
 import {AvatarModule} from "primeng/avatar";
 import {UserService} from "../../../_services/users/user.service";
 import {from} from "rxjs";
+import {MessageService} from "primeng/api";
+import {CommonModule} from "@angular/common";
+import {SharedComponents} from "../../../pages/envirotrack/shared-components";
+import {SharedModules} from "../../../shared-module";
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
   imports: [
+    CommonModule,
+    SharedComponents,
+    SharedModules,
     CardModule,
     InplaceModule,
     InputTextModule,
@@ -20,7 +27,8 @@ import {from} from "rxjs";
     InputGroupModule,
     InputGroupAddonModule,
     AvatarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   ],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
@@ -28,12 +36,12 @@ import {from} from "rxjs";
 export class UserProfileComponent {
   userEditForm!: FormGroup;
 
-  constructor(private userService: UserService, private fb: FormBuilder) {
+  constructor(private userService: UserService, private fb: FormBuilder, private msg: MessageService) {
 
     this.userEditForm = this.fb.group({
       first_name: new FormControl('', [Validators.required]),
       last_name: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
       contact_number: new FormControl('', [Validators.required]),
     })
 
@@ -56,5 +64,16 @@ export class UserProfileComponent {
   }
 
   // Functionality to edit account details
+  patchUserValues = () => {
+
+    if (!this.userEditForm.valid){
+      this.msg.add({
+        severity : 'warn',
+        detail: 'Please fill in all fields'
+      })
+    }
+
+    console.log(this.userEditForm)
+  }
 
 }
