@@ -129,10 +129,7 @@ export class AuthService {
       this.isLoggedIn.next(false)
       localStorage.clear();
       this.route.navigate(['login']);
-      this.msg.add({
-        severity: 'info',
-        detail: 'Logged Out!'
-      })
+
     }
   }
 

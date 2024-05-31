@@ -3,7 +3,7 @@ import {SidebarModule} from "primeng/sidebar";
 import {RouterLink} from "@angular/router";
 import {ButtonModule} from "primeng/button";
 import {MenubarModule} from "primeng/menubar";
-import {MenuItem, Message} from "primeng/api";
+import {MenuItem, Message, MessageService} from "primeng/api";
 import {EnvirotrackReportPieComponent} from "../envirotrack/report/envirotrack-report-pie/envirotrack-report-pie.component";
 import {NgxEchartsDirective} from "ngx-echarts";
 import {EnvirotrackReportHeatmapComponent} from "../envirotrack/report/envirotrack-report-heatmap/envirotrack-report-heatmap.component";
@@ -24,6 +24,7 @@ import { createDirectus, authentication, rest, logout } from '@directus/sdk';
 import {from} from "rxjs";
 import {Router} from "@angular/router";
 import {AuthService} from "../../_services/users/auth.service";
+
 
 
 
@@ -71,7 +72,7 @@ export class DashboardComponent {
   helpMenu:boolean=false;
 
 
-  constructor(private global: GlobalService,private route: Router,private auth: AuthService) {
+  constructor(private global: GlobalService,private route: Router,private auth: AuthService,private msg: MessageService) {
 
     // Check for Microsoft Edges
     if (/Edg/.test(navigator.userAgent)) {
@@ -294,5 +295,9 @@ export class DashboardComponent {
 
   handleLogOut = () => {
     this.auth.logout()
+    this.msg.add({
+      severity: 'warn',
+      summary: 'Logged Out!'
+    })
   }
 }
