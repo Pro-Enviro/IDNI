@@ -247,16 +247,12 @@ export class EnvirotrackReportBase1Component implements OnInit {
           this.firstYear = moment(this.months[0]).year()
 
           for(let i:number = moment().year(); i >= this.firstYear; i-- ){
-
-
             if(this.data.filter((x:any) => moment(x.date).format('YYYY-MM-DD') === `${i}-12-25`).length){
               this.lastYear = i;
               this.dateFilter = i;
               break;
             }
-
           }
-
 
           this.filterData()
         },
@@ -270,24 +266,20 @@ export class EnvirotrackReportBase1Component implements OnInit {
     this.defaultFilters = [];
     this.data = this.data.filter((x:any) => x.mpan === this.selectedMpan)
 
+    // Getting filters required, only show filters if data is available and christmas day is available
     for(let i: number = this.firstYear; i <= this.lastYear; i++){
-
-      // find year in data
       const found = this.data.find((row: any) => moment(row.date).year() === i)
-
-
       if (found){
-        this.defaultFilters.push({
-          name: i,
-          value: i
-        })
+        if(this.data.filter((x:any) => moment(x.date).format('YYYY-MM-DD') === `${i}-12-25`).length){
+          this.defaultFilters.push({
+            name: i,
+            value: i
+          })
+          this.dateFilter = i
+        }
+
       }
     }
-
-
-    // Filter date filters if data doesn't exist
-
-
 
     let tmp = this.data.filter((x:any) => moment(x.date).year() === this.dateFilter)
 
