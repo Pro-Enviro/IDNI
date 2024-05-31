@@ -12,7 +12,7 @@
                   <p-inputGroupAddon>
                     <span class="material-symbols-outlined">mail</span>
                   </p-inputGroupAddon>
-                  <input id="email" type="text" class="w-full p-3" formControlName="email" pInputText  >
+                  <input id="email" type="text" class="w-full p-3" formControlName="email" pInputText  [disabled]="isLoading">
                 </p-inputGroup>
                 <div
                   *ngIf="userEditForm.get('email')?.invalid && (userEditForm.get('email')?.dirty || userEditForm.get('email')?.touched)"
@@ -33,7 +33,7 @@
                   <p-inputGroupAddon>
                     <span class="material-symbols-outlined">call</span>
                   </p-inputGroupAddon>
-                  <input id="contact_number" type="text" class="w-full p-3" formControlName="contact_number" pInputText>
+                  <input id="contact_number" type="text" class="w-full p-3" formControlName="contact_number" pInputText [disabled]="isLoading">
                 </p-inputGroup>
                 <div
                   *ngIf="userEditForm.get('contact_number')?.invalid && (userEditForm.get('contact_number')?.dirty || userEditForm.get('contact_number')?.touched)"
@@ -55,7 +55,7 @@
                   <p-inputGroupAddon>
                     <i class="pi pi-user"></i>
                   </p-inputGroupAddon>
-                  <input id="first_name" type="text" class="w-full p-3" formControlName="first_name" pInputText>
+                  <input id="first_name" type="text" class="w-full p-3" formControlName="first_name" pInputText >
                   <br/>
                 </p-inputGroup>
                 <div
@@ -76,7 +76,7 @@
                   <p-inputGroupAddon>
                     <span class="material-symbols-outlined">group</span>
                   </p-inputGroupAddon>
-                  <input id="last_name" type="text" class="w-full p-3" formControlName="last_name" pInputText>
+                  <input id="last_name" type="text" class="w-full p-3" formControlName="last_name" pInputText [disabled]="isLoading">
                 </p-inputGroup>
                 <div
                   *ngIf="userEditForm.get('last_name')?.invalid && (userEditForm.get('last_name')?.dirty || userEditForm.get('last_name')?.touched)"

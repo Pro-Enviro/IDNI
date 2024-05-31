@@ -65,10 +65,6 @@ export class UserProfileComponent {
 
   // Functionality to edit account details
   patchUserValues = () => {
-    this.isLoading = true;
-
-
-
     if (!this.userEditForm.valid){
       this.msg.add({
         severity : 'warn',
@@ -76,9 +72,8 @@ export class UserProfileComponent {
       })
     }
 
-    // this.userEditForm.controls['first_name'].disable()
-    // this.userEditForm.controls['last_name'].disable()
-    // this.userEditForm.controls['contact_number'].disable()
+
+
 
     if (this.userEditForm.valid){
       from(this.userService.updateCurrentUserDatails(this.userEditForm.value)).subscribe({
@@ -97,7 +92,6 @@ export class UserProfileComponent {
       })
     }
 
-    this.isLoading = false
+    this.isLoading = false;
   }
-
 }
