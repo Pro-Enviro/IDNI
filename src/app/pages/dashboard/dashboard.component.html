@@ -47,9 +47,9 @@
         </div>
         <div class="absolute" style="bottom:30px">
           @if(!showMenu){
-            <button pButton pRipple label="Log Out" icon="pi pi-sign-out" class="btn-style"></button>
+            <button pButton pRipple label="Log Out" icon="pi pi-sign-out" class="btn-style" (click)="logout()"></button>
           }@else{
-            <button pButton pRipple icon="pi pi-sign-out" class="btn-style"></button>
+            <button pButton pRipple icon="pi pi-sign-out" class="btn-style" (click)="logout()"></button>
           }
         </div>
       </div>

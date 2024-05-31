@@ -10,6 +10,7 @@ import {passwordRequest, readRole, readRoles, logout } from "@directus/sdk";
 import {MessageService} from "primeng/api";
 
 
+
 export interface Credentials {
   email: string;
   password: string;
@@ -28,6 +29,7 @@ export class AuthService {
     private http: HttpClient,
     private storage: StorageService,
     private route: Router,
+    private msg: MessageService
   ) {
     this.client = this.global.client
 
@@ -114,12 +116,25 @@ export class AuthService {
     this.client.refresh()
   }
 
-  logOut = () =>{
-    this.client.logout()
-    const result = this.client.request(logout('1XwUd4yRRObb_PnX-tZgXx1b6K9oVN5WlG1ZS7tEtlzVJ5p53RY0hhUIPpAzXAGW'))
-    this.isLoggedIn.next(false)
-    localStorage.clear()
-    this.route.navigate(['/'])
+  // logout = () =>{
+  //   this.client.logout()
+  //   this.isLoggedIn.next(false)
+  //   localStorage.clear()
+  //   this.route.navigate(['/login'])
+  // }
+
+  logout = () => {
+    if(this.storage.get('refresh_token')){
+      this.http.post<any>(`${this.url}/auth/logout`, {refresh_token: this.storage.get('refresh_token')}).subscribe();
+      this.isLoggedIn.next(false)
+      this.client.next(null);
+      localStorage.clear();
+      this.route.navigate(['/auth/login']);
+      this.msg.add({
+        severity: 'info',
+        detail: 'Logged Out!'
+      })
+    }
   }
 
   refreshToken =  async () => {
@@ -143,5 +158,6 @@ export class AuthService {
   getUserRoles = () => {
     return this.http.get(`${this.url}roles?filter[name]=user`);
   }
+
 
 }
