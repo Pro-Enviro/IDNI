@@ -58,14 +58,9 @@ export class UserService {
   editUsersCompany = async (companyId: number, updatedFields: {[key: string]: string | number | null}) => {
     try {
       const currentUser = await this.getCurrentUserData()
-
-    
       // @ts-ignore
       const usersCompany = await this.client.request(updateItem('companies', companyId, {...updatedFields, name: updatedFields.company_name}))
-
-      console.log(usersCompany)
       return usersCompany
-
     } catch {
       return console.log('Error updating your company')
     }

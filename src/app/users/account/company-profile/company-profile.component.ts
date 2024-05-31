@@ -39,6 +39,7 @@ export class CompanyProfileComponent {
   client?: any
   companyEditForm!: FormGroup
   company: any;
+  isSubmitting: boolean = false;
 
   constructor(private userService: UserService, private fb: FormBuilder, private global: GlobalService, private msg: MessageService) {
     this.client = this.global.client
@@ -93,7 +94,11 @@ export class CompanyProfileComponent {
     })
   }
 
+
   editCompanySubmit() {
+
+    this.isSubmitting = true;
+
     from(this.userService.editUsersCompany(this.company.id, this.companyEditForm.value)).subscribe({
       next: (res: any) => {
         this.msg.add({
@@ -106,7 +111,15 @@ export class CompanyProfileComponent {
           severity: 'warn',
           detail: 'Failed to update company details. Please try again.'
         })
+      },
+      complete: () => {
+        setTimeout(() => {
+          this.isSubmitting = false;
+
+        }, 500)
       }
     })
+
+
   }
 }

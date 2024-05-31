@@ -161,7 +161,7 @@
           </div>
 
           <div>
-            <p-button label="Save Changes" icon="pi pi-save" styleClass="btn-style" type="submit"
+            <p-button label="Save Changes" icon="pi pi-save" styleClass="btn-style" type="submit" [disabled]="!companyEditForm.valid || isSubmitting"
                       value="Submit"></p-button>
           </div>
 
