@@ -2,7 +2,7 @@
   <div class="container">
     <p-card header="User Profile" styleClass="card-select-panel" [style]="{ width: '75vw' }">
       <div class="grid nested-grid">
-        <div class="col-9">
+        <form class="col-9" [formGroup]="userEditForm">
           <div class="grid mt-3">
             <div class="col-6">
               <!--          FIRST NAME-->
@@ -12,7 +12,7 @@
                   <p-inputGroupAddon>
                     <i class="pi pi-user"></i>
                   </p-inputGroupAddon>
-                  <input id="first_name" type="text" class="w-full p-3" [ngModel]="first_name" pInputText>
+                  <input id="first_name" type="text" class="w-full p-3" formControlName="first_name" pInputText>
                 </p-inputGroup>
               </div>
             </div>
@@ -24,7 +24,7 @@
                   <p-inputGroupAddon>
                     <span class="material-symbols-outlined">group</span>
                   </p-inputGroupAddon>
-                  <input id="last_name" type="text" class="w-full p-3" [ngModel]="last_name" pInputText>
+                  <input id="last_name" type="text" class="w-full p-3" formControlName="last_name" pInputText>
                 </p-inputGroup>
               </div>
             </div>
@@ -38,7 +38,7 @@
                   <p-inputGroupAddon>
                     <span class="material-symbols-outlined">mail</span>
                   </p-inputGroupAddon>
-                  <input id="email" type="text" class="w-full p-3" [ngModel]="email" pInputText>
+                  <input id="email" type="text" class="w-full p-3" formControlName="email" pInputText>
                 </p-inputGroup>
               </div>
             </div>
@@ -49,12 +49,12 @@
                   <p-inputGroupAddon>
                     <span class="material-symbols-outlined">call</span>
                   </p-inputGroupAddon>
-                  <input id="contact_number" type="text" class="w-full p-3" [ngModel]="contact_number" pInputText>
+                  <input id="contact_number" type="text" class="w-full p-3" formControlName="contact_number" pInputText>
                 </p-inputGroup>
               </div>
             </div>
           </div>
-        </div>
+        </form>
         <div class="col-3">
           <p-avatar
             label="P"
