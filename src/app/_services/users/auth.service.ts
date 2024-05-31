@@ -6,7 +6,7 @@ import {BehaviorSubject, from, map, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../storage.service";
 import {GlobalService} from "../global.service";
-import {passwordRequest, readRole, readRoles} from "@directus/sdk";
+import {passwordRequest, readRole, readRoles, logout } from "@directus/sdk";
 import {MessageService} from "primeng/api";
 
 
@@ -114,8 +114,9 @@ export class AuthService {
     this.client.refresh()
   }
 
-  logout = () =>{
+  logOut = () =>{
     this.client.logout()
+    const result = this.client.request(logout('1XwUd4yRRObb_PnX-tZgXx1b6K9oVN5WlG1ZS7tEtlzVJ5p53RY0hhUIPpAzXAGW'))
     this.isLoggedIn.next(false)
     localStorage.clear()
     this.route.navigate(['/'])
