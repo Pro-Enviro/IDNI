@@ -35,13 +35,14 @@ import {SharedModules} from "../../../shared-module";
 })
 export class UserProfileComponent {
   userEditForm!: FormGroup;
+  isLoading: boolean = false
 
   constructor(private userService: UserService, private fb: FormBuilder, private msg: MessageService) {
 
     this.userEditForm = this.fb.group({
       first_name: new FormControl('', [Validators.required]),
       last_name: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl({value: '', disabled:true}, [Validators.required, Validators.email]),
       contact_number: new FormControl('', [Validators.required]),
     })
 
@@ -52,7 +53,6 @@ export class UserProfileComponent {
   getCurrentUser = () => {
     from(this.userService.getCurrentUserData()).subscribe({
       next: (res: any) => {
-        console.log(res)
         this.userEditForm.patchValue({
           first_name: res.first_name,
           last_name: res.last_name,
@@ -65,6 +65,9 @@ export class UserProfileComponent {
 
   // Functionality to edit account details
   patchUserValues = () => {
+    this.isLoading = true;
+
+
 
     if (!this.userEditForm.valid){
       this.msg.add({
@@ -73,7 +76,28 @@ export class UserProfileComponent {
       })
     }
 
-    console.log(this.userEditForm)
+    // this.userEditForm.controls['first_name'].disable()
+    // this.userEditForm.controls['last_name'].disable()
+    // this.userEditForm.controls['contact_number'].disable()
+
+    if (this.userEditForm.valid){
+      from(this.userService.updateCurrentUserDatails(this.userEditForm.value)).subscribe({
+        next: (res: any) => {
+          this.msg.add({
+            severity: 'success',
+            detail: 'User details successfully updated'
+          })
+        },
+        error: (error: any) => {
+          this.msg.add({
+            severity: 'warn',
+            detail: 'Error updating user details'
+          })
+        }
+      })
+    }
+
+    this.isLoading = false
   }
 
 }

@@ -3,6 +3,49 @@
     <p-card header="User Profile" styleClass="card-select-panel" [style]="{ width: '75vw' }">
       <div class="grid nested-grid">
         <form class="col-9" [formGroup]="userEditForm" (ngSubmit)="patchUserValues()">
+          <div class="grid">
+            <div class="col-6">
+              <!--          EMAIL-->
+              <div class="field flex flex-column">
+                <label for="contact_number">Contact Email</label>
+                <p-inputGroup disabled="true">
+                  <p-inputGroupAddon>
+                    <span class="material-symbols-outlined">mail</span>
+                  </p-inputGroupAddon>
+                  <input id="email" type="text" class="w-full p-3" formControlName="email" pInputText  >
+                </p-inputGroup>
+                <div
+                  *ngIf="userEditForm.get('email')?.invalid && (userEditForm.get('email')?.dirty || userEditForm.get('email')?.touched)"
+                >
+                  <div *ngIf="userEditForm.get('email')?.errors?.['required']" class="text-red-400 text-xs font-medium mt-2">
+                    Email is required
+                  </div>
+                  <div *ngIf="userEditForm.get('email')?.errors?.['email']" class="text-red-400 text-xs font-medium mt-2">
+                    Please enter a correct email
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="field flex flex-column">
+                <label for="contact_number">Contact Number</label>
+                <p-inputGroup>
+                  <p-inputGroupAddon>
+                    <span class="material-symbols-outlined">call</span>
+                  </p-inputGroupAddon>
+                  <input id="contact_number" type="text" class="w-full p-3" formControlName="contact_number" pInputText>
+                </p-inputGroup>
+                <div
+                  *ngIf="userEditForm.get('contact_number')?.invalid && (userEditForm.get('contact_number')?.dirty || userEditForm.get('contact_number')?.touched)"
+                >
+                  <div *ngIf="userEditForm.get('contact_number')?.errors?.['required']" class="text-red-400 text-xs font-medium mt-2">
+                    Contact Number is required.
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="grid mt-3">
             <div class="col-6">
               <!--          FIRST NAME-->
@@ -46,54 +89,12 @@
               </div>
             </div>
           </div>
-          <div class="grid">
-            <div class="col-6">
-              <!--          EMAIL-->
-              <div class="field flex flex-column">
-                <label for="contact_number">Contact Email</label>
-                <p-inputGroup>
-                  <p-inputGroupAddon>
-                    <span class="material-symbols-outlined">mail</span>
-                  </p-inputGroupAddon>
-                  <input id="email" type="text" class="w-full p-3" formControlName="email" pInputText>
-                </p-inputGroup>
-                <div
-                  *ngIf="userEditForm.get('email')?.invalid && (userEditForm.get('email')?.dirty || userEditForm.get('email')?.touched)"
-                >
-                  <div *ngIf="userEditForm.get('email')?.errors?.['required']" class="text-red-400 text-xs font-medium mt-2">
-                    Email is required
-                  </div>
-                  <div *ngIf="userEditForm.get('email')?.errors?.['email']" class="text-red-400 text-xs font-medium mt-2">
-                    Please enter a correct email
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="field flex flex-column">
-                <label for="contact_number">Contact Number</label>
-                <p-inputGroup>
-                  <p-inputGroupAddon>
-                    <span class="material-symbols-outlined">call</span>
-                  </p-inputGroupAddon>
-                  <input id="contact_number" type="text" class="w-full p-3" formControlName="contact_number" pInputText>
-                </p-inputGroup>
-                <div
-                  *ngIf="userEditForm.get('contact_number')?.invalid && (userEditForm.get('contact_number')?.dirty || userEditForm.get('contact_number')?.touched)"
-                >
-                  <div *ngIf="userEditForm.get('contact_number')?.errors?.['required']" class="text-red-400 text-xs font-medium mt-2">
-                    Contact Number is required.
-                  </div>
 
-                </div>
-              </div>
-            </div>
-          </div>
 
 
           <div>
             <p-button label="Save Changes" icon="pi pi-save" styleClass="btn-style" type="submit"
-                      value="Submit"></p-button>
+                      value="Submit" [disabled]="!userEditForm.valid"></p-button>
           </div>
 
         </form>
