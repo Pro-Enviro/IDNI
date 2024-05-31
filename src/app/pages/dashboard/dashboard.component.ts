@@ -296,8 +296,8 @@ export class DashboardComponent {
   handleLogOut = () => {
     this.auth.logout()
     this.msg.add({
-      severity: 'warn',
-      summary: 'Logged Out!'
+      severity:'warn',
+      summary: 'You have been Logged Out !'
     })
   }
 }
