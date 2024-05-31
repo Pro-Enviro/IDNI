@@ -129,7 +129,6 @@
                   </p-inputGroupAddon>
                   <input id="uprn" type="text" class="w-full p-3" formControlName="uprn" pInputText>
                 </p-inputGroup>
-
               </div>
             </div>
             <div class="col-6">
@@ -147,14 +146,14 @@
           </div>
 
           <div class="grid mt-3">
-            <div class="col-8">
+            <div class="col-6">
               <div class="field flex flex-column">
                 <label for="address">Company Description</label>
                 <p-inputGroup>
                   <p-inputGroupAddon>
                     <span class="material-symbols-outlined">call</span>
                   </p-inputGroupAddon>
-                  <textarea id="company_description" type="text" class="w-full p-3" formControlName="company_description" pTextarea></textarea>
+                  <textarea id="company_description" type="text" style="font-family: inherit;" class="w-full p-3 " formControlName="company_description" pTextarea [rows]="6"></textarea>
                 </p-inputGroup>
 
               </div>
