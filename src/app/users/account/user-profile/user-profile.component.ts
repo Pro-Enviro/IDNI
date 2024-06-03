@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {CardModule} from "primeng/card";
 import {InplaceModule} from "primeng/inplace";
 import {InputTextModule} from "primeng/inputtext";
-import {Form, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {InputGroupModule} from "primeng/inputgroup";
 import {InputGroupAddonModule} from "primeng/inputgroupaddon";
 import {AvatarModule} from "primeng/avatar";
@@ -36,6 +36,7 @@ import {SharedModules} from "../../../shared-module";
 export class UserProfileComponent {
   userEditForm!: FormGroup;
   isLoading: boolean = false
+  usersCompanies: string[] = []
 
   constructor(private userService: UserService, private fb: FormBuilder, private msg: MessageService) {
 
@@ -59,6 +60,17 @@ export class UserProfileComponent {
           email: res.email,
           contact_number: res.phone_number,
         })
+
+        // Get companies associated with the user
+        this.getUsersCompanies()
+      }
+    })
+  }
+
+  getUsersCompanies = () => {
+    from(this.userService.getUsersCompany()).subscribe({
+      next: (res: any) => {
+        this.usersCompanies = res.map((company: any) => company.name)
       }
     })
   }
