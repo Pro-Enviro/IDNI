@@ -14,18 +14,25 @@
                   </p-inputGroupAddon>
                   <input id="email" type="text" class="w-full p-3" formControlName="email" pInputText >
                 </p-inputGroup>
-                <div
-                  *ngIf="userEditForm.get('email')?.invalid && (userEditForm.get('email')?.dirty || userEditForm.get('email')?.touched)"
-                >
-                  <div *ngIf="userEditForm.get('email')?.errors?.['required']" class="text-red-400 text-xs font-medium mt-2">
-                    Email is required
+
+                @if (userEditForm.get('email')?.invalid && (userEditForm.get('email')?.dirty || userEditForm.get('email')?.touched)){
+                  <div>
+                    @if(userEditForm.get('email')?.errors?.['required']) {
+                      <div class="text-red-400 text-xs font-medium mt-2">Email is required</div>
+                    }
+
+                    @if(userEditForm.get('email')?.errors?.['required']){
+                      <div class="text-red-400 text-xs font-medium mt-2">Email is required </div>
+                    }
+
+                    @if(userEditForm.get('email')?.errors?.['email']){
+                      <div class="text-red-400 text-xs font-medium mt-2">Please enter a correct email</div>
+                    }
                   </div>
-                  <div *ngIf="userEditForm.get('email')?.errors?.['email']" class="text-red-400 text-xs font-medium mt-2">
-                    Please enter a correct email
-                  </div>
-                </div>
+                }
               </div>
             </div>
+
             <div class="col-6">
               <div class="field flex flex-column">
                 <label for="contact_number">Contact Number</label>
@@ -35,14 +42,14 @@
                   </p-inputGroupAddon>
                   <input id="contact_number" type="text" class="w-full p-3" formControlName="contact_number" pInputText >
                 </p-inputGroup>
-                <div
-                  *ngIf="userEditForm.get('contact_number')?.invalid && (userEditForm.get('contact_number')?.dirty || userEditForm.get('contact_number')?.touched)"
-                >
-                  <div *ngIf="userEditForm.get('contact_number')?.errors?.['required']" class="text-red-400 text-xs font-medium mt-2">
-                    Contact Number is required.
-                  </div>
 
-                </div>
+                @if (userEditForm.get('contact_number')?.invalid && (userEditForm.get('contact_number')?.dirty || userEditForm.get('contact_number')?.touched)) {
+                  <div>
+                    @if (userEditForm.get('contact_number')?.errors?.['required']) {
+                      <div class="text-red-400 text-xs font-medium mt-2">Contact Number is required.</div>
+                    }
+                  </div>
+                }
               </div>
             </div>
           </div>
@@ -58,14 +65,13 @@
                   <input id="first_name" type="text" class="w-full p-3" formControlName="first_name" pInputText >
                   <br/>
                 </p-inputGroup>
-                <div
-                  *ngIf="userEditForm.get('first_name')?.invalid && (userEditForm.get('first_name')?.dirty || userEditForm.get('first_name')?.touched)"
-                >
-                  <div *ngIf="userEditForm.get('first_name')?.errors?.['required']" class="text-red-400 text-xs font-medium mt-2">
-                    First Name is required
+                @if (userEditForm.get('first_name')?.invalid && (userEditForm.get('first_name')?.dirty || userEditForm.get('first_name')?.touched)){
+                  <div>
+                    @if (userEditForm.get('first_name')?.errors?.['required']) {
+                      <div class="text-red-400 text-xs font-medium mt-2">First Name is required</div>
+                    }
                   </div>
-
-                </div>
+                }
               </div>
             </div>
             <div class="col-6">
@@ -78,14 +84,13 @@
                   </p-inputGroupAddon>
                   <input id="last_name" type="text" class="w-full p-3" formControlName="last_name" pInputText >
                 </p-inputGroup>
-                <div
-                  *ngIf="userEditForm.get('last_name')?.invalid && (userEditForm.get('last_name')?.dirty || userEditForm.get('last_name')?.touched)"
-                >
-                  <div *ngIf="userEditForm.get('last_name')?.errors?.['required']" class="text-red-400 text-xs font-medium mt-2">
-                    Last Name is required
+                @if (userEditForm.get('last_name')?.invalid && (userEditForm.get('last_name')?.dirty || userEditForm.get('last_name')?.touched)){
+                  <div>
+                    @if (userEditForm.get('last_name')?.errors?.['required']) {
+                      <div class="text-red-400 text-xs font-medium mt-2">Last Name is required</div>
+                    }
                   </div>
-
-                </div>
+                }
               </div>
             </div>
           </div>
@@ -110,10 +115,18 @@
 
     </p-card>
     <p-card header="Companies" styleClass="card-select-panel mt-5" [style]="{ width: '50vw' }">
-      <ul *ngIf="usersCompanies.length > 0" class="pl-0">
-        <li *ngFor="let company of usersCompanies" class="mt-2 text-md">{{company}}</li>
-      </ul>
-      <p *ngIf="!usersCompanies.length" class="text-md">The user is not associated with any companies</p>
+
+      @if(usersCompanies.length > 0) {
+        <ul class="pl-0">
+          @for (company of usersCompanies; track $index){
+            <li class="mt-2 text-md">{{company}}</li>
+          }
+        </ul>
+      } @else {
+        <p class="text-md">The user is not associated with any companies</p>
+      }
+
+
     </p-card>
   </div>
 </section>

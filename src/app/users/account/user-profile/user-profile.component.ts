@@ -53,14 +53,13 @@ export class UserProfileComponent {
   // Fetch Users Data and preload inputs
   getCurrentUser = () => {
     from(this.userService.getCurrentUserData()).subscribe({
-      next: (res: any) => {
+      next: (res) => {
         this.userEditForm.patchValue({
           first_name: res.first_name,
           last_name: res.last_name,
           email: res.email,
           contact_number: res.phone_number,
         })
-
         // Get companies associated with the user
         this.getUsersCompanies()
       }
@@ -69,7 +68,7 @@ export class UserProfileComponent {
 
   getUsersCompanies = () => {
     from(this.userService.getUsersCompany()).subscribe({
-      next: (res: any) => {
+      next: (res) => {
         this.usersCompanies = res.map((company: any) => company.name)
       }
     })
@@ -89,7 +88,7 @@ export class UserProfileComponent {
 
     if (this.userEditForm.valid){
       from(this.userService.updateCurrentUserDatails(this.userEditForm.value)).subscribe({
-        next: (res: any) => {
+        next: () => {
           this.msg.add({
             severity: 'success',
             detail: 'User details successfully updated'
