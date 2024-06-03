@@ -14,16 +14,20 @@
 
            </p-card>
          }
- 
+
          <!--        <p-card styleClass="card-select-panel" *ngIf="!isConsultant && selectedCompany"  >-->
          <!--         <p *ngIf="!isConsultant && selectedCompany">{{selectedName}}</p>-->
          <!--        </p-card>-->
        </div>
        <div class="lg:col-12 xl:col-6 md:col-6 sm:col-12">
-         <div class="" *ngIf="mpan.length">
-           <p-card header="Select Mpan" styleClass="card-select-panel" [style]="{ height: '100%' }">
-             <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>
-           </p-card>
+         <div class="flex flex-column" *ngIf="mpan.length">
+<!--           <p-card header="Select Mpan" styleClass="card-select-panel" [style]="{ height: '100%' }">-->
+<!--             <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
+<!--           </p-card>-->
+           <p class="font-bold">MPAN</p>
+           <p-dropdown [options]="mpan" (onChange)="onSelectCompany()" class="mt-1">
+
+           </p-dropdown>
          </div>
        </div>
        <div class="col-12">
