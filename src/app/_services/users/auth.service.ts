@@ -39,10 +39,7 @@ export class AuthService {
   }
   url:string = 'https://app.idni.eco/'
   login = async (credentials: Credentials) => {
-    // credentials = {
-    //   email: 'rian.jacobs@proenviro.co.uk',
-    //   password: 'Kinibay100%'
-    // }
+
 
 
     // Reset tokens if re logging in
