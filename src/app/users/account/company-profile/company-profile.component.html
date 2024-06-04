@@ -84,14 +84,25 @@
             </div>
           </div>
           <div class="grid mt-3">
-            <div class="col-12">
+            <div class="col-6">
               <div class="field flex flex-column">
-                <label for="address">Business Established Year</label>
+                <label>Business Established Year</label>
                 <p-inputGroup>
                   <p-inputGroupAddon>
                     <span class="material-symbols-outlined">calendar_month</span>
                   </p-inputGroupAddon>
                   <input id="est_year" type="text" class="w-full p-3" formControlName="est_year" pInputText>
+                </p-inputGroup>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="field flex flex-column">
+                <label>Local Authority</label>
+                <p-inputGroup>
+                  <p-inputGroupAddon>
+                    <span class="material-symbols-outlined">location_city</span>
+                  </p-inputGroupAddon>
+                  <input id="local_auth" type="text" class="w-full p-3" formControlName="local_auth" pInputText>
                 </p-inputGroup>
               </div>
             </div>
