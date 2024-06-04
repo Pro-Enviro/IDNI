@@ -72,39 +72,27 @@
        <p-divider></p-divider>
        <div class="flex flex-column envirotrack-menu">
          <ul class="list-menu">
-           <div [class]="accountMenu ? 'accountMenu' : '' ">
-             <div class="flex flex-row">
-               <li><span class="material-symbols-outlined">manage_accounts</span> Account</li>
-               <span class="material-symbols-outlined pt-2" (click)="accountMenu = !accountMenu">arrow_drop_down</span>
-             </div>
-             @if(accountMenu){
-               <ul class="pl-4">
-                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/user-profile"><span class="material-symbols-outlined">person</span> User Profile</a></li>
-                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/company-profile"><span class="material-symbols-outlined">source_environment</span> Company Profile</a></li>
-               </ul>
-             }
-           </div>
            <li ng-click="behaviour(sideMenu = false)" class="font-size:30px"><a href="/dashboard"><span class="material-symbols-outlined">dashboard</span>Dashboard</a></li>
-           <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/fuel-data"><span class="material-symbols-outlined">flowsheet</span>Non Half-Hourly Data</a></li>
-           <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/import"><span class="material-symbols-outlined">add_chart</span>Half-Hourly Data Upload</a></li>
            <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/pet"><span class="material-symbols-outlined">timeline</span>PET</a></li>
-           <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/recommendations"><span class="material-symbols-outlined">data_thresholding</span>Recommendations</a></li>
+             <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/heatmap"><span class="material-symbols-outlined material-icon">assessment</span>Electricity Consumption, <br>kWh per half-hour</a></li>
+             <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/scatter"><span class="material-symbols-outlined material-icon">scatter_plot</span>Electricity Consumption, <br>kWh split by day of the week</a></li>
+             <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/bar"><span class="material-symbols-outlined material-icon">bar_chart</span>Electricity Consumption,kWh</a></li>
+             <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/pie"><span class="material-symbols-outlined material-icon">pie_chart</span>Electricity Consumption,<br> % split by day of the week</a></li>
+             <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/base1"><span class="material-symbols-outlined material-icon">show_chart</span>Christmas Day vs Lowest <br>Day of the year consumption</a></li>
+             <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/avg"><span class="material-symbols-outlined material-icon">stacked_line_chart</span>Average Daily Consumption,<br> kWh per half hour</a></li>
+             <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/demand"><span class="material-symbols-outlined material-icon">data_exploration</span>Maximum Demand</a></li>
+             <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/co2emissions"><span class="material-symbols-outlined material-icon">pie_chart</span>Breakdown of CO2e (tonnes) <br> by emissions source</a></li>
+             <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/co2emissionsbyscope"><span class="material-symbols-outlined material-icon">data_usage</span>Breakdown of CO2e (tonnes)<br> by scope</a></li>
            <div [class]="dropMenu ? 'dropMenu' : '' ">
              <div class="flex flex-row">
-               <li><span class="material-symbols-outlined">query_stats</span>Reports</li>
+               <li><span class="material-symbols-outlined">query_stats</span>Data</li>
                <span class="material-symbols-outlined pt-2" (click)="dropMenu = !dropMenu">arrow_drop_down</span>
              </div>
              @if(dropMenu){
-               <ul class="p-3">
-                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/heatmap"><span class="material-symbols-outlined material-icon">assessment</span>Electricity Consumption, <br>kWh per half-hour</a></li>
-                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/scatter"><span class="material-symbols-outlined material-icon">scatter_plot</span>Electricity Consumption, <br>kWh split by day of the week</a></li>
-                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/bar"><span class="material-symbols-outlined material-icon">bar_chart</span>Electricity Consumption,kWh</a></li>
-                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/pie"><span class="material-symbols-outlined material-icon">pie_chart</span>Electricity Consumption,<br> % split by day of the week</a></li>
-                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/base1"><span class="material-symbols-outlined material-icon">show_chart</span>Christmas Day vs Lowest <br>Day of the year consumption</a></li>
-                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/avg"><span class="material-symbols-outlined material-icon">stacked_line_chart</span>Average Daily Consumption,<br> kWh per half hour</a></li>
-                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/demand"><span class="material-symbols-outlined material-icon">data_exploration</span>Maximum Demand</a></li>
-                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/co2emissions"><span class="material-symbols-outlined material-icon">pie_chart</span>Breakdown of CO2e (tonnes) by emissions source</a></li>
-                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/co2emissionsbyscope"><span class="material-symbols-outlined material-icon">data_usage</span>Breakdown of CO2e (tonnes) by scope</a></li>
+               <ul>
+                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/fuel-data"><span class="material-symbols-outlined">flowsheet</span>Non Half-Hourly Data</a></li>
+                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/import"><span class="material-symbols-outlined">add_chart</span>Half-Hourly Data Upload</a></li>
+                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/recommendations"><span class="material-symbols-outlined">data_thresholding</span>Recommendations</a></li>
                </ul>
              }
            </div>
@@ -118,6 +106,18 @@
                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/bug-report"><span class="material-symbols-outlined">problem</span>Bug Report</a></li>
                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/faqs"><span class="material-symbols-outlined">live_help</span>FAQ's</a></li>
               </ul>
+             }
+           </div>
+           <div [class]="accountMenu ? 'accountMenu' : '' ">
+             <div class="flex flex-row">
+               <li><span class="material-symbols-outlined">manage_accounts</span> Account</li>
+               <span class="material-symbols-outlined pt-2" (click)="accountMenu = !accountMenu">arrow_drop_down</span>
+             </div>
+             @if(accountMenu){
+               <ul class="pl-4">
+                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/user-profile"><span class="material-symbols-outlined">person</span> User Profile</a></li>
+                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/company-profile"><span class="material-symbols-outlined">source_environment</span> Company Profile</a></li>
+               </ul>
              }
            </div>
          </ul>

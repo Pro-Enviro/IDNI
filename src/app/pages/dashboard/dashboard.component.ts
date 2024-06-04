@@ -92,52 +92,15 @@ export class DashboardComponent {
         // @ts-ignore
         this.menuBar = [
           {
-            label:'<span class="material-symbols-outlined">manage_accounts</span> Account',
-            escape:false,
-            items:[
-              {
-                label:'<span class="material-symbols-outlined">person</span> User Profile',
-                routerLink: '/dashboard/user-profile',
-                escape:false
-              },
-              {
-                label:'<span class="material-symbols-outlined">source_environment</span> Company Profile',
-                routerLink: '/dashboard/company-profile',
-                escape:false
-              }
-            ]
-          },
-          {
             label:'<span class="material-symbols-outlined">dashboard</span> Dashboard',
             routerLink:'/dashboard',
             escape: false
-          },
-          {
-            label: '<span class="material-symbols-outlined">flowsheet</span> Non Half-Hourly Data',
-            routerLink: '/dashboard/fuel-data',
-            escape: false,
-            visible: this.showFuelData
-          },
-          {
-            label: '<span class="material-symbols-outlined">add_chart</span> Half-Hourly Data Upload',
-            escape: false,
-            routerLink: '/dashboard/import'
           },
           {
             label: '<span class="material-symbols-outlined">timeline</span> PET',
             routerLink: '/dashboard/pet',
             escape: false
           },
-          {
-            label: '<span class="material-symbols-outlined">data_thresholding</span> Recommendations',
-            routerLink: '/dashboard/recommendations',
-            escape: false
-          },
-          {
-            label: '<span class="material-symbols-outlined">query_stats</span> Report',
-            escape: false,
-            routerLink: '/dashboard/heatmap',
-            items: [
               {
                 label: '<span class="material-symbols-outlined material-icon">assessment</span>Electricity Consumption, kWh per half-hour',
                 escape: false,
@@ -182,6 +145,26 @@ export class DashboardComponent {
                 label: '<span class="material-symbols-outlined material-icon">data_usage</span>Breakdown of CO2e (tonnes) by scope',
                 escape: false,
                 routerLink: '/dashboard/co2emissionsbyscope'
+              },
+          {
+            label: '<span class="material-symbols-outlined">data_thresholding</span> Data',
+            escape: false,
+            items:[
+              {
+                label: '<span class="material-symbols-outlined">flowsheet</span> Non Half-Hourly Data',
+                routerLink: '/dashboard/fuel-data',
+                escape: false,
+                visible: this.showFuelData
+              },
+              {
+                label: '<span class="material-symbols-outlined">add_chart</span> Half-Hourly Data Upload',
+                escape: false,
+                routerLink: '/dashboard/import'
+              },
+              {
+                label: '<span class="material-symbols-outlined">data_thresholding</span> Recommendations',
+                routerLink: '/dashboard/recommendations',
+                escape: false
               }
             ]
           },
@@ -202,104 +185,100 @@ export class DashboardComponent {
               }
             ]
           },
-
-
-        ]
-
-
-        this.miniMenu = [
           {
-            label:'<span class="material-symbols-outlined">manage_accounts</span>',
+            label:'<span class="material-symbols-outlined">manage_accounts</span> Account',
             escape:false,
             items:[
               {
-                label:'<span class="material-symbols-outlined">person</span>',
+                label:'<span class="material-symbols-outlined">person</span> User Profile',
                 routerLink: '/dashboard/user-profile',
                 escape:false
               },
               {
-                label:'<span class="material-symbols-outlined">source_environment</span>',
+                label:'<span class="material-symbols-outlined">source_environment</span> Company Profile',
                 routerLink: '/dashboard/company-profile',
                 escape:false
               }
             ]
-          },
+          }
+        ]
+
+
+        this.miniMenu = [
           {
             label:'<span class="material-symbols-outlined">dashboard</span>',
             routerLink:'/dashboard',
             escape: false
           },
           {
-            label: '<span class="material-symbols-outlined">flowsheet</span>',
-            routerLink: '/dashboard/fuel-data',
-            escape: false,
-            visible: this.showFuelData
-          },
-          {
-            label: '<span class="material-symbols-outlined">add_chart</span>',
-            escape: false,
-            routerLink: '/dashboard/import'
-          },
-
-          {
             label: '<span class="material-symbols-outlined">timeline</span>',
             routerLink: '/dashboard/pet',
             escape: false
           },
           {
-            label: '<span class="material-symbols-outlined">data_thresholding</span>',
-            routerLink: '/dashboard/recommendations',
-            escape: false
+            label: '<span class="material-symbols-outlined material-icon">assessment</span>',
+            escape: false,
+            routerLink: '/dashboard/heatmap'
           },
           {
-            label: '<span class="material-symbols-outlined">query_stats</span> ',
+            label: '<span class="material-symbols-outlined material-icon">scatter_plot</span>',
             escape: false,
-            routerLink: '/dashboard/heatmap',
-            items: [
+            routerLink: '/dashboard/scatter',
+          },
+          {
+            label: '<span class="material-symbols-outlined material-icon">bar_chart</span>',
+            escape: false,
+            routerLink: '/dashboard/bar'
+          },
+          {
+            label: '<span class="material-symbols-outlined material-icon">pie_chart</span>',
+            escape: false,
+            routerLink: '/dashboard/pie'
+          },
+          {
+            label: '<span class="material-symbols-outlined material-icon">show_chart</span>',
+            escape: false,
+            routerLink: '/dashboard/base1'
+          },
+          {
+            label: '<span class="material-symbols-outlined material-icon">stacked_line_chart</span>',
+            escape: false,
+            routerLink: '/dashboard/avg'
+          },
+          {
+            label: '<span class="material-symbols-outlined material-icon">data_exploration</span>',
+            escape: false,
+            routerLink: '/dashboard/demand'
+          },
+          {
+            label: '<span class="material-symbols-outlined material-icon">pie_chart</span>',
+            escape: false,
+            routerLink: '/dashboard/co2emissions'
+          },
+          {
+            label: '<span class="material-symbols-outlined material-icon">data_usage</span>',
+            escape: false,
+            routerLink: '/dashboard/co2emissionsbyscope'
+          },
+          {
+            label: '<span class="material-symbols-outlined">data_thresholding</span>',
+            escape: false,
+            items:[
               {
-                label: '<span class="material-symbols-outlined material-icon">assessment</span>',
+                label: '<span class="material-symbols-outlined">flowsheet</span>',
+                routerLink: '/dashboard/fuel-data',
                 escape: false,
-                routerLink: '/dashboard/heatmap'
+                visible: this.showFuelData
               },
               {
-                label: '<span class="material-symbols-outlined material-icon">scatter_plot</span>',
+                label: '<span class="material-symbols-outlined">add_chart</span>',
                 escape: false,
-                routerLink: '/dashboard/scatter',
+                routerLink: '/dashboard/import'
               },
               {
-                label: '<span class="material-symbols-outlined material-icon">bar_chart</span>',
-                escape: false,
-                routerLink: '/dashboard/bar'
-              },
-              {
-                label: '<span class="material-symbols-outlined material-icon">pie_chart</span>',
-                escape: false,
-                routerLink: '/dashboard/pie'
-              },
-              {
-                label: '<span class="material-symbols-outlined material-icon">show_chart</span>',
-                escape: false,
-                routerLink: '/dashboard/base1'
-              },
-              {
-                label: '<span class="material-symbols-outlined material-icon">stacked_line_chart</span>',
-                escape: false,
-                routerLink: '/dashboard/avg'
-              },
-              {
-                label: '<span class="material-symbols-outlined material-icon">data_exploration</span>',
-                escape: false,
-                routerLink: '/dashboard/demand'
-              },
-              {
-                label: '<span class="material-symbols-outlined material-icon">pie_chart</span>',
-                escape: false,
-                routerLink: '/dashboard/co2emissions'
-              },
-              {
-                label: '<span class="material-symbols-outlined material-icon">data_usage</span>',
-                escape: false,
-                routerLink: '/dashboard/co2emissionsbyscope'
+                label: '<span class="material-symbols-outlined">data_thresholding</span>',
+                routerLink: '/dashboard/recommendations',
+                escape: false
               }
             ]
           },
@@ -319,8 +298,23 @@ export class DashboardComponent {
                 routerLink: '/dashboard/faqs'
               }
             ]
+          },
+          {
+            label:'<span class="material-symbols-outlined">manage_accounts</span>',
+            escape:false,
+            items:[
+              {
+                label:'<span class="material-symbols-outlined">person</span>',
+                routerLink: '/dashboard/user-profile',
+                escape:false
+              },
+              {
+                label:'<span class="material-symbols-outlined">source_environment</span>',
+                routerLink: '/dashboard/company-profile',
+                escape:false
+              }
+            ]
           }
-
         ]
 
       }
