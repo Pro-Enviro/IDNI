@@ -3,7 +3,7 @@ import {SidebarModule} from "primeng/sidebar";
 import {RouterLink} from "@angular/router";
 import {ButtonModule} from "primeng/button";
 import {MenubarModule} from "primeng/menubar";
-import {MenuItem, Message} from "primeng/api";
+import {MenuItem, Message, MessageService} from "primeng/api";
 import {EnvirotrackReportPieComponent} from "../envirotrack/report/envirotrack-report-pie/envirotrack-report-pie.component";
 import {NgxEchartsDirective} from "ngx-echarts";
 import {EnvirotrackReportHeatmapComponent} from "../envirotrack/report/envirotrack-report-heatmap/envirotrack-report-heatmap.component";
@@ -20,6 +20,10 @@ import {MessagesModule} from "primeng/messages";
 import {NgIf} from "@angular/common";
 import {DialogModule} from "primeng/dialog";
 import {MenuModule} from "primeng/menu";
+import { createDirectus, authentication, rest, logout } from '@directus/sdk';
+import {from} from "rxjs";
+import {Router} from "@angular/router";
+import {AuthService} from "../../_services/users/auth.service";
 
 
 
@@ -59,6 +63,7 @@ export class DashboardComponent {
   menuBar : MenuItem[] =[]
   miniMenu: MenuItem[] = []
   items: MenuItem[] | undefined;
+  client: any;
 
   showWarningBanner: boolean = false;
   messages: Message[] = [{severity: 'warn', summary: 'Using Microsoft Edge', detail: 'This website works best on Firefox or Chrome'}]
@@ -67,7 +72,7 @@ export class DashboardComponent {
   helpMenu:boolean=false;
 
 
-  constructor(private global: GlobalService) {
+  constructor(private global: GlobalService,private route: Router,private auth: AuthService,private msg: MessageService) {
 
     // Check for Microsoft Edges
     if (/Edg/.test(navigator.userAgent)) {
@@ -77,207 +82,210 @@ export class DashboardComponent {
 
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        if (res.role.name === 'user'){
+        if (res.role.name === 'user') {
           this.showFuelData = false
         }
       },
       complete: () => {
         // @ts-ignore
-        this.menuBar  =[
+        this.menuBar = [
           {
-            label:'<span class="material-symbols-outlined">dashboard</span> Dashboard',
-            routerLink:'/dashboard',
+            label: '<span class="material-symbols-outlined">dashboard</span> Dashboard',
+            routerLink: '/dashboard',
             escape: false
           },
           {
-            label:'<span class="material-symbols-outlined">flowsheet</span> Non Half-Hourly Data',
-            routerLink:'/dashboard/fuel-data',
+            label: '<span class="material-symbols-outlined">flowsheet</span> Non Half-Hourly Data',
+            routerLink: '/dashboard/fuel-data',
             escape: false,
             visible: this.showFuelData
           },
           {
-            label:'<span class="material-symbols-outlined">add_chart</span> Half-Hourly Data Upload',
+            label: '<span class="material-symbols-outlined">add_chart</span> Half-Hourly Data Upload',
             escape: false,
-            routerLink:'/dashboard/import'
+            routerLink: '/dashboard/import'
           },
           {
-            label:'<span class="material-symbols-outlined">timeline</span> PET',
-            routerLink:'/dashboard/pet',
+            label: '<span class="material-symbols-outlined">timeline</span> PET',
+            routerLink: '/dashboard/pet',
             escape: false
           },
           {
-            label:'<span class="material-symbols-outlined">data_thresholding</span> Recommendations',
-            routerLink:'/dashboard/recommendations',
+            label: '<span class="material-symbols-outlined">data_thresholding</span> Recommendations',
+            routerLink: '/dashboard/recommendations',
             escape: false
           },
           {
-            label:'<span class="material-symbols-outlined">query_stats</span> Report',
+            label: '<span class="material-symbols-outlined">query_stats</span> Report',
             escape: false,
-            routerLink:'/dashboard/heatmap',
-            items:[
+            routerLink: '/dashboard/heatmap',
+            items: [
               {
-                label:'<span class="material-symbols-outlined material-icon">assessment</span>Electricity Consumption, kWh per half-hour',
+                label: '<span class="material-symbols-outlined material-icon">assessment</span>Electricity Consumption, kWh per half-hour',
                 escape: false,
                 routerLink: '/dashboard/heatmap'
               },
               {
-                label:'<span class="material-symbols-outlined material-icon">scatter_plot</span>Electricity Consumption, kWh split by day of the week',
+                label: '<span class="material-symbols-outlined material-icon">scatter_plot</span>Electricity Consumption, kWh split by day of the week',
                 escape: false,
                 routerLink: '/dashboard/scatter',
               },
               {
-                label:'<span class="material-symbols-outlined material-icon">bar_chart</span>Electricity Consumption, kWh',
+                label: '<span class="material-symbols-outlined material-icon">bar_chart</span>Electricity Consumption, kWh',
                 escape: false,
                 routerLink: '/dashboard/bar'
               },
               {
-                label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Electricity Consumption, % split by day of the week',
+                label: '<span class="material-symbols-outlined material-icon">pie_chart</span>Electricity Consumption, % split by day of the week',
                 escape: false,
                 routerLink: '/dashboard/pie'
               },
               {
-                label:'<span class="material-symbols-outlined material-icon">show_chart</span>Christmas Day vs Lowest Day of the year consumption',
+                label: '<span class="material-symbols-outlined material-icon">show_chart</span>Christmas Day vs Lowest Day of the year consumption',
                 escape: false,
                 routerLink: '/dashboard/base1'
               },
               {
-                label:'<span class="material-symbols-outlined material-icon">stacked_line_chart</span>Average Daily Consumption, kWh per half hour',
+                label: '<span class="material-symbols-outlined material-icon">stacked_line_chart</span>Average Daily Consumption, kWh per half hour',
                 escape: false,
                 routerLink: '/dashboard/avg'
               },
               {
-                label:'<span class="material-symbols-outlined material-icon">data_exploration</span>Maximum Demand',
+                label: '<span class="material-symbols-outlined material-icon">data_exploration</span>Maximum Demand',
                 escape: false,
                 routerLink: '/dashboard/demand'
               },
               {
-                label:'<span class="material-symbols-outlined material-icon">pie_chart</span>Breakdown of CO2e (tonnes) by emissions source',
+                label: '<span class="material-symbols-outlined material-icon">pie_chart</span>Breakdown of CO2e (tonnes) by emissions source',
                 escape: false,
                 routerLink: '/dashboard/co2emissions'
               },
               {
-                label:'<span class="material-symbols-outlined material-icon">data_usage</span>Breakdown of CO2e (tonnes) by scope',
+                label: '<span class="material-symbols-outlined material-icon">data_usage</span>Breakdown of CO2e (tonnes) by scope',
                 escape: false,
                 routerLink: '/dashboard/co2emissionsbyscope'
               }
             ]
           },
           {
-            label:'<span class="material-symbols-outlined">help</span> Help',
-          escape: false,
-          //routerLink:'/dashboard/help',
-          items:[
-            {
-              label:'<span class="material-symbols-outlined">problem</span> Bug Report',
-              escape: false,
-              routerLink: '/dashboard/bug-report'
-            },
-            {
-              label:'<span class="material-symbols-outlined">live_help</span> FAQ\'s',
-              escape: false,
-              routerLink: '/dashboard/faqs'
-            }
-          ]}
-
-        ]
-
-
-        this.miniMenu  =[
-          {
-            label:'<span class="material-symbols-outlined">dashboard</span>',
-            routerLink:'/dashboard',
-            escape: false
-          },
-          {
-            label:'<span class="material-symbols-outlined">flowsheet</span>',
-            routerLink:'/dashboard/fuel-data',
-            escape: false,
-            visible: this.showFuelData
-          },
-          {
-            label:'<span class="material-symbols-outlined">add_chart</span>',
-            escape: false,
-            routerLink:'/dashboard/import'
-          },
-
-          {
-            label:'<span class="material-symbols-outlined">timeline</span>',
-            routerLink:'/dashboard/pet',
-            escape: false
-          },
-          {
-            label:'<span class="material-symbols-outlined">data_thresholding</span>',
-            routerLink:'/dashboard/recommendations',
-            escape: false
-          },
-          {
-            label:'<span class="material-symbols-outlined">query_stats</span> ',
-            escape: false,
-            routerLink:'/dashboard/heatmap',
-            items:[
-              {
-                label:'<span class="material-symbols-outlined material-icon">assessment</span>',
-                escape: false,
-                routerLink: '/dashboard/heatmap'
-              },
-              {
-                label:'<span class="material-symbols-outlined material-icon">scatter_plot</span>',
-                escape: false,
-                routerLink: '/dashboard/scatter',
-              },
-              {
-                label:'<span class="material-symbols-outlined material-icon">bar_chart</span>',
-                escape: false,
-                routerLink: '/dashboard/bar'
-              },
-              {
-                label:'<span class="material-symbols-outlined material-icon">pie_chart</span>',
-                escape: false,
-                routerLink: '/dashboard/pie'
-              },
-              {
-                label:'<span class="material-symbols-outlined material-icon">show_chart</span>',
-                escape: false,
-                routerLink: '/dashboard/base1'
-              },
-              {
-                label:'<span class="material-symbols-outlined material-icon">stacked_line_chart</span>',
-                escape: false,
-                routerLink: '/dashboard/avg'
-              },
-              {
-                label:'<span class="material-symbols-outlined material-icon">data_exploration</span>',
-                escape: false,
-                routerLink: '/dashboard/demand'
-              },
-              {
-                label:'<span class="material-symbols-outlined material-icon">pie_chart</span>',
-                escape: false,
-                routerLink: '/dashboard/co2emissions'
-              },
-              {
-                label:'<span class="material-symbols-outlined material-icon">data_usage</span>',
-                escape: false,
-                routerLink: '/dashboard/co2emissionsbyscope'
-              }
-            ]
-          },
-          {
-            label:'<span class="material-symbols-outlined">help</span>',
+            label: '<span class="material-symbols-outlined">help</span> Help',
             escape: false,
             //routerLink:'/dashboard/help',
-            items:[
+            items: [
               {
-                label:'<span class="material-symbols-outlined">problem</span>',
+                label: '<span class="material-symbols-outlined">problem</span> Bug Report',
                 escape: false,
                 routerLink: '/dashboard/bug-report'
               },
               {
-                label:'<span class="material-symbols-outlined">live_help</span>',
+                label: '<span class="material-symbols-outlined">live_help</span> FAQ\'s',
                 escape: false,
                 routerLink: '/dashboard/faqs'
               }
-            ]}
+            ]
+          },
+
+
+        ]
+
+
+        this.miniMenu = [
+          {
+            label: '<span class="material-symbols-outlined">dashboard</span>',
+            routerLink: '/dashboard',
+            escape: false
+          },
+          {
+            label: '<span class="material-symbols-outlined">flowsheet</span>',
+            routerLink: '/dashboard/fuel-data',
+            escape: false,
+            visible: this.showFuelData
+          },
+          {
+            label: '<span class="material-symbols-outlined">add_chart</span>',
+            escape: false,
+            routerLink: '/dashboard/import'
+          },
+
+          {
+            label: '<span class="material-symbols-outlined">timeline</span>',
+            routerLink: '/dashboard/pet',
+            escape: false
+          },
+          {
+            label: '<span class="material-symbols-outlined">data_thresholding</span>',
+            routerLink: '/dashboard/recommendations',
+            escape: false
+          },
+          {
+            label: '<span class="material-symbols-outlined">query_stats</span> ',
+            escape: false,
+            routerLink: '/dashboard/heatmap',
+            items: [
+              {
+                label: '<span class="material-symbols-outlined material-icon">assessment</span>',
+                escape: false,
+                routerLink: '/dashboard/heatmap'
+              },
+              {
+                label: '<span class="material-symbols-outlined material-icon">scatter_plot</span>',
+                escape: false,
+                routerLink: '/dashboard/scatter',
+              },
+              {
+                label: '<span class="material-symbols-outlined material-icon">bar_chart</span>',
+                escape: false,
+                routerLink: '/dashboard/bar'
+              },
+              {
+                label: '<span class="material-symbols-outlined material-icon">pie_chart</span>',
+                escape: false,
+                routerLink: '/dashboard/pie'
+              },
+              {
+                label: '<span class="material-symbols-outlined material-icon">show_chart</span>',
+                escape: false,
+                routerLink: '/dashboard/base1'
+              },
+              {
+                label: '<span class="material-symbols-outlined material-icon">stacked_line_chart</span>',
+                escape: false,
+                routerLink: '/dashboard/avg'
+              },
+              {
+                label: '<span class="material-symbols-outlined material-icon">data_exploration</span>',
+                escape: false,
+                routerLink: '/dashboard/demand'
+              },
+              {
+                label: '<span class="material-symbols-outlined material-icon">pie_chart</span>',
+                escape: false,
+                routerLink: '/dashboard/co2emissions'
+              },
+              {
+                label: '<span class="material-symbols-outlined material-icon">data_usage</span>',
+                escape: false,
+                routerLink: '/dashboard/co2emissionsbyscope'
+              }
+            ]
+          },
+          {
+            label: '<span class="material-symbols-outlined">help</span>',
+            escape: false,
+            //routerLink:'/dashboard/help',
+            items: [
+              {
+                label: '<span class="material-symbols-outlined">problem</span>',
+                escape: false,
+                routerLink: '/dashboard/bug-report'
+              },
+              {
+                label: '<span class="material-symbols-outlined">live_help</span>',
+                escape: false,
+                routerLink: '/dashboard/faqs'
+              }
+            ]
+          }
 
         ]
 
@@ -285,5 +293,11 @@ export class DashboardComponent {
     })
   }
 
-  protected readonly onclick = onclick;
+  handleLogOut = () => {
+    this.auth.logout()
+    this.msg.add({
+      severity:'warn',
+      summary: 'You have been Logged Out !'
+    })
+  }
 }
