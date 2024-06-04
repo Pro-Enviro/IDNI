@@ -1,11 +1,10 @@
 <section>
   <div class="container">
-    <p-card header="User Profile" styleClass="card-select-panel" [style]="{ width: '75vw' }">
+    <p-card header="Company Profile" styleClass="card-select-panel" [style]="{ width: '75vw' }">
       <div class="grid nested-grid">
-        <form class="col-9" [formGroup]="companyEditForm" (ngSubmit)="editCompanySubmit()">
+        <form class="col-12" [formGroup]="companyEditForm" (ngSubmit)="editCompanySubmit()">
           <div class="grid">
-            <div class="col-6">
-              <!--          EMAIL-->
+            <div class="col-12">
               <div class="field flex flex-column">
                 <label for="company_name">Company Name</label>
                 <p-inputGroup disabled="true">
@@ -33,11 +32,8 @@
                   </p-inputGroupAddon>
                   <input id="address" type="text" class="w-full p-3" formControlName="address" pInputText>
                 </p-inputGroup>
-
               </div>
             </div>
-          </div>
-          <div class="grid mt-3">
             <div class="col-6">
               <div class="field flex flex-column">
                 <label for="address">Postcode</label>
@@ -47,24 +43,10 @@
                   </p-inputGroupAddon>
                   <input id="postcode" type="text" class="w-full p-3" formControlName="postcode" pInputText>
                 </p-inputGroup>
-
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="field flex flex-column">
-                <label for="address">Established</label>
-                <p-inputGroup>
-                  <p-inputGroupAddon>
-                    <span class="material-symbols-outlined">call</span>
-                  </p-inputGroupAddon>
-                  <input id="est_year" type="text" class="w-full p-3" formControlName="est_year" pInputText>
-                </p-inputGroup>
-
               </div>
             </div>
           </div>
-
-          <div class="grid mt-3">
+          <div class="grid">
             <div class="col-6">
               <div class="field flex flex-column">
                 <label for="address">Employees</label>
@@ -73,34 +55,6 @@
                     <span class="material-symbols-outlined">call</span>
                   </p-inputGroupAddon>
                   <input id="employees" type="text" class="w-full p-3" formControlName="employees" pInputText>
-                </p-inputGroup>
-
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="field flex flex-column">
-                <label for="address">Sector</label>
-                <p-inputGroup>
-                  <p-inputGroupAddon>
-                    <span class="material-symbols-outlined">call</span>
-                  </p-inputGroupAddon>
-                  <input id="sector" type="text" class="w-full p-3" formControlName="sector" pInputText>
-                </p-inputGroup>
-
-              </div>
-            </div>
-          </div>
-
-
-          <div class="grid mt-3">
-            <div class="col-6">
-              <div class="field flex flex-column">
-                <label for="address">SIC Code</label>
-                <p-inputGroup>
-                  <p-inputGroupAddon>
-                    <span class="material-symbols-outlined">call</span>
-                  </p-inputGroupAddon>
-                  <input id="sic_code" type="text" class="w-full p-3" formControlName="sic_code" pInputText>
                 </p-inputGroup>
 
               </div>
@@ -118,8 +72,18 @@
               </div>
             </div>
           </div>
-
           <div class="grid mt-3">
+            <div class="col-6">
+              <div class="field flex flex-column">
+                <label for="address">Established</label>
+                <p-inputGroup>
+                  <p-inputGroupAddon>
+                    <span class="material-symbols-outlined">call</span>
+                  </p-inputGroupAddon>
+                  <input id="est_year" type="text" class="w-full p-3" formControlName="est_year" pInputText>
+                </p-inputGroup>
+              </div>
+            </div>
             <div class="col-6">
               <div class="field flex flex-column">
                 <label for="address">UPRN</label>
@@ -131,7 +95,37 @@
                 </p-inputGroup>
               </div>
             </div>
+          </div>
+
+          <div class="grid mt-3">
             <div class="col-6">
+              <div class="field flex flex-column">
+                <label for="address">Sector</label>
+                <p-inputGroup>
+                  <p-inputGroupAddon>
+                    <span class="material-symbols-outlined">call</span>
+                  </p-inputGroupAddon>
+                  <input id="sector" type="text" class="w-full p-3" formControlName="sector" pInputText>
+                </p-inputGroup>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="field flex flex-column">
+                <label for="address">SIC Code</label>
+                <p-inputGroup>
+                  <p-inputGroupAddon>
+                    <span class="material-symbols-outlined">call</span>
+                  </p-inputGroupAddon>
+                  <input id="sic_code" type="text" class="w-full p-3" formControlName="sic_code" pInputText>
+                </p-inputGroup>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="grid mt-3">
+
+            <div class="col-12">
               <div class="field flex flex-column">
                 <label for="address">Website URL</label>
                 <p-inputGroup>
@@ -146,7 +140,7 @@
           </div>
 
           <div class="grid mt-3">
-            <div class="col-6">
+            <div class="col-12">
               <div class="field flex flex-column">
                 <label for="address">Company Description</label>
                 <p-inputGroup>
@@ -161,18 +155,10 @@
           </div>
 
           <div>
-            <p-button label="Save Changes" icon="pi pi-save" styleClass="btn-style" type="submit" [disabled]="!companyEditForm.valid || isSubmitting"
-                      value="Submit"></p-button>
+            <p-button label="Save Changes" icon="pi pi-save" styleClass="btn-style" type="submit" [disabled]="!companyEditForm.valid || isSubmitting" value="Submit"></p-button>
           </div>
 
         </form>
-        <div class="col-3">
-          <p-avatar
-            label="P"
-            styleClass="mr-2"
-            size="xlarge"
-            shape="circle"/>
-        </div>
       </div>
 
 
