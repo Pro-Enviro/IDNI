@@ -64,12 +64,14 @@ export class DashboardComponent {
   menuBar : MenuItem[] =[]
   miniMenu: MenuItem[] = []
   profileMenu:MenuItem[] = []
+  profileMiniMenu:MenuItem[] = []
   items: MenuItem[] | undefined;
   client: any;
 
   showWarningBanner: boolean = false;
   messages: Message[] = [{severity: 'warn', summary: 'Using Microsoft Edge', detail: 'This website works best on Firefox or Chrome'}]
   showMenu: boolean = false;
+  accountShowMenu: boolean = false;
   dropMenu:boolean=false;
   helpMenu:boolean=false;
   accountMenu:boolean=false;
@@ -90,6 +92,26 @@ export class DashboardComponent {
         }
       },
       complete: () => {
+        this.profileMiniMenu=[
+          {
+            label:'<span class="material-symbols-outlined">manage_accounts</span>',
+            escape:false,
+            items:[
+              {
+                label:'<span class="material-symbols-outlined">person</span>',
+                routerLink: '/dashboard/user-profile',
+                escape:false
+              },
+              {
+                label:'<span class="material-symbols-outlined">source_environment</span>',
+                routerLink: '/dashboard/company-profile',
+                escape:false
+              }
+            ]
+          }
+        ]
+
+
         this.profileMenu=[
           {
             label:'<span class="material-symbols-outlined">manage_accounts</span> Account',
@@ -299,22 +321,6 @@ export class DashboardComponent {
                 label: '<span class="material-symbols-outlined">live_help</span>',
                 escape: false,
                 routerLink: '/dashboard/faqs'
-              }
-            ]
-          },
-          {
-            label:'<span class="material-symbols-outlined">manage_accounts</span>',
-            escape:false,
-            items:[
-              {
-                label:'<span class="material-symbols-outlined">person</span>',
-                routerLink: '/dashboard/user-profile',
-                escape:false
-              },
-              {
-                label:'<span class="material-symbols-outlined">source_environment</span>',
-                routerLink: '/dashboard/company-profile',
-                escape:false
               }
             ]
           }

@@ -18,7 +18,7 @@
   </div>
 <div class="flex justify-content-start p-2" style="background-color: #fdfdfd">
   <div class="relative">
-    <div class="sidenav-col h-full lg:w-8" [class]="showMenu ? 'showMenu' : '' ">
+    <div class="sidenav-col h-full lg:w-8" [class]="showMenu ? 'showMenu' : ''">
       <div class="sidenav">
        <div class="flex justify-content-end mb-3">
            @if (showMenu){
@@ -37,11 +37,13 @@
         <p-divider></p-divider>
         <div class="flex flex-column envirotrack-menu">
           <p-panelMenu [model]="showMenu ? miniMenu : menuBar"></p-panelMenu>
-
           <div>
             <p-divider></p-divider>
-            <p-panelMenu [model]="profileMenu"></p-panelMenu>
-
+            @if(!showMenu){
+              <p-panelMenu [model]="profileMenu"></p-panelMenu>
+            }@else{
+              <p-panelMenu [model]="profileMiniMenu"></p-panelMenu>
+            }
             <div class="flex flex-column mt-5">
               <div class="pt-4">
                 @if(!showMenu){
