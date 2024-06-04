@@ -39,7 +39,7 @@ export class UserService {
       const currentUser = await this.getCurrentUserData();
       // @ts-ignore
       const usersCompany = await this.client.request(readItems("companies", {
-        fields: ['id', 'name', 'address', 'postcode', 'uprn', 'est_year','employees','turnover', 'sector','sic_code','website_url', 'company_description'],
+        fields: ['id', 'name', 'address', 'postcode', 'uprn', 'est_year','employees','turnover', 'sector','sic_code','website_url', 'company_description','local_auth'],
         filter: {
           "users": {
             "directus_users_id": {
