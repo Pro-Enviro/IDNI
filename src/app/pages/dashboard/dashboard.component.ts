@@ -67,6 +67,7 @@ export class DashboardComponent {
   showMenu: boolean = false;
   dropMenu:boolean=false;
   helpMenu:boolean=false;
+  accountMenu:boolean=false;
 
 
   constructor(private global: GlobalService) {
