@@ -2,7 +2,48 @@
   <div class="container">
     <p-card header="User Profile" styleClass="card-select-panel" [style]="{ width: '50vw' }">
       <div class="grid nested-grid">
-        <form class="col-9" [formGroup]="userEditForm" (ngSubmit)="patchUserValues()">
+        <form class="col-12" [formGroup]="userEditForm" (ngSubmit)="patchUserValues()">
+          <div class="grid mt-3">
+            <div class="col-6">
+              <!--          FIRST NAME-->
+              <div class="field flex flex-column">
+                <label for="first_name">First Name</label>
+                <p-inputGroup>
+                  <p-inputGroupAddon>
+                    <i class="pi pi-user"></i>
+                  </p-inputGroupAddon>
+                  <input id="first_name" type="text" class="w-full p-3" formControlName="first_name" pInputText >
+                  <br/>
+                </p-inputGroup>
+                @if (userEditForm.get('first_name')?.invalid && (userEditForm.get('first_name')?.dirty || userEditForm.get('first_name')?.touched)){
+                  <div>
+                    @if (userEditForm.get('first_name')?.errors?.['required']) {
+                      <div class="text-red-400 text-xs font-medium mt-2">First Name is required</div>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="col-6">
+              <!--          LAST NAME-->
+              <div class="field flex flex-column">
+                <label for="last_name">Last Name</label>
+                <p-inputGroup>
+                  <p-inputGroupAddon>
+                    <span class="material-symbols-outlined">group</span>
+                  </p-inputGroupAddon>
+                  <input id="last_name" type="text" class="w-full p-3" formControlName="last_name" pInputText >
+                </p-inputGroup>
+                @if (userEditForm.get('last_name')?.invalid && (userEditForm.get('last_name')?.dirty || userEditForm.get('last_name')?.touched)){
+                  <div>
+                    @if (userEditForm.get('last_name')?.errors?.['required']) {
+                      <div class="text-red-400 text-xs font-medium mt-2">Last Name is required</div>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
           <div class="grid">
             <div class="col-6">
               <!--          EMAIL-->
@@ -53,65 +94,15 @@
               </div>
             </div>
           </div>
-          <div class="grid mt-3">
-            <div class="col-6">
-              <!--          FIRST NAME-->
-              <div class="field flex flex-column">
-                <label for="first_name">First Name</label>
-                <p-inputGroup>
-                  <p-inputGroupAddon>
-                    <i class="pi pi-user"></i>
-                  </p-inputGroupAddon>
-                  <input id="first_name" type="text" class="w-full p-3" formControlName="first_name" pInputText >
-                  <br/>
-                </p-inputGroup>
-                @if (userEditForm.get('first_name')?.invalid && (userEditForm.get('first_name')?.dirty || userEditForm.get('first_name')?.touched)){
-                  <div>
-                    @if (userEditForm.get('first_name')?.errors?.['required']) {
-                      <div class="text-red-400 text-xs font-medium mt-2">First Name is required</div>
-                    }
-                  </div>
-                }
-              </div>
-            </div>
-            <div class="col-6">
-              <!--          LAST NAME-->
-              <div class="field flex flex-column">
-                <label for="last_name">Last Name</label>
-                <p-inputGroup>
-                  <p-inputGroupAddon>
-                    <span class="material-symbols-outlined">group</span>
-                  </p-inputGroupAddon>
-                  <input id="last_name" type="text" class="w-full p-3" formControlName="last_name" pInputText >
-                </p-inputGroup>
-                @if (userEditForm.get('last_name')?.invalid && (userEditForm.get('last_name')?.dirty || userEditForm.get('last_name')?.touched)){
-                  <div>
-                    @if (userEditForm.get('last_name')?.errors?.['required']) {
-                      <div class="text-red-400 text-xs font-medium mt-2">Last Name is required</div>
-                    }
-                  </div>
-                }
-              </div>
-            </div>
-          </div>
 
 
           <div>
-            <p-button label="Save Changes" icon="pi pi-save" styleClass="btn-style" type="submit"
-                      value="Submit" [disabled]="!userEditForm.valid"></p-button>
+            <div class="mt-4">
+              <p-button label="Save Changes" icon="pi pi-save" styleClass="btn-style" type="submit" value="Submit" [disabled]="!userEditForm.valid"></p-button>
+            </div>
           </div>
-
         </form>
-        <div class="col-3">
-          <p-avatar
-            label="P"
-            styleClass="mr-2"
-            size="xlarge"
-            shape="circle"/>
-        </div>
       </div>
-
-
     </p-card>
     <p-card header="Companies" styleClass="card-select-panel mt-5" [style]="{ width: '50vw' }">
 
