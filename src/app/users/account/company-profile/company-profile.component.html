@@ -1,6 +1,6 @@
 <section>
   <div class="container">
-    <p-card header="Company Profile" styleClass="card-select-panel" [style]="{ width: '75vw' }">
+    <p-card header="Company Profile" styleClass="card-company-profile">
       <div class="grid nested-grid">
         <form class="col-12 p-3" [formGroup]="companyEditForm" (ngSubmit)="editCompanySubmit()">
           <div class="grid">
@@ -23,7 +23,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-6">
+            <div class="lg:col-6 md:col-12">
               <div class="field flex flex-column">
                 <label for="address">Address</label>
                 <p-inputGroup>
@@ -34,7 +34,7 @@
                 </p-inputGroup>
               </div>
             </div>
-            <div class="col-6">
+            <div class="lg:col-6 md:col-12">
               <div class="field flex flex-column">
                 <label for="address">Postcode</label>
                 <p-inputGroup>
@@ -58,7 +58,7 @@
             </div>
           </div>
           <div class="grid">
-            <div class="col-6">
+            <div class="lg:col-6 md:col-12">
               <div class="field flex flex-column">
                 <label for="address">Total Number of Employees</label>
                 <p-inputGroup>
@@ -70,7 +70,7 @@
 
               </div>
             </div>
-            <div class="col-6">
+            <div class="lg:col-6 md:col-12">
               <div class="field flex flex-column">
                 <label for="address">Annual Turnover</label>
                 <p-inputGroup>
@@ -84,7 +84,7 @@
             </div>
           </div>
           <div class="grid mt-3">
-            <div class="col-6">
+            <div class="lg:col-6 md:col-12">
               <div class="field flex flex-column">
                 <label>Business Established Year</label>
                 <p-inputGroup>
@@ -95,7 +95,7 @@
                 </p-inputGroup>
               </div>
             </div>
-            <div class="col-6">
+            <div class="lg:col-6 md:col-12">
               <div class="field flex flex-column">
                 <label>Local Authority</label>
                 <p-inputGroup>
@@ -109,7 +109,7 @@
           </div>
 
           <div class="grid mt-3">
-            <div class="col-6">
+            <div class="lg:col-6 md:col-12">
               <div class="field flex flex-column">
                 <label for="address">Sector</label>
                 <p-inputGroup>
@@ -120,7 +120,7 @@
                 </p-inputGroup>
               </div>
             </div>
-            <div class="col-6">
+            <div class="lg:col-6 md:col-12">
               <div class="field flex flex-column">
                 <label for="address">SIC Code</label>
                 <p-inputGroup>
