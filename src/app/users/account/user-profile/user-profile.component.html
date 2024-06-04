@@ -1,6 +1,6 @@
 <section>
   <div class="container">
-    <p-card header="User Profile" styleClass="card-select-panel" [style]="{ width: '45vw' }">
+    <p-card header="User Profile" styleClass="card-profile">
       <div class="grid nested-grid">
         <form class="col-12" [formGroup]="userEditForm" (ngSubmit)="patchUserValues()">
           <div class="grid mt-3">
@@ -45,7 +45,7 @@
             </div>
           </div>
           <div class="grid">
-            <div class="col-6">
+            <div class="lg:col-6 md:col-12">
               <!--          EMAIL-->
               <div class="field flex flex-column">
                 <label for="contact_number">Contact Email</label>
@@ -74,7 +74,7 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="lg:col-6 md:col-12">
               <div class="field flex flex-column">
                 <label for="contact_number">Contact Number</label>
                 <p-inputGroup>
@@ -104,7 +104,7 @@
     </p-card>
 
     <div class="mt-5">
-      <p-card header="Companies" styleClass="card-select-panel" [style]="{ width: '45vw' }">
+      <p-card header="Companies" styleClass="card-profile">
 
         @if(usersCompanies.length > 0) {
           <ul class="pl-0">

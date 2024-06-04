@@ -419,6 +419,11 @@ a{
     background-color:#fbfbfb;
   }
 
+  .card-profile{
+    background-color:#fbfbfb;
+    width: 45vw;
+  }
+
 .p-card-bck {
   background: #fdfdfd !important;
   color: #4b5563;
@@ -1209,6 +1214,9 @@ a{
     .dashboard-items{
       flex: 0 0 auto;
       width: 100%;
+    }
+    .card-profile{
+      width:80vw;
     }
   }
 
