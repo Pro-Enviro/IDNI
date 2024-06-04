@@ -118,6 +118,7 @@
               </ul>
              }
            </div>
+           <p-divider></p-divider>
            <div [class]="accountMenu ? 'accountMenu' : '' ">
              <div class="flex flex-row">
                <li><span class="material-symbols-outlined">manage_accounts</span> Account</li>
@@ -129,17 +130,25 @@
                  <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/company-profile"><span class="material-symbols-outlined">source_environment</span> Company Profile</a></li>
                </ul>
              }
+             <div class="flex flex-column mt-3">
+               <div class="pt-3">
+                 <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple label="Knowledge Platform" icon="pi pi-globe" class="btn-dark"></button></a>
+               </div>
+               <div class="pt-3">
+                 <button pButton pRipple label="Log Out" icon="pi pi-sign-out" class="btn-style" (click)="handleLogOut()"></button>
+               </div>
+             </div>
            </div>
          </ul>
 
        </div>
-       <div class="mt-5">
-         <p-divider></p-divider>
-         <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple label="Knowledge Platform" icon="pi pi-globe" class="btn-dark"></button></a>
-       </div>
-       <div class="mt-5">
-          <button pButton pRipple label="Log Out" icon="pi pi-sign-out" class="btn-style" (click)="handleLogOut()"></button>
-       </div>
+<!--       <div class="mt-5">-->
+<!--         <p-divider></p-divider>-->
+<!--         <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple label="Knowledge Platform" icon="pi pi-globe" class="btn-dark"></button></a>-->
+<!--       </div>-->
+<!--       <div class="mt-5">-->
+<!--          <button pButton pRipple label="Log Out" icon="pi pi-sign-out" class="btn-style" (click)="handleLogOut()"></button>-->
+<!--       </div>-->
      </div>
   </p-sidebar>
 
