@@ -163,7 +163,6 @@ export class EnvirotrackReportBase1Component implements OnInit {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
               if (res.data) {
-                console.log(res.data)
                 this.companies = res.data
                 this.selectedCompany = this.companies[0].id
                 this.isConsultant = true
@@ -248,7 +247,6 @@ export class EnvirotrackReportBase1Component implements OnInit {
           this.firstYear = moment(this.months[0]).year()
 
           for(let i:number = moment().year(); i >= this.firstYear; i-- ){
-
             if(this.data.filter((x:any) => moment(x.date).format('YYYY-MM-DD') === `${i}-12-25`).length){
               this.lastYear = i;
               this.dateFilter = i;
@@ -267,13 +265,25 @@ export class EnvirotrackReportBase1Component implements OnInit {
   filterData = () =>{
     this.defaultFilters = [];
     this.data = this.data.filter((x:any) => x.mpan === this.selectedMpan)
+
+    // Getting filters required, only show filters if data is available and christmas day is available
     for(let i: number = this.firstYear; i <= this.lastYear; i++){
-      this.defaultFilters.push({
-        name: i,
-        value: i
-      })
+      const found = this.data.find((row: any) => moment(row.date).year() === i)
+      if (found){
+        if(this.data.filter((x:any) => moment(x.date).format('YYYY-MM-DD') === `${i}-12-25`).length){
+          this.defaultFilters.push({
+            name: i,
+            value: i
+          })
+          this.dateFilter = i
+        }
+
+      }
     }
+
     let tmp = this.data.filter((x:any) => moment(x.date).year() === this.dateFilter)
+
+
     let lowDay
     if(tmp.length) {
        lowDay = tmp.reduce((x: any, y: any) => x.total < y.total ? x : y)
@@ -284,11 +294,17 @@ export class EnvirotrackReportBase1Component implements OnInit {
     let cDay = this.data.filter((x:any) => moment(x.date).format('YYYY-MM-DD') === `${this.dateFilter}-12-25`)[0]
 
 
+
+
     if(cDay === undefined){
       this.msg.add({
         severity: 'warn',
         detail: 'No data found for Christmas Day'
       })
+
+      this.chartData = []
+      this.chartOptions = {}
+
       return
     }
 
