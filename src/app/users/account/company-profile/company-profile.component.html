@@ -2,7 +2,7 @@
   <div class="container">
     <p-card header="Company Profile" styleClass="card-select-panel" [style]="{ width: '75vw' }">
       <div class="grid nested-grid">
-        <form class="col-12" [formGroup]="companyEditForm" (ngSubmit)="editCompanySubmit()">
+        <form class="col-12 p-3" [formGroup]="companyEditForm" (ngSubmit)="editCompanySubmit()">
           <div class="grid">
             <div class="col-12">
               <div class="field flex flex-column">
@@ -45,11 +45,22 @@
                 </p-inputGroup>
               </div>
             </div>
+            <div class="col-12">
+              <div class="field flex flex-column">
+                <label for="address">Unique Property Reference Number (UPRN)</label>
+                <p-inputGroup>
+                  <p-inputGroupAddon>
+                    <span class="material-symbols-outlined">assistant_navigation</span>
+                  </p-inputGroupAddon>
+                  <input id="uprn" type="text" class="w-full p-3" formControlName="uprn" pInputText>
+                </p-inputGroup>
+              </div>
+            </div>
           </div>
           <div class="grid">
             <div class="col-6">
               <div class="field flex flex-column">
-                <label for="address">Employees</label>
+                <label for="address">Total Number of Employees</label>
                 <p-inputGroup>
                   <p-inputGroupAddon>
                     <span class="material-symbols-outlined">groups</span>
@@ -61,7 +72,7 @@
             </div>
             <div class="col-6">
               <div class="field flex flex-column">
-                <label for="address">Turnover</label>
+                <label for="address">Annual Turnover</label>
                 <p-inputGroup>
                   <p-inputGroupAddon>
                     <span class="material-symbols-outlined">credit_card_gear</span>
@@ -73,25 +84,14 @@
             </div>
           </div>
           <div class="grid mt-3">
-            <div class="col-6">
+            <div class="col-12">
               <div class="field flex flex-column">
-                <label for="address">Established</label>
+                <label for="address">Business Established Year</label>
                 <p-inputGroup>
                   <p-inputGroupAddon>
                     <span class="material-symbols-outlined">calendar_month</span>
                   </p-inputGroupAddon>
                   <input id="est_year" type="text" class="w-full p-3" formControlName="est_year" pInputText>
-                </p-inputGroup>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="field flex flex-column">
-                <label for="address">UPRN</label>
-                <p-inputGroup>
-                  <p-inputGroupAddon>
-                    <span class="material-symbols-outlined">assistant_navigation</span>
-                  </p-inputGroupAddon>
-                  <input id="uprn" type="text" class="w-full p-3" formControlName="uprn" pInputText>
                 </p-inputGroup>
               </div>
             </div>
@@ -122,7 +122,6 @@
             </div>
           </div>
 
-
           <div class="grid mt-3">
             <div class="col-12">
               <div class="field flex flex-column">
@@ -133,7 +132,6 @@
                   </p-inputGroupAddon>
                   <input id="website_url" type="text" class="w-full p-3" formControlName="website_url" pInputText>
                 </p-inputGroup>
-
               </div>
             </div>
           </div>
@@ -141,26 +139,21 @@
           <div class="grid mt-3">
             <div class="col-12">
               <div class="field flex flex-column">
-                <label for="address">Company Description</label>
+                <label for="address">Primary Business Activity</label>
                 <p-inputGroup>
                   <p-inputGroupAddon>
                     <span class="material-symbols-outlined">edit_note</span>
                   </p-inputGroupAddon>
                   <textarea id="company_description" type="text" style="font-family: inherit;" class="w-full p-3 " formControlName="company_description" pTextarea [rows]="6"></textarea>
                 </p-inputGroup>
-
               </div>
             </div>
           </div>
-
           <div class="pt-4">
             <p-button label="Save Changes" icon="pi pi-save" styleClass="btn-style" type="submit" [disabled]="!companyEditForm.valid || isSubmitting" value="Submit"></p-button>
           </div>
-
         </form>
       </div>
-
-
     </p-card>
   </div>
 </section>

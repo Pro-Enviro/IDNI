@@ -1,10 +1,10 @@
 <section>
   <div class="container">
-    <p-card header="User Profile" styleClass="card-select-panel" [style]="{ width: '50vw' }">
+    <p-card header="User Profile" styleClass="card-select-panel" [style]="{ width: '45vw' }">
       <div class="grid nested-grid">
         <form class="col-12" [formGroup]="userEditForm" (ngSubmit)="patchUserValues()">
           <div class="grid mt-3">
-            <div class="col-6">
+            <div class="col-12">
               <!--          FIRST NAME-->
               <div class="field flex flex-column">
                 <label for="first_name">First Name</label>
@@ -24,7 +24,7 @@
                 }
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-12">
               <!--          LAST NAME-->
               <div class="field flex flex-column">
                 <label for="last_name">Last Name</label>
@@ -94,8 +94,6 @@
               </div>
             </div>
           </div>
-
-
           <div>
             <div class="mt-4">
               <p-button label="Save Changes" icon="pi pi-save" styleClass="btn-style" type="submit" value="Submit" [disabled]="!userEditForm.valid"></p-button>
@@ -104,19 +102,21 @@
         </form>
       </div>
     </p-card>
-    <p-card header="Companies" styleClass="card-select-panel mt-5" [style]="{ width: '50vw' }">
 
-      @if(usersCompanies.length > 0) {
-        <ul class="pl-0">
-          @for (company of usersCompanies; track $index){
-            <li class="mt-2 text-md">{{company}}</li>
-          }
-        </ul>
-      } @else {
-        <p class="text-md">The user is not associated with any companies</p>
-      }
+    <div class="mt-5">
+      <p-card header="Companies" styleClass="card-select-panel" [style]="{ width: '45vw' }">
 
+        @if(usersCompanies.length > 0) {
+          <ul class="pl-0">
+            @for (company of usersCompanies; track $index){
+              <li class="mt-2 text-md">{{company}}</li>
+            }
+          </ul>
+        } @else {
+          <p class="text-md">The user is not associated with any companies</p>
+        }
 
-    </p-card>
-  </div>
+      </p-card>
+    </div>
+    </div>
 </section>
