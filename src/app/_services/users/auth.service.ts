@@ -6,8 +6,9 @@ import {BehaviorSubject, from, map, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {StorageService} from "../storage.service";
 import {GlobalService} from "../global.service";
-import {passwordRequest, readRole, readRoles} from "@directus/sdk";
+import {passwordRequest, readRole, readRoles, logout } from "@directus/sdk";
 import {MessageService} from "primeng/api";
+
 
 
 export interface Credentials {
@@ -28,6 +29,7 @@ export class AuthService {
     private http: HttpClient,
     private storage: StorageService,
     private route: Router,
+    private msg: MessageService
   ) {
     this.client = this.global.client
 
@@ -41,10 +43,7 @@ export class AuthService {
   }
   url:string = 'https://app.idni.eco/'
   login = async (credentials: Credentials) => {
-    // credentials = {
-    //   email: 'rian.jacobs@proenviro.co.uk',
-    //   password: 'Kinibay100%'
-    // }
+
 
 
     // Reset tokens if re logging in
@@ -114,11 +113,21 @@ export class AuthService {
     this.client.refresh()
   }
 
-  logout = () =>{
-    this.client.logout()
-    this.isLoggedIn.next(false)
-    localStorage.clear()
-    this.route.navigate(['/'])
+  // logout = () =>{
+  //   this.client.logout()
+  //   this.isLoggedIn.next(false)
+  //   localStorage.clear()
+  //   this.route.navigate(['/login'])
+  // }
+
+  logout = async () => {
+    if(this.storage.get('refresh_token')){
+      const result = await this.client.request(logout('refresh_token'));
+      this.isLoggedIn.next(false)
+      localStorage.clear();
+      this.route.navigate(['login']);
+
+    }
   }
 
   refreshToken =  async () => {
@@ -142,5 +151,6 @@ export class AuthService {
   getUserRoles = () => {
     return this.http.get(`${this.url}roles?filter[name]=user`);
   }
+
 
 }
