@@ -23,9 +23,8 @@ import {MenuModule} from "primeng/menu";
 import {AuthService} from "../../_services/users/auth.service";
 import {from} from "rxjs";
 import { createDirectus, authentication, rest, logout } from '@directus/sdk';
-import {from} from "rxjs";
 import {Router} from "@angular/router";
-import {AuthService} from "../../_services/users/auth.service";
+
 
 
 
