@@ -63,6 +63,7 @@ export class DashboardComponent {
   checked: boolean = false;
   menuBar : MenuItem[] =[]
   miniMenu: MenuItem[] = []
+  profileMenu:MenuItem[] = []
   items: MenuItem[] | undefined;
   client: any;
 
@@ -89,6 +90,24 @@ export class DashboardComponent {
         }
       },
       complete: () => {
+        this.profileMenu=[
+          {
+            label:'<span class="material-symbols-outlined">manage_accounts</span> Account',
+            escape:false,
+            items:[
+              {
+                label:'<span class="material-symbols-outlined">person</span> User Profile',
+                routerLink: '/dashboard/user-profile',
+                escape:false
+              },
+              {
+                label:'<span class="material-symbols-outlined">source_environment</span> Company Profile',
+                routerLink: '/dashboard/company-profile',
+                escape:false
+              }
+            ]
+          }
+        ]
         // @ts-ignore
         this.menuBar = [
           {
@@ -182,22 +201,6 @@ export class DashboardComponent {
                 label: '<span class="material-symbols-outlined">live_help</span> FAQ\'s',
                 escape: false,
                 routerLink: '/dashboard/faqs'
-              }
-            ]
-          },
-          {
-            label:'<span class="material-symbols-outlined">manage_accounts</span> Account',
-            escape:false,
-            items:[
-              {
-                label:'<span class="material-symbols-outlined">person</span> User Profile',
-                routerLink: '/dashboard/user-profile',
-                escape:false
-              },
-              {
-                label:'<span class="material-symbols-outlined">source_environment</span> Company Profile',
-                routerLink: '/dashboard/company-profile',
-                escape:false
               }
             ]
           }

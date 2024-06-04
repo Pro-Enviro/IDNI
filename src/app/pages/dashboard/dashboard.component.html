@@ -37,21 +37,44 @@
         <p-divider></p-divider>
         <div class="flex flex-column envirotrack-menu">
           <p-panelMenu [model]="showMenu ? miniMenu : menuBar"></p-panelMenu>
+
+          <div>
+            <p-divider></p-divider>
+            <p-panelMenu [model]="profileMenu"></p-panelMenu>
+
+            <div class="flex flex-column mt-5">
+              <div class="pt-4">
+                @if(!showMenu){
+                  <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple label="Knowledge Platform" icon="pi pi-globe" class="btn-dark"></button></a>
+                }@else{
+                  <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple icon="pi pi-globe" class="btn-dark"></button></a>
+                }
+              </div>
+              <div class="pt-4">
+                @if(!showMenu){
+                  <button pButton pRipple label="Log Out" icon="pi pi-sign-out" class="btn-style" (click)="handleLogOut()"></button>
+                }@else{
+                  <button pButton pRipple icon="pi pi-sign-out" class="btn-style" (click)="handleLogOut()"></button>
+                }
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="absolute" style="bottom:160px">
-            @if(!showMenu){
-              <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple label="Knowledge Platform" icon="pi pi-globe" class="btn-dark"></button></a>
-            }@else{
-              <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple icon="pi pi-globe" class="btn-dark"></button></a>
-            }
-        </div>
-        <div class="absolute" style="bottom:30px">
-          @if(!showMenu){
-            <button pButton pRipple label="Log Out" icon="pi pi-sign-out" class="btn-style" (click)="handleLogOut()"></button>
-          }@else{
-            <button pButton pRipple icon="pi pi-sign-out" class="btn-style" (click)="handleLogOut()"></button>
-          }
-        </div>
+
+<!--        <div class="absolute" style="bottom:160px">-->
+<!--            @if(!showMenu){-->
+<!--              <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple label="Knowledge Platform" icon="pi pi-globe" class="btn-dark"></button></a>-->
+<!--            }@else{-->
+<!--              <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple icon="pi pi-globe" class="btn-dark"></button></a>-->
+<!--            }-->
+<!--        </div>-->
+<!--        <div class="absolute" style="bottom:30px">-->
+<!--          @if(!showMenu){-->
+<!--            <button pButton pRipple label="Log Out" icon="pi pi-sign-out" class="btn-style" (click)="handleLogOut()"></button>-->
+<!--          }@else{-->
+<!--            <button pButton pRipple icon="pi pi-sign-out" class="btn-style" (click)="handleLogOut()"></button>-->
+<!--          }-->
+<!--        </div>-->
       </div>
     </div>
   </div>
