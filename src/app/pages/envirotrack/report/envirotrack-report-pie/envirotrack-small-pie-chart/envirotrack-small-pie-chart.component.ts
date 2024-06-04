@@ -256,6 +256,8 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
 
   filterData = () => {
 
+
+
     if (this.dateRange != undefined && this.dateRange[1]) {
       this.filteredData = this.data.filter((x: any) => moment(x.date).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
       this.chartX = this.months.filter((x: any) => moment(x).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
@@ -270,6 +272,7 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
     }
 
 
+
     let monday: any[] = [];
     let tuesday: any[] = [];
     let wednesday: any[] = [];
@@ -278,6 +281,8 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
     let saturday: any[] = [];
     let sunday: any[] = [];
     this.filteredData = this.filteredData.filter((x: any) => x.mpan === this.selectedMpan)
+
+    if (!this.filteredData.length) return
 
 
     this.filteredData.forEach((row: any) => {

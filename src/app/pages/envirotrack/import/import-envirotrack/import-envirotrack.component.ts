@@ -355,7 +355,6 @@ export class ImportEnvirotrackComponent {
       complete: () => {
         this.uploadedFiles = []
         this.fileContent = null;
-
       }
     })
   }

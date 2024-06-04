@@ -495,8 +495,8 @@ a{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
-  min-width: 20px;
+  //height: 40px;
+  //min-width: 20px;
 }
 
 
@@ -1007,7 +1007,19 @@ a{
   }
 }
 
+//.p-inplace{
+//  background: pink;
+//  padding: 20px;
+//  border-radius:20px;
+//  width:50%;
+//}
 
+.inplace-style{
+  background: white;
+  //width: 30%;
+  padding: 10px;
+  border-radius:15px;
+}
 
 
 

@@ -20,6 +20,8 @@ import {MessagesModule} from "primeng/messages";
 import {NgIf} from "@angular/common";
 import {DialogModule} from "primeng/dialog";
 import {MenuModule} from "primeng/menu";
+import {AuthService} from "../../_services/users/auth.service";
+import {from} from "rxjs";
 import { createDirectus, authentication, rest, logout } from '@directus/sdk';
 import {from} from "rxjs";
 import {Router} from "@angular/router";
@@ -70,6 +72,7 @@ export class DashboardComponent {
   showMenu: boolean = false;
   dropMenu:boolean=false;
   helpMenu:boolean=false;
+  accountMenu:boolean=false;
 
 
   constructor(private global: GlobalService,private route: Router,private auth: AuthService,private msg: MessageService) {
@@ -90,8 +93,24 @@ export class DashboardComponent {
         // @ts-ignore
         this.menuBar = [
           {
-            label: '<span class="material-symbols-outlined">dashboard</span> Dashboard',
-            routerLink: '/dashboard',
+            label:'<span class="material-symbols-outlined">manage_accounts</span> Account',
+            escape:false,
+            items:[
+              {
+                label:'<span class="material-symbols-outlined">person</span> User Profile',
+                routerLink: '/dashboard/user-profile',
+                escape:false
+              },
+              {
+                label:'<span class="material-symbols-outlined">source_environment</span> Company Profile',
+                routerLink: '/dashboard/company-profile',
+                escape:false
+              }
+            ]
+          },
+          {
+            label:'<span class="material-symbols-outlined">dashboard</span> Dashboard',
+            routerLink:'/dashboard',
             escape: false
           },
           {
@@ -191,8 +210,24 @@ export class DashboardComponent {
 
         this.miniMenu = [
           {
-            label: '<span class="material-symbols-outlined">dashboard</span>',
-            routerLink: '/dashboard',
+            label:'<span class="material-symbols-outlined">manage_accounts</span>',
+            escape:false,
+            items:[
+              {
+                label:'<span class="material-symbols-outlined">person</span>',
+                routerLink: '/dashboard/user-profile',
+                escape:false
+              },
+              {
+                label:'<span class="material-symbols-outlined">source_environment</span>',
+                routerLink: '/dashboard/company-profile',
+                escape:false
+              }
+            ]
+          },
+          {
+            label:'<span class="material-symbols-outlined">dashboard</span>',
+            routerLink:'/dashboard',
             escape: false
           },
           {

@@ -71,9 +71,19 @@
        </div>
        <p-divider></p-divider>
        <div class="flex flex-column envirotrack-menu">
-
-<!--          <p-panelMenu [model]="envirotrackReport"></p-panelMenu> -->
          <ul class="list-menu">
+           <div [class]="accountMenu ? 'accountMenu' : '' ">
+             <div class="flex flex-row">
+               <li><span class="material-symbols-outlined">manage_accounts</span> Account</li>
+               <span class="material-symbols-outlined pt-2" (click)="accountMenu = !accountMenu">arrow_drop_down</span>
+             </div>
+             @if(accountMenu){
+               <ul class="pl-4">
+                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/user-profile"><span class="material-symbols-outlined">person</span> User Profile</a></li>
+                 <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/company-profile"><span class="material-symbols-outlined">source_environment</span> Company Profile</a></li>
+               </ul>
+             }
+           </div>
            <li ng-click="behaviour(sideMenu = false)" class="font-size:30px"><a href="/dashboard"><span class="material-symbols-outlined">dashboard</span>Dashboard</a></li>
            <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/fuel-data"><span class="material-symbols-outlined">flowsheet</span>Non Half-Hourly Data</a></li>
            <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/import"><span class="material-symbols-outlined">add_chart</span>Half-Hourly Data Upload</a></li>

@@ -28,7 +28,8 @@ import {FaqsComponent} from "./pages/help/faqs/faqs.component";
 import {ContactUsComponent} from "./pages/help/contact-us/contact-us.component";
 import {RegisterComponent} from "./users/register/register.component";
 import {RegistrationFormComponent} from "./users/register/registration-form/registration-form.component";
-
+import{UserProfileComponent} from "./users/account/user-profile/user-profile.component";
+import {CompanyProfileComponent} from "./users/account/company-profile/company-profile.component";
 
 
 export const routes: Routes = [
@@ -62,6 +63,8 @@ export const routes: Routes = [
 
 
   {path:'dashboard',component:DashboardComponent, canActivate: [authGuard], canActivateChild: [authGuard], children: [
+      {path:'user-profile',component:UserProfileComponent},
+      {path:'company-profile',component:CompanyProfileComponent},
       {path: '', component: DasboardWidgetsComponent},
       {path: 'import', component: ImportEnvirotrackComponent},
       {path: 'fuel-data', component: DataCaptureSpreadsheetFuelsComponent},
