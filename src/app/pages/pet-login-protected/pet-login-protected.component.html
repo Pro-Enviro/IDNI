@@ -4,25 +4,34 @@
       <p-button type="button" styleClass="btn-style" (click)="sidebarVisible = true" icon="pi pi-spin pi-cog"
                 label="Using the PET Tool"></p-button>
     </div>
-    <div class="container mt-2">
-      <h3 class="text-center text-xl">The Productivity & Emissions Tool</h3>
-      <p>The ID-NI Productivity & Emissions Tool (PET) is a unique and powerful tool that is easy to use and quick to
-        provide key insights for business improvement. By measuring the various factors that impact Productivity we can
-        also, when blended with some additional information, enable your business to begin to measure your Scope 1, 2
-        and 3 emissions at your site.</p>
-      <p>The important distinction for our PET is that it is not just about measuring how productive you are, it is
-        highlighting those main factors that are impacting that productivity score and therefore determining your
-        performance. Likewise we can calculate your emissions, using the same factors that determine your Productivity,
-        to show how and where you are performing well or poorly. The low hanging fruit will typically be those areas
-        that are high cost and high emissions, by solving one you improve the other.</p>
-      <p>Productivity is well understood and easily measured in a number ways by any economist. As a business term, it
-        is roughly understood but seldom calculated.
-        The Office of National Statistics have provided a clear model for how businesses should calculate their own
-        Productivity based on their business Turnover on their particular site,
-        the number of employees at that site and the total external costs incurred at that site. The ID-NI Productivity
-        & Emissions Tool PET goes a few steps further. Our PET is designed to not only
-        focus on the main Factors those external costs, bring clarity to those costs, allow the company to begin
-        measurement to those costs, both financially and in emissions generated.</p>
+    <div class="container mt-2 p-3">
+      <h3 class="text-center text-xl mb-3">Introduction to the Productivity & Emissions Tool (PET Tool)</h3>
+     <p style="font-size:1.2rem">
+       The Productivity & Emissions Tool (PET) is a secure and user-friendly platform designed to help businesses gather data and visualize factors impacting productivity and emissions. In line with the
+       IDNI <a href="https://id-ni.eco/data-privacy-policy.html" target="_blank" style="color:#85bfba">Data Privacy Policy</a> , information provided by individual companies will remain confidential and accessible only to them. No other registered businesses
+       will be able to view or identify another company’s data. Additionally, no company-specific data will be shared outside the IDNI project without prior approval.
+       The PET tool allows businesses to benchmark their productivity against other companies within their sector across the UK. It also assists in estimating carbon emissions,
+       providing insights into factors that negatively impact productivity and offers solutions to reduce emissions. Each productivity factor—such as energy, transportation, and materials—can be detailed to
+       understand business costs and emission sources. This comprehensive understanding helps set targets and benchmark your business progress.
+     </p>
+      <h3 class="text-center text-xl mb-3 mt-6">Significance of the Data for the Tool</h3>
+      <p style="font-size:1.2rem">
+        The data provided by companies is invaluable both on an individual and site level. It helps improve productivity and reduce Scope 1 and 2 emissions. For the IDNI project,
+        this data is critical to its success, demonstrating how collective efforts can significantly impact productivity and emissions across clusters, sectors, and regions in Northern Ireland. Achieving these goals will require policy changes,
+        a re-evaluation of energy use, and significant investments in infrastructure and technology. The IDNI project will outline strategies driven by business-sourced evidence to facilitate these changes.
+      </p>
+      <h3 class="text-center text-xl mb-3 mt-6">Interpreting the Tool's Output Results for Companies</h3>
+      <p style="font-size:1.2rem">
+        Using the PET tool, companies can benchmark their productivity against competitors, identify Scope 1 and 2 emissions, and find ways to reduce them while improving their bottom line. This methodology aims to be widely accepted in Northern
+        Ireland, highlighting issues that individual companies may struggle to resolve alone.
+        By working collaboratively with other companies in the sector or region, businesses can find collective solutions that benefit all involved.
+      </p>
+      <h3 class="text-center text-xl mb-3 mt-6">Using the Information for Decarbonisation</h3>
+      <p style="font-size:1.2rem">
+        Companies that join the Industrial Decarbonisation for Northern Ireland project and agree to share their data will gain insights into their Scope 1 and 2 emissions and identify most of their Scope 3 emissions.
+        Analyzing anonymized data from participating companies will help build a case for future funding, policy, and infrastructure improvements. This collective approach aims to enhance productivity, sustainability, international competitiveness,
+        and customer appeal through decarbonization efforts. Collaboration among companies can expedite these goals, share financial burdens, and amplify their collective voice.
+      </p>
       <div class="p-3 flex justify-content-center">
         <p-button routerLink="/dashboard/import" styleClass="btn-dark" label="Go to Data Upload"></p-button>
       </div>
@@ -118,6 +127,19 @@
               <th colspan="5" class="px-1">
                 <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
                                [(ngModel)]="employees" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+              </th>
+
+            </tr>
+            <tr>
+              <th>
+                <p>Annual Output (total units sold)</p>
+              </th>
+              <th colspan="1" class="px-1">
+                <p-inputNumber inputId="output" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
+                               [(ngModel)]="output" ></p-inputNumber>
+              </th>
+              <th colspan="4">
+                <p-dropdown [options]="outputChoices" [(ngModel)]="outputUnit"  [editable]="true" placeholder="Select/input a unit"></p-dropdown>
               </th>
             </tr>
           </ng-template>
