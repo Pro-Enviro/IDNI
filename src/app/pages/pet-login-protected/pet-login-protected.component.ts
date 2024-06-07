@@ -98,7 +98,7 @@ export class PetLoginProtected implements OnInit {
   // TableRows
   rows: TableRow[] = []
   // For Primeng dropdowns
-  unitsUom: UnitsUom[] = ['Select', 'litres', 'kg', 'kWh', 'tonnes', 'cubic metres', 'km', 'miles', 'million litres']
+  unitsUom: UnitsUom[] = ['Select', 'litres', 'kg', 'kWh', 'tonnes', 'metres', 'cubic metres', 'km', 'miles', 'million litres']
   regionOfOrigin: RegionsOfOrigin[] = ['UK', 'EU', 'US', 'Asia']
   modeOfTransport: ModeOfTransport[] = ['Select', 'Van <3.5t', 'Refrigerated Van <3.5t', 'Van >3.5t < 7.5t', 'Refrigerated Van > 3.5t < 7.5t', 'HGV', 'Refrigerated HGV']
   fuelTypes: FuelTypes[] = ['Select', 'Diesel', 'Petrol', 'LPG', 'EV', 'Hydrogen']
@@ -117,6 +117,7 @@ export class PetLoginProtected implements OnInit {
   selectedYear: string = years[0] || '2024'
   data: any = []
   twoDecimalPlaces = {minimumFractionDigits: 0, maximumFractionDigits: 2,}
+  noDecimals = {minimumFractionDigits: 0, maximumFractionDigits: 0} ;
   productivityData!: any// Excel spreadsheet
   sicCodeData!: any // Excel Spreadsheet
   sicCode: any = {}
@@ -957,6 +958,7 @@ export class PetLoginProtected implements OnInit {
     }
 
   }
+
 
 
   filterSicCode(event: AutoCompleteCompleteEvent) {
