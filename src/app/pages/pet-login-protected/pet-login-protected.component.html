@@ -119,6 +119,19 @@
                 <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
                                [(ngModel)]="employees" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
               </th>
+
+            </tr>
+            <tr>
+              <th>
+                <p>Annual Output (total units sold)</p>
+              </th>
+              <th colspan="1" class="px-1">
+                <p-inputNumber inputId="output" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
+                               [(ngModel)]="output" ></p-inputNumber>
+              </th>
+              <th colspan="4">
+                <p-dropdown [options]="outputChoices" [(ngModel)]="outputUnit"  [editable]="true" placeholder="Select/input a unit"></p-dropdown>
+              </th>
             </tr>
           </ng-template>
 

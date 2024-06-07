@@ -19,6 +19,8 @@ export interface PetToolData {
   defaultData?: {}[],
   company_id: number
   number_of_employees: number
+  annual_output: number
+  output_unit: string
   export_percent: number
   mark_end: number | undefined
   mark_start: number | undefined

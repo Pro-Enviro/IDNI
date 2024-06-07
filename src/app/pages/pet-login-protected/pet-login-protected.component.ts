@@ -72,6 +72,9 @@ export class PetLoginProtected implements OnInit {
   turnover: number = 0;
   template!: any
   employees: number = 0;
+  output: number = 0;
+  outputChoices: string[]  = ['Litres', 'Tonnes', 'Parts', 'Products', 'Licenses'];
+  outputUnit: string = ''
   productivityScore: number = 0;
   innovationPercent: number = 0;
   staffTrainingPercent: number = 0;
@@ -131,6 +134,7 @@ export class PetLoginProtected implements OnInit {
   selectedPetId: number | undefined
   filteredSicCodes: any[] = []
 
+
   constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService, private global: GlobalService) {}
 
   onSelectCompany = () => {
@@ -185,6 +189,7 @@ export class PetLoginProtected implements OnInit {
     })
   }
 
+
   onSelectYear = () => {
     if (!this.allPetData.length) return
     const selectedYear = this.allPetData.find((petDataRow: PetToolData) => petDataRow.year === this.selectedYear)
@@ -201,6 +206,7 @@ export class PetLoginProtected implements OnInit {
   resetTableValues = () => {
     this.data = []
     this.employees = 0
+    this.output = 0;
     this.turnover = 0
     this.innovationPercent = 0
     this.staffTrainingPercent = 0
@@ -219,9 +225,14 @@ export class PetLoginProtected implements OnInit {
   fillTable = (petData: PetToolData) => {
     if (!petData) return;
 
+
+
+
     this.data = []
     this.selectedPetId = petData.id
     this.employees = Number(petData.number_of_employees || 0)
+    this.output = Number(petData.annual_output || 0)
+    this.outputUnit = petData?.output_unit
     this.turnover = Number(petData.turnover || 0)
     this.staffTrainingPercent = Number(petData.training_percent || 0)
     this.sicCode = petData?.sic_code !== '' ? JSON.parse(petData?.sic_code) : ''
@@ -234,6 +245,10 @@ export class PetLoginProtected implements OnInit {
     this.markEnd = Number(petData.mark_end || 0)
     this.selectedYear = petData.year || '2024'
     this.externalCost = Number(petData.total_external_costs) || 0
+
+    if (this.outputUnit !== null) {
+      this.outputChoices.unshift(this.outputUnit)
+    }
 
     // All dynamic rows added back from save
     const energy = JSON.parse(petData.cost_of_energy)
@@ -321,9 +336,10 @@ export class PetLoginProtected implements OnInit {
               this.otherMaterials = this.otherMaterials.filter(item => item !== undefined)
               this.otherMetals = this.otherMetals.filter(item => item !== undefined)
               this.plastics = this.plastics.filter(item => item !== undefined)
-
             })
           })
+
+
 
           this.fillTable(this.allPetData[0])
           this.calculateProductivityComparison()
@@ -874,6 +890,8 @@ export class PetLoginProtected implements OnInit {
       sic_code: this.sicCode,
       sic_letter: this.sicCodeLetter,
       turnover: this.turnover,
+      output_unit: this.outputUnit,
+      annual_output: this.output,
       number_of_employees: this.employees,
       productivity_score: this.productivityScore,
       innovation_percent: this.innovationPercent,
@@ -894,6 +912,7 @@ export class PetLoginProtected implements OnInit {
       staff_commute: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Staff Commute')),
       other_external_costs: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Other External Costs (Legal, rental, accounting etc)')),
     }
+
 
 
     // console.log(this.selectedYear)
@@ -938,6 +957,7 @@ export class PetLoginProtected implements OnInit {
     }
 
   }
+
 
   filterSicCode(event: AutoCompleteCompleteEvent) {
     let filtered: any[] = [];
