@@ -32,10 +32,15 @@
     </div>
 
     <div class="mt-5">
+      <p-button label="Export" (click)="table.exportCSV()"></p-button>
       <p-tabView (onChange)="sortRecommendations()">
         <!--RECOMMENDATIONS-->
         <p-tabPanel header="Recommendation Summary">
-          <p-table [value]="recommendations" styleClass="p-datatable-sm scrollfix reco-table" [tableStyle]="{'min-width': '60rem'}">
+          <p-table [value]="recommendations"
+                   styleClass="p-datatable-sm scrollfix reco-table"
+                   [tableStyle]="{'min-width': '60rem'}"
+                   #table
+                   [columns]="recommendations" >
             <ng-template pTemplate="header">
               <tr>
                 <th>No.</th>

@@ -10,6 +10,8 @@ import {DialogModule} from "primeng/dialog";
 import {EnvirotrackService} from "../../envirotrack/envirotrack.service";
 import {DbService} from "../../../_services/db.service";
 import {InputTextareaModule} from "primeng/inputtextarea";
+import {formatCurrency} from "@angular/common";
+import FileSaver from "file-saver";
 
 
 
@@ -201,6 +203,33 @@ export class GenerateReportComponent implements OnInit {
     }
 
     return report;
+  }
+
+  exportCSV = () => {
+    let recommendationRows = this.recommendations.map((rec) =>
+      rec.reduce((current:any, next:any) => {
+        return { ...current, [next.name]: next.value ? next.value : '' };
+      }, {})
+    );
+
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(recommendationRows);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+      this.saveAsExcelFile(excelBuffer, `${this.selectedCompany.name} - ${moment(new Date()).format('DD-MM-YYYY')}.xlsx`);
+    });
+
+    console.log(recommendationRows)
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + EXCEL_EXTENSION);
   }
 
   saveForm = () => {
