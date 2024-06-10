@@ -35,6 +35,7 @@ export class GenerateReportComponent implements OnInit {
   percentOptions: any[] = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10]
   isConsultant: boolean = false;
 
+
   constructor(
     private global: GlobalService,
     private msg: MessageService,
@@ -205,22 +206,48 @@ export class GenerateReportComponent implements OnInit {
     return report;
   }
 
+  // getCols = (cols: any) => {
+  //   return cols.map((col: any) => {
+  //     return [
+  //       { field: 'number', header: 'No'},
+  //       { field: 'recommendation', header: 'recommendation' },
+  //       { field: 'type_of_change', header: 'Type of Change' },
+  //       { field: 'estimated_annual_energy_saving', header: 'Estimated Annual Energy Saving' },
+  //       { field: 'estimated_annual_saving', header: 'Estimated Annual saving' },
+  //       { field: 'estimated_cost_to_implement', header: 'Estimated cost to implement' },
+  //       { field: 'payback_period', header: 'Payback Period' },
+  //       {field: 'estimated_annual_carbon_saving ', header: 'Estimated Annual carbon saving'},
+  //       {field: 'margin_of_error', header: 'Margin Of Error'}
+  //
+  //     ]
+  //   })
+  // }
+
+  recommendationCols = [
+    { field: 'number', header: 'No'},
+    { field: 'recommendation', header: 'recommendation' },
+    { field: 'type_of_change', header: 'Type of Change' },
+    { field: 'estimated_annual_energy_saving', header: 'Estimated Annual Energy Saving' },
+    { field: 'estimated_annual_saving', header: 'Estimated Annual saving' },
+    { field: 'estimated_cost_to_implement', header: 'Estimated cost to implement' },
+    { field: 'payback_period', header: 'Payback Period' },
+    {field: 'estimated_annual_carbon_saving ', header: 'Estimated Annual carbon saving'},
+    {field: 'margin_of_error', header: 'Margin Of Error'}
+  ]
+
   exportCSV = () => {
-    let recommendationRows = this.recommendations.map((rec) =>
-      rec.reduce((current:any, next:any) => {
-        return { ...current, [next.name]: next.value ? next.value : '' };
-      }, {})
-    );
+    const exportRow = this.recommendationCols.map((col:any) => {
+
+    })
 
     import("xlsx").then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(recommendationRows);
+      const worksheet = xlsx.utils.json_to_sheet(exportRow);
       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
       const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
 
       this.saveAsExcelFile(excelBuffer, `${this.selectedCompany.name} - ${moment(new Date()).format('DD-MM-YYYY')}.xlsx`);
     });
 
-    console.log(recommendationRows)
   }
 
   saveAsExcelFile(buffer: any, fileName: string): void {
