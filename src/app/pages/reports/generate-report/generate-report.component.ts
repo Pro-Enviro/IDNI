@@ -259,6 +259,8 @@ export class GenerateReportComponent implements OnInit {
     FileSaver.saveAs(data, fileName + EXCEL_EXTENSION);
   }
 
+
+
   saveForm = () => {
     const report = this.createReportObject('save')
 
