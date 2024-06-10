@@ -620,6 +620,11 @@ export class PetLoginProtected implements OnInit {
   }
 
   calculateGroupTotalCost = (group: any) => {
+
+    if (group.parent.name === 'Cost of Raw Materials') {
+      return this.calculateRawMaterials(group)
+    }
+
     if (!group?.parent) return 0;
     const parentName = group?.parent.name
     const total = this.data.filter((item: any) => item.parent.name === parentName).reduce((acc: number, curr: any) => {
@@ -630,6 +635,7 @@ export class PetLoginProtected implements OnInit {
       }
     }, 0)
 
+
     this.data = this.data.map((item: any) => {
       if (item.parent.name === parentName) {
         item.parent.totalCost = total;
@@ -637,9 +643,9 @@ export class PetLoginProtected implements OnInit {
           item.parent.secondColumn = (total / this.employees).toFixed(2)
         }
       }
+
       return item
     })
-
 
     return total !== undefined ? total : 0
   }
@@ -978,6 +984,34 @@ export class PetLoginProtected implements OnInit {
 
     this.filteredSicCodes = filtered;
 
+  }
+
+  calculateRawMaterials(group: any) {
+
+    const total = this.data.filter((item: any) => item.parent.name === 'Cost of Raw Materials').reduce((acc: number, curr: any) => {
+      if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined) {
+
+        return acc + (parseFloat(curr.cost) * parseFloat(curr.totalUnits))
+      } else {
+        return acc;
+      }
+    }, 0)
+
+
+    this.data = this.data.map((item: any) => {
+      if (item.parent.name === 'Cost of Raw Materials') {
+
+        console.log(item.parent.totalCost)
+        item.parent.totalCost = total;
+        if (this.employees > 0) {
+          item.parent.secondColumn = (total / this.employees).toFixed(2)
+        }
+      }
+
+      return item
+    })
+
+    return this.data;
   }
 
 

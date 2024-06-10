@@ -256,7 +256,7 @@
               </td>
               <td *ngIf="groups.totalUnits !== undefined">
                 <p-inputNumber [(ngModel)]="groups.totalUnits" class="p-inputtext-sm" [minFractionDigits]="2" [maxFractionDigits]="2"
-                               [inputStyle]="{width: '100px'}"></p-inputNumber>
+                               [inputStyle]="{width: '100px'}" (ngModelChange)="calculateRawMaterials(groups)"></p-inputNumber>
               </td>
 
               <td *ngIf="groups.otherModes !== undefined">
