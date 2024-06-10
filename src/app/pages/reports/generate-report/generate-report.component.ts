@@ -235,6 +235,7 @@ export class GenerateReportComponent implements OnInit {
     {field: 'margin_of_error', header: 'Margin Of Error'}
   ]
 
+
   exportCSV = () => {
     const exportRow = this.recommendationCols.map((col:any) => {
 
