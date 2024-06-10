@@ -285,7 +285,7 @@ export class PetLoginProtected implements OnInit {
     this.generateClasses('Road Freight', RoadFreight)
     this.generateClasses('Other Freight', OtherFreightTransportation)
     this.generateClasses('Company Travel', CompanyTravel)
-    // this.generateClasses('Staff Commute', StaffCommute)
+    this.generateClasses('Staff Commute', StaffCommute)
 
     this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
 
@@ -394,12 +394,12 @@ export class PetLoginProtected implements OnInit {
 
   generateRows = (array: string[] | any, parentName: string, isClass?: boolean) => {
     if (isClass) {
-      if (parentName === 'Staff Commute') {
-        array.parent.name = 'Company Travel'
-      } else {
+      // if (parentName === 'Staff Commute') {
+      //   array.parent.name = 'Company Travel'
+      // } else {
         array.parent.name = parentName
         this.data.push(array)
-      }
+      // }
     } else {
       array.forEach((name: string) => {
         let newGroupItem = new GroupItem()
