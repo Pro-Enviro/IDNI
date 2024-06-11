@@ -195,14 +195,6 @@ export class GenerateReportComponent implements OnInit {
     return report;
   }
 
-  getCols = () => {
-    return this.recommendationCols.map((col: any) => {
-      return {
-        field: col.name,
-        header: col.name
-      }
-    })
-  }
 
   recommendationCols = [
     { field: 'number', header: 'No.'},
@@ -231,19 +223,15 @@ export class GenerateReportComponent implements OnInit {
         'Estimated cost to implement (£ excl. VAT)': row.estimatedCost,
         'Payback Period': row.paybackPeriod,
         'Estimated Annual carbon saving (tCo2e/yr)':row.estimatedCarbonSaving,
-        'Margin Of Error (%)':row.marginOfErrorSavings
+        'Margin Of Error (%)':row.marginOfErrorSavings,
       }
     })
-
-
 
     import("xlsx").then(xlsx => {
       const worksheet = xlsx.utils.json_to_sheet(array);
       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
       const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-
-      this.saveAsExcelFile(excelBuffer, `${this.selectedCompany.name} ${moment(new Date()).format('DD-MM-YYYY')}`);
-      console.log(this.recommendations)
+      this.saveAsExcelFile(excelBuffer, `Recommendation Summary ${moment(new Date()).format('DD-MM-YYYY')}`);
     });
   }
 
