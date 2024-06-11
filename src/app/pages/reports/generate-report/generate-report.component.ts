@@ -245,7 +245,6 @@ export class GenerateReportComponent implements OnInit {
         'Payback Period': row.paybackPeriod,
         'Estimated Annual carbon saving (tCo2e/yr)': row.estimatedCarbonSaving,
         'Margin Of Error (%)': row.marginOfErrorSavings,
-
       }
     });
 
