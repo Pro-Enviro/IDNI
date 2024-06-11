@@ -232,6 +232,10 @@ export class GenerateReportComponent implements OnInit {
         changeType: row.changeType,
         estimatedEnergySaving: row.estimatedEnergySaving,
         estimatedSaving: row.estimatedSaving,
+        estimatedCost: row.estimatedCost,
+        paybackPeriod: row.paybackPeriod,
+        estimatedCarbonSaving:row.estimatedCarbonSaving,
+        marginOfErrorSavings:row.marginOfErrorSavings
       }
     })
     this.exportRow = this.recommendations.map((col) => {
