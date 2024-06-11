@@ -233,25 +233,35 @@ export class GenerateReportComponent implements OnInit {
 
     const headers = this.recommendationCols.map(col => col.header);
 
-    let array = this.recommendations.map((row,index)=> {
+
+    let array = this.recommendations.map(row => {
       return {
-        'No.':row.recommendationId,
+        'No.': row.recommendationId,
         'Recommendation': row.recommendation,
         'Type of Change': row.changeType,
         'Estimated Annual Energy Saving (kWh/yr)': row.estimatedEnergySaving,
         'Estimated Annual saving (£ exc VAT/yr)': row.estimatedSaving,
         'Estimated cost to implement (£ excl. VAT)': row.estimatedCost,
         'Payback Period': row.paybackPeriod,
-        'Estimated Annual carbon saving (tCo2e/yr)':row.estimatedCarbonSaving,
-        'Margin Of Error (%)':row.marginOfErrorSavings,
-        'Total Annual energy saving (kWh/yr)':index === 0 ? totalEstimatedEnergySaving : '',
-        'Total Annual Saving (£ exc VAT/yr)':index === 0 ? totalAnnualSaving : '',
-        'Total Estimated Cost':index === 0 ? totalEstimatedCost : '',
-        'Total Carbon Saving':index === 0 ? totalCarbonSaving : '',
+        'Estimated Annual carbon saving (tCo2e/yr)': row.estimatedCarbonSaving,
+        'Margin Of Error (%)': row.marginOfErrorSavings,
 
       }
+    });
 
-    })
+    let totalsRow = {
+      'No.': '',
+      'Recommendation': 'Total',
+      'Type of Change': '',
+      'Estimated Annual Energy Saving (kWh/yr)': totalEstimatedEnergySaving,
+      'Estimated Annual saving (£ exc VAT/yr)': totalAnnualSaving,
+      'Estimated cost to implement (£ excl. VAT)': totalEstimatedCost,
+      'Payback Period': '',
+      'Estimated Annual carbon saving (tCo2e/yr)': totalCarbonSaving,
+      'Margin Of Error (%)': '',
+    };
+
+    array.push(totalsRow);
 
 
     import("xlsx").then(xlsx => {
@@ -259,7 +269,6 @@ export class GenerateReportComponent implements OnInit {
       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
       const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
       this.saveAsExcelFile(excelBuffer, `Recommendation Summary ${moment(new Date()).format('DD-MM-YYYY')}`);
-     console.log(totalEstimatedCost)
     });
   }
 
