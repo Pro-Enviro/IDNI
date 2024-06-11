@@ -27,6 +27,7 @@ export class GenerateReportComponent implements OnInit {
   selectedCompany: any;
   tmp: any = [];
   exportRow :any = [];
+
   template: any;
   docxInHtml: any;
   modelVisible: boolean = false;
@@ -226,7 +227,7 @@ export class GenerateReportComponent implements OnInit {
 
   recommendationCols = [
     { field: 'number', header: 'No'},
-    { field: 'recommendation', header: 'recommendation' },
+    { field: 'recommendation', header: 'Recommendation' },
     { field: 'type_of_change', header: 'Type of Change' },
     { field: 'estimated_annual_energy_saving', header: 'Estimated Annual Energy Saving' },
     { field: 'estimated_annual_saving', header: 'Estimated Annual saving' },
@@ -238,20 +239,28 @@ export class GenerateReportComponent implements OnInit {
 
 
   exportExcel = () => {
-    // this.exportRow = this.recommendationCols.map((col:any) => {
-    //
-    // })
 
-    this.exportRow = this.recommendationCols.map(col => ({title: col.header, dataKey: col.field}));
+    this.exportRow = this.recommendations.map(col => ({title: col.header, dataKey: col.field}));
+
+    // const filteredRecommendations = this.recommendations.map(rec => {
+    //   let filteredRec:any = {};
+    //   this.recommendationCols.forEach(col => {
+    //     filteredRec[col.header] = filteredRec[col.field];
+    //   });
+    //   return filteredRec;
+    // });
+
+
+
 
     import("xlsx").then(xlsx => {
       const worksheet = xlsx.utils.json_to_sheet(this.recommendations);
       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
       const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
 
-      this.saveAsExcelFile(excelBuffer, `${this.selectedCompany.name}.xlsx`);
+      this.saveAsExcelFile(excelBuffer, `${this.selectedCompany.name} ${moment(new Date()).format('DD-MM-YYYY')}`);
+      console.log(this.recommendations)
     });
-
   }
 
   saveAsExcelFile(buffer: any, fileName: string): void {
