@@ -10,7 +10,6 @@ import {DialogModule} from "primeng/dialog";
 import {EnvirotrackService} from "../../envirotrack/envirotrack.service";
 import {DbService} from "../../../_services/db.service";
 import {InputTextareaModule} from "primeng/inputtextarea";
-import {formatCurrency} from "@angular/common";
 import FileSaver from "file-saver";
 
 
@@ -25,7 +24,6 @@ import FileSaver from "file-saver";
 export class GenerateReportComponent implements OnInit {
   companies: any;
   selectedCompany: any;
-  tmp: any = [];
   exportRow :any = [];
 
   template: any;
@@ -55,11 +53,8 @@ export class GenerateReportComponent implements OnInit {
 
     if (assessment) {
       recommendation.recommendation = assessment.question
-      recommendation.recommendationDetail = assessment.recommendation
-      recommendation.recommendationTitle = assessment.recommendation_title
     } else {
       recommendation.recommendation = `New Recommendation`
-      recommendation.recommendationTitle = 'New Recommendation'
     }
 
     this.recommendations.push(recommendation)
@@ -139,14 +134,7 @@ export class GenerateReportComponent implements OnInit {
   }
 
 
-  createReportObject = (save?: string) => {this.recommendations.map((rec: Recommendations) => {
-      rec.steps.map((step: any) => {
-        step.startDateFormatted = moment(step.startDate).format('MMM-YYYY')
-        step.completionDateFormatted = moment(step.completionDate).format('MMM-YYYY')
-      })
-    })
-
-
+  createReportObject = (save?: string) => {
     // Filter out empty recommendations
     let filteredRecommendations: Recommendations[] =
       this.recommendations.filter((rec: Recommendations) => rec.recommendation.length)
@@ -233,14 +221,23 @@ export class GenerateReportComponent implements OnInit {
     { field: 'estimated_annual_saving', header: 'Estimated Annual saving' },
     { field: 'estimated_cost_to_implement', header: 'Estimated cost to implement' },
     { field: 'payback_period', header: 'Payback Period' },
-    {field: 'estimated_annual_carbon_saving ', header: 'Estimated Annual carbon saving'},
-    {field: 'margin_of_error', header: 'Margin Of Error'}
+    { field: 'estimated_annual_carbon_saving ', header: 'Estimated Annual carbon saving' },
+    { field: 'margin_of_error', header: 'Margin Of Error' }
   ]
 
 
   exportExcel = () => {
-
-    this.exportRow = this.recommendations.map(col => ({title: col.header, dataKey: col.field}));
+    let array = this.recommendations.map((row)=> {
+      return {
+        recommendation: row.recommendation,
+        changeType: row.changeType,
+        estimatedEnergySaving: row.estimatedEnergySaving,
+        estimatedSaving: row.estimatedSaving,
+      }
+    })
+    this.exportRow = this.recommendations.map((col) => {
+      //return {title: this.recommendations.filter((x:any)=>x.field === ), dataKey: col.field}
+    });
 
     // const filteredRecommendations = this.recommendations.map(rec => {
     //   let filteredRec:any = {};
@@ -254,7 +251,7 @@ export class GenerateReportComponent implements OnInit {
 
 
     import("xlsx").then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(this.recommendations);
+      const worksheet = xlsx.utils.json_to_sheet(array);
       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
       const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
 
