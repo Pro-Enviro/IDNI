@@ -35,16 +35,15 @@
       <p-tabView (onChange)="sortRecommendations()">
         <!--RECOMMENDATIONS-->
         <p-tabPanel header="Recommendation Summary">
+          <div class="flex justify-content-end p-4">
+            <button pButton class="btn-dark" icon="pi pi-file-excel" (click)="exportExcel()"></button>
+          </div>
           <p-table [value]="recommendations"
                    styleClass="p-datatable-sm scrollfix reco-table"
                    [tableStyle]="{'min-width': '60rem'}"
                    #table
                    [columns]="recommendationCols">
             <ng-template pTemplate="header">
-              <div>
-<!--                <p-button label="Export" icon="pi pi-file-excel" (click)="table.exportCSV()"></p-button>-->
-                <button pButton icon="pi pi-file-excel" (click)="exportExcel()"></button>
-              </div>
               <tr>
                 <th>No.</th>
                 <th [style]="{width: '350px', fontSize: '0.8rem'}">Recommendation</th>
