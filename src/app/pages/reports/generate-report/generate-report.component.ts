@@ -25,7 +25,6 @@ export class GenerateReportComponent implements OnInit {
   companies: any;
   selectedCompany: any;
   exportRow :any = [];
-
   template: any;
   docxInHtml: any;
   modelVisible: boolean = false;
@@ -238,15 +237,6 @@ export class GenerateReportComponent implements OnInit {
     this.exportRow = this.recommendations.map((col) => {
       //return {title: this.recommendations.filter((x:any)=>x.field === ), dataKey: col.field}
     });
-
-    // const filteredRecommendations = this.recommendations.map(rec => {
-    //   let filteredRec:any = {};
-    //   this.recommendationCols.forEach(col => {
-    //     filteredRec[col.header] = filteredRec[col.field];
-    //   });
-    //   return filteredRec;
-    // });
-
 
 
 
