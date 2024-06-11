@@ -205,15 +205,19 @@ export class GenerateReportComponent implements OnInit {
     { field: 'estimated_cost_to_implement', header: 'Estimated cost to implement (£ excl. VAT)' },
     { field: 'payback_period', header: 'Payback Period' },
     { field: 'estimated_annual_carbon_saving ', header: 'Estimated Annual carbon saving (tCo2e/yr)' },
-    { field: 'margin_of_error', header: 'Margin Of Error (%)' }
+    { field: 'margin_of_error', header: 'Margin Of Error (%)' },
+    { field: 'total_energy_saving', header: 'Total Annual energy saving (kWh/yr)' }
   ]
 
 
-
   exportExcel = () => {
+    let totalEstimatedEnergySaving = this.recommendations.reduce((total, row) => {
+      return total + row.estimatedEnergySaving;
+    }, 0);
+
     const headers = this.recommendationCols.map(col => col.header);
 
-    let array = this.recommendations.map((row)=> {
+    let array = this.recommendations.map((row,index)=> {
       return {
         'No.':row.recommendationId,
         'Recommendation': row.recommendation,
@@ -224,14 +228,19 @@ export class GenerateReportComponent implements OnInit {
         'Payback Period': row.paybackPeriod,
         'Estimated Annual carbon saving (tCo2e/yr)':row.estimatedCarbonSaving,
         'Margin Of Error (%)':row.marginOfErrorSavings,
+        'Total Annual energy saving (kWh/yr)':index === 0 ? totalEstimatedEnergySaving : ''
+
       }
+
     })
+
 
     import("xlsx").then(xlsx => {
       const worksheet = xlsx.utils.json_to_sheet(array);
       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
       const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
       this.saveAsExcelFile(excelBuffer, `Recommendation Summary ${moment(new Date()).format('DD-MM-YYYY')}`);
+     console.log(totalEstimatedEnergySaving)
     });
   }
 
