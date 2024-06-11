@@ -32,7 +32,6 @@
     </div>
 
     <div class="mt-5">
-      <p-button label="Export" (click)="table.exportCSV()"></p-button>
       <p-tabView (onChange)="sortRecommendations()">
         <!--RECOMMENDATIONS-->
         <p-tabPanel header="Recommendation Summary">
@@ -42,6 +41,10 @@
                    #table
                    [columns]="recommendationCols">
             <ng-template pTemplate="header">
+              <div>
+<!--                <p-button label="Export" icon="pi pi-file-excel" (click)="table.exportCSV()"></p-button>-->
+                <button pButton icon="pi pi-file-excel" (click)="exportExcel()"></button>
+              </div>
               <tr>
                 <th>No.</th>
                 <th [style]="{width: '350px', fontSize: '0.8rem'}">Recommendation</th>

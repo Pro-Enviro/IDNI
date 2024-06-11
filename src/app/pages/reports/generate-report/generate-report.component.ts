@@ -26,6 +26,7 @@ export class GenerateReportComponent implements OnInit {
   companies: any;
   selectedCompany: any;
   tmp: any = [];
+  exportRow :any = [];
   template: any;
   docxInHtml: any;
   modelVisible: boolean = false;
@@ -236,17 +237,19 @@ export class GenerateReportComponent implements OnInit {
   ]
 
 
-  exportCSV = () => {
-    const exportRow = this.recommendationCols.map((col:any) => {
+  exportExcel = () => {
+    // this.exportRow = this.recommendationCols.map((col:any) => {
+    //
+    // })
 
-    })
+    this.exportRow = this.recommendationCols.map(col => ({title: col.header, dataKey: col.field}));
 
     import("xlsx").then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(exportRow);
+      const worksheet = xlsx.utils.json_to_sheet(this.recommendations);
       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
       const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
 
-      this.saveAsExcelFile(excelBuffer, `${this.selectedCompany.name} - ${moment(new Date()).format('DD-MM-YYYY')}.xlsx`);
+      this.saveAsExcelFile(excelBuffer, `${this.selectedCompany.name}.xlsx`);
     });
 
   }
