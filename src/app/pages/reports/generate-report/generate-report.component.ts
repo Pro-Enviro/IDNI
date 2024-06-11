@@ -195,52 +195,44 @@ export class GenerateReportComponent implements OnInit {
     return report;
   }
 
-  // getCols = (cols: any) => {
-  //   return cols.map((col: any) => {
-  //     return [
-  //       { field: 'number', header: 'No'},
-  //       { field: 'recommendation', header: 'recommendation' },
-  //       { field: 'type_of_change', header: 'Type of Change' },
-  //       { field: 'estimated_annual_energy_saving', header: 'Estimated Annual Energy Saving' },
-  //       { field: 'estimated_annual_saving', header: 'Estimated Annual saving' },
-  //       { field: 'estimated_cost_to_implement', header: 'Estimated cost to implement' },
-  //       { field: 'payback_period', header: 'Payback Period' },
-  //       {field: 'estimated_annual_carbon_saving ', header: 'Estimated Annual carbon saving'},
-  //       {field: 'margin_of_error', header: 'Margin Of Error'}
-  //
-  //     ]
-  //   })
-  // }
+  getCols = () => {
+    return this.recommendationCols.map((col: any) => {
+      return {
+        field: col.name,
+        header: col.name
+      }
+    })
+  }
 
   recommendationCols = [
     { field: 'number', header: 'No'},
     { field: 'recommendation', header: 'Recommendation' },
     { field: 'type_of_change', header: 'Type of Change' },
-    { field: 'estimated_annual_energy_saving', header: 'Estimated Annual Energy Saving' },
-    { field: 'estimated_annual_saving', header: 'Estimated Annual saving' },
-    { field: 'estimated_cost_to_implement', header: 'Estimated cost to implement' },
+    { field: 'estimated_annual_energy_saving', header: 'Estimated Annual Energy Saving (kWh/yr)' },
+    { field: 'estimated_annual_saving', header: 'Estimated Annual saving (£ exc VAT/yr)' },
+    { field: 'estimated_cost_to_implement', header: 'Estimated cost to implement (£ excl. VAT)' },
     { field: 'payback_period', header: 'Payback Period' },
-    { field: 'estimated_annual_carbon_saving ', header: 'Estimated Annual carbon saving' },
-    { field: 'margin_of_error', header: 'Margin Of Error' }
+    { field: 'estimated_annual_carbon_saving ', header: 'Estimated Annual carbon saving (tCo2e/yr)' },
+    { field: 'margin_of_error', header: 'Margin Of Error (%)' }
   ]
 
 
+
   exportExcel = () => {
+    const headers = this.recommendationCols.map(col => col.header);
+
     let array = this.recommendations.map((row)=> {
       return {
-        recommendation: row.recommendation,
-        changeType: row.changeType,
-        estimatedEnergySaving: row.estimatedEnergySaving,
-        estimatedSaving: row.estimatedSaving,
-        estimatedCost: row.estimatedCost,
-        paybackPeriod: row.paybackPeriod,
-        estimatedCarbonSaving:row.estimatedCarbonSaving,
-        marginOfErrorSavings:row.marginOfErrorSavings
+        'Recommendation': row.recommendation,
+        'Type of Change': row.changeType,
+        'Estimated Annual Energy Saving (kWh/yr)': row.estimatedEnergySaving,
+        'Estimated Annual saving (£ exc VAT/yr)': row.estimatedSaving,
+        'Estimated cost to implement (£ excl. VAT)': row.estimatedCost,
+        'Payback Period': row.paybackPeriod,
+        'Estimated Annual carbon saving (tCo2e/yr)':row.estimatedCarbonSaving,
+        'Margin Of Error (%)':row.marginOfErrorSavings
       }
     })
-    this.exportRow = this.recommendations.map((col) => {
-      //return {title: this.recommendations.filter((x:any)=>x.field === ), dataKey: col.field}
-    });
 
 
 
@@ -250,7 +242,7 @@ export class GenerateReportComponent implements OnInit {
       const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
 
       this.saveAsExcelFile(excelBuffer, `${this.selectedCompany.name} ${moment(new Date()).format('DD-MM-YYYY')}`);
-      console.log(this.recommendations)
+      console.log(this.exportRow)
     });
   }
 
