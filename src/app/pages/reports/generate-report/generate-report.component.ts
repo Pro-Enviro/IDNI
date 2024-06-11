@@ -206,7 +206,11 @@ export class GenerateReportComponent implements OnInit {
     { field: 'payback_period', header: 'Payback Period' },
     { field: 'estimated_annual_carbon_saving ', header: 'Estimated Annual carbon saving (tCo2e/yr)' },
     { field: 'margin_of_error', header: 'Margin Of Error (%)' },
-    { field: 'total_energy_saving', header: 'Total Annual energy saving (kWh/yr)' }
+    { field: 'total_energy_saving', header: 'Total Annual energy saving (kWh/yr)' },
+    {field:  'total_annual_saving', header:'Total Annual Saving (£ exc VAT/yr)' },
+    {field:  'total_est_cost', header:'Total Estimated Cost' },
+    {field: 'total_carbon_saving', header: 'Total Carbon saving' },
+
   ]
 
 
@@ -214,6 +218,18 @@ export class GenerateReportComponent implements OnInit {
     let totalEstimatedEnergySaving = this.recommendations.reduce((total, row) => {
       return total + row.estimatedEnergySaving;
     }, 0);
+
+    let totalAnnualSaving = this.recommendations.reduce((total, row) => {
+      return total + row.estimatedSaving;
+    }, 0);
+
+    let totalEstimatedCost = this.recommendations.reduce((total, row) => {
+      return total + row.estimatedCost;
+    },0)
+
+    let totalCarbonSaving = this.recommendations.reduce((total,row) => {
+      return total + row.estimatedCarbonSaving;
+    },0)
 
     const headers = this.recommendationCols.map(col => col.header);
 
@@ -228,7 +244,10 @@ export class GenerateReportComponent implements OnInit {
         'Payback Period': row.paybackPeriod,
         'Estimated Annual carbon saving (tCo2e/yr)':row.estimatedCarbonSaving,
         'Margin Of Error (%)':row.marginOfErrorSavings,
-        'Total Annual energy saving (kWh/yr)':index === 0 ? totalEstimatedEnergySaving : ''
+        'Total Annual energy saving (kWh/yr)':index === 0 ? totalEstimatedEnergySaving : '',
+        'Total Annual Saving (£ exc VAT/yr)':index === 0 ? totalAnnualSaving : '',
+        'Total Estimated Cost':index === 0 ? totalEstimatedCost : '',
+        'Total Carbon Saving':index === 0 ? totalCarbonSaving : '',
 
       }
 
@@ -240,7 +259,7 @@ export class GenerateReportComponent implements OnInit {
       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
       const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
       this.saveAsExcelFile(excelBuffer, `Recommendation Summary ${moment(new Date()).format('DD-MM-YYYY')}`);
-     console.log(totalEstimatedEnergySaving)
+     console.log(totalEstimatedCost)
     });
   }
 
