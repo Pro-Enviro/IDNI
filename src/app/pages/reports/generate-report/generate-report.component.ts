@@ -205,7 +205,7 @@ export class GenerateReportComponent implements OnInit {
   }
 
   recommendationCols = [
-    { field: 'number', header: 'No'},
+    { field: 'number', header: 'No.'},
     { field: 'recommendation', header: 'Recommendation' },
     { field: 'type_of_change', header: 'Type of Change' },
     { field: 'estimated_annual_energy_saving', header: 'Estimated Annual Energy Saving (kWh/yr)' },
@@ -223,6 +223,7 @@ export class GenerateReportComponent implements OnInit {
 
     let array = this.recommendations.map((row)=> {
       return {
+        'No.':row.recommendationId,
         'Recommendation': row.recommendation,
         'Type of Change': row.changeType,
         'Estimated Annual Energy Saving (kWh/yr)': row.estimatedEnergySaving,
@@ -242,7 +243,7 @@ export class GenerateReportComponent implements OnInit {
       const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
 
       this.saveAsExcelFile(excelBuffer, `${this.selectedCompany.name} ${moment(new Date()).format('DD-MM-YYYY')}`);
-      console.log(this.exportRow)
+      console.log(this.recommendations)
     });
   }
 
