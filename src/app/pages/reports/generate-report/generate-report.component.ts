@@ -363,9 +363,9 @@ export class GenerateReportComponent implements OnInit {
     const headers = this.recommendationCols.map(col => col.header);
 
 
-    let array = this.recommendations.map(row => {
+    let array = this.recommendations.map((row,index) => {
       return {
-        'No.': row.recommendationId,
+        'No.': index+1,
         'Recommendation': row.recommendation,
         'Type of Change': row.changeType,
         'Estimated Annual Energy Saving (kWh/yr)': row.estimatedEnergySaving,
@@ -377,7 +377,7 @@ export class GenerateReportComponent implements OnInit {
       }
     });
 
-    let totalsRow = {
+    let totalsRow:any = {
       'No.': '',
       'Recommendation': 'Total',
       'Type of Change': '',

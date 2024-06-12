@@ -1,5 +1,5 @@
 export class Recommendations {
-  recommendationId: number = 1
+  recommendationId: number | string = 1
   recommendation: string = ''
   estimatedEnergySaving: number | string = 0
   estimatedSaving: number | string = 0
