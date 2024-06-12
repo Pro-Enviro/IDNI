@@ -126,6 +126,7 @@ export class PetLoginProtected implements OnInit {
   productivityPercentile: string = ''
   chartOptions!: EChartsOption | null;
   gaugeChartOptions!: EChartsOption | null;
+  pieChart1!: EChartsOption | null;
   chartData: [string, (string | number)][] | null = []
   markStart: number | undefined
   markEnd: number | undefined
@@ -220,6 +221,7 @@ export class PetLoginProtected implements OnInit {
     this.chartData = null
     this.chartOptions = null;
     this.gaugeChartOptions = null;
+    this.pieChart1 = null;
   }
 
   fillTable = (petData: PetToolData) => {
@@ -796,6 +798,61 @@ export class PetLoginProtected implements OnInit {
     };
   }
 
+
+  initPieChart1 = (pieOneNum:number) => {
+    this.pieChart1 = {
+      title: {
+        text: 'Breakdown of CO2e (tonnes) by scope',
+        left: 'center',
+        top: 30,
+
+      },
+      legend: {
+        left: 'left',
+        orient: 'horizontal'
+      },
+      tooltip: {
+        extraCssText: 'text-transform: capitalize',
+        trigger: 'item',
+        formatter: '{a} <br />{b}: {c} ({d}%)'
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {
+            show: true,
+            name: 'Breakdown of CO2e (tonnes) by scope',
+            type: 'png'
+          }
+        }
+      },
+      series: [
+        {
+          name: 'Scope Data',
+          type: 'pie',
+          radius: [20,180],
+          itemStyle: {
+            borderRadius: 5
+          },
+          emphasis: {
+            label: {
+              show: true
+            }
+          },
+          data: [
+            {
+              value:pieOneNum,
+              name:'Chart'
+            }
+          ]
+        },
+      ],
+      color: ['#006633',
+        '#72ac3f',
+        '#bed8a5',
+        '#3fa8ac',]
+    };
+  }
 
 
 
