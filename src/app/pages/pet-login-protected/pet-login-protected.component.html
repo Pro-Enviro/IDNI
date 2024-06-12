@@ -454,19 +454,19 @@
       <div class="grid">
         <div class="xl:col-6 lg:col-12 md:col-12">
 <!-- CO2E BREAKDOWN CHART-->
-          <p-card>
             @if(co2eBreakdown){
-              <div echarts [options]="co2eBreakdown" style="max-height: 600px; height: 600px"></div>
+              <p-card>
+                <div echarts [options]="co2eBreakdown" style="max-height: 600px; height: 600px"></div>
+                </p-card>
             }
-          </p-card>
         </div>
         <div class="xl:col-6 lg:col-12 md:col-12">
-          <p-card>
 <!--  CO2E SCOPE-->
             @if(co2eScope){
+              <p-card>
               <div echarts [options]="co2eScope" style="max-height: 600px; height: 600px"></div>
+              </p-card>
             }
-          </p-card>
         </div>
       </div>
 
