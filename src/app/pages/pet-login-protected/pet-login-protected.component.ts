@@ -1125,7 +1125,7 @@ export class PetLoginProtected implements OnInit {
     const conversionFactors: { [key: string]: number } = {
       'Electricity': 0.22499,
       'Natural Gas (Grid)': 0.18293,
-      'Burning oil (Kerosene)': 0.24677,
+      'Kerosene': 0.24677,
       'Diesel (avg biofuel blend)': 0.23908,
       'Petrol (avg biofuel blend)': 0.22166,
       "Gas oil (Red diesel)": 0.25650,
@@ -1134,7 +1134,14 @@ export class PetLoginProtected implements OnInit {
       'Butane': 0.22241,
       'Biogas': 0.00022,
       'Biomethane (compressed)': 0.00038,
-      'Wood Chips': 0.01074
+      'Wood Chips': 0.01074,
+      // Do these options exist above already?
+      'Natural Gas off Grid': 0,
+      'Bio Gas Off Grid': 0,
+      'Oil':0,
+      'Bio fuels': 0,
+      'Bio Mass': 0,
+      'Coal for Industrial use': 0,
     }
 
     const selectedConversionFactor = conversionFactors[group.name] ? conversionFactors[group.name] : 0
