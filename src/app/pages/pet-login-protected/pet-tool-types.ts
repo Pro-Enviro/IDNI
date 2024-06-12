@@ -1,4 +1,4 @@
-export type UnitsUom = 'Select' | 'litres' | 'kg' | 'kWh' | 'tonnes' | 'cubic metres' | 'km' | 'miles' | 'million litres'
+export type UnitsUom = 'Select' | 'litres' | 'kg' | 'kWh' | 'tonnes' | 'metres' | 'cubic metres' | 'km' | 'miles' | 'million litres'
 export type RegionsOfOrigin = 'UK' | 'EU' | 'US' | 'Asia'
 export type UnitsOfCost = 'Cost/unit' | 'Total Cost' | 'Select'
 export type ModeOfTransport = 'Select' | 'Van <3.5t' | 'Refrigerated Van <3.5t' | 'Van >3.5t < 7.5t' | 'Refrigerated Van > 3.5t < 7.5t' | 'HGV' | 'Refrigerated HGV'
