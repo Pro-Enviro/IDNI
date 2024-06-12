@@ -233,7 +233,6 @@ export class EnvirotrackReportDemandComponent implements OnInit {
   getAsc = (startDate: any, endDate: any) => {
     this.asc = [];
 
-
     this.db.getASCData(this.selectedCompany).subscribe({
       next: (res: any) => {
         this.supply = res.data
@@ -241,12 +240,10 @@ export class EnvirotrackReportDemandComponent implements OnInit {
           this.initChart()
         } else {
 
-
           this.supply = this.supply.filter((asc_data: any) => asc_data.mpan === this.selectedMpan)
 
+
           this.supply.forEach((row: any) => {
-
-
             row.start_date = moment(row.start_date);
             row.end_date = moment(row.end_date);
           })
@@ -259,7 +256,9 @@ export class EnvirotrackReportDemandComponent implements OnInit {
 
           })
 
-          this.asc[this.asc.length-1][0] = endDate
+          if (this.asc.length){
+            this.asc[this.asc.length-1][0] = endDate
+          }
 
           this.initChart()
         }
@@ -281,8 +280,6 @@ export class EnvirotrackReportDemandComponent implements OnInit {
             this.months.push(moment(row.date).format('DD/MM/YYYY'))
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
-
-          console.log(this.mpan)
 
           // if (this.global.selectedMpan?.value) {
           //   this.selectedMpan = this.global.selectedMpan.value
@@ -308,6 +305,8 @@ export class EnvirotrackReportDemandComponent implements OnInit {
   filterData = () =>{
 
     this.chartData = [];
+    this.asc = [];
+
     if(this.dateRange != undefined && this.dateRange[1]){
       this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
       this.chartX = this.months.filter((x:any) => moment(x).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
