@@ -864,7 +864,6 @@ export class PetLoginProtected implements OnInit {
 
 
   initChart = () => {
-
     this.chartOptions = {
       legend: {
         show: true,
