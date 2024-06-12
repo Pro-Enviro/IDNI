@@ -49,6 +49,23 @@ export class GenerateReportComponent implements OnInit {
   totalConsumption: number = 0;
   totalCost: number = 0 ;
   totalEmissions: number = 0;
+  fuels: any = [];
+
+
+  conversionFactors: any = {
+    'Electricity': 0.22499,
+    'Gas': 0.18293,
+    'Burning oil (Kerosene)': 0.24677,
+    'Diesel (avg biofuel blend)': 0.23908,
+    'Petrol (avg biofuel blend)': 0.22166,
+    "Gas oil (Red diesel)": 0.25650,
+    'LPG': 0.21449,
+    'Propane': 0.21410,
+    'Butane': 0.22241,
+    'Biogas': 0.00022,
+    'Biomethane (compressed)': 0.00038,
+    'Wood Chips': 0.01074
+  }
 
 
   constructor(
@@ -130,6 +147,7 @@ export class GenerateReportComponent implements OnInit {
   onSelectCompany = () => {
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getReportValues(this.selectedCompany)
+    this.getFuelData()
   }
 
 
@@ -147,6 +165,66 @@ export class GenerateReportComponent implements OnInit {
 
     })
   }
+
+  getFuelData = () => {
+    this.fuels = []
+
+
+    if (this.selectedCompany) {
+
+
+      this.track.getFuelData(this.selectedCompany).subscribe({
+        next: (res: any) => {
+
+          if (res?.data?.fuel_data) {
+            this.fuels = JSON.parse(res.data?.fuel_data)
+            console.log(this.fuels)
+          }
+        },
+        error: (err) => console.log(err),
+        complete: () =>  this.assignFuelDataToCorrectCost()
+      })
+    }
+  }
+
+  assignFuelDataToCorrectCost = () => {
+    if (!this.fuels.length) return;
+    // loop through fuel types and just get total of all values/units/ total cost/
+
+    let extractedData = this.fuels.map((fuel: any) => {
+
+      let totalValue = 0
+      let totalCost = 0
+      let unit: string = ''
+
+      fuel.rows.forEach((row: any) => {
+        const findValue = row.findIndex((cell: any) => cell.name === 'Value')
+        const findUnit = row.findIndex((cell: any) => cell.name === 'Unit')
+        const findCost = row.findIndex((cell: any) => cell.name === 'Total')
+
+        // Check if not available
+        if (findValue !== -1) totalValue += parseFloat(row[findValue].value)
+        if (findCost !== -1) totalCost += parseFloat(row[findCost].value)
+        if (findUnit !== -1) unit = row[findUnit].value
+      })
+
+      console.log(this.conversionFactors[fuel.type])
+
+      return {
+        type: fuel.type,
+        consumption: totalValue,
+        cost: totalCost,
+        emissions: (totalValue * this.conversionFactors[fuel.type] || 0),
+        conversionFactor: this.conversionFactors[fuel.type] ? this.conversionFactors[fuel.type] : 0,
+        unit: unit ? unit : 'kWh'
+      }
+    })
+
+    this.typeTotals = extractedData
+
+    this.recalculateTotals()
+  }
+
 
 
   createReportObject = (save?: string) => {
@@ -313,6 +391,12 @@ export class GenerateReportComponent implements OnInit {
     })
   }
 
+  recalculateTotals = () => {
+    this.totalCost = this.typeTotals.reduce((acc: any, curr: any) => acc + curr.cost, 0)
+    this.totalConsumption = this.typeTotals.reduce((acc: any, curr: any) => acc + curr.consumption, 0)
+    this.totalEmissions = (this.typeTotals.reduce((acc: any, curr: any) => acc + curr.emissions, 0)) / 1000
+  }
+
   calculateConsumptionPercent = (typeTotal: any) => {
     const percent = (parseFloat(typeTotal.consumption) / this.totalConsumption) * 100
     return percent.toFixed(1)
@@ -347,6 +431,7 @@ export class GenerateReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCompanies();
+    this.getFuelData()
   }
 }
 
