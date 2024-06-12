@@ -942,10 +942,38 @@ export class PetLoginProtected implements OnInit {
         },
       ],
       color: [
-        '#0787c2',
         '#72ac3f',
+        '#3fa8ac',
+        '#5470c6',
+        '#91cc75',
+        '#fac858',
+        '#ee6666',
         '#bed8a5',
-        '#24b7f2',
+        '#73c0de',
+        '#3ba272',
+        '#fc8452',
+        '#9a60b4',
+        '#ea7ccc',
+        '#753d3d',
+        '#922e9b',
+        '#9f7c3b',
+        '#29724d',
+        '#68e5d3',
+        '#ff6c00',
+        '#00f196',
+        '#3627fa',
+        '#ffb683',
+        '#9a017d',
+        '#3592c5',
+        '#c45a5a',
+        '#8aa1e8',
+        '#accc9d',
+        '#efd59e',
+        '#fdbaba',
+        '#b5e4fa',
+        '#a6f6d0',
+        '#faba9f',
+        '#e6bafc',
       ]
     };
   }
@@ -1032,7 +1060,7 @@ export class PetLoginProtected implements OnInit {
       ],
       color: [
         '#50a3ba',
-        '#327088',
+        '#bed8a5',
         '#dbeef2',
         '#2e5c70',
       ]
@@ -1135,13 +1163,12 @@ export class PetLoginProtected implements OnInit {
       'Biogas': 0.00022,
       'Biomethane (compressed)': 0.00038,
       'Wood Chips': 0.01074,
-      // Do these options exist above already?
-      'Natural Gas off Grid': 0,
-      'Bio Gas Off Grid': 0,
-      'Oil':0,
-      'Bio fuels': 0,
-      'Bio Mass': 0,
-      'Coal for Industrial use': 0,
+      'Natural Gas off Grid': 0.03021,
+      'Bio Gas Off Grid':   0.00020,
+      'Oil':0, //what type of oil - burning oil,fuel oil,gas oil, marine gas oil,
+      'Bio fuels': 0, //there many bio fuels-bio diesel, bioethanol and many others
+      'Bio Mass': 0.01074,
+      'Coal for Industrial use': 0.05629,
     }
 
     const selectedConversionFactor = conversionFactors[group.name] ? conversionFactors[group.name] : 0
