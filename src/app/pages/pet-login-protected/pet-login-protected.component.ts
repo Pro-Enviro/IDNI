@@ -575,36 +575,42 @@ export class PetLoginProtected implements OnInit {
         this.markEnd = 1
         this.productivityPercentile = '10th Percentile'
         this.initChartGauge(10)
+        this.initPieChart1(10)
         break;
       case 1 :
         this.markStart = 0
         this.markEnd = 2
         this.productivityPercentile = '25th Percentile'
         this.initChartGauge(25)
+        this.initPieChart1(25)
         break;
       case 2:
         this.markStart = 0
         this.markEnd = 3
         this.productivityPercentile = '50th Percentile'
         this.initChartGauge(50)
+        this.initPieChart1(50)
         break;
       case 3:
         this.markStart = 0
         this.markEnd = 4
         this.productivityPercentile = '75th Percentile'
         this.initChartGauge(75)
+        this.initPieChart1(75)
         break;
       case 4:
         this.markStart = 0
         this.markEnd = 5
         this.productivityPercentile = '90th Percentile'
         this.initChartGauge(90)
+        this.initPieChart1(90)
         break;
       default:
         this.markStart = 0
         this.markEnd = 0
         this.productivityPercentile = ''
         this.initChartGauge(0)
+        this.initPieChart1(0)
         break;
     }
 
