@@ -808,14 +808,13 @@ export class PetLoginProtected implements OnInit {
   initPieChart1 = (pieOneNum:number) => {
     this.pieChart1 = {
       title: {
-        text: 'Breakdown of CO2e (tonnes) by scope',
+        text: 'Co2e Pie Chart - First',
         left: 'center',
         top: 30,
-
       },
       legend: {
-        left: 'left',
-        orient: 'horizontal'
+        orient: 'vertical',
+        left: 'left'
       },
       tooltip: {
         extraCssText: 'text-transform: capitalize',
@@ -834,7 +833,7 @@ export class PetLoginProtected implements OnInit {
       },
       series: [
         {
-          name: 'Scope Data',
+          name: 'Co2e Data',
           type: 'pie',
           radius: [20,180],
           itemStyle: {
@@ -853,10 +852,12 @@ export class PetLoginProtected implements OnInit {
           ]
         },
       ],
-      color: ['#006633',
+      color: [
+        '#3fa8ac',
         '#72ac3f',
         '#bed8a5',
-        '#3fa8ac',]
+        '#006633',
+      ]
     };
   }
 
