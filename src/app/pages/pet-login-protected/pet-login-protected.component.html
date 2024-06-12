@@ -258,7 +258,7 @@
               </td>
               <td *ngIf="groups.totalUnits !== undefined">
                 <p-inputNumber [(ngModel)]="groups.totalUnits" class="p-inputtext-sm"
-                               [inputStyle]="{width: '100px'}"></p-inputNumber>
+                               [inputStyle]="{width: '100px'}" (ngModelChange)="calculateCo2e(groups)"></p-inputNumber>
               </td>
 
               <td *ngIf="groups.otherModes !== undefined">

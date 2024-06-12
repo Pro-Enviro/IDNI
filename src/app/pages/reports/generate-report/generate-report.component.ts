@@ -10,6 +10,7 @@ import {DialogModule} from "primeng/dialog";
 import {EnvirotrackService} from "../../envirotrack/envirotrack.service";
 import {DbService} from "../../../_services/db.service";
 import {InputTextareaModule} from "primeng/inputtextarea";
+import FileSaver from "file-saver";
 
 
 
@@ -23,7 +24,7 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 export class GenerateReportComponent implements OnInit {
   companies: any;
   selectedCompany: any;
-  tmp: any = [];
+  exportRow :any = [];
   template: any;
   docxInHtml: any;
   modelVisible: boolean = false;
@@ -32,13 +33,83 @@ export class GenerateReportComponent implements OnInit {
   changeOptions: any[] = ['Behavioural', 'Upgrades', 'Changes to existing technology', 'Improvements to building fabric', 'Resource efficiency', 'Other']
   percentOptions: any[] = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10]
   isConsultant: boolean = false;
+  typeTotals: any[] = []
+  strOptions =  {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  };
+  noDecimalsString  =  {
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+  }
+  oneDecimalString = {
+    maximumFractionDigits: 1,
+    minimumFractionDigits: 1,
+  }
+  totalConsumption: number = 0;
+  totalCost: number = 0 ;
+  totalEmissions: number = 0;
+  fuels: any = [];
+  exportColumns: any[] = [];
+
+
+  cols = [
+    {
+      field: 'Utility',
+      header: 'Utility'
+    },
+    {
+      field: 'Consumption (kWh)',
+      header: 'Consumption (kWh)'
+    },
+    {
+      field: 'Consumption %',
+      header: 'Consumption %'
+    },
+    {
+      field: 'Cost £',
+      header: 'Cost £'
+    },
+    {
+      field: 'Cost %',
+      header: 'Cost %'
+    },
+    {
+      field: 'Carbon Emissions CO2e (tonnes)',
+      header: 'Carbon Emissions CO2e (tonnes)'
+    },
+    {
+      field: 'Carbon Emissions %',
+      header: 'Carbon Emissions %'
+    }
+
+  ]
+
+
+  conversionFactors: any = {
+    'Electricity': 0.22499,
+    'Gas': 0.18293,
+    'Burning oil (Kerosene)': 0.24677,
+    'Diesel (avg biofuel blend)': 0.23908,
+    'Petrol (avg biofuel blend)': 0.22166,
+    "Gas oil (Red diesel)": 0.25650,
+    'LPG': 0.21449,
+    'Propane': 0.21410,
+    'Butane': 0.22241,
+    'Biogas': 0.00022,
+    'Biomethane (compressed)': 0.00038,
+    'Wood Chips': 0.01074
+  }
+
 
   constructor(
     private global: GlobalService,
     private msg: MessageService,
     private track: EnvirotrackService,
     private db: DbService,
-  ) {}
+  ) {
+
+  }
 
   getTotal = (propertyToTotal: string) => {
     return this.recommendations.map((rec: any) => !isNaN(rec[propertyToTotal]) ? parseFloat(rec[propertyToTotal]) : 0)
@@ -50,11 +121,8 @@ export class GenerateReportComponent implements OnInit {
 
     if (assessment) {
       recommendation.recommendation = assessment.question
-      recommendation.recommendationDetail = assessment.recommendation
-      recommendation.recommendationTitle = assessment.recommendation_title
     } else {
       recommendation.recommendation = `New Recommendation`
-      recommendation.recommendationTitle = 'New Recommendation'
     }
 
     this.recommendations.push(recommendation)
@@ -115,6 +183,7 @@ export class GenerateReportComponent implements OnInit {
   onSelectCompany = () => {
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getReportValues(this.selectedCompany)
+    this.getFuelData()
   }
 
 
@@ -133,15 +202,67 @@ export class GenerateReportComponent implements OnInit {
     })
   }
 
+  getFuelData = () => {
+    this.fuels = []
 
-  createReportObject = (save?: string) => {this.recommendations.map((rec: Recommendations) => {
-      rec.steps.map((step: any) => {
-        step.startDateFormatted = moment(step.startDate).format('MMM-YYYY')
-        step.completionDateFormatted = moment(step.completionDate).format('MMM-YYYY')
+
+    if (this.selectedCompany) {
+
+
+      this.track.getFuelData(this.selectedCompany).subscribe({
+        next: (res: any) => {
+
+          if (res?.data?.fuel_data) {
+            this.fuels = JSON.parse(res.data?.fuel_data)
+          }
+        },
+        error: (err) => console.log(err),
+        complete: () =>  this.assignFuelDataToCorrectCost()
       })
+    }
+  }
+
+  assignFuelDataToCorrectCost = () => {
+    if (!this.fuels.length) return;
+    // loop through fuel types and just get total of all values/units/ total cost/
+
+    let extractedData = this.fuels.map((fuel: any) => {
+
+      let totalValue = 0
+      let totalCost = 0
+      let unit: string = ''
+
+      fuel.rows.forEach((row: any) => {
+        const findValue = row.findIndex((cell: any) => cell.name === 'Value')
+        const findUnit = row.findIndex((cell: any) => cell.name === 'Unit')
+        const findCost = row.findIndex((cell: any) => cell.name === 'Total')
+
+        // Check if not available
+        if (findValue !== -1) totalValue += parseFloat(row[findValue].value)
+        if (findCost !== -1) totalCost += parseFloat(row[findCost].value)
+        if (findUnit !== -1) unit = row[findUnit].value
+      })
+
+
+      return {
+        type: fuel.type,
+        consumption: totalValue,
+        cost: totalCost,
+        emissions: (totalValue * this.conversionFactors[fuel.type] || 0),
+        conversionFactor: this.conversionFactors[fuel.type] ? this.conversionFactors[fuel.type] : 0,
+        unit: unit ? unit : 'kWh'
+      }
     })
 
+    this.typeTotals = extractedData
 
+    this.recalculateTotals()
+
+  }
+
+
+
+  createReportObject = (save?: string) => {
     // Filter out empty recommendations
     let filteredRecommendations: Recommendations[] =
       this.recommendations.filter((rec: Recommendations) => rec.recommendation.length)
@@ -203,6 +324,93 @@ export class GenerateReportComponent implements OnInit {
     return report;
   }
 
+
+  recommendationCols = [
+    { field: 'number', header: 'No.'},
+    { field: 'recommendation', header: 'Recommendation' },
+    { field: 'type_of_change', header: 'Type of Change' },
+    { field: 'estimated_annual_energy_saving', header: 'Estimated Annual Energy Saving (kWh/yr)' },
+    { field: 'estimated_annual_saving', header: 'Estimated Annual saving (£ exc VAT/yr)' },
+    { field: 'estimated_cost_to_implement', header: 'Estimated cost to implement (£ excl. VAT)' },
+    { field: 'payback_period', header: 'Payback Period' },
+    { field: 'estimated_annual_carbon_saving ', header: 'Estimated Annual carbon saving (tCo2e/yr)' },
+    { field: 'margin_of_error', header: 'Margin Of Error (%)' },
+    { field: 'total_energy_saving', header: 'Total Annual energy saving (kWh/yr)' },
+    {field:  'total_annual_saving', header:'Total Annual Saving (£ exc VAT/yr)' },
+    {field:  'total_est_cost', header:'Total Estimated Cost' },
+    {field: 'total_carbon_saving', header: 'Total Carbon saving' },
+
+  ]
+
+
+  exportExcel = () => {
+    let totalEstimatedEnergySaving = this.recommendations.reduce((total, row) => {
+      return total + row.estimatedEnergySaving;
+    }, 0);
+
+    let totalAnnualSaving = this.recommendations.reduce((total, row) => {
+      return total + row.estimatedSaving;
+    }, 0);
+
+    let totalEstimatedCost = this.recommendations.reduce((total, row) => {
+      return total + row.estimatedCost;
+    },0)
+
+    let totalCarbonSaving = this.recommendations.reduce((total,row) => {
+      return total + row.estimatedCarbonSaving;
+    },0)
+
+    const headers = this.recommendationCols.map(col => col.header);
+
+
+    let array = this.recommendations.map(row => {
+      return {
+        'No.': row.recommendationId,
+        'Recommendation': row.recommendation,
+        'Type of Change': row.changeType,
+        'Estimated Annual Energy Saving (kWh/yr)': row.estimatedEnergySaving,
+        'Estimated Annual saving (£ exc VAT/yr)': row.estimatedSaving,
+        'Estimated cost to implement (£ excl. VAT)': row.estimatedCost,
+        'Payback Period': row.paybackPeriod,
+        'Estimated Annual carbon saving (tCo2e/yr)': row.estimatedCarbonSaving,
+        'Margin Of Error (%)': row.marginOfErrorSavings,
+      }
+    });
+
+    let totalsRow = {
+      'No.': '',
+      'Recommendation': 'Total',
+      'Type of Change': '',
+      'Estimated Annual Energy Saving (kWh/yr)': totalEstimatedEnergySaving,
+      'Estimated Annual saving (£ exc VAT/yr)': totalAnnualSaving,
+      'Estimated cost to implement (£ excl. VAT)': totalEstimatedCost,
+      'Payback Period': '',
+      'Estimated Annual carbon saving (tCo2e/yr)': totalCarbonSaving,
+      'Margin Of Error (%)': '',
+    };
+
+    array.push(totalsRow);
+
+
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(array);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, `Recommendation Summary ${moment(new Date()).format('DD-MM-YYYY')}`);
+    });
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + EXCEL_EXTENSION);
+  }
+
+
+
   saveForm = () => {
     const report = this.createReportObject('save')
 
@@ -218,8 +426,84 @@ export class GenerateReportComponent implements OnInit {
     })
   }
 
+  recalculateTotals = () => {
+    this.totalCost = this.typeTotals.reduce((acc: any, curr: any) => acc + curr.cost, 0)
+    this.totalConsumption = this.typeTotals.reduce((acc: any, curr: any) => acc + curr.consumption, 0)
+    this.totalEmissions = (this.typeTotals.reduce((acc: any, curr: any) => acc + curr.emissions, 0)) / 1000
+  }
+
+  calculateConsumptionPercent = (typeTotal: any) => {
+    const percent = (parseFloat(typeTotal.consumption) / this.totalConsumption) * 100
+    return percent.toFixed(1)
+  }
+
+  calculateCostPercent = (typeTotal: any) => {
+    if (typeTotal.cost === 0 || isNaN(typeTotal.cost)) return 0
+
+    const percent = (parseFloat(typeTotal.cost) / this.totalCost) * 100
+    return percent.toFixed(1)
+  }
+
+  calculateEmissions = (typeTotal: any) => {
+    const data = (parseFloat(typeTotal.consumption) * parseFloat(typeTotal.conversionFactor)) / 1000
+
+    let strOptions = this.strOptions
+
+    // To handle small amounts
+    if (data < 0.001) strOptions = {
+      minimumFractionDigits: 4,
+      maximumFractionDigits: 4
+    }
+
+    return data.toLocaleString('en-US', strOptions)
+  }
+
+  calculateEmissionsPercent = (typeTotal: any) => {
+    const percent = ((typeTotal.emissions / 1000) / this.totalEmissions) * 100
+    return percent.toFixed(1)
+  }
+
+  exportExcelForBreakdownTable = () => {
+
+    let array = this.typeTotals.map(row => {
+      return {
+        'Utility': row.type,
+        'Consumption (kWh)': row.consumption,
+        'Consumption %': this.calculateConsumptionPercent(row),
+        'Cost £': row.cost,
+        'Cost %': this.calculateCostPercent(row),
+        'Carbon Emissions Co2e (tonnes)': row.emissions / 1000,
+        'Carbon Emissions %': this.calculateEmissionsPercent(row),
+      }
+    });
+
+    let totalsRow = {
+      'Utility': 'Total',
+      'Consumption (kWh)': this.totalConsumption,
+      'Consumption %': '',
+      'Cost £': this.totalCost,
+      'Cost %': '',
+      'Carbon Emissions Co2e (tonnes)': this.totalEmissions,
+      'Carbon Emissions %': ''
+    };
+
+
+    array.push(totalsRow);
+
+
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(array);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, `Breakdown of Energy Costs ${moment(new Date()).format('DD-MM-YYYY')}`);
+    });
+  }
+
+
+
   ngOnInit(): void {
     this.getCompanies();
+    this.getFuelData()
   }
 }
 
