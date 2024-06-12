@@ -900,7 +900,7 @@ export class PetLoginProtected implements OnInit {
   initPieChart1 = (pieOneNum:number) => {
     this.pieChart1 = {
       title: {
-        text: 'Co2e Pie Chart - First',
+        text: 'Breakdown of CO2e',
         left: 'center',
         top: 30,
       },
@@ -918,14 +918,14 @@ export class PetLoginProtected implements OnInit {
         feature: {
           saveAsImage: {
             show: true,
-            name: 'Breakdown of CO2e (tonnes) by scope',
+            name: 'Breakdown of CO2e',
             type: 'png'
           }
         }
       },
       series: [
         {
-          name: 'Co2e Data',
+          name: 'CO2e Data',
           type: 'pie',
           radius: [20,180],
           itemStyle: {
@@ -939,7 +939,7 @@ export class PetLoginProtected implements OnInit {
           data: [
             {
               value:pieOneNum,
-              name:'Chart'
+              name:'Breakdown of CO2e'
             }
           ]
         },
@@ -956,7 +956,7 @@ export class PetLoginProtected implements OnInit {
   initPieChart2 = (pieTwoNum:number) => {
     this.pieChart2 = {
       title: {
-        text: 'Co2e Pie Chart - Second',
+        text: 'CO2e by Scope',
         left: 'center',
         top: 30,
       },
@@ -974,14 +974,14 @@ export class PetLoginProtected implements OnInit {
         feature: {
           saveAsImage: {
             show: true,
-            name: 'Name',
+            name: 'CO2e-by-Scope-Chart',
             type: 'png'
           }
         }
       },
       series: [
         {
-          name: 'Co2e Data',
+          name: 'Co2e Data By Scope',
           type: 'pie',
           radius: [20,180],
           itemStyle: {
@@ -995,7 +995,7 @@ export class PetLoginProtected implements OnInit {
           data: [
             {
               value:pieTwoNum,
-              name:'Chart'
+              name:'Co2e Data By Scope'
             }
           ]
         },
