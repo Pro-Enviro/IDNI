@@ -51,7 +51,7 @@ import {
 } from "./pet-tool-classes";
 import {AutoCompleteCompleteEvent} from "primeng/autocomplete";
 import {DividerModule} from "primeng/divider";
-
+import {map} from "rxjs";
 
 
 @Component({
@@ -63,7 +63,7 @@ import {DividerModule} from "primeng/divider";
 })
 
 export class PetLoginProtected implements OnInit {
-  url:string = 'https://app.idni.eco'
+  url: string = 'https://app.idni.eco'
   sidebarVisible: boolean = false
   // Admin
   selectedCompany!: number;
@@ -73,7 +73,7 @@ export class PetLoginProtected implements OnInit {
   template!: any
   employees: number = 0;
   output: number = 0;
-  outputChoices: string[]  = ['Litres', 'Tonnes', 'Parts', 'Products', 'Licenses'];
+  outputChoices: string[] = ['Litres', 'Tonnes', 'Parts', 'Products', 'Licenses'];
   outputUnit: string = ''
   productivityScore: number = 0;
   innovationPercent: number = 0;
@@ -108,7 +108,7 @@ export class PetLoginProtected implements OnInit {
   staffCommute: StaffCommuteModes[] = ['Select', 'On foot', 'Cycle', 'Public Transport', 'Car', 'Motorbike']
   unitsOfCost: UnitsOfCost[] = ['Cost/unit', 'Total Cost', 'Select']
   materialTypes: MaterialTypes[] = ['Steel', 'Other Metals', 'Plastics', 'Other Materials']
-  steelMaterials: SteelMaterials[] = ['Mild Steel', 'Carbon Steel', 'Tool Steel D2', 'Tool Steel H13', 'Tool Steel M2', 'Tool Steel S275', 'Tool Steel S325', 'Alloy Steel 4340', 'Alloy Steel 4140', 'Alloy Steel 4150', 'Alloy Steel 9310', 'Alloy Steel 52100', 'Stainless Steel 304', 'Stainless Steel 316', 'Duplex Steel', 'Hardox series 400' , 'Hardox series 500' , 'Hardox series 600' , 'Inconel series 600' , 'Inconel series 700']
+  steelMaterials: SteelMaterials[] = ['Mild Steel', 'Carbon Steel', 'Tool Steel D2', 'Tool Steel H13', 'Tool Steel M2', 'Tool Steel S275', 'Tool Steel S325', 'Alloy Steel 4340', 'Alloy Steel 4140', 'Alloy Steel 4150', 'Alloy Steel 9310', 'Alloy Steel 52100', 'Stainless Steel 304', 'Stainless Steel 316', 'Duplex Steel', 'Hardox series 400', 'Hardox series 500', 'Hardox series 600', 'Inconel series 600', 'Inconel series 700']
   otherMetals: OtherMetals[] = ['Aluminium 1000', 'Aluminium 2000', 'Aluminium 6000', 'Aluminium 7000', 'Duralumin', 'Aluminium Lithium', 'Copper', 'Bronze', 'Titanium', 'Lithium', 'Magnesium']
   plastics: Plastics[] = ['ABS', 'PA', 'PET', 'PP', 'PU', 'POM', 'PEEK', 'PE', 'PVC', 'PPS', 'Elastomers', 'Composites', 'Textiles']
   otherMaterials: OtherMaterials[] = ['Composites', 'Textiles', 'Cement', 'Aggregate', 'Sand', 'Glass', 'Chemicals', 'Hardwood', 'Softwood']
@@ -137,7 +137,8 @@ export class PetLoginProtected implements OnInit {
   filteredSicCodes: any[] = []
 
 
-  constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService, private global: GlobalService) {}
+  constructor(private http: HttpClient, private storage: StorageService, private track: EnvirotrackService, private msg: MessageService, private db: DbService, private global: GlobalService) {
+  }
 
   onSelectCompany = () => {
     if (!this.selectedCompany) this.selectedCompany = this.companies[0]
@@ -165,8 +166,7 @@ export class PetLoginProtected implements OnInit {
               }
             }
           })
-        }
-        else if (res.role.name === 'consultant'){
+        } else if (res.role.name === 'consultant') {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
               console.log(res)
@@ -185,7 +185,7 @@ export class PetLoginProtected implements OnInit {
               this.isConsultant = true;
             }
           })
-      }
+        }
 
       }
     })
@@ -196,7 +196,7 @@ export class PetLoginProtected implements OnInit {
     if (!this.allPetData.length) return
     const selectedYear = this.allPetData.find((petDataRow: PetToolData) => petDataRow.year === this.selectedYear)
 
-    if (selectedYear){
+    if (selectedYear) {
       this.fillTable(selectedYear)
       this.selectedPetId = selectedYear.id
     } else {
@@ -228,8 +228,6 @@ export class PetLoginProtected implements OnInit {
 
   fillTable = (petData: PetToolData) => {
     if (!petData) return;
-
-
 
 
     this.data = []
@@ -267,8 +265,7 @@ export class PetLoginProtected implements OnInit {
     const otherCosts = JSON.parse(petData.other_external_costs)
 
 
-
-    this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waterUsage,...waste, ...roadFreight, ...otherFreight, ...companyTravel, ...staffCommute, ...otherCosts)
+    this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waterUsage, ...waste, ...roadFreight, ...otherFreight, ...companyTravel, ...staffCommute, ...otherCosts)
     // console.log(this.data)
 
     this.calculateProductivityScore()
@@ -293,7 +290,7 @@ export class PetLoginProtected implements OnInit {
     this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
 
     // Generate extra rows for Raw Materials
-    for (let i = 0; i < 9; i++ ){
+    for (let i = 0; i < 9; i++) {
       this.createNewTableRow(rawMats)
     }
 
@@ -344,7 +341,6 @@ export class PetLoginProtected implements OnInit {
           })
 
 
-
           this.fillTable(this.allPetData[0])
           this.calculateProductivityComparison()
         } else {
@@ -384,7 +380,7 @@ export class PetLoginProtected implements OnInit {
         }
         return newClass;
       })
-        this.data.push(...classArray)
+      this.data.push(...classArray)
       return classArray
     } else {
       let newClass = new classToUse()
@@ -420,12 +416,12 @@ export class PetLoginProtected implements OnInit {
     if (group.parent.name === 'Company Travel') {
       const findLastCompanyTravel = this.data.find((item: any) => item.buttonName === 'Company Travel')
       if (findLastCompanyTravel === -1) return;
-      let copy = {...findLastCompanyTravel, cost: 0, mileage: 0 }
+      let copy = {...findLastCompanyTravel, cost: 0, mileage: 0}
 
-      let findObject = this.data.findLastIndex((item: any ) => item.parent.name === 'Company Travel');
+      let findObject = this.data.findLastIndex((item: any) => item.parent.name === 'Company Travel');
 
       if (findObject === -1) return;
-      this.data.splice(findObject + 1, 0 , copy)
+      this.data.splice(findObject + 1, 0, copy)
 
       return;
     }
@@ -440,12 +436,11 @@ export class PetLoginProtected implements OnInit {
   addNewStaffCommuteRow = (group: any) => {
     const staffCommute = this.generateClasses('Staff Commute', StaffCommute)
     let copy = {...staffCommute}
-    let findObject = this.data.findLastIndex((item: any ) => item.parent.name === 'Company Travel');
+    let findObject = this.data.findLastIndex((item: any) => item.parent.name === 'Company Travel');
 
     if (findObject === -1) return;
-    this.data.splice(findObject + 1, 0 , copy)
+    this.data.splice(findObject + 1, 0, copy)
   }
-
 
 
   calculatePerEmployeeCost = (groups?: any) => {
@@ -577,48 +572,36 @@ export class PetLoginProtected implements OnInit {
         this.markEnd = 1
         this.productivityPercentile = '10th Percentile'
         this.initChartGauge(10)
-        this.initCo2eBreakdown(10)
-        this.initCo2eScope(10)
         break;
       case 1 :
         this.markStart = 0
         this.markEnd = 2
         this.productivityPercentile = '25th Percentile'
         this.initChartGauge(25)
-        this.initCo2eBreakdown(25)
-        this.initCo2eScope(25)
         break;
       case 2:
         this.markStart = 0
         this.markEnd = 3
         this.productivityPercentile = '50th Percentile'
         this.initChartGauge(50)
-        this.initCo2eBreakdown(50)
-        this.initCo2eScope(50)
         break;
       case 3:
         this.markStart = 0
         this.markEnd = 4
         this.productivityPercentile = '75th Percentile'
         this.initChartGauge(75)
-        this.initCo2eBreakdown(75)
-        this.initCo2eScope(75)
         break;
       case 4:
         this.markStart = 0
         this.markEnd = 5
         this.productivityPercentile = '90th Percentile'
         this.initChartGauge(90)
-        this.initCo2eBreakdown(90)
-        this.initCo2eScope(90)
         break;
       default:
         this.markStart = 0
         this.markEnd = 0
         this.productivityPercentile = ''
         this.initChartGauge(0)
-        this.initCo2eBreakdown(0)
-        this.initCo2eScope(0)
         break;
     }
 
@@ -635,6 +618,11 @@ export class PetLoginProtected implements OnInit {
   }
 
   calculateGroupTotalCost = (group: any) => {
+
+    if (group.parent.name === 'Cost of Energy') {
+      return this.calculateCo2e(group)
+    }
+
     if (!group?.parent) return 0;
     const parentName = group?.parent.name
     const total = this.data.filter((item: any) => item.parent.name === parentName).reduce((acc: number, curr: any) => {
@@ -722,8 +710,6 @@ export class PetLoginProtected implements OnInit {
         unit: unit ? unit : 'kWh'
       }
     })
-
-
 
 
     // Add to the data in the table
@@ -825,7 +811,7 @@ export class PetLoginProtected implements OnInit {
     }
   }
 
-  initChartGauge = (gaugeNum:number) => {
+  initChartGauge = (gaugeNum: number) => {
     this.gaugeChartOptions = {
       tooltip: {
         formatter: '{a} <br/>{b} : {c}%'
@@ -887,8 +873,8 @@ export class PetLoginProtected implements OnInit {
           },
           data: [
             {
-              value:gaugeNum,
-              name:'Chart'
+              value: gaugeNum,
+              name: 'Chart'
             }
           ]
         }
@@ -897,7 +883,23 @@ export class PetLoginProtected implements OnInit {
   }
 
 
-  initCo2eBreakdown = (pieOneNum:number) => {
+  initCo2eBreakdown = () => {
+
+    // filter this.data by total units if kwh
+    const getAllKWhSelected = this.data.filter((fuelType: any) => fuelType.unitsUom === 'kWh')
+    if (!getAllKWhSelected.length) return;
+
+
+    // Map values to return just name and co2e
+    const mappedValues = getAllKWhSelected.map((fuelType: any) => {
+      return {
+        name: fuelType.name,
+        value: fuelType.co2e
+      }
+    })
+
+    if (!mappedValues.length) return;
+
     this.co2eBreakdown = {
       title: {
         text: 'Breakdown of CO2e',
@@ -927,7 +929,7 @@ export class PetLoginProtected implements OnInit {
         {
           name: 'CO2e Data',
           type: 'pie',
-          radius: [20,180],
+          radius: [20, 180],
           itemStyle: {
             borderRadius: 5
           },
@@ -936,12 +938,7 @@ export class PetLoginProtected implements OnInit {
               show: true
             }
           },
-          data: [
-            {
-              value:pieOneNum,
-              name:'Breakdown of CO2e'
-            }
-          ]
+          data: mappedValues
         },
       ],
       color: [
@@ -953,7 +950,47 @@ export class PetLoginProtected implements OnInit {
     };
   }
 
-  initCo2eScope = (pieTwoNum:number) => {
+  initCo2eScope = () => {
+
+    // filter this.data by total units if kwh
+    const getAllKWhSelected = this.data.filter((fuelType: any) => fuelType.unitsUom === 'kWh')
+    if (!getAllKWhSelected.length) return;
+
+
+    // Reduce to different scopes
+    // If Electricity -> Scope 2
+    // All others => scope 1
+    const getElectricity = getAllKWhSelected.filter((fuelType: any) => fuelType.name.toLowerCase().includes('electricity'))
+    const mappedScope2 = getElectricity.map((elec: any) => {
+      return {
+        name: 'Scope 2',
+        value: elec.co2e
+      }
+    })
+
+    const allOtherFuelTypes = getAllKWhSelected.filter((fuelType: any) => !fuelType.name.toLowerCase().includes('electricity'))
+
+    console.log(allOtherFuelTypes)
+
+    let mappedScope1 = []
+    if (allOtherFuelTypes.length) {
+      mappedScope1 = allOtherFuelTypes.reduce((acc: any, fuelType: any) => {
+        return {
+          name: 'Scope 1',
+          value: acc.value + (fuelType.co2e || 0)
+        }
+      }, {value: 0})
+    }
+
+
+    let finalData = []
+    if (allOtherFuelTypes.length) {
+      finalData = [...mappedScope2, mappedScope1]
+    } else {
+     finalData = [ ...mappedScope2]
+    }
+
+
     this.co2eScope = {
       title: {
         text: 'CO2e by Scope',
@@ -983,7 +1020,7 @@ export class PetLoginProtected implements OnInit {
         {
           name: 'Co2e Data By Scope',
           type: 'pie',
-          radius: [20,180],
+          radius: [20, 180],
           itemStyle: {
             borderRadius: 5
           },
@@ -992,12 +1029,7 @@ export class PetLoginProtected implements OnInit {
               show: true
             }
           },
-          data: [
-            {
-              value:pieTwoNum,
-              name:'Co2e Data By Scope'
-            }
-          ]
+          data: finalData
         },
       ],
       color: [
@@ -1038,7 +1070,6 @@ export class PetLoginProtected implements OnInit {
       staff_commute: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Staff Commute')),
       other_external_costs: JSON.stringify(this.data.filter((row: any) => row.parent.name === 'Other External Costs (Legal, rental, accounting etc)')),
     }
-
 
 
     // console.log(this.selectedYear)
@@ -1084,6 +1115,38 @@ export class PetLoginProtected implements OnInit {
 
   }
 
+  calculateCo2e = (group: any) => {
+
+    console.log(group)
+
+    if (group.parent.name !== 'Cost of Energy') return;
+    if (group.unitsUom !== 'kWh') return;
+
+    // Find Fuel Type in object
+
+    const conversionFactors: { [key: string]: number } = {
+      'Electricity': 0.22499,
+      'Natural Gas (Grid)': 0.18293,
+      'Burning oil (Kerosene)': 0.24677,
+      'Diesel (avg biofuel blend)': 0.23908,
+      'Petrol (avg biofuel blend)': 0.22166,
+      "Gas oil (Red diesel)": 0.25650,
+      'LPG': 0.21449,
+      'Propane': 0.21410,
+      'Butane': 0.22241,
+      'Biogas': 0.00022,
+      'Biomethane (compressed)': 0.00038,
+      'Wood Chips': 0.01074
+    }
+
+    const selectedConversionFactor = conversionFactors[group.name] ? conversionFactors[group.name] : 0
+    const calculatedCO2e = (group.totalUnits * selectedConversionFactor) / 1000
+    group.co2e = calculatedCO2e
+
+    this.initCo2eBreakdown()
+    this.initCo2eScope()
+
+  }
 
   filterSicCode(event: AutoCompleteCompleteEvent) {
     let filtered: any[] = [];
@@ -1109,7 +1172,6 @@ export class PetLoginProtected implements OnInit {
     this.getCompanies()
     this.getProductivityData()
   }
-
 
 
 }
