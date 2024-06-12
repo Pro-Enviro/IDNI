@@ -689,8 +689,8 @@ a{
   display:none;
 }
 .showMenu{
-  width: 6.80%;
-  padding-right: 20px;
+  width: 7%;
+  padding-right: 6px;
 }
 
   @media screen and (min-width: 200px) and (max-width:1080px) {
@@ -1232,8 +1232,8 @@ a{
   }
 
 @media screen and (max-width: 1780px) and (min-width: 1440px){
-  .sidenav {
-    width: 140%;
-  }
+  //.sidenav {
+  //  width: 140%;
+  //}
 }
 
