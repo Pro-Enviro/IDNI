@@ -126,8 +126,8 @@ export class PetLoginProtected implements OnInit {
   productivityPercentile: string = ''
   chartOptions!: EChartsOption | null;
   gaugeChartOptions!: EChartsOption | null;
-  pieChart1!: EChartsOption | null;
-  pieChart2!: EChartsOption | null;
+  co2eBreakdown!: EChartsOption | null;
+  co2eScope!: EChartsOption | null;
   chartData: [string, (string | number)][] | null = []
   markStart: number | undefined
   markEnd: number | undefined
@@ -222,8 +222,8 @@ export class PetLoginProtected implements OnInit {
     this.chartData = null
     this.chartOptions = null;
     this.gaugeChartOptions = null;
-    this.pieChart1 = null;
-    this.pieChart2 = null;
+    this.co2eBreakdown = null;
+    this.co2eScope = null;
   }
 
   fillTable = (petData: PetToolData) => {
@@ -577,48 +577,48 @@ export class PetLoginProtected implements OnInit {
         this.markEnd = 1
         this.productivityPercentile = '10th Percentile'
         this.initChartGauge(10)
-        this.initPieChart1(10)
-        this.initPieChart2(10)
+        this.initCo2eBreakdown(10)
+        this.initCo2eScope(10)
         break;
       case 1 :
         this.markStart = 0
         this.markEnd = 2
         this.productivityPercentile = '25th Percentile'
         this.initChartGauge(25)
-        this.initPieChart1(25)
-        this.initPieChart2(25)
+        this.initCo2eBreakdown(25)
+        this.initCo2eScope(25)
         break;
       case 2:
         this.markStart = 0
         this.markEnd = 3
         this.productivityPercentile = '50th Percentile'
         this.initChartGauge(50)
-        this.initPieChart1(50)
-        this.initPieChart2(50)
+        this.initCo2eBreakdown(50)
+        this.initCo2eScope(50)
         break;
       case 3:
         this.markStart = 0
         this.markEnd = 4
         this.productivityPercentile = '75th Percentile'
         this.initChartGauge(75)
-        this.initPieChart1(75)
-        this.initPieChart2(75)
+        this.initCo2eBreakdown(75)
+        this.initCo2eScope(75)
         break;
       case 4:
         this.markStart = 0
         this.markEnd = 5
         this.productivityPercentile = '90th Percentile'
         this.initChartGauge(90)
-        this.initPieChart1(90)
-        this.initPieChart2(90)
+        this.initCo2eBreakdown(90)
+        this.initCo2eScope(90)
         break;
       default:
         this.markStart = 0
         this.markEnd = 0
         this.productivityPercentile = ''
         this.initChartGauge(0)
-        this.initPieChart1(0)
-        this.initPieChart2(0)
+        this.initCo2eBreakdown(0)
+        this.initCo2eScope(0)
         break;
     }
 
@@ -897,8 +897,8 @@ export class PetLoginProtected implements OnInit {
   }
 
 
-  initPieChart1 = (pieOneNum:number) => {
-    this.pieChart1 = {
+  initCo2eBreakdown = (pieOneNum:number) => {
+    this.co2eBreakdown = {
       title: {
         text: 'Breakdown of CO2e',
         left: 'center',
@@ -953,8 +953,8 @@ export class PetLoginProtected implements OnInit {
     };
   }
 
-  initPieChart2 = (pieTwoNum:number) => {
-    this.pieChart2 = {
+  initCo2eScope = (pieTwoNum:number) => {
+    this.co2eScope = {
       title: {
         text: 'CO2e by Scope',
         left: 'center',

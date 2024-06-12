@@ -451,18 +451,18 @@
       <div class="grid">
         <div class="xl:col-6 lg:col-12 md:col-12">
           <p-card>
-            @if(pieChart1){
+            @if(co2eBreakdown){
               <p class="text-xs mb-4">Source: ONS by sector (latest year: 2021)</p>
             }
-            <div echarts [options]="pieChart1" style="max-height: 600px; height: 600px"></div>
+            <div echarts [options]="co2eBreakdown" style="max-height: 600px; height: 600px"></div>
           </p-card>
         </div>
         <div class="xl:col-6 lg:col-12 md:col-12">
           <p-card>
-            @if(pieChart2){
+            @if(co2eScope){
               <p class="text-xs mb-4">Source: ONS by sector (latest year: 2021)</p>
             }
-            <div echarts [options]="pieChart2" style="max-height: 600px; height: 600px"></div>
+            <div echarts [options]="co2eScope" style="max-height: 600px; height: 600px"></div>
           </p-card>
         </div>
       </div>
