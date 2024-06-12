@@ -33,6 +33,22 @@ export class GenerateReportComponent implements OnInit {
   changeOptions: any[] = ['Behavioural', 'Upgrades', 'Changes to existing technology', 'Improvements to building fabric', 'Resource efficiency', 'Other']
   percentOptions: any[] = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10]
   isConsultant: boolean = false;
+  typeTotals: any[] = []
+  strOptions =  {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  };
+  noDecimalsString  =  {
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+  }
+  oneDecimalString = {
+    maximumFractionDigits: 1,
+    minimumFractionDigits: 1,
+  }
+  totalConsumption: number = 0;
+  totalCost: number = 0 ;
+  totalEmissions: number = 0;
 
 
   constructor(
@@ -296,6 +312,38 @@ export class GenerateReportComponent implements OnInit {
       error: (error: any) => console.log(error),
     })
   }
+
+  calculateConsumptionPercent = (typeTotal: any) => {
+    const percent = (parseFloat(typeTotal.consumption) / this.totalConsumption) * 100
+    return percent.toFixed(1)
+  }
+
+  calculateCostPercent = (typeTotal: any) => {
+    if (typeTotal.cost === 0 || isNaN(typeTotal.cost)) return 0
+
+    const percent = (parseFloat(typeTotal.cost) / this.totalCost) * 100
+    return percent.toFixed(1)
+  }
+
+  calculateEmissions = (typeTotal: any) => {
+    const data = (parseFloat(typeTotal.consumption) * parseFloat(typeTotal.conversionFactor)) / 1000
+
+    let strOptions = this.strOptions
+
+    // To handle small amounts
+    if (data < 0.001) strOptions = {
+      minimumFractionDigits: 4,
+      maximumFractionDigits: 4
+    }
+
+    return data.toLocaleString('en-US', strOptions)
+  }
+
+  calculateEmissionsPercent = (typeTotal: any) => {
+    const percent = ((typeTotal.emissions / 1000) / this.totalEmissions) * 100
+    return percent.toFixed(1)
+  }
+
 
   ngOnInit(): void {
     this.getCompanies();
