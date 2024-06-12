@@ -578,6 +578,7 @@ export class PetLoginProtected implements OnInit {
         this.productivityPercentile = '10th Percentile'
         this.initChartGauge(10)
         this.initPieChart1(10)
+        this.initPieChart2(10)
         break;
       case 1 :
         this.markStart = 0
@@ -585,6 +586,7 @@ export class PetLoginProtected implements OnInit {
         this.productivityPercentile = '25th Percentile'
         this.initChartGauge(25)
         this.initPieChart1(25)
+        this.initPieChart2(25)
         break;
       case 2:
         this.markStart = 0
@@ -592,6 +594,7 @@ export class PetLoginProtected implements OnInit {
         this.productivityPercentile = '50th Percentile'
         this.initChartGauge(50)
         this.initPieChart1(50)
+        this.initPieChart2(50)
         break;
       case 3:
         this.markStart = 0
@@ -599,6 +602,7 @@ export class PetLoginProtected implements OnInit {
         this.productivityPercentile = '75th Percentile'
         this.initChartGauge(75)
         this.initPieChart1(75)
+        this.initPieChart2(75)
         break;
       case 4:
         this.markStart = 0
@@ -606,6 +610,7 @@ export class PetLoginProtected implements OnInit {
         this.productivityPercentile = '90th Percentile'
         this.initChartGauge(90)
         this.initPieChart1(90)
+        this.initPieChart2(90)
         break;
       default:
         this.markStart = 0
@@ -613,6 +618,7 @@ export class PetLoginProtected implements OnInit {
         this.productivityPercentile = ''
         this.initChartGauge(0)
         this.initPieChart1(0)
+        this.initPieChart2(0)
         break;
     }
 
@@ -877,7 +883,7 @@ export class PetLoginProtected implements OnInit {
           },
           detail: {
             valueAnimation: true,
-            formatter: '{value}'
+            formatter: '{value}',
           },
           data: [
             {
@@ -939,10 +945,10 @@ export class PetLoginProtected implements OnInit {
         },
       ],
       color: [
-        '#3fa8ac',
+        '#0787c2',
         '#72ac3f',
         '#bed8a5',
-        '#006633',
+        '#24b7f2',
       ]
     };
   }
@@ -995,10 +1001,10 @@ export class PetLoginProtected implements OnInit {
         },
       ],
       color: [
-        '#3fa8ac',
-        '#72ac3f',
-        '#bed8a5',
-        '#006633',
+        '#50a3ba',
+        '#327088',
+        '#dbeef2',
+        '#2e5c70',
       ]
     };
   }
