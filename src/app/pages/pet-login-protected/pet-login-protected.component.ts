@@ -1015,6 +1015,36 @@ export class PetLoginProtected implements OnInit {
   }
 
 
+  calculateCo2e = (group: any) => {
+    if (group.parent.name !== 'Cost of Energy') return;
+    if (group.unitsUom !== 'kWh') return;
+
+    // Find Fuel Type in object
+
+
+    const fuelTypes: { [key: string]: number } = {
+      'Electricity': 0.22499,
+      'Gas': 0.18293,
+      'Burning oil (Kerosene)': 0.24677,
+      'Diesel (avg biofuel blend)': 0.23908,
+      'Petrol (avg biofuel blend)': 0.22166,
+      "Gas oil (Red diesel)": 0.25650,
+      'LPG': 0.21449,
+      'Propane': 0.21410,
+      'Butane': 0.22241,
+      'Biogas': 0.00022,
+      'Biomethane (compressed)': 0.00038,
+      'Wood Chips': 0.01074
+    }
+
+    const selectedConversionFactor = fuelTypes[group.name] ? fuelTypes[group.name] : 0
+    const calculatedCO2e = (group.totalUnits * selectedConversionFactor) / 1000
+    group.co2e = calculatedCO2e
+
+    console.log(group.co2e)
+  }
+
+
   ngOnInit() {
     this.getCompanies()
     this.getProductivityData()
