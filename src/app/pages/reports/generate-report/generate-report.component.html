@@ -130,7 +130,12 @@
 
 
   <p-panel header="Breakdown of Energy Costs" [style]="{marginTop: '1rem'}">
-    <p-table [value]="typeTotals" styleClass="p-datatable-sm">
+    <p-table [value]="typeTotals" styleClass="p-datatable-sm" [columns]="cols" >
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-end p-4">
+          <button pButton class="btn-dark" icon="pi pi-file-excel" (click)="exportExcelForBreakdownTable()"></button>
+        </div>
+      </ng-template>
       <ng-template pTemplate="header">
         <tr>
           <th class="font-semibold text-sm">Utility</th>

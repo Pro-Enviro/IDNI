@@ -50,6 +50,40 @@ export class GenerateReportComponent implements OnInit {
   totalCost: number = 0 ;
   totalEmissions: number = 0;
   fuels: any = [];
+  exportColumns: any[] = [];
+
+
+  cols = [
+    {
+      field: 'Utility',
+      header: 'Utility'
+    },
+    {
+      field: 'Consumption (kWh)',
+      header: 'Consumption (kWh)'
+    },
+    {
+      field: 'Consumption %',
+      header: 'Consumption %'
+    },
+    {
+      field: 'Cost £',
+      header: 'Cost £'
+    },
+    {
+      field: 'Cost %',
+      header: 'Cost %'
+    },
+    {
+      field: 'Carbon Emissions CO2e (tonnes)',
+      header: 'Carbon Emissions CO2e (tonnes)'
+    },
+    {
+      field: 'Carbon Emissions %',
+      header: 'Carbon Emissions %'
+    }
+
+  ]
 
 
   conversionFactors: any = {
@@ -73,7 +107,9 @@ export class GenerateReportComponent implements OnInit {
     private msg: MessageService,
     private track: EnvirotrackService,
     private db: DbService,
-  ) {}
+  ) {
+
+  }
 
   getTotal = (propertyToTotal: string) => {
     return this.recommendations.map((rec: any) => !isNaN(rec[propertyToTotal]) ? parseFloat(rec[propertyToTotal]) : 0)
@@ -221,6 +257,7 @@ export class GenerateReportComponent implements OnInit {
     this.typeTotals = extractedData
 
     this.recalculateTotals()
+
   }
 
 
@@ -425,6 +462,43 @@ export class GenerateReportComponent implements OnInit {
     const percent = ((typeTotal.emissions / 1000) / this.totalEmissions) * 100
     return percent.toFixed(1)
   }
+
+  exportExcelForBreakdownTable = () => {
+
+    let array = this.typeTotals.map(row => {
+      return {
+        'Utility': row.type,
+        'Consumption (kWh)': row.consumption,
+        'Consumption %': this.calculateConsumptionPercent(row),
+        'Cost £': row.cost,
+        'Cost %': this.calculateCostPercent(row),
+        'Carbon Emissions Co2e (tonnes)': row.emissions / 1000,
+        'Carbon Emissions %': this.calculateEmissionsPercent(row),
+      }
+    });
+
+    let totalsRow = {
+      'Utility': 'Total',
+      'Consumption (kWh)': this.totalConsumption,
+      'Consumption %': '',
+      'Cost £': this.totalCost,
+      'Cost %': '',
+      'Carbon Emissions Co2e (tonnes)': this.totalEmissions,
+      'Carbon Emissions %': ''
+    };
+
+
+    array.push(totalsRow);
+
+
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(array);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, `Breakdown of Energy Costs ${moment(new Date()).format('DD-MM-YYYY')}`);
+    });
+  }
+
 
 
   ngOnInit(): void {
