@@ -265,12 +265,8 @@ export class PetLoginProtected implements OnInit {
     const otherCosts = JSON.parse(petData.other_external_costs)
 
 
-
-
-
-
     this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waterUsage, ...waste, ...roadFreight, ...otherFreight, ...companyTravel, ...staffCommute, ...otherCosts)
-    // console.log(this.data)
+    // console.log(this.data)M
 
     this.calculateProductivityScore()
 
@@ -283,7 +279,6 @@ export class PetLoginProtected implements OnInit {
 
 
   generateNewTable = () => {
-
     this.resetTableValues()
 
     this.generateClasses('Cost of Energy', TableRow, energyNames)
@@ -895,7 +890,7 @@ export class PetLoginProtected implements OnInit {
   initCo2eBreakdown = () => {
 
     // filter this.data by total units if kwh
-    const getAllKWhSelected = this.data.filter((fuelType: any) => fuelType.unitsUom === 'kWh')
+    const getAllKWhSelected = this.data.filter((fuelType: any) => fuelType.unitsUom === 'kWh' && fuelType.parent.name === 'Cost of Energy')
     if (!getAllKWhSelected.length) return;
 
 
