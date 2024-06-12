@@ -11,70 +11,14 @@
     <div class="top-image-line"></div>
   </div>
 
+<!--BURGER MENU-->
   <div class="dashboard-menu mt-5">
     <div class="flex justify-content-start p-2">
         <p-button (click)="sideMenu = true" icon="pi pi-home" styleClass="btn-outline ml-3" label="Menu"></p-button>
     </div>
   </div>
 
-<!--<div class="flex justify-content-start p-2" style="background-color: #fdfdfd">-->
-<!--  <div class="relative">-->
-<!--    <div class="h-full lg:w-8" [class]="showMenu ? 'showMenu' : ''">-->
-<!--      <div class="sidenav">-->
-<!--       <div class="flex justify-content-end mb-3">-->
-<!--           @if (showMenu){-->
-<!--           <span class="material-symbols-outlined flex" (click)="showMenu = !showMenu">arrow_circle_right</span>-->
-<!--           }@else{-->
-<!--           <span class="material-symbols-outlined" (click)="showMenu = !showMenu">arrow_circle_left</span>-->
-<!--           }-->
-<!--       </div>-->
-<!--        <div class="flex justify-content-start mt-4">-->
-<!--            @if(!showMenu){-->
-<!--              <img src="https://id-ni.eco/assets/images/logos/idni-logo.svg" alt="idni-logo" style="height:80px">-->
-<!--            } @else{-->
-<!--              <img src="https://id-ni.eco/assets/images/logos/idni-favicon-svg.svg" alt="idni-logo"  style="height:70px">-->
-<!--            }-->
-<!--        </div>-->
-<!--        <p-divider></p-divider>-->
-<!--        <div class="flex flex-column envirotrack-menu">-->
-<!--          <p-panelMenu [model]="showMenu ? miniMenu : menuBar"></p-panelMenu>-->
-<!--          <div>-->
-<!--            <p-divider></p-divider>-->
-<!--            @if(!showMenu){-->
-<!--              <p-panelMenu [model]="profileMenu"></p-panelMenu>-->
-<!--            }@else{-->
-<!--              <p-panelMenu [model]="profileMiniMenu"></p-panelMenu>-->
-<!--            }-->
-<!--            <div class="flex flex-column mt-5">-->
-<!--              <div class="pt-4">-->
-<!--                @if(!showMenu){-->
-<!--                  <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple label="Knowledge Platform" icon="pi pi-globe" class="btn-dark"></button></a>-->
-<!--                }@else{-->
-<!--                  <a href="https://idni.eco/" style="text-decoration: none" class="a-tag-no-style"><button pButton pRipple icon="pi pi-globe" class="btn-dark"></button></a>-->
-<!--                }-->
-<!--              </div>-->
-<!--              <div class="pt-4">-->
-<!--                @if(!showMenu){-->
-<!--                  <button pButton pRipple label="Log Out" icon="pi pi-sign-out" class="btn-style" (click)="handleLogOut()"></button>-->
-<!--                }@else{-->
-<!--                  <button pButton pRipple icon="pi pi-sign-out" class="btn-style" (click)="handleLogOut()"></button>-->
-<!--                }-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--    <div class="dashboard-items">-->
-<!--      <section class="pr-5">-->
-<!--&lt;!&ndash;    <app-stat-containers-tpl></app-stat-containers-tpl>&ndash;&gt;-->
-<!--           <p-messages *ngIf="showWarningBanner" [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>-->
-<!--           <router-outlet></router-outlet>-->
-<!--      </section>-->
-<!--    </div>-->
-<!-- </div>-->
-
+<!--  DASHBOARD MENU-->
   <div class="grid p-2" style="background-color: #fdfdfd">
     <div class="col-2 something" [class]="showMenu ? 'showMenu' : ''">
       <div class="h-full">
@@ -133,6 +77,7 @@
     </div>
   </div>
 
+<!--  BURGER MENU SIDEBAR-->
   <p-sidebar [(visible)]="sideMenu" styleClass="xl:w-4 lg:w-5 md:w-7">
   <app-sidebar-menu></app-sidebar-menu>
   </p-sidebar>
