@@ -110,6 +110,12 @@ a{
 }
   //----------------------------------------------------BUTTON----------------------------------------------------------
 
+.btn-style-none{
+  background: none;
+  border: 0px;
+  padding-bottom: 15px;
+}
+
 .btn-select{
   .p-selectbutton .p-button.p-highlight{
     background-color: $primeColor;

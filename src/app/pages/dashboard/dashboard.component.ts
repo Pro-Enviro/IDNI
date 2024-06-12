@@ -24,6 +24,7 @@ import {AuthService} from "../../_services/users/auth.service";
 import {from} from "rxjs";
 import { createDirectus, authentication, rest, logout } from '@directus/sdk';
 import {Router} from "@angular/router";
+import {SidebarMenuComponent} from "./sidebar-menu/sidebar-menu.component";
 
 
 
@@ -52,7 +53,8 @@ import {Router} from "@angular/router";
     MessagesModule,
     NgIf,
     DialogModule,
-    MenuModule
+    MenuModule,
+    SidebarMenuComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
