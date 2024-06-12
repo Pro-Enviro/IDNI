@@ -454,9 +454,15 @@
             @if(pieChart1){
               <p class="text-xs">Source: ONS by sector (latest year: 2021)</p>
             }
-            <div>
-              <div echarts [options]="pieChart1" style="max-height: 600px; height: 600px"></div>
-            </div>
+            <div echarts [options]="pieChart1" style="max-height: 600px; height: 600px"></div>
+          </p-card>
+        </div>
+        <div class="xl:col-6 lg:col-12 md:col-12">
+          <p-card>
+            @if(pieChart2){
+              <p class="text-xs">Source: ONS by sector (latest year: 2021)</p>
+            }
+            <div echarts [options]="pieChart2" style="max-height: 600px; height: 600px"></div>
           </p-card>
         </div>
       </div>

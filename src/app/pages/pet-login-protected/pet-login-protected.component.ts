@@ -127,6 +127,7 @@ export class PetLoginProtected implements OnInit {
   chartOptions!: EChartsOption | null;
   gaugeChartOptions!: EChartsOption | null;
   pieChart1!: EChartsOption | null;
+  pieChart2!: EChartsOption | null;
   chartData: [string, (string | number)][] | null = []
   markStart: number | undefined
   markEnd: number | undefined
@@ -222,6 +223,7 @@ export class PetLoginProtected implements OnInit {
     this.chartOptions = null;
     this.gaugeChartOptions = null;
     this.pieChart1 = null;
+    this.pieChart2 = null;
   }
 
   fillTable = (petData: PetToolData) => {
@@ -733,6 +735,90 @@ export class PetLoginProtected implements OnInit {
     })
   }
 
+
+  initChart = () => {
+    this.chartOptions = {
+      legend: {
+        show: true,
+      },
+      grid: {
+        left: '140'
+      },
+      title: {
+        text: `Percentiles for Sector ${this.sicCodeLetter}`,
+        left: 'center',
+
+      },
+      xAxis: {
+        type: 'category',
+        name: 'Percentile',
+        boundaryGap: false
+      },
+      tooltip: {
+        extraCssText: 'text-transform: capitalize',
+        trigger: 'item',
+        formatter: `{a} <br />{b}: {c}`,
+        axisPointer: {
+          type: 'cross',
+          label: {
+            backgroundColor: '#6a7985'
+          }
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {
+            show: true
+          }
+        }
+      },
+      yAxis: {
+        type: 'value',
+        name: 'Labour Productivity',
+        nameLocation: "middle",
+        nameTextStyle: {
+          fontSize: 16,
+          fontWeight: "bold"
+        },
+        nameGap: 70
+      },
+      visualMap: {
+        type: 'piecewise',
+        show: false,
+        dimension: 0,
+        seriesIndex: 0,
+        pieces: [
+          {
+            gt: this.markStart,
+            lt: this.markEnd,
+            color: 'rgba(0, 0, 180, 0.4)'
+          },
+
+        ]
+      },
+      series: [
+        {
+          type: 'line',
+          connectNulls: true,
+          smooth: 0.2,
+          symbol: 'none',
+          lineStyle: {
+            color: '#5470C6',
+            width: 3
+          },
+          markLine: {
+            symbol: ['none', 'none'],
+            label: {show: false},
+            data: [{xAxis: 1}, {xAxis: 3}, {xAxis: 5}, {xAxis: 7}]
+          },
+          areaStyle: {},
+          data: this.chartData as Array<[string, (string | number)]>
+        }
+      ]
+    }
+  }
+
   initChartGauge = (gaugeNum:number) => {
     this.gaugeChartOptions = {
       tooltip: {
@@ -861,89 +947,60 @@ export class PetLoginProtected implements OnInit {
     };
   }
 
-
-
-  initChart = () => {
-    this.chartOptions = {
-      legend: {
-        show: true,
-      },
-      grid: {
-        left: '140'
-      },
+  initPieChart2 = (pieTwoNum:number) => {
+    this.pieChart2 = {
       title: {
-        text: `Percentiles for Sector ${this.sicCodeLetter}`,
+        text: 'Co2e Pie Chart - Second',
         left: 'center',
-
+        top: 30,
       },
-      xAxis: {
-        type: 'category',
-        name: 'Percentile',
-        boundaryGap: false
+      legend: {
+        orient: 'vertical',
+        left: 'left'
       },
       tooltip: {
         extraCssText: 'text-transform: capitalize',
         trigger: 'item',
-        formatter: `{a} <br />{b}: {c}`,
-        axisPointer: {
-          type: 'cross',
-          label: {
-            backgroundColor: '#6a7985'
-          }
-        }
+        formatter: '{a} <br />{b}: {c} ({d}%)'
       },
       toolbox: {
         show: true,
         feature: {
           saveAsImage: {
-            show: true
+            show: true,
+            name: 'Name',
+            type: 'png'
           }
         }
       },
-      yAxis: {
-        type: 'value',
-        name: 'Labour Productivity',
-        nameLocation: "middle",
-        nameTextStyle: {
-          fontSize: 16,
-          fontWeight: "bold"
-        },
-        nameGap: 70
-      },
-      visualMap: {
-        type: 'piecewise',
-        show: false,
-        dimension: 0,
-        seriesIndex: 0,
-        pieces: [
-          {
-            gt: this.markStart,
-            lt: this.markEnd,
-            color: 'rgba(0, 0, 180, 0.4)'
-          },
-
-        ]
-      },
       series: [
         {
-          type: 'line',
-          connectNulls: true,
-          smooth: 0.2,
-          symbol: 'none',
-          lineStyle: {
-            color: '#5470C6',
-            width: 3
+          name: 'Co2e Data',
+          type: 'pie',
+          radius: [20,180],
+          itemStyle: {
+            borderRadius: 5
           },
-          markLine: {
-            symbol: ['none', 'none'],
-            label: {show: false},
-            data: [{xAxis: 1}, {xAxis: 3}, {xAxis: 5}, {xAxis: 7}]
+          emphasis: {
+            label: {
+              show: true
+            }
           },
-          areaStyle: {},
-          data: this.chartData as Array<[string, (string | number)]>
-        }
+          data: [
+            {
+              value:pieTwoNum,
+              name:'Chart'
+            }
+          ]
+        },
+      ],
+      color: [
+        '#3fa8ac',
+        '#72ac3f',
+        '#bed8a5',
+        '#006633',
       ]
-    }
+    };
   }
 
   savePETdata = () => {
