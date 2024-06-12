@@ -126,7 +126,7 @@
           <div class="flex justify-content-end p-4">
             <button pButton class="btn-dark" icon="pi pi-file-excel" (click)="exportExcelForBreakdownTable()"></button>
           </div>
-            <p-table [value]="typeTotals" styleClass="p-datatable-sm" [columns]="cols" >
+            <p-table [value]="typeTotals" styleClass="p-datatable-sm" [columns]="cols" [tableStyle]="{'min-width': '60rem'}">
               <ng-template pTemplate="caption">
                 <h3 class="p-3">Breakdown of Energy Costs</h3>
               </ng-template>
