@@ -178,7 +178,6 @@ export class GenerateReportComponent implements OnInit {
 
           if (res?.data?.fuel_data) {
             this.fuels = JSON.parse(res.data?.fuel_data)
-            console.log(this.fuels)
           }
         },
         error: (err) => console.log(err),
@@ -208,7 +207,6 @@ export class GenerateReportComponent implements OnInit {
         if (findUnit !== -1) unit = row[findUnit].value
       })
 
-      console.log(this.conversionFactors[fuel.type])
 
       return {
         type: fuel.type,
