@@ -265,11 +265,20 @@ export class PetLoginProtected implements OnInit {
     const otherCosts = JSON.parse(petData.other_external_costs)
 
 
+
+
+
+
     this.data.push(...energy, ...rawMats, ...boughtInGoods, ...waterUsage, ...waste, ...roadFreight, ...otherFreight, ...companyTravel, ...staffCommute, ...otherCosts)
     // console.log(this.data)
 
     this.calculateProductivityScore()
 
+    const findEnergyCO2e = energy.find((fuelType: any) => fuelType.co2e > 0)
+    if (findEnergyCO2e.co2e) {
+      this.initCo2eScope()
+      this.initCo2eBreakdown()
+    }
   }
 
 
