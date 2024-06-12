@@ -689,7 +689,7 @@ a{
   display:none;
 }
 .showMenu{
-  width: 7%;
+  width: 5%;
   padding-right: 6px;
 }
 
@@ -1231,9 +1231,10 @@ a{
     }
   }
 
-@media screen and (max-width: 1780px) and (min-width: 1440px){
-  //.sidenav {
-  //  width: 140%;
-  //}
+@media screen and (max-width: 1920px) and (min-width: 1440px){
+  .showMenu{
+    width: 8%;
+    padding-right: 6px;
+  }
 }
 

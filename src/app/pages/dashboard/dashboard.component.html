@@ -76,7 +76,7 @@
 <!-- </div>-->
 
   <div class="grid p-2" style="background-color: #fdfdfd">
-    <div class="col-2" [class]="showMenu ? 'showMenu' : ''">
+    <div class="col-2 something" [class]="showMenu ? 'showMenu' : ''">
       <div class="h-full">
         <div class="sidenav">
           <div class="flex justify-content-end mb-3">
@@ -90,7 +90,7 @@
             @if(!showMenu){
               <img src="https://id-ni.eco/assets/images/logos/idni-logo.svg" alt="idni-logo" style="height:80px">
             } @else{
-              <img src="https://id-ni.eco/assets/images/logos/idni-favicon-svg.svg" alt="idni-logo"  style="height:60px">
+              <img src="https://id-ni.eco/assets/images/logos/idni-favicon-svg.svg" alt="idni-logo"  style="height:70px">
             }
           </div>
           <p-divider></p-divider>
@@ -133,7 +133,7 @@
     </div>
   </div>
 
-  <p-sidebar [(visible)]="sideMenu" styleClass="w-6">
+  <p-sidebar [(visible)]="sideMenu" styleClass="xl:w-4 lg:w-5 md:w-7">
   <app-sidebar-menu></app-sidebar-menu>
   </p-sidebar>
 
