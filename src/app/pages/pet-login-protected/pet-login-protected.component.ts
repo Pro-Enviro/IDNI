@@ -970,8 +970,6 @@ export class PetLoginProtected implements OnInit {
 
     const allOtherFuelTypes = getAllKWhSelected.filter((fuelType: any) => !fuelType.name.toLowerCase().includes('electricity'))
 
-    console.log(allOtherFuelTypes)
-
     let mappedScope1 = []
     if (allOtherFuelTypes.length) {
       mappedScope1 = allOtherFuelTypes.reduce((acc: any, fuelType: any) => {

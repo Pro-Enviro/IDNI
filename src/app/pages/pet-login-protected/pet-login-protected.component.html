@@ -248,7 +248,7 @@
                             [(ngModel)]="groups.fuelType"></p-dropdown>
               </td>
               <td *ngIf="groups.unitsUom">
-                <p-dropdown [options]="unitsUom" [(ngModel)]="groups.unitsUom" class="p-inputtext-sm"
+                <p-dropdown [options]="unitsUom" [(ngModel)]="groups.unitsUom" class="p-inputtext-sm" (ngModelChange)="calculateCo2e(groups)"
                             [style]="{width: '120px'}"></p-dropdown>
               </td>
 
