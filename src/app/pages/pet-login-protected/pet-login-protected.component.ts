@@ -1115,7 +1115,7 @@ export class PetLoginProtected implements OnInit {
 
   calculateCo2e = (group: any) => {
 
-    console.log(group)
+
 
     if (group.parent.name !== 'Cost of Energy') return;
     if (group.unitsUom !== 'kWh') return;
