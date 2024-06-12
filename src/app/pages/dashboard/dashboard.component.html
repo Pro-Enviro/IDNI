@@ -25,9 +25,9 @@
         <div class="sidenav">
           <div class="flex justify-content-end mb-3">
             @if (showMenu){
-              <span class="material-symbols-outlined flex" (click)="showMenu = !showMenu">arrow_circle_right</span>
+              <span class="material-symbols-outlined flex" (click)="showMenu = !showMenu" style="cursor:pointer">arrow_circle_right</span>
             }@else{
-              <span class="material-symbols-outlined" (click)="showMenu = !showMenu">arrow_circle_left</span>
+              <span class="material-symbols-outlined" (click)="showMenu = !showMenu" style="cursor:pointer">arrow_circle_left</span>
             }
           </div>
           <div class="flex justify-content-start mt-4">
