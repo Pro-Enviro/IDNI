@@ -101,7 +101,6 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   initChart = () => {
     // @ts-ignore
 
-
     this.chartOptions = {
       tooltip: {
         extraCssText: 'text-transform: capitalize',
@@ -115,7 +114,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
 
         }
       },
-      //width: this.screenWidth >= 1441 ? 950 : this.screenWidth >= 1281 ? 500 : 380,
+      width: this.screenWidth >= 1441 ? 950 : this.screenWidth >= 1281 ? 500 : 380,
       title: {
         text: 'Electricity Consumption, kWh split by day of the week',
         left: 'center',

@@ -80,7 +80,20 @@ export class EnvirotrackReportBarComponent implements OnInit {
   // }
   initChart = () => {
 
-    this.chartOptions = {
+    console.log(this.chartData)
+
+    this.chartX = this.chartX.map((date: any) => moment(date).format('DD/MM/YYYY'));
+
+    this.chartData = this.chartData.map((date: any) => {
+     console.log(date)
+      date[0] = moment(date[0]).format('DD/MM/YYYY');
+     date[1] = date[1].toFixed(2)
+     return date
+
+    })
+
+
+      this.chartOptions = {
       legend: {
         show: true,
       },
@@ -121,7 +134,9 @@ export class EnvirotrackReportBarComponent implements OnInit {
       tooltip: {
         extraCssText: 'text-transform: capitalize',
         trigger: 'item',
-        formatter: `{a} <br />{b}: {c}`,
+        formatter: function (params: any) {
+          return `<p>${params.data[0]}: ${params.data[1]}</p>`
+        },
         axisPointer: {
           type: 'cross',
           label: {
