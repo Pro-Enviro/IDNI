@@ -82,9 +82,7 @@ export class EnvirotrackReportBase1Component implements OnInit {
       tooltip: {
         extraCssText: 'text-transform: capitalize',
         trigger: 'item',
-        formatter: function (params: any) {
-          return `<p>${params.data[0]}: ${params.data[1]}</p>`
-        },
+        formatter: `{b}:{c}`,
         axisPointer: {
           type: 'cross',
           label: {

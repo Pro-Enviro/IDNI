@@ -121,9 +121,7 @@ export class EnvirotrackReportBarComponent implements OnInit {
       tooltip: {
         extraCssText: 'text-transform: capitalize',
         trigger: 'item',
-        formatter: function (params: any) {
-          return `<p>${params.data[0]}: ${params.data[1]}</p>`
-        },
+        formatter: `{a} <br />{b}: {c}`,
         axisPointer: {
           type: 'cross',
           label: {
