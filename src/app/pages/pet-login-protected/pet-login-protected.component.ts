@@ -622,12 +622,12 @@ export class PetLoginProtected implements OnInit {
   }
 
   calculateGroupTotalCost = (group: any) => {
+    if (!group?.parent) return 0;
 
     if (group.parent.name === 'Cost of Energy') {
       return this.calculateCo2e(group)
     }
 
-    if (!group?.parent) return 0;
     const parentName = group?.parent.name
     const total = this.data.filter((item: any) => item.parent.name === parentName).reduce((acc: number, curr: any) => {
       if (curr.cost !== undefined && curr.cost !== null) {
@@ -646,7 +646,6 @@ export class PetLoginProtected implements OnInit {
       }
       return item
     })
-
 
     return total !== undefined ? total : 0
   }
@@ -1147,8 +1146,6 @@ export class PetLoginProtected implements OnInit {
 
   calculateCo2e = (group: any) => {
 
-
-
     if (group.parent.name !== 'Cost of Energy') return;
     if (group.unitsUom !== 'kWh') return;
 
@@ -1178,6 +1175,7 @@ export class PetLoginProtected implements OnInit {
     const selectedConversionFactor = conversionFactors[group.name] ? conversionFactors[group.name] : 0
     const calculatedCO2e = (group.totalUnits * selectedConversionFactor) / 1000
     group.co2e = calculatedCO2e
+
 
     this.initCo2eBreakdown()
     this.initCo2eScope()
