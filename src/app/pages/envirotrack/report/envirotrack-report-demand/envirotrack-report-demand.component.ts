@@ -231,6 +231,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
   }
 
   getAsc = (startDate: any, endDate: any) => {
+    console.log(startDate, endDate)
     this.asc = [];
 
     this.db.getASCData(this.selectedCompany).subscribe({
@@ -248,19 +249,19 @@ export class EnvirotrackReportDemandComponent implements OnInit {
             row.end_date = moment(row.end_date);
           })
 
+
           this.supply = this.supply.sort((a: any, b: any) => a.start_date.unix() - b.start_date.unix())
+
           this.supply.forEach((row: any) => {
-
             let checkStart = row.start_date.isBefore(moment(startDate, 'DD/MM/YYYY'))
-            this.asc.push([ checkStart ? startDate : row.start_date.format('DD/MM/YYYY'), row.asc],[ row.end_date.format('DD/MM/YYYY'), row.asc])
-
+            const formattedEndDate = row.end_date.format('DD/MM/YYYY')
+            this.asc.push([ checkStart ? startDate : row.start_date.format('DD/MM/YYYY'), row.asc],[formattedEndDate, row.asc])
           })
 
-          if (this.asc.length){
-            this.asc[this.asc.length-1][0] = endDate
-          }
-
-          this.initChart()
+          // if (this.asc.length){
+          //   this.asc[this.asc.length-1][0] = endDate
+            this.initChart()
+          // }
         }
       }
     })
@@ -337,6 +338,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
     this.chartData.forEach((row:any) => {
       this.chartX.push(row[0])
     })
+
     this.getAsc(this.chartX[0], this.chartX[this.chartX.length - 1])
     let arr: number[] = this.chartData.map((x:any) => x[2])
     this.max = Math.max(...arr)
