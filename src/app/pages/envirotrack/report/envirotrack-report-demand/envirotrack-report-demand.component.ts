@@ -231,7 +231,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
   }
 
   getAsc = (startDate: any, endDate: any) => {
-    console.log(startDate, endDate)
+
     this.asc = [];
 
     this.db.getASCData(this.selectedCompany).subscribe({
