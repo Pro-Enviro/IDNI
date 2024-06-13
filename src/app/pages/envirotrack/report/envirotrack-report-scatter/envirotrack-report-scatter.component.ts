@@ -163,7 +163,7 @@ export class EnvirotrackReportScatterComponent implements OnInit {
         extraCssText: 'text-transform: capitalize',
         trigger: 'item',
         formatter: function (params: any) {
-            return `<p class="bg-purple-500">${params.data[0]}: ${params.data[1]}</p>`
+            return `<p>${params.data[0]}: ${params.data[1]}</p>`
         },
         axisPointer: {
           type: 'cross',

@@ -79,6 +79,7 @@ export class EnvirotrackReportBarComponent implements OnInit {
   //   return data;
   // }
   initChart = () => {
+
     this.chartOptions = {
       legend: {
         show: true,
@@ -120,7 +121,9 @@ export class EnvirotrackReportBarComponent implements OnInit {
       tooltip: {
         extraCssText: 'text-transform: capitalize',
         trigger: 'item',
-        formatter: `{a} <br />{b}: {c}`,
+        formatter: function (params: any) {
+          return `<p>${params.data[0]}: ${params.data[1]}</p>`
+        },
         axisPointer: {
           type: 'cross',
           label: {
