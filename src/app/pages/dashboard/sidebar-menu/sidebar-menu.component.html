@@ -19,7 +19,7 @@
       <div [class]="dropMenu ? 'dropMenu' : '' ">
         <div class="flex flex-row">
           <li><span class="material-symbols-outlined">query_stats</span>Data</li>
-          <button class="btn-style-none" (click)="dropMenu = !dropMenu"><span class="material-symbols-outlined pt-2">arrow_drop_down</span></button>
+          <span class="material-symbols-outlined pt-2" (click)="dropMenu = !dropMenu" style="cursor:pointer">arrow_drop_down</span>
         </div>
         @if(dropMenu){
           <ul>
@@ -32,7 +32,7 @@
       <div [class]="helpMenu ? 'helpMenu' : '' ">
         <div class="flex flex-row">
           <li><span class="material-symbols-outlined">help</span>Help</li>
-          <button class="btn-style-none" (click)="helpMenu = !helpMenu"><span class="material-symbols-outlined pt-2">arrow_drop_down</span></button>
+          <span class="material-symbols-outlined pt-2" (click)="helpMenu = !helpMenu" style="cursor:pointer">arrow_drop_down</span>
         </div>
         @if(helpMenu){
           <ul class="pl-4">
@@ -45,7 +45,7 @@
       <div [class]="accountMenu ? 'accountMenu' : '' ">
         <div class="flex flex-row">
           <li><span class="material-symbols-outlined">manage_accounts</span> Account</li>
-          <button class="btn-style-none" (click)="accountMenu = !accountMenu"><span class="material-symbols-outlined pt-2">arrow_drop_down</span></button>
+          <span class="material-symbols-outlined pt-2" (click)="accountMenu = !accountMenu" style="cursor:pointer">arrow_drop_down</span>
         </div>
         @if(accountMenu){
           <ul class="pl-4">
