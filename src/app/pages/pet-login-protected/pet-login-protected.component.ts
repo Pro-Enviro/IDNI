@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {PanelModule} from 'primeng/panel';
 import {SelectButtonModule} from "primeng/selectbutton";
-import {TableModule} from "primeng/table";
+import {Table, TableModule} from "primeng/table";
 import {InputNumberModule} from "primeng/inputnumber";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
@@ -51,7 +51,6 @@ import {
 } from "./pet-tool-classes";
 import {AutoCompleteCompleteEvent} from "primeng/autocomplete";
 import {DividerModule} from "primeng/divider";
-import {map} from "rxjs";
 
 
 @Component({
@@ -624,13 +623,10 @@ export class PetLoginProtected implements OnInit {
   calculateGroupTotalCost = (group: any) => {
     if (!group?.parent) return 0;
 
-    if (group.parent.name === 'Cost of Energy') {
-      return this.calculateCo2e(group)
-    }
-
     if (group.parent.name === 'Cost of Raw Materials') {
       return this.calculateRawMaterials(group)
     }
+
 
     const parentName = group?.parent.name
     const total = this.data.filter((item: any) => item.parent.name === parentName).reduce((acc: number, curr: any) => {
@@ -650,6 +646,10 @@ export class PetLoginProtected implements OnInit {
       }
       return item
     })
+
+    if (group.parent.name === 'Cost of Energy') {
+      this.calculateCo2e(group)
+    }
 
     return total !== undefined ? total : 0
   }
