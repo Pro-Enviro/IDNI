@@ -1118,10 +1118,6 @@ export class PetLoginProtected implements OnInit {
     }
 
 
-    // console.log(this.selectedYear)
-    // console.log(objectToSave)
-    // return console.log(objectToSave)
-
     if (!this.selectedCompany) return;
 
     const token = this.storage.get('access_token');
@@ -1220,12 +1216,10 @@ export class PetLoginProtected implements OnInit {
     const calculatedCO2e = (group.totalUnits * selectedConversionFactor) / 1000
     group.co2e = calculatedCO2e
 
-
     this.initCo2eBreakdown()
     this.initCo2eScope()
 
   }
-
 
   filterSicCode(event: AutoCompleteCompleteEvent) {
     let filtered: any[] = [];
@@ -1244,64 +1238,6 @@ export class PetLoginProtected implements OnInit {
 
     this.filteredSicCodes = filtered;
 
-  }
-
-  calculateRawMaterials(group: any) {
-
-    const total = this.data.filter((item: any) => item.parent.name === 'Cost of Raw Materials').reduce((acc: number, curr: any) => {
-      if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined) {
-
-        return acc + (parseFloat(curr.cost) * parseFloat(curr.totalUnits))
-      } else {
-        return acc;
-      }
-    }, 0)
-
-
-    this.data = this.data.map((item: any) => {
-      if (item.parent.name === 'Cost of Raw Materials') {
-
-        console.log(item.parent.totalCost)
-        item.parent.totalCost = total;
-        if (this.employees > 0) {
-          item.parent.secondColumn = (total / this.employees).toFixed(2)
-        }
-      }
-
-      return item
-    })
-
-    return this.data;
-  }
-
-
-  calculateCo2e = (group: any) => {
-    if (group.parent.name !== 'Cost of Energy') return;
-    if (group.unitsUom !== 'kWh') return;
-
-    // Find Fuel Type in object
-
-
-    const fuelTypes: { [key: string]: number } = {
-      'Electricity': 0.22499,
-      'Gas': 0.18293,
-      'Burning oil (Kerosene)': 0.24677,
-      'Diesel (avg biofuel blend)': 0.23908,
-      'Petrol (avg biofuel blend)': 0.22166,
-      "Gas oil (Red diesel)": 0.25650,
-      'LPG': 0.21449,
-      'Propane': 0.21410,
-      'Butane': 0.22241,
-      'Biogas': 0.00022,
-      'Biomethane (compressed)': 0.00038,
-      'Wood Chips': 0.01074
-    }
-
-    const selectedConversionFactor = fuelTypes[group.name] ? fuelTypes[group.name] : 0
-    const calculatedCO2e = (group.totalUnits * selectedConversionFactor) / 1000
-    group.co2e = calculatedCO2e
-
-    console.log(group.co2e)
   }
 
 
