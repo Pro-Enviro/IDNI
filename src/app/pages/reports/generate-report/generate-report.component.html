@@ -1,23 +1,23 @@
 <section>
   <p-card styleClass="recom-charts" [style]="{ width: '80vw' }">
     <h3 class="title">Recommendation Section</h3>
-   <div class="grid">
-     <div class="lg:col-4 md:col-6">
+    <div class="grid">
+      <div class="lg:col-4 md:col-6">
 
-       @if(isConsultant){
-         <p-card styleClass="recm-select-panel" [style]="{ height: '100%' }">
-           <h3 class="title">Select Company</h3>
-           <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" scrollHeight="370px"></p-dropdown>
-         </p-card>
-       } @else if (!isConsultant){
-         <p-card styleClass="card-select-panel" [style]="{ height: '100%' }">
-           <h3 class="title">Selected Company</h3>
-           <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select" [unselectable]="true"></p-selectButton>
-         </p-card>
-       }
+        @if(isConsultant){
+          <p-card styleClass="recm-select-panel" [style]="{ height: '100%' }">
+            <h3 class="title">Select Company</h3>
+            <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" scrollHeight="370px"></p-dropdown>
+          </p-card>
+        } @else if (!isConsultant){
+          <p-card styleClass="card-select-panel" [style]="{ height: '100%' }">
+            <h3 class="title">Selected Company</h3>
+            <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select" [unselectable]="true"></p-selectButton>
+          </p-card>
+        }
 
-     </div>
-   </div>
+      </div>
+    </div>
 
     <p-dialog [(visible)]="modelVisible" [modal]="true" [style]="{width: '60vw'}">
       <div class="grid generated-report" style="{padding: 1rem}">
@@ -121,76 +121,70 @@
             <button type="submit" icon="pi pi-save" label="Save" pButton class="btn-style" (click)="saveForm()"></button>
           </div>
         </p-tabPanel>
-<!-- DATA ANALYSIS-->
+        <!-- DATA ANALYSIS-->
         <p-tabPanel header="Breakdown of Energy Costs">
           <div class="flex justify-content-end p-4">
             <button pButton class="btn-dark" icon="pi pi-file-excel" (click)="exportExcelForBreakdownTable()"></button>
           </div>
-            <p-table [value]="typeTotals" styleClass="p-datatable-sm" [columns]="cols" >
-              <ng-template pTemplate="caption">
-                <h3 class="p-3">Breakdown of Energy Costs</h3>
-              </ng-template>
-              <ng-template pTemplate="header">
-                <tr>
-                  <th class="font-semibold text-sm">Utility</th>
-                  <th class="font-semibold text-sm">Consumption (kWh)</th>
-                  <th class="font-semibold text-sm">Consumption %</th>
-                  <th class="font-semibold text-sm">Cost £</th>
-                  <th class="font-semibold text-sm">Cost %</th>
-                  <th class="font-semibold text-sm">Carbon Emissions CO2e (tonnes)</th>
-                  <th class="font-semibold text-sm">Carbon Emissions %</th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-typeTotal let-i="rowIndex">
-                <tr  class="breakdownRow" *ngIf="typeTotal">
-                  <td class="font-normal text-sm">{{ typeTotal.type.toLocaleString('en-US', strOptions) }}</td>
-                  <td class="font-normal text-sm">{{ typeTotal?.consumption >= 1000 ? typeTotal?.consumption?.toLocaleString('en-us', noDecimalsString) : typeTotal?.consumption?.toLocaleString('en-US', oneDecimalString) || 0 }}
-                    <span class="text-xs" style="color: #7e7c7c" *ngIf="typeTotal.converted && typeTotal.consumption > 0">(Converted to kWh)</span>
-                    <span class="text-xs" style="color: #7e7c7c" *ngIf="typeTotal.converted && typeTotal.consumption === 0">(Converting to kWh failed)</span>
-                  </td>
-                  <td class="font-normal text-sm">{{ calculateConsumptionPercent(typeTotal) }}</td>
-                  <td class="font-normal text-sm">{{ typeTotal.cost.toLocaleString('en-US', noDecimalsString) }}</td>
-                  <td class="font-normal text-sm">{{ calculateCostPercent(typeTotal) }}</td>
-                  <td class="font-normal text-sm">{{ calculateEmissions(typeTotal) }}</td>
-                  <td class="font-normal text-sm">{{ calculateEmissionsPercent(typeTotal) }}</td>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="footer">
-                <tr>
-                  <td class="font-semibold text-sm" colspan="1">Totals</td>
-                  <td class="font-semibold text-sm">{{ totalConsumption >= 1000 ? totalConsumption.toLocaleString('en-US', noDecimalsString )  : totalConsumption.toLocaleString('en-US', oneDecimalString) }}</td>
-                  <td class="font-semibold text-sm" colspan="1"></td>
-                  <td class="font-semibold text-sm">£{{ totalCost.toLocaleString('en-US', noDecimalsString) }}</td>
-                  <td class="font-semibold text-sm" colspan="1"></td>
-                  <td class="font-semibold text-sm">{{ totalEmissions.toLocaleString('en-US', strOptions) }}</td>
-                  <td class="font-semibold text-sm" colspan="1"></td>
+          <p-table [value]="typeTotals" styleClass="p-datatable-sm" [columns]="cols" >
+            <ng-template pTemplate="caption">
+              <h3 class="p-3">Breakdown of Energy Costs</h3>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th class="font-semibold text-sm">Utility</th>
+                <th class="font-semibold text-sm">Consumption (kWh)</th>
+                <th class="font-semibold text-sm">Consumption %</th>
+                <th class="font-semibold text-sm">Cost £</th>
+                <th class="font-semibold text-sm">Cost %</th>
+                <th class="font-semibold text-sm">Carbon Emissions CO2e (tonnes)</th>
+                <th class="font-semibold text-sm">Carbon Emissions %</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-typeTotal let-i="rowIndex">
+              <tr  class="breakdownRow" *ngIf="typeTotal">
+                <td class="font-normal text-sm">{{ typeTotal.type.toLocaleString('en-US', strOptions) }}</td>
+                <td class="font-normal text-sm">{{ typeTotal?.consumption >= 1000 ? typeTotal?.consumption?.toLocaleString('en-us', noDecimalsString) : typeTotal?.consumption?.toLocaleString('en-US', oneDecimalString) || 0 }}
+                  <span class="text-xs" style="color: #7e7c7c" *ngIf="typeTotal.converted && typeTotal.consumption > 0">(Converted to kWh)</span>
+                  <span class="text-xs" style="color: #7e7c7c" *ngIf="typeTotal.converted && typeTotal.consumption === 0">(Converting to kWh failed)</span>
+                </td>
+                <td class="font-normal text-sm">{{ calculateConsumptionPercent(typeTotal) }}</td>
+                <td class="font-normal text-sm">{{ typeTotal.cost.toLocaleString('en-US', noDecimalsString) }}</td>
+                <td class="font-normal text-sm">{{ calculateCostPercent(typeTotal) }}</td>
+                <td class="font-normal text-sm">{{ calculateEmissions(typeTotal) }}</td>
+                <td class="font-normal text-sm">{{ calculateEmissionsPercent(typeTotal) }}</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="footer">
+              <tr>
+                <td class="font-semibold text-sm" colspan="1">Totals</td>
+                <td class="font-semibold text-sm">{{ totalConsumption >= 1000 ? totalConsumption.toLocaleString('en-US', noDecimalsString )  : totalConsumption.toLocaleString('en-US', oneDecimalString) }}</td>
+                <td class="font-semibold text-sm" colspan="1"></td>
+                <td class="font-semibold text-sm">£{{ totalCost.toLocaleString('en-US', noDecimalsString) }}</td>
+                <td class="font-semibold text-sm" colspan="1"></td>
+                <td class="font-semibold text-sm">{{ totalEmissions.toLocaleString('en-US', strOptions) }}</td>
+                <td class="font-semibold text-sm" colspan="1"></td>
+              </tr>
+              <!--        <tr>-->
+              <!--          <td>-->
+              <!--            <button pButton class="p-button-text p-button-rounded p-button-success" icon="pi pi-plus"-->
+              <!--                    (click)="newBreakdownRow()"></button>-->
+              <!--          </td>-->
+              <!--          <td colspan="6"></td>-->
+              <!--          <td>-->
+              <!--            <button pButton class="btn btn-dark" (click)="getFuelData(true)"-->
+              <!--                    pTooltip="<span style='font-size: 0.8rem'>Refresh fuel breakdown data</span>" [escape]="false"-->
+              <!--                    tooltipPosition="top">Refresh-->
+              <!--            </button>-->
+              <!--          </td>-->
 
-                </tr>
-                <!--        <tr>-->
-                <!--          <td>-->
-                <!--            <button pButton class="p-button-text p-button-rounded p-button-success" icon="pi pi-plus"-->
-                <!--                    (click)="newBreakdownRow()"></button>-->
-                <!--          </td>-->
-                <!--          <td colspan="6"></td>-->
-                <!--          <td>-->
-                <!--            <button pButton class="btn btn-dark" (click)="getFuelData(true)"-->
-                <!--                    pTooltip="<span style='font-size: 0.8rem'>Refresh fuel breakdown data</span>" [escape]="false"-->
-                <!--                    tooltipPosition="top">Refresh-->
-                <!--            </button>-->
-                <!--          </td>-->
-
-                <!--        </tr>-->
-              </ng-template>
-
-
-            </p-table>
+              <!--        </tr>-->
+            </ng-template>
+          </p-table>
         </p-tabPanel>
       </p-tabView>
     </div>
   </p-card>
-
-
-
 </section>
 
 

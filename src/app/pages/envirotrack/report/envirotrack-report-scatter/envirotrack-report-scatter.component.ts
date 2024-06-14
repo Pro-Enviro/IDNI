@@ -7,6 +7,7 @@ import {SharedModules} from "../../../../shared-module";
 import {SharedComponents} from "../../shared-components";
 import {GlobalService} from "../../../../_services/global.service";
 import {SidebarModule} from "primeng/sidebar";
+import {TopLevelFormatterParams} from "echarts/types/src/component/tooltip/TooltipModel";
 
 
 @Component({
@@ -88,6 +89,20 @@ export class EnvirotrackReportScatterComponent implements OnInit {
   // }
 
   initChart = () => {
+
+    // Format dates on axis and the chartData
+    this.chartX = this.chartX.map((date: any) => moment(date).format('DD/MM/YYYY'));
+
+    // e.g. Monday -> Data -> ['01/01/2024', 1000] - Update the format of the date
+    this.chartData = this.chartData.map((day: any) => {
+      day.data.map((data: any) => {
+        data[0] = moment(data[0]).format('DD/MM/YYYY')
+        data[1] = data[1].toFixed(2)
+        return data;
+      })
+      return day
+    })
+
     this.chartOptions = {
       title: {
         text: 'Electricity Consumption, kWh split by day of the week',
@@ -147,7 +162,9 @@ export class EnvirotrackReportScatterComponent implements OnInit {
       tooltip: {
         extraCssText: 'text-transform: capitalize',
         trigger: 'item',
-        formatter: `{a} <br />{b}: {c}`,
+        formatter: function (params: any) {
+            return `<p>${params.data[0]}: ${params.data[1]}</p>`
+        },
         axisPointer: {
           type: 'cross',
           label: {
@@ -186,7 +203,6 @@ export class EnvirotrackReportScatterComponent implements OnInit {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
               if (res.data) {
-                console.log(res.data)
                 this.companies = res.data
                 this.selectedCompany = this.companies[0].id
                 this.isConsultant = true

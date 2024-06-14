@@ -1,5 +1,5 @@
 <section>
-  <p-card header="The Productivity & Emissions Tool (PET)" styleClass="card-charts" [style]="{ width: '83.5vw' }">
+  <p-card header="The Productivity & Emissions Tool (PET)" styleClass="card-charts" [style]="{ width: '83.5vw',overflowX: 'hidden' }">
     <div class="container flex justify-content-end mt-2 mb-4">
       <p-button type="button" styleClass="btn-style" (click)="sidebarVisible = true" icon="pi pi-spin pi-cog"
                 label="Using the PET Tool"></p-button>
@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="grid flex justify-content-center flex-wrap">
-      <div class="col-5 p-3 mt-3">
+      <div class="lg:col-5 md:col-6 p-3 mt-3">
         <p-card header="{{isConsultant ? 'Select Company' : ''}}"
                 styleClass="flex justify-content-center card-charts p-2">
           @if (isConsultant) {
@@ -246,7 +246,7 @@
                             [(ngModel)]="groups.fuelType"></p-dropdown>
               </td>
               <td *ngIf="groups.unitsUom">
-                <p-dropdown [options]="unitsUom" [(ngModel)]="groups.unitsUom" class="p-inputtext-sm"
+                <p-dropdown [options]="unitsUom" [(ngModel)]="groups.unitsUom" class="p-inputtext-sm" (ngModelChange)="calculateCo2e(groups)"
                             [style]="{width: '120px'}"></p-dropdown>
               </td>
 
@@ -256,8 +256,11 @@
               </td>
               <td *ngIf="groups.totalUnits !== undefined">
 
-                <p-inputNumber [(ngModel)]="groups.totalUnits" class="p-inputtext-sm" [minFractionDigits]="2" [maxFractionDigits]="2"
-                               [inputStyle]="{width: '100px'}" (ngModelChange)="calculateRawMaterials(groups)"></p-inputNumber>
+                <p-inputNumber [(ngModel)]="groups.totalUnits" class="p-inputtext-sm"
+                               [inputStyle]="{width: '100px'}" (ngModelChange)="calculateCo2e(groups)" ></p-inputNumber>
+
+<!--                 <p-inputNumber [(ngModel)]="groups.totalUnits" class="p-inputtext-sm" [minFractionDigits]="2" [maxFractionDigits]="2"
+                               [inputStyle]="{width: '100px'}" (ngModelChange)="calculateRawMaterials(groups)"></p-inputNumber> -->
 
               </td>
 
@@ -428,7 +431,10 @@
      <div class="grid mt-7">
        <div class="xl:col-6 lg:col-12 md:col-12">
          <p-card>
-           <p *ngIf="chartOptions" class="text-xs">Source: ONS by sector (latest year: 2021)</p>
+           @if(chartOptions){
+      <!--LINE CHART-->
+             <p class="text-xs">Source: ONS by sector (latest year: 2021)</p>
+           }
            <div class="flex justify-content-start">
              <!--           <div echarts [options]="chartOptions" style="max-height: 70vh; height: 70vh; width: 70vw"></div>-->
              <div echarts [options]="chartOptions" style="width: 105%; min-height: 570px;margin-top:1rem"></div>
@@ -437,7 +443,10 @@
        </div>
        <div class="xl:col-6 lg:col-12 md:col-12">
          <p-card>
-           <p *ngIf="gaugeChartOptions" class="text-xs">Source: ONS by sector (latest year: 2021)</p>
+           <!--GAUGE CHART-->
+           @if(gaugeChartOptions){
+             <p class="text-xs">Source: ONS by sector (latest year: 2021)</p>
+           }
            <div class="flex justify-content-start">
              <div echarts [options]="gaugeChartOptions" style="width: 100%; min-height: 570px;margin-top:1rem"></div>
            </div>
@@ -445,6 +454,25 @@
        </div>
      </div>
     }
+      <div class="grid">
+        <div class="xl:col-6 lg:col-12 md:col-12">
+<!-- CO2E BREAKDOWN CHART-->
+            @if(co2eBreakdown){
+              <p-card>
+                <div echarts [options]="co2eBreakdown" style="max-height: 600px; height: 600px"></div>
+                </p-card>
+            }
+        </div>
+        <div class="xl:col-6 lg:col-12 md:col-12">
+<!--  CO2E SCOPE-->
+            @if(co2eScope){
+              <p-card>
+              <div echarts [options]="co2eScope" style="max-height: 600px; height: 600px"></div>
+              </p-card>
+            }
+        </div>
+      </div>
+
   </p-card>
 </section>
 
