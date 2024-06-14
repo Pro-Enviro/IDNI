@@ -51,12 +51,14 @@ import {
 } from "./pet-tool-classes";
 import {AutoCompleteCompleteEvent} from "primeng/autocomplete";
 import {DividerModule} from "primeng/divider";
+import {TypeChartComponent} from "../envirotrack/report/type-chart/type-chart.component";
+import {json} from "node:stream/consumers";
 
 
 @Component({
   selector: 'app-pet-login-protected',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective, SidebarModule, DividerModule],
+  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective, SidebarModule, DividerModule, TypeChartComponent],
   templateUrl: './pet-login-protected.component.html',
   styleUrl: './pet-login-protected.component.scss'
 })
@@ -78,6 +80,9 @@ export class PetLoginProtected implements OnInit {
   innovationPercent: number = 0;
   staffTrainingPercent: number = 0;
   exportPercent: number = 0;
+  breakDownChartData:any[] = [];
+  envirotrackData?:{name:string,value:number | string}
+  breakDownScope:any[]=[]
 
   consultancyRow = {
     name: 'Consultancy Cost',
@@ -150,7 +155,10 @@ export class PetLoginProtected implements OnInit {
     // Get sites report or generate new rows
     this.getPETReport(this.selectedCompany)
     this.getFuelData()
+    this.getData(this.selectedCompany)
+
   }
+
 
   getCompanies = () => {
     // Fetch all companies
@@ -274,11 +282,6 @@ export class PetLoginProtected implements OnInit {
 
     this.calculateProductivityScore()
 
-    const findEnergyCO2e = energy.find((fuelType: any) => fuelType.co2e > 0)
-    if (findEnergyCO2e.co2e) {
-      this.initCo2eScope()
-      this.initCo2eBreakdown()
-    }
   }
 
 
@@ -668,6 +671,7 @@ export class PetLoginProtected implements OnInit {
   }
 
   getProductivityData = () => {
+
     this.http.get(`${this.url}/items/sic_codes?limit=-1`).subscribe({
       next: (res: any) => {
         if (res?.data) {
@@ -697,7 +701,9 @@ export class PetLoginProtected implements OnInit {
           }
         },
         error: (err) => console.log(err),
-        complete: () => this.assignFuelDataToCorrectCost()
+        complete: () =>{
+          this.assignFuelDataToCorrectCost()
+        }
       })
     }
   }
@@ -745,8 +751,74 @@ export class PetLoginProtected implements OnInit {
       this.data[foundType].cost = extracted.totalCost
       this.data[foundType].unitsUom = extracted.unit ? extracted.unit : 'kWh'
     })
+    this.calculatePieCharts(extractedData)
   }
 
+
+ calculatePieCharts = (extractedData:any) => {
+   const conversionFactors: { [key: string]: number } = {
+     'Electricity': 0.22499,
+     'Natural Gas (Grid)': 0.18293,
+     'Kerosene': 0.24677,
+     'Diesel (avg biofuel blend)': 0.23908,
+     'Petrol (avg biofuel blend)': 0.22166,
+     "Gas oil (Red diesel)": 0.25650,
+     'LPG': 0.21449,
+     'Propane': 0.21410,
+     'Butane': 0.22241,
+     'Biogas': 0.00022,
+     'Biomethane (compressed)': 0.00038,
+     'Wood Chips': 0.01074,
+     'Natural Gas off Grid': 0.03021,
+     'Bio Gas Off Grid':   0.00020,
+     'Oil': 0.24557, //burning oil
+     'Bio fuels': 0.03558,//bio diesel
+     'Bio Mass': 0.01074,
+     'Coal for Industrial use': 0.05629,
+   }
+
+   this.breakDownChartData = extractedData.map((fuelType :any) => {
+     const selectedConversionFactor = conversionFactors[fuelType.type] ? conversionFactors[fuelType.type] : 0
+     const calculatedCO2e = (fuelType.totalValue * selectedConversionFactor) / 1000
+      return {
+      name : fuelType.type,
+        value : calculatedCO2e
+
+      }
+   })
+
+
+ }
+
+
+  getData = (id: number) => {
+   if(!id){
+     return
+   }
+    this.track.getData(id).subscribe({
+        next: (res) => {
+          if (res){
+            let grandTotal = 0;
+            res.forEach((row: any) => {
+              row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
+              // Sort the envirotrack data
+              grandTotal += row.hhd.reduce((acc: number, curr: number) => acc + curr, 0)
+            })
+            this.envirotrackData = {
+              name: 'Electricity',
+              value:( grandTotal/1000).toFixed(2)
+            }
+            this.breakDownChartData.push(this.envirotrackData)
+          }
+
+        },
+         complete:()=> {
+          this.initCo2eScope()
+          this.initCo2eBreakdown()
+         }
+      }
+    )
+  }
 
   initChart = () => {
     this.chartOptions = {
@@ -905,21 +977,6 @@ export class PetLoginProtected implements OnInit {
 
   initCo2eBreakdown = () => {
 
-    // filter this.data by total units if kwh
-    const getAllKWhSelected = this.data.filter((fuelType: any) => fuelType.unitsUom === 'kWh' && fuelType.parent.name === 'Cost of Energy')
-    if (!getAllKWhSelected.length) return;
-
-
-    // Map values to return just name and co2e
-    const mappedValues = getAllKWhSelected.map((fuelType: any) => {
-      return {
-        name: fuelType.name,
-        value: fuelType.co2e
-      }
-    })
-
-    if (!mappedValues.length) return;
-
     this.co2eBreakdown = {
       title: {
         text: 'Breakdown of CO2e',
@@ -958,7 +1015,7 @@ export class PetLoginProtected implements OnInit {
               show: true
             }
           },
-          data: mappedValues
+          data: this.breakDownChartData
         },
       ],
       color: [
@@ -999,31 +1056,24 @@ export class PetLoginProtected implements OnInit {
   }
 
   initCo2eScope = () => {
-
-    // filter this.data by total units if kwh
-    const getAllKWhSelected = this.data.filter((fuelType: any) => fuelType.unitsUom === 'kWh')
-    if (!getAllKWhSelected.length) return;
-
-
     // Reduce to different scopes
     // If Electricity -> Scope 2
     // All others => scope 1
-    const getElectricity = getAllKWhSelected.filter((fuelType: any) => fuelType.name.toLowerCase().includes('electricity'))
-    const mappedScope2 = getElectricity.map((elec: any) => {
-      return {
+    const getElectricity = this.breakDownChartData.filter((fuelType: any) => fuelType.name.toLowerCase().includes('electricity'))
+    const mappedScope2 = getElectricity.map((elec: any) => ({
         name: 'Scope 2',
-        value: elec.co2e
-      }
-    })
+        value: elec.value
+      })
+    )
 
-    const allOtherFuelTypes = getAllKWhSelected.filter((fuelType: any) => !fuelType.name.toLowerCase().includes('electricity'))
+    const allOtherFuelTypes = this.breakDownChartData.filter((fuelType: any) => !fuelType.name.toLowerCase().includes('electricity'))
 
     let mappedScope1 = []
     if (allOtherFuelTypes.length) {
       mappedScope1 = allOtherFuelTypes.reduce((acc: any, fuelType: any) => {
         return {
           name: 'Scope 1',
-          value: acc.value + (fuelType.co2e || 0)
+          value: acc.value + (fuelType.value || 0)
         }
       }, {value: 0})
     }
@@ -1035,7 +1085,6 @@ export class PetLoginProtected implements OnInit {
     } else {
      finalData = [ ...mappedScope2]
     }
-
 
     this.co2eScope = {
       title: {
@@ -1206,8 +1255,8 @@ export class PetLoginProtected implements OnInit {
       'Wood Chips': 0.01074,
       'Natural Gas off Grid': 0.03021,
       'Bio Gas Off Grid':   0.00020,
-      'Oil':0, //what type of oil - burning oil,fuel oil,gas oil, marine gas oil,
-      'Bio fuels': 0, //there many bio fuels-bio diesel, bioethanol and many others
+      'Oil': 0.24557, //burning oil
+      'Bio fuels': 0.03558, //biodiesel
       'Bio Mass': 0.01074,
       'Coal for Industrial use': 0.05629,
     }
@@ -1216,8 +1265,6 @@ export class PetLoginProtected implements OnInit {
     const calculatedCO2e = (group.totalUnits * selectedConversionFactor) / 1000
     group.co2e = calculatedCO2e
 
-    this.initCo2eBreakdown()
-    this.initCo2eScope()
 
   }
 
