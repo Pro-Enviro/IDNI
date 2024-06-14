@@ -1080,17 +1080,6 @@ export class PetLoginProtected implements OnInit {
   }
 
   initCo2eScope = () => {
-console.log(JSON.parse(JSON.stringify(this.breakDownChartData)))
-    //i need new array for electricity
-    //get electricity
-    //not electricy reduce it
-    //
-
-    // filter this.data by total units if kwh
-    // const getAllKWhSelected = this.data.filter((fuelType: any) => fuelType.unitsUom === 'kWh')
-    // if (!getAllKWhSelected.length) return;
-
-
     // Reduce to different scopes
     // If Electricity -> Scope 2
     // All others => scope 1
@@ -1121,7 +1110,6 @@ console.log(JSON.parse(JSON.stringify(this.breakDownChartData)))
     } else {
      finalData = [ ...mappedScope2]
     }
-
 
     this.co2eScope = {
       title: {
@@ -1171,7 +1159,6 @@ console.log(JSON.parse(JSON.stringify(this.breakDownChartData)))
         '#2e5c70',
       ]
     };
-    console.log(finalData)
   }
 
   savePETdata = () => {
