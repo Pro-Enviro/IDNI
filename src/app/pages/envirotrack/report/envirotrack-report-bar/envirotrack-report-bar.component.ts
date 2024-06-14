@@ -83,7 +83,6 @@ export class EnvirotrackReportBarComponent implements OnInit {
     this.chartX = this.chartX.map((date: any) => moment(date).format('DD/MM/YYYY'));
 
     this.chartData = this.chartData.map((date: any) => {
-     console.log(date)
       date[0] = moment(date[0]).format('DD/MM/YYYY');
      date[1] = date[1].toFixed(2)
      return date
@@ -190,7 +189,6 @@ export class EnvirotrackReportBarComponent implements OnInit {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
               if (res.data) {
-                console.log(res.data)
                 this.companies = res.data
                 this.selectedCompany = this.companies[0].id
                 this.isConsultant = true

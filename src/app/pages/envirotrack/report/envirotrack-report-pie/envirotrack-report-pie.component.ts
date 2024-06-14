@@ -175,7 +175,6 @@ export class EnvirotrackReportPieComponent implements OnInit {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
               if (res.data) {
-                console.log(res.data)
                 this.companies = res.data
                 this.selectedCompany = this.companies[0].id
                 this.isConsultant = true

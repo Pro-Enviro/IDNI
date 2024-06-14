@@ -282,7 +282,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
 
-          console.log(this.mpan)
+
 
           // if (this.global.selectedMpan?.value) {
           //   this.selectedMpan = this.global.selectedMpan.value
