@@ -168,7 +168,6 @@ export class PetLoginProtected implements OnInit {
         } else if (res.role.name === 'consultant') {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
-              console.log(res)
               if (res.data) {
                 this.companies = res.data
                 this.selectedCompany = res.data[0].id
@@ -1168,7 +1167,6 @@ export class PetLoginProtected implements OnInit {
     this.data = this.data.map((item: any) => {
       if (item.parent.name === 'Cost of Raw Materials') {
 
-        console.log(item.parent.totalCost)
         item.parent.totalCost = total;
         if (this.employees > 0) {
           item.parent.secondColumn = (total / this.employees).toFixed(2)
