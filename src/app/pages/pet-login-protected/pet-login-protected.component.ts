@@ -52,6 +52,7 @@ import {
 import {AutoCompleteCompleteEvent} from "primeng/autocomplete";
 import {DividerModule} from "primeng/divider";
 import {TypeChartComponent} from "../envirotrack/report/type-chart/type-chart.component";
+import {json} from "node:stream/consumers";
 
 
 @Component({
@@ -80,7 +81,8 @@ export class PetLoginProtected implements OnInit {
   staffTrainingPercent: number = 0;
   exportPercent: number = 0;
   breakDownChartData:any[] = [];
-  envirotrackData:{name:string,value:number | string} = {name:'',value:0}
+  envirotrackData?:{name:string,value:number | string}
+  breakDownScope:any[]=[]
 
   consultancyRow = {
     name: 'Consultancy Cost',
@@ -154,6 +156,7 @@ export class PetLoginProtected implements OnInit {
     this.getPETReport(this.selectedCompany)
     this.getFuelData()
     this.getData(this.selectedCompany)
+    this.getScopeData(this.selectedCompany)
   }
 
   getCompanies = () => {
@@ -281,7 +284,7 @@ export class PetLoginProtected implements OnInit {
     const findEnergyCO2e = energy.find((fuelType: any) => fuelType.co2e > 0)
     if (findEnergyCO2e.co2e) {
       this.initCo2eScope()
-      this.initCo2eBreakdown()
+      //this.initCo2eBreakdown()
     }
   }
 
@@ -804,12 +807,40 @@ export class PetLoginProtected implements OnInit {
               value:( grandTotal/1000).toFixed(2)
             }
             this.breakDownChartData.push(this.envirotrackData)
-            console.log(res)
           }
 
         },
 
       }
+    )
+  }
+
+  getScopeData = (id: number) => {
+    if(!id){
+      return
+    }
+    this.track.getData(id).subscribe({
+      next: (res) => {
+        if (res){
+          let grandTotal = 0;
+          res.forEach((row: any) => {
+            row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
+            // Sort the envirotrack data
+            grandTotal += row.hhd.reduce((acc: number, curr: number) => acc + curr, 0)
+          })
+          this.envirotrackData = {
+            name: 'Electricity',
+            value:( grandTotal/1000).toFixed(2)
+          }
+          this.breakDownScope.push(this.envirotrackData)
+
+        }
+
+      },
+      complete:() => {
+        this.initCo2eScope()
+      }
+    }
     )
   }
 
@@ -1049,31 +1080,36 @@ export class PetLoginProtected implements OnInit {
   }
 
   initCo2eScope = () => {
+console.log(JSON.parse(JSON.stringify(this.breakDownChartData)))
+    //i need new array for electricity
+    //get electricity
+    //not electricy reduce it
+    //
 
     // filter this.data by total units if kwh
-    const getAllKWhSelected = this.data.filter((fuelType: any) => fuelType.unitsUom === 'kWh')
-    if (!getAllKWhSelected.length) return;
+    // const getAllKWhSelected = this.data.filter((fuelType: any) => fuelType.unitsUom === 'kWh')
+    // if (!getAllKWhSelected.length) return;
 
 
     // Reduce to different scopes
     // If Electricity -> Scope 2
     // All others => scope 1
-    const getElectricity = getAllKWhSelected.filter((fuelType: any) => fuelType.name.toLowerCase().includes('electricity'))
+    const getElectricity = this.breakDownChartData.filter((fuelType: any) => fuelType.name.toLowerCase().includes('electricity'))
     const mappedScope2 = getElectricity.map((elec: any) => {
       return {
         name: 'Scope 2',
-        value: elec.co2e
+        value: elec.value
       }
     })
 
-    const allOtherFuelTypes = getAllKWhSelected.filter((fuelType: any) => !fuelType.name.toLowerCase().includes('electricity'))
+    const allOtherFuelTypes = this.breakDownChartData.filter((fuelType: any) => !fuelType.name.toLowerCase().includes('electricity'))
 
     let mappedScope1 = []
     if (allOtherFuelTypes.length) {
       mappedScope1 = allOtherFuelTypes.reduce((acc: any, fuelType: any) => {
         return {
           name: 'Scope 1',
-          value: acc.value + (fuelType.co2e || 0)
+          value: acc.value + (fuelType.value || 0)
         }
       }, {value: 0})
     }
@@ -1135,6 +1171,7 @@ export class PetLoginProtected implements OnInit {
         '#2e5c70',
       ]
     };
+    console.log(finalData)
   }
 
   savePETdata = () => {
@@ -1294,7 +1331,6 @@ export class PetLoginProtected implements OnInit {
   ngOnInit() {
     this.getCompanies()
     this.getProductivityData()
-    this.getData(this.selectedCompany)
   }
 
 
