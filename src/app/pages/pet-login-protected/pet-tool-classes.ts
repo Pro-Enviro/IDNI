@@ -31,7 +31,6 @@ export class MaterialRow extends SubTable {
   totalUnits: number = 0
   regionOfOrigin: RegionsOfOrigin = 'UK'
   scrappageAndWaste?: number = 0
-
 }
 
 export class BoughtInParts extends SubTable {
@@ -108,6 +107,7 @@ export class TableRow {
   unitOfCost: UnitsOfCost = 'Select'
   regionOfOrigin: RegionsOfOrigin = 'UK'
   buttonName: string = ''
+  co2e: number = 0;
   parent?: { name: string, secondColumn: number, totalCost: number } = {
     name: '',
     secondColumn: 0,

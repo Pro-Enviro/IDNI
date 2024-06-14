@@ -97,7 +97,7 @@ export class PetLoginProtected implements OnInit {
   // TableRows
   rows: TableRow[] = []
   // For Primeng dropdowns
-  unitsUom: UnitsUom[] = ['Select', 'litres', 'kg', 'kWh', 'tonnes', 'cubic metres', 'km', 'miles', 'million litres']
+  unitsUom: UnitsUom[] = ['Select', 'litres', 'kg', 'kWh', 'tonnes', 'metres', 'cubic metres', 'km', 'miles', 'million litres']
   regionOfOrigin: RegionsOfOrigin[] = ['UK', 'EU', 'US', 'Asia']
   modeOfTransport: ModeOfTransport[] = ['Select', 'Van <3.5t', 'Refrigerated Van <3.5t', 'Van >3.5t < 7.5t', 'Refrigerated Van > 3.5t < 7.5t', 'HGV', 'Refrigerated HGV']
   fuelTypes: FuelTypes[] = ['Select', 'Diesel', 'Petrol', 'LPG', 'EV', 'Hydrogen']
@@ -116,6 +116,7 @@ export class PetLoginProtected implements OnInit {
   selectedYear: string = years[0] || '2024'
   data: any = []
   twoDecimalPlaces = {minimumFractionDigits: 0, maximumFractionDigits: 2,}
+  noDecimals = {minimumFractionDigits: 0, maximumFractionDigits: 0} ;
   productivityData!: any// Excel spreadsheet
   sicCodeData!: any // Excel Spreadsheet
   sicCode: any = {}
@@ -292,7 +293,7 @@ export class PetLoginProtected implements OnInit {
     this.generateClasses('Road Freight', RoadFreight)
     this.generateClasses('Other Freight', OtherFreightTransportation)
     this.generateClasses('Company Travel', CompanyTravel)
-    // this.generateClasses('Staff Commute', StaffCommute)
+    this.generateClasses('Staff Commute', StaffCommute)
 
     this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
 
@@ -400,12 +401,12 @@ export class PetLoginProtected implements OnInit {
 
   generateRows = (array: string[] | any, parentName: string, isClass?: boolean) => {
     if (isClass) {
-      if (parentName === 'Staff Commute') {
-        array.parent.name = 'Company Travel'
-      } else {
+      // if (parentName === 'Staff Commute') {
+      //   array.parent.name = 'Company Travel'
+      // } else {
         array.parent.name = parentName
         this.data.push(array)
-      }
+      // }
     } else {
       array.forEach((name: string) => {
         let newGroupItem = new GroupItem()
@@ -625,6 +626,11 @@ export class PetLoginProtected implements OnInit {
   }
 
   calculateGroupTotalCost = (group: any) => {
+
+    if (group.parent.name === 'Cost of Raw Materials') {
+      return this.calculateRawMaterials(group)
+    }
+
     if (!group?.parent) return 0;
 
     if (group.parent.name === 'Cost of Raw Materials') {
@@ -641,6 +647,7 @@ export class PetLoginProtected implements OnInit {
       }
     }, 0)
 
+
     this.data = this.data.map((item: any) => {
       if (item.parent.name === parentName) {
         item.parent.totalCost = total;
@@ -648,8 +655,10 @@ export class PetLoginProtected implements OnInit {
           item.parent.secondColumn = (total / this.employees).toFixed(2)
         }
       }
+
       return item
     })
+
 
     if (group.parent.name === 'Cost of Energy') {
       this.calculateCo2e(group)
@@ -1217,6 +1226,7 @@ export class PetLoginProtected implements OnInit {
 
   }
 
+
   filterSicCode(event: AutoCompleteCompleteEvent) {
     let filtered: any[] = [];
     let query = event.query;
@@ -1234,6 +1244,64 @@ export class PetLoginProtected implements OnInit {
 
     this.filteredSicCodes = filtered;
 
+  }
+
+  calculateRawMaterials(group: any) {
+
+    const total = this.data.filter((item: any) => item.parent.name === 'Cost of Raw Materials').reduce((acc: number, curr: any) => {
+      if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined) {
+
+        return acc + (parseFloat(curr.cost) * parseFloat(curr.totalUnits))
+      } else {
+        return acc;
+      }
+    }, 0)
+
+
+    this.data = this.data.map((item: any) => {
+      if (item.parent.name === 'Cost of Raw Materials') {
+
+        console.log(item.parent.totalCost)
+        item.parent.totalCost = total;
+        if (this.employees > 0) {
+          item.parent.secondColumn = (total / this.employees).toFixed(2)
+        }
+      }
+
+      return item
+    })
+
+    return this.data;
+  }
+
+
+  calculateCo2e = (group: any) => {
+    if (group.parent.name !== 'Cost of Energy') return;
+    if (group.unitsUom !== 'kWh') return;
+
+    // Find Fuel Type in object
+
+
+    const fuelTypes: { [key: string]: number } = {
+      'Electricity': 0.22499,
+      'Gas': 0.18293,
+      'Burning oil (Kerosene)': 0.24677,
+      'Diesel (avg biofuel blend)': 0.23908,
+      'Petrol (avg biofuel blend)': 0.22166,
+      "Gas oil (Red diesel)": 0.25650,
+      'LPG': 0.21449,
+      'Propane': 0.21410,
+      'Butane': 0.22241,
+      'Biogas': 0.00022,
+      'Biomethane (compressed)': 0.00038,
+      'Wood Chips': 0.01074
+    }
+
+    const selectedConversionFactor = fuelTypes[group.name] ? fuelTypes[group.name] : 0
+    const calculatedCO2e = (group.totalUnits * selectedConversionFactor) / 1000
+    group.co2e = calculatedCO2e
+
+    console.log(group.co2e)
   }
 
 

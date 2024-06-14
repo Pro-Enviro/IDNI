@@ -115,8 +115,7 @@
                 <p>Turnover</p>
               </th>
               <th colspan="5" class="px-1">
-                <p-inputNumber inputId="turnover" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
-                               [(ngModel)]="turnover" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+                <p-inputNumber inputId="turnover" class="p-inputtext-sm" [inputStyle]="{width: '120px'}" [minFractionDigits]="2" [maxFractionDigits]="2" [(ngModel)]="turnover" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
               </th>
 
             </tr>
@@ -125,7 +124,7 @@
                 <p>Number Of Employees</p>
               </th>
               <th colspan="5" class="px-1">
-                <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
+                <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '120px'}" [minFractionDigits]="0" [maxFractionDigits]="0"
                                [(ngModel)]="employees" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
               </th>
 
@@ -135,8 +134,7 @@
                 <p>Annual Output (total units sold)</p>
               </th>
               <th colspan="1" class="px-1">
-                <p-inputNumber inputId="output" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
-                               [(ngModel)]="output" ></p-inputNumber>
+                <p-inputNumber inputId="output" class="p-inputtext-sm" [inputStyle]="{width: '120px'}" [minFractionDigits]="2" [maxFractionDigits]="2" [(ngModel)]="output" ></p-inputNumber>
               </th>
               <th colspan="4">
                 <p-dropdown [options]="outputChoices" [(ngModel)]="outputUnit"  [editable]="true" placeholder="Select/input a unit"></p-dropdown>
@@ -155,11 +153,11 @@
               <td class="px-1">
                 <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
                                [(ngModel)]="groups.parent.totalCost"
-                               (ngModelChange)="calculatePerEmployeeCost(groups)"></p-inputNumber>
+                               (ngModelChange)="calculatePerEmployeeCost(groups)" ></p-inputNumber>
               </td>
               <td colspan="4">
                 <p class="ml-3"
-                   *ngIf="groups.parent.secondColumn !== 0">{{ groups.parent.secondColumn.toLocaleString('en-US', twoDecimalPlaces) }}</p>
+                   *ngIf="groups.parent.secondColumn !== 0">{{ groups.parent.secondColumn.toLocaleString('en-US', noDecimals) }}</p>
               </td>
               <!--            <td colspan="4"></td>-->
             </tr>
@@ -257,8 +255,13 @@
                                [inputStyle]="{width: '100px'}"></p-inputNumber>
               </td>
               <td *ngIf="groups.totalUnits !== undefined">
+
                 <p-inputNumber [(ngModel)]="groups.totalUnits" class="p-inputtext-sm"
                                [inputStyle]="{width: '100px'}" (ngModelChange)="calculateCo2e(groups)" ></p-inputNumber>
+
+<!--                 <p-inputNumber [(ngModel)]="groups.totalUnits" class="p-inputtext-sm" [minFractionDigits]="2" [maxFractionDigits]="2"
+                               [inputStyle]="{width: '100px'}" (ngModelChange)="calculateRawMaterials(groups)"></p-inputNumber> -->
+
               </td>
 
               <td *ngIf="groups.otherModes !== undefined">
@@ -279,7 +282,7 @@
               </td>
               <td *ngIf="groups.cost !== undefined">
 
-                <p-inputNumber [(ngModel)]="groups.cost" class="p-inputtext-sm"
+                <p-inputNumber [(ngModel)]="groups.cost" class="p-inputtext-sm" [minFractionDigits]="2" [maxFractionDigits]="2"
                                [inputStyle]="{width: '100px'}"
                                (ngModelChange)="calculateGroupTotalCost(groups)"></p-inputNumber>
               </td>
@@ -351,7 +354,7 @@
               </td>
               <td>
                 <p class="ml-3"
-                   *ngIf="innovationPercent !== 0">{{ (turnover * (innovationPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}</p>
+                   *ngIf="innovationPercent !== 0">{{ (turnover * (innovationPercent / 100)).toLocaleString('en-US', noDecimals) }}</p>
               </td>
             </tr>
             <tr>
@@ -365,7 +368,7 @@
               </td>
               <td>
                 <p class="ml-3"
-                   *ngIf="staffTrainingPercent !== 0">{{ (employees * (staffTrainingPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}</p>
+                   *ngIf="staffTrainingPercent !== 0">{{ (employees * (staffTrainingPercent / 100)).toLocaleString('en-US', noDecimals) }}</p>
               </td>
             </tr>
             <tr>
@@ -377,7 +380,7 @@
               </td>
               <td>
                 <p class="ml-3"
-                   *ngIf="exportPercent !== 0"> {{ (turnover * (exportPercent / 100)).toLocaleString('en-US', twoDecimalPlaces) }}</p>
+                   *ngIf="exportPercent !== 0"> {{ (turnover * (exportPercent / 100)).toLocaleString('en-US', noDecimals) }}</p>
               </td>
             </tr>
             <tr>
@@ -415,9 +418,9 @@
               <td colspan="6" class="pl-2">
                 <p-button icon="pi pi-plus" size="small" label="Add New {{groups.parent.name}}"
                           (click)="createNewTableRow(groups)" styleClass="btn-dark mt-3 mb-3"></p-button>
-                <p-button *ngIf="groups.parent.name === 'Company Travel'" icon="pi pi-plus" size="small"
-                          label="Add New Staff Commute" (click)="addNewStaffCommuteRow(groups)"
-                          styleClass="btn-dark mt-3 mb-3 ml-2"></p-button>
+<!--                <p-button *ngIf="groups.parent.name === 'Company Travel'" icon="pi pi-plus" size="small"-->
+<!--                          label="Add New Staff Commute" (click)="addNewStaffCommuteRow(groups)"-->
+<!--                          styleClass="btn-dark mt-3 mb-3 ml-2"></p-button>-->
               </td>
             </tr>
           </ng-template>
