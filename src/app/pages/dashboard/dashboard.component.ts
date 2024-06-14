@@ -190,6 +190,11 @@ export class DashboardComponent {
                 routerLink: '/dashboard/co2emissionsbyscope'
               },
           {
+            label: '<span class="material-symbols-outlined material-icon">bar_chart</span>Fuel Usage',
+            escape: false,
+            routerLink: '/dashboard/fields'
+          },
+          {
             label: '<span class="material-symbols-outlined">data_thresholding</span> Data',
             escape: false,
             items:[
@@ -286,6 +291,11 @@ export class DashboardComponent {
             label: '<span class="material-symbols-outlined material-icon">data_usage</span>',
             escape: false,
             routerLink: '/dashboard/co2emissionsbyscope'
+          },
+          {
+            label: '<span class="material-symbols-outlined material-icon">bar_chart</span>',
+            escape: false,
+            routerLink: '/dashboard/fields'
           },
           {
             label: '<span class="material-symbols-outlined">data_thresholding</span>',
