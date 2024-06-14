@@ -323,7 +323,7 @@ export class EnvirotrackReportFieldsComponent {
     if (selectedCompanyId) {
       this.track.getFuelData(selectedCompanyId).subscribe({
         next: (res:any) => {
-          console.log(res)
+
           if (res?.data?.fuel_data) {
             this.fuels = JSON.parse(res.data?.fuel_data)
 
