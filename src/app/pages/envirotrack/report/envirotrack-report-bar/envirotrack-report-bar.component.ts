@@ -80,8 +80,6 @@ export class EnvirotrackReportBarComponent implements OnInit {
   // }
   initChart = () => {
 
-    console.log(this.chartData)
-
     this.chartX = this.chartX.map((date: any) => moment(date).format('DD/MM/YYYY'));
 
     this.chartData = this.chartData.map((date: any) => {
@@ -89,7 +87,6 @@ export class EnvirotrackReportBarComponent implements OnInit {
       date[0] = moment(date[0]).format('DD/MM/YYYY');
      date[1] = date[1].toFixed(2)
      return date
-
     })
 
 
