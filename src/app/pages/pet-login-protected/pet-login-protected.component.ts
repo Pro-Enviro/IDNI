@@ -771,8 +771,8 @@ export class PetLoginProtected implements OnInit {
      'Wood Chips': 0.01074,
      'Natural Gas off Grid': 0.03021,
      'Bio Gas Off Grid':   0.00020,
-     'Oil':0, //burning oil
-     'Bio fuels': 0, //biodiesel
+     'Oil': 0.24557, //burning oil
+     'Bio fuels': 0.03558,
      'Bio Mass': 0.01074,
      'Coal for Industrial use': 0.05629,
    }
@@ -1293,8 +1293,8 @@ console.log(JSON.parse(JSON.stringify(this.breakDownChartData)))
       'Wood Chips': 0.01074,
       'Natural Gas off Grid': 0.03021,
       'Bio Gas Off Grid':   0.00020,
-      'Oil':0, //burning oil
-      'Bio fuels': 0, //biodiesel
+      'Oil': 0.24557, //burning oil
+      'Bio fuels': 0.03558, //biodiesel
       'Bio Mass': 0.01074,
       'Coal for Industrial use': 0.05629,
     }
