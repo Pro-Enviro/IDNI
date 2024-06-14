@@ -304,8 +304,8 @@ export class EnvirotrackReportFieldsComponent {
   }
 
   filterData = () => {
-    this.splitByMonth(this.data)
-    this.calculateTotals(this.data.slice(0), this.dateFilter)
+    this.splitByMonth(this.fuels)
+    this.calculateTotals(this.fuels.slice(0), this.dateFilter)
   }
 
   getTimes = () => {
@@ -407,6 +407,7 @@ export class EnvirotrackReportFieldsComponent {
 
   // CHART BUILDING FUNCTIONS
   splitByMonth = (data: FuelDataType[]) => {
+
     let months = new Set()
     let allDays: string[] = []
     let allocations: SingleChartAllocation[] = []
@@ -425,8 +426,6 @@ export class EnvirotrackReportFieldsComponent {
     // Loop over fuel types, and rows for each fuel type
     dataToMap.map((fuelType: FuelDataType) => {
       const rows = fuelType.rows;
-
-      console.log(rows)
 
       rows.map((row: RowOrCol[], index: number) => {
         // Extract all standard data, start date, end date, values etc

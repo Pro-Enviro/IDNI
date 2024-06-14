@@ -21,14 +21,14 @@
   </div>
 </div>
 
-<p-panel>
+<p-panel *ngIf="fuels.length">
 
 
   <p-selectButton
     *ngIf="fieldFilters"
     [options]="fieldFilters"
     [(ngModel)]="filteredField"
-    (ngModelChange)="splitByMonth(data)"
+    (ngModelChange)="splitByMonth(fuels)"
     class="btn-select"
   ></p-selectButton>
   <div class="flex justify-content-between align-items-center">
@@ -36,11 +36,11 @@
                     (ngModelChange)="filterData()" class="btn-select " [style]="{marginTop: '1rem'}"></p-selectButton>
     <div>
       <p-toggleButton [(ngModel)]="dayAndNightFilter" onLabel="Day & Night Split" offLabel="Day & Night Split"
-                      (ngModelChange)="splitByMonth(data)" *ngIf="showDayAndNightButton" styleClass="text-xs mr-1"
+                      (ngModelChange)="splitByMonth(fuels)" *ngIf="showDayAndNightButton" styleClass="text-xs mr-1"
                       pTooltip="If Day/Night kwh is available" tooltipPosition="top"
                       [showDelay]="1500"></p-toggleButton>
       <p-toggleButton [(ngModel)]="dailyFilter" onLabel="Monthly Average" offLabel="Daily Average"
-                      (ngModelChange)="splitByMonth(data)" styleClass="text-xs"></p-toggleButton>
+                      (ngModelChange)="splitByMonth(fuels)" styleClass="text-xs"></p-toggleButton>
 
     </div>
   </div>
@@ -48,7 +48,7 @@
 
 </p-panel>
 
-<p-panel header="Totals">
+<p-panel header="Totals" *ngIf="fuels.length">
 
   <div class="flex justify-content-end m-3">
     <button pButton class="btn-dark" pRipple icon="pi pi-file-excel" (click)="exportExcel()"></button>
