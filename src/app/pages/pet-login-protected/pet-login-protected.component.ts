@@ -1206,8 +1206,8 @@ export class PetLoginProtected implements OnInit {
       'Wood Chips': 0.01074,
       'Natural Gas off Grid': 0.03021,
       'Bio Gas Off Grid':   0.00020,
-      'Oil':0, //what type of oil - burning oil,fuel oil,gas oil, marine gas oil,
-      'Bio fuels': 0, //there many bio fuels-bio diesel, bioethanol and many others
+      'Oil':0, //burning oil
+      'Bio fuels': 0, //biodiesel
       'Bio Mass': 0.01074,
       'Coal for Industrial use': 0.05629,
     }
