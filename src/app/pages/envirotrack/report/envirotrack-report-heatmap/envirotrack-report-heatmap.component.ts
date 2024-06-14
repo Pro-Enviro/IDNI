@@ -101,7 +101,6 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   initChart = () => {
     // @ts-ignore
 
-
     this.chartOptions = {
       tooltip: {
         extraCssText: 'text-transform: capitalize',

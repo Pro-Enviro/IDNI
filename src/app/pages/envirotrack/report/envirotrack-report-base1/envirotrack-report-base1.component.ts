@@ -50,8 +50,6 @@ export class EnvirotrackReportBase1Component implements OnInit {
   ) {}
 
   initChart = () => {
-
-
     this.chartOptions = {
       legend: {
         show: true,
@@ -84,7 +82,7 @@ export class EnvirotrackReportBase1Component implements OnInit {
       tooltip: {
         extraCssText: 'text-transform: capitalize',
         trigger: 'item',
-        formatter: '{b} ({d}%)',
+        formatter: `{b}  {c}`,
         axisPointer: {
           type: 'cross',
           label: {
@@ -309,10 +307,10 @@ export class EnvirotrackReportBase1Component implements OnInit {
     }
 
     this.showChart = true;
-
+//this.chartX = this.chartX.map((date: any) => moment(date).format('DD/MM/YYYY'));
     this.chartData =  [{
       type: 'line',
-      name: cDay.date,
+      name: moment(cDay.date).format('DD/MM/YYYY'),
       data: cDay.hhd,
       emphasis: {
         itemStyle: {
@@ -322,7 +320,7 @@ export class EnvirotrackReportBase1Component implements OnInit {
       }
     },{
       type: 'line',
-      name: lowDay.date,
+      name: moment(lowDay.date).format('DD/MM/YYYY'),
       data: lowDay.hhd,
       emphasis: {
         itemStyle: {

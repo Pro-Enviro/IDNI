@@ -110,6 +110,12 @@ a{
 }
   //----------------------------------------------------BUTTON----------------------------------------------------------
 
+.btn-style-none{
+  background: none;
+  border: 0px;
+  padding-bottom: 15px;
+}
+
 .btn-select{
   .p-selectbutton .p-button.p-highlight{
     background-color: $primeColor;
@@ -683,8 +689,8 @@ a{
   display:none;
 }
 .showMenu{
-  width:80% !important;
-  padding-right: 20px;
+  width: 5%;
+  padding-right: 6px;
 }
 
   @media screen and (min-width: 200px) and (max-width:1080px) {
@@ -702,10 +708,6 @@ a{
   display:none;
 }
 
-  //.dashboard-btn{
-  //  display:block;
-  //}
-
 .sidenav {
   height: 100%;
   overflow-x: hidden;
@@ -714,7 +716,8 @@ a{
   color: #4b5563;
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   border-radius: 6px;
-  width: 120%;
+  //max-width: 134%;
+  //width: 120%;
   //margin-left: 10px;
   a {
     font-size:18.5px;
@@ -1228,9 +1231,10 @@ a{
     }
   }
 
-@media screen and (max-width: 1780px) and (min-width: 1440px){
-  .sidenav {
-    width: 140%;
+@media screen and (max-width: 1920px) and (min-width: 1440px){
+  .showMenu{
+    width: 8%;
+    padding-right: 6px;
   }
 }
 

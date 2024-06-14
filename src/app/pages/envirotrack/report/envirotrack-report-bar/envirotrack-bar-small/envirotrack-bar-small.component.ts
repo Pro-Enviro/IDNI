@@ -72,6 +72,14 @@ export class EnvirotrackBarSmallComponent implements OnInit {
 
 
   initChart = () => {
+    this.chartX = this.chartX.map((date: any) => moment(date).format('DD/MM/YYYY'));
+
+    this.chartData = this.chartData.map((date: any) => {
+      date[0] = moment(date[0]).format('DD/MM/YYYY');
+      date[1] = date[1].toFixed(2)
+      return date
+    })
+
     this.chartOptions = {
       legend: {
         show: true,
@@ -101,8 +109,8 @@ export class EnvirotrackBarSmallComponent implements OnInit {
       tooltip: {
         extraCssText: 'text-transform: capitalize',
         trigger: 'item',
-        formatter: (params: any) => {
-          return `<span class="font-bold">${moment(params.value[0]).format('YYYY-MM-DD')}:</span>  ${params.value[1].toLocaleString('en-US')}`
+        formatter: function (params: any) {
+          return `<p>${params.data[0]}: ${params.data[1]}</p>`
         },
         axisPointer: {
           type: 'cross',
@@ -162,7 +170,6 @@ export class EnvirotrackBarSmallComponent implements OnInit {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
               if (res.data) {
-                console.log(res.data)
                 this.companies = res.data
                 this.selectedCompany = this.companies[0].id
                 this.isConsultant = true

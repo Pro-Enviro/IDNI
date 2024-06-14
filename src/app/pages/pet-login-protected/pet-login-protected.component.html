@@ -1,5 +1,5 @@
 <section>
-  <p-card header="The Productivity & Emissions Tool (PET)" styleClass="card-charts" [style]="{ width: '83.5vw' }">
+  <p-card header="The Productivity & Emissions Tool (PET)" styleClass="card-charts" [style]="{ width: '83.5vw',overflowX: 'hidden' }">
     <div class="container flex justify-content-end mt-2 mb-4">
       <p-button type="button" styleClass="btn-style" (click)="sidebarVisible = true" icon="pi pi-spin pi-cog"
                 label="Using the PET Tool"></p-button>
@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="grid flex justify-content-center flex-wrap">
-      <div class="col-5 p-3 mt-3">
+      <div class="lg:col-5 md:col-6 p-3 mt-3">
         <p-card header="{{isConsultant ? 'Select Company' : ''}}"
                 styleClass="flex justify-content-center card-charts p-2">
           @if (isConsultant) {
