@@ -248,8 +248,9 @@ export class PetLoginProtected implements OnInit {
     this.externalCost = Number(petData.total_external_costs) || 0
 
 
-    // Check if exists in output choices first
+
     if (this.outputUnit !== null) {
+    // Check if exists in output choices first
       if (!this.outputChoices.find((choice: any) => choice === this.outputUnit)) {
         this.outputChoices.unshift(this.outputUnit)
       }
