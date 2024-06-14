@@ -247,8 +247,12 @@ export class PetLoginProtected implements OnInit {
     this.selectedYear = petData.year || '2024'
     this.externalCost = Number(petData.total_external_costs) || 0
 
+
+    // Check if exists in output choices first
     if (this.outputUnit !== null) {
-      this.outputChoices.unshift(this.outputUnit)
+      if (!this.outputChoices.find((choice: any) => choice === this.outputUnit)) {
+        this.outputChoices.unshift(this.outputUnit)
+      }
     }
 
     // All dynamic rows added back from save
