@@ -156,8 +156,9 @@ export class PetLoginProtected implements OnInit {
     this.getPETReport(this.selectedCompany)
     this.getFuelData()
     this.getData(this.selectedCompany)
-    this.getScopeData(this.selectedCompany)
+
   }
+
 
   getCompanies = () => {
     // Fetch all companies
@@ -281,11 +282,6 @@ export class PetLoginProtected implements OnInit {
 
     this.calculateProductivityScore()
 
-    const findEnergyCO2e = energy.find((fuelType: any) => fuelType.co2e > 0)
-    if (findEnergyCO2e.co2e) {
-      this.initCo2eScope()
-      //this.initCo2eBreakdown()
-    }
   }
 
 
@@ -675,6 +671,7 @@ export class PetLoginProtected implements OnInit {
   }
 
   getProductivityData = () => {
+
     this.http.get(`${this.url}/items/sic_codes?limit=-1`).subscribe({
       next: (res: any) => {
         if (res?.data) {
@@ -704,7 +701,9 @@ export class PetLoginProtected implements OnInit {
           }
         },
         error: (err) => console.log(err),
-        complete: () => this.assignFuelDataToCorrectCost()
+        complete: () =>{
+          this.assignFuelDataToCorrectCost()
+        }
       })
     }
   }
@@ -755,6 +754,7 @@ export class PetLoginProtected implements OnInit {
     this.calculatePieCharts(extractedData)
   }
 
+
  calculatePieCharts = (extractedData:any) => {
    const conversionFactors: { [key: string]: number } = {
      'Electricity': 0.22499,
@@ -772,7 +772,7 @@ export class PetLoginProtected implements OnInit {
      'Natural Gas off Grid': 0.03021,
      'Bio Gas Off Grid':   0.00020,
      'Oil': 0.24557, //burning oil
-     'Bio fuels': 0.03558,
+     'Bio fuels': 0.03558,//bio diesel
      'Bio Mass': 0.01074,
      'Coal for Industrial use': 0.05629,
    }
@@ -785,9 +785,11 @@ export class PetLoginProtected implements OnInit {
         value : calculatedCO2e
 
       }
-    })
-    this.initCo2eBreakdown()
+   })
+
+
  }
+
 
   getData = (id: number) => {
    if(!id){
@@ -810,37 +812,11 @@ export class PetLoginProtected implements OnInit {
           }
 
         },
-
+         complete:()=> {
+          this.initCo2eScope()
+          this.initCo2eBreakdown()
+         }
       }
-    )
-  }
-
-  getScopeData = (id: number) => {
-    if(!id){
-      return
-    }
-    this.track.getData(id).subscribe({
-      next: (res) => {
-        if (res){
-          let grandTotal = 0;
-          res.forEach((row: any) => {
-            row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
-            // Sort the envirotrack data
-            grandTotal += row.hhd.reduce((acc: number, curr: number) => acc + curr, 0)
-          })
-          this.envirotrackData = {
-            name: 'Electricity',
-            value:( grandTotal/1000).toFixed(2)
-          }
-          this.breakDownScope.push(this.envirotrackData)
-
-        }
-
-      },
-      complete:() => {
-        this.initCo2eScope()
-      }
-    }
     )
   }
 
@@ -1084,12 +1060,11 @@ export class PetLoginProtected implements OnInit {
     // If Electricity -> Scope 2
     // All others => scope 1
     const getElectricity = this.breakDownChartData.filter((fuelType: any) => fuelType.name.toLowerCase().includes('electricity'))
-    const mappedScope2 = getElectricity.map((elec: any) => {
-      return {
+    const mappedScope2 = getElectricity.map((elec: any) => ({
         name: 'Scope 2',
         value: elec.value
-      }
-    })
+      })
+    )
 
     const allOtherFuelTypes = this.breakDownChartData.filter((fuelType: any) => !fuelType.name.toLowerCase().includes('electricity'))
 
@@ -1290,8 +1265,6 @@ export class PetLoginProtected implements OnInit {
     const calculatedCO2e = (group.totalUnits * selectedConversionFactor) / 1000
     group.co2e = calculatedCO2e
 
-    this.initCo2eBreakdown()
-    this.initCo2eScope()
 
   }
 
