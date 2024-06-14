@@ -237,6 +237,7 @@ export class TypeChartComponent implements OnInit {
     this.dataArray = []
 
     if (selectedCompanyId) {
+
       this.track.getFuelData(selectedCompanyId).subscribe({
         next: (res:any) => {
           if (res?.data?.fuel_data) {
@@ -316,6 +317,7 @@ export class TypeChartComponent implements OnInit {
           }
 
         },
+        complete: () => this.getFuelData(id)
       }
     )
   }
