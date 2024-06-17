@@ -51,6 +51,7 @@ export class GenerateReportComponent implements OnInit {
   totalEmissions: number = 0;
   fuels: any = [];
   exportColumns: any[] = [];
+  scopeTable: any[] = []
 
 
   cols = [
@@ -100,6 +101,8 @@ export class GenerateReportComponent implements OnInit {
     'Biomethane (compressed)': 0.00038,
     'Wood Chips': 0.01074
   }
+   totalCo2e: any;
+    envirotrackData: any;
 
 
   constructor(
@@ -255,9 +258,39 @@ export class GenerateReportComponent implements OnInit {
     })
 
     this.typeTotals = extractedData
+    this.scopeTable = [...extractedData]
 
-    this.recalculateTotals()
+    this.getData(this.selectedCompany)
 
+
+  }
+
+  getData = (id: number) => {
+    if(!id){
+      return
+    }
+    this.track.getData(id).subscribe({
+        next: (res) => {
+          if (res){
+            let grandTotal = 0;
+            res.forEach((row: any) => {
+              row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
+              // Sort the envirotrack data
+              grandTotal += row.hhd.reduce((acc: number, curr: number) => acc + curr, 0)
+            })
+            this.envirotrackData = {
+              type: 'Electricity',
+              consumption:( grandTotal/1000).toFixed(2),
+            }
+            this.scopeTable.push(this.envirotrackData)
+          }
+        },
+        complete: () => {
+          this.calculateScopeTable()
+          this.recalculateTotals()
+        }
+      }
+    )
   }
 
 
@@ -500,11 +533,72 @@ export class GenerateReportComponent implements OnInit {
   }
 
 
+  calculateScopeTable = () => {
+    const conversionFactors: { [key: string]: number } = {
+      'Electricity': 0.22499,
+      'Natural Gas (Grid)': 0.18293,
+      'Kerosene': 0.24677,
+      'Diesel (avg biofuel blend)': 0.23908,
+      'Petrol (avg biofuel blend)': 0.22166,
+      "Gas oil (Red diesel)": 0.25650,
+      'LPG': 0.21449,
+      'Propane': 0.21410,
+      'Butane': 0.22241,
+      'Biogas': 0.00022,
+      'Biomethane (compressed)': 0.00038,
+      'Wood Chips': 0.01074,
+      'Natural Gas off Grid': 0.03021,
+      'Bio Gas Off Grid':   0.00020,
+      'Oil': 0.24557, //burning oil
+      'Bio fuels': 0.03558, //biodiesel
+      'Bio Mass': 0.01074,
+      'Coal for Industrial use': 0.05629,
+    }
+
+
+
+    this.scopeTable = this.scopeTable.map((fuelType: any) => {
+      fuelType.scope = fuelType.type === 'Electricity' ? 'Scope 2' : 'Scope 1'
+
+      const selectedConversionFactor = conversionFactors[fuelType.type] ? conversionFactors[fuelType.type] : 0
+      const calculatedCO2e = (fuelType.consumption * selectedConversionFactor) / 1000
+      fuelType.co2e = Number(calculatedCO2e)
+
+      return fuelType
+    })
+
+
+    // Update Co2e totals
+    this.totalCo2e = this.typeTotals.reduce((acc: any, curr: any) => {
+      if (curr.co2e > 0 ){
+        return acc + curr.co2e
+      }
+      return acc;
+    }, 0)
+
+    this.scopeTable.sort((a: any, b: any) => b.co2e - a.co2e)
+  }
+
+  calculateCo2ePercent(typeTotal: any) {
+    const calculatedPercent = ( typeTotal.co2e / this.totalCo2e) * 100
+    if (calculatedPercent > 0 ) {
+      return calculatedPercent.toFixed(2);
+    }
+
+    return 0;
+  }
+
+
+
+
 
   ngOnInit(): void {
     this.getCompanies();
     this.getFuelData()
+
   }
+
+
 }
 
 

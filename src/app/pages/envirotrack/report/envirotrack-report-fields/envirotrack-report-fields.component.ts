@@ -641,13 +641,11 @@ export class EnvirotrackReportFieldsComponent {
         nightAllocationsForSeries.push([currentDay.format('DD-MMMM-YYYY'), nightKwhPerDay])
         currentDay.add(1, 'day')
       } else {
-
         allDays.push(currentDay.format('DD-MMMM-YYYY'));
         allocations.push([currentDay.format('DD-MMMM-YYYY'), valuePerDay])
         currentDay.add(1, 'day')
       }
     }
-
 
     return {
       allDays,
