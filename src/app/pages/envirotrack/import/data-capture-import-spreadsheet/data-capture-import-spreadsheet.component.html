@@ -47,7 +47,7 @@
       </div>
 
       <div style="overflow-x:scroll">
-      <p-table [value]="fileContent.slice(0,10)" [tableStyle]="{ 'min-width': '50rem',width: '100%'}">
+      <p-table [value]="fileContent.slice(0,20)" [tableStyle]="{ 'min-width': '50rem',width: '100%'}">
         <ng-template pTemplate="body" let-row let-r="rowIndex">
           <tr *ngIf="r === 0">
             <td *ngFor="let cell of row.slice(0,30); index as c" >
