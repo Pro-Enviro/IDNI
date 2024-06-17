@@ -126,7 +126,7 @@
           <div class="flex justify-content-end p-4">
             <button pButton class="btn-dark" icon="pi pi-file-excel" (click)="exportExcelForBreakdownTable()"></button>
           </div>
-          <p-table [value]="typeTotals" styleClass="p-datatable-sm" [columns]="cols" >
+          <p-table [value]="typeTotals" styleClass="p-datatable-sm" [columns]="cols" *ngIf="typeTotals && totalConsumption">
             <ng-template pTemplate="caption">
               <h3 class="p-3">Breakdown of Energy Costs</h3>
             </ng-template>
@@ -158,7 +158,7 @@
             <ng-template pTemplate="footer">
               <tr>
                 <td class="font-semibold text-sm" colspan="1">Totals</td>
-                <td class="font-semibold text-sm">{{ totalConsumption >= 1000 ? totalConsumption.toLocaleString('en-US', noDecimalsString )  : totalConsumption.toLocaleString('en-US', oneDecimalString) }}</td>
+                <td class="font-semibold text-sm">{{ totalConsumption }}</td>
                 <td class="font-semibold text-sm" colspan="1"></td>
                 <td class="font-semibold text-sm">£{{ totalCost.toLocaleString('en-US', noDecimalsString) }}</td>
                 <td class="font-semibold text-sm" colspan="1"></td>
@@ -183,7 +183,7 @@
           </p-table>
         </p-tabPanel>
         <p-tabPanel header="Co2e breakdown">
-          <p-table [value]="scopeTable" styleClass="p-datatable-sm" [columns]="cols">
+          <p-table [value]="scopeTable" styleClass="p-datatable-sm" [columns]="cols" >
             <ng-template pTemplate="caption">
               <h3 class="p-3">Co2e By Scope</h3>
             </ng-template>
@@ -199,7 +199,7 @@
               <tr  class="breakdownRow" *ngIf="typeTotal">
                 <td class="font-normal text-sm">{{ typeTotal.scope }}</td>
                 <td class="font-normal text-sm">{{ typeTotal.type}}</td>
-                <td class="font-normal text-sm" >{{ typeTotal.co2e.toLocaleString('en-US', strOptions) }}</td>
+                <td class="font-normal text-sm" >{{ typeTotal.co2e }}</td>
                 <td class="font-normal text-sm">{{ calculateCo2ePercent(typeTotal) }}</td>
               </tr>
             </ng-template>

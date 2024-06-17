@@ -46,7 +46,7 @@ export class GenerateReportComponent implements OnInit {
     maximumFractionDigits: 1,
     minimumFractionDigits: 1,
   }
-  totalConsumption: number = 0;
+  totalConsumption: any = 0;
   totalCost: number = 0 ;
   totalEmissions: number = 0;
   fuels: any = [];
@@ -281,8 +281,12 @@ export class GenerateReportComponent implements OnInit {
             this.envirotrackData = {
               type: 'Electricity',
               consumption:( grandTotal/1000).toFixed(2),
+              cost: 0,
+              emissions: (grandTotal * 0.22499) / 1000
             }
             this.scopeTable.push(this.envirotrackData)
+            this.typeTotals.push(this.envirotrackData)
+
           }
         },
         complete: () => {
@@ -463,10 +467,13 @@ export class GenerateReportComponent implements OnInit {
     this.totalCost = this.typeTotals.reduce((acc: any, curr: any) => acc + curr.cost, 0)
     this.totalConsumption = this.typeTotals.reduce((acc: any, curr: any) => acc + curr.consumption, 0)
     this.totalEmissions = (this.typeTotals.reduce((acc: any, curr: any) => acc + curr.emissions, 0)) / 1000
+
+    this.totalConsumption = parseFloat(this.totalConsumption).toLocaleString('en-US', this.noDecimalsString)
   }
 
   calculateConsumptionPercent = (typeTotal: any) => {
-    const percent = (parseFloat(typeTotal.consumption) / this.totalConsumption) * 100
+    typeTotal.consumption = Number(typeTotal.consumption)
+    const percent:number = (parseFloat(typeTotal.consumption) / parseFloat(this.totalConsumption)) * 100
     return percent.toFixed(1)
   }
 
@@ -576,6 +583,7 @@ export class GenerateReportComponent implements OnInit {
       return acc;
     }, 0)
 
+    this.typeTotals.sort((a: any, b: any) => b.consumption - a.consumption)
     this.scopeTable.sort((a: any, b: any) => b.co2e - a.co2e)
   }
 
