@@ -485,6 +485,11 @@ export class GenerateReportComponent implements OnInit {
   }
 
   calculateEmissions = (typeTotal: any) => {
+
+    if (typeTotal.type === 'Electricity') {
+      typeTotal.conversionFactor = 0.22499
+    }
+
     const data = (parseFloat(typeTotal.consumption) * parseFloat(typeTotal.conversionFactor)) / 1000
 
     let strOptions = this.strOptions
