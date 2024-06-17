@@ -628,7 +628,7 @@ export class EnvirotrackReportFieldsComponent {
     while (currentDay.isBefore(currentEnd)) {
 
       if (this.dateFilter && !isNaN(this.dateFilter)) {
-        const monthsAgo = moment(new Date()).subtract(this.dateFilter, 'months')
+        const monthsAgo = moment(new Date()).subtract(this.dateFilter + 1, 'months')
         if (extractedRowValues.currentMonth.isBefore(monthsAgo, 'month')) return;
       }
       // Add day/night split if applicable
@@ -683,7 +683,7 @@ export class EnvirotrackReportFieldsComponent {
       }
 
       if (this.dateFilter && !isNaN(this.dateFilter)) {
-        const monthsAgo = moment(new Date()).subtract(this.dateFilter, 'months')
+        const monthsAgo = moment(new Date()).subtract(this.dateFilter + 1, 'months')
         if (extractedRowValues.currentMonth.isBefore(monthsAgo, 'month')) return;
       }
 
