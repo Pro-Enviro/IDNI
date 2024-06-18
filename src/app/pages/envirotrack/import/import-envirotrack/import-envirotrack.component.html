@@ -101,7 +101,7 @@
                 </div>
               </div>
 
-              <p-table [value]="fileContent.slice(0,16)" [tableStyle]="{ 'min-width': '50rem' }">
+              <p-table [value]="fileContent.slice(0,20)" [tableStyle]="{ 'min-width': '50rem' }">
                 <ng-template pTemplate="body" let-row let-r="rowIndex">
                   <tr>
                     <td *ngFor="let cell of row.slice(0,15); index as c">
