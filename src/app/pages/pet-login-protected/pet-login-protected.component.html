@@ -153,7 +153,7 @@
               <td class="px-1">
                 <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
                                [(ngModel)]="groups.parent.totalCost"
-                               (ngModelChange)="calculatePerEmployeeCost(groups)" ></p-inputNumber>
+                               (ngModelChange)="calculatePerEmployeeCost(groups)"></p-inputNumber>
               </td>
               <td colspan="4">
                 <p class="ml-3"
@@ -161,7 +161,6 @@
               </td>
               <!--            <td colspan="4"></td>-->
             </tr>
-
 
             <!--   Dynamic titles       -->
             <tr *ngIf="expanded && groups.parent.name === 'Cost of Raw Materials'">

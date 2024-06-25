@@ -455,6 +455,7 @@ export class PetLoginProtected implements OnInit {
 
 
   calculatePerEmployeeCost = (groups?: any) => {
+    console.log('Calculating external')
     this.calculateTotalExternalCost()
 
     if (!this.employees) return;
@@ -501,6 +502,7 @@ export class PetLoginProtected implements OnInit {
         oneOfEachParent[row.parent.name] = row.parent.totalCost
       }
     })
+
 
     let summedValues = this.sumValues(oneOfEachParent)
 
@@ -630,6 +632,7 @@ export class PetLoginProtected implements OnInit {
 
   calculateGroupTotalCost = (group: any) => {
 
+
     if (group.parent.name === 'Cost of Raw Materials') {
       return this.calculateRawMaterials(group)
     }
@@ -642,6 +645,7 @@ export class PetLoginProtected implements OnInit {
 
 
     const parentName = group?.parent.name
+
     const total = this.data.filter((item: any) => item.parent.name === parentName).reduce((acc: number, curr: any) => {
       if (curr.cost !== undefined && curr.cost !== null) {
         return acc + parseFloat(curr.cost)
@@ -651,9 +655,14 @@ export class PetLoginProtected implements OnInit {
     }, 0)
 
 
+
     this.data = this.data.map((item: any) => {
       if (item.parent.name === parentName) {
-        item.parent.totalCost = total;
+
+        if (item.parent.totalCost < total){
+          item.parent.totalCost = total;
+        }
+
         if (this.employees > 0) {
           item.parent.secondColumn = (total / this.employees).toFixed(2)
         }
@@ -666,6 +675,9 @@ export class PetLoginProtected implements OnInit {
     if (group.parent.name === 'Cost of Energy') {
       this.calculateCo2e(group)
     }
+
+
+    this.calculateTotalExternalCost()
 
     return total !== undefined ? total : 0
   }
