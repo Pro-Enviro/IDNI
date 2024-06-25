@@ -272,7 +272,7 @@
               </td>
               <td *ngIf="groups.unitsUom">
                 <p-dropdown [options]="unitsUom" [(ngModel)]="groups.unitsUom" class="p-inputtext-sm"
-                            (ngModelChange)="calculateCo2e(groups)"
+                            (ngModelChange)="handleEnergyOrRawMaterials(groups)"
                             [style]="{width: '120px'}"></p-dropdown>
               </td>
 
@@ -283,7 +283,7 @@
               <td *ngIf="groups.totalUnits !== undefined">
 
                 <p-inputNumber [(ngModel)]="groups.totalUnits" class="p-inputtext-sm"
-                               [inputStyle]="{width: '100px'}" (ngModelChange)="calculateCo2e(groups)"></p-inputNumber>
+                               [inputStyle]="{width: '100px'}" (ngModelChange)="handleEnergyOrRawMaterials(groups)"></p-inputNumber>
 
               </td>
 
@@ -430,7 +430,7 @@
               <td *ngIf="groups.companyModeOfTransport !== undefined"></td>
               <td *ngIf="groups.staffCommute !== undefined"></td>
               <td *ngIf="groups.route !== undefined"></td>
-              <td *ngIf="groups.cost !== undefined">{{ groups.parent.totalCost }}</td>
+              <td *ngIf="groups.cost !== undefined">{{ groups.parent.subtotal }}</td>
               <td *ngIf="groups.unitOfCost !== undefined"></td>
               <td *ngIf="groups.approxMileage !== undefined"></td>
               <td *ngIf="groups.regionOfOrigin !== undefined"></td>

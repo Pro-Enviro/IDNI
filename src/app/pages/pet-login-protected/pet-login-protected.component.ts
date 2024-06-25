@@ -624,22 +624,17 @@ export class PetLoginProtected implements OnInit {
 
   sumValues = (obj: any): number => <number>Object.values(obj).reduce((a: any, b: any) => a + b, 0);
 
-  calculateIndividualEmployeeCost = (object: any) => {
-    if (!this.employees || !object.totalCost) return;
-    object.secondColumn = (object.totalCost / this.employees)
-  }
 
   calculateGroupTotalCost = (group: any) => {
-    if (group.parent.name === 'Cost of Raw Materials') {
-      return this.calculateRawMaterials('Cost of Raw Materials')
-    }
+    // if (group.parent.name === 'Cost of Raw Materials') {
+    //   return this.calculateRawMaterials('Cost of Raw Materials')
+    // }
 
     if (!group?.parent) return 0;
 
     if (group.parent.name === 'Cost of Raw Materials') {
       return this.calculateRawMaterials('Cost of Raw Materials')
     }
-
 
     const parentName = group?.parent.name
 
@@ -651,8 +646,11 @@ export class PetLoginProtected implements OnInit {
       }
     }, 0)
 
+
     this.data = this.data.map((item: any) => {
       if (item.parent.name === parentName) {
+
+        item.parent.subtotal = total;
 
         if (item.parent.totalCost < total){
           item.parent.totalCost = total;
@@ -670,25 +668,6 @@ export class PetLoginProtected implements OnInit {
       this.calculateCo2e(group)
     }
 
-
-  // // Handle other costs not working
-    if (group.parent.name === 'Other External Costs (Legal, rental, accounting etc)') {
-      const otherCosts = this.data.filter((rows: any) => rows.parent.name === 'Other External Costs (Legal, rental, accounting etc)').reduce((acc: any, current: any) => {
-        if (current.cost === null) current.cost = 0;
-        return acc + parseFloat(current.cost);
-      },0)
-
-      this.data = this.data.map((row: any) => {
-        if (row.parent.name === 'Other External Costs (Legal, rental, accounting etc)') {
-
-          if (row.parent.totalCost < otherCosts){
-            row.parent.totalCost = otherCosts;
-          }
-        }
-
-        return row;
-      })
-    }
 
     this.calculateTotalExternalCost()
     return total !== undefined ? total : 0
@@ -1245,7 +1224,13 @@ export class PetLoginProtected implements OnInit {
     this.data = this.data.map((item: any) => {
       if (item.parent.name === parentName) {
 
-        item.parent.totalCost = total;
+        item.parent.subtotal = total;
+
+        if (item.parent.totalCost < total) {
+          item.parent.totalCost = total;
+        }
+
+
         if (this.employees > 0) {
           item.parent.secondColumn = (total / this.employees).toFixed(2)
         }
@@ -1257,8 +1242,18 @@ export class PetLoginProtected implements OnInit {
     return this.data;
   }
 
-  calculateCo2e = (group: any) => {
 
+  handleEnergyOrRawMaterials = (groups: any) => {
+    if (groups.parent.name === 'Cost of Energy'){
+      return this.calculateCo2e(groups)
+    }
+
+    if (groups.parent.name === 'Cost of Raw Materials') {
+      return this.calculateRawMaterials('Cost of Raw Materials')
+    }
+  }
+
+  calculateCo2e = (group: any) => {
     if (group.parent.name !== 'Cost of Energy') return;
     if (group.unitsUom !== 'kWh') return;
 
