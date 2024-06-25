@@ -1,36 +1,55 @@
 <section>
-  <p-card header="The Productivity & Emissions Tool (PET)" styleClass="card-charts" [style]="{ width: '83.5vw',overflowX: 'hidden' }">
+  <p-card header="The Productivity & Emissions Tool (PET)" styleClass="card-charts"
+          [style]="{ width: '83.5vw',overflowX: 'hidden' }">
     <div class="container flex justify-content-end mt-2 mb-4">
       <p-button type="button" styleClass="btn-style" (click)="sidebarVisible = true" icon="pi pi-spin pi-cog"
                 label="Using the PET Tool"></p-button>
     </div>
     <div class="container mt-2 p-3">
       <h3 class="text-center text-xl mb-3">Introduction to the Productivity & Emissions Tool (PET Tool)</h3>
-     <p style="font-size:1.2rem">
-       The Productivity & Emissions Tool (PET) is a secure and user-friendly platform designed to help businesses gather data and visualize factors impacting productivity and emissions. In line with the
-       IDNI <a href="https://id-ni.eco/data-privacy-policy.html" target="_blank" style="color:#85bfba">Data Privacy Policy</a> , information provided by individual companies will remain confidential and accessible only to them. No other registered businesses
-       will be able to view or identify another company’s data. Additionally, no company-specific data will be shared outside the IDNI project without prior approval.
-       The PET tool allows businesses to benchmark their productivity against other companies within their sector across the UK. It also assists in estimating carbon emissions,
-       providing insights into factors that negatively impact productivity and offers solutions to reduce emissions. Each productivity factor—such as energy, transportation, and materials—can be detailed to
-       understand business costs and emission sources. This comprehensive understanding helps set targets and benchmark your business progress.
-     </p>
+      <p style="font-size:1.2rem">
+        The Productivity & Emissions Tool (PET) is a secure and user-friendly platform designed to help businesses
+        gather data and visualize factors impacting productivity and emissions. In line with the
+        IDNI <a href="https://id-ni.eco/data-privacy-policy.html" target="_blank" style="color:#85bfba">Data Privacy
+        Policy</a> , information provided by individual companies will remain confidential and accessible only to them.
+        No other registered businesses
+        will be able to view or identify another company’s data. Additionally, no company-specific data will be shared
+        outside the IDNI project without prior approval.
+        The PET tool allows businesses to benchmark their productivity against other companies within their sector
+        across the UK. It also assists in estimating carbon emissions,
+        providing insights into factors that negatively impact productivity and offers solutions to reduce emissions.
+        Each productivity factor—such as energy, transportation, and materials—can be detailed to
+        understand business costs and emission sources. This comprehensive understanding helps set targets and benchmark
+        your business progress.
+      </p>
       <h3 class="text-center text-xl mb-3 mt-6">Significance of the Data for the Tool</h3>
       <p style="font-size:1.2rem">
-        The data provided by companies is invaluable both on an individual and site level. It helps improve productivity and reduce Scope 1 and 2 emissions. For the IDNI project,
-        this data is critical to its success, demonstrating how collective efforts can significantly impact productivity and emissions across clusters, sectors, and regions in Northern Ireland. Achieving these goals will require policy changes,
-        a re-evaluation of energy use, and significant investments in infrastructure and technology. The IDNI project will outline strategies driven by business-sourced evidence to facilitate these changes.
+        The data provided by companies is invaluable both on an individual and site level. It helps improve productivity
+        and reduce Scope 1 and 2 emissions. For the IDNI project,
+        this data is critical to its success, demonstrating how collective efforts can significantly impact productivity
+        and emissions across clusters, sectors, and regions in Northern Ireland. Achieving these goals will require
+        policy changes,
+        a re-evaluation of energy use, and significant investments in infrastructure and technology. The IDNI project
+        will outline strategies driven by business-sourced evidence to facilitate these changes.
       </p>
       <h3 class="text-center text-xl mb-3 mt-6">Interpreting the Tool's Output Results for Companies</h3>
       <p style="font-size:1.2rem">
-        Using the PET tool, companies can benchmark their productivity against competitors, identify Scope 1 and 2 emissions, and find ways to reduce them while improving their bottom line. This methodology aims to be widely accepted in Northern
+        Using the PET tool, companies can benchmark their productivity against competitors, identify Scope 1 and 2
+        emissions, and find ways to reduce them while improving their bottom line. This methodology aims to be widely
+        accepted in Northern
         Ireland, highlighting issues that individual companies may struggle to resolve alone.
-        By working collaboratively with other companies in the sector or region, businesses can find collective solutions that benefit all involved.
+        By working collaboratively with other companies in the sector or region, businesses can find collective
+        solutions that benefit all involved.
       </p>
       <h3 class="text-center text-xl mb-3 mt-6">Using the Information for Decarbonisation</h3>
       <p style="font-size:1.2rem">
-        Companies that join the Industrial Decarbonisation for Northern Ireland project and agree to share their data will gain insights into their Scope 1 and 2 emissions and identify most of their Scope 3 emissions.
-        Analyzing anonymized data from participating companies will help build a case for future funding, policy, and infrastructure improvements. This collective approach aims to enhance productivity, sustainability, international competitiveness,
-        and customer appeal through decarbonization efforts. Collaboration among companies can expedite these goals, share financial burdens, and amplify their collective voice.
+        Companies that join the Industrial Decarbonisation for Northern Ireland project and agree to share their data
+        will gain insights into their Scope 1 and 2 emissions and identify most of their Scope 3 emissions.
+        Analyzing anonymized data from participating companies will help build a case for future funding, policy, and
+        infrastructure improvements. This collective approach aims to enhance productivity, sustainability,
+        international competitiveness,
+        and customer appeal through decarbonization efforts. Collaboration among companies can expedite these goals,
+        share financial burdens, and amplify their collective voice.
       </p>
       <div class="p-3 flex justify-content-center">
         <p-button routerLink="/dashboard/import" styleClass="btn-dark" label="Go to Data Upload"></p-button>
@@ -57,7 +76,6 @@
 
               </p-card>
             </div>
-
 
 
           }
@@ -115,7 +133,9 @@
                 <p>Turnover</p>
               </th>
               <th colspan="5" class="px-1">
-                <p-inputNumber inputId="turnover" class="p-inputtext-sm" [inputStyle]="{width: '120px'}" [minFractionDigits]="2" [maxFractionDigits]="2" [(ngModel)]="turnover" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
+                <p-inputNumber inputId="turnover" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
+                               [minFractionDigits]="2" [maxFractionDigits]="2" [(ngModel)]="turnover"
+                               (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
               </th>
 
             </tr>
@@ -124,7 +144,8 @@
                 <p>Number Of Employees</p>
               </th>
               <th colspan="5" class="px-1">
-                <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '120px'}" [minFractionDigits]="0" [maxFractionDigits]="0"
+                <p-inputNumber inputId="employees" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
+                               [minFractionDigits]="0" [maxFractionDigits]="0"
                                [(ngModel)]="employees" (ngModelChange)="calculatePerEmployeeCost()"></p-inputNumber>
               </th>
 
@@ -134,10 +155,12 @@
                 <p>Annual Output (total units sold)</p>
               </th>
               <th colspan="1" class="px-1">
-                <p-inputNumber inputId="output" class="p-inputtext-sm" [inputStyle]="{width: '120px'}" [minFractionDigits]="2" [maxFractionDigits]="2" [(ngModel)]="output" ></p-inputNumber>
+                <p-inputNumber inputId="output" class="p-inputtext-sm" [inputStyle]="{width: '120px'}"
+                               [minFractionDigits]="2" [maxFractionDigits]="2" [(ngModel)]="output"></p-inputNumber>
               </th>
               <th colspan="4">
-                <p-dropdown [options]="outputChoices" [(ngModel)]="outputUnit"  [editable]="true" placeholder="Select/input a unit"></p-dropdown>
+                <p-dropdown [options]="outputChoices" [(ngModel)]="outputUnit" [editable]="true"
+                            placeholder="Select/input a unit"></p-dropdown>
               </th>
             </tr>
           </ng-template>
@@ -191,11 +214,14 @@
               <td *ngIf="groups.route !== undefined">Route</td>
               <td *ngIf="groups.cost !== undefined">Cost</td>
               <td *ngIf="groups.unitOfCost !== undefined">Unit of cost</td>
-              <td *ngIf="groups.approxMileage !== undefined"><p class="flex flex-column"><span>Approx Mileage </span><span class="text-xs text-gray-500">(if required)</span></p></td>
+              <td *ngIf="groups.approxMileage !== undefined"><p class="flex flex-column">
+                <span>Approx Mileage </span><span class="text-xs text-gray-500">(if required)</span></p></td>
               <td *ngIf="groups.regionOfOrigin !== undefined">Region of Origin</td>
               <td *ngIf="groups.scrappageAndWaste !== undefined">% Scrappage & Waste in Prod</td>
-              <td *ngIf="groups.percentStaff !== undefined" ><p class="flex flex-column"><span>% Staff </span><span class="text-xs text-gray-500">(if required)</span></p></td>
-              <td style="width: 100px" *ngIf="groups.distance !== undefined" ><p class="flex flex-column"><span>Average Distance (miles) </span><span class="text-xs text-gray-500">(if required)</span></p></td>
+              <td *ngIf="groups.percentStaff !== undefined"><p class="flex flex-column"><span>% Staff </span><span
+                class="text-xs text-gray-500">(if required)</span></p></td>
+              <td style="width: 100px" *ngIf="groups.distance !== undefined"><p class="flex flex-column"><span>Average Distance (miles) </span><span
+                class="text-xs text-gray-500">(if required)</span></p></td>
             </tr>
           </ng-template>
 
@@ -221,7 +247,7 @@
                             [editable]="true" placeholder="Please Select"></p-dropdown>
                 <p-dropdown [options]="materialFormats" class="p-inputtext-sm" [style]="{width:'120px'}"
                             [(ngModel)]="groups.format" placeholder="Please Select" scrollHeight="350px"
-                            ></p-dropdown>
+                ></p-dropdown>
               </td>
 
               <td [pEditableColumn]="groups.name" pEditableColumnField="name"
@@ -245,7 +271,8 @@
                             [(ngModel)]="groups.fuelType"></p-dropdown>
               </td>
               <td *ngIf="groups.unitsUom">
-                <p-dropdown [options]="unitsUom" [(ngModel)]="groups.unitsUom" class="p-inputtext-sm" (ngModelChange)="calculateCo2e(groups)"
+                <p-dropdown [options]="unitsUom" [(ngModel)]="groups.unitsUom" class="p-inputtext-sm"
+                            (ngModelChange)="calculateCo2e(groups)"
                             [style]="{width: '120px'}"></p-dropdown>
               </td>
 
@@ -256,10 +283,7 @@
               <td *ngIf="groups.totalUnits !== undefined">
 
                 <p-inputNumber [(ngModel)]="groups.totalUnits" class="p-inputtext-sm"
-                               [inputStyle]="{width: '100px'}" (ngModelChange)="calculateCo2e(groups)" ></p-inputNumber>
-
-<!--                 <p-inputNumber [(ngModel)]="groups.totalUnits" class="p-inputtext-sm" [minFractionDigits]="2" [maxFractionDigits]="2"
-                               [inputStyle]="{width: '100px'}" (ngModelChange)="calculateRawMaterials(groups)"></p-inputNumber> -->
+                               [inputStyle]="{width: '100px'}" (ngModelChange)="calculateCo2e(groups)"></p-inputNumber>
 
               </td>
 
@@ -281,7 +305,8 @@
               </td>
               <td *ngIf="groups.cost !== undefined">
 
-                <p-inputNumber [(ngModel)]="groups.cost" class="p-inputtext-sm" [minFractionDigits]="2" [maxFractionDigits]="2"
+                <p-inputNumber [(ngModel)]="groups.cost" class="p-inputtext-sm" [minFractionDigits]="2"
+                               [maxFractionDigits]="2"
                                [inputStyle]="{width: '100px'}"
                                (ngModelChange)="calculateGroupTotalCost(groups)"></p-inputNumber>
               </td>
@@ -292,7 +317,7 @@
               </td>
               <td *ngIf="groups.approxMileage !== undefined">
 
-<!--                <p *ngIf="groups.approxMileage === null">N/A</p>-->
+                <!--                <p *ngIf="groups.approxMileage === null">N/A</p>-->
                 <p-inputNumber [(ngModel)]="groups.approxMileage" class="p-inputtext-sm"
                                [inputStyle]="{width: '100px'}"></p-inputNumber>
               </td>
@@ -306,15 +331,15 @@
               </td>
               <td *ngIf="groups.percentStaff !== undefined">
 
-<!--                <p *ngIf="groups.percentStaff === null">N/A </p>-->
-                <p-inputNumber  [(ngModel)]="groups.percentStaff" class="p-inputtext-sm"
+                <!--                <p *ngIf="groups.percentStaff === null">N/A </p>-->
+                <p-inputNumber [(ngModel)]="groups.percentStaff" class="p-inputtext-sm"
                                [inputStyle]="{width: '100px'}"></p-inputNumber>
               </td>
 
               <td *ngIf="groups.distance !== undefined">
 
-<!--                <p *ngIf="groups.distance === null">N/A</p>-->
-                <p-inputNumber  [(ngModel)]="groups.distance" class="p-inputtext-sm"
+                <!--                <p *ngIf="groups.distance === null">N/A</p>-->
+                <p-inputNumber [(ngModel)]="groups.distance" class="p-inputtext-sm"
                                [inputStyle]="{width: '100px'}"></p-inputNumber>
               </td>
             </tr>
@@ -417,61 +442,60 @@
               <td colspan="6" class="pl-2">
                 <p-button icon="pi pi-plus" size="small" label="Add New {{groups.parent.name}}"
                           (click)="createNewTableRow(groups)" styleClass="btn-dark mt-3 mb-3"></p-button>
-<!--                <p-button *ngIf="groups.parent.name === 'Company Travel'" icon="pi pi-plus" size="small"-->
-<!--                          label="Add New Staff Commute" (click)="addNewStaffCommuteRow(groups)"-->
-<!--                          styleClass="btn-dark mt-3 mb-3 ml-2"></p-button>-->
+                <!--                <p-button *ngIf="groups.parent.name === 'Company Travel'" icon="pi pi-plus" size="small"-->
+                <!--                          label="Add New Staff Commute" (click)="addNewStaffCommuteRow(groups)"-->
+                <!--                          styleClass="btn-dark mt-3 mb-3 ml-2"></p-button>-->
               </td>
             </tr>
           </ng-template>
         </p-table>
       </div>
     </div>
-    @if(this.chartData){
-     <div class="grid mt-7">
-       <div class="xl:col-6 lg:col-12 md:col-12">
-         <p-card>
-           @if(chartOptions){
-      <!--LINE CHART-->
-             <p class="text-xs">Source: ONS by sector (latest year: 2021)</p>
-           }
-           <div class="flex justify-content-start">
-             <!--           <div echarts [options]="chartOptions" style="max-height: 70vh; height: 70vh; width: 70vw"></div>-->
-             <div echarts [options]="chartOptions" style="width: 105%; min-height: 570px;margin-top:1rem"></div>
-           </div>
-         </p-card>
-       </div>
-       <div class="xl:col-6 lg:col-12 md:col-12">
-         <p-card>
-           <!--GAUGE CHART-->
-           @if(gaugeChartOptions){
-             <p class="text-xs">Source: ONS by sector (latest year: 2021)</p>
-           }
-           <div class="flex justify-content-start">
-             <div echarts [options]="gaugeChartOptions" style="width: 100%; min-height: 570px;margin-top:1rem"></div>
-           </div>
-         </p-card>
-       </div>
-     </div>
-    }
-      <div class="grid">
+    @if (this.chartData) {
+      <div class="grid mt-7">
         <div class="xl:col-6 lg:col-12 md:col-12">
-<!-- CO2E BREAKDOWN CHART-->
-            @if(co2eBreakdown){
-              <p-card>
-                <div echarts [options]="co2eBreakdown" style="max-height: 600px; height: 600px"></div>
-                </p-card>
-
+          <p-card>
+            @if (chartOptions) {
+              <!--LINE CHART-->
+              <p class="text-xs">Source: ONS by sector (latest year: 2021)</p>
             }
+            <div class="flex justify-content-start">
+              <div echarts [options]="chartOptions" style="width: 105%; min-height: 570px;margin-top:1rem"></div>
+            </div>
+          </p-card>
         </div>
         <div class="xl:col-6 lg:col-12 md:col-12">
-<!--  CO2E SCOPE-->
-            @if(co2eScope){
-              <p-card>
-              <div echarts [options]="co2eScope" style="max-height: 600px; height: 600px"></div>
-              </p-card>
+          <p-card>
+            <!--GAUGE CHART-->
+            @if (gaugeChartOptions) {
+              <p class="text-xs">Source: ONS by sector (latest year: 2021)</p>
             }
+            <div class="flex justify-content-start">
+              <div echarts [options]="gaugeChartOptions" style="width: 100%; min-height: 570px;margin-top:1rem"></div>
+            </div>
+          </p-card>
         </div>
       </div>
+    }
+    <div class="grid">
+      <div class="xl:col-6 lg:col-12 md:col-12">
+        <!-- CO2E BREAKDOWN CHART-->
+        @if (co2eBreakdown) {
+          <p-card>
+            <div echarts [options]="co2eBreakdown" style="max-height: 600px; height: 600px"></div>
+          </p-card>
+
+        }
+      </div>
+      <div class="xl:col-6 lg:col-12 md:col-12">
+        <!--  CO2E SCOPE-->
+        @if (co2eScope) {
+          <p-card>
+            <div echarts [options]="co2eScope" style="max-height: 600px; height: 600px"></div>
+          </p-card>
+        }
+      </div>
+    </div>
 
   </p-card>
 </section>

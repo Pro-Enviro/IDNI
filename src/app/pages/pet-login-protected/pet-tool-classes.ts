@@ -90,9 +90,10 @@ export class StaffCommute {
   secondColumn: number = 0
   approxMileage: number = 0
   cost: number = 0
-  parent: { name: string, addRows: boolean, totalCost: number, secondColumn: number } = {
+  parent: { name: string, addRows: boolean, subtotal: number, totalCost: number, secondColumn: number } = {
     name: '',
     totalCost: 0,
+    subtotal: 0,
     secondColumn: 0,
     addRows: true
   }
