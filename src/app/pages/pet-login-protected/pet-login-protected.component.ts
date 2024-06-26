@@ -363,7 +363,6 @@ export class PetLoginProtected implements OnInit {
     }
     // Select correct SIC code letter
     const foundRow = this.sicCodeData.find((row: any) => row.sector === this.sicCode.sector)
-
     if (foundRow) {
       this.sicCodeLetter = foundRow.sic_number
       this.calculatePerEmployeeCost()
