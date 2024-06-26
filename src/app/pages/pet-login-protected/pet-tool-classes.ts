@@ -90,7 +90,7 @@ export class StaffCommute {
   distance: number = 0
   secondColumn: number = 0
   approxMileage: number = 0
-  cost: number = 0
+  cost: string = 'NA'
   parent: { name: string, subtotal:number, addRows: boolean, totalCost: number, secondColumn: number } = {
     name: '',
     totalCost: 0,
