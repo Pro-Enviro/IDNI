@@ -1213,7 +1213,6 @@ export class PetLoginProtected implements OnInit {
 
     const total = this.data.filter((item: any) => item.parent.name === parentName).reduce((acc: number, curr: any) => {
       if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined) {
-
         return acc + (parseFloat(curr.cost) * parseFloat(curr.totalUnits))
       } else {
         return acc;
