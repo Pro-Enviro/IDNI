@@ -322,24 +322,16 @@ export class PetLoginProtected implements OnInit {
           this.allPetData.forEach((year: PetToolData) => {
             const json = JSON.parse(year.cost_of_raw_materials)
             json.forEach((row: any) => {
+
               if (!this.materialTypes.includes(row.type)) {
                 this.materialTypes.push(row.type)
               }
 
 
-              if (!this.steelMaterials.includes(row.subtype)) {
+              if (!this.steelMaterials.includes(row.subtype) && !this.otherMetals.includes(row.subtype) && !this.plastics.includes(row.subtype) && !this.otherMaterials.includes(row.subtype)) {
                 this.steelMaterials.push(row.subtype)
-              }
-
-              if (!this.otherMetals.includes(row.subtype)) {
                 this.otherMetals.push(row.subtype)
-              }
-
-              if (!this.plastics.includes(row.subtype)) {
                 this.plastics.push(row.subtype)
-              }
-
-              if (!this.otherMaterials.includes(row.subtype)) {
                 this.otherMaterials.push(row.subtype)
               }
 
@@ -348,6 +340,7 @@ export class PetLoginProtected implements OnInit {
               this.otherMaterials = this.otherMaterials.filter(item => item !== undefined)
               this.otherMetals = this.otherMetals.filter(item => item !== undefined)
               this.plastics = this.plastics.filter(item => item !== undefined)
+
             })
           })
 
@@ -1229,15 +1222,12 @@ export class PetLoginProtected implements OnInit {
           item.parent.totalCost = total;
         }
 
-
         if (this.employees > 0) {
           item.parent.secondColumn = (total / this.employees).toFixed(2)
         }
       }
-
       return item
     })
-
     return this.data;
   }
 
@@ -1257,7 +1247,6 @@ export class PetLoginProtected implements OnInit {
     if (group.unitsUom !== 'kWh') return;
 
     // Find Fuel Type in object
-
     const conversionFactors: { [key: string]: number } = {
       'Electricity': 0.22499,
       'Natural Gas (Grid)': 0.18293,
@@ -1272,18 +1261,17 @@ export class PetLoginProtected implements OnInit {
       'Biomethane (compressed)': 0.00038,
       'Wood Chips': 0.01074,
       'Natural Gas off Grid': 0.03021,
-      'Bio Gas Off Grid':   0.00020,
-      'Oil': 0.24557, //burning oil
-      'Bio fuels': 0.03558, //biodiesel
+      'Bio Gas Off Grid': 0.00020,
+      'Oil': 0.24557, // burning oil
+      'Bio fuels': 0.03558, // biodiesel
       'Bio Mass': 0.01074,
       'Coal for Industrial use': 0.05629,
     }
 
+
     const selectedConversionFactor = conversionFactors[group.name] ? conversionFactors[group.name] : 0
     const calculatedCO2e = (group.totalUnits * selectedConversionFactor) / 1000
     group.co2e = calculatedCO2e
-
-
   }
 
   filterSicCode(event: AutoCompleteCompleteEvent) {
@@ -1302,7 +1290,6 @@ export class PetLoginProtected implements OnInit {
     }
 
     this.filteredSicCodes = filtered;
-
   }
 
 
