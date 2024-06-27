@@ -314,7 +314,7 @@
               <td *ngIf="groups.unitOfCost">
 
                 <p-dropdown [options]="unitsOfCost" class="p-inputtext-sm" [style]="{width: '120px'}"
-                            [(ngModel)]="groups.unitOfCost"></p-dropdown>
+                            [(ngModel)]="groups.unitOfCost" (ngModelChange)="calculateEnergyCostPerUnit(groups)" ></p-dropdown>
               </td>
               <td *ngIf="groups.approxMileage !== undefined">
                 <!--                <p *ngIf="groups.approxMileage === null">N/A</p>-->

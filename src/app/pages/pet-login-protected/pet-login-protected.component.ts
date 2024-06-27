@@ -658,11 +658,7 @@ export class PetLoginProtected implements OnInit {
 
     if (group.parent.name === 'Cost of Energy') {
       this.calculateCo2e(group)
-
-      if (group.unitOfCost === 'Cost/unit') {
-        this.calculateEnergyCostPerUnit(group)
-      }
-
+      this.calculateEnergyCostPerUnit(group)
     }
 
 
@@ -671,20 +667,25 @@ export class PetLoginProtected implements OnInit {
   }
 
   calculateEnergyCostPerUnit = (group: any) => {
-      if (group.cost === 0 || group.totalUnits === 0) return;
+      // if (group.cost === 0) return;
 
-      const total = this.data.filter((item: any) => item.parent.name === 'Cost of Energy' ).reduce((acc: number, curr: any) => {
-        if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined && curr.unitOfCost === 'Cost/unit') {
-          return acc + (parseFloat(curr.cost) * parseFloat(curr.totalUnits))
-        } else if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined) {
-          return acc + parseFloat(curr.cost)
-        } else {
-          return acc;
-        }
+      if (group.parent.name !== 'Cost of Energy') return;
+
+      const total = this.data
+        .filter((item: any) => item.parent.name === 'Cost of Energy' )
+        .reduce((acc: number, curr: any) => {
+
+          if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined && curr.unitOfCost === 'Cost/unit') {
+            console.log('TIMES', curr.cost, curr.totalUnits)
+            return acc + (parseFloat(curr.cost) * parseFloat(curr.totalUnits))
+          } else if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined) {
+            console.log('Adding', curr.cost)
+            return acc + parseFloat(curr.cost)
+          } else {
+            return acc;
+          }
       }, 0)
 
-
-    console.log(total)
 
     this.data = this.data.map((item: any) => {
       if (item.parent.name === 'Cost of Energy') {
@@ -1274,7 +1275,9 @@ export class PetLoginProtected implements OnInit {
 
   handleEnergyOrRawMaterials = (groups: any) => {
     if (groups.parent.name === 'Cost of Energy'){
-      return this.calculateCo2e(groups)
+      this.calculateCo2e(groups)
+      this.calculateEnergyCostPerUnit(groups)
+      return;
     }
 
     if (groups.parent.name === 'Cost of Raw Materials') {
