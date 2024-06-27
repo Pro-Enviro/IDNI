@@ -676,14 +676,13 @@ export class PetLoginProtected implements OnInit {
         .reduce((acc: number, curr: any) => {
 
           if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined && curr.unitOfCost === 'Cost/unit') {
-            console.log('TIMES', curr.cost, curr.totalUnits)
             return acc + (parseFloat(curr.cost) * parseFloat(curr.totalUnits))
           } else if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined) {
-            console.log('Adding', curr.cost)
             return acc + parseFloat(curr.cost)
           } else {
             return acc;
           }
+
       }, 0)
 
 
