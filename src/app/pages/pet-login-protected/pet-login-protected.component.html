@@ -62,7 +62,8 @@
             <div class="p-1">
               <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id"
                           (ngModelChange)="onSelectCompany()"
-                          [style]="{ width: '15rem', marginBottom: '2rem'}" scrollHeight="300px"></p-dropdown>
+                          [style]="{ width: '15rem', marginBottom: '2rem'}" scrollHeight="300px"
+                          [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
             </div>
 
           <div class="flex flex-column p-1">
