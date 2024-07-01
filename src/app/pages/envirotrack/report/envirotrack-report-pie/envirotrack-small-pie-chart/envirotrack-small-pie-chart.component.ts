@@ -35,7 +35,7 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
   months: string[] = [];
   filteredData: any;
   companies: any;
-  selectedCompany!: number;
+  selectedCompany!: number | null;
   chartData: any = [];
   chartX: string[] = [];
   chartY: string[] = [];
@@ -212,10 +212,9 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
 
     this.chartOptions = {}
     this.chartData = []
-    this.track.updateSelectedCompany(this.selectedCompany)
-    this.getData(this.selectedCompany)
 
-    //this.selectedCompany ? this.getData(this.selectedCompany) : null
+
+    this.selectedCompany ? this.getData(this.selectedCompany) : null
 
   }
 
@@ -244,6 +243,7 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
           //   this.selectedMpan = this.global.selectedMpan.value
           // } else {
           this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
+          console.log(this.selectedMpan)
           // }
 
           this.data = res
@@ -344,7 +344,7 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
 
   fetchDataByRole = () => {
     if (this.global.companyAssignedId.value) {
-      //this.selectedCompany = this?.global?.companyAssignedId?.value || null;
+      this.selectedCompany = this?.global?.companyAssignedId?.value || null;
       this.getData(this?.global?.companyAssignedId?.value)
       this.onSelectCompany()
     }
@@ -353,7 +353,7 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
 
   ngOnInit() {
     this.isConsultant = false
-    //this.selectedCompany = null;
+    this.selectedCompany = null;
     this.getCompanies();
     this.fetchDataByRole()
 
