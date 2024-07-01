@@ -207,7 +207,9 @@ export class EnvirotrackReportPieComponent implements OnInit {
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
+
     this.chartOptions = {}
+    this.chartData = []
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
 

@@ -35,7 +35,7 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
   months: string[] = [];
   filteredData: any;
   companies: any;
-  selectedCompany!: number | null;
+  selectedCompany!: number;
   chartData: any = [];
   chartX: string[] = [];
   chartY: string[] = [];
@@ -207,9 +207,16 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
   }
 
   onSelectCompany = () => {
-    // this.global.updateSelectedMpan(this.selectedMpan)
-    // this.selectedCompany ? this.track.updateSelectedCompany(this.selectedCompany) : null;
-    this.selectedCompany ? this.getData(this.selectedCompany) : null
+    //this.global.updateSelectedMpan(this.selectedMpan)
+    //this.selectedCompany ? this.track.updateSelectedCompany(this.selectedCompany) : null;
+
+    this.chartOptions = {}
+    this.chartData = []
+    this.track.updateSelectedCompany(this.selectedCompany)
+    this.getData(this.selectedCompany)
+
+    //this.selectedCompany ? this.getData(this.selectedCompany) : null
+
   }
 
   getTimes = () => {
@@ -281,6 +288,7 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
     let sunday: any[] = [];
     this.filteredData = this.filteredData.filter((x: any) => x.mpan === this.selectedMpan)
 
+
     if (!this.filteredData.length) return
 
 
@@ -336,7 +344,7 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
 
   fetchDataByRole = () => {
     if (this.global.companyAssignedId.value) {
-      this.selectedCompany = this?.global?.companyAssignedId?.value || null;
+      //this.selectedCompany = this?.global?.companyAssignedId?.value || null;
       this.getData(this?.global?.companyAssignedId?.value)
       this.onSelectCompany()
     }
@@ -345,7 +353,7 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
 
   ngOnInit() {
     this.isConsultant = false
-    this.selectedCompany = null;
+    //this.selectedCompany = null;
     this.getCompanies();
     this.fetchDataByRole()
 
