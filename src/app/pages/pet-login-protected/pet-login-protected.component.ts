@@ -146,8 +146,7 @@ export class PetLoginProtected implements OnInit {
   }
 
   onSelectCompany = () => {
-    if (!this.selectedCompany) this.selectedCompany = this.companies[0]
-
+    if (!this.selectedCompany) this.selectedCompany = this.companies[0].id
     // Reset table
     this.resetTableValues()
     this.allPetData = []
@@ -823,7 +822,6 @@ export class PetLoginProtected implements OnInit {
 
       }
    })
-
 
  }
 
