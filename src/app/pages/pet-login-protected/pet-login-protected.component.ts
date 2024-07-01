@@ -115,7 +115,7 @@ export class PetLoginProtected implements OnInit {
   steelMaterials: SteelMaterials[] = ['Mild Steel', 'Carbon Steel', 'Tool Steel D2', 'Tool Steel H13', 'Tool Steel M2', 'Tool Steel S275', 'Tool Steel S325', 'Alloy Steel 4340', 'Alloy Steel 4140', 'Alloy Steel 4150', 'Alloy Steel 9310', 'Alloy Steel 52100', 'Stainless Steel 304', 'Stainless Steel 316', 'Duplex Steel', 'Hardox series 400', 'Hardox series 500', 'Hardox series 600', 'Inconel series 600', 'Inconel series 700']
   otherMetals: OtherMetals[] = ['Aluminium 1000', 'Aluminium 2000', 'Aluminium 6000', 'Aluminium 7000', 'Duralumin', 'Aluminium Lithium', 'Copper', 'Bronze', 'Titanium', 'Lithium', 'Magnesium']
   plastics: Plastics[] = ['ABS', 'PA', 'PET', 'PP', 'PU', 'POM', 'PEEK', 'PE', 'PVC', 'PPS', 'Elastomers', 'Composites', 'Textiles']
-  otherMaterials: OtherMaterials[] = ['Composites', 'Textiles', 'Cement', 'Aggregate', 'Sand', 'Glass', 'Chemicals', 'Hardwood', 'Softwood']
+  otherMaterials: OtherMaterials[] = ['Composites', 'Textiles', 'Cement', 'Aggregate', 'Sand', 'Glass', 'Chemicals', 'Hardwood', 'Softwood', 'MDF', 'Marine plywood', 'Interior plywood', 'Plasterboard', 'Insulation', 'Wool', 'Natural fibre' ]
   materialFormats: MaterialFormats[] = ['Sheet', 'Profile', 'Filament/Fibre', 'Ingot/Billet', 'Natural State', 'Powder', 'Granule', 'Liquid', 'Gas', 'Recyclate']
   years = years
   selectedYear: string = years[0] || '2024'
@@ -296,7 +296,7 @@ export class PetLoginProtected implements OnInit {
     this.generateClasses('Road Freight', RoadFreight)
     this.generateClasses('Other Freight', OtherFreightTransportation)
     this.generateClasses('Company Travel', CompanyTravel)
-    this.generateClasses('Staff Commute', StaffCommute)
+    // this.generateClasses('Staff Commute', StaffCommute)
 
     this.generateClasses('Other External Costs (Legal, rental, accounting etc)', OtherExternalCosts, ['Consultancy Cost', 'Sub Contracting Cost'])
 
@@ -322,24 +322,16 @@ export class PetLoginProtected implements OnInit {
           this.allPetData.forEach((year: PetToolData) => {
             const json = JSON.parse(year.cost_of_raw_materials)
             json.forEach((row: any) => {
+
               if (!this.materialTypes.includes(row.type)) {
                 this.materialTypes.push(row.type)
               }
 
 
-              if (!this.steelMaterials.includes(row.subtype)) {
+              if (!this.steelMaterials.includes(row.subtype) && !this.otherMetals.includes(row.subtype) && !this.plastics.includes(row.subtype) && !this.otherMaterials.includes(row.subtype)) {
                 this.steelMaterials.push(row.subtype)
-              }
-
-              if (!this.otherMetals.includes(row.subtype)) {
                 this.otherMetals.push(row.subtype)
-              }
-
-              if (!this.plastics.includes(row.subtype)) {
                 this.plastics.push(row.subtype)
-              }
-
-              if (!this.otherMaterials.includes(row.subtype)) {
                 this.otherMaterials.push(row.subtype)
               }
 
@@ -348,6 +340,7 @@ export class PetLoginProtected implements OnInit {
               this.otherMaterials = this.otherMaterials.filter(item => item !== undefined)
               this.otherMetals = this.otherMetals.filter(item => item !== undefined)
               this.plastics = this.plastics.filter(item => item !== undefined)
+
             })
           })
 
@@ -370,7 +363,6 @@ export class PetLoginProtected implements OnInit {
     }
     // Select correct SIC code letter
     const foundRow = this.sicCodeData.find((row: any) => row.sector === this.sicCode.sector)
-
     if (foundRow) {
       this.sicCodeLetter = foundRow.sic_number
       this.calculatePerEmployeeCost()
@@ -404,12 +396,12 @@ export class PetLoginProtected implements OnInit {
 
   generateRows = (array: string[] | any, parentName: string, isClass?: boolean) => {
     if (isClass) {
-      // if (parentName === 'Staff Commute') {
-      //   array.parent.name = 'Company Travel'
-      // } else {
+      if (parentName === 'Staff Commute') {
+        array.parent.name = 'Company Travel'
+      } else {
         array.parent.name = parentName
         this.data.push(array)
-      // }
+      }
     } else {
       array.forEach((name: string) => {
         let newGroupItem = new GroupItem()
@@ -496,15 +488,18 @@ export class PetLoginProtected implements OnInit {
       otherExternalCostsRow: this.otherExternalCostsRow.totalCost,
     }
 
+
     this.data.forEach((row: any) => {
       if (!oneOfEachParent[row.parent.name]) {
         oneOfEachParent[row.parent.name] = row.parent.totalCost
       }
     })
 
+
     let summedValues = this.sumValues(oneOfEachParent)
 
     this.externalCost = summedValues ? summedValues : 0
+
 
     this.calculateProductivityScore()
 
@@ -617,32 +612,26 @@ export class PetLoginProtected implements OnInit {
     }
 
     this.initChart()
-
-
   }
 
   sumValues = (obj: any): number => <number>Object.values(obj).reduce((a: any, b: any) => a + b, 0);
 
-  calculateIndividualEmployeeCost = (object: any) => {
-    if (!this.employees || !object.totalCost) return;
-    object.secondColumn = (object.totalCost / this.employees)
-  }
 
   calculateGroupTotalCost = (group: any) => {
-
-    if (group.parent.name === 'Cost of Raw Materials') {
-      return this.calculateRawMaterials(group)
-    }
+    // if (group.parent.name === 'Cost of Raw Materials') {
+    //   return this.calculateRawMaterials('Cost of Raw Materials')
+    // }
 
     if (!group?.parent) return 0;
 
     if (group.parent.name === 'Cost of Raw Materials') {
-      return this.calculateRawMaterials(group)
+      return this.calculateRawMaterials('Cost of Raw Materials')
     }
 
-
     const parentName = group?.parent.name
+
     const total = this.data.filter((item: any) => item.parent.name === parentName).reduce((acc: number, curr: any) => {
+      if (curr.cost === 'NA') return acc;
       if (curr.cost !== undefined && curr.cost !== null) {
         return acc + parseFloat(curr.cost)
       } else {
@@ -653,7 +642,13 @@ export class PetLoginProtected implements OnInit {
 
     this.data = this.data.map((item: any) => {
       if (item.parent.name === parentName) {
-        item.parent.totalCost = total;
+
+        item.parent.subtotal = total;
+
+        if (item.parent.totalCost < total){
+          item.parent.totalCost = total;
+        }
+
         if (this.employees > 0) {
           item.parent.secondColumn = (total / this.employees).toFixed(2)
         }
@@ -662,13 +657,55 @@ export class PetLoginProtected implements OnInit {
       return item
     })
 
-
     if (group.parent.name === 'Cost of Energy') {
       this.calculateCo2e(group)
+      this.calculateEnergyCostPerUnit(group)
     }
 
+
+    this.calculateTotalExternalCost()
     return total !== undefined ? total : 0
   }
+
+  calculateEnergyCostPerUnit = (group: any) => {
+      // if (group.cost === 0) return;
+
+      if (group.parent.name !== 'Cost of Energy') return;
+
+      const total = this.data
+        .filter((item: any) => item.parent.name === 'Cost of Energy' )
+        .reduce((acc: number, curr: any) => {
+
+          if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined && curr.unitOfCost === 'Cost/unit') {
+            return acc + (parseFloat(curr.cost) * parseFloat(curr.totalUnits))
+          } else if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined) {
+            return acc + parseFloat(curr.cost)
+          } else {
+            return acc;
+          }
+
+      }, 0)
+
+
+    this.data = this.data.map((item: any) => {
+      if (item.parent.name === 'Cost of Energy') {
+
+        item.parent.subtotal = total;
+
+        if (item.parent.totalCost < total) {
+          item.parent.totalCost = total;
+        }
+
+        if (this.employees > 0) {
+          item.parent.secondColumn = (total / this.employees).toFixed(2)
+        }
+      }
+      return item
+    })
+
+    return this.data;
+  }
+
 
   getProductivityData = () => {
 
@@ -1206,11 +1243,10 @@ export class PetLoginProtected implements OnInit {
 
   }
 
-  calculateRawMaterials(group: any) {
+  calculateRawMaterials(parentName: string) {
 
-    const total = this.data.filter((item: any) => item.parent.name === 'Cost of Raw Materials').reduce((acc: number, curr: any) => {
+    const total = this.data.filter((item: any) => item.parent.name === parentName).reduce((acc: number, curr: any) => {
       if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined) {
-
         return acc + (parseFloat(curr.cost) * parseFloat(curr.totalUnits))
       } else {
         return acc;
@@ -1219,27 +1255,41 @@ export class PetLoginProtected implements OnInit {
 
 
     this.data = this.data.map((item: any) => {
-      if (item.parent.name === 'Cost of Raw Materials') {
+      if (item.parent.name === parentName) {
 
-        item.parent.totalCost = total;
+        item.parent.subtotal = total;
+
+        if (item.parent.totalCost < total) {
+          item.parent.totalCost = total;
+        }
+
         if (this.employees > 0) {
           item.parent.secondColumn = (total / this.employees).toFixed(2)
         }
       }
-
       return item
     })
-
     return this.data;
   }
 
-  calculateCo2e = (group: any) => {
 
+  handleEnergyOrRawMaterials = (groups: any) => {
+    if (groups.parent.name === 'Cost of Energy'){
+      this.calculateCo2e(groups)
+      this.calculateEnergyCostPerUnit(groups)
+      return;
+    }
+
+    if (groups.parent.name === 'Cost of Raw Materials') {
+      return this.calculateRawMaterials('Cost of Raw Materials')
+    }
+  }
+
+  calculateCo2e = (group: any) => {
     if (group.parent.name !== 'Cost of Energy') return;
     if (group.unitsUom !== 'kWh') return;
 
     // Find Fuel Type in object
-
     const conversionFactors: { [key: string]: number } = {
       'Electricity': 0.22499,
       'Natural Gas (Grid)': 0.18293,
@@ -1254,18 +1304,17 @@ export class PetLoginProtected implements OnInit {
       'Biomethane (compressed)': 0.00038,
       'Wood Chips': 0.01074,
       'Natural Gas off Grid': 0.03021,
-      'Bio Gas Off Grid':   0.00020,
-      'Oil': 0.24557, //burning oil
-      'Bio fuels': 0.03558, //biodiesel
+      'Bio Gas Off Grid': 0.00020,
+      'Oil': 0.24557, // burning oil
+      'Bio fuels': 0.03558, // biodiesel
       'Bio Mass': 0.01074,
       'Coal for Industrial use': 0.05629,
     }
 
+
     const selectedConversionFactor = conversionFactors[group.name] ? conversionFactors[group.name] : 0
     const calculatedCO2e = (group.totalUnits * selectedConversionFactor) / 1000
     group.co2e = calculatedCO2e
-
-
   }
 
   filterSicCode(event: AutoCompleteCompleteEvent) {
@@ -1284,7 +1333,6 @@ export class PetLoginProtected implements OnInit {
     }
 
     this.filteredSicCodes = filtered;
-
   }
 
 

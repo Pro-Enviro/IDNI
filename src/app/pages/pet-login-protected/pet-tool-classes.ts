@@ -14,9 +14,10 @@ export class SubTable {
   cost: number = 0
   secondColumn: number = 0
 
-  parent: { name: string, addRows: boolean, totalCost: number, secondColumn: number } = {
+  parent: { name: string, addRows: boolean, subtotal: number, totalCost: number, secondColumn: number } = {
     name: '',
     totalCost: 0,
+    subtotal: 0,
     secondColumn: 0,
     addRows: true
   }
@@ -89,11 +90,12 @@ export class StaffCommute {
   distance: number = 0
   secondColumn: number = 0
   approxMileage: number = 0
-  cost: number = 0
-  parent: { name: string, addRows: boolean, totalCost: number, secondColumn: number } = {
+  cost: string = 'NA'
+  parent: { name: string, subtotal:number, addRows: boolean, totalCost: number, secondColumn: number } = {
     name: '',
     totalCost: 0,
     secondColumn: 0,
+    subtotal: 0,
     addRows: true
   }
 }
@@ -108,9 +110,10 @@ export class TableRow {
   regionOfOrigin: RegionsOfOrigin = 'UK'
   buttonName: string = ''
   co2e: number = 0;
-  parent?: { name: string, secondColumn: number, totalCost: number } = {
+  parent?: { name: string, subtotal: number, secondColumn: number, totalCost: number } = {
     name: '',
     secondColumn: 0,
+    subtotal: 0,
     totalCost: 0
   }
 }
@@ -122,6 +125,7 @@ export class GroupItem {
   parent: { name: string, secondColumn: number } = {
     name: '',
     secondColumn: 0
+
   }
 }
 
