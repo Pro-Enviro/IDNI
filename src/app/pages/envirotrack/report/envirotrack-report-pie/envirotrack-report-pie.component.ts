@@ -281,6 +281,7 @@ export class EnvirotrackReportPieComponent implements OnInit {
     let sunday: any[] = [];
     this.filteredData = this.filteredData.filter((x:any) => x.mpan === this.selectedMpan)
 
+    if (!this.filteredData.length) return
 
     this.filteredData.forEach((row: any) => {
       row.hhd.forEach((hh: any, i:number) => {
