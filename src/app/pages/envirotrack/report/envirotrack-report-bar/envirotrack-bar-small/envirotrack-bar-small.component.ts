@@ -190,7 +190,6 @@ export class EnvirotrackBarSmallComponent implements OnInit {
       }
     })
 
-
     // this.track.getCompanies().subscribe({
     //     next: (res: any)=>{
     //       if (res.data) {
@@ -200,7 +199,6 @@ export class EnvirotrackBarSmallComponent implements OnInit {
     //       }
     //     }
     //   })
-
 
   }
 
