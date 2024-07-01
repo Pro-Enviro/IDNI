@@ -30,6 +30,9 @@ import {RegisterComponent} from "./users/register/register.component";
 import {RegistrationFormComponent} from "./users/register/registration-form/registration-form.component";
 import{UserProfileComponent} from "./users/account/user-profile/user-profile.component";
 import {CompanyProfileComponent} from "./users/account/company-profile/company-profile.component";
+import {
+  EnvirotrackReportFieldsComponent
+} from "./pages/envirotrack/report/envirotrack-report-fields/envirotrack-report-fields.component";
 
 
 export const routes: Routes = [
@@ -76,6 +79,7 @@ export const routes: Routes = [
       {path: 'bar', component: EnvirotrackReportBarComponent },
       {path: 'pie', component: EnvirotrackReportPieComponent },
       {path: 'base1', component: EnvirotrackReportBase1Component },
+      {path: 'fields', component: EnvirotrackReportFieldsComponent },
       {path: 'avg', component: EnvirotrackReportAvgComponent },
       {path: 'demand', component: EnvirotrackReportDemandComponent },
       {path: 'co2emissions', component:  TypeChartComponent},

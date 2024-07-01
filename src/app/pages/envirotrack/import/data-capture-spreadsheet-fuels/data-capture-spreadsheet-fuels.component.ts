@@ -248,10 +248,11 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
     // Format data for export
     let fuelRows = fuel.rows.map((row: any) => row.reduce((current: any, next: any) => {
       return {...current, [next.name]: next.value ? next.value : ''}
-    }))
+    }, {}))
 
     // Remove unnecessary columns
     fuelRows = fuelRows.map(({name, math, type, draggedCell, ...row}: any) => row)
+
 
     import('xlsx').then((xlsx) => {
       const worksheet = xlsx.utils.json_to_sheet(fuelRows);

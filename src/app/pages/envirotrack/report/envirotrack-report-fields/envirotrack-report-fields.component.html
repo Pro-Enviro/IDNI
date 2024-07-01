@@ -1,0 +1,97 @@
+<div class="flex">
+  <div class="flex-1">
+    <div class="lg:col-4 md:col-6">
+      @if(isConsultant){
+        <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"
+                      scrollHeight="370px"></p-dropdown>
+        </p-card>
+      } @else if (!isConsultant){
+        <p-card header="Selected Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+          <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select" [unselectable]="true"></p-selectButton>
+        </p-card>
+      }
+    </div>
+  </div>
+  <div class="flex-1" *ngIf="mpan.length">
+    <p-panel header="Select Mpan">
+      <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()"
+                      class="btn-select"></p-selectButton>
+    </p-panel>
+  </div>
+</div>
+
+<p-panel *ngIf="fuels.length">
+
+
+  <p-selectButton
+    *ngIf="fieldFilters"
+    [options]="fieldFilters"
+    [(ngModel)]="filteredField"
+    (ngModelChange)="splitByMonth(fuels)"
+    class="btn-select"
+  ></p-selectButton>
+  <div class="flex justify-content-between align-items-center">
+    <p-selectButton [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value"
+                    (ngModelChange)="filterData()" class="btn-select " [style]="{marginTop: '1rem'}"></p-selectButton>
+    <div>
+      <p-toggleButton [(ngModel)]="dayAndNightFilter" onLabel="Day & Night Split" offLabel="Day & Night Split"
+                      (ngModelChange)="splitByMonth(fuels)" *ngIf="showDayAndNightButton" styleClass="text-xs mr-1"
+                      pTooltip="If Day/Night kwh is available" tooltipPosition="top"
+                      [showDelay]="1500"></p-toggleButton>
+      <p-toggleButton [(ngModel)]="dailyFilter" onLabel="Monthly Average" offLabel="Daily Average"
+                      (ngModelChange)="splitByMonth(fuels)" styleClass="text-xs"></p-toggleButton>
+
+    </div>
+  </div>
+  <div echarts [options]="chartOptions" style="max-height: 60vh; height: 600px; margin-top: 3rem"></div>
+
+</p-panel>
+
+<p-panel header="Totals" *ngIf="fuels.length">
+
+  <div class="flex justify-content-end m-3">
+    <button pButton class="btn-dark" pRipple icon="pi pi-file-excel" (click)="exportExcel()"></button>
+  </div>
+  <p-table [value]="typeTotals" styleClass="p-datatable-sm">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Utility</th>
+        <th>Consumption (kWh)</th>
+        <th>Consumption %</th>
+        <th pTooltip="<p class='text-xs'><span class='font-bold'>Source:</span> Fuel Data [Total] column. </p><p class='text-xs mt-1'><span class='font-bold'>Note:</span> Envirotrack costing is not stored in DB.</p>" [escape]="false"
+            tooltipPosition="top"> Total Cost £
+        </th>
+        <th>Cost %</th>
+        <th>Carbon Emissions KG CO2e</th>
+        <th>Carbon Emissions %</th>
+      </tr>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-typeTotals let-i="rowIndex">
+      <tr>
+        <td>{{ typeTotals.type }}</td>
+        <td>{{ (typeTotals.consumption).toLocaleString('en-US', strOptions) }} <span
+          style="font-size: 0.9rem; color: #7e7c7c">{{ typeTotals.converted ? ' (Converted to kWh)' : '' }}</span></td>
+        <td>{{ ((typeTotals.consumption / totalConsumption) * 100).toFixed(2) }}</td>
+        <td>{{ typeTotals.cost.toLocaleString('en-US', strOptions) }}</td>
+        <td>{{ ((typeTotals?.cost / totalCost) * 100).toFixed(2) }}</td>
+        <td>{{ (typeTotals.consumption * typeTotals.conversionFactor).toLocaleString('en-US', strOptions) }}</td>
+        <td>{{ (((typeTotals.consumption * typeTotals.conversionFactor) / totalEmissions) * 100).toFixed(2) }}</td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <tr>
+        <td colspan="1">Totals</td>
+        <td>{{ (totalConsumption).toLocaleString('en-US', strOptions) }} kWh</td>
+        <td colspan="1"></td>
+        <td>£{{ totalCost.toLocaleString('en-US', strOptions) }}</td>
+        <td colspan="1"></td>
+        <td>{{ totalEmissions.toLocaleString('en-US', strOptions) }}</td>
+        <td colspan="1"></td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+</p-panel>
