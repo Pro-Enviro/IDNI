@@ -207,8 +207,10 @@ export class EnvirotrackReportPieComponent implements OnInit {
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
+    this.chartOptions = {}
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
+
   }
 
   getTimes = () => {
@@ -276,7 +278,6 @@ export class EnvirotrackReportPieComponent implements OnInit {
     let saturday: any[] = [];
     let sunday: any[] = [];
     this.filteredData = this.filteredData.filter((x:any) => x.mpan === this.selectedMpan)
-
 
 
     this.filteredData.forEach((row: any) => {
