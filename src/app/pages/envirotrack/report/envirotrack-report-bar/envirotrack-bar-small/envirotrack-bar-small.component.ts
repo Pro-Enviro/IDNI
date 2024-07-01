@@ -34,7 +34,7 @@ export class EnvirotrackBarSmallComponent implements OnInit {
   months: string[] = [];
   filteredData: any;
   companies: any;
-  selectedCompany!: number | null;
+  selectedCompany!: number;
   chartData: any = [];
   chartX: string[] = [];
   chartY: string[] = [];
@@ -206,8 +206,9 @@ export class EnvirotrackBarSmallComponent implements OnInit {
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
-    this.selectedCompany ? this.global.updateCompanyId(this.selectedCompany) : null
-    this.selectedCompany ? this.getData(this.selectedCompany) : null
+
+    this.track.updateSelectedCompany(this.selectedCompany)
+    this.getData(this.selectedCompany)
   }
 
   getTimes = () => {
@@ -285,9 +286,9 @@ export class EnvirotrackBarSmallComponent implements OnInit {
   ngOnInit() {
     this.getCompanies();
 
-    if (this.global.companyAssignedId.value) {
-      this.selectedCompany = this?.global?.companyAssignedId?.value || null;
-      this.getData(this?.global?.companyAssignedId?.value)
+    if (this.track.selectedCompany.value) {
+      this.selectedCompany = this.track.selectedCompany.value
+      this.getData(this.selectedCompany)
     }
 
     this.screenWidth = window.innerWidth
