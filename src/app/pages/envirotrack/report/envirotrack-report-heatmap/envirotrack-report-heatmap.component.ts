@@ -236,6 +236,9 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   onSelectCompany = () => {
     this.chartData = [];
     this.chartOptions = null;
+    this.chartX = [];
+    this.chartY = [];
+    this.testChart = []
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
   }
