@@ -8,6 +8,7 @@ import {MessageService} from "primeng/api";
 import {SharedComponents} from "../../shared-components";
 import {SharedModules} from "../../../../shared-module";
 import {EnvirotrackService} from "../../envirotrack.service";
+import {SidebarModule} from "primeng/sidebar";
 
 
 export class TableTotals {
@@ -52,7 +53,8 @@ interface ExtractedRowProps {
   templateUrl: './envirotrack-report-fields.component.html',
   imports: [
     SharedComponents,
-    SharedModules
+    SharedModules,
+    SidebarModule
   ],
   styleUrls: ['./envirotrack-report-fields.component.scss']
 })
@@ -84,6 +86,7 @@ export class EnvirotrackReportFieldsComponent {
   },
   ];
   filteredField: string = ''
+  fuelUsageGuide:boolean = false;
   fieldFilters!: any
   dateRange: any;
   minDate!: Date;

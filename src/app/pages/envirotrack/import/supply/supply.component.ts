@@ -10,6 +10,8 @@ import {SharedModules} from "../../../../shared-module";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {DbService} from "../../../../_services/db.service";
 import moment from "moment";
+import {SidebarModule} from "primeng/sidebar";
+import {DividerModule} from "primeng/divider";
 
 
 export type ASCProps = {
@@ -31,6 +33,8 @@ export type ASCProps = {
     SharedModules,
     FormsModule,
     TableModule,
+    SidebarModule,
+    DividerModule,
   ],
   providers: [EditableRow]
 })
@@ -50,6 +54,7 @@ export class SupplyComponent implements OnInit, OnChanges {
   isConsultant: boolean = false;
   selectedEmail: string = ''
   selectedCompanyName: string = ''
+  ascGuide:boolean = false;
 
   constructor(private global: GlobalService, private track: EnvirotrackService, private db: DbService, private msg: MessageService) {
 
