@@ -2,7 +2,10 @@
     <p-card>
       <div class="grid">
         <div class="lg:col-6 md:col-12">
-          <p-card header="Fuel Usage Chart" styleClass="card-select-panel" [style]="{ height: '100%' }"></p-card>
+          <p-card header="Fuel Usage Chart" styleClass="card-select-panel" [style]="{ height: '100%' }">
+            <p-button type="button" styleClass="btn-style" (click)="fuelUsageGuide = true" icon="pi pi-chart-bar" label="Guide"></p-button>
+          </p-card>
+
         </div>
         <div class="lg:col-6 md:col-12">
             <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
@@ -72,5 +75,18 @@
       </p-card>
       </div>
     </p-card>
+
+
+  <p-sidebar [(visible)]="fuelUsageGuide" position="right" styleClass="lg:w-4 md:w-6">
+    <div class="container p-5">
+      <h3 class="header-style">Fuel Usage Chart Guide</h3>
+      <p>The fuel usage bar chart is based on the provided information and shows the monthly energy or fuel consumption over a specific period. Here are the key components that the chart includes:</p>
+      <ul>
+        <li class="pb-2">1. X-Axis (Horizontal Axis): Represent the time period, divided into individual months. Each bar will correspond to a specific month.</li>
+        <li class="pb-2">2. Y-Axis (Vertical Axis): Represents the amount of energy or fuel used.</li>
+        <li class="pb-2">3. Bars: Each bar on the chart is indicating the total energy or fuel usage for that particular month. The height of the bar will be proportional to the amount of energy or fuel used.</li>
+      </ul>
+    </div>
+  </p-sidebar>
 </section>
 
