@@ -184,6 +184,11 @@ export class GenerateReportComponent implements OnInit {
     })
   }
   onSelectCompany = () => {
+    this.recommendations = []
+    this.typeTotals = []
+    this.scopeTable = []
+    this.totalConsumption = []
+
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getReportValues(this.selectedCompany)
     this.getFuelData()
