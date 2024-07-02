@@ -11,6 +11,9 @@
 <!--  </div>-->
 </div>
 <p-card header="Authorised Supply Capacity (ASC)">
+  <div>
+    <p-button type="button" styleClass="btn-style mb-4" (click)="ascGuide = true" icon="pi pi-chart-line" label="ASC Guide"></p-button>
+  </div>
   <div class="grid p-3">
     <div class="lg:col-6 md:col-12">
       <p-card header="Company Supply" styleClass="card-select-panel">
@@ -148,4 +151,16 @@
 </p-card>
 
 
-
+<p-sidebar [(visible)]="ascGuide" position="right" styleClass="lg:w-5 md:w-7">
+  <div class="container p-5">
+    <h3 class="header-style">Authorised Supply Capacity Guide</h3>
+    <p>The Authorised Supply Capacity (ASC) it is the total amount of electrical load available to your site, or the peak
+      electrical demand you could use if you switched on lots of electrical equipment at the same time. It can also be referred to as Agreed Supply Capacity, Authorised Supply Capacity, Supply Capacity, Supply Availability or simply ASC.</p>
+    <p-divider></p-divider>
+    <h3>Adding New Supply:</h3>
+    <p>To add new supply, please fill the following fields – MPAN Number, start – end date and the Authorised Supply Capacity (ASC) value in kVA.</p>
+    <p-divider></p-divider>
+    <h3>How to view the ASC against demand:</h3>
+    <p>To view the ASC, please navigate to the menu, select “Report” and “Maximum Demand”.</p>
+  </div>
+</p-sidebar>
