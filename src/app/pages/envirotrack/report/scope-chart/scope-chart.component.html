@@ -8,15 +8,10 @@
       </div>
 
       <div class="lg:col-5 md:col-6">
-        @if(isConsultant){
           <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
-            <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}" scrollHeight="370px"></p-dropdown>
+            <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"
+                        scrollHeight="370px" [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
           </p-card>
-        } @else if (!isConsultant){
-          <p-card header="Selected Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
-            <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select" [unselectable]="true"></p-selectButton>
-          </p-card>
-        }
       </div>
 
       <div class="col-12" *ngIf="chartOption">

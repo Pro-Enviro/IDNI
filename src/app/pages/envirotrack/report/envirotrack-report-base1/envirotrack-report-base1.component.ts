@@ -194,6 +194,9 @@ export class EnvirotrackReportBase1Component implements OnInit {
     this.chartData = [];
     this.chartX = [];
     this.chartY = [];
+    this.mpan = [];
+    this.defaultFilters = []
+    this.chartOptions = {}
 
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)

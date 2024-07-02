@@ -2,30 +2,23 @@
    <p-card styleClass="card-charts" [style]="{ height: '100%' }">
      <div class="grid">
        <div class="lg:col-12 xl:col-6 md:col-6 sm:col-12">
-         @if(isConsultant){
+
            <p-card header="Select Company" styleClass="card-select-panel">
              <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()"
                          [style]="{ width: '12rem'}"
-                         scrollHeight="350px"></p-dropdown>
+                         scrollHeight="350px" [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
            </p-card>
-         } @else if (!isConsultant){
-           <p-card header="Selected Company" styleClass="card-select-panel">
-                   <p-selectButton [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" class="btn-select" [unselectable]="true"></p-selectButton>
-
-           </p-card>
-         }
 
          <!--        <p-card styleClass="card-select-panel" *ngIf="!isConsultant && selectedCompany"  >-->
          <!--         <p *ngIf="!isConsultant && selectedCompany">{{selectedName}}</p>-->
          <!--        </p-card>-->
        </div>
-       <div class="lg:col-12 xl:col-6 md:col-6 sm:col-12">
-         <div class="flex flex-column" *ngIf="mpan.length">
+       <div class="lg:col-12 xl:col-6 md:col-6 sm:col-12 flex flex-column">
+         @if(mpan.length){
            <p-card header="Select Mpan" styleClass="card-select-panel" [style]="{ height: '100%' }">
-<!--             <p-selectButton [options]="mpan" [(ngModel)]="selectedMpan" (ngModelChange)="onSelectCompany()" class="btn-select"></p-selectButton>-->
              <p-dropdown [options]="mpan" [(ngModel)]="selectedMpan" (onChange)="onSelectCompany()" class="mt-1"></p-dropdown>
            </p-card>
-         </div>
+         }
        </div>
        <div class="col-12">
 

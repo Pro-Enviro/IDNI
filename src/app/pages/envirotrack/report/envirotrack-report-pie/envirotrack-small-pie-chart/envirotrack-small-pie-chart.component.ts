@@ -35,7 +35,7 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
   months: string[] = [];
   filteredData: any;
   companies: any;
-  selectedCompany!: number | null;
+  selectedCompany!: number;
   chartData: any = [];
   chartX: string[] = [];
   chartY: string[] = [];
@@ -203,13 +203,18 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
     //   }
     // })
 
-
   }
 
   onSelectCompany = () => {
-    // this.global.updateSelectedMpan(this.selectedMpan)
-    // this.selectedCompany ? this.track.updateSelectedCompany(this.selectedCompany) : null;
-    this.selectedCompany ? this.getData(this.selectedCompany) : null
+    //this.global.updateSelectedMpan(this.selectedMpan)
+    //this.selectedCompany ? this.track.updateSelectedCompany(this.selectedCompany) : null;
+
+    this.chartOptions = {}
+    this.chartData = []
+    this.track.updateSelectedCompany(this.selectedCompany)
+    this.getData(this.selectedCompany)
+
+    //this.selectedCompany ? this.getData(this.selectedCompany) : null
   }
 
   getTimes = () => {
@@ -255,8 +260,6 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
 
   filterData = () => {
 
-
-
     if (this.dateRange != undefined && this.dateRange[1]) {
       this.filteredData = this.data.filter((x: any) => moment(x.date).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
       this.chartX = this.months.filter((x: any) => moment(x).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
@@ -280,6 +283,7 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
     let saturday: any[] = [];
     let sunday: any[] = [];
     this.filteredData = this.filteredData.filter((x: any) => x.mpan === this.selectedMpan)
+
 
     if (!this.filteredData.length) return
 
@@ -334,21 +338,24 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
   }
 
 
-  fetchDataByRole = () => {
-    if (this.global.companyAssignedId.value) {
-      this.selectedCompany = this?.global?.companyAssignedId?.value || null;
-      this.getData(this?.global?.companyAssignedId?.value)
-      this.onSelectCompany()
-    }
-  }
+  // fetchDataByRole = () => {
+  //   if (this.global.companyAssignedId.value) {
+  //     this.selectedCompany = this?.global?.companyAssignedId?.value || null;
+  //     this.getData(this?.global?.companyAssignedId?.value)
+  //     this.onSelectCompany()
+  //   }
+  // }
 
 
   ngOnInit() {
     this.isConsultant = false
-    this.selectedCompany = null;
+    //this.selectedCompany = null;
     this.getCompanies();
-    this.fetchDataByRole()
-
+    //this.fetchDataByRole()
+    if (this.track.selectedCompany.value) {
+      this.selectedCompany = this.track.selectedCompany.value
+      this.getData(this.selectedCompany)
+    }
     this.screenWidth = window.innerWidth;
   }
 }
