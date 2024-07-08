@@ -497,7 +497,10 @@ export class ImportEnvirotrackComponent {
     this.fileContent = null
     this.selectedMpan = null;
     this.draggedCell = null;
+    this.selectedStartDate = null;
     this.selectedDataStart = null;
+    this.hhd = [];
+
   }
 }
 
