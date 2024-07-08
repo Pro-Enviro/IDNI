@@ -334,8 +334,9 @@ export class ImportEnvirotrackComponent {
 
      // Send an email to pro enviro to alert about uploaded data
     return this.http.post(`${this.url}/Mailer`,{
-      subject: 'Pro Enviro Envirotrack sent',
-      to: ['it@proenviro.co.uk', 'data@proenviro.co.uk','richard.pelan@investni.com'],
+      subject: `${this.selectedCompanyName} has data for upload`,
+      // to: ['it@proenviro.co.uk', 'data@proenviro.co.uk','richard.pelan@investni.com'],
+      to: ['mila.lozanova@proenviro.co.uk'],
       template: {
         name: "data_uploaded",
         data: {
@@ -343,7 +344,7 @@ export class ImportEnvirotrackComponent {
           "user": this.selectedEmail
         }
       },
-      "files": [this.fileIds]
+      "files": typeof this.fileIds === 'string' ? [this.fileIds] : [...this.fileIds]
     },{responseType: "text"}).subscribe({
       next:(res) => {
         this.msg.add({
@@ -478,7 +479,14 @@ export class ImportEnvirotrackComponent {
       });
     }
   }
+
+  resetUploader = () => {
+    this.uploadingData = false;
+    this.uploadedFiles = []
+    this.fileContent = null
+  }
 }
+
 
 
 
