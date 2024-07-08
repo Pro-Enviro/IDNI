@@ -15,6 +15,7 @@ import {DividerModule} from "primeng/divider";
 import {FileUpload} from "primeng/fileupload";
 import {DbService} from "../../../../_services/db.service";
 import {SupplyComponent} from "../supply/supply.component";
+import {Router} from "@angular/router";
 
 
 interface Sheet {
@@ -93,7 +94,8 @@ export class ImportEnvirotrackComponent {
     private msg: MessageService,
     private papa: Papa,
     private http: HttpClient,
-    private db: DbService
+    private db: DbService,
+    private route: Router
   ) {
     moment.locale('en-gb')
     moment().format('L')
@@ -478,6 +480,15 @@ export class ImportEnvirotrackComponent {
         detail: err.error.errors[0]
       });
     }
+
+
+    this.uploadingData = false;
+    this.uploadedFiles = []
+    this.fileContent = null
+    this.selectedMpan = null;
+    this.draggedCell = null;
+    this.selectedDataStart = null;
+
   }
 
   resetUploader = () => {
