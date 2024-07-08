@@ -495,6 +495,9 @@ export class ImportEnvirotrackComponent {
     this.uploadingData = false;
     this.uploadedFiles = []
     this.fileContent = null
+    this.selectedMpan = null;
+    this.draggedCell = null;
+    this.selectedDataStart = null;
   }
 }
 
