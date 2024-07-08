@@ -294,6 +294,8 @@ export class ImportEnvirotrackComponent {
       fileUUIDS = mappedIds
     }
 
+
+
     try {
       // Check if existing files, if so add to current uuid array
       this.db.checkUsersFiles(this.selectedCompany).subscribe({
@@ -330,7 +332,6 @@ export class ImportEnvirotrackComponent {
         detail:'You have already uploaded files'
       })
     }
-
 
      // Send an email to pro enviro to alert about uploaded data
     return this.http.post(`${this.url}/Mailer`,{
@@ -477,6 +478,13 @@ export class ImportEnvirotrackComponent {
         detail: err.error.errors[0]
       });
     }
+  }
+
+  resetData() {
+    console.log('Resetting')
+    this.fileContent = null;
+    this.uploadingData = false;
+    this.uploadedFiles = []
   }
 }
 
