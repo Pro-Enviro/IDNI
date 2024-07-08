@@ -333,6 +333,7 @@ export class ImportEnvirotrackComponent {
       })
     }
 
+    console.log(this.fileIds)
 
      // Send an email to pro enviro to alert about uploaded data
     return this.http.post(`${this.url}/Mailer`,{
@@ -346,7 +347,7 @@ export class ImportEnvirotrackComponent {
           "user": this.selectedEmail
         }
       },
-      "files": [this.fileIds]
+      "files": typeof this.fileIds === 'string' ? [this.fileIds] : [...this.fileIds]
     },{responseType: "text"}).subscribe({
       next:(res) => {
         this.msg.add({
