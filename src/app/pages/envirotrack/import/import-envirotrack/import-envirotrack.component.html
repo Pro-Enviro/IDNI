@@ -17,7 +17,7 @@
         </div>
         <div class="col-6">
           <p-card header="Select Company" styleClass="card-select-panel" *ngIf="!fileContent && isConsultant" [style]="{ height: '100%' }">
-            <p-dropdown [options]="companies" optionLabel="name" optionValue="id" [(ngModel)]="selectedCompany"
+            <p-dropdown [options]="companies" optionLabel="name" optionValue="id" [(ngModel)]="selectedCompany" (onChange)="resetUploader()"
                         [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px" [filter]="true" filterBy="name" [showClear]="true"
             ></p-dropdown>
           </p-card>

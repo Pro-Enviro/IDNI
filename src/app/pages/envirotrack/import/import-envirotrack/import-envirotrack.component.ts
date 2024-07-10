@@ -15,6 +15,7 @@ import {DividerModule} from "primeng/divider";
 import {FileUpload} from "primeng/fileupload";
 import {DbService} from "../../../../_services/db.service";
 import {SupplyComponent} from "../supply/supply.component";
+import {Router} from "@angular/router";
 
 
 interface Sheet {
@@ -93,7 +94,8 @@ export class ImportEnvirotrackComponent {
     private msg: MessageService,
     private papa: Papa,
     private http: HttpClient,
-    private db: DbService
+    private db: DbService,
+    private route: Router
   ) {
     moment.locale('en-gb')
     moment().format('L')
@@ -334,7 +336,7 @@ export class ImportEnvirotrackComponent {
 
      // Send an email to pro enviro to alert about uploaded data
     return this.http.post(`${this.url}/Mailer`,{
-      subject: 'Pro Enviro Envirotrack sent',
+      subject: `${this.selectedCompanyName} has data for upload`,
       to: ['it@proenviro.co.uk', 'data@proenviro.co.uk','richard.pelan@investni.com'],
       template: {
         name: "data_uploaded",
@@ -343,7 +345,7 @@ export class ImportEnvirotrackComponent {
           "user": this.selectedEmail
         }
       },
-      "files": [this.fileIds]
+      "files": typeof this.fileIds === 'string' ? [this.fileIds] : [...this.fileIds]
     },{responseType: "text"}).subscribe({
       next:(res) => {
         this.msg.add({
@@ -477,8 +479,30 @@ export class ImportEnvirotrackComponent {
         detail: err.error.errors[0]
       });
     }
+
+
+    this.uploadingData = false;
+    this.uploadedFiles = []
+    this.fileContent = null
+    this.selectedMpan = null;
+    this.draggedCell = null;
+    this.selectedDataStart = null;
+
+  }
+
+  resetUploader = () => {
+    this.uploadingData = false;
+    this.uploadedFiles = []
+    this.fileContent = null
+    this.selectedMpan = null;
+    this.draggedCell = null;
+    this.selectedStartDate = null;
+    this.selectedDataStart = null;
+    this.hhd = [];
+
   }
 }
+
 
 
 
