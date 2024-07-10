@@ -337,8 +337,7 @@ export class ImportEnvirotrackComponent {
      // Send an email to pro enviro to alert about uploaded data
     return this.http.post(`${this.url}/Mailer`,{
       subject: `${this.selectedCompanyName} has data for upload`,
-      // to: ['it@proenviro.co.uk', 'data@proenviro.co.uk','richard.pelan@investni.com'],
-      to: ['mila.lozanova@proenviro.co.uk'],
+      to: ['it@proenviro.co.uk', 'data@proenviro.co.uk','richard.pelan@investni.com'],
       template: {
         name: "data_uploaded",
         data: {
