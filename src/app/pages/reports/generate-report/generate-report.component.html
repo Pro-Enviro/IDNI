@@ -111,6 +111,9 @@
           </p-table>
           <div class="flex justify-content-start pt-4 pl-2">
             <button type="submit" icon="pi pi-save" label="Save" pButton class="btn-style" (click)="saveForm()"></button>
+
+            <a class="ml-2 btn-style font-semibold" href="https://app.idni.eco/assets/eec33870-669a-4ca6-aae3-713701dd2d1d?download" target="_blank" download="IDNI_report_template.pdf">Download Report Template</a>
+
           </div>
         </p-tabPanel>
         <!-- DATA ANALYSIS-->
@@ -157,20 +160,7 @@
                 <td class="font-semibold text-sm">{{ totalEmissions.toLocaleString('en-US', strOptions) }}</td>
                 <td class="font-semibold text-sm" colspan="1"></td>
               </tr>
-              <!--        <tr>-->
-              <!--          <td>-->
-              <!--            <button pButton class="p-button-text p-button-rounded p-button-success" icon="pi pi-plus"-->
-              <!--                    (click)="newBreakdownRow()"></button>-->
-              <!--          </td>-->
-              <!--          <td colspan="6"></td>-->
-              <!--          <td>-->
-              <!--            <button pButton class="btn btn-dark" (click)="getFuelData(true)"-->
-              <!--                    pTooltip="<span style='font-size: 0.8rem'>Refresh fuel breakdown data</span>" [escape]="false"-->
-              <!--                    tooltipPosition="top">Refresh-->
-              <!--            </button>-->
-              <!--          </td>-->
 
-              <!--        </tr>-->
             </ng-template>
           </p-table>
         </p-tabPanel>
