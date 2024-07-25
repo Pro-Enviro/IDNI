@@ -1,6 +1,6 @@
 import {Component, Injector, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet} from '@angular/router'
+import {Router, RouterOutlet} from '@angular/router'
 import {PetComponent} from "./pages/pet/pet.component";
 import {MessageService} from "primeng/api";
 import {MessagesModule} from "primeng/messages";
@@ -9,6 +9,7 @@ import {RegisterComponent} from "./users/register/register.component";
 import {RegisterSuccessPageComponent} from "./users/register/register-success-page/register-success-page.component";
 import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 import {createCustomElement} from "@angular/elements";
+import {GlobalService} from "./_services/global.service";
 
 
 @Component({
@@ -23,9 +24,20 @@ export class AppComponent{
   title = 'ID-NI';
 
 
-  constructor(private injector: Injector) {
+  constructor(private injector: Injector, private global: GlobalService, private route: Router) {
     const NewElement1 = createCustomElement(AppComponent, {injector: this.injector})
     customElements.define('dashboard-app', NewElement1)
+
+    this.global.getCurrentUser().subscribe({
+      next: (res: any) => {
+        if (res.role.name === 'uu') {
+          this.global.updateRole('uu')
+
+          this.route.navigate(['/dashboard/pet'])
+        }
+      },
+    })
+
   }
 
 }

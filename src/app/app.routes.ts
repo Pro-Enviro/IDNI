@@ -37,33 +37,8 @@ import {
 
 export const routes: Routes = [
   {path: 'login', component: LoginComponent},
-
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'admin/reset-password', component: ResetPasswordComponent},
-  // {path: 'registration', component: RegisterComponent},
-  // {path: 'registration-form', component: RegistrationFormComponent},
-  // {path:'forgotpassword', component: ForgotPasswordComponent},
-  // {path:'successful-registration',component:RegisterSuccessPageComponent},
-  // {path:'chat',component: ChatDialogTplComponent},
-  // {path:'live-chat',component:LiveChatTplComponent},
-
-
-  //{path:'dashboard',component: DashboardComponent, canActivate: [authGuard], canActivateChild: [authGuard], children: [
-
-//   {path: 'registration', component: RegisterComponent},
-//   {path: 'registration-form', component: RegistrationFormComponent},
-//   // {path:'forgotpassword', component: ForgotPasswordComponent},
-//   {path:'successful-registration',component:RegisterSuccessPageComponent},
-//   {path:'chat',component: ChatDialogTplComponent},
-//   {path:'live-chat',component:LiveChatTplComponent},
-
-//   {
-//     path: 'envirotrack', children: [
-
-//     ]
-//   },
-
-
 
   {path:'dashboard',component:DashboardComponent, canActivate: [authGuard], canActivateChild: [authGuard], children: [
       {path:'user-profile',component:UserProfileComponent},

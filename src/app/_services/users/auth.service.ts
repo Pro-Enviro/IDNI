@@ -42,6 +42,7 @@ export class AuthService {
     })*/
   }
   url:string = 'https://app.idni.eco/'
+
   login = async (credentials: Credentials) => {
 
 
@@ -53,12 +54,12 @@ export class AuthService {
 
     const result = await this.client.login(credentials.email, credentials.password)
 
-
     const token = await this.client.getToken()
 
     this.storage.set('access_token', token)
     this.storage.set('expires', result.expires)
     this.storage.set('refresh_token', result.refresh_token)
+
 
       // Get users role
     this.http.get(`${this.url}users/me?fields=email,role.name`).subscribe({
@@ -84,8 +85,8 @@ export class AuthService {
             }
           })
         } else if (res.data.role.name === 'uu') {
-          console.log('Updating Role to uu')
           this.global.updateRole('uu')
+          this.storage.set('role', 'uu')
         }
       },
       error: (err: any) => {

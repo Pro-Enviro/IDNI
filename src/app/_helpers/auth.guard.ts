@@ -10,6 +10,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const storage: StorageService = inject(StorageService)
   const router: Router = inject(Router)
 
+  console.log(route.data['role'])
 
 
   //if token invalid then
@@ -20,5 +21,17 @@ export const authGuard: CanActivateFn = (route, state) => {
     router.navigate(['login'])
     return false;
   }
+
+  const userRole = storage.get('role');
+
+
+
+  if (userRole === 'uu' && state.url !== '/dashboard/pet') {
+    router.navigate(['/dashboard/pet']);
+    return false;
+  }
+
+
+
   return true;
 };
