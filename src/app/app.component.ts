@@ -10,6 +10,7 @@ import {RegisterSuccessPageComponent} from "./users/register/register-success-pa
 import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 import {createCustomElement} from "@angular/elements";
 import {GlobalService} from "./_services/global.service";
+import {StorageService} from "./_services/storage.service";
 
 
 @Component({
@@ -24,16 +25,16 @@ export class AppComponent{
   title = 'ID-NI';
 
 
-  constructor(private injector: Injector, private global: GlobalService, private route: Router) {
+  constructor(private injector: Injector, private global: GlobalService, private route: Router, private storage: StorageService) {
     const NewElement1 = createCustomElement(AppComponent, {injector: this.injector})
     customElements.define('dashboard-app', NewElement1)
 
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        if (res.role.name === 'uu') {
+        if (res.role.name === 'uu' && this.storage.get('role') !== 'uu') {
           this.global.updateRole('uu')
 
-          this.route.navigate(['/dashboard/pet'])
+          this.route.navigate(['/login'])
         }
       },
     })
