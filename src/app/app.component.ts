@@ -21,22 +21,31 @@ import {StorageService} from "./_services/storage.service";
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent{
+export class AppComponent implements OnInit{
   title = 'ID-NI';
 
 
   constructor(private injector: Injector, private global: GlobalService, private route: Router, private storage: StorageService) {
     const NewElement1 = createCustomElement(AppComponent, {injector: this.injector})
     customElements.define('dashboard-app', NewElement1)
-
-    this.global.getCurrentUser().subscribe({
-      next: (res: any) => {
-        if (res.role.name === 'uu' && this.storage.get('role') !== 'uu') {
-          this.global.updateRole('uu')
-          this.storage.set('role', 'uu')
-        }
-      },
-    })
   }
 
+
+  ngOnInit(){
+    if (this.storage.get('access_token')) {
+      this.global.getCurrentUser().subscribe({
+        next: (res: any) => {
+          if (res.role.name === 'uu') {
+            if (this.storage.get('role') !== 'uu') {
+              console.log('Setting role correctly to UU')
+              this.global.updateRole('uu')
+              this.storage.set('role', 'uu')
+              this.route.navigate(['/dashboard/pet'])
+            }
+          }
+        },
+
+      })
+    }
+  }
 }
