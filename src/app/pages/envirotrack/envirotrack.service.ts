@@ -20,8 +20,8 @@ export class EnvirotrackService {
 
   updateSelectedCompany = (company: number) => this.selectedCompany.next(company)
 
-  getCompanies = () => {
-      return this.http.get(`${this.url}/items/companies`)
+  getCompanies = (uuReview?:boolean) => {
+      return this.http.get(`${this.url}/items/companies?filter[uu_review][_eq]=true`)
   }
 
   // getCompanyByUser = () => {

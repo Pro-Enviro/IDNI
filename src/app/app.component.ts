@@ -33,12 +33,10 @@ export class AppComponent{
       next: (res: any) => {
         if (res.role.name === 'uu' && this.storage.get('role') !== 'uu') {
           this.global.updateRole('uu')
-
-          this.route.navigate(['/login'])
+          this.storage.set('role', 'uu')
         }
       },
     })
-
   }
 
 }
