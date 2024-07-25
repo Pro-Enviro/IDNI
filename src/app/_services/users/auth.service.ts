@@ -83,6 +83,9 @@ export class AuthService {
               console.log(error)
             }
           })
+        } else if (res.data.role.name === 'uu') {
+          console.log('Updating Role to uu')
+          this.global.updateRole('uu')
         }
       },
       error: (err: any) => {
@@ -94,7 +97,11 @@ export class AuthService {
 
 
     setTimeout(() => {
-      this.route.navigate(['dashboard'])
+      if (this.global.role.value === 'uu'){
+        this.route.navigate(['dashboard/pet'])
+      } else {
+        this.route.navigate(['dashboard'])
+      }
     }, 400)
 
      // this.http.post(`${this.url}auth/login`, credentials).pipe(

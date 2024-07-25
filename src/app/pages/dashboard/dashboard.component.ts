@@ -77,7 +77,7 @@ export class DashboardComponent {
   dropMenu:boolean=false;
   helpMenu:boolean=false;
   accountMenu:boolean=false;
-
+  uuPermissions: boolean = false;
 
   constructor(private global: GlobalService,private route: Router,private auth: AuthService,private msg: MessageService) {
 
@@ -91,6 +91,10 @@ export class DashboardComponent {
       next: (res: any) => {
         if (res.role.name === 'user') {
           this.showFuelData = false
+        }
+        else if (res.role.name === 'uu'){
+          this.uuPermissions = true;
+          return;
         }
       },
       complete: () => {

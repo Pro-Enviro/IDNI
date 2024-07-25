@@ -3,7 +3,7 @@
     <img src="https://id-ni.eco/assets/images/logos/idni-logo.svg" alt="idni-logo" style="height:85px">
   </div>
   <p-divider></p-divider>
-  <div class="flex flex-column envirotrack-menu">
+  <div class="flex flex-column envirotrack-menu" *ngIf="!uuPermissions">
     <ul class="list-menu">
       <li ng-click="behaviour(sideMenu = false)" class="font-size:30px"><a href="/dashboard"><span class="material-symbols-outlined">dashboard</span>Dashboard</a></li>
       <li ng-click="behaviour(sideMenu = false)"><a href="/dashboard/pet"><span class="material-symbols-outlined">timeline</span>PET</a></li>

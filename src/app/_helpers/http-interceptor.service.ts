@@ -11,6 +11,7 @@ import {inject} from '@angular/core';
 import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {AuthService} from "../_services/users/auth.service";
+import {GlobalService} from "../_services/global.service";
 
 
 export const HttpInterceptorService: HttpInterceptorFn = (
@@ -22,6 +23,7 @@ export const HttpInterceptorService: HttpInterceptorFn = (
   const router = inject(Router)
   const msg = inject(MessageService)
   const token = storage.get('access_token');
+  const global = inject(GlobalService)
 
   const addTokenHeader = (request: HttpRequest<any>, token: string | null) => {
     return request.clone({

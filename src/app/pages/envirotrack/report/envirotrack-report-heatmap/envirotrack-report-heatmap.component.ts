@@ -198,6 +198,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
 
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {
+
         if (res.role.name === 'user') {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
