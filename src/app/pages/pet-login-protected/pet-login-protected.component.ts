@@ -53,12 +53,13 @@ import {AutoCompleteCompleteEvent} from "primeng/autocomplete";
 import {DividerModule} from "primeng/divider";
 import {TypeChartComponent} from "../envirotrack/report/type-chart/type-chart.component";
 import {json} from "node:stream/consumers";
+import {ScopeChartComponent} from "../envirotrack/report/scope-chart/scope-chart.component";
 
 
 @Component({
   selector: 'app-pet-login-protected',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective, SidebarModule, DividerModule, TypeChartComponent],
+  imports: [CommonModule, FormsModule, PanelModule, SelectButtonModule, TableModule, InputNumberModule, ButtonModule, RippleModule, JsonPipe, DropdownModule, SharedComponents, NgxEchartsDirective, SidebarModule, DividerModule, TypeChartComponent, ScopeChartComponent],
   templateUrl: './pet-login-protected.component.html',
   styleUrl: './pet-login-protected.component.scss'
 })

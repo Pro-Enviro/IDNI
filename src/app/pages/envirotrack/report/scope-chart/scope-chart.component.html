@@ -1,23 +1,30 @@
 <section>
   <p-card styleClass="card-charts">
     <div class="grid">
-      <div class="lg:col-6 md:col-6">
-        <p-card header="Breakdown of CO2e by Scope Chart Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
-          <p-button type="button" styleClass="btn-style" (click)="scopeGuide = true" icon="pi pi-chart-pie" label="Guide"></p-button>
-        </p-card>
+      <div class="col-12">
+        <div class="grid">
+          <div class="col-12">
+            <div class="col">
+              <p-card header="Breakdown of CO2e by Scope Chart Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
+                <p-button type="button" styleClass="btn-style" (click)="scopeGuide = true" icon="pi pi-chart-pie" label="Guide"></p-button>
+              </p-card>
+            </div>
+
+            <div class="lg:col-5 md:col-6" *ngIf="!companySelected">
+              <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
+                <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"
+                            scrollHeight="370px" [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
+              </p-card>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="lg:col-5 md:col-6">
-          <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
-            <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"
-                        scrollHeight="370px" [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
-          </p-card>
-      </div>
 
-      <div class="col-12" *ngIf="chartOption">
+      <div class="col-12" *ngIf="dataArray">
         <div echarts [options]="chartOption" class="Scope Chart" style="max-height: 600px; height: 600px" [id]="'chartId'"></div>
       </div>
-      <div *ngIf="!dataArray.length">
+      <div *ngIf="!dataArray">
         <p>To add data, please go to "Menu" and select "Non Half-Hourly Data".</p>
       </div>
     </div>

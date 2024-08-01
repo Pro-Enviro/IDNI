@@ -469,7 +469,7 @@
         <!-- CO2E BREAKDOWN CHART-->
         @if (co2eBreakdown) {
           <p-card>
-            <div echarts [options]="co2eBreakdown" style="max-height: 600px; height: 600px"></div>
+            <app-type-chart [selectedCompany]="selectedCompany"></app-type-chart>
           </p-card>
 
         }
@@ -478,7 +478,7 @@
         <!--  CO2E SCOPE-->
         @if (co2eScope) {
           <p-card>
-            <div echarts [options]="co2eScope" style="max-height: 600px; height: 600px"></div>
+            <app-scope-chart  [selectedCompany]="selectedCompany"></app-scope-chart>
           </p-card>
         }
       </div>
