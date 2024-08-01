@@ -1,6 +1,6 @@
 import { Component, Input, OnInit} from '@angular/core';
 import { EChartsOption } from 'echarts';
-import { FilterService } from 'primeng/api';
+import {FilterService, MessageService} from 'primeng/api';
 import moment from "moment";
 import {SharedComponents} from "../../shared-components";
 import {SharedModules} from "../../../../shared-module";
@@ -8,6 +8,7 @@ import {MultiSelectModule} from "primeng/multiselect";
 import {EnvirotrackService} from "../../envirotrack.service";
 import {GlobalService} from "../../../../_services/global.service";
 import {SidebarModule} from "primeng/sidebar";
+import {DbService} from "../../../../_services/db.service";
 
 @Component({
   selector: 'app-scope-chart',
@@ -27,120 +28,27 @@ export class ScopeChartComponent implements OnInit {
   @Input() yearFilter: any;
   @Input() scopes: any;
   @Input() companyList: any;
+  @Input() types: any;
   @Input() dash?: boolean;
+  @Input('selectedCompany') companySelected: number | undefined;
+
+  filteredData: any;
   companies: any;
   selectedCompany!: number;
-  selectedYears: any;
-  filteredData: any;
-  selectedTypes:any;
-  envirotrackData: any = {}
-  chartOption: EChartsOption | undefined;
+  scopeGuide: boolean = false;
   fuels: any[] = []
-  datas: any;
+  envirotrackData: any = {}
+  chartOption!: EChartsOption;
+  chartData: boolean = false;
   dataArray: any;
   isConsultant: boolean = false;
-  scopeGuide:boolean = false;
-  showChart: boolean = false
-
 
   constructor(
-    private fltr: FilterService,
-    private track: EnvirotrackService,
-    private global: GlobalService
+    private db: DbService,
+    private global: GlobalService,
+    private msg: MessageService,
+    private track: EnvirotrackService
   ) { }
-
-  resetDataArray(){
-    this.dataArray = [{
-      name: 'Scope 1',
-      value: 0
-    },{
-      name: 'Scope 2',
-      value: 0
-    },{
-      name: 'Scope 3',
-      value: 0
-    },{
-      name: 'Outside of Scopes',
-      value: 0
-    }];
-
-    this.envirotrackData = {}
-  }
-
-
-  initChart(){
-
-    this.dataArray.push(this.envirotrackData)
-
-    this.chartOption = {
-      title: {
-        text: 'Breakdown of CO2e (tonnes) by scope',
-        left: 'center',
-        top: 30,
-
-      },
-      legend: {
-        left: 'left',
-        orient: 'horizontal',
-        show: this.dash
-      },
-      tooltip: {
-        extraCssText: 'text-transform: capitalize',
-        trigger: 'item',
-        formatter: '{a} <br />{b}: {c} ({d}%)'
-      },
-      toolbox: {
-        show: true,
-        feature: {
-          saveAsImage: {
-            show: true,
-            name: 'Breakdown of CO2e (tonnes) by scope',
-            type: 'png'
-          }
-        }
-      },
-      series: [
-        {
-          name: 'Scope Data',
-          data: this.dataArray.filter((x:any) => x.value),
-          type: 'pie',
-          radius: [20,180],
-          itemStyle: {
-            borderRadius: 5
-          },
-          emphasis: {
-            label: {
-              show: true
-            }
-          }
-        },
-      ],
-      color: ['#006633',
-        '#72ac3f',
-        '#bed8a5',
-        '#3fa8ac',]
-    };
-  }
-
-  onYearFilter(event:any){
-    let filterArr: any[] = [];
-    // event.map((x:any)=> filterArr.push(x.value))
-    // this.filteredData = this.data.filter((x:any)=> this.fltr.filters['in'](x.year, filterArr));
-    // this.resetDataArray();
-    // this.getDataArray(this.filteredData);
-    // this.initChart();
-  }
-
-  getDataArray(data:any){
-
-    if (!data) return;
-
-    data.filter((x:any) => x.scope === 'Scope 1').map((x:any) => moment(x.endDate).year() > 2018 ? this.dataArray[0].value += x.kgCO2e : null);
-    data.filter((x:any) => x.scope === 'Scope 2').map((x:any) => moment(x.endDate).year() > 2018 ? this.dataArray[1].value += x.kgCO2e: null);
-    data.filter((x:any) => x.scope === 'Scope 3').map((x:any) => moment(x.endDate).year() > 2018 ? this.dataArray[2].value += x.kgCO2e: null);
-    data.filter((x:any) => x.scope === 'Outside of Scopes').map((x:any) => moment(x.endDate).year() > 2018 ? this.dataArray[3].value += x.kgCO2e: null);
-    this.dataArray.forEach((x:any)=>x.value = (x.value/1000).toFixed(2))
-  }
 
   getCompanies = () =>{
 
@@ -180,134 +88,161 @@ export class ScopeChartComponent implements OnInit {
       }
     })
 
-    // this.track.getCompanies().subscribe({
-    //   next: (res: any) => {
-    //     this.companies = res.data;
-    //     this.selectedCompany = res.data[0].id
-    //     this.onSelectCompany()
-    //   }
-    // })
   }
 
   onSelectCompany = () => {
-    // this.global.updateSelectedMpan(this.selectedMpan)
     this.dataArray = []
-    this.fuels = []
     this.envirotrackData = {}
-    this.chartOption = undefined;
-
-
+    this.chartData = false;
     this.track.updateSelectedCompany(this.selectedCompany)
-    this.getData(this.selectedCompany)
-    this.getFuelData(this.selectedCompany)
+    this.getData();
   }
 
-  getFuelData = (selectedCompanyId: number) => {
-    this.fuels = []
-    this.dataArray = []
+  getData = () => {
+    this.db.getPetData(this.selectedCompany).subscribe({
+      next: (res:any) => {
+        let data = res.data.map(({cost_of_energy}:any) => JSON.parse(cost_of_energy))
+        this.dataArray = data.map((data:any) => {
+          let values: any[] =   [{
+            value:  (data.filter(({name}:any) => name === 'Electricity')[0].totalUnits * 0.20705 / 1000).toFixed(2),
+            name: 'Electricity'
+          },{
+            value:  (data.filter(({name}:any) => name === 'Natural Gas (Grid)')[0].totalUnits * 0.18290 / 1000).toFixed(2),
+            name: 'Natural Gas (Grid)'
+          },{
+            value:  (data.filter(({name}:any) => name === 'Natural Gas off Grid')[0].totalUnits * 0.18290 / 1000).toFixed(2),
+            name: 'Natural Gas off Grid'
+          },{
+            value:  (data.filter(({name}:any) => name === 'Bio Gas Off Grid')[0].totalUnits * 0.18449 / 1000).toFixed(2),
+            name: 'Bio Gas Off Grid'
+          },{
+            value:  (data.filter(({name}:any) => name === 'LPG')[0].totalUnits * 0.21450 / 1000).toFixed(2),
+            name: 'LPG'
+          },{
+            value:  (data.filter(({name}:any) => name === 'Oil')[0].totalUnits * 0.24677 / 1000).toFixed(2),
+            name: 'Oil'
+          },{
+            value:  (data.filter(({name}:any) => name === 'Kerosene')[0].totalUnits * 0.25 / 1000).toFixed(2),
+            name: 'Kerosene'
+          },{
+            value:  (data.filter(({name}:any) => name === 'Bio Fuels')[0].totalUnits * 0.04562 / 1000).toFixed(2),
+            name: 'Bio Fuels'
+          },{
+            value:  (data.filter(({name}:any) => name === 'Bio Mass')[0].totalUnits * 0.01132 / 1000).toFixed(2),
+            name: 'Bio Mass'
+          },{
+            value:  (data.filter(({name}:any) => name === 'Coal for Industrial use')[0].totalUnits * 0.32302 / 1000).toFixed(2),
+            name: 'Coal for Industrial use'
+          }]
+
+          let scope2 = values.filter(({name}: any) => name != 'Electricity').map(({value}:any) => value).reduce((x:any,y:any) => parseFloat(x) + parseFloat(y) )
+
+          return [{
+            name: 'Scope 1',
+            value: scope2
+          },{
+            name: 'Scope 2',
+            value: values.filter(({name}:any) => name === 'Electricity')[0].value
+          }]
+        })
+        this.initChart()
+      },
+      error: (err: any)=> this.msg.add({
+        severity: 'error',
+        detail: err.error.errors[0].message
+      })
+    })
+  }
 
 
-    if (selectedCompanyId) {
-      this.track.getFuelData(selectedCompanyId).subscribe({
-        next: (res:any) => {
-          if (res?.data?.fuel_data) {
-            this.fuels = JSON.parse(res.data?.fuel_data)
+  initChart(){
+    console.log(this.dataArray[0])
+    this.chartOption = {
+      title: {
+        text: 'Breakdown of CO2e (tonnes) by emissions source',
+        left: 'center',
+        top: 30,
 
-          } else {
-            this.fuels = []
-            this.dataArray = []
-
+      },
+      legend: {
+        height: 120,
+        bottom: '5',
+        orient: 'vertical',
+        show: false
+      },
+      tooltip: {
+        extraCssText: 'text-transform: capitalize',
+        trigger: 'item',
+        formatter: '{a} <br />{b}: {c} ({d}%)'
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {
+            show: true
           }
-        },
-        error: (err) => console.log(err),
-        complete: () => this.formatDataCorrectly()
-      })
-    }
-  }
+        }
+      },
+      series: [
+        {
+          name: 'tCO2e By emissions source',
+          data: this.dataArray[0],
+          type: 'pie',
+          radius: [20,180],
+          itemStyle: {
+            borderRadius: 5
+          },
+          emphasis: {
+            label: {
+              show: true,
 
-  formatDataCorrectly = () => {
-    this.dataArray = []
-
-
-    if (!this.fuels.length) this.showChart = false
-    if (!this.fuels.length) return ;
-    // loop through fuel types and just get total of all values/units/ total cost/
-
-    if (this.fuels.length) {
-      this.showChart = true;
-    }
-
-    let extractedData = this.fuels.map((fuel: any) => {
-
-      let totalValue = 0
-      let totalCost = 0
-      let unit: string = ''
-
-      fuel.rows.forEach((row: any) => {
-        const findValue = row.findIndex((cell: any) => cell.name === 'Value')
-        const findUnit = row.findIndex((cell: any) => cell.name === 'Unit')
-        const findCost = row.findIndex((cell: any) => cell.name === 'Total')
-
-        // Check if not available
-        if (findValue !== -1) totalValue += parseFloat(row[findValue].value)
-        if (findCost !== -1 ) totalCost += parseFloat(row[findCost].value)
-        if (findUnit !== -1) unit = row[findUnit].value
-
-      })
-
-      return {
-        type: fuel.type,
-        totalValue,
-        totalCost,
-        unit: unit ? unit : 'kWh',
-        scope: 'Scope 1'
-      }
-    })
-
-    this.dataArray = extractedData.map((y:any) => {
-      return {
-        name: y.scope,
-        value: (y.totalValue / 1000).toFixed(2)
-      }
-    })
-
-    const total = this.dataArray.reduce((acc: any, curr: any) => {
-      return acc + parseFloat(curr.value)
-    }, 0)
-
-    this.dataArray = [{
-      name: 'Scope 1',
-      value: total.toFixed(2)
-    }]
-
-    this.initChart()
-  }
-
-  getData = (id: number) => {
-    this.track.getData(id).subscribe({
-        next: (res) => {
-          if (res){
-            let grandTotal = 0;
-            res.forEach((row: any) => {
-              row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
-              // Sort the envirotrack data
-              grandTotal += row.hhd.reduce((acc: number, curr: number) => acc + curr, 0)
-            })
-
-            this.envirotrackData = {
-              name: 'Scope 2',
-              value:( grandTotal/1000).toFixed(2)
             }
           }
         },
-      }
-    )
+      ],
+      color: [
+        '#006633',
+        '#72ac3f',
+        '#bed8a5',
+        '#3fa8ac',
+        '#5470c6',
+        '#91cc75',
+        '#fac858',
+        '#ee6666',
+        '#73c0de',
+        '#3ba272',
+        '#fc8452',
+        '#9a60b4',
+        '#ea7ccc',
+        '#753d3d',
+        '#922e9b',
+        '#9f7c3b',
+        '#29724d',
+        '#68e5d3',
+        '#ff6c00',
+        '#00f196',
+        '#3627fa',
+        '#d8ff33',
+        '#ffb683',
+        '#9a017d',
+        '#3592c5',
+        '#c45a5a',
+        '#8aa1e8',
+        '#accc9d',
+        '#efd59e',
+        '#fdbaba',
+        '#b5e4fa',
+        '#a6f6d0',
+        '#faba9f',
+        '#e6bafc',
+      ]
+    };
   }
 
   ngOnInit(): void {
+    this.companySelected ? this.selectedCompany = this.companySelected: null;
     this.getCompanies()
-    this.resetDataArray();
-    this.getDataArray(this.data);
-    // this.initChart();
+    this.selectedCompany ? this.getData() : null;
   }
+
 }

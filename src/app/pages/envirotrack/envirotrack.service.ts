@@ -24,19 +24,6 @@ export class EnvirotrackService {
       return this.http.get(`${this.url}/items/companies`)
   }
 
-  // getCompanyByUser = () => {
-  //   this.global.getCurrentUser().subscribe({
-  //     next: (res: any) => {
-  //       this.http.get(`${this.url}/items/companies?filter[users][directus_users_id][email][_eq]=${res.email}`).subscribe({
-  //         next: (res: any) =>{
-  //           console.log(res)
-  //           return res;
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
-
   getCompanyDetails(id: any, fields: string[]) {
     return this.http.get(`${this.url}/items/companies/${id}?fields=${fields.toString()}`)
       .pipe(
