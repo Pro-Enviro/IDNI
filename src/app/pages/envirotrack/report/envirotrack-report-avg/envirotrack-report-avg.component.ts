@@ -109,7 +109,7 @@ export class EnvirotrackReportAvgComponent implements OnInit {
       },
       yAxis: {
         type: 'value',
-        name: 'kWh',
+        name: 'kW per half hour',
         nameLocation: "middle",
         nameTextStyle: {
           fontSize: 16,
