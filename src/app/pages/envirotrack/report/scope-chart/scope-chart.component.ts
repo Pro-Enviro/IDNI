@@ -161,7 +161,7 @@ export class ScopeChartComponent implements OnInit {
 
 
   initChart(){
-    console.log(this.dataArray[0])
+    // console.log(this.dataArray[0])
     this.chartOption = {
       title: {
         text: 'Breakdown of CO2e (tonnes) by emissions source',
