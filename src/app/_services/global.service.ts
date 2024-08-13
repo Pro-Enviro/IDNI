@@ -28,6 +28,8 @@ export class GlobalService {
   companyName: BehaviorSubject<string | null> = new BehaviorSubject<any>(null)
   isSignedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
 
+  selectedMpan: BehaviorSubject<any> = new BehaviorSubject<any>(null)
+
   client: any;
   url: any = `https://app.idni.eco`
 
@@ -44,6 +46,7 @@ export class GlobalService {
   updateCompanyId = (value: number) => this.companyAssignedId.next(value)
   updateCompanyName = (value: string) => this.companyName.next(value)
   onSignedIn = this.isSignedIn.asObservable();
+  updateSelectedMpan = (value: any) => this.selectedMpan.next(value);
 
   uploadBugReportScreenshots = async (screenshots: any) => {
     const result = await this.client.request(uploadFiles(screenshots))

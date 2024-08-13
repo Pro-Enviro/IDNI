@@ -177,6 +177,11 @@ export class EnvirotrackReportBase1Component implements OnInit {
           })
         }
 
+      },
+      complete: () => {
+        if (this.global.selectedMpan.value) {
+          this.selectedMpan = this.global.selectedMpan.value;
+        }
       }
     })
     // this.track.getCompanies().subscribe({
@@ -198,6 +203,8 @@ export class EnvirotrackReportBase1Component implements OnInit {
     this.defaultFilters = []
     this.chartOptions = {}
 
+    this.global.updateCompanyId(this.selectedCompany)
+    this.global.updateSelectedMpan(this.selectedMpan)
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getData(this.selectedCompany)
   }

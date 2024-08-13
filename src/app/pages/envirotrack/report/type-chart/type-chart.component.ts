@@ -84,6 +84,12 @@ export class TypeChartComponent implements OnInit {
           })
         }
 
+      },
+      complete: () => {
+        if (this.global.companyAssignedId.value) {
+          this.selectedCompany = this.global.companyAssignedId.value;
+          this.onSelectCompany()
+        }
       }
     })
 
@@ -93,6 +99,7 @@ export class TypeChartComponent implements OnInit {
     this.dataArray = []
     this.envirotrackData = {}
     this.chartData = false;
+    this.global.updateCompanyId(this.selectedCompany)
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getData();
   }

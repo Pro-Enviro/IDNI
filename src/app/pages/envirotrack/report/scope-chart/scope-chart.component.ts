@@ -84,7 +84,12 @@ export class ScopeChartComponent implements OnInit {
             }
           })
         }
-
+      },
+      complete: () => {
+        if (this.global.companyAssignedId.value) {
+          this.selectedCompany = this.global.companyAssignedId.value;
+          this.onSelectCompany()
+        }
       }
     })
 

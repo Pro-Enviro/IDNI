@@ -58,26 +58,7 @@ export class EnvirotrackReportBarComponent implements OnInit {
     private global: GlobalService
   ) {}
 
-  // saveChartAsBase64 = () => {
-  //   console.log('saving as base 64');
-  //   if (!this.chartOptions) return;
-  //
-  //   // Create temporary chart that uses echarts.instanceOf
-  //   const div = document.createElement('div')
-  //   div.style.width = '1200px'
-  //   div.style.height = '1200px'
-  //
-  //   const temporaryChart = echarts.init(div)
-  //
-  //   temporaryChart.setOption({...this.chartOptions, animation: false})
-  //
-  //   const data = temporaryChart.getDataURL({
-  //     backgroundColor: '#fff',
-  //     pixelRatio: 2
-  //   })
-  //   console.log(data);
-  //   return data;
-  // }
+
   initChart = () => {
 
     this.chartX = this.chartX.map((date: any) => moment(date).format('DD/MM/YYYY'));
@@ -204,7 +185,12 @@ export class EnvirotrackReportBarComponent implements OnInit {
             }
           })
         }
+      },
+      complete: () => {
 
+        if (this.global.selectedMpan.value) {
+          this.selectedMpan = this.global.selectedMpan.value;
+        }
       }
     })
     // this.track.getCompanies().subscribe({
@@ -219,6 +205,11 @@ export class EnvirotrackReportBarComponent implements OnInit {
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
     this.track.updateSelectedCompany(this.selectedCompany)
+
+    this.global.updateCompanyId(this.selectedCompany)
+    this.global.updateSelectedMpan(this.selectedMpan)
+
+
     this.getData(this.selectedCompany)
   }
 

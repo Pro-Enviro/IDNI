@@ -191,6 +191,11 @@ export class EnvirotrackReportPieComponent implements OnInit {
           })
         }
 
+      },
+      complete: () => {
+        if (this.global.selectedMpan.value) {
+          this.selectedMpan = this.global.selectedMpan.value;
+        }
       }
     })
 
@@ -211,6 +216,8 @@ export class EnvirotrackReportPieComponent implements OnInit {
     this.chartOptions = {}
     this.chartData = []
     this.track.updateSelectedCompany(this.selectedCompany)
+    this.global.updateCompanyId(this.selectedCompany)
+    this.global.updateSelectedMpan(this.selectedMpan)
     this.getData(this.selectedCompany)
 
   }
