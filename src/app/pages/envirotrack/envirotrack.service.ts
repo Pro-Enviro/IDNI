@@ -21,7 +21,7 @@ export class EnvirotrackService {
   updateSelectedCompany = (company: number) => this.selectedCompany.next(company)
 
   getCompanies = () => {
-      return this.http.get(`${this.url}/items/companies`)
+      return this.http.get(`${this.url}/items/companies?limit=-1`)
   }
 
   getCompanyDetails(id: any, fields: string[]) {
