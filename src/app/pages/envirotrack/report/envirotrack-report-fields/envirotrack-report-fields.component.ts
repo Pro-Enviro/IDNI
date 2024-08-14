@@ -291,6 +291,12 @@ export class EnvirotrackReportFieldsComponent {
           })
         }
 
+      },
+      complete: () => {
+        if (this.global.companyAssignedId.value) {
+          this.selectedCompany = this.global.companyAssignedId.value;
+          this.onSelectCompany()
+        }
       }
     })
   }
