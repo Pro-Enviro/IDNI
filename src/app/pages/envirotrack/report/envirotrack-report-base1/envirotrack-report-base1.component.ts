@@ -56,7 +56,7 @@ export class EnvirotrackReportBase1Component implements OnInit {
         top: 35,
       },
       title: {
-        text: 'Christmas Day vs lowest day of the year consumption',
+        text: 'Christmas Day vs lowest day of the year consumption per half hour',
         left: 'center',
         top: 8,
         textStyle: {
@@ -103,7 +103,7 @@ export class EnvirotrackReportBase1Component implements OnInit {
       },
       yAxis: {
         type: 'value',
-        name: 'kWh',
+        name: 'kW per half hour',
         nameLocation: "middle",
         nameTextStyle: {
           fontSize: 16,

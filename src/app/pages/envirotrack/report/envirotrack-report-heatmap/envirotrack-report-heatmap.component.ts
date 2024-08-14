@@ -399,10 +399,12 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         x0: 1,
         xd: 2,
         type: 'contour',
-        colorscale: 'Jet',
-        contours: {
+        zsmooth: 'best',
+        colorscale: [[0, 'rgb(255,255,255)'], [0.25, 'rgb(31,120,180)'], [0.45, 'rgb(178,223,138)'], [0.65, 'rgb(51,160,44)'], [0.85, 'rgb(251,154,153)'], [1, 'rgb(227,26,28)']],
+        //colorscale: 'Jet',
+        /*contours: {
           coloring: 'heatmap',
-        },
+        },*/
         line: {
           color: '#000',
           dash: 'solid',
@@ -440,7 +442,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
               size: 18,
               color: '#7f7f7f'
             }
-          }
+          },
         },
         zaxis: {
           title: {
