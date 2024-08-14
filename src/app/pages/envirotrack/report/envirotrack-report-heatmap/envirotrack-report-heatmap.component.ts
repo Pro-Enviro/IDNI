@@ -203,7 +203,16 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
             next: (res: any) => {
               if (res.data) {
                 this.companies = res.data
-                this.selectedCompany = res.data[0].id
+
+                if (this.global.companyAssignedId.value) {
+                  this.selectedCompany = this.global.companyAssignedId.value
+                  if (this.global.selectedMpan.value) {
+                    this.selectedMpan = this.global.selectedMpan.value;
+                  }
+                } else {
+                  this.selectedCompany = res.data[0].id
+                }
+
                 this.onSelectCompany()
               }
             }
@@ -214,7 +223,16 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
             next: (res: any) => {
               if (res.data) {
                 this.companies = res.data
-                this.selectedCompany = this.companies[0].id
+
+                if (this.global.companyAssignedId.value) {
+                  this.selectedCompany = this.global.companyAssignedId.value
+                  if (this.global.selectedMpan.value) {
+                    this.selectedMpan = this.global.selectedMpan.value;
+                  }
+                } else {
+                  this.selectedCompany = this.companies[0].id
+                }
+
                 this.isConsultant = true
                 this.onSelectCompany()
               }
@@ -230,20 +248,22 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
         }
       },
       complete: () => {
-        if (this.global.selectedMpan.value) {
-          this.selectedMpan = this.global.selectedMpan.value;
-        }
+
+
       }
     })
   }
 
   onSelectCompany = () => {
+
     this.chartData = [];
     this.chartOptions = null;
     this.testChart = []
     this.mpan = [];
     this.chartX = [];
     this.chartY = [];
+
+
     this.global.updateCompanyId(this.selectedCompany)
     this.global.updateSelectedMpan(this.selectedMpan)
     this.track.updateSelectedCompany(this.selectedCompany)

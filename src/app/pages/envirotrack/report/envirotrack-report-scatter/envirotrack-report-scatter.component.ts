@@ -193,7 +193,16 @@ export class EnvirotrackReportScatterComponent implements OnInit {
             next: (res: any) => {
               if (res.data) {
                 this.companies = res.data
-                this.selectedCompany = res.data[0].id
+
+                if (this.global.companyAssignedId.value) {
+                  this.selectedCompany = this.global.companyAssignedId.value
+                  if (this.global.selectedMpan.value) {
+                    this.selectedMpan = this.global.selectedMpan.value;
+                  }
+                } else {
+                  this.selectedCompany = res.data[0].id
+                }
+
                 this.onSelectCompany()
               }
             }
@@ -204,7 +213,18 @@ export class EnvirotrackReportScatterComponent implements OnInit {
             next: (res: any) => {
               if (res.data) {
                 this.companies = res.data
-                this.selectedCompany = this.companies[0].id
+
+                if (this.global.companyAssignedId.value) {
+                  this.selectedCompany = this.global.companyAssignedId.value
+                  if (this.global.selectedMpan.value) {
+                    this.selectedMpan = this.global.selectedMpan.value;
+                  }
+                } else {
+                  this.selectedCompany = this.companies[0].id
+                }
+
+
+
                 this.isConsultant = true
                 this.onSelectCompany()
               }
@@ -236,7 +256,7 @@ export class EnvirotrackReportScatterComponent implements OnInit {
   }
 
   onSelectCompany = () => {
-    // this.global.updateSelectedMpan(this.selectedMpan)
+
     this.track.updateSelectedCompany(this.selectedCompany)
     this.global.updateCompanyId(this.selectedCompany)
     this.global.updateSelectedMpan(this.selectedMpan)

@@ -59,7 +59,14 @@ export class ScopeChartComponent implements OnInit {
             next: (res: any) => {
               if (res.data) {
                 this.companies = res.data
-                this.selectedCompany = res.data[0].id
+
+                if (this.global.companyAssignedId.value) {
+                  this.selectedCompany = this.global.companyAssignedId.value
+                } else {
+                  this.selectedCompany = res.data[0].id
+                }
+
+
                 this.onSelectCompany()
               }
             }
@@ -70,7 +77,15 @@ export class ScopeChartComponent implements OnInit {
             next: (res: any) => {
               if (res.data) {
                 this.companies = res.data
-                this.selectedCompany = this.companies[0].id
+
+
+                if (this.global.companyAssignedId.value) {
+                  this.selectedCompany = this.global.companyAssignedId.value
+                } else {
+                  this.selectedCompany = this.companies[0].id
+                }
+
+
                 this.isConsultant = true
                 this.onSelectCompany()
               }
@@ -100,6 +115,7 @@ export class ScopeChartComponent implements OnInit {
     this.envirotrackData = {}
     this.chartData = false;
     this.track.updateSelectedCompany(this.selectedCompany)
+    this.global.updateCompanyId(this.selectedCompany)
     this.getData();
   }
 
