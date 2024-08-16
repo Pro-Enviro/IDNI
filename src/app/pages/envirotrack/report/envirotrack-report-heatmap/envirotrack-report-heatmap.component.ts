@@ -296,11 +296,11 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
           })
 
           // Changing companies should also change mpan
-          // if (this.global.selectedMpan.value) {
-          //   this.selectedMpan = this.global.selectedMpan.value
-          // } else {
-          this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
-          // }
+          if (this.global.selectedMpan.value) {
+            this.selectedMpan = this.global.selectedMpan.value
+          } else {
+            this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
+          }
 
 
           this.data = res

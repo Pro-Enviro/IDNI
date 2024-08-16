@@ -287,11 +287,11 @@ export class EnvirotrackReportScatterComponent implements OnInit {
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan):  null;
           })
 
-          // if (this.global.selectedMpan?.value) {
-          //   this.selectedMpan = this.global.selectedMpan.value
-          // } else {
+          if (this.global.selectedMpan?.value) {
+            this.selectedMpan = this.global.selectedMpan.value
+          } else {
             this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
-          // }
+          }
 
           this.data = res
           this.getTimes()
