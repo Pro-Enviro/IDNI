@@ -42,6 +42,8 @@ export class EnvirotrackReportBase1Component implements OnInit {
   isConsultant: boolean = false;
   baseGuide: boolean = false;
   showChart: boolean = false;
+  christmasDayTotal = 0;
+  lowestDayTotal = 0
 
   constructor(
     private track: EnvirotrackService,
@@ -318,9 +320,11 @@ export class EnvirotrackReportBase1Component implements OnInit {
       lowDay = 0
     }
 
+    this.lowestDayTotal = lowDay?.total?.toFixed(2) || 0
+
     let cDay = this.data.filter((x:any) => moment(x.date).format('YYYY-MM-DD') === `${this.dateFilter}-12-25`)[0]
 
-
+    this.christmasDayTotal = cDay?.total?.toFixed(2) || 0
 
 
     if(cDay === undefined){

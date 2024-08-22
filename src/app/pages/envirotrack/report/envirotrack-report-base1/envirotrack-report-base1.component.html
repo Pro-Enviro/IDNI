@@ -24,6 +24,12 @@
           <p-card styleClass="card-style-none">
             <p-selectButton *ngIf="defaultFilters.length" [options]="defaultFilters" [(ngModel)]="dateFilter" optionLabel="name" optionValue="value" (ngModelChange)="filterData()" class="btn-select ml-5"></p-selectButton>
             <div echarts [options]="chartOptions" style="max-height: 60vh; height: 800px"></div>
+            <div *ngIf="chartOptions">
+              <ul >
+                <li class="text-sm"><span class="font-semibold">Christmas Day Total:</span> {{christmasDayTotal}} </li>
+                <li class="text-sm mt-1"><span class="font-semibold">Lowest Day Total:</span> {{lowestDayTotal}}</li>
+              </ul>
+            </div>
           </p-card>
 <!--        }-->
       </div>
