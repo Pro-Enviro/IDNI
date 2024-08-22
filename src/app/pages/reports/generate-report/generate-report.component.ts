@@ -504,7 +504,6 @@ export class GenerateReportComponent implements OnInit {
   }
 
   calculateConsumptionPercent = (typeTotal: any) => {
-    console.log(typeTotal, this.totalConsumption)
     typeTotal.consumption = Number(typeTotal.consumption)
     const percent: number = (parseFloat(typeTotal.consumption) / parseFloat(this.totalConsumption)) * 100
     return percent.toFixed(1)
