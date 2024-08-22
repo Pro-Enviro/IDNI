@@ -499,7 +499,7 @@ export class GenerateReportComponent implements OnInit {
     this.totalConsumption = this.typeTotals.reduce((acc: any, curr: any) => acc + curr.consumption, 0)
     this.totalEmissions = (this.typeTotals.reduce((acc: any, curr: any) => acc + curr.emissions, 0)) / 1000
 
-    this.totalConsumption = parseFloat(this.totalConsumption)
+    this.totalConsumption = parseFloat(this.totalConsumption).toFixed(0)
 
   }
 
