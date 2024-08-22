@@ -103,6 +103,7 @@ export class GenerateReportComponent implements OnInit {
   }
    totalCo2e: any;
     envirotrackData: any;
+    halfHourlyData: any;
 
 
   constructor(
@@ -215,26 +216,49 @@ export class GenerateReportComponent implements OnInit {
 
 
     if (this.selectedCompany) {
-
-
       this.track.getFuelData(this.selectedCompany).subscribe({
         next: (res: any) => {
-
           if (res?.data?.fuel_data) {
             this.fuels = JSON.parse(res.data?.fuel_data)
           }
         },
         error: (err) => console.log(err),
         complete: () =>  this.assignFuelDataToCorrectCost()
+
       })
+
+      // this.track.getData(this.selectedCompany).subscribe({
+      //     next: (res) => {
+      //       res.forEach((row: any) => {
+      //         row.hhd = JSON.parse(row.hhd.replaceAll('"', '').replaceAll("'", '')).map((x: number) => x ? x : 0)
+      //       })
+      //
+      //
+      //       res.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime())
+      //       const latestDate = res[res.length - 1].date
+      //       const twelveMonthsAgo = moment(latestDate).subtract(12, 'months').subtract(1, 'days').format('YYYY-MM-DD')
+      //
+      //       const filteredDates = res.filter((row: any) => {
+      //         if (!row.hhd.length) return null;
+      //         return moment(row.date, ['YYYY-MM-DD']).isAfter(twelveMonthsAgo)
+      //       })
+      //
+      //       this.halfHourlyData = filteredDates
+      //
+      //       console.log(this.halfHourlyData)
+      //     },
+      //     error: (err: any) => console.log(err)
+      //   }
+      // )
+
     }
   }
 
   assignFuelDataToCorrectCost = () => {
-    if (!this.fuels.length) return;
+    // if (!this.fuels.length) return;
     // loop through fuel types and just get total of all values/units/ total cost/
 
-    let extractedData = this.fuels.map((fuel: any) => {
+    let extractedData = this.fuels?.map((fuel: any) => {
 
       let totalValue = 0
       let totalCost = 0
@@ -262,6 +286,7 @@ export class GenerateReportComponent implements OnInit {
       }
     })
 
+
     this.typeTotals = extractedData
     this.scopeTable = [...extractedData]
 
@@ -274,6 +299,7 @@ export class GenerateReportComponent implements OnInit {
     if(!id){
       return
     }
+
     this.track.getData(id).subscribe({
         next: (res) => {
           if (res){
@@ -473,12 +499,14 @@ export class GenerateReportComponent implements OnInit {
     this.totalConsumption = this.typeTotals.reduce((acc: any, curr: any) => acc + curr.consumption, 0)
     this.totalEmissions = (this.typeTotals.reduce((acc: any, curr: any) => acc + curr.emissions, 0)) / 1000
 
-    this.totalConsumption = parseFloat(this.totalConsumption).toLocaleString('en-US', this.noDecimalsString)
+    this.totalConsumption = parseFloat(this.totalConsumption)
+
   }
 
   calculateConsumptionPercent = (typeTotal: any) => {
+    console.log(typeTotal, this.totalConsumption)
     typeTotal.consumption = Number(typeTotal.consumption)
-    const percent:number = (parseFloat(typeTotal.consumption) / parseFloat(this.totalConsumption)) * 100
+    const percent: number = (parseFloat(typeTotal.consumption) / parseFloat(this.totalConsumption)) * 100
     return percent.toFixed(1)
   }
 
