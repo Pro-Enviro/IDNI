@@ -227,29 +227,6 @@ export class GenerateReportComponent implements OnInit {
 
       })
 
-      // this.track.getData(this.selectedCompany).subscribe({
-      //     next: (res) => {
-      //       res.forEach((row: any) => {
-      //         row.hhd = JSON.parse(row.hhd.replaceAll('"', '').replaceAll("'", '')).map((x: number) => x ? x : 0)
-      //       })
-      //
-      //
-      //       res.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime())
-      //       const latestDate = res[res.length - 1].date
-      //       const twelveMonthsAgo = moment(latestDate).subtract(12, 'months').subtract(1, 'days').format('YYYY-MM-DD')
-      //
-      //       const filteredDates = res.filter((row: any) => {
-      //         if (!row.hhd.length) return null;
-      //         return moment(row.date, ['YYYY-MM-DD']).isAfter(twelveMonthsAgo)
-      //       })
-      //
-      //       this.halfHourlyData = filteredDates
-      //
-      //       console.log(this.halfHourlyData)
-      //     },
-      //     error: (err: any) => console.log(err)
-      //   }
-      // )
 
     }
   }
@@ -303,21 +280,40 @@ export class GenerateReportComponent implements OnInit {
     this.track.getData(id).subscribe({
         next: (res) => {
           if (res){
-            let grandTotal = 0;
-            res.forEach((row: any) => {
-              row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
-              // Sort the envirotrack data
-              grandTotal += row.hhd.reduce((acc: number, curr: number) => acc + curr, 0)
-            })
-            this.envirotrackData = {
-              type: 'Electricity',
-              consumption:( grandTotal/1000).toFixed(2),
-              cost: 0,
-              emissions: (grandTotal * 0.22499) / 1000
-            }
-            this.scopeTable.push(this.envirotrackData)
-            this.typeTotals.push(this.envirotrackData)
+            const groupedData = new Map();
 
+            // Group by mpan
+            res.forEach((row: any) => {
+              row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x: number) => x ? x : 0);
+
+              // Group by mpan
+              if (!groupedData.has(row.mpan)) {
+                groupedData.set(row.mpan, []);
+              }
+              groupedData.get(row.mpan).push(row);
+            });
+
+            // Calculate totals for each group by mpan
+            groupedData.forEach((rows, mpan) => {
+              let grandTotal = 0;
+
+              // Calculate total consumption for the current mpan
+              rows.forEach((row: any) => {
+                grandTotal += row.hhd.reduce((acc: number, curr: number) => acc + curr, 0);
+              });
+
+              // Store the result for the current mpan
+              const envirotrackData = {
+                type: `Electricity HH - ${mpan}`,
+                consumption: grandTotal.toFixed(2),
+                cost: 0,
+                emissions: (grandTotal * 0.22499) / 1000
+              };
+
+              // Add the result to your tables
+              this.scopeTable.push(envirotrackData);
+              this.typeTotals.push(envirotrackData);
+            });
           }
         },
         complete: () => {
@@ -517,8 +513,7 @@ export class GenerateReportComponent implements OnInit {
   }
 
   calculateEmissions = (typeTotal: any) => {
-
-    if (typeTotal.type === 'Electricity') {
+    if (typeTotal.type.includes('Electricity')) {
       typeTotal.conversionFactor = 0.22499
     }
 
