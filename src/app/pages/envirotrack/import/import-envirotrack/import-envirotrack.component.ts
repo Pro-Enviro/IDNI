@@ -86,6 +86,7 @@ export class ImportEnvirotrackComponent {
   dataGuide:boolean = false;
   fileIds: string[] = []
   selectedCompanyName: any;
+  hourlyData: boolean = false;
 
 
   constructor(
@@ -201,8 +202,32 @@ export class ImportEnvirotrackComponent {
 
   getSheetData = () => {
     const sheet = this.sheetData.find((x: any) => x.name === this.selectedSheet);
-    this.fileContent = sheet?.data;
+    this.fileContent = sheet?.data || [];
 
+    function excelDateToDateTime(excelSerial: number): Date {
+      const utcDays = Math.floor(excelSerial) - 25569; 1
+      const utcValue = utcDays * 86400
+      const fractionalDay = excelSerial - Math.floor(excelSerial);
+      const secondsInDay = Math.round(86400 * fractionalDay);
+      return new Date((utcValue + secondsInDay) * 1000);
+    }
+
+
+
+    if (this.hourlyData) {
+      const formattedDates = this.fileContent.map((row: any[], index: number) => {
+        if (index === 0) return row;
+        const timestamp = excelDateToDateTime(row[0]);
+        row[0] = timestamp;
+        return row;
+      });
+
+      this.fileContent = [...formattedDates]
+
+    } else {
+      this.fileContent = sheet?.data;
+    }
+    console.log(this.fileContent);
   }
 
   getFileType = (event: any) => {
@@ -363,6 +388,13 @@ export class ImportEnvirotrackComponent {
 
 
   processData = async () => {
+
+    if (!this.selectedMpan && this.hourlyData){
+      this.selectedMpan = {
+        name: 'No Provided MPAN'
+      }
+    }
+
     if (!this.selectedMpan || !this.selectedMpan?.name.toString().length  ) {
       this.msg.add({
         severity: 'error',
@@ -389,32 +421,90 @@ export class ImportEnvirotrackComponent {
     }
 
 
-    for (const [index, row] of this.fileContent.entries()) {
-      if (index >= this.selectedDataStart.row) {
-        let date;
-        if (row[this.selectedStartDate.col.toString().substring(0, 2)] != 20) {
-          let tmp = row[this.selectedStartDate.col]
-          if (isNaN(tmp)) {
-            date = moment(tmp, 'DD/MM/YYYY')
-          } else {
-            let unix = ((tmp - 25569) * 86400000)
-            row[this.selectedStartDate.col] = moment(new Date(unix), 'DD/MM/YYYY')
-            date = moment(new Date(unix), 'DD/MM/YYYY')
+    if (this.hourlyData) {
+      const groupedData: { [key: string]: any } = {};
+
+      for (const [index, row] of this.fileContent.entries()) {
+        if (index >= this.selectedDataStart.row) {
+
+          const originalDate = moment(row[0]);
+
+
+          if (originalDate.isValid()) {
+            const halfHHDAmount = row[1] / 2;
+
+
+            const dayKey = originalDate.format('DD/MM/YYYY');
+
+            // Initialize the day object if it doesn't exist
+            if (!groupedData[dayKey]) {
+              groupedData[dayKey] = {
+                company_id: this.selectedCompany,
+                mpan: this.selectedMpan.name.toString(),
+                date: originalDate.clone().startOf('day'),
+                hhd: Array(48).fill(0),
+                reactive_data: this.reactiveData
+              };
+            }
+
+            // Calculate positions for xx:00 + xx:30
+            const hourPosition = originalDate.hour() * 2;
+            const halfHourPosition = hourPosition + 1;
+
+            // Add values to hhd array
+            groupedData[dayKey].hhd[hourPosition] = halfHHDAmount;
+            if (halfHourPosition < 48) {
+              groupedData[dayKey].hhd[halfHourPosition] = halfHHDAmount;
+            }
+
+            // Ensure that `00:00` belongs to the next day
+            if (originalDate.format('HH:mm') === '00:00') {
+              const previousDayKey = originalDate.clone().subtract(1, 'day').format('DD/MM/YYYY');
+              groupedData[dayKey].hhd[0] = halfHHDAmount;
+
+              // Remove `00:00` from the current day and move it to the next day's first position
+              delete groupedData[previousDayKey].hhd[48];
+            }
           }
-        } else {
-          date = moment(row[this.selectedStartDate.col], 'DD/MM/YYYY')
         }
-        if (date.isValid()) {
-          this.hhd.push({
-            company_id: this.selectedCompany,
-            mpan: this.selectedMpan.name.toString(),
-            date: date,
-            hhd: row.slice(this.selectedDataStart.col, (this.selectedDataStart.col + 1 + 47)).map((x: number | string) => typeof x === 'string' ? parseFloat(x) : x),
-            reactive_data: this.reactiveData
-          })
+      }
+
+      // Convert the grouped data object to an array
+      this.hhd = Object.values(groupedData);
+
+  } else {
+      for (const [index, row] of this.fileContent.entries()) {
+        if (index >= this.selectedDataStart.row) {
+          let date;
+          if (row[this.selectedStartDate.col.toString().substring(0, 2)] != 20) {
+            let tmp = row[this.selectedStartDate.col]
+            if (isNaN(tmp)) {
+              date = moment(tmp, 'DD/MM/YYYY')
+            } else {
+              let unix = ((tmp - 25569) * 86400000)
+              row[this.selectedStartDate.col] = moment(new Date(unix), 'DD/MM/YYYY')
+              date = moment(new Date(unix), 'DD/MM/YYYY')
+            }
+          } else {
+            date = moment(row[this.selectedStartDate.col], 'DD/MM/YYYY')
+          }
+          if (date.isValid()) {
+            this.hhd.push({
+              company_id: this.selectedCompany,
+              mpan: this.selectedMpan.name.toString(),
+              date: date,
+              hhd: row.slice(this.selectedDataStart.col, (this.selectedDataStart.col + 1 + 47)).map((x: number | string) => typeof x === 'string' ? parseFloat(x) : x),
+              reactive_data: this.reactiveData
+            })
+          }
         }
       }
     }
+
+    console.log(this.hhd)
+
+    return;
+
     //TODO change Post request to be bulk
     let newHhd: any[] = [];
     let skippedRows: number = 0;
@@ -501,6 +591,7 @@ export class ImportEnvirotrackComponent {
     this.hhd = [];
 
   }
+
 }
 
 

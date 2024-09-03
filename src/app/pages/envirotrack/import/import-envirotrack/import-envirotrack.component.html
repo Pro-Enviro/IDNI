@@ -42,6 +42,7 @@
                 </ul>
               </ng-template>
             </p-fileUpload>
+            <p-checkbox [binary]="true" [(ngModel)]="hourlyData" label="Hourly data (tick if the data is in hourly format)" class="py-2 text-sm"></p-checkbox>
           </div>
 
           <div class="pet-card mt-5" *ngIf="uploadedFiles.length && isConsultant">
@@ -56,7 +57,7 @@
           </div>
 
           <ng-container *ngIf="fileContent && isConsultant">
-            <p-card header="Half-Hourly Data (HHD)" styleClass="card-charts mt-4" #table>
+            <p-card header="{{hourlyData ? 'Hourly Data' : 'Half-Hourly Data (HHD)'}}" styleClass="card-charts mt-4" #table>
               <div class="grid">
                 <div class="lg:col-3 md:col-6" pDroppable (onDrop)="dropMpan()">
                   <div class="enviro-card">
