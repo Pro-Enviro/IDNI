@@ -427,12 +427,10 @@ export class ImportEnvirotrackComponent {
       for (const [index, row] of this.fileContent.entries()) {
         if (index >= this.selectedDataStart.row) {
 
-          const originalDate = moment(row[0]);
-
+          const originalDate = moment.utc(row[0]);
 
           if (originalDate.isValid()) {
             const halfHHDAmount = row[1] / 2;
-
 
             const dayKey = originalDate.format('DD/MM/YYYY');
 
@@ -447,24 +445,14 @@ export class ImportEnvirotrackComponent {
               };
             }
 
-            // Calculate positions for xx:00 + xx:30
-            const hourPosition = originalDate.hour() * 2;
-            const halfHourPosition = hourPosition + 1;
+            // Calculate the position in the hhd array
+            const hour = originalDate.hour();
+            const position = hour * 2;
 
-            // Add values to hhd array
-            groupedData[dayKey].hhd[hourPosition] = halfHHDAmount;
-            if (halfHourPosition < 48) {
-              groupedData[dayKey].hhd[halfHourPosition] = halfHHDAmount;
-            }
+            // Half the data for on the hour and half hour
+            groupedData[dayKey].hhd[position] = halfHHDAmount;
+            groupedData[dayKey].hhd[position + 1] = halfHHDAmount;
 
-            // Ensure that `00:00` belongs to the next day
-            if (originalDate.format('HH:mm') === '00:00') {
-              const previousDayKey = originalDate.clone().subtract(1, 'day').format('DD/MM/YYYY');
-              groupedData[dayKey].hhd[0] = halfHHDAmount;
-
-              // Remove `00:00` from the current day and move it to the next day's first position
-              delete groupedData[previousDayKey].hhd[48];
-            }
           }
         }
       }
@@ -501,9 +489,6 @@ export class ImportEnvirotrackComponent {
       }
     }
 
-    console.log(this.hhd)
-
-    return;
 
     //TODO change Post request to be bulk
     let newHhd: any[] = [];
