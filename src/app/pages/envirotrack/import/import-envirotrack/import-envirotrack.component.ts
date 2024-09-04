@@ -227,7 +227,7 @@ export class ImportEnvirotrackComponent {
     } else {
       this.fileContent = sheet?.data;
     }
-    console.log(this.fileContent);
+    // console.log(this.fileContent);
   }
 
   getFileType = (event: any) => {
