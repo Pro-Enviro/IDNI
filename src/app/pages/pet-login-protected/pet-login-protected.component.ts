@@ -112,12 +112,43 @@ export class PetLoginProtected implements OnInit {
   companyModesOfTransport: CompanyModesOfTransport[] = ['Select', 'Rail', 'Sea', 'Air', 'Company Car', 'Public Transport']
   staffCommute: StaffCommuteModes[] = ['Select', 'On foot', 'Cycle', 'Public Transport', 'Car', 'Motorbike']
   unitsOfCost: UnitsOfCost[] = ['Cost/unit', 'Total Cost', 'Select']
-  materialTypes: MaterialTypes[] = ['Steel', 'Other Metals', 'Plastics', 'Other Materials']
+  materialTypes: MaterialTypes[] = ['Steel', 'Other Metals', 'Plastics', 'Food And Drink', 'Other Materials']
   steelMaterials: SteelMaterials[] = ['Mild Steel', 'Carbon Steel', 'Tool Steel D2', 'Tool Steel H13', 'Tool Steel M2', 'Tool Steel S275', 'Tool Steel S325', 'Alloy Steel 4340', 'Alloy Steel 4140', 'Alloy Steel 4150', 'Alloy Steel 9310', 'Alloy Steel 52100', 'Stainless Steel 304', 'Stainless Steel 316', 'Duplex Steel', 'Hardox series 400', 'Hardox series 500', 'Hardox series 600', 'Inconel series 600', 'Inconel series 700']
   otherMetals: OtherMetals[] = ['Aluminium 1000', 'Aluminium 2000', 'Aluminium 6000', 'Aluminium 7000', 'Duralumin', 'Aluminium Lithium', 'Copper', 'Bronze', 'Titanium', 'Lithium', 'Magnesium']
   plastics: Plastics[] = ['ABS', 'PA', 'PET', 'PP', 'PU', 'POM', 'PEEK', 'PE', 'PVC', 'PPS', 'Elastomers', 'Composites', 'Textiles']
   otherMaterials: OtherMaterials[] = ['Composites', 'Textiles', 'Cement', 'Aggregate', 'Sand', 'Glass', 'Chemicals', 'Hardwood', 'Softwood', 'MDF', 'Marine plywood', 'Interior plywood', 'Plasterboard', 'Insulation', 'Wool', 'Natural fibre' ]
   materialFormats: MaterialFormats[] = ['Sheet', 'Profile', 'Filament/Fibre', 'Ingot/Billet', 'Natural State', 'Powder', 'Granule', 'Liquid', 'Gas', 'Recyclate']
+  foodFormats: string[] = [
+    "Vegetables",
+    "Fruit",
+    "Cereals",
+    "Beans and Pulses",
+    "Soya",
+    "Wheat",
+    "Butter",
+    "Milk",
+    "Yeast",
+    "Flour",
+    "Salts",
+    "Sugars",
+    "Oils",
+    "Fats",
+    "Animal Proteins",
+    "Non Animal Proteins",
+    "Vitamins",
+    "Minerals",
+    "Preservatives",
+    "Cheese",
+    "Herbs",
+    "Spices",
+    "Flavouring",
+    "Eggs",
+    "Alcohol",
+    "Rice",
+    "CO2",
+    "Acids",
+    "Alkalis"
+  ];
   years = years
   selectedYear: string = years[0] || '2024'
   data: any = []

@@ -59,12 +59,12 @@
       <div class="lg:col-5 md:col-6 p-3 mt-3">
         <p-card header="{{isConsultant ? 'Select Company' : ''}}"
                 styleClass="flex justify-content-center card-charts p-2">
-            <div class="p-1">
-              <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id"
-                          (ngModelChange)="onSelectCompany()"
-                          [style]="{ width: '15rem', marginBottom: '2rem'}" scrollHeight="300px"
-                          [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
-            </div>
+          <div class="p-1">
+            <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id"
+                        (ngModelChange)="onSelectCompany()"
+                        [style]="{ width: '15rem', marginBottom: '2rem'}" scrollHeight="300px"
+                        [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
+          </div>
 
           <div class="flex flex-column p-1">
             <label class="text-xl font-semibold" for="sic_code">SIC Code</label>
@@ -215,23 +215,35 @@
           <ng-template pTemplate="rowexpansion" let-groups let-editing="editing">
             <tr style="background-color: #fff; overflow-x: scroll">
               <td *ngIf="groups.parent.name === 'Cost of Raw Materials'">
+                <!-- General types -->
                 <p-dropdown [options]="materialTypes" class="p-inputtext-sm"
                             [style]="{width: '120px', marginRight: '0.2rem'}" [(ngModel)]="groups.type"
                             placeholder="Please Select" [editable]="true"></p-dropdown>
+
                 <p-dropdown [options]="steelMaterials" class="p-inputtext-sm"
                             [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype"
                             *ngIf="groups.type === 'Steel'" placeholder="Please Select" [editable]="true"></p-dropdown>
+
                 <p-dropdown [options]="otherMetals" class="p-inputtext-sm"
                             [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype"
                             *ngIf="groups.type === 'Other Metals'" placeholder="Please Select"
                             [editable]="true"></p-dropdown>
+
                 <p-dropdown [options]="plastics" class="p-inputtext-sm" [style]="{width:'120px', marginRight: '0.2rem'}"
                             [(ngModel)]="groups.subtype" *ngIf="groups.type === 'Plastics'" placeholder="Please Select"
                             [editable]="true"></p-dropdown>
+
+                <p-dropdown [options]="foodFormats" class="p-inputtext-sm"
+                            [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype"
+                            *ngIf="groups.type === 'Food And Drink'"
+                            [editable]="true" placeholder="Please Select"></p-dropdown>
+
                 <p-dropdown [options]="otherMaterials" class="p-inputtext-sm"
                             [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype"
-                            *ngIf="groups.type !== 'Steel' && groups.type !== 'Other Metals' && groups.type !== 'Plastics'"
+                            *ngIf="groups.type !== 'Steel' && groups.type !== 'Other Metals' && groups.type !== 'Plastics' && groups.type !== 'Food And Drink'"
                             [editable]="true" placeholder="Please Select"></p-dropdown>
+
+                <!--FORMAT-->
                 <p-dropdown [options]="materialFormats" class="p-inputtext-sm" [style]="{width:'120px'}"
                             [(ngModel)]="groups.format" placeholder="Please Select" scrollHeight="350px"
                 ></p-dropdown>
@@ -270,7 +282,8 @@
               <td *ngIf="groups.totalUnits !== undefined">
 
                 <p-inputNumber [(ngModel)]="groups.totalUnits" class="p-inputtext-sm"
-                               [inputStyle]="{width: '100px'}" (ngModelChange)="handleEnergyOrRawMaterials(groups)"></p-inputNumber>
+                               [inputStyle]="{width: '100px'}"
+                               (ngModelChange)="handleEnergyOrRawMaterials(groups)"></p-inputNumber>
 
               </td>
 
@@ -293,7 +306,8 @@
               <td *ngIf="groups.cost !== undefined">
 
                 <p *ngIf="groups.cost === 'NA'"></p>
-                <p-inputNumber [(ngModel)]="groups.cost" class="p-inputtext-sm" [minFractionDigits]="2" *ngIf="groups.cost !== 'NA'"
+                <p-inputNumber [(ngModel)]="groups.cost" class="p-inputtext-sm" [minFractionDigits]="2"
+                               *ngIf="groups.cost !== 'NA'"
                                [maxFractionDigits]="2"
                                [inputStyle]="{width: '100px'}"
                                (ngModelChange)="calculateGroupTotalCost(groups)"></p-inputNumber>
@@ -301,7 +315,8 @@
               <td *ngIf="groups.unitOfCost">
 
                 <p-dropdown [options]="unitsOfCost" class="p-inputtext-sm" [style]="{width: '120px'}"
-                            [(ngModel)]="groups.unitOfCost" (ngModelChange)="calculateEnergyCostPerUnit(groups)" ></p-dropdown>
+                            [(ngModel)]="groups.unitOfCost"
+                            (ngModelChange)="calculateEnergyCostPerUnit(groups)"></p-dropdown>
               </td>
               <td *ngIf="groups.approxMileage !== undefined">
                 <!--                <p *ngIf="groups.approxMileage === null">N/A</p>-->
@@ -429,9 +444,9 @@
               <td colspan="6" class="pl-2">
                 <p-button icon="pi pi-plus" size="small" label="Add New {{groups.parent.name}}"
                           (click)="createNewTableRow(groups)" styleClass="btn-dark mt-3 mb-3"></p-button>
-                                <p-button *ngIf="groups.parent.name === 'Company Travel'" icon="pi pi-plus" size="small"
-                                          label="Add New Staff Commute" (click)="addNewStaffCommuteRow(groups)"
-                                          styleClass="btn-dark mt-3 mb-3 ml-2"></p-button>
+                <p-button *ngIf="groups.parent.name === 'Company Travel'" icon="pi pi-plus" size="small"
+                          label="Add New Staff Commute" (click)="addNewStaffCommuteRow(groups)"
+                          styleClass="btn-dark mt-3 mb-3 ml-2"></p-button>
               </td>
             </tr>
           </ng-template>
@@ -478,7 +493,7 @@
         <!--  CO2E SCOPE-->
         @if (co2eScope) {
           <p-card>
-            <app-scope-chart  [selectedCompany]="selectedCompany"></app-scope-chart>
+            <app-scope-chart [selectedCompany]="selectedCompany"></app-scope-chart>
           </p-card>
         }
       </div>
