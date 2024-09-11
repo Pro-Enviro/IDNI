@@ -24,7 +24,8 @@
       </div>
     </div>
 
-    <div class="mt-5">
+
+    <div class="mt-5" *ngIf="selectedCompany"    >
       <p-tabView (onChange)="sortRecommendations()">
         <!--RECOMMENDATIONS-->
         <p-tabPanel header="Recommendation Summary">
@@ -210,6 +211,7 @@
                 <th class="font-semibold text-sm">Energy Type</th>
                 <th class="font-semibold text-sm">UoM</th>
                 <th class="font-semibold text-sm">Total</th>
+                <th></th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-surplus let-i="rowIndex">
@@ -225,17 +227,26 @@
                   <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="surplus.total"
                                  class="p-inputtext-sm"></p-inputNumber>
                 </td>
+                <td>
+                  <button pButton class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-trash"
+                          (click)="deleteSurplus(surplus)"></button>
+                </td>
               </tr>
             </ng-template>
             <ng-template pTemplate="footer">
               <tr>
+                <td class="w-3 p-2"></td>
+                <td colspan="2"></td>
                 <td class="w-3 p-2">
                   <button label="Add New Energy surplus" pButton
-                          class="p-button p-button-outlined btn btn-dark w-full mr-2" icon="pi pi-plus"
+                          class="p-button p-button-outlined btn btn-dark w-full mr-2 text-sm" icon="pi pi-plus"
                           (click)="addNewSurplus()"></button>
                 </td>
-                <td colspan="8"></td>
               </tr>
+              <div class="mt-2">
+                <button type="submit" icon="pi pi-save" label="Save" pButton class="btn-style text-sm"
+                        (click)="saveSurplusData()"></button>
+              </div>
             </ng-template>
           </p-table>
         </p-tabPanel>
@@ -248,7 +259,8 @@
               <tr>
                 <th class="font-semibold text-sm">Energy Type</th>
                 <th class="font-semibold text-sm">UoM</th>
-                <th class="font-semibold text-sm">CO2 Total</th>
+                <th class="font-semibold text-sm">Total</th>
+                <th></th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-deficit let-i="rowIndex">
@@ -264,17 +276,26 @@
                   <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="deficit.total"
                                  class="p-inputtext-sm"></p-inputNumber>
                 </td>
+                <td>
+                  <button pButton class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-trash"
+                          (click)="deleteDeficit(deficit)"></button>
+                </td>
               </tr>
             </ng-template>
             <ng-template pTemplate="footer">
               <tr>
+                <td class="w-3 p-2"></td>
+                <td colspan="2"></td>
                 <td class="w-3 p-2">
-                  <button label="Add New Energy deficit" pButton
-                          class="p-button p-button-outlined btn btn-dark w-full mr-2" icon="pi pi-plus"
+                  <button label="Add New Energy surplus" pButton
+                          class="p-button p-button-outlined btn btn-dark w-full mr-2 text-sm" icon="pi pi-plus"
                           (click)="addNewDeficit()"></button>
                 </td>
-                <td colspan="8"></td>
               </tr>
+              <div class="mt-2">
+                <button type="submit" icon="pi pi-save" label="Save" pButton class="btn-style text-sm"
+                        (click)="saveForm()"></button>
+              </div>
             </ng-template>
           </p-table>
         </p-tabPanel>

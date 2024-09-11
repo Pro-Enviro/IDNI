@@ -12,11 +12,16 @@ import {DbService} from "../../../_services/db.service";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import FileSaver from "file-saver";
 import {UnitsUom} from "../../pet-login-protected/pet-tool-types";
+import {type} from "node:os";
 
-interface DigitalTwinRows {
+export interface DigitalTwinRows {
+  id?: number
+  generatedId: string
   type: string
   unit: string
   total: number
+  company: number
+  deficit?: boolean
 }
 
 @Component({
@@ -153,11 +158,21 @@ export class GenerateReportComponent implements OnInit {
     this.recommendations = this.recommendations.filter((rec: any) => rec.recommendationId !== deletedRec.recommendationId)
   }
 
+  deleteSurplus = (surplusToDelete: DigitalTwinRows) => {
+    this.energySurplus = this.energySurplus.filter((sup: DigitalTwinRows) => sup.id !== surplusToDelete.id)
+  }
+
+  deleteDeficit = (deficitToDelete: DigitalTwinRows) => {
+    this.energyDeficit = this.energyDeficit.filter((sup: DigitalTwinRows) => sup.id !== deficitToDelete.id )
+  }
+
   addNewSurplus = () => {
     let surplus = {
+      generatedId: "id" + Math.random().toString(16).slice(2),
       type: '',
       unit: '',
-      total: 0
+      total: 0,
+      company: this.selectedCompany
     }
 
     this.energySurplus.push(surplus)
@@ -165,9 +180,12 @@ export class GenerateReportComponent implements OnInit {
 
   addNewDeficit = () => {
     let deficit = {
+      generatedId: "id" + Math.random().toString(16).slice(2),
       type: '',
       unit: '',
-      total: 0
+      total: 0,
+      deficit: true,
+      company: this.selectedCompany
     }
 
     this.energyDeficit.push(deficit)
@@ -217,9 +235,12 @@ export class GenerateReportComponent implements OnInit {
     this.typeTotals = []
     this.scopeTable = []
     this.totalConsumption = []
+    this.energySurplus = []
+    this.energyDeficit = []
 
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getReportValues(this.selectedCompany)
+    this.getCompanyDigitalTwinData(this.selectedCompany)
     this.getFuelData()
   }
 
@@ -237,6 +258,25 @@ export class GenerateReportComponent implements OnInit {
       error: (error: any) => console.log(error),
 
     })
+  }
+
+  getCompanyDigitalTwinData = (selectedCompany: number) => {
+    if (!selectedCompany) return;
+
+    this.db.getDigitalTwinData(selectedCompany).subscribe({
+      next:(res: any) => {
+        if (res.data) {
+          res.data.forEach((data: any) => {
+            if (data.deficit){
+              this.energyDeficit.push(data)
+            } else {
+              this.energySurplus.push(data)
+            }
+          })
+        }
+      }
+    })
+
   }
 
   getFuelData = () => {
@@ -504,6 +544,7 @@ export class GenerateReportComponent implements OnInit {
 
 
   saveForm = () => {
+    if (!this.selectedCompany) return;
     const report = this.createReportObject('save')
 
     this.db.saveRecommendations(this.selectedCompany, {'recommendations': JSON.stringify(report)})
@@ -517,6 +558,44 @@ export class GenerateReportComponent implements OnInit {
       error: (error: any) => console.log(error),
     })
   }
+
+  saveSurplusData = () => {
+    if (!this.selectedCompany) return;
+
+    // Patch or post new rows of data
+    this.energySurplus.forEach((energyType: DigitalTwinRows) => {
+      if (!energyType.id) {
+        let rowToSend = {
+          type: energyType.type,
+          generatedId: energyType.generatedId,
+          company: energyType.company,
+          unit: energyType.unit,
+          total: energyType.total,
+          deficit: false,
+        }
+
+        if (!rowToSend.type) return;
+        if (!rowToSend.company) return;
+
+        this.db.saveDigitalTwinRow(rowToSend).subscribe({
+          next: (res: any) => {},
+          error: (error: any) => console.log(error)
+        })
+      } else {
+        this.db.patchDigitalTwinRow(energyType.id, energyType).subscribe({
+          next: (res: any) => {},
+          error: (error: any) => console.log(error),
+        })
+      }
+    })
+
+    this.msg.add({
+      severity:'success',
+      detail: 'Data Saved'
+    })
+  }
+
+
 
   recalculateTotals = () => {
     this.totalCost = this.typeTotals.reduce((acc: any, curr: any) => acc + curr.cost, 0)
