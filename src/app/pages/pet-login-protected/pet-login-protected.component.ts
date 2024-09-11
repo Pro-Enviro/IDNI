@@ -116,7 +116,27 @@ export class PetLoginProtected implements OnInit {
   steelMaterials: SteelMaterials[] = ['Mild Steel', 'Carbon Steel', 'Tool Steel D2', 'Tool Steel H13', 'Tool Steel M2', 'Tool Steel S275', 'Tool Steel S325', 'Alloy Steel 4340', 'Alloy Steel 4140', 'Alloy Steel 4150', 'Alloy Steel 9310', 'Alloy Steel 52100', 'Stainless Steel 304', 'Stainless Steel 316', 'Duplex Steel', 'Hardox series 400', 'Hardox series 500', 'Hardox series 600', 'Inconel series 600', 'Inconel series 700']
   otherMetals: OtherMetals[] = ['Aluminium 1000', 'Aluminium 2000', 'Aluminium 6000', 'Aluminium 7000', 'Duralumin', 'Aluminium Lithium', 'Copper', 'Bronze', 'Titanium', 'Lithium', 'Magnesium']
   plastics: Plastics[] = ['ABS', 'PA', 'PET', 'PP', 'PU', 'POM', 'PEEK', 'PE', 'PVC', 'PPS', 'Elastomers', 'Composites', 'Textiles']
-  otherMaterials: OtherMaterials[] = ['Composites', 'Textiles', 'Cement', 'Aggregate', 'Sand', 'Glass', 'Chemicals', 'Hardwood', 'Softwood', 'MDF', 'Marine plywood', 'Interior plywood', 'Plasterboard', 'Insulation', 'Wool', 'Natural fibre' ]
+  otherMaterials: OtherMaterials[] = ['Composites', 'Textiles', 'Cement', 'Aggregate', 'Sand', 'Glass', 'Chemicals', 'Hardwood', 'Softwood', 'MDF', 'Marine plywood', 'Interior plywood', 'Plasterboard', 'Insulation', 'Wool', 'Natural fibre',
+    'Paper',
+    'Carton board',
+    'Corrugated cardboard',
+    'Gypsum',
+    'Clay',
+    'Nitrogen',
+    'Oxygen',
+    'Hydrogen',
+    'Ammonia',
+    'Tungsten',
+    'Argon',
+    'CO2',
+    'Caking agents',
+    'Acids',
+    'Alkalis',
+    'Active Pharmaceutical Ingredients',
+    'Adhesives',
+    'Paints',
+    'Talcs and Fillers',
+  ]
   materialFormats: MaterialFormats[] = ['Sheet', 'Profile', 'Filament/Fibre', 'Ingot/Billet', 'Natural State', 'Powder', 'Granule', 'Liquid', 'Gas', 'Recyclate']
   foodFormats: string[] = [
     "Vegetables",
