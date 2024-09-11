@@ -422,6 +422,7 @@ export class ImportEnvirotrackComponent {
 
 
     if (this.hourlyData) {
+      // Temp object to store data for each date
       const groupedData: { [key: string]: any } = {};
 
       for (const [index, row] of this.fileContent.entries()) {
@@ -429,9 +430,8 @@ export class ImportEnvirotrackComponent {
 
           const originalDate = moment.utc(row[0]);
 
+          // handles date + time in one cell
           if (originalDate.isValid()) {
-            const halfHHDAmount = row[1] / 2;
-
             const dayKey = originalDate.format('DD/MM/YYYY');
 
             // Initialize the day object if it doesn't exist
@@ -445,14 +445,16 @@ export class ImportEnvirotrackComponent {
               };
             }
 
-            // Calculate the position in the hhd array
+            // Calculate the position in the hhd array - 00:00 should go in position 0, 00:30 in position 1 etc.
+            // e.g. if time is 03:00, hour = 3, position is 6 to take into account half hours in between
             const hour = originalDate.hour();
             const position = hour * 2;
 
             // Half the data for on the hour and half hour
+            const halfHHDAmount = row[1] / 2;
+
             groupedData[dayKey].hhd[position] = halfHHDAmount;
             groupedData[dayKey].hhd[position + 1] = halfHHDAmount;
-
           }
         }
       }
