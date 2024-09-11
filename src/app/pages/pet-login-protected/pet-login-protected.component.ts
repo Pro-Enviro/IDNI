@@ -104,7 +104,7 @@ export class PetLoginProtected implements OnInit {
   rows: TableRow[] = []
   // For Primeng dropdowns
   unitsUom: UnitsUom[] = ['Select', 'litres', 'kg', 'kWh', 'tonnes', 'metres', 'cubic metres', 'km', 'miles', 'million litres']
-  regionOfOrigin: RegionsOfOrigin[] = ['UK', 'EU', 'US', 'Asia']
+  regionOfOrigin: RegionsOfOrigin[] = ['NI', 'UK', 'EU', 'US', 'Asia', 'ROW']
   modeOfTransport: ModeOfTransport[] = ['Select', 'Van <3.5t', 'Refrigerated Van <3.5t', 'Van >3.5t < 7.5t', 'Refrigerated Van > 3.5t < 7.5t', 'HGV', 'Refrigerated HGV']
   fuelTypes: FuelTypes[] = ['Select', 'Diesel', 'Petrol', 'LPG', 'EV', 'Hydrogen']
   otherModesOfTransport: OtherModesOfTransport[] = ['Select', 'Rail', 'Sea', 'Air']
