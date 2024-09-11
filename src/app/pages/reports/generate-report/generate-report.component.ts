@@ -559,11 +559,13 @@ export class GenerateReportComponent implements OnInit {
     })
   }
 
-  saveSurplusData = () => {
+  saveSurplusData = (isDeficit: boolean = false) => {
     if (!this.selectedCompany) return;
 
+    const arrayToUse = isDeficit ? this.energyDeficit : this.energySurplus
+
     // Patch or post new rows of data
-    this.energySurplus.forEach((energyType: DigitalTwinRows) => {
+    arrayToUse.forEach((energyType: DigitalTwinRows) => {
       if (!energyType.id) {
         let rowToSend = {
           type: energyType.type,
@@ -571,7 +573,7 @@ export class GenerateReportComponent implements OnInit {
           company: energyType.company,
           unit: energyType.unit,
           total: energyType.total,
-          deficit: false,
+          deficit: isDeficit,
         }
 
         if (!rowToSend.type) return;
