@@ -11,8 +11,13 @@ import {EnvirotrackService} from "../../envirotrack/envirotrack.service";
 import {DbService} from "../../../_services/db.service";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import FileSaver from "file-saver";
+import {UnitsUom} from "../../pet-login-protected/pet-tool-types";
 
-
+interface DigitalTwinRows {
+  type: string
+  unit: string
+  total: number
+}
 
 @Component({
   selector: 'app-generate-report',
@@ -52,6 +57,9 @@ export class GenerateReportComponent implements OnInit {
   fuels: any = [];
   exportColumns: any[] = [];
   scopeTable: any[] = []
+  energySurplus: DigitalTwinRows[] = []
+  energyDeficit: DigitalTwinRows[] = []
+  unitTypes: UnitsUom[] = ['Select', 'litres', 'kg', 'kWh', 'tonnes', 'metres', 'cubic metres', 'km', 'miles', 'million litres']
 
 
   cols = [
@@ -143,6 +151,26 @@ export class GenerateReportComponent implements OnInit {
   }
   deleteRecommendation = (deletedRec: Recommendations) => {
     this.recommendations = this.recommendations.filter((rec: any) => rec.recommendationId !== deletedRec.recommendationId)
+  }
+
+  addNewSurplus = () => {
+    let surplus = {
+      type: '',
+      unit: '',
+      total: 0
+    }
+
+    this.energySurplus.push(surplus)
+  }
+
+  addNewDeficit = () => {
+    let deficit = {
+      type: '',
+      unit: '',
+      total: 0
+    }
+
+    this.energyDeficit.push(deficit)
   }
 
   getCompanies = () => {
