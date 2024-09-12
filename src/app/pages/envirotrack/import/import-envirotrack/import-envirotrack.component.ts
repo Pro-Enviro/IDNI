@@ -159,6 +159,19 @@ export class ImportEnvirotrackComponent {
     });
   }
 
+  onDataChange() {
+    if (this.dataValue) {
+      this.hourlyData = false;
+    }
+  }
+
+  onHourlyDataChange() {
+    if (this.hourlyData) {
+      this.dataValue = null;
+    }
+  }
+
+
   customMpanNumberHandler = () => {
     this.selectedMpan = {
       col: 0,
