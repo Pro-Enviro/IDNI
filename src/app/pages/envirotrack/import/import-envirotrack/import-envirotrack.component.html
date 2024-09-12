@@ -114,11 +114,10 @@
                 <div class="md:col-6 hhd-size">
                   <div class="enviro-card">
                     <h3 class="title">Custom MPAN</h3>
-                    <ul class="list-none flex flex-column gap-2 p-0 m-0">
-                      <li class="">
-
-                      </li>
-                    </ul>
+                        <div class="flex flex-column">
+                          <input type="text" pInputText [(ngModel)]="customMpanNumber"/>
+                          <button pButton  class="btn btn-dark mt-2"  label="Change" (click)="customMpanNumberHandler()"></button>
+                        </div>
                   </div>
                 </div>
               </div>
