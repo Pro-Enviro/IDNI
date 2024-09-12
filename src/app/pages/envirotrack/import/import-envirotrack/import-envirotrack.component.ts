@@ -421,12 +421,21 @@ export class ImportEnvirotrackComponent {
 
 
   processData = async () => {
+    if(!this.energyType){
+      this.msg.add({
+        severity: 'error',
+        summary: 'No energy type selected',
+        detail: 'Please select energy type and try again !'
+      });
+      return;
+    }
 
     if (!this.selectedMpan && this.hourlyData){
       this.selectedMpan = {
         name: 'No Provided MPAN'
       }
     }
+
 
     if (!this.selectedMpan || !this.selectedMpan?.name.toString().length  ) {
       this.msg.add({
@@ -598,6 +607,9 @@ export class ImportEnvirotrackComponent {
     this.selectedMpan = null;
     this.draggedCell = null;
     this.selectedDataStart = null;
+    //DO I NEED THIS VALUES HERE ?
+    this.energyType = []
+    this.customMpanNumber = ""
 
   }
 
@@ -610,6 +622,10 @@ export class ImportEnvirotrackComponent {
     this.selectedStartDate = null;
     this.selectedDataStart = null;
     this.hhd = [];
+
+    //DO I NEED THIS VALUES HERE ?
+    this.energyType = []
+    this.customMpanNumber = ""
 
 
   }
