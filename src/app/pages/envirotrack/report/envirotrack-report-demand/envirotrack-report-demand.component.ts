@@ -157,7 +157,7 @@ export class EnvirotrackReportDemandComponent implements OnInit {
         }
       },
         {
-        name: 'ASC',
+        name: 'MIC',
         type: 'line',
         data: this.asc,
         emphasis: {
