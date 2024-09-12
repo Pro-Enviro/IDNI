@@ -87,6 +87,12 @@ export class ImportEnvirotrackComponent {
   fileIds: string[] = []
   selectedCompanyName: any;
   hourlyData: boolean = false;
+  dataValue?:any;
+
+  dataOptions = [
+    {name:'Half-Hourly Data',value:'half hourly data'},
+    {name:'Hourly Data',value:'hourly data'}
+  ]
 
 
   constructor(
