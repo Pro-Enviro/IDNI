@@ -74,7 +74,7 @@
                 <div class="lg:col-2">
                   <div class="enviro-card">
                     <h3 class="title">Energy Type</h3>
-                    <p-selectButton [options]="energyTypeOptions" [(ngModel)]="energyType" optionLabel="name" optionValue="value" class="btn-select"></p-selectButton>
+                    <p-selectButton [options]="energyTypeOptions" [(ngModel)]="energyType" optionLabel="name" optionValue="value" class="btn-select" (onChange)="onTypeChange($event)"></p-selectButton>
                   </div>
                 </div>
                 <div class="lg:col-2 md:col-6" pDroppable (onDrop)="dropMpan()">

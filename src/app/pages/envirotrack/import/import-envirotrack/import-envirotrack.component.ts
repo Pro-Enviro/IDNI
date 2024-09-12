@@ -90,6 +90,7 @@ export class ImportEnvirotrackComponent {
   dataValue?:any;
   customMpanNumber: string = ''
   energyType:any;
+  displayValue: string = '';
 
   dataOptions = [
     {name:'Half-Hourly Data',value:'half hourly data'},
@@ -163,6 +164,14 @@ export class ImportEnvirotrackComponent {
       col: 0,
       row: 1,
       name: this.customMpanNumber
+    }
+  }
+
+  onTypeChange(event: any) {
+    const selectedOption = this.energyTypeOptions.find((option:any) => option.value === event.value);
+    if (selectedOption) {
+      this.displayValue = `${selectedOption.name}`;
+
     }
   }
 
@@ -506,7 +515,7 @@ export class ImportEnvirotrackComponent {
             this.hhd.push({
               company_id: this.selectedCompany,
               //mpan: this.selectedMpan.name.toString(),
-              mpan:this.customMpanNumber.length ? this.customMpanNumber :  parseInt(this.selectedMpan.name).toString(),
+              mpan: this.customMpanNumber.length ? this.displayValue + "-" + this.customMpanNumber :  this.displayValue + "-" + parseInt(this.selectedMpan.name).toString(),
               date: date,
               hhd: row.slice(this.selectedDataStart.col, (this.selectedDataStart.col + 1 + 47)).map((x: number | string) => typeof x === 'string' ? parseFloat(x) : x),
               reactive_data: this.reactiveData
@@ -601,6 +610,7 @@ export class ImportEnvirotrackComponent {
     this.selectedStartDate = null;
     this.selectedDataStart = null;
     this.hhd = [];
+
 
   }
 
