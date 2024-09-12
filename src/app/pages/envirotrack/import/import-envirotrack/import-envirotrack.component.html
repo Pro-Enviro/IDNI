@@ -82,7 +82,8 @@
                     <h3 class="title">MPAN Number</h3>
                     <ul class="list-none flex flex-column gap-2 p-0 m-0 bg-white" *ngIf="selectedMpan">
                       <li class="p-2 border-round shadow-1">
-                        {{ selectedMpan.name }}
+<!--                        {{ selectedMpan.name }}-->
+                        {{displayValue}}{{displayValue? "-" : ''}}{{ selectedMpan.name }}
                       </li>
                     </ul>
                   </div>
