@@ -434,11 +434,10 @@ export class ImportEnvirotrackComponent {
       this.selectedMpan = {
         name: 'No Provided MPAN'
       }
-    }else {
+    } else {
       this.selectedMpan = {
         name: this.selectedMpan = this.customMpanNumber.length ? this.displayValue + "-" + this.customMpanNumber :  this.displayValue + "-" + parseInt(this.selectedMpan.name).toString()
       }
-      console.log(this.selectedMpan)
     }
 
 
