@@ -91,6 +91,9 @@ export class ImportEnvirotrackComponent {
 
   dataOptions = [
     {name:'Half-Hourly Data',value:'half hourly data'},
+  ]
+
+  hourlyDataOptions = [
     {name:'Hourly Data',value:'hourly data'}
   ]
 

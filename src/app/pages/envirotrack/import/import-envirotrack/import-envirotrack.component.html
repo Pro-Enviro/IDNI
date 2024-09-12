@@ -29,11 +29,14 @@
         <div class="col-11 mt-5 flex justify-content-center">
           <div class="pet-card lg:col-5 md:col-12 flex justify-content-center flex-column p-3">
             <h3 class="title pb-3">Select the type of data you wish to import</h3>
-            <p-selectButton [options]="dataOptions" [(ngModel)]="dataValue" optionLabel="name" optionValue="value" class="btn-select"></p-selectButton>
+            <div class="flex flex-row">
+              <p-selectButton [options]="dataOptions" [(ngModel)]="dataValue" optionLabel="name" optionValue="value" class="btn-select"></p-selectButton>
+              <p-selectButton [options]="hourlyDataOptions" [(ngModel)]="hourlyData" optionLabel="name" optionValue="value" class="btn-select"></p-selectButton>
+            </div>
           </div>
         </div>
 
-        <div class="col-12 mt-5" *ngIf="dataValue">
+        <div class="col-12 mt-5" *ngIf="dataValue || hourlyData">
           <div class="pet-card lg:col-6 md:col-12" *ngIf="!fileContent" [style]="{margin: 'auto', marginTop:'4rem'}">
             <h3 class="title pb-3">File Upload</h3>
             <p-fileUpload #uploader name="file[]" [customUpload]="true"
