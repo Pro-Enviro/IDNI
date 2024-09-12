@@ -3,20 +3,17 @@
     <div class="grid">
       <div class="col-12">
         <div class="grid">
-          <div class="col-12">
             <div class="col">
               <p-card header="Breakdown of CO2e by Scope Chart Guide" styleClass="card-select-panel" [style]="{ height: '100%' }">
                 <p-button type="button" styleClass="btn-style" (click)="scopeGuide = true" icon="pi pi-chart-pie" label="Guide"></p-button>
               </p-card>
             </div>
-
             <div class="lg:col-5 md:col-6" *ngIf="!companySelected">
               <p-card header="Select Company" styleClass="card-select-panel" [style]="{ height: '100%' }">
                 <p-dropdown [options]="companies" [(ngModel)]="selectedCompany" optionLabel="name" optionValue="id" (ngModelChange)="onSelectCompany()" [style]="{ width: '12rem'}"
                             scrollHeight="370px" [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
               </p-card>
             </div>
-          </div>
         </div>
       </div>
 
