@@ -89,6 +89,7 @@ export class ImportEnvirotrackComponent {
   hourlyData: boolean = false;
   dataValue?:any;
   customMpanNumber: string = ''
+  energyType:any;
 
   dataOptions = [
     {name:'Half-Hourly Data',value:'half hourly data'},
@@ -96,6 +97,11 @@ export class ImportEnvirotrackComponent {
 
   hourlyDataOptions = [
     {name:'Hourly Data',value:'hourly data'}
+  ]
+
+  energyTypeOptions = [
+    {name:'Electricity',value:'electricity'},
+    {name:'Gas',value:'gas'}
   ]
 
 

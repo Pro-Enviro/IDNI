@@ -16,6 +16,7 @@
           </p-card>
         </div>
         <div class="col-6">
+<!--          ONLY ONE OPTION NEEDS TO BE SELECTED WE CANT SELECT BOTH-->
           <p-card header="Select Company" styleClass="card-select-panel" *ngIf="!fileContent && isConsultant" [style]="{ height: '100%' }">
             <p-dropdown [options]="companies" optionLabel="name" optionValue="id" [(ngModel)]="selectedCompany" (onChange)="resetUploader()"
                         [style]="{ width: '12rem'}" [disabled]="!isConsultant" scrollHeight="370px" [filter]="true" filterBy="name" [showClear]="true"
@@ -70,7 +71,13 @@
           <ng-container *ngIf="fileContent && isConsultant">
             <p-card header="{{hourlyData ? 'Hourly Data' : 'Half-Hourly Data (HHD)'}}" styleClass="card-charts mt-4" #table>
               <div class="grid">
-                <div class="md:col-6 hhd-size" pDroppable (onDrop)="dropMpan()">
+                <div class="lg:col-2">
+                  <div class="enviro-card">
+                    <h3 class="title">Energy Type</h3>
+                    <p-selectButton [options]="energyTypeOptions" [(ngModel)]="energyType" optionLabel="name" optionValue="value" class="btn-select"></p-selectButton>
+                  </div>
+                </div>
+                <div class="lg:col-2 md:col-6" pDroppable (onDrop)="dropMpan()">
                   <div class="enviro-card">
                     <h3 class="title">MPAN Number</h3>
                     <ul class="list-none flex flex-column gap-2 p-0 m-0 bg-white" *ngIf="selectedMpan">
@@ -80,7 +87,7 @@
                     </ul>
                   </div>
                 </div>
-                <div class="md:col-6 hhd-size" pDroppable (onDrop)="dropStartDate()">
+                <div class="lg:col-2 md:col-6" pDroppable (onDrop)="dropStartDate()">
                   <div class="enviro-card">
                     <h3 class="title">Date Column</h3>
                     <ul class="list-none flex flex-column gap-2 p-0 m-0 bg-white" *ngIf="selectedStartDate">
@@ -90,7 +97,7 @@
                     </ul>
                   </div>
                 </div>
-                <div class="md:col-6 hhd-size" pDroppable (onDrop)="dropFirstData()">
+                <div class="lg:col-2 md:col-6" pDroppable (onDrop)="dropFirstData()">
                   <div class="enviro-card">
                     <h3 class="title">Data Start Point</h3>
                     <ul class="list-none flex flex-column gap-2 p-0 m-0 bg-white" *ngIf="selectedDataStart">
@@ -100,7 +107,7 @@
                     </ul>
                   </div>
                 </div>
-                <div class="md:col-6 hhd-size">
+                <div class="lg:col-2 md:col-6">
                   <div class="enviro-card">
                     <h3 class="title">Data Type</h3>
                     <ul class="list-none flex flex-column gap-2 p-0 m-0">
@@ -111,7 +118,7 @@
                     </ul>
                   </div>
                 </div>
-                <div class="md:col-6 hhd-size">
+                <div class="lg:col-2 md:col-6">
                   <div class="enviro-card">
                     <h3 class="title">Custom MPAN</h3>
                         <div class="flex flex-column">
