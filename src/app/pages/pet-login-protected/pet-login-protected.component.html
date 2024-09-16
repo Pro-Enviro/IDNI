@@ -237,10 +237,14 @@
                             [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype"
                             *ngIf="groups.type === 'Food And Drink'"
                             [editable]="true" placeholder="Please Select"></p-dropdown>
+                <p-dropdown [options]="gasMaterials" class="p-inputtext-sm"
+                            [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype"
+                            *ngIf="groups.type === 'Gasses'"
+                            [editable]="true" placeholder="Please Select"></p-dropdown>
 
                 <p-dropdown [options]="otherMaterials" class="p-inputtext-sm"
                             [style]="{width:'120px', marginRight: '0.2rem'}" [(ngModel)]="groups.subtype"
-                            *ngIf="groups.type !== 'Steel' && groups.type !== 'Other Metals' && groups.type !== 'Plastics' && groups.type !== 'Food And Drink'"
+                            *ngIf="groups.type !== 'Steel' && groups.type !== 'Other Metals' && groups.type !== 'Plastics' && groups.type !== 'Food And Drink' && groups.type !== 'Gasses'"
                             [editable]="true" placeholder="Please Select"></p-dropdown>
 
                 <!--FORMAT-->
