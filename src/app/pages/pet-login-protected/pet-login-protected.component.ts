@@ -169,7 +169,7 @@ export class PetLoginProtected implements OnInit {
     "Acids",
     "Alkalis"
   ];
-  gasMaterials: string [] = ['test',' test2']
+  gasMaterials: string [] = ['Ammonia', 'F404', 'F420']
   years = years
   selectedYear: string = years[0] || '2024'
   data: any = []
