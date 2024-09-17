@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import * as XLSX from "xlsx";
 import {MenuItem, MessageService} from "primeng/api";
-import { Papa } from "ngx-papaparse";
+import {Papa} from "ngx-papaparse";
 import moment from "moment";
 import 'moment/locale/en-gb';
 import {from, lastValueFrom} from "rxjs";
@@ -19,22 +19,22 @@ import {Router} from "@angular/router";
 
 
 interface Sheet {
-    name: string;
-    data: any[];
+  name: string;
+  data: any[];
 }
 
 interface DraggedCell {
-    name: any;
-    row: number;
-    col: number;
+  name: any;
+  row: number;
+  col: number;
 }
 
 interface HHDData {
-    company_id: number;
-    mpan: string;
-    date: moment.Moment;
-    hh: (number | string)[];
-    reactive_data: boolean;
+  company_id: number;
+  mpan: string;
+  date: moment.Moment;
+  hh: (number | string)[];
+  reactive_data: boolean;
 }
 
 @Component({
@@ -83,26 +83,32 @@ export class ImportEnvirotrackComponent {
   isConsultant: boolean = false;
   uploadingData: boolean = false;
   accessData: boolean = false;
-  dataGuide:boolean = false;
+  dataGuide: boolean = false;
   fileIds: string[] = []
   selectedCompanyName: any;
   hourlyData: boolean = false;
-  dataValue?:any;
+  dataValue?: any;
   customMpanNumber: string = ''
-  energyType:any;
+  energyType: any;
   displayValue: string = '';
 
   dataOptions = [
-    {name:'Half-Hourly Data',value:'half hourly data'},
+    {name: 'Hourly Data - standard', value: 'hourly data standard'},
+    {name: 'Hourly Data - list', value: 'hourly data list'},
+    {name: 'Half-Hourly Data - standard', value: 'half hourly data standard'},
+    {name: 'Half-Hourly Data - list', value: 'half hourly data list'},
   ]
 
   hourlyDataOptions = [
-    {name:'Hourly Data',value:'hourly data'}
+    {name: 'Hourly Data - standard', value: 'hourly data standard'},
+    {name: 'Hourly Data - list', value: 'hourly data list'},
+    {name: 'Half-Hourly Data - standard', value: 'half hourly data standard'},
+    {name: 'Half-Hourly Data - list', value: 'half hourly data list'},
   ]
 
   energyTypeOptions = [
-    {name:'Electricity',value:'electricity'},
-    {name:'Gas',value:'gas'}
+    {name: 'Electricity', value: 'electricity'},
+    {name: 'Gas', value: 'gas'}
   ]
 
 
@@ -113,7 +119,6 @@ export class ImportEnvirotrackComponent {
     private papa: Papa,
     private http: HttpClient,
     private db: DbService,
-    private route: Router
   ) {
     moment.locale('en-gb')
     moment().format('L')
@@ -122,37 +127,37 @@ export class ImportEnvirotrackComponent {
     //   this.selectedCompany = this.global.companyAssignedId.value
     //   this.selectedName = this.global.companyName.value || ''
     // }
-      this.getCompanies();
+    this.getCompanies();
   }
 
-    openXlsx = async (data: any) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            this.availableSheets = [];
-            const fileData = reader.result;
-            if (typeof fileData === 'string') {
-                const workbook: XLSX.WorkBook = XLSX.read(fileData, { type: "binary" });
-                const sheets: Sheet[] = workbook.SheetNames.map((name: string) => ({
-                    name,
-                    data: XLSX.utils.sheet_to_json(workbook.Sheets[name], { header: 1 })
-                }));
-                this.availableSheets = sheets.map((sheet: Sheet) => sheet.name);
-                this.sheetData = sheets;
-            }
-        };
-        reader.readAsBinaryString(data);
+  openXlsx = async (data: any) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.availableSheets = [];
+      const fileData = reader.result;
+      if (typeof fileData === 'string') {
+        const workbook: XLSX.WorkBook = XLSX.read(fileData, {type: "binary"});
+        const sheets: Sheet[] = workbook.SheetNames.map((name: string) => ({
+          name,
+          data: XLSX.utils.sheet_to_json(workbook.Sheets[name], {header: 1})
+        }));
+        this.availableSheets = sheets.map((sheet: Sheet) => sheet.name);
+        this.sheetData = sheets;
+      }
     };
+    reader.readAsBinaryString(data);
+  };
 
   openCsv = (data: any) => {
     return new Promise<void>((resolve, reject) => {
       this.papa.parse(data, {
         skipEmptyLines: true,
         transform: (res: any) => res.toLowerCase(),
-        complete: (res:any) => {
+        complete: (res: any) => {
           this.resultSet(res.data, 'csv');
           resolve();
         },
-        error: (err:any) => {
+        error: (err: any) => {
           reject(err);
         }
       });
@@ -160,15 +165,27 @@ export class ImportEnvirotrackComponent {
   }
 
   onDataChange() {
-    if (this.dataValue) {
-      this.hourlyData = false;
+    console.log(this.dataValue)
+    // Cases can be:
+    // 1 standard format -> hourly or half hourly
+    // 2 list format -> hourly or half hourly
+    switch (this.dataValue) {
+      case 'hourly data standard':
+        this.hourlyData = true;
+        break;
+      case 'hourly data list':
+        this.hourlyData = true;
+        break;
+      case 'half hourly data standard':
+        this.hourlyData = false;
+        break;
+      case 'half hourly data list':
+        this.hourlyData = false;
+        break;
     }
   }
 
   onHourlyDataChange() {
-    if (this.hourlyData) {
-      this.dataValue = null;
-    }
   }
 
 
@@ -181,7 +198,7 @@ export class ImportEnvirotrackComponent {
   }
 
   onTypeChange(event: any) {
-    const selectedOption = this.energyTypeOptions.find((option:any) => option.value === event.value);
+    const selectedOption = this.energyTypeOptions.find((option: any) => option.value === event.value);
     if (selectedOption) {
       this.displayValue = `${selectedOption.name}`;
 
@@ -197,6 +214,11 @@ export class ImportEnvirotrackComponent {
       });
       return;
     }
+
+    console.log('datavalue:', this.dataValue)
+    console.log('hourlydata:', this.hourlyData)
+
+
     if (event.files[0].name.split('.').pop().toLowerCase() === 'csv') {
       await this.openCsv(event.files[0]);
     } else {
@@ -227,7 +249,7 @@ export class ImportEnvirotrackComponent {
 
       from(this.global.uploadDataForCompany(formData)).subscribe({
         next: (res: any) => {
-          if (res.length > 1 ) {
+          if (res.length > 1) {
             this.fileIds = res.map((file: any) => file.id);
           } else if (res.id) {
             this.fileIds = res.id
@@ -251,13 +273,13 @@ export class ImportEnvirotrackComponent {
     this.fileContent = sheet?.data || [];
 
     function excelDateToDateTime(excelSerial: number): Date {
-      const utcDays = Math.floor(excelSerial) - 25569; 1
+      const utcDays = Math.floor(excelSerial) - 25569;
+      1
       const utcValue = utcDays * 86400
       const fractionalDay = excelSerial - Math.floor(excelSerial);
       const secondsInDay = Math.round(86400 * fractionalDay);
       return new Date((utcValue + secondsInDay) * 1000);
     }
-
 
 
     if (this.hourlyData) {
@@ -316,18 +338,18 @@ export class ImportEnvirotrackComponent {
   getCompanies = () => {
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        if (res.role.name === 'user'){
+        if (res.role.name === 'user') {
           this.selectedEmail = res.email
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
-              if (res.data){
+              if (res.data) {
                 this.companies = res.data
                 this.selectedCompany = res.data[0].id
                 this.selectedCompanyName = res.data[0].name
               }
             }
-          }) }
-        else if (res.role.name === 'consultant'){
+          })
+        } else if (res.role.name === 'consultant') {
           this.track.getUsersCompany(res.email).subscribe({
             next: (res: any) => {
               if (res.data) {
@@ -339,7 +361,7 @@ export class ImportEnvirotrackComponent {
 
         } else {
           this.track.getCompanies().subscribe({
-            next:(res: any) => {
+            next: (res: any) => {
               this.companies = res.data;
               this.isConsultant = true;
             }
@@ -350,20 +372,20 @@ export class ImportEnvirotrackComponent {
     })
   }
 
-  sendDataToProEnviro(){
+  sendDataToProEnviro() {
 
     // Upload data to database and link to company
     if (!this.selectedCompany || !this.uploadedFiles.length) return;
 
-    let fileUUIDS : {directus_files_id: any}[] = [];
-    if (this.uploadedFiles.length === 1 ) {
+    let fileUUIDS: { directus_files_id: any }[] = [];
+    if (this.uploadedFiles.length === 1) {
       fileUUIDS = [{directus_files_id: this.fileIds}]
     } else if (this.uploadedFiles.length > 1 && this.uploadedFiles.length <= 10) {
       let mappedIds = this.fileIds.map((fileId: string) => {
-            return {
-              directus_files_id: fileId
-            }
-          })
+        return {
+          directus_files_id: fileId
+        }
+      })
       fileUUIDS = mappedIds
     }
 
@@ -372,7 +394,7 @@ export class ImportEnvirotrackComponent {
       this.db.checkUsersFiles(this.selectedCompany).subscribe({
 
         next: (res: any) => {
-          if (res.data){
+          if (res.data) {
             res.data.uploaded_files.forEach((file: any) => {
               fileUUIDS.push({
                 directus_files_id: file.directus_files_id,
@@ -388,10 +410,10 @@ export class ImportEnvirotrackComponent {
           if (!this.selectedCompany) return;
 
           this.track.saveFilesData(this.selectedCompany, {uploaded_files: fileUUIDS}).subscribe({
-            next: (res:any) => {
+            next: (res: any) => {
               this.uploadedFiles = []
             },
-            error: (err:any) => {
+            error: (err: any) => {
               console.log(err)
             },
           })
@@ -400,15 +422,15 @@ export class ImportEnvirotrackComponent {
     } catch {
       this.msg.add({
         severity: 'warn',
-        detail:'You have already uploaded files'
+        detail: 'You have already uploaded files'
       })
     }
 
 
-     // Send an email to pro enviro to alert about uploaded data
-    return this.http.post(`${this.url}/Mailer`,{
+    // Send an email to pro enviro to alert about uploaded data
+    return this.http.post(`${this.url}/Mailer`, {
       subject: `${this.selectedCompanyName} has data for upload`,
-      to: ['it@proenviro.co.uk', 'data@proenviro.co.uk','richard.pelan@investni.com'],
+      to: ['it@proenviro.co.uk', 'data@proenviro.co.uk', 'richard.pelan@investni.com'],
       template: {
         name: "data_uploaded",
         data: {
@@ -417,14 +439,14 @@ export class ImportEnvirotrackComponent {
         }
       },
       "files": typeof this.fileIds === 'string' ? [this.fileIds] : [...this.fileIds]
-    },{responseType: "text"}).subscribe({
-      next:(res) => {
+    }, {responseType: "text"}).subscribe({
+      next: (res) => {
         this.msg.add({
           severity: 'success',
           detail: 'Data sent'
         })
       },
-      error: (error: any) =>console.log(error),
+      error: (error: any) => console.log(error),
       complete: () => {
         this.uploadedFiles = []
         this.fileContent = null;
@@ -434,7 +456,7 @@ export class ImportEnvirotrackComponent {
 
 
   processData = async () => {
-    if(!this.energyType){
+    if (!this.energyType) {
       this.msg.add({
         severity: 'error',
         summary: 'No energy type selected',
@@ -443,18 +465,25 @@ export class ImportEnvirotrackComponent {
       return;
     }
 
-    if (!this.selectedMpan && this.hourlyData){
+    if (!this.dataValue) {
+      return this.msg.add({
+        severity: 'error',
+        detail: 'Please select an upload method'
+      })
+    }
+
+    if (!this.selectedMpan && this.hourlyData) {
       this.selectedMpan = {
         name: 'No Provided MPAN'
       }
     } else {
       this.selectedMpan = {
-        name: this.selectedMpan = this.customMpanNumber.length ? this.displayValue + "-" + this.customMpanNumber :  this.displayValue + "-" + parseInt(this.selectedMpan.name).toString()
+        name: this.selectedMpan = this.customMpanNumber.length ? this.displayValue + "-" + this.customMpanNumber : this.displayValue + "-" + parseInt(this.selectedMpan.name).toString()
       }
     }
 
 
-    if (!this.selectedMpan || !this.selectedMpan?.name.toString().length  ) {
+    if (!this.selectedMpan || !this.selectedMpan?.name.toString().length) {
       this.msg.add({
         severity: 'error',
         summary: 'No mpan number selected',
@@ -480,10 +509,24 @@ export class ImportEnvirotrackComponent {
     }
 
 
+    // return;
+
+    const isHalfHourly = this.dataValue === 'half hourly data standard' || this.dataValue === 'half hourly data list';
+    const isListFormat = this.dataValue === 'hourly data list' || this.dataValue === 'half hourly data list';
+
+    // 4 data manipulation required
+    // 1) Half Hourly and standard format -> Done
+    // 2) Half Hourly and list format
+    // 3) Hourly and standard format
+    // 4) Hourly and List format -> Done
+
     if (this.hourlyData) {
       // Temp object to store data for each date
+
       const groupedData: { [key: string]: any } = {};
 
+
+      // row = [date, value]
       for (const [index, row] of this.fileContent.entries()) {
         if (index >= this.selectedDataStart.row) {
 
@@ -521,7 +564,7 @@ export class ImportEnvirotrackComponent {
       // Convert the grouped data object to an array
       this.hhd = Object.values(groupedData);
 
-  } else {
+    } else {
       for (const [index, row] of this.fileContent.entries()) {
         if (index >= this.selectedDataStart.row) {
           let date;
@@ -541,7 +584,7 @@ export class ImportEnvirotrackComponent {
             this.hhd.push({
               company_id: this.selectedCompany,
               //mpan: this.selectedMpan.name.toString(),
-              mpan: this.customMpanNumber.length ? this.displayValue + "-" + this.customMpanNumber :  this.displayValue + "-" + parseInt(this.selectedMpan.name).toString(),
+              mpan: this.customMpanNumber.length ? this.displayValue + "-" + this.customMpanNumber : this.displayValue + "-" + parseInt(this.selectedMpan.name).toString(),
               date: date,
               hhd: row.slice(this.selectedDataStart.col, (this.selectedDataStart.col + 1 + 47)).map((x: number | string) => typeof x === 'string' ? parseFloat(x) : x),
               reactive_data: this.reactiveData
@@ -551,6 +594,10 @@ export class ImportEnvirotrackComponent {
       }
     }
 
+
+    console.log(this.hhd)
+
+    return;
 
     //TODO change Post request to be bulk
     let newHhd: any[] = [];
@@ -562,17 +609,17 @@ export class ImportEnvirotrackComponent {
         let newRow = omit('company_id', row)
         newRow.company = this.selectedCompany;
 
-        const res:any = await lastValueFrom(this.track.lookup(row.mpan, row.date.format('YYYY-MM-DD'), newRow.company));
-        if(!res || !res.data.length){
+        const res: any = await lastValueFrom(this.track.lookup(row.mpan, row.date.format('YYYY-MM-DD'), newRow.company));
+        if (!res || !res.data.length) {
           await lastValueFrom(this.track.uploadData([newRow], this.selectedCompany!));
-        }else if(res.data.length > 0 && row.reactive_data != res.data[0].reactive_data) {
+        } else if (res.data.length > 0 && row.reactive_data != res.data[0].reactive_data) {
           await lastValueFrom(this.track.uploadData([newRow], this.selectedCompany!));
         } else if (res.length > 1) {
           console.error('Too many results found! Please check database', row, res.data)
         } else {
           skippedRows++;
-          console.error('request',row)
-          console.error('result',res.data)
+          console.error('request', row)
+          console.error('result', res.data)
         }
       } catch (err: any) {
         this.msg.add({
@@ -602,7 +649,7 @@ export class ImportEnvirotrackComponent {
       this.uploadingData = false;
       this.uploadedFiles = []
       this.fileContent = null
-      if(skippedRows){
+      if (skippedRows) {
         // this.msg.add({
         //   severity: 'warn',
         //   detail: `${skippedRows}`
@@ -650,9 +697,7 @@ export class ImportEnvirotrackComponent {
 }
 
 
-
-
 export function omit(key: any, obj: any) {
-  const { [key]: omitted, ...rest } = obj;
+  const {[key]: omitted, ...rest} = obj;
   return rest;
 }

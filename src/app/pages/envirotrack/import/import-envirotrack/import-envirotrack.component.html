@@ -27,12 +27,13 @@
           <!--        </p-card>-->
         </div>
 
-        <div class="col-11 mt-5 flex justify-content-center">
+        <div class="col-11 mt-5 flex justify-content-center" *ngIf="selectedCompany">
           <div class="pet-card lg:col-5 md:col-12 flex justify-content-center flex-column p-3">
             <h3 class="title pb-3">Select the type of data you would like to import</h3>
+            <p>Explain the difference types ... ? ? ? </p>
             <div class="flex flex-row">
               <p-selectButton [options]="dataOptions" [(ngModel)]="dataValue" optionLabel="name" optionValue="value" class="btn-select" (onChange)="onDataChange()"></p-selectButton>
-              <p-selectButton [options]="hourlyDataOptions" [(ngModel)]="hourlyData" optionLabel="name" optionValue="value" class="btn-select" (onChange)="onHourlyDataChange()"></p-selectButton>
+<!--              <p-selectButton [options]="hourlyDataOptions" [(ngModel)]="dataValue" optionLabel="name" optionValue="value" class="btn-select" (onChange)="onHourlyDataChange()"></p-selectButton>-->
             </div>
           </div>
         </div>
@@ -155,9 +156,9 @@
     </div>
   </p-card>
 
-<app-supply *ngIf="companies.length" [companiesFromParent]="selectedCompany"></app-supply>
+<app-supply *ngIf="companies.length && selectedCompany" [companiesFromParent]="selectedCompany"></app-supply>
 
-<div class="flex justify-content-end">
+<div class="flex justify-content-end" >
   <div class="flex flex-column">
     <p-sidebar [(visible)]="accessData" position="right" styleClass="lg:w-5 md:w-7">
       <div class="container p-4">
