@@ -159,11 +159,36 @@ export class GenerateReportComponent implements OnInit {
   }
 
   deleteSurplus = (surplusToDelete: DigitalTwinRows) => {
+    if (!surplusToDelete.id) return;
     this.energySurplus = this.energySurplus.filter((sup: DigitalTwinRows) => sup.id !== surplusToDelete.id)
+
+    this.db.deleteDigitalTwinRow(surplusToDelete.id).subscribe({
+      next: (res: any) => {
+        this.msg.add({
+          severity:'info',
+          detail: 'Deleted row'
+        })
+      }
+    })
+
   }
 
   deleteDeficit = (deficitToDelete: DigitalTwinRows) => {
+    if (!deficitToDelete.id) return;
+
     this.energyDeficit = this.energyDeficit.filter((sup: DigitalTwinRows) => sup.id !== deficitToDelete.id )
+
+    this.db.deleteDigitalTwinRow(deficitToDelete.id).subscribe({
+      next: (res: any) => {
+        this.msg.add({
+          severity:'info',
+          detail: 'Deleted row'
+        })
+      },
+      error: (error: any) => {
+        console.log(error)
+      }
+    })
   }
 
   addNewSurplus = () => {
@@ -276,12 +301,10 @@ export class GenerateReportComponent implements OnInit {
         }
       }
     })
-
   }
 
   getFuelData = () => {
     this.fuels = []
-
 
     if (this.selectedCompany) {
       this.track.getFuelData(this.selectedCompany).subscribe({
@@ -292,10 +315,7 @@ export class GenerateReportComponent implements OnInit {
         },
         error: (err) => console.log(err),
         complete: () =>  this.assignFuelDataToCorrectCost()
-
       })
-
-
     }
   }
 
@@ -596,6 +616,8 @@ export class GenerateReportComponent implements OnInit {
       detail: 'Data Saved'
     })
   }
+
+
 
 
 

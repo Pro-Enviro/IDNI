@@ -77,6 +77,10 @@ export class DbService {
     return this.http.patch(`${this.url}/items/company_digital_twin_data/${id}`, data)
   }
 
+  deleteDigitalTwinRow = (id: number) => {
+    return this.http.delete(`${this.url}/items/company_digital_twin_data/${id}`)
+  }
+
 
   addCompany(
     fields: string[],
