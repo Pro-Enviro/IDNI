@@ -564,7 +564,34 @@ export class ImportEnvirotrackComponent {
         // Convert the grouped data object to an array
         this.hhd = Object.values(groupedData);
       } else {
-
+        // Scenario 3 - hourly and standard format
+        for (const [index, row] of this.fileContent.entries()) {
+          if (index >= this.selectedDataStart.row) {
+            let date;
+            if (row[this.selectedStartDate.col.toString().substring(0, 2)] != 20) {
+              let tmp = row[this.selectedStartDate.col]
+              if (isNaN(tmp)) {
+                date = moment(tmp, 'DD/MM/YYYY')
+              } else {
+                let unix = ((tmp - 25569) * 86400000)
+                row[this.selectedStartDate.col] = moment(new Date(unix), 'DD/MM/YYYY')
+                date = moment(new Date(unix), 'DD/MM/YYYY')
+              }
+            } else {
+              date = moment(row[this.selectedStartDate.col], 'DD/MM/YYYY')
+            }
+            if (date.isValid()) {
+              // this.hhd.push({
+              //   company_id: this.selectedCompany,
+              //   //mpan: this.selectedMpan.name.toString(),
+              //   mpan: this.customMpanNumber.length ? this.displayValue + "-" + this.customMpanNumber : this.displayValue + "-" + parseInt(this.selectedMpan.name).toString(),
+              //   date: date,
+              //   hhd: row.slice(this.selectedDataStart.col, (this.selectedDataStart.col + 1 + 47)).map((x: number | string) => typeof x === 'string' ? parseFloat(x) : x),
+              //   reactive_data: this.reactiveData
+              // })
+            }
+          }
+        }
       }
 
     } else {
