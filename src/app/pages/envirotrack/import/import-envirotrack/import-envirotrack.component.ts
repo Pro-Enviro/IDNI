@@ -523,72 +523,80 @@ export class ImportEnvirotrackComponent {
     if (this.hourlyData) {
       // Temp object to store data for each date
 
-      const groupedData: { [key: string]: any } = {};
+      if (isListFormat) {
+        const groupedData: { [key: string]: any } = {};
 
+        // row = [date, value]
+        for (const [index, row] of this.fileContent.entries()) {
+          if (index >= this.selectedDataStart.row) {
 
-      // row = [date, value]
-      for (const [index, row] of this.fileContent.entries()) {
-        if (index >= this.selectedDataStart.row) {
+            const originalDate = moment.utc(row[0]);
 
-          const originalDate = moment.utc(row[0]);
+            // handles date + time in one cell
+            if (originalDate.isValid()) {
+              const dayKey = originalDate.format('DD/MM/YYYY');
 
-          // handles date + time in one cell
-          if (originalDate.isValid()) {
-            const dayKey = originalDate.format('DD/MM/YYYY');
+              // Initialize the day object if it doesn't exist
+              if (!groupedData[dayKey]) {
+                groupedData[dayKey] = {
+                  company_id: this.selectedCompany,
+                  mpan: this.selectedMpan.name.toString(),
+                  date: originalDate.clone().startOf('day'),
+                  hhd: Array(48).fill(0),
+                  reactive_data: this.reactiveData
+                };
+              }
 
-            // Initialize the day object if it doesn't exist
-            if (!groupedData[dayKey]) {
-              groupedData[dayKey] = {
-                company_id: this.selectedCompany,
-                mpan: this.selectedMpan.name.toString(),
-                date: originalDate.clone().startOf('day'),
-                hhd: Array(48).fill(0),
-                reactive_data: this.reactiveData
-              };
+              // Calculate the position in the hhd array - 00:00 should go in position 0, 00:30 in position 1 etc.
+              // e.g. if time is 03:00, hour = 3, position is 6 to take into account half hours in between
+              const hour = originalDate.hour();
+              const position = hour * 2;
+
+              // Half the data for on the hour and half hour
+              const halfHHDAmount = row[1] / 2;
+
+              groupedData[dayKey].hhd[position] = halfHHDAmount;
+              groupedData[dayKey].hhd[position + 1] = halfHHDAmount;
             }
-
-            // Calculate the position in the hhd array - 00:00 should go in position 0, 00:30 in position 1 etc.
-            // e.g. if time is 03:00, hour = 3, position is 6 to take into account half hours in between
-            const hour = originalDate.hour();
-            const position = hour * 2;
-
-            // Half the data for on the hour and half hour
-            const halfHHDAmount = row[1] / 2;
-
-            groupedData[dayKey].hhd[position] = halfHHDAmount;
-            groupedData[dayKey].hhd[position + 1] = halfHHDAmount;
           }
         }
+
+        // Convert the grouped data object to an array
+        this.hhd = Object.values(groupedData);
+      } else {
+
       }
 
-      // Convert the grouped data object to an array
-      this.hhd = Object.values(groupedData);
-
     } else {
-      for (const [index, row] of this.fileContent.entries()) {
-        if (index >= this.selectedDataStart.row) {
-          let date;
-          if (row[this.selectedStartDate.col.toString().substring(0, 2)] != 20) {
-            let tmp = row[this.selectedStartDate.col]
-            if (isNaN(tmp)) {
-              date = moment(tmp, 'DD/MM/YYYY')
+
+      if (isListFormat){
+
+      } else {
+        for (const [index, row] of this.fileContent.entries()) {
+          if (index >= this.selectedDataStart.row) {
+            let date;
+            if (row[this.selectedStartDate.col.toString().substring(0, 2)] != 20) {
+              let tmp = row[this.selectedStartDate.col]
+              if (isNaN(tmp)) {
+                date = moment(tmp, 'DD/MM/YYYY')
+              } else {
+                let unix = ((tmp - 25569) * 86400000)
+                row[this.selectedStartDate.col] = moment(new Date(unix), 'DD/MM/YYYY')
+                date = moment(new Date(unix), 'DD/MM/YYYY')
+              }
             } else {
-              let unix = ((tmp - 25569) * 86400000)
-              row[this.selectedStartDate.col] = moment(new Date(unix), 'DD/MM/YYYY')
-              date = moment(new Date(unix), 'DD/MM/YYYY')
+              date = moment(row[this.selectedStartDate.col], 'DD/MM/YYYY')
             }
-          } else {
-            date = moment(row[this.selectedStartDate.col], 'DD/MM/YYYY')
-          }
-          if (date.isValid()) {
-            this.hhd.push({
-              company_id: this.selectedCompany,
-              //mpan: this.selectedMpan.name.toString(),
-              mpan: this.customMpanNumber.length ? this.displayValue + "-" + this.customMpanNumber : this.displayValue + "-" + parseInt(this.selectedMpan.name).toString(),
-              date: date,
-              hhd: row.slice(this.selectedDataStart.col, (this.selectedDataStart.col + 1 + 47)).map((x: number | string) => typeof x === 'string' ? parseFloat(x) : x),
-              reactive_data: this.reactiveData
-            })
+            if (date.isValid()) {
+              this.hhd.push({
+                company_id: this.selectedCompany,
+                //mpan: this.selectedMpan.name.toString(),
+                mpan: this.customMpanNumber.length ? this.displayValue + "-" + this.customMpanNumber : this.displayValue + "-" + parseInt(this.selectedMpan.name).toString(),
+                date: date,
+                hhd: row.slice(this.selectedDataStart.col, (this.selectedDataStart.col + 1 + 47)).map((x: number | string) => typeof x === 'string' ? parseFloat(x) : x),
+                reactive_data: this.reactiveData
+              })
+            }
           }
         }
       }
