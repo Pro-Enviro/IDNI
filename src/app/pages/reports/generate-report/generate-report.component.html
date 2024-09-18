@@ -194,7 +194,7 @@
               <tr class="breakdownRow" *ngIf="typeTotal">
                 <td class="font-normal text-sm">{{ typeTotal.scope }}</td>
                 <td class="font-normal text-sm">{{ typeTotal.type }}</td>
-                <td class="font-normal text-sm">{{ typeTotal.co2e.toLocaleString('en-US', oneDecimalString) }}</td>
+                <td class="font-normal text-sm">{{ typeTotal.co2e?.toLocaleString('en-US', oneDecimalString) }}</td>
                 <td class="font-normal text-sm">{{ calculateCo2ePercent(typeTotal) }}</td>
               </tr>
             </ng-template>
