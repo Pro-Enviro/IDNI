@@ -288,6 +288,8 @@ export class GenerateReportComponent implements OnInit {
   getCompanyDigitalTwinData = (selectedCompany: number) => {
     if (!selectedCompany) return;
 
+    console.log(this.selectedCompany)
+
     this.db.getDigitalTwinData(selectedCompany).subscribe({
       next:(res: any) => {
         if (res.data) {

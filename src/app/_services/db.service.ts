@@ -66,7 +66,7 @@ export class DbService {
   }
 
   getDigitalTwinData = (companyId: number) => {
-    return this.http.get(`${this.url}/items/company_digital_twin_data?fitler[companyId][_eq]=${companyId}`)
+    return this.http.get(`${this.url}/items/company_digital_twin_data?filter[company][_eq]=${companyId}`)
   }
 
   saveDigitalTwinRow = (data: Partial<DigitalTwinRows> ) => {
