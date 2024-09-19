@@ -11,8 +11,20 @@ import {EnvirotrackService} from "../../envirotrack/envirotrack.service";
 import {DbService} from "../../../_services/db.service";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import FileSaver from "file-saver";
+import {UnitsUom} from "../../pet-login-protected/pet-tool-types";
 
 
+export interface DigitalTwinRows {
+  id?: number
+  generatedId: string
+  type: string
+  unit: string
+  total: number
+  company: number
+  deficit?: boolean
+  solution?: boolean
+  solutionText?: string
+}
 
 @Component({
   selector: 'app-generate-report',
@@ -52,7 +64,10 @@ export class GenerateReportComponent implements OnInit {
   fuels: any = [];
   exportColumns: any[] = [];
   scopeTable: any[] = []
-
+  energySurplus: DigitalTwinRows[] = []
+  energyDeficit: DigitalTwinRows[] = []
+  energySolution: DigitalTwinRows[] = []
+  unitTypes: UnitsUom[] = ['Select', 'litres', 'kg', 'kWh', 'tonnes', 'metres', 'cubic metres', 'km', 'miles', 'million litres']
 
   cols = [
     {
@@ -145,6 +160,98 @@ export class GenerateReportComponent implements OnInit {
     this.recommendations = this.recommendations.filter((rec: any) => rec.recommendationId !== deletedRec.recommendationId)
   }
 
+  deleteSurplus = (surplusToDelete: DigitalTwinRows) => {
+    if (!surplusToDelete.id) return;
+    this.energySurplus = this.energySurplus.filter((sup: DigitalTwinRows) => sup.id !== surplusToDelete.id)
+
+    this.db.deleteDigitalTwinRow(surplusToDelete.id).subscribe({
+      next: (res: any) => {
+        this.msg.add({
+          severity:'info',
+          detail: 'Deleted row'
+        })
+      }
+    })
+
+  }
+
+  deleteDeficit = (deficitToDelete: DigitalTwinRows) => {
+    if (!deficitToDelete.id) return;
+
+    this.energyDeficit = this.energyDeficit.filter((sup: DigitalTwinRows) => sup.id !== deficitToDelete.id )
+
+    this.db.deleteDigitalTwinRow(deficitToDelete.id).subscribe({
+      next: (res: any) => {
+        this.msg.add({
+          severity:'info',
+          detail: 'Deleted row'
+        })
+      },
+      error: (error: any) => {
+        console.log(error)
+      }
+    })
+  }
+
+  deleteSolution = (solution: DigitalTwinRows) => {
+    if (!solution.id) return;
+
+    this.energySolution = this.energySolution.filter((sol: DigitalTwinRows) => sol.id !== solution.id);
+
+    this.db.deleteDigitalTwinRow(solution.id).subscribe({
+      next: (res: any) => {
+        this.msg.add({
+          severity:'info',
+          detail: 'Deleted row'
+        })
+      },
+      error: (error: any) => {
+        console.log(error)
+      }
+    })
+
+  }
+
+  addNewSurplus = () => {
+    let surplus = {
+      generatedId: "id" + Math.random().toString(16).slice(2),
+      type: '',
+      unit: '',
+      total: 0,
+      company: this.selectedCompany
+    }
+
+    this.energySurplus.push(surplus)
+  }
+
+  addNewDeficit = () => {
+    let deficit = {
+      generatedId: "id" + Math.random().toString(16).slice(2),
+      type: '',
+      unit: '',
+      total: 0,
+      deficit: true,
+      company: this.selectedCompany
+    }
+
+    this.energyDeficit.push(deficit)
+  }
+
+  addNewSolution = () => {
+    let solution = {
+      generatedId: "id" + Math.random().toString(16).slice(2),
+      type: '',
+      unit: '',
+      total: 0,
+      deficit: false,
+      solution: true,
+      solutionText: '',
+      company: this.selectedCompany
+    }
+
+    this.energySolution.push(solution)
+  }
+
   getCompanies = () => {
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {
@@ -189,9 +296,13 @@ export class GenerateReportComponent implements OnInit {
     this.typeTotals = []
     this.scopeTable = []
     this.totalConsumption = []
+    this.energySurplus = []
+    this.energyDeficit = []
+    this.energySolution = []
 
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getReportValues(this.selectedCompany)
+    this.getCompanyDigitalTwinData(this.selectedCompany)
     this.getFuelData()
   }
 
@@ -211,9 +322,28 @@ export class GenerateReportComponent implements OnInit {
     })
   }
 
+  getCompanyDigitalTwinData = (selectedCompany: number) => {
+    if (!selectedCompany) return;
+
+    this.db.getDigitalTwinData(selectedCompany).subscribe({
+      next:(res: any) => {
+        if (res.data) {
+          res.data.forEach((data: any) => {
+            if (data.deficit) {
+              this.energyDeficit.push(data)
+          } else if (data.solution){
+              this.energySolution.push(data)
+          } else {
+            this.energySurplus.push(data)
+          }
+          })
+        }
+      }
+    })
+  }
+
   getFuelData = () => {
     this.fuels = []
-
 
     if (this.selectedCompany) {
       this.track.getFuelData(this.selectedCompany).subscribe({
@@ -224,10 +354,7 @@ export class GenerateReportComponent implements OnInit {
         },
         error: (err) => console.log(err),
         complete: () =>  this.assignFuelDataToCorrectCost()
-
       })
-
-
     }
   }
 
@@ -476,6 +603,7 @@ export class GenerateReportComponent implements OnInit {
 
 
   saveForm = () => {
+    if (!this.selectedCompany) return;
     const report = this.createReportObject('save')
 
     this.db.saveRecommendations(this.selectedCompany, {'recommendations': JSON.stringify(report)})
@@ -489,6 +617,80 @@ export class GenerateReportComponent implements OnInit {
       error: (error: any) => console.log(error),
     })
   }
+
+  saveSurplusData = (isDeficit: boolean = false, ) => {
+    if (!this.selectedCompany) return;
+
+    const arrayToUse = isDeficit ? this.energyDeficit : this.energySurplus
+    // Patch or post new rows of data
+    arrayToUse.forEach((energyType: DigitalTwinRows) => {
+      if (!energyType.id) {
+        let rowToSend = {
+          type: energyType.type,
+          generatedId: energyType.generatedId,
+          company: energyType.company,
+          unit: energyType.unit,
+          total: energyType.total,
+          deficit: isDeficit,
+        }
+
+        if (!rowToSend.type) return;
+        if (!rowToSend.company) return;
+
+        this.db.saveDigitalTwinRow(rowToSend).subscribe({
+          next: (res: any) => {},
+          error: (error: any) => console.log(error)
+        })
+      } else {
+        this.db.patchDigitalTwinRow(energyType.id, energyType).subscribe({
+          next: (res: any) => {},
+          error: (error: any) => console.log(error),
+        })
+      }
+    })
+
+    this.msg.add({
+      severity:'success',
+      detail: 'Data Saved'
+    })
+  }
+
+  saveSolutionData = () => {
+    if (!this.selectedCompany) return;
+
+
+    this.energySolution.forEach((solution: DigitalTwinRows) => {
+      if (!solution.id) {
+        let row = {
+          type: solution.type,
+          generatedId: solution.generatedId,
+          company: solution.company,
+          solution: true,
+          solutionText: solution.solutionText
+        }
+
+        if (!row.company) return;
+
+        this.db.saveDigitalTwinRow(row).subscribe({
+          next: (res: any) => {},
+          error: (error: any) => console.log(error)
+        })
+      } else {
+        this.db.patchDigitalTwinRow(solution.id, solution).subscribe({
+          next: (res: any) => {},
+          error: (error: any) => console.log(error),
+        })
+      }
+
+    })
+    this.msg.add({
+      severity:'success',
+      detail: 'Data Saved'
+    })
+
+  }
+
+
 
   recalculateTotals = () => {
     this.totalCost = this.typeTotals.reduce((acc: any, curr: any) => acc + curr.cost, 0)
@@ -628,16 +830,10 @@ export class GenerateReportComponent implements OnInit {
     return 0;
   }
 
-
-
-
-
   ngOnInit(): void {
     this.getCompanies();
     this.getFuelData()
-
   }
-
 
 }
 
