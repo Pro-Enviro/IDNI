@@ -286,7 +286,7 @@ export class ImportEnvirotrackComponent {
       const formattedDates = this.fileContent.map((row: any[], index: number) => {
         if (index === 0) return row;
 
-        if (this.dataValue === 'hourly data standard'){
+        if (this.dataValue === 'hourly data standard' || this.dataValue === 'half hourly data standard'){
           let timestamp = excelDateToDateTime(row[1]);
           row[1] = timestamp;
         } else {
@@ -572,7 +572,6 @@ export class ImportEnvirotrackComponent {
         this.hhd = Object.values(groupedData);
       } else {
         // Scenario 3 - hourly and standard format
-
         for (const [index, row] of this.fileContent.entries()) {
           if (index >= this.selectedDataStart.row) {
             let date = moment.utc(row[this.selectedStartDate.col]);
@@ -604,9 +603,47 @@ export class ImportEnvirotrackComponent {
       }
 
     } else {
-
+      // Half hourly and in list format
       if (isListFormat){
+        const groupedData: { [key: string]: any } = {};
 
+        let pointIndex = 0;
+
+        // row = [date, value]
+        for (const [index, row] of this.fileContent.entries()) {
+          if (index >= this.selectedDataStart.row) {
+
+            const originalDate = moment.utc(row[0]);
+
+            // handles date + time in one cell
+            if (originalDate.isValid()) {
+              const dayKey = originalDate.format('DD/MM/YYYY');
+
+              // Initialize the day object if it doesn't exist
+              if (!groupedData[dayKey]) {
+                groupedData[dayKey] = {
+                  company_id: this.selectedCompany,
+                  mpan: this.selectedMpan.name.toString(),
+                  date: originalDate.clone().startOf('day'),
+                  hhd: Array(48).fill(0),
+                  reactive_data: this.reactiveData
+                };
+                pointIndex = 0;
+              }
+
+              // Calculate the position in the hhd array - 00:00 should go in position 0, 00:30 in position 1 etc.
+
+              if (pointIndex < 48) {
+                groupedData[dayKey].hhd[pointIndex] = row[1];
+                pointIndex++;
+              }
+
+            }
+          }
+        }
+
+        // Convert the grouped data object to an array
+        this.hhd = Object.values(groupedData);
       } else {
         for (const [index, row] of this.fileContent.entries()) {
           if (index >= this.selectedDataStart.row) {
