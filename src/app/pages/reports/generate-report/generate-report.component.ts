@@ -196,8 +196,6 @@ export class GenerateReportComponent implements OnInit {
   deleteSolution = (solution: DigitalTwinRows) => {
     if (!solution.id) return;
 
-    console.log(this.energySolution)
-
     this.energySolution = this.energySolution.filter((sol: DigitalTwinRows) => sol.id !== solution.id);
 
     this.db.deleteDigitalTwinRow(solution.id).subscribe({
