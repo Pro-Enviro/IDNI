@@ -12,7 +12,7 @@ import {DbService} from "../../../_services/db.service";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import FileSaver from "file-saver";
 import {UnitsUom} from "../../pet-login-protected/pet-tool-types";
-import {type} from "node:os";
+
 
 export interface DigitalTwinRows {
   id?: number
@@ -22,6 +22,8 @@ export interface DigitalTwinRows {
   total: number
   company: number
   deficit?: boolean
+  solution?: boolean
+  solutionText?: string
 }
 
 @Component({
@@ -64,8 +66,8 @@ export class GenerateReportComponent implements OnInit {
   scopeTable: any[] = []
   energySurplus: DigitalTwinRows[] = []
   energyDeficit: DigitalTwinRows[] = []
+  energySolution: DigitalTwinRows[] = []
   unitTypes: UnitsUom[] = ['Select', 'litres', 'kg', 'kWh', 'tonnes', 'metres', 'cubic metres', 'km', 'miles', 'million litres']
-
 
   cols = [
     {
@@ -191,6 +193,27 @@ export class GenerateReportComponent implements OnInit {
     })
   }
 
+  deleteSolution = (solution: DigitalTwinRows) => {
+    if (!solution.id) return;
+
+    console.log(this.energySolution)
+
+    this.energySolution = this.energySolution.filter((sol: DigitalTwinRows) => sol.id !== solution.id);
+
+    this.db.deleteDigitalTwinRow(solution.id).subscribe({
+      next: (res: any) => {
+        this.msg.add({
+          severity:'info',
+          detail: 'Deleted row'
+        })
+      },
+      error: (error: any) => {
+        console.log(error)
+      }
+    })
+
+  }
+
   addNewSurplus = () => {
     let surplus = {
       generatedId: "id" + Math.random().toString(16).slice(2),
@@ -214,6 +237,21 @@ export class GenerateReportComponent implements OnInit {
     }
 
     this.energyDeficit.push(deficit)
+  }
+
+  addNewSolution = () => {
+    let solution = {
+      generatedId: "id" + Math.random().toString(16).slice(2),
+      type: '',
+      unit: '',
+      total: 0,
+      deficit: false,
+      solution: true,
+      solutionText: '',
+      company: this.selectedCompany
+    }
+
+    this.energySolution.push(solution)
   }
 
   getCompanies = () => {
@@ -262,6 +300,7 @@ export class GenerateReportComponent implements OnInit {
     this.totalConsumption = []
     this.energySurplus = []
     this.energyDeficit = []
+    this.energySolution = []
 
     this.track.updateSelectedCompany(this.selectedCompany)
     this.getReportValues(this.selectedCompany)
@@ -292,11 +331,13 @@ export class GenerateReportComponent implements OnInit {
       next:(res: any) => {
         if (res.data) {
           res.data.forEach((data: any) => {
-            if (data.deficit){
+            if (data.deficit) {
               this.energyDeficit.push(data)
-            } else {
-              this.energySurplus.push(data)
-            }
+          } else if (data.solution){
+              this.energySolution.push(data)
+          } else {
+            this.energySurplus.push(data)
+          }
           })
         }
       }
@@ -579,11 +620,10 @@ export class GenerateReportComponent implements OnInit {
     })
   }
 
-  saveSurplusData = (isDeficit: boolean = false) => {
+  saveSurplusData = (isDeficit: boolean = false, ) => {
     if (!this.selectedCompany) return;
 
     const arrayToUse = isDeficit ? this.energyDeficit : this.energySurplus
-
     // Patch or post new rows of data
     arrayToUse.forEach((energyType: DigitalTwinRows) => {
       if (!energyType.id) {
@@ -617,7 +657,40 @@ export class GenerateReportComponent implements OnInit {
     })
   }
 
+  saveSolutionData = () => {
+    if (!this.selectedCompany) return;
 
+
+    this.energySolution.forEach((solution: DigitalTwinRows) => {
+      if (!solution.id) {
+        let row = {
+          type: solution.type,
+          generatedId: solution.generatedId,
+          company: solution.company,
+          solution: true,
+          solutionText: solution.solutionText
+        }
+
+        if (!row.company) return;
+
+        this.db.saveDigitalTwinRow(row).subscribe({
+          next: (res: any) => {},
+          error: (error: any) => console.log(error)
+        })
+      } else {
+        this.db.patchDigitalTwinRow(solution.id, solution).subscribe({
+          next: (res: any) => {},
+          error: (error: any) => console.log(error),
+        })
+      }
+
+    })
+    this.msg.add({
+      severity:'success',
+      detail: 'Data Saved'
+    })
+
+  }
 
 
 
@@ -759,16 +832,10 @@ export class GenerateReportComponent implements OnInit {
     return 0;
   }
 
-
-
-
-
   ngOnInit(): void {
     this.getCompanies();
     this.getFuelData()
-
   }
-
 
 }
 

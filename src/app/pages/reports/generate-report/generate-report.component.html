@@ -25,7 +25,7 @@
     </div>
 
 
-    <div class="mt-5" *ngIf="selectedCompany"    >
+    <div class="mt-5" *ngIf="selectedCompany">
       <p-tabView (onChange)="sortRecommendations()">
         <!--RECOMMENDATIONS-->
         <p-tabPanel header="Recommendation Summary">
@@ -243,7 +243,7 @@
                 </td>
               </tr>
               <div class="mt-2">
-                <button type="submit" icon="pi pi-save" label="Save" pButton class="btn-style text-sm"
+                <button type="button" icon="pi pi-save" label="Save" pButton class="btn-style text-sm"
                         (click)="saveSurplusData()"></button>
               </div>
             </ng-template>
@@ -292,8 +292,56 @@
                 </td>
               </tr>
               <div class="mt-2">
-                <button type="submit" icon="pi pi-save" label="Save" pButton class="btn-style text-sm"
+                <button type="button" icon="pi pi-save" label="Save" pButton class="btn-style text-sm"
                         (click)="saveSurplusData(true)"></button>
+              </div>
+
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+        <p-tabPanel header="Solutions">
+          <p-table [value]="energySolution" styleClass="p-datatable-sm" [columns]="cols">
+            <ng-template pTemplate="caption">
+              <h3 class="p-3">Solutions</h3>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th class="font-semibold text-sm">Energy Type</th>
+                <th class="font-semibold text-sm">Solution description</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-solution let-i="rowIndex">
+              <tr class="breakdownRow" *ngIf="solution">
+                <td class="font-normal text-sm">
+                  <input pInputText rows="2" cols="30" pInputTextarea
+                                                       [(ngModel)]="solution.type" style="resize: none"
+                                                       class="p-inputtext-sm w-full mr-2"/></td>
+
+                <td class="font-normal text-sm"><input pInputText rows="2" cols="30" pInputTextarea
+                                                       [(ngModel)]="solution.solutionText" style="resize: none"
+                                                       class="p-inputtext-sm w-full mr-2"/></td>
+
+                <td></td>
+                <td>
+                  <button pButton class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-trash"
+                          (click)="deleteSolution(solution)"></button>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="footer">
+              <tr>
+                <td class="w-3 p-2"></td>
+                <td colspan="2"></td>
+                <td class="w-3 p-2">
+                  <button label="Add New Energy surplus" pButton
+                          class="p-button p-button-outlined btn btn-dark w-full mr-2 text-sm" icon="pi pi-plus"
+                          (click)="addNewSolution()"></button>
+                </td>
+              </tr>
+              <div class="mt-2">
+                <button type="button" icon="pi pi-save" label="Save" pButton class="btn-style text-sm" (click)="saveSolutionData()"></button>
               </div>
 
             </ng-template>
