@@ -292,7 +292,6 @@ export class ImportEnvirotrackComponent {
 
     function excelDateToDateTime(excelSerial: number): Date {
       const utcDays = Math.floor(excelSerial) - 25569;
-      1
       const utcValue = utcDays * 86400
       const fractionalDay = excelSerial - Math.floor(excelSerial);
       const secondsInDay = Math.round(86400 * fractionalDay);
