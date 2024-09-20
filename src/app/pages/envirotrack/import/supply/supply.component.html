@@ -10,9 +10,9 @@
 <!--    </p-panel>-->
 <!--  </div>-->
 </div>
-<p-card header="Authorised Supply Capacity (ASC)">
+<p-card header="Maximum Import Capacity (MIC)">
   <div>
-    <p-button type="button" styleClass="btn-style mb-4" (click)="ascGuide = true" icon="pi pi-chart-line" label="ASC Guide"></p-button>
+    <p-button type="button" styleClass="btn-style mb-4" (click)="ascGuide = true" icon="pi pi-chart-line" label="MIC Guide"></p-button>
   </div>
   <div class="grid p-3">
     <div class="lg:col-6 md:col-12">
@@ -24,7 +24,7 @@
               <th>MPAN</th>
               <th>Start Date</th>
               <th>End Date</th>
-              <th>ASC</th>
+              <th>MIC</th>
               <th>Save</th>
               <th>Delete</th>
             </tr>
@@ -108,7 +108,7 @@
               <label>MPAN Number</label>
             </div>
             <div class="flex flex-1">
-              <input type="text" pInputText placeholder="Mpan" [(ngModel)]="mpan">
+              <input type="text" pInputText placeholder="MPAN" [(ngModel)]="mpan">
             </div>
           </div>
 
@@ -132,10 +132,10 @@
 
           <div class="flex p-2">
             <div class="flex flex-1">
-              <label>ASC</label>
+              <label>MIC</label>
             </div>
             <div class="flex flex-1">
-              <input type="text" pInputText placeholder="ASC" [(ngModel)]="asc">
+              <input type="text" pInputText placeholder="MIC" [(ngModel)]="asc">
             </div>
           </div>
 
@@ -153,14 +153,16 @@
 
 <p-sidebar [(visible)]="ascGuide" position="right" styleClass="lg:w-5 md:w-7">
   <div class="container p-5">
-    <h3 class="header-style">Authorised Supply Capacity Guide</h3>
-    <p>The Authorised Supply Capacity (ASC) it is the total amount of electrical load available to your site, or the peak
-      electrical demand you could use if you switched on lots of electrical equipment at the same time. It can also be referred to as Agreed Supply Capacity, Authorised Supply Capacity, Supply Capacity, Supply Availability or simply ASC.</p>
+    <h3 class="header-style">Maximum Import Capacity Guide</h3>
+    <p>
+      The Maximum Import Capacity (MIC) is the highest amount of electrical power (measured in kilovolt-amperes, or kVA) that a customer or facility is allowed to import from the electricity grid at any given time.
+      It represents the contractual limit agreed between the electricity provider and the consumer, and it reflects the maximum load or capacity that a customer can draw from the grid without incurring additional charges.
+    </p>
     <p-divider></p-divider>
-    <h3>Adding New Supply:</h3>
-    <p>To add new supply, please fill the following fields – MPAN Number, start – end date and the Authorised Supply Capacity (ASC) value in kVA.</p>
+    <h3>Adding New Maximum Capacity:</h3>
+    <p>To add new capacity, please fill the following fields – MPAN Number, Start and End date ,and the Maximum Import Capacity (MIC) value in kVA.</p>
     <p-divider></p-divider>
-    <h3>How to view the ASC against demand:</h3>
-    <p>To view the ASC, please navigate to the menu, select “Report” and “Maximum Demand”.</p>
+    <h3>How to view the MIC against demand:</h3>
+    <p>To access the MIC, please select the 'Maximum Demand' option from the menu.</p>
   </div>
 </p-sidebar>
