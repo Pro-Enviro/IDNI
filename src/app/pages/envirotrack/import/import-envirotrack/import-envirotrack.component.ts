@@ -15,7 +15,7 @@ import {DividerModule} from "primeng/divider";
 import {FileUpload} from "primeng/fileupload";
 import {DbService} from "../../../../_services/db.service";
 import {SupplyComponent} from "../supply/supply.component";
-import {Router} from "@angular/router";
+
 
 
 interface Sheet {
@@ -605,6 +605,7 @@ export class ImportEnvirotrackComponent {
     } else {
       // Half hourly and in list format
       if (isListFormat){
+        console.log('Half hourly and list format')
         const groupedData: { [key: string]: any } = {};
 
         let pointIndex = 0;
@@ -660,6 +661,7 @@ export class ImportEnvirotrackComponent {
             } else {
               date = moment(row[this.selectedStartDate.col], 'DD/MM/YYYY')
             }
+
             if (date.isValid()) {
               this.hhd.push({
                 company_id: this.selectedCompany,
@@ -674,9 +676,7 @@ export class ImportEnvirotrackComponent {
       }
     }
 
-
     console.log(this.hhd)
-
     // return;
 
     //TODO change Post request to be bulk
