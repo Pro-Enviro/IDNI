@@ -36,6 +36,17 @@
               <p-selectButton [options]="dataOptions" [(ngModel)]="dataValue" optionLabel="name" optionValue="value" class="btn-select" (onChange)="onDataChange()"></p-selectButton>
 <!--              <p-selectButton [options]="hourlyDataOptions" [(ngModel)]="dataValue" optionLabel="name" optionValue="value" class="btn-select" (onChange)="onHourlyDataChange()"></p-selectButton>-->
             </div>
+            <p-divider></p-divider>
+            <h1>OR WE CAN MAKE IT LIKE THIS</h1>
+            <div class="p-2">
+              <p-selectButton [options]="testing1" [(ngModel)]="testing1Stuff " optionLabel="name" optionValue="value" class="btn-select"></p-selectButton>
+              <div *ngIf="testing1Stuff === 'Hourly Data'" class="mt-3">
+                <p-selectButton [options]="testing2" [(ngModel)]="testing2Stuff" optionLabel="name" optionValue="value" class="btn-select"></p-selectButton>
+              </div>
+              <div *ngIf="testing1Stuff === 'Half-Hourly Data'" class="mt-3">
+                <p-selectButton [options]="testing3" [(ngModel)]="testing3Stuff" optionLabel="name" optionValue="value" class="btn-select"></p-selectButton>
+              </div>
+            </div>
           </div>
         </div>
 

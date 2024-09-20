@@ -91,6 +91,24 @@ export class ImportEnvirotrackComponent {
   customMpanNumber: string = ''
   energyType: any;
   displayValue: string = '';
+  testing1Stuff:any;
+  testing2Stuff:any;
+  testing3Stuff:any;
+
+  testing1 =[
+    {name:'Hourly Data',value:'Hourly Data'},
+    {name:'Half-Hourly Data',value:'Half-Hourly Data'}
+  ]
+
+  testing2 =[
+    {name: 'Hourly Data - standard', value: 'hourly data standard'},
+    {name: 'Hourly Data - list', value: 'hourly data list'},
+  ]
+
+  testing3 = [
+    {name: 'Half-Hourly Data - standard', value: 'half hourly data standard'},
+    {name: 'Half-Hourly Data - list', value: 'half hourly data list'},
+  ]
 
   dataOptions = [
     {name: 'Hourly Data - standard', value: 'hourly data standard'},
@@ -215,8 +233,8 @@ export class ImportEnvirotrackComponent {
       return;
     }
 
-    console.log('datavalue:', this.dataValue)
-    console.log('hourlydata:', this.hourlyData)
+    //console.log('datavalue:', this.dataValue)
+    //console.log('hourlydata:', this.hourlyData)
 
 
     if (event.files[0].name.split('.').pop().toLowerCase() === 'csv') {
