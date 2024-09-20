@@ -285,6 +285,7 @@ export class EnvirotrackReportAvgComponent implements OnInit {
       }
     )
   }
+
   averageTime = (data:any) =>{
     let times: number[] = new Array(48).fill(10);
     let days: number = data.length
@@ -302,7 +303,6 @@ export class EnvirotrackReportAvgComponent implements OnInit {
   }
 
   filterData = () =>{
-
     if(this.dateRange != undefined && this.dateRange[1]){
       this.filteredData = this.data.filter((x:any) => moment(x.date).isBetween(moment(this.dateRange[0]), moment(this.dateRange[1])))
     }else {
@@ -362,9 +362,9 @@ export class EnvirotrackReportAvgComponent implements OnInit {
             opacity: this.shift ? 0.3 : 0
           },
           data: [[{
-            xAxis: this.companies[0].monday_start_time
+            xAxis: this.companies?.monday_start_time
           },{
-            xAxis: this.companies[0].monday_end_time
+            xAxis: this.companies?.monday_end_time
           }]]
         },
         data: this.averageTime(monday),
@@ -382,9 +382,9 @@ export class EnvirotrackReportAvgComponent implements OnInit {
             opacity: this.shift ? 0.3 : 0
           },
           data: [[{
-            xAxis: this.companies[0].tuesday_start_time
+            xAxis: this.companies?.tuesday_start_time
           },{
-            xAxis: this.companies[0].tuesday_end_time
+            xAxis: this.companies?.tuesday_end_time
           }]]
         },
         data: this.averageTime(tuesday),
@@ -402,9 +402,9 @@ export class EnvirotrackReportAvgComponent implements OnInit {
             opacity: this.shift ? 0.3 : 0
           },
           data: [[{
-            xAxis: this.companies[0].wednesday_start_time
+            xAxis: this.companies?.wednesday_start_time
           },{
-            xAxis: this.companies[0].wednesday_end_time
+            xAxis: this.companies?.wednesday_end_time
           }]]
         },
         data: this.averageTime(wednesday),
@@ -422,9 +422,9 @@ export class EnvirotrackReportAvgComponent implements OnInit {
             opacity: this.shift ? 0.3 : 0
           },
           data: [[{
-            xAxis: this.companies[0].thursday_start_time
+            xAxis: this.companies?.thursday_start_time
           },{
-            xAxis: this.companies[0].thursday_end_time
+            xAxis: this.companies?.thursday_end_time
           }]]
         },
         data: this.averageTime(thursday),
@@ -442,9 +442,9 @@ export class EnvirotrackReportAvgComponent implements OnInit {
             opacity: this.shift ? 0.3 : 0
           },
           data: [[{
-            xAxis: this.companies[0].friday_start_time
+            xAxis: this.companies?.friday_start_time
           },{
-            xAxis: this.companies[0].friday_end_time
+            xAxis: this.companies?.friday_end_time
           }]]
         },
         data: this.averageTime(friday),
@@ -462,9 +462,9 @@ export class EnvirotrackReportAvgComponent implements OnInit {
             opacity: this.shift ? 0.3 : 0
           },
           data: [[{
-            xAxis: this.companies[0].saturday_start_time
+            xAxis: this.companies?.saturday_start_time
           },{
-            xAxis: this.companies[0].saturday_end_time
+            xAxis: this.companies?.saturday_end_time
           }]]
         },
         data: this.averageTime(saturday),
@@ -482,9 +482,9 @@ export class EnvirotrackReportAvgComponent implements OnInit {
             opacity: this.shift ? 0.3 : 0
           },
           data: [[{
-            xAxis: this.companies[0].sunday_start_time
+            xAxis: this.companies?.sunday_start_time
           },{
-            xAxis: this.companies[0].sunday_end_time
+            xAxis: this.companies?.sunday_end_time
           }]]
         },
         data: this.averageTime(sunday),
