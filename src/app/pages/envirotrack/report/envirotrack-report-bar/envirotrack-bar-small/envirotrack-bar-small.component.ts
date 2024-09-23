@@ -204,8 +204,9 @@ export class EnvirotrackBarSmallComponent implements OnInit {
 
   onSelectCompany = () => {
     // this.global.updateSelectedMpan(this.selectedMpan)
-
     this.track.updateSelectedCompany(this.selectedCompany)
+    this.global.updateCompanyId(this.selectedCompany)
+    this.global.updateSelectedMpan(this.selectedMpan)
     this.getData(this.selectedCompany)
   }
 

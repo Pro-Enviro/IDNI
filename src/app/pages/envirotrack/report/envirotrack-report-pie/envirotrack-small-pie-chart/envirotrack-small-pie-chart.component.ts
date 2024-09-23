@@ -211,16 +211,12 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
   }
 
   onSelectCompany = () => {
-    //this.global.updateSelectedMpan(this.selectedMpan)
-    //this.selectedCompany ? this.track.updateSelectedCompany(this.selectedCompany) : null;
     this.chartOptions = {}
     this.chartData = []
     this.track.updateSelectedCompany(this.selectedCompany)
     this.global.updateCompanyId(this.selectedCompany)
     this.global.updateSelectedMpan(this.selectedMpan)
     this.getData(this.selectedCompany)
-
-    //this.selectedCompany ? this.getData(this.selectedCompany) : null
   }
 
   getTimes = () => {
