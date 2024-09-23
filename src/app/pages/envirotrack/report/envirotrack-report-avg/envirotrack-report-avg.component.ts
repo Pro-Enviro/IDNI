@@ -265,10 +265,10 @@ export class EnvirotrackReportAvgComponent implements OnInit {
           })
 
 
-          if (this.global.selectedMpan?.value) {
+          if (this.selectedMpan && this.mpan.includes(this.selectedMpan)){
             this.selectedMpan = this.global.selectedMpan.value
           } else {
-            this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
+            this.selectedMpan = this.mpan[0]
           }
 
 
