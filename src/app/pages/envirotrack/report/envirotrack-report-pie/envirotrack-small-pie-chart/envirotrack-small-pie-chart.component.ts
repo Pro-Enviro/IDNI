@@ -244,11 +244,11 @@ export class EnvirotrackSmallPieChartComponent implements OnInit {
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan) : null;
           })
 
-          // if (this.global.selectedMpan?.value) {
-          //   this.selectedMpan = this.global.selectedMpan.value
-          // } else {
-          this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
-          // }
+          if (this.selectedMpan && this.mpan.includes(this.selectedMpan)){
+            this.selectedMpan = this.global.selectedMpan.value
+          } else {
+            this.selectedMpan = this.mpan[0]
+          }
 
           this.data = res
           this.getTimes()
