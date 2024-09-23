@@ -271,8 +271,6 @@ export class EnvirotrackReportScatterComponent implements OnInit {
 
 
   getData = (id: number) => {
-    //switching between companies - the second company has the mpan from the first company
-
     this.mpan = [];
     this.months = [];
     this.chartData = [];
@@ -288,14 +286,18 @@ export class EnvirotrackReportScatterComponent implements OnInit {
           })
 
 
-          if (this.global.selectedMpan?.value) {
-            //this.selectedMpan = this.global.selectedMpan.value
-            this.selectedMpan = this.mpan[0];
-            console.log(this.selectedMpan)
+          if (this.selectedMpan && this.mpan.includes(this.selectedMpan)){
+            this.selectedMpan = this.global.selectedMpan.value
           } else {
-            this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
-            this.global.updateSelectedMpan(this.selectedMpan)
+            this.selectedMpan = this.mpan[0]
           }
+
+          // if (this.global.selectedMpan?.value) {
+          //   console.log(this.mpan)
+          //   this.selectedMpan = this.global.selectedMpan.value
+          // } else {
+          //   this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
+          // }
 
           this.data = res
           this.getTimes()
