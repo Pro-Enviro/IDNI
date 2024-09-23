@@ -202,7 +202,6 @@ export class EnvirotrackReportScatterComponent implements OnInit {
                 } else {
                   this.selectedCompany = res.data[0].id
                 }
-
                 this.onSelectCompany()
               }
             }
@@ -256,7 +255,6 @@ export class EnvirotrackReportScatterComponent implements OnInit {
   }
 
   onSelectCompany = () => {
-
     this.track.updateSelectedCompany(this.selectedCompany)
     this.global.updateCompanyId(this.selectedCompany)
     this.global.updateSelectedMpan(this.selectedMpan)
@@ -273,6 +271,8 @@ export class EnvirotrackReportScatterComponent implements OnInit {
 
 
   getData = (id: number) => {
+    //switching between companies - the second company has the mpan from the first company
+
     this.mpan = [];
     this.months = [];
     this.chartData = [];
@@ -287,10 +287,14 @@ export class EnvirotrackReportScatterComponent implements OnInit {
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan):  null;
           })
 
+
           if (this.global.selectedMpan?.value) {
-            this.selectedMpan = this.global.selectedMpan.value
+            //this.selectedMpan = this.global.selectedMpan.value
+            this.selectedMpan = this.mpan[0];
+            console.log(this.selectedMpan)
           } else {
             this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
+            this.global.updateSelectedMpan(this.selectedMpan)
           }
 
           this.data = res
