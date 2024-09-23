@@ -259,10 +259,10 @@ export class EnvirotrackReportBase1Component implements OnInit {
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan):  null;
           })
 
-          if (this.global.selectedMpan?.value) {
+          if (this.selectedMpan && this.mpan.includes(this.selectedMpan)){
             this.selectedMpan = this.global.selectedMpan.value
           } else {
-            this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
+            this.selectedMpan = this.mpan[0]
           }
 
           this.data = res.filter((x:any) => x.total)
