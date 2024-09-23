@@ -277,9 +277,7 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
   }
 
   getData = (id: number) => {
-
     if (!id) return;
-
     this.mpan = [];
     this.months = [];
     this.chartData = [];
@@ -296,10 +294,10 @@ export class EnvirotrackReportHeatmapComponent implements OnInit {
           })
 
           // Changing companies should also change mpan
-          if (this.global.selectedMpan.value) {
+          if (this.selectedMpan && this.mpan.includes(this.selectedMpan)){
             this.selectedMpan = this.global.selectedMpan.value
           } else {
-            this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
+            this.selectedMpan = this.mpan[0]
           }
 
 

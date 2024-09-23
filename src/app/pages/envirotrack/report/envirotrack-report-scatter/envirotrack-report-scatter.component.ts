@@ -222,8 +222,6 @@ export class EnvirotrackReportScatterComponent implements OnInit {
                   this.selectedCompany = this.companies[0].id
                 }
 
-
-
                 this.isConsultant = true
                 this.onSelectCompany()
               }
@@ -259,7 +257,6 @@ export class EnvirotrackReportScatterComponent implements OnInit {
     this.global.updateCompanyId(this.selectedCompany)
     this.global.updateSelectedMpan(this.selectedMpan)
     this.getData(this.selectedCompany)
-
   }
 
   getTimes = () =>{
@@ -293,7 +290,6 @@ export class EnvirotrackReportScatterComponent implements OnInit {
           }
 
           // if (this.global.selectedMpan?.value) {
-          //   console.log(this.mpan)
           //   this.selectedMpan = this.global.selectedMpan.value
           // } else {
           //   this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
