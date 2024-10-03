@@ -683,7 +683,7 @@ export class ImportEnvirotrackComponent {
       }
     }
 
-    console.log(this.hhd)
+    //console.log(this.hhd)
     // return;
 
     //TODO change Post request to be bulk
