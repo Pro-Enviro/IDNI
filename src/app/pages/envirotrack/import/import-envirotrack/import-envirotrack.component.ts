@@ -481,20 +481,18 @@ export class ImportEnvirotrackComponent {
     }
 
     // if (!this.selectedMpan && this.hourlyData) {
-    //   console.log(this.selectedMpan)
     //   this.selectedMpan = {
     //     name: 'No Provided MPAN'
     //   }
     // } else {
-    //   console.log(this.selectedMpan)
     //   this.selectedMpan = {
     //     name: this.selectedMpan = this.customMpanNumber.length ? this.displayValue + "-" + this.customMpanNumber : this.displayValue + "-" + parseInt(this.selectedMpan.name).toString()
     //   }
     // }
 
 
+
     if (!this.selectedMpan || !this.selectedMpan?.name.toString().length) {
-      console.log(this.selectedMpan)
       this.msg.add({
         severity: 'error',
         summary: 'No mpan number selected',
@@ -518,9 +516,6 @@ export class ImportEnvirotrackComponent {
       });
       return;
     }
-
-
-    // return;
 
     const isHalfHourly = this.dataValue === 'half hourly data standard' || this.dataValue === 'half hourly data list';
     const isListFormat = this.dataValue === 'hourly data list' || this.dataValue === 'half hourly data list';
@@ -551,7 +546,10 @@ export class ImportEnvirotrackComponent {
               if (!groupedData[dayKey]) {
                 groupedData[dayKey] = {
                   company_id: this.selectedCompany,
-                  mpan: this.selectedMpan.name.toString(),
+                  //mpan: this.selectedMpan.name.toString(),
+                  mpan: this.customMpanNumber.length
+                    ? this.displayValue + "-" + this.customMpanNumber
+                    : this.displayValue + "-" + parseInt(this.selectedMpan.name).toString(),
                   date: originalDate.clone().startOf('day'),
                   hhd: Array(48).fill(0),
                   reactive_data: this.reactiveData
@@ -609,7 +607,7 @@ export class ImportEnvirotrackComponent {
     } else {
       // Half hourly and in list format
       if (isListFormat){
-        console.log('Half hourly and list format')
+        //console.log('Half hourly and list format')
         const groupedData: { [key: string]: any } = {};
 
         let pointIndex = 0;
@@ -628,7 +626,10 @@ export class ImportEnvirotrackComponent {
               if (!groupedData[dayKey]) {
                 groupedData[dayKey] = {
                   company_id: this.selectedCompany,
-                  mpan: this.selectedMpan.name.toString(),
+                  //mpan: this.selectedMpan.name.toString(),
+                  mpan: this.customMpanNumber.length
+                    ? this.displayValue + "-" + this.customMpanNumber
+                    : this.displayValue + "-" + parseInt(this.selectedMpan.name).toString(),
                   date: originalDate.clone().startOf('day'),
                   hhd: Array(48).fill(0),
                   reactive_data: this.reactiveData
