@@ -463,20 +463,21 @@ export class ImportEnvirotrackComponent {
 
 
   processData = async () => {
-    if (!this.energyType) {
+    if (!this.energyType.length) {
       this.msg.add({
         severity: 'error',
         summary: 'No energy type selected',
-        detail: 'Please select energy type and try again !'
+        detail: 'Please select an energy type and try again!'
       });
       return;
     }
 
     if (!this.dataValue) {
-      return this.msg.add({
+      this.msg.add({
         severity: 'error',
         detail: 'Please select an upload method'
-      })
+      });
+      return;
     }
 
     // if (!this.selectedMpan && this.hourlyData) {
