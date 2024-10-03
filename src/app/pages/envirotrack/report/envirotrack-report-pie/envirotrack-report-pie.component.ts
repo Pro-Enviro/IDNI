@@ -230,15 +230,12 @@ export class EnvirotrackReportPieComponent implements OnInit {
   }
 
   onSelectCompany = () => {
-    // this.global.updateSelectedMpan(this.selectedMpan)
-
     this.chartOptions = {}
     this.chartData = []
     this.track.updateSelectedCompany(this.selectedCompany)
     this.global.updateCompanyId(this.selectedCompany)
     this.global.updateSelectedMpan(this.selectedMpan)
     this.getData(this.selectedCompany)
-
   }
 
   getTimes = () => {
@@ -261,10 +258,10 @@ export class EnvirotrackReportPieComponent implements OnInit {
             !~this.mpan.indexOf(row.mpan) ? this.mpan.push(row.mpan):  null;
           })
 
-          if (this.global.selectedMpan?.value) {
+          if (this.selectedMpan && this.mpan.includes(this.selectedMpan)){
             this.selectedMpan = this.global.selectedMpan.value
           } else {
-            this.selectedMpan === undefined ? this.selectedMpan = this.mpan[0] : null
+            this.selectedMpan = this.mpan[0]
           }
 
           this.data = res
