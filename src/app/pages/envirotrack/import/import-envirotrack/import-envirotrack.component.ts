@@ -15,6 +15,7 @@ import {DividerModule} from "primeng/divider";
 import {FileUpload} from "primeng/fileupload";
 import {DbService} from "../../../../_services/db.service";
 import {SupplyComponent} from "../supply/supply.component";
+import {FieldsetModule} from "primeng/fieldset";
 
 
 
@@ -47,7 +48,8 @@ interface HHDData {
     SharedComponents,
     SidebarModule,
     DividerModule,
-    SupplyComponent
+    SupplyComponent,
+    FieldsetModule
   ]
 })
 

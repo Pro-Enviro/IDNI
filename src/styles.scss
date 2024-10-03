@@ -20,6 +20,12 @@
     list-style: none;
   }
 
+  .style-type{
+    li{
+      list-style: decimal !important;
+    }
+  }
+
   table {
     border-collapse: separate !important;
     width: 100%;

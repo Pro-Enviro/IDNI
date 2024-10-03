@@ -276,22 +276,75 @@
 
     <p-sidebar [(visible)]="dataGuide" position="right" styleClass="lg:w-5 md:w-7">
       <div class="container p-5">
-        <h3 class="header-style">Guide on how to import Half-Hourly Data</h3>
-        <p>To import the Half-Hourly Data you need to follow these steps:</p>
-        <uL>
-          <li class="pb-2">1. Select the company from the dropdown panel.</li>
-          <li class="pb-2">2. Click on the "Choose" button located in "File Upload" panel.</li>
-          <li class="pb-2">3. Select the file that you would like to upload.</li>
-          <li class="pb-2">4. Click the "Upload" button.</li>
-          <!--          <li>5. Click ‘Send’ to share your data with Pro Enviro for data processing.</li>-->
-          <li class="pb-2">5. A new panel called "Half-Hourly Data (HHD)" will appearing, displaying a table holding information for :
-            mpan number, date and data share point.The table below will contain a preview of your spreadsheet.
-            Drag the column titles from the spreadsheet preview to the corresponding panels, this ensures the data
-            processed correctly.
-          </li>
-          <li class="pb-2">6. Click the “Process” button when the above is complete.</li>
-          <li class="">7. A message will appear if the data was successfully uploaded and processed. You can now close the page or navigate away.</li>
-        </uL>
+        <div>
+          <h3 class="header-style">Guide on how to import Half-Hourly Data</h3>
+          <p>To import the Half-Hourly Data you need to follow these steps:</p>
+          <uL class="style-type">
+            <li class="pb-2">Select the company from the dropdown panel.</li>
+            <li class="pb-2">Click on the "Choose" button located in "File Upload" panel.</li>
+            <li class="pb-2">Select the file that you would like to upload.</li>
+            <li class="pb-2">Click the "Upload" button.</li>
+            <!--          <li>5. Click ‘Send’ to share your data with Pro Enviro for data processing.</li>-->
+            <li class="pb-2">A new panel called "Half-Hourly Data (HHD)" will appearing, displaying a table holding information for :
+              mpan number, date and data share point.The table below will contain a preview of your spreadsheet.
+              Drag the column titles from the spreadsheet preview to the corresponding panels, this ensures the data
+              processed correctly.
+            </li>
+            <li class="pb-2">Click the “Process” button when the above is complete.</li>
+            <li class="">A message will appear if the data was successfully uploaded and processed. You can now close the page or navigate away.</li>
+          </uL>
+        </div>
+        <p-divider></p-divider>
+        <div>
+          <h3 class="header-style">Types of Data</h3>
+          <div class="pl-2">
+            <p-fieldset legend="Hourly Data - Standard">
+                <p>Hourly data standard format refers to the structured organization of data that is recorded or reported at hourly intervals.</p>
+                <p>This type of format includes:</p>
+                <ul class="style-type">
+                  <li>Timestamp: Marks the specific hour of the data entry</li>
+                  <li>Measurement values: Data points or values recorded at that hour</li>
+                </ul>
+            </p-fieldset>
+          </div>
+          <div class="pl-2 mt-3">
+            <p-fieldset legend="Hourly Data - List">
+              <p>The Hourly Data - List format, data is organized into a list where each entry corresponds to a specific hour, typically used for time series data.</p>
+              <p>This type of format includes:</p>
+              <ul class="style-type">
+                <li>Timestamp: Each entry in the list corresponds to an hourly timestamp</li>
+                <li>Data Fields: Each list item can include one or more fields of data associated with that specific hour</li>
+                <li>Sequential and Uniform: The format ensures the data is ordered and spans continuous hourly intervals, enabling easy tracking and analysis</li>
+                <li>Data Organization: Typically, the data is organized either as a plain list or a table where each row contains a timestamp and corresponding values</li>
+              </ul>
+            </p-fieldset>
+          </div>
+          <div class="pl-2 mt-3">
+            <p-fieldset legend="Half-Hourly Data Standard">
+              <p>The Half-Hourly Data Standard format refers to the structured collection and reporting of data at 30-minute intervals</p>
+              <p>This type of format includes:</p>
+              <ul class="style-type">
+                <li>Timestamp: Each entry is recorded for a specific 30-minute interval</li>
+                <li>Data Fields: For each 30-minute interval, specific data points are recorded</li>
+                <li>Sequential Data: The half-hourly intervals create a continuous time series where data is recorded and stored in consecutive 30-minute slots</li>
+              </ul>
+              <p>The Half-Hourly Data Standard format offers more frequent snapshots of the system or environment being monitored, providing detailed insights for time-sensitive or dynamic operations</p>
+            </p-fieldset>
+          </div>
+          <div class="pl-2 mt-3">
+            <p-fieldset legend="Half-Hourly Data List">
+              <p>The Half-Hourly Data - List Format is a structured way of organizing data that is recorded at 30-minute intervals.
+                This format organizes each half-hour interval as a separate entry in a list, where each entry contains a timestamp and associated data values.</p>
+              <p>This type of format includes:</p>
+              <ul class="style-type">
+                <li>Timestamp: Each data point in the list corresponds to a specific 30-minute interval</li>
+                <li>Data Fields: Each entry in the list is associated with one or more data values for that 30-minute period</li>
+                <li>Sequential Data: The half-hourly intervals create a continuous time series where data is recorded and stored in consecutive 30-minute slots</li>
+                <li>Data Organization: Typically, the data is organized either as a plain list or a table where each row contains a timestamp and corresponding values</li>
+              </ul>
+            </p-fieldset>
+          </div>
+        </div>
       </div>
     </p-sidebar>
   </div>
