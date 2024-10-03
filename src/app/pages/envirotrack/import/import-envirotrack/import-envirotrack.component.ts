@@ -479,18 +479,21 @@ export class ImportEnvirotrackComponent {
       })
     }
 
-    if (!this.selectedMpan && this.hourlyData) {
-      this.selectedMpan = {
-        name: 'No Provided MPAN'
-      }
-    } else {
-      this.selectedMpan = {
-        name: this.selectedMpan = this.customMpanNumber.length ? this.displayValue + "-" + this.customMpanNumber : this.displayValue + "-" + parseInt(this.selectedMpan.name).toString()
-      }
-    }
+    // if (!this.selectedMpan && this.hourlyData) {
+    //   console.log(this.selectedMpan)
+    //   this.selectedMpan = {
+    //     name: 'No Provided MPAN'
+    //   }
+    // } else {
+    //   console.log(this.selectedMpan)
+    //   this.selectedMpan = {
+    //     name: this.selectedMpan = this.customMpanNumber.length ? this.displayValue + "-" + this.customMpanNumber : this.displayValue + "-" + parseInt(this.selectedMpan.name).toString()
+    //   }
+    // }
 
 
     if (!this.selectedMpan || !this.selectedMpan?.name.toString().length) {
+      console.log(this.selectedMpan)
       this.msg.add({
         severity: 'error',
         summary: 'No mpan number selected',
