@@ -58,7 +58,7 @@
           <ng-container *ngIf="fileContent && isConsultant">
             <p-card header="Half-Hourly Data (HHD)" styleClass="card-charts mt-4" #table>
               <div class="grid">
-                <div class="lg:col-3 md:col-6" pDroppable (onDrop)="dropMpan()">
+                <div class="lg:col-2 md:col-6" pDroppable (onDrop)="dropMpan()">
                   <div class="enviro-card">
                     <h3 class="title">MPAN Number</h3>
                     <ul class="list-none flex flex-column gap-2 p-0 m-0 bg-white" *ngIf="selectedMpan">
@@ -68,7 +68,7 @@
                     </ul>
                   </div>
                 </div>
-                <div class="lg:col-3 md:col-6" pDroppable (onDrop)="dropStartDate()">
+                <div class="lg:col-2 md:col-6" pDroppable (onDrop)="dropStartDate()">
                   <div class="enviro-card">
                     <h3 class="title">Date Column</h3>
                     <ul class="list-none flex flex-column gap-2 p-0 m-0 bg-white" *ngIf="selectedStartDate">
@@ -78,7 +78,7 @@
                     </ul>
                   </div>
                 </div>
-                <div class="lg:col-3 md:col-6" pDroppable (onDrop)="dropFirstData()">
+                <div class="lg:col-2 md:col-6" pDroppable (onDrop)="dropFirstData()">
                   <div class="enviro-card">
                     <h3 class="title">Data Start Point</h3>
                     <ul class="list-none flex flex-column gap-2 p-0 m-0 bg-white" *ngIf="selectedDataStart">
@@ -88,7 +88,7 @@
                     </ul>
                   </div>
                 </div>
-                <div class="lg:col-3 md:col-6">
+                <div class="lg:col-2 md:col-6">
                   <div class="enviro-card">
                     <h3 class="title">Data Type</h3>
                     <ul class="list-none flex flex-column gap-2 p-0 m-0">
@@ -99,6 +99,16 @@
                     </ul>
                   </div>
                 </div>
+                <div class="lg:col-2 md:col-6">
+                <div class="enviro-card">
+                  <h3 class="title">Custom MPAN</h3>
+                  <div class="flex flex-column">
+                    <input type="text" pInputText [(ngModel)]="customMpanNumber"/>
+                    <button pButton  class="btn btn-dark mt-2"  label="Change" (click)="customMpanNumberHandler()"></button>
+                  </div>
+                </div>
+              </div>
+
               </div>
 
               <p-table [value]="fileContent.slice(0,20)" [tableStyle]="{ 'min-width': '50rem' }">

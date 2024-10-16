@@ -86,6 +86,7 @@ export class ImportEnvirotrackComponent {
   dataGuide:boolean = false;
   fileIds: string[] = []
   selectedCompanyName: any;
+  customMpanNumber: string = ''
 
 
   constructor(
@@ -139,6 +140,14 @@ export class ImportEnvirotrackComponent {
         }
       });
     });
+  }
+
+  customMpanNumberHandler = () => {
+    this.selectedMpan = {
+      col: 0,
+      row: 1,
+      name: this.customMpanNumber
+    }
   }
 
   onUpload = async (event: any, fileUploadComponent: FileUpload) => {
@@ -407,7 +416,7 @@ export class ImportEnvirotrackComponent {
         if (date.isValid()) {
           this.hhd.push({
             company_id: this.selectedCompany,
-            mpan: this.selectedMpan.name.toString(),
+            mpan: this.selectedMpan = this.customMpanNumber.length ? this.customMpanNumber : parseInt(this.selectedMpan.name).toString(),
             date: date,
             hhd: row.slice(this.selectedDataStart.col, (this.selectedDataStart.col + 1 + 47)).map((x: number | string) => typeof x === 'string' ? parseFloat(x) : x),
             reactive_data: this.reactiveData
