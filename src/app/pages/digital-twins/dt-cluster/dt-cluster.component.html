@@ -1,0 +1,54 @@
+<p-panel header="{{clusterName ? clusterName + ' ' : ''}}Cluster">
+  <div class="mb-p">
+    <p-card  #panel>
+      <div class="grid">
+        <div class="col-10">
+          <pre>{{clusters | json}}</pre>
+          <p-autoComplete
+            [suggestions]="clusters"
+            [(ngModel)]="clusterName"
+            [dropdown]="true"
+            placeholder="Cluster Name"
+            optionLabel="name"
+            optionValue="name"
+            (completeMethod)="onSelect($event)"
+          ></p-autoComplete>
+        </div>
+        <div class="col-2">
+          <button pButton label="Save" icon="pi pi-save" [disabled]="clusterCompanies.length < 2" (click)="onSave()"></button>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  @if (companies){
+    <div class="company-list mt-5">
+      <p-pickList
+        #picklist
+        [source]="companies"
+        [target]="clusterCompanies"
+        sourceHeader="Companies"
+        targetHeader="{{clusterName ? clusterName + ' ' : ''}}Cluster"
+        [dragdrop]="true"
+        [responsive]="true"
+        filterBy="name"
+        sourceFilterPlaceholder="Search by name"
+        targetFilterPlaceholder="Search by name"
+        [targetStyle]="{height: targetHeight ? targetHeight + 'px' : 0 + 'px'}"
+      >
+
+        <ng-template let-company pTemplate="item" >
+          <div class="flex flex-wrap p-2 align-items-center gap-3">
+            <div class="flex-1 flex flex-column gap-2">
+              <span class="font-bold">{{ company.name }}</span>
+              <div class="flex align-items-center">
+                {{ company.address }}
+              </div>
+            </div>
+            <span class="font-bold text-900">{{ company.sector }} </span>
+          </div>
+        </ng-template>
+      </p-pickList>
+    </div>
+  }
+</p-panel>
