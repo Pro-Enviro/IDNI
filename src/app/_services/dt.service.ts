@@ -46,15 +46,14 @@ export class DtService {
   ) {
     this.getCompanies()
     this.getClusters()
-    this.getDigitalTwinData()
-
-    console.log(this.clusters)
   }
 
   getCompanies = () => {
     this.db.getContentFromCollection('companies', '?limit=-1').subscribe({
       next: (res: any) => {
         this.companies.next(res.map((x: any) => {
+          let recommendations = JSON.parse(x?.recommendations) ||[]
+
           return {
             id: x.id,
             name: x.name,
@@ -63,8 +62,11 @@ export class DtService {
             sector: x.sector,
             sic_code: x.sic_code,
             description: x.description,
+            recommendations: recommendations
           }
         }));
+
+
 
         this.recommendations.next(res.map((x: any) => x.recommendations))
 
@@ -122,6 +124,24 @@ export class DtService {
     })
   }
 
-  getDigitalTwinData = () => {
+  getDigitalTwinData = (selectedCluster: ClusterObject) => {
+    if (!selectedCluster || !selectedCluster.companies.length) return;
+
+    // console.log(selectedCluster)
+
+    const companies = selectedCluster.companies
+
+    companies.forEach((company: any) => {
+
+      this.db.getDigitalTwinData(company.id).subscribe({
+        next: (res: any) => {
+          company.digital_twin_data = res;
+        }
+      })
+    })
+
+    console.log(companies)
+
+    // this.db.getDigitalTwinData()
   }
 }

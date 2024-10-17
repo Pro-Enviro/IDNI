@@ -7,6 +7,9 @@ import {AutoCompleteCompleteEvent, AutoCompleteModule} from "primeng/autocomplet
 import {ButtonModule} from "primeng/button";
 import {CardModule} from "primeng/card";
 import {SharedModules} from "../../../shared-module";
+import {SharedComponents} from "../../envirotrack/shared-components";
+import {DropdownChangeEvent} from "primeng/dropdown";
+import {CarouselModule} from "primeng/carousel";
 
 @Component({
   selector: 'app-dt-report',
@@ -18,7 +21,9 @@ import {SharedModules} from "../../../shared-module";
     AutoCompleteModule,
     ButtonModule,
     CardModule,
-    SharedModules
+    SharedModules,
+    SharedComponents,
+    CarouselModule
   ],
   templateUrl: './dt-report.component.html',
   styleUrl: './dt-report.component.scss'
@@ -29,6 +34,9 @@ export class DtReportComponent {
   clusterCompanies: any[] | undefined;
   filteredClusters: any[] = [] ;
   selectedCluster!: any;
+  availableRecommendations: any[] = [];
+  selectedRecommendation: any | null = null;
+  appliedRecommendations: any[] = [];
 
   constructor(private dt: DtService) {
     this.dt.companies.subscribe({
@@ -37,6 +45,7 @@ export class DtReportComponent {
     this.dt.clusters.subscribe({
       next: (cluster) => this.clusters = cluster
     })
+
 
   }
 
@@ -48,15 +57,65 @@ export class DtReportComponent {
     );
   }
 
+
   onClusterSelect = (event: any) => {
     this.selectedCluster = event.value;
     this.clusterCompanies = event.value.companies || [];
-    console.log('Selected Cluster:', event);
-    console.log('Cluster Companies:', this.clusterCompanies);
+
+    this.dt.getDigitalTwinData(this.selectedCluster);
+
+
+    const matchedCompanies = this.companies.filter((company: any) =>
+        this.clusterCompanies?.some((clusterCompany: any) => clusterCompany.id === company.id)
+    );
+
+    if (this.selectedCluster) {
+      this.selectedCluster.companies = matchedCompanies;
+    }
+
+    this.availableRecommendations = matchedCompanies
+        .flatMap((company: any) => company.recommendations || [])
+        .flatMap((recommendationObj: any) => recommendationObj.recommendations || []);
+
+  }
+
+  onRecommendationSelect(event: DropdownChangeEvent) {
+    this.selectedRecommendation = event.value;
+  }
+
+  applyRecommendation(recommendation: any) {
+    if (!this.isRecommendationApplied(recommendation)) {
+      this.appliedRecommendations.push(recommendation);
+    }
   }
 
 
   getTargetHeader() {
     return undefined;
+  }
+
+  calculateImpact(company: any, rec: any, energy: string) {
+    return undefined;
+  }
+
+  getTotalEnergy() {
+    return undefined;
+  }
+
+  getTotalCO2e() {
+    return undefined;
+  }
+
+  getTotalEnergyAfterRecommendation(rec: any) {
+    return undefined;
+  }
+
+  getTotalCO2eAfterRecommendation(rec: any) {
+    return undefined;
+  }
+
+
+  isRecommendationApplied(recommendationId: any) {
+    return this.appliedRecommendations.some(rec => rec.id === recommendationId);
   }
 }
