@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {Cluster, Companies} from "../../../_services/dt.service";
+import {Cluster, ClusterObject, Companies} from "../../../_services/dt.service";
 import {PickListModule} from "primeng/picklist";
 import {PanelModule} from "primeng/panel";
 import {InputTextModule} from "primeng/inputtext";
@@ -19,7 +19,7 @@ import {AutoCompleteCompleteEvent, AutoCompleteModule} from "primeng/autocomplet
   styleUrl: './dt-cluster.component.scss'
 })
 
-export class DtClusterComponent implements AfterViewInit{
+export class DtClusterComponent implements AfterViewInit {
   @Input('cmp') companies: Companies[] | undefined;
   @Input('clusters') clusters: any | undefined;
   @ViewChild('picklist') picklist: any;
@@ -27,23 +27,56 @@ export class DtClusterComponent implements AfterViewInit{
   @Output() returnCluster: EventEmitter<Cluster> = new EventEmitter<Cluster>()
 
   clusterName!: string;
+  selectedCluster: ClusterObject | undefined;
   clusterCompanies: Companies[] = [];
-  targetHeight: number | undefined;
+  filteredClusters: any[] = [];
+  targetHeight: number | undefined = 1000;
 
   onSave = () => {
-    this.returnCluster.emit({id: this.clusters.filter((x:any) => x.name === this.clusterName)[0].id,name: this.clusterName, companies: this.clusterCompanies})
+
+
+      if (this.selectedCluster) {
+        this.returnCluster.emit({
+          id: this.selectedCluster?.id,
+          name: this.selectedCluster?.name,
+          companies: this.clusterCompanies
+        });
+      } else {
+        this.returnCluster.emit({
+          name: this.clusterName,
+          companies: this.clusterCompanies
+        });
+      }
+
+
   }
 
-  onSelect =(event: AutoCompleteCompleteEvent) => {
-    if(this.clusters.filter((x:any) => x.name === event.query)){
-      this.clusterCompanies = this.clusters.filter((x:any) => x.name === event.query)[0].companies;
-    }
+  onSelect = (event: AutoCompleteCompleteEvent) => {
+
+    this.filteredClusters = this.clusters.filter(
+      (cluster: ClusterObject) => cluster.name.toLowerCase().includes(event.query.toLowerCase())
+    );
   }
 
+  onClusterSelect = (event: any) => {
+    this.selectedCluster = event.value;
+    this.clusterCompanies = event.value.companies || [];
+    console.log('Selected Cluster:', event);
+    console.log('Cluster Companies:', this.clusterCompanies);
+  }
+
+  getTargetHeader = () => {
+    return this.selectedCluster ? `${this.selectedCluster?.name} Cluster` : 'New Cluster';
+  }
+
+  onClearSelection = () => {
+    this.selectedCluster = undefined;
+    this.clusterCompanies = [];
+  }
 
   ngAfterViewInit() {
-    setTimeout(():void=> {
-      this.targetHeight = this.picklist.el.nativeElement.offsetHeight - 150
-    },1000)
+    // setTimeout((): void => {
+    //   this.targetHeight = this.picklist.el.nativeElement.offsetHeight - 150
+    // }, 1000)
   }
 }

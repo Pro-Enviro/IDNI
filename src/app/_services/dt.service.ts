@@ -37,13 +37,16 @@ export interface Cluster{
 export class DtService {
   companies: BehaviorSubject<Companies[]> = new BehaviorSubject<Companies[]>([]);
   recommendations: BehaviorSubject<Solutions[]> = new BehaviorSubject<Solutions[]>([]);
-  clusters: BehaviorSubject<any> = new BehaviorSubject<any>(null)
+  clusters: BehaviorSubject<any[]> = new BehaviorSubject<any>(null)
+
   constructor(
     private db:DbService,
     private msg: MessageService
   ) {
     this.getCompanies()
     this.getClusters()
+
+    console.log(this.clusters)
   }
 
   getCompanies = ()=>{
@@ -106,7 +109,9 @@ export class DtService {
 
   getClusters = () => {
     this.db.fnGetClusters().subscribe({
-      next: ((res:any) => this.clusters.next(res.data)),
+      next: ((res:any) => {
+        this.clusters.next(res.data)
+      }),
       error: (err: any) => this.msg.add({
         severity: 'error',
         summary: 'Something went wrong',

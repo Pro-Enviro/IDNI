@@ -3,15 +3,18 @@
     <p-card  #panel>
       <div class="grid">
         <div class="col-10">
-          <pre>{{clusters | json}}</pre>
+<!--          <pre>{{clusters | json}}</pre>-->
           <p-autoComplete
-            [suggestions]="clusters"
+            [suggestions]="filteredClusters"
             [(ngModel)]="clusterName"
             [dropdown]="true"
             placeholder="Cluster Name"
             optionLabel="name"
             optionValue="name"
             (completeMethod)="onSelect($event)"
+            (onSelect)="onClusterSelect($event)"
+            (onClear)="onClearSelection()"
+            (onUnselect)="onClearSelection()"
           ></p-autoComplete>
         </div>
         <div class="col-2">
@@ -22,19 +25,19 @@
   </div>
 
   @if (companies){
-    <div class="company-list mt-5">
+    <div class="company-list mt-5 h-full">
       <p-pickList
         #picklist
         [source]="companies"
         [target]="clusterCompanies"
         sourceHeader="Companies"
-        targetHeader="{{clusterName ? clusterName + ' ' : ''}}Cluster"
+        [targetHeader]="getTargetHeader()"
         [dragdrop]="true"
         [responsive]="true"
         filterBy="name"
         sourceFilterPlaceholder="Search by name"
         targetFilterPlaceholder="Search by name"
-        [targetStyle]="{height: targetHeight ? targetHeight + 'px' : 0 + 'px'}"
+        [targetStyle]="{height: targetHeight ? targetHeight + 'px' :  + 'px'}"
       >
 
         <ng-template let-company pTemplate="item" >
