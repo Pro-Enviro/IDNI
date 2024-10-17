@@ -4,6 +4,8 @@ import {map} from "rxjs";
 import {PetToolData} from "../pages/pet-login-protected/pet-tool-types";
 import {uploadFiles} from "@directus/sdk";
 import {ASCProps} from "../pages/envirotrack/import/supply/supply.component";
+import {DigitalTwinRows} from "../pages/reports/generate-report/generate-report.component";
+
 import {Cluster, ClusterObject} from "./dt.service";
 
 @Injectable({
@@ -75,6 +77,22 @@ export class DbService {
 
   saveRecommendations = (companyId: number, data: {recommendations: string}) => {
     return this.http.patch(`${this.url}/items/companies/${companyId}?fields=recommendations`, data)
+  }
+
+  getDigitalTwinData = (companyId: number) => {
+    return this.http.get(`${this.url}/items/company_digital_twin_data?filter[company][_eq]=${companyId}`)
+  }
+
+  saveDigitalTwinRow = (data: Partial<DigitalTwinRows> ) => {
+    return this.http.post(`${this.url}/items/company_digital_twin_data`, data)
+  }
+
+  patchDigitalTwinRow = (id: number, data: Partial<DigitalTwinRows>) => {
+    return this.http.patch(`${this.url}/items/company_digital_twin_data/${id}`, data)
+  }
+
+  deleteDigitalTwinRow = (id: number) => {
+    return this.http.delete(`${this.url}/items/company_digital_twin_data/${id}`)
   }
 
 
