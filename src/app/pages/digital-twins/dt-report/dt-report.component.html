@@ -1,1 +1,45 @@
-<p>dt-report works!</p>
+<p-panel header="Clusters">
+  <div class="mb-p">
+    <p-card #panel>
+      <div class="grid">
+        <div class="col-10">
+          <!--          <pre>{{clusters | json}}</pre>-->
+          <p-autoComplete
+            [suggestions]="filteredClusters"
+            [(ngModel)]="selectedCluster"
+            [dropdown]="true"
+            placeholder="Cluster Name"
+            optionLabel="name"
+            optionValue="name"
+            (completeMethod)="onSelect($event)"
+            (onSelect)="onClusterSelect($event)"
+          ></p-autoComplete>
+        </div>
+        <!--        <div class="col-2">-->
+        <!--          <button pButton label="Save" icon="pi pi-save" [disabled]="clusterCompanies.length < 2" (click)="onSave()"></button>-->
+        <!--        </div>-->
+      </div>
+    </p-card>
+  </div>
+
+
+  @if (clusterCompanies) {
+    <p-table [value]="clusterCompanies">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Total Energy Use</th>
+          <th>CO2e Use</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product>
+        <tr>
+          <td>{{ product.name }}</td>
+          <td>{{ product.totalEnergyUse }}</td>
+          <td>{{ product.totalCo2e }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  }
+</p-panel>
+

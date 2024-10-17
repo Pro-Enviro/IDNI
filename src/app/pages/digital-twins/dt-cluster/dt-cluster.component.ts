@@ -33,9 +33,7 @@ export class DtClusterComponent implements AfterViewInit {
   targetHeight: number | undefined = 1000;
 
   onSave = () => {
-
-
-      if (this.selectedCluster) {
+     if (this.selectedCluster) {
         this.returnCluster.emit({
           id: this.selectedCluster?.id,
           name: this.selectedCluster?.name,
@@ -47,8 +45,6 @@ export class DtClusterComponent implements AfterViewInit {
           companies: this.clusterCompanies
         });
       }
-
-
   }
 
   onSelect = (event: AutoCompleteCompleteEvent) => {
@@ -66,7 +62,7 @@ export class DtClusterComponent implements AfterViewInit {
   }
 
   getTargetHeader = () => {
-    return this.selectedCluster ? `${this.selectedCluster?.name} Cluster` : 'New Cluster';
+    return this.selectedCluster ? `${this.selectedCluster.name} Cluster` : 'New Cluster';
   }
 
   onClearSelection = () => {

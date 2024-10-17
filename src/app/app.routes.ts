@@ -34,6 +34,7 @@ import {
   EnvirotrackReportFieldsComponent
 } from "./pages/envirotrack/report/envirotrack-report-fields/envirotrack-report-fields.component";
 import {DigitalTwinsComponent} from "./pages/digital-twins/digital-twins.component";
+import {DtReportComponent} from "./pages/digital-twins/dt-report/dt-report.component";
 
 
 export const routes: Routes = [
@@ -87,7 +88,8 @@ export const routes: Routes = [
       {path: 'co2emissionsbyscope', component: ScopeChartComponent },
       {path:'bug-report',component:BugReportComponent},
       {path:'faqs',component:FaqsComponent},
-      {path: 'digital-twin', component: DigitalTwinsComponent}
+      {path: 'digital-twin', component: DigitalTwinsComponent},
+      {path: 'digital-twin-report', component: DtReportComponent}
       // {path:'contact-us',component:ContactUsComponent}
     ]},
   {path: '**', redirectTo: 'dashboard'},

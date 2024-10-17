@@ -1,30 +1,30 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {DbService} from "./db.service";
 import {MessageService} from "primeng/api";
 import {BehaviorSubject} from "rxjs";
 
-export interface ClusterObject{
-  id?:number
+export interface ClusterObject {
+  id?: number
   name: string
   companies: number[]
 }
 
-export interface Companies{
+export interface Companies {
   id: number,
   name: string
 }
 
-export interface Solutions{
+export interface Solutions {
   name: string
 }
 
-export interface Totals{
+export interface Totals {
   tco2e: number
   kwh: number
 }
 
-export interface Cluster{
-  id?:number,
+export interface Cluster {
+  id?: number,
   name: string
   companies: Companies[]
   solutions?: Solutions[]
@@ -38,21 +38,23 @@ export class DtService {
   companies: BehaviorSubject<Companies[]> = new BehaviorSubject<Companies[]>([]);
   recommendations: BehaviorSubject<Solutions[]> = new BehaviorSubject<Solutions[]>([]);
   clusters: BehaviorSubject<any[]> = new BehaviorSubject<any>(null)
+  digitalTwinRecommendations: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([])
 
   constructor(
-    private db:DbService,
+    private db: DbService,
     private msg: MessageService
   ) {
     this.getCompanies()
     this.getClusters()
+    this.getDigitalTwinData()
 
     console.log(this.clusters)
   }
 
-  getCompanies = ()=>{
-    this.db.getContentFromCollection('companies','?limit=-1').subscribe({
-      next: (res:any) => {
-        this.companies.next(res.map((x:any)=> {
+  getCompanies = () => {
+    this.db.getContentFromCollection('companies', '?limit=-1').subscribe({
+      next: (res: any) => {
+        this.companies.next(res.map((x: any) => {
           return {
             id: x.id,
             name: x.name,
@@ -64,10 +66,10 @@ export class DtService {
           }
         }));
 
-        this.recommendations.next(res.map((x:any) => x.recommendations))
+        this.recommendations.next(res.map((x: any) => x.recommendations))
 
       },
-      error: (err:any) => this.msg.add({
+      error: (err: any) => this.msg.add({
         severity: 'error',
         summary: 'Companies not found!',
         detail: err.error.errors[0].message
@@ -77,10 +79,10 @@ export class DtService {
 
   saveCluster = (cluster: ClusterObject) => {
     console.log(cluster)
-    if(cluster.id){
+    if (cluster.id) {
       console.log('edit')
       this.db.fnEditCluster(cluster, cluster.id).subscribe({
-        next:() => this.msg.add({
+        next: () => this.msg.add({
           severity: 'success',
           detail: 'Cluster Saved'
         }),
@@ -90,10 +92,10 @@ export class DtService {
           detail: err.error.errors[0].message
         })
       })
-    }else {
+    } else {
       console.log('save')
       this.db.fnAddCluster(cluster).subscribe({
-        next:() => this.msg.add({
+        next: () => this.msg.add({
           severity: 'success',
           detail: 'Cluster Saved'
         }),
@@ -109,7 +111,7 @@ export class DtService {
 
   getClusters = () => {
     this.db.fnGetClusters().subscribe({
-      next: ((res:any) => {
+      next: ((res: any) => {
         this.clusters.next(res.data)
       }),
       error: (err: any) => this.msg.add({
@@ -118,5 +120,8 @@ export class DtService {
         detail: err.error.errors[0].message
       })
     })
+  }
+
+  getDigitalTwinData = () => {
   }
 }

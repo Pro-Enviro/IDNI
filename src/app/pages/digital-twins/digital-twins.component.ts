@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {Cluster, Companies, DtService} from "../../_services/dt.service";
 import {DtClusterComponent} from "./dt-cluster/dt-cluster.component";
 import {MessageService} from "primeng/api";
+import {DtReportComponent} from "./dt-report/dt-report.component";
+import {NgIf} from "@angular/common";
 
 
 
@@ -9,7 +11,9 @@ import {MessageService} from "primeng/api";
   selector: 'app-digital-twins',
   standalone: true,
   imports: [
-    DtClusterComponent
+    DtClusterComponent,
+    DtReportComponent,
+    NgIf
   ],
   templateUrl: './digital-twins.component.html',
   styleUrl: './digital-twins.component.scss'
