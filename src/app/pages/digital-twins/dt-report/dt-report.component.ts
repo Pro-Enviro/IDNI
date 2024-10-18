@@ -161,7 +161,6 @@ export class DtReportComponent {
 
   calculateC02Impact() {
     const co2eSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedCarbonSaving, 0);
-
     return this.totalC02Used - co2eSavings;
   }
 
@@ -189,5 +188,7 @@ export class DtReportComponent {
   }
 
 
-
+  getEmissionsDifference() {
+    return 0;
+  }
 }

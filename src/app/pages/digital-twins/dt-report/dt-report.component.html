@@ -23,38 +23,38 @@
 
   @if (clusterCompanies) {
     <div class="bg-white shadow-1 p-5 mt-2">
-      <p>Companies included in this cluster: </p>
-      <ul class="">
+      <p class="font-semibold">Companies included in this cluster: </p>
+      <ul class="pl-0">
         <li class="mt-1" *ngFor="let comp of clusterCompanies">{{ comp.name }}</li>
       </ul>
     </div>
 
     <h3 class="text-center">Scenarios</h3>
-    <div class="flex align-items-start justify-content-between mt-2">
-      <div class="w-full mr-2 flex-shrink-1">
-        <p-card styleClass="mb-3 p-3">
+    <div class="flex align-items-stretch justify-content-between mt-2">
+      <div class="w-full h-full mr-2 flex-shrink-1">
+        <p-card styleClass="mb-3 p-3 h-full">
           <ng-template pTemplate="header">
             <h3 class="m-0 text-center">{{ selectedCluster.name }} Cluster - Current</h3>
           </ng-template>
           <div class="flex flex-column">
             <div class="w-full">
-              <strong>Total Energy Use:</strong><br>
-              {{ getTotalEnergy() | number:'1.0-2'  }} kWh
+              <p class="font-semibold">Total Energy Use:</p>
+              <p class="">{{ getTotalEnergy() | number:'1.0-2' }} kWh</p>
             </div>
             <div class="w-full mt-1">
-              <strong>Total Cost:</strong><br>
-              {{ getTotalCost() | currency: '£'  }}
+              <p class="font-semibold">Total Cost:</p>
+              <p>{{ getTotalCost() | currency: '£' }}</p>
             </div>
             <div class="w-full mt-1">
-              <strong>Total CO2e Emissions:</strong><br>
-              {{ getTotalCO2e() | number:'1.0-2'  }} tons
+              <p class="font-semibold">Total CO2e Emissions:</p>
+              <p>{{ getTotalCO2e() | number:'1.0-2' }} tons</p>
             </div>
           </div>
         </p-card>
       </div>
 
-      <div class="w-full flex-grow-1">
-        <p-card styleClass="mb-3 p-1" pDroppable (onDrop)="drop()">
+      <div class="w-full h-full min-h-full flex-grow-1">
+        <p-card styleClass="mb-3 p-1 h-full" pDroppable (onDrop)="drop()">
           <ng-template pTemplate="header">
             <h3 class="m-0 text-center text-primary my-3">Applied Recommendations</h3>
           </ng-template>
@@ -65,7 +65,7 @@
               <div class="col-3 text-right">Energy Saving (kWh)</div>
               <div class="col-3 text-right">Cost Saving ($)</div>
               <div class="col-3 text-right">Carbon Saving (tCO2e)</div>
-<!--              <div class="col-2 text-right">Payback (years)</div>-->
+              <!--              <div class="col-2 text-right">Payback (years)</div>-->
             </div>
             <ul class="list-none p-0 m-0">
               <li *ngFor="let reco of appliedRecommendations"
@@ -75,13 +75,14 @@
                 <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': reco.estimatedEnergySaving > 0}">
                   {{ reco.estimatedEnergySaving }}
                 </div>
-                <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': reco.estimatedSaving > 0, 'text-red-500': reco.estimatedSaving < 0}">
+                <div class="col-3 text-xs text-right"
+                     [ngClass]="{'text-green-500': reco.estimatedSaving > 0, 'text-red-500': reco.estimatedSaving < 0}">
                   {{ reco.estimatedSaving }}
                 </div>
                 <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': reco.estimatedCarbonSaving > 0}">
                   {{ reco.estimatedCarbonSaving }}
                 </div>
-<!--                <div class="col-2 text-xs text-right">{{ reco.paybackPeriod }}</div>-->
+                <!--                <div class="col-2 text-xs text-right">{{ reco.paybackPeriod }}</div>-->
               </li>
             </ul>
           </div>
@@ -95,34 +96,40 @@
       </div>
 
       <div class="w-full ml-2 flex-shrink-1">
-        <p-card styleClass="mb-3 p-3">
+        <p-card styleClass="mb-3 p-3 ">
           <ng-template pTemplate="header">
             <h3 class="m-0 text-center">After Recommendations</h3>
           </ng-template>
           <div class="flex flex-column">
             <div class="w-full">
-              <strong>Total Energy Use:</strong><br>
-              <span>{{ calculateEnergyImpact() | number:'1.0-2' }} kWh </span><span *ngIf="appliedRecommendations.length" class="text-green-500">({{getEnergyDifference()}})</span>
+              <p class="font-semibold">Total Energy Use:</p>
+              <p>{{ calculateEnergyImpact() | number:'1.0-2' }} kWh <span *ngIf="appliedRecommendations.length"
+                                                                          class="text-green-500">({{ getEnergyDifference() }}
+                )</span></p>
             </div>
             <div class="w-full mt-1">
-              <strong>Total Cost:</strong><br>
-              {{ calculateCostImpact() | currency: '£'  }} <span *ngIf="appliedRecommendations.length" class="text-green-500">({{getCostDifference()}})</span>
+              <p class="font-semibold">Total Cost:</p>
+              <p>{{ calculateCostImpact() | currency: '£' }} <span *ngIf="appliedRecommendations.length"
+                                                                   class="text-green-500">({{ getCostDifference() }}
+                )</span></p>
             </div>
             <div class="w-full mt-1">
-              <strong>Total CO2e Emissions:</strong><br>
-              {{ calculateC02Impact() | number:'1.0-2' }} tons
+              <p class="font-semibold">Total C02e Emissions:</p>
+              <p>{{ calculateC02Impact() | number:'1.0-2' }} tons <span *ngIf="appliedRecommendations.length"
+                                                                        class="text-green-500">({{ getEmissionsDifference() }}
+                )</span></p>
             </div>
           </div>
         </p-card>
       </div>
     </div>
     <div class="mt-3">
-      <h3>Available Recommendations</h3>
-      <div class="flex flex-wrap gap-3">
+      <h3 class="text-md">Available Recommendations</h3>
+      <div class="flex flex-wrap gap-3 justify-content-center">
         <div
           *ngFor="let reco of availableRecommendations"
           class="recommendation-card p-3 border-round-xl shadow-1 bg-white cursor-pointer"
-          style="width: 300px; height: 250px;"
+          style="width: 250px; height: 250px;"
           pDraggable
           (onDragStart)="dragStart(reco)"
           (onDragEnd)="dragEnd()">
@@ -130,38 +137,49 @@
             <div class="text-center font-semibold text-lg mb-3 text-gray-800">{{ reco.recommendation }}</div>
             <div class="grid flex-grow-1">
               <div class="col-6 flex flex-column justify-content-center align-items-center">
-                <span class="font-semibold mb-2">Energy Saving</span>
+                <span class="font-semibold mb-2 text-sm">Energy Saving</span>
                 <span [ngClass]="{'text-green-500': reco.estimatedEnergySaving > 0}">
               {{ reco.estimatedEnergySaving }} kWh
             </span>
               </div>
               <div class="col-6 flex flex-column justify-content-center align-items-center">
-                <span class="font-semibold mb-2">Cost Saving</span>
-                <span [ngClass]="{'text-green-500': reco.estimatedSaving > 0, 'text-red-500': reco.estimatedSaving < 0}">
+                <span class="font-semibold mb-2 text-sm">Cost Saving</span>
+                <span
+                  [ngClass]="{'text-green-500': reco.estimatedSaving > 0, 'text-red-500': reco.estimatedSaving < 0}">
               ${{ reco.estimatedSaving }}
             </span>
               </div>
               <div class="col-6 flex flex-column justify-content-center align-items-center">
-                <span class="font-semibold mb-2">Implementation Cost</span>
+                <span class="font-semibold mb-2 text-sm">Implementation Cost</span>
                 <span class="text-red-500">${{ reco.estimatedCost }}</span>
               </div>
               <div class="col-6 flex flex-column justify-content-center align-items-center">
-                <span class="font-semibold mb-2">Carbon Saving</span>
+                <span class="font-semibold mb-2 text-sm">Carbon Saving</span>
                 <span [ngClass]="{'text-green-500': reco.estimatedCarbonSaving > 0}">
               {{ reco.estimatedCarbonSaving }} tCO2e
             </span>
               </div>
             </div>
             <div class="text-center mt-2">
-              <span class="font-bold">Payback Period: </span>
+              <span class="font-semibold text-sm">Payback Period: </span>
               <span>{{ reco.paybackPeriod }} years</span>
             </div>
           </div>
+        </div>
+        <div *ngIf="!availableRecommendations.length">
+          <p>No Recommendations have been added</p>
         </div>
       </div>
     </div>
   }
 </p-panel>
 
-TODO:
-- Add conversion if units are not kWh
+<div class="mt-2">
+  <p>TODO:</p>
+  <ul>
+    <li>Add conversion calculation if units are not kWh</li>
+    <li>Pull through HH Data from database</li>
+    <li>Add the energy surplus/deficit from recommendations page</li>
+  </ul>
+</div>
+
