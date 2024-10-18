@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {DbService} from "./db.service";
 import {MessageService} from "primeng/api";
 import {BehaviorSubject} from "rxjs";
+import {EnvirotrackService} from "../pages/envirotrack/envirotrack.service";
 
 export interface ClusterObject {
   id?: number
@@ -42,7 +43,8 @@ export class DtService {
 
   constructor(
     private db: DbService,
-    private msg: MessageService
+    private msg: MessageService,
+    private track: EnvirotrackService
   ) {
     this.getCompanies()
     this.getClusters()
@@ -53,6 +55,7 @@ export class DtService {
       next: (res: any) => {
         this.companies.next(res.map((x: any) => {
           let recommendations = JSON.parse(x?.recommendations) ||[]
+          let fuel_data = JSON.parse(x?.fuel_data) ||[]
 
           return {
             id: x.id,
@@ -62,11 +65,10 @@ export class DtService {
             sector: x.sector,
             sic_code: x.sic_code,
             description: x.description,
-            recommendations: recommendations
+            recommendations: recommendations,
+            fuel_data: fuel_data
           }
         }));
-
-
 
         this.recommendations.next(res.map((x: any) => x.recommendations))
 
@@ -77,6 +79,8 @@ export class DtService {
         detail: err.error.errors[0].message
       })
     })
+
+    console.log(this.companies)
   }
 
   saveCluster = (cluster: ClusterObject) => {
@@ -140,8 +144,53 @@ export class DtService {
       })
     })
 
-    console.log(companies)
 
     // this.db.getDigitalTwinData()
   }
+
+  getHHData = (id: number) => {
+  if(!id){
+    return
+  }
+
+  this.track.getData(id).subscribe({
+      next: (res: any) => {
+        if (res){
+          const groupedData = new Map();
+
+          // Group by mpan
+          res.forEach((row: any) => {
+            row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x: number) => x ? x : 0);
+
+            // Group by mpan
+            if (!groupedData.has(row.mpan)) {
+              groupedData.set(row.mpan, []);
+            }
+            groupedData.get(row.mpan).push(row);
+          });
+
+          // Calculate totals for each group by mpan
+          groupedData.forEach((rows, mpan) => {
+            let grandTotal = 0;
+
+            // Calculate total consumption for the current mpan
+            rows.forEach((row: any) => {
+              grandTotal += row.hhd.reduce((acc: number, curr: number) => acc + curr, 0);
+            });
+
+            // Store the result for the current mpan
+            const envirotrackData = {
+              type: `Electricity HH - ${mpan}`,
+              consumption: grandTotal.toFixed(2),
+              cost: 0,
+              emissions: (grandTotal * 0.22499) / 1000
+            };
+
+            return envirotrackData
+          });
+        }
+      },
+    }
+  )
+}
 }

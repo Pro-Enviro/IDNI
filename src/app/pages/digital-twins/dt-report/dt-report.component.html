@@ -25,129 +25,95 @@
 
   @if (clusterCompanies) {
 
-      <div class="mb-3 flex flex-row">
-<!--          <h3>Available Recommendations</h3>-->
-<!--          <p-carousel [value]="availableRecommendations" [numVisible]="3" [numScroll]="1" [circular]="false" *ngIf="availableRecommendations.length">-->
-<!--              <ng-template let-recommendation pTemplate="item">-->
-<!--                  <div class="recommendation-card">-->
-<!--                      <p-card [header]="recommendation.recommendation">-->
-<!--&lt;!&ndash;                          <ng-template pTemplate="header">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <p>{{recommendation?.recommendationTitle}}</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                          </ng-template>&ndash;&gt;-->
-<!--                          <div class="flex justify-content-between">-->
-<!--                              <span>Energy Impact: {{recommendation.estaimtedEnergySaving}}%</span>-->
-<!--                              <span>CO2e Impact: {{recommendation.estimatedCarbonSaving}}%</span>-->
-<!--                          </div>-->
-<!--                          <ng-template pTemplate="footer">-->
-<!--                              <p-button-->
-<!--                                      label="Apply"-->
-<!--                                      (onClick)="applyRecommendation(recommendation)"-->
-<!--                                      [disabled]="isRecommendationApplied(recommendation.id)"-->
-<!--                              ></p-button>-->
-<!--                          </ng-template>-->
-<!--                      </p-card>-->
-<!--                  </div>-->
-<!--              </ng-template>-->
-<!--          </p-carousel>-->
+    <div>
+      <p>Companies included in this cluster: </p>
+      <ul>
+        <li *ngFor="let comp of clusterCompanies">{{ comp.name }}</li>
+      </ul>
+    </div>
 
-      <p-table [value]="clusterCompanies">
+    <div class="flex align-items-start justify-content-between mt-2">
+      <div class="mr-3 p-2 w-full ">
+        <p-card styleClass="mb-3 p-3">
           <ng-template pTemplate="header">
-              <tr>
-                  <th>Name</th>
-                  <th>Total Energy Use (kWh)</th>
-                  <th>CO2e Emissions (tons)</th>
-                  @if (appliedRecommendations.length > 0) {
-                      <th *ngFor="let rec of appliedRecommendations">
-                          Energy After {{rec.description}}
-                      </th>
-                      <th *ngFor="let rec of appliedRecommendations">
-                          CO2e After {{rec.description}}
-                      </th>
-                  }
-              </tr>
+            <h3 class="m-0">{{ selectedCluster.name }} - Current Totals</h3>
           </ng-template>
-          <ng-template pTemplate="body" let-company>
-              <tr>
-                  <td>{{ company.name }}</td>
-                  <td>{{ company.digital_twin_data?.totalEnergyUse | number:'1.0-2' }}</td>
-                  <td>{{ company.digital_twin_data?.totalCo2e | number:'1.0-2' }}</td>
-                  @if (appliedRecommendations.length > 0) {
-                      <td *ngFor="let rec of appliedRecommendations">
-                          {{ calculateImpact(company, rec, 'energy') | number:'1.0-2' }}
-                      </td>
-                      <td *ngFor="let rec of appliedRecommendations">
-                          {{ calculateImpact(company, rec, 'co2e') | number:'1.0-2' }}
-                      </td>
-                  }
-              </tr>
-          </ng-template>
-          <ng-template pTemplate="footer">
-              <tr>
-                  <td><strong>Total</strong></td>
-                  <td><strong>{{ getTotalEnergy() | number:'1.0-2' }}</strong></td>
-                  <td><strong>{{ getTotalCO2e() | number:'1.0-2' }}</strong></td>
-                  @if (appliedRecommendations.length > 0) {
-                      <td *ngFor="let rec of appliedRecommendations">
-                          <strong>{{ getTotalEnergyAfterRecommendation(rec) | number:'1.0-2' }}</strong>
-                      </td>
-                      <td *ngFor="let rec of appliedRecommendations">
-                          <strong>{{ getTotalCO2eAfterRecommendation(rec) | number:'1.0-2' }}</strong>
-                      </td>
-                  }
-              </tr>
-          </ng-template>
-      </p-table>
-
-      <div class="w-6rem border-2 border-gray-500">
-            Middle area for recommendations
+          <div class="flex flex-column">
+            <div class="col-6">
+              <strong>Total Energy Use:</strong><br>
+              <!--              {{ energyData | json }}-->
+              TODO: Add conversion if units are not kWh
+              {{ getTotalEnergy() }} kWh
+            </div>
+            <div class="col-6">
+              <strong>Total CO2e Emissions:</strong><br>
+              {{ getTotalCO2e() }} tons
+            </div>
+          </div>
+        </p-card>
       </div>
 
-      <p-table [value]="clusterCompanies">
+      <!--      <div class="mr-3 p-2 w-full ">-->
+      <!--        <p-card styleClass="mb-3 p-3">-->
+      <!--          Recommendations drag area-->
+      <!--        </p-card>-->
+      <!--      </div>-->
+      <div class="mr-3 p-2 w-full">
+        <p-card styleClass="mb-3 p-3" pDroppable (onDrop)="drop()">
           <ng-template pTemplate="header">
-              <tr>
-                      <th>
-                          Energy After
-                      </th>
-                      <th>
-                          CO2e After
-                      </th>
-              </tr>
+            <h3 class="m-0">Recommendations Drag Area</h3>
           </ng-template>
-          <ng-template pTemplate="body" let-company>
-              <tr>
-                  @if (appliedRecommendations.length > 0) {
-                      <td *ngFor="let rec of appliedRecommendations">
-                          {{ calculateImpact(company, rec, 'energy') | number:'1.0-2' }}
-                      </td>
-                      <td *ngFor="let rec of appliedRecommendations">
-                          {{ calculateImpact(company, rec, 'co2e') | number:'1.0-2' }}
-                      </td>
-                  }
-              </tr>
-          </ng-template>
-          <ng-template pTemplate="footer">
-              <tr>
-                  <td><strong>Total</strong></td>
-                  @if (appliedRecommendations.length > 0) {
-                      <td *ngFor="let rec of appliedRecommendations">
-                          <strong>{{ getTotalEnergyAfterRecommendation(rec) | number:'1.0-2' }}</strong>
-                      </td>
-                      <td *ngFor="let rec of appliedRecommendations">
-                          <strong>{{ getTotalCO2eAfterRecommendation(rec) | number:'1.0-2' }}</strong>
-                      </td>
-                  }
-              </tr>
-          </ng-template>
-      </p-table>
 
-      </div>
-      <div>
-          <ul>
-              <li *ngFor="let rec of availableRecommendations">
-                  {{rec.recommendation}}
-              </li>
+          <ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="appliedRecommendations">
+            <li *ngFor="let reco of appliedRecommendations" class="p-2 border-round shadow-1">
+              {{ reco.recommendation }}
+            </li>
           </ul>
+
+        </p-card>
       </div>
+
+      <div class="mr-3 p-2 w-full ">
+        <p-card styleClass="mb-3 p-3">
+          <ng-template pTemplate="header">
+            <h3 class="m-0">After Recommendations - Current Totals</h3>
+          </ng-template>
+          <div class="flex flex-column">
+            <div class="col-6">
+              <strong>Total Energy Use:</strong><br>
+              {{ getTotalEnergy() | number:'1.0-2' }} kWh
+            </div>
+            <div class="col-6">
+              <strong>Total CO2e Emissions:</strong><br>
+              {{ getTotalCO2e() | number:'1.0-2' }} tons
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </div>
+    <div class="mt-3">
+      <h3>Available Recommendations</h3>
+      <div class="flex flex-wrap">
+        <ul class="list-none flex flex-row gap-2 p-0 m-0">
+
+          <li
+            *ngFor="let reco of availableRecommendations"
+            class="p-2 border-round shadow-1 bg-white"
+            pDraggable
+            (onDragStart)="dragStart(reco)"
+            (onDragEnd)="dragEnd()">
+            <div class="flex flex-column">
+              Recommendation: {{ reco.recommendation }}
+              Estimated Energy saving: {{ reco.estimatedEnergySaving }}
+              Estimated Cost Saving: {{ reco.estimatedSaving }}
+              Estimated Cost to implement: {{ reco.estimatedCost }}
+              Estimated Carbon Saving: {{ reco.estimatedCarbonSaving }}
+              Payback Period: {{ reco.paybackPeriod }}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   }
 </p-panel>
 
