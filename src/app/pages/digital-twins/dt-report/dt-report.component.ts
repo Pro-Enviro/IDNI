@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {PickListModule} from "primeng/picklist";
 import {SharedModule} from "primeng/api";
 import {PanelModule} from "primeng/panel";
@@ -8,7 +8,6 @@ import {ButtonModule} from "primeng/button";
 import {CardModule} from "primeng/card";
 import {SharedModules} from "../../../shared-module";
 import {SharedComponents} from "../../envirotrack/shared-components";
-import {DropdownChangeEvent} from "primeng/dropdown";
 import {CarouselModule} from "primeng/carousel";
 import {calculateEnergyData} from "./calculateEnergyData";
 
@@ -40,6 +39,9 @@ export class DtReportComponent {
   appliedRecommendations: any[] = [];
   energyData: any[] = []
   draggedRecommendation: any;
+  totalEnergyUsed: number = 0;
+  totalCost: number = 0;
+  totalC02Used: number = 0 ;
 
   constructor(private dt: DtService) {
     this.dt.companies.subscribe({
@@ -51,6 +53,7 @@ export class DtReportComponent {
 
   }
 
+  // Cluster Selection
 
   onSelect = (event: AutoCompleteCompleteEvent) => {
     this.filteredClusters = this.clusters.filter(
@@ -79,42 +82,14 @@ export class DtReportComponent {
       .flatMap((company: any) => company.recommendations || [])
       .flatMap((recommendationObj: any) => recommendationObj.recommendations || []);
 
+    this.availableRecommendations = this.availableRecommendations.map((reco: any, index: number) => {
+        reco.generated_id = index;
+        return reco;
+    })
+
     const energyData = calculateEnergyData(matchedCompanies);
     this.energyData.push(...energyData);
 
-  }
-
-  getClusterEnergyData = () => {
-
-  }
-
-  onRecommendationSelect(event: DropdownChangeEvent) {
-    this.selectedRecommendation = event.value;
-  }
-
-  applyRecommendation(recommendation: any) {
-    if (!this.isRecommendationApplied(recommendation)) {
-      this.appliedRecommendations.push(recommendation);
-    }
-  }
-
-
-  getTotalEnergy() {
-    let total = 0;
-    if (this.energyData.length) {
-      const totalEnergy = this.energyData.reduce((sum, fuelType) => sum + (fuelType.totalValue || 0), 0);
-      return totalEnergy;
-    }
-
-    return total;
-  }
-
-  getTotalCO2e() {
-    return undefined;
-  }
-
-  isRecommendationApplied(recommendationId: any) {
-    return this.appliedRecommendations.some(rec => rec.id === recommendationId);
   }
 
 
@@ -136,14 +111,83 @@ export class DtReportComponent {
     }
   }
 
-  findIndex(product: any) {
+  findIndex(recomendation: any) {
     let index = -1;
     for (let i = 0; i < (this.availableRecommendations as any[]).length; i++) {
-      if (product.id === (this.availableRecommendations as any[])[i].id) {
+      if (recomendation.generated_id === (this.availableRecommendations as any[])[i].generated_id) {
         index = i;
         break;
       }
     }
     return index;
   }
+
+  removeRecommendation(reco: any) {
+    this.appliedRecommendations = this.appliedRecommendations.filter(rec => rec.generated_id !== reco.generated_id);
+
+    this.availableRecommendations = [...this.availableRecommendations, reco];
+  }
+
+  // Calculate Totals
+
+  getTotalEnergy() {
+    let total = 0;
+    if (this.energyData.length) {
+      const totalEnergy = this.energyData.reduce((sum, fuelType) => sum + (fuelType.totalValue || 0), 0);
+      this.totalEnergyUsed = totalEnergy;
+      return totalEnergy;
+    }
+
+    return total;
+  }
+  getTotalCost() {
+    let total =0 ;
+    if (this.energyData.length) {
+      const totalCost = this.energyData.reduce((sum, fuelType) => sum + (fuelType.totalCost || 0), 0);
+      this.totalCost = totalCost;
+      return totalCost
+    }
+
+  }
+
+  getTotalCO2e() {
+    return 0;
+  }
+
+  calculateEnergyImpact() {
+    const energySavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedEnergySaving, 0);
+    return this.totalEnergyUsed - energySavings;
+  }
+
+  calculateC02Impact() {
+    const co2eSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedCarbonSaving, 0);
+
+    return this.totalC02Used - co2eSavings;
+  }
+
+  calculateCostImpact() {
+    const costSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedCost, 0);
+    return this.totalCost - costSavings;
+  }
+
+  getEnergyDifference() {
+      const energySavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedEnergySaving, 0);
+
+    // Calculate percentage change
+    const percentageSavings = (energySavings / this.totalEnergyUsed) * 100;
+
+      return `-${percentageSavings.toFixed(1)}%` ;
+  }
+
+  getCostDifference() {
+    const costSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedCost, 0);
+
+    // Calculate percentage change
+    const percentageSavings = (costSavings / this.totalCost) * 100;
+
+    return `-${percentageSavings.toFixed(1)}%` ;
+  }
+
+
+
 }
