@@ -98,7 +98,7 @@ export class DtReportComponent {
     const fuseOptions = {
       threshold: 0.3,
       includeScore: true,
-      keys: ['recommendation']
+      keys: ['recommendation', 'type']
     }
 
     const fuse = new Fuse(this.availableRecommendations, fuseOptions);
@@ -128,6 +128,36 @@ export class DtReportComponent {
 
     // Select Surplus/Deficit recommendations from report page
     this.availableDigitalTwinData = matchedCompanies.flatMap((company: any) => company.digital_twin_data || [])
+
+
+    // Go through recommendations are collate similar named ones
+
+    const fuseTwins = new Fuse(this.availableDigitalTwinData, fuseOptions);
+
+    this.availableDigitalTwinData.forEach((reco: any) => {
+      const foundDuplicates = fuseTwins.search(reco.type)
+        .filter(result => result.item !== reco)
+        .map(result => result.item);
+
+      if (foundDuplicates.length > 0) {
+        foundDuplicates.forEach(duplicate => {
+          // TODO: Sum up
+          // this.sumProperties(reco, duplicate);
+
+          // Remove duplicate from recommendations
+          const indexToRemove = this.availableDigitalTwinData.indexOf(duplicate);
+          if (indexToRemove !== -1) {
+            this.availableDigitalTwinData.splice(indexToRemove, 1);
+          }
+
+          // Add counter to current Reco
+          if (reco.counter) reco.counter++;
+          else reco.counter = 1;
+        })
+      }
+    })
+
+
 
     // Get Non-HH energy data
     const energyData = calculateEnergyData(matchedCompanies);

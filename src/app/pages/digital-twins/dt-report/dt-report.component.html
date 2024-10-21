@@ -70,7 +70,7 @@
             </div>
             <ul class="list-none p-0 m-0">
               <li *ngFor="let reco of appliedRecommendations"
-                  class="grid align-items-center mb-2 p-2 border-round-sm surface-hover cursor-pointer hover:bg-gray-100"
+                  class="grid align-items-center mb-2 p-2 border-round-xs surface-hover cursor-pointer hover:bg-gray-100"
                   (click)="removeItem(reco, 'recommendations')">
                 <div class="col-3 text-xs font-medium ">{{ reco.recommendation }}</div>
                 <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': reco.estimatedEnergySaving > 0}">
@@ -145,7 +145,7 @@
       <div class="flex flex-wrap gap-3 justify-content-center">
         <div
           *ngFor="let reco of availableRecommendations"
-          class="recommendation-card p-3 border-round-xl shadow-1 bg-white cursor-pointer"
+          class="recommendation-card p-3 border-round-sm shadow-2 bg-white cursor-pointer"
           style="width: 250px; height: 250px;"
           pDraggable
           (onDragStart)="dragStart(reco)"
@@ -197,8 +197,8 @@
           pDraggable
           (onDragStart)="dragStart(data)"
           (onDragEnd)="dragEnd()"
-          class="digital-twin-card p-3 border-round-xl shadow-1 bg-white"
-          style="width: 250px; height: 250px;">
+          class="digital-twin-card p-3 border-round-sm shadow-2 bg-white"
+          style="width: 200px; height: 200px;">
           <div class="flex flex-column h-full text-md">
             <div class="text-center font-semibold text-lg mb-3 text-gray-800">{{ data.type }}</div>
             <div class="grid flex-grow-1">
@@ -231,8 +231,9 @@
     <li><s>Get HH to pull through</s></li>
     <li><s>Get recommendation to pull through (Surplus/deficit)</s></li>
     <li><s>Prevent duplicate recommendations</s> (Needs further testing)</li>
+    <li>Prevent duplicate surplus/deficits?</li>
     <li>Add conversion calculation if units are not kWh</li>
-    <li>Check all calculations</li>
+    <li>Check all calculations (Emissions not coming through correctly)</li>
   </ul>
 </div>
 
