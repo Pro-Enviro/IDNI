@@ -59,7 +59,8 @@
             <h3 class="m-0 text-center text-primary my-3">Applied Recommendations</h3>
           </ng-template>
 
-          <div class="applied-recommendations" *ngIf="appliedRecommendations && appliedRecommendations.length > 0 || appliedDigitalTwinData && appliedDigitalTwinData.length > 0">
+          <div class="applied-recommendations"
+               *ngIf="appliedRecommendations && appliedRecommendations.length > 0 || appliedDigitalTwinData && appliedDigitalTwinData.length > 0">
             <div class="grid font-bold mb-2 text-xs">
               <div class="col-3">Recommendation</div>
               <div class="col-3 text-right">Energy Saving (kWh)</div>
@@ -84,15 +85,17 @@
                 </div>
                 <!--                <div class="col-2 text-xs text-right">{{ reco.paybackPeriod }}</div>-->
               </li>
-              <li *ngFor="let data of appliedDigitalTwinData" class="grid align-items-center mb-2 p-2 border-round-sm surface-hover cursor-pointer hover:bg-gray-100"
+              <li *ngFor="let data of appliedDigitalTwinData"
+                  class="grid align-items-center mb-2 p-2 border-round-sm surface-hover cursor-pointer hover:bg-gray-100"
                   (click)="removeItem(data, 'digitalTwinData')">
-                <div class="col-3 text-xs font-medium ">{{ data.type }}({{data.deficit ? 'Deficit' : 'Surplus'}})</div>
+                <div class="col-3 text-xs font-medium ">{{ data.type }}({{ data.deficit ? 'Deficit' : 'Surplus' }})
+                </div>
                 <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': data.total > 0}">
                   {{ data.deficit ? -data.total : data.total }}
                 </div>
                 <div class="col-3 text-xs text-right"></div>
                 <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': data.estimatedCarbonSaving > 0}">
-                  {{ data.estimatedCarbonSaving || 0}}
+                  {{ data.estimatedCarbonSaving || 0 }}
                 </div>
               </li>
             </ul>
@@ -114,20 +117,23 @@
           <div class="flex flex-column">
             <div class="w-full">
               <p class="font-semibold">Total Energy Use:</p>
-              <p>{{ calculateEnergyImpact() | number:'1.0-2' }} kWh <span *ngIf="appliedRecommendations.length"
-                                                                          class="text-green-500">({{ getEnergyDifference() }}
+              <p>{{ calculateEnergyImpact() | number:'1.0-2' }} kWh <span
+                *ngIf="appliedRecommendations.length || appliedDigitalTwinData.length"
+                class="text-green-500">({{ getEnergyDifference() }}
                 )</span></p>
             </div>
             <div class="w-full mt-1">
               <p class="font-semibold">Total Cost:</p>
-              <p>{{ calculateCostImpact() | currency: '£' }} <span *ngIf="appliedRecommendations.length"
-                                                                   class="text-green-500">({{ getCostDifference() }}
+              <p>{{ calculateCostImpact() | currency: '£' }} <span
+                *ngIf="appliedRecommendations.length || appliedDigitalTwinData.length"
+                class="text-green-500">({{ getCostDifference() }}
                 )</span></p>
             </div>
             <div class="w-full mt-1">
               <p class="font-semibold">Total C02e Emissions:</p>
-              <p>{{ calculateC02Impact() | number:'1.0-2' }} tons <span *ngIf="appliedRecommendations.length"
-                                                                        class="text-green-500">({{ getEmissionsDifference() }}
+              <p>{{ calculateC02Impact() | number:'1.0-2' }} tons <span
+                *ngIf="appliedRecommendations.length || appliedDigitalTwinData.length"
+                class="text-green-500">({{ getEmissionsDifference() }}
                 )</span></p>
             </div>
           </div>
@@ -146,6 +152,7 @@
           (onDragEnd)="dragEnd()">
           <div class="flex flex-column h-full text-md">
             <div class="text-center font-semibold text-lg mb-3 text-gray-800">{{ reco.recommendation }}</div>
+            <span *ngIf="reco.counter" class="mb-1">{{ reco.counter }} duplicate </span>
             <div class="grid flex-grow-1">
               <div class="col-6 flex flex-column justify-content-center align-items-center">
                 <span class="font-semibold mb-2 text-sm">Energy Saving</span>
@@ -183,7 +190,7 @@
       </div>
     </div>
     <div class="mt-3">
-      <h3 class="text-md">Surplus & Defecits</h3>
+      <h3 class="text-md">Surplus & Deficits</h3>
       <div class="flex flex-wrap gap-3 justify-content-center">
         <div
           *ngFor="let data of availableDigitalTwinData"
@@ -220,9 +227,11 @@
 
 <div class="mt-2">
   <p>TODO:</p>
-  <ul>
+  <ul class="list-disc">
+    <li><s>Get HH to pull through</s></li>
+    <li><s>Get recommendation to pull through (Surplus/deficit)</s></li>
+    <li><s>Prevent duplicate recommendations</s> (Needs further testing)</li>
     <li>Add conversion calculation if units are not kWh</li>
-    <li>Prevent duplicate recommendations</li>
     <li>Check all calculations</li>
   </ul>
 </div>

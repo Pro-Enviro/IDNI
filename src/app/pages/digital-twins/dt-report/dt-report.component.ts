@@ -10,6 +10,7 @@ import {SharedModules} from "../../../shared-module";
 import {SharedComponents} from "../../envirotrack/shared-components";
 import {CarouselModule} from "primeng/carousel";
 import {calculateEnergyData} from "./calculateEnergyData";
+import Fuse from "fuse.js";
 
 @Component({
   selector: 'app-dt-report',
@@ -64,6 +65,12 @@ export class DtReportComponent {
     );
   }
 
+  sumProperties = (item1: any, item2: any) => {
+    item1.estimatedEnergySaving += item2.estimatedEnergySaving || 0;
+    item1.estimatedCarbonSaving += item2.estimatedCarbonSaving || 0;
+    item1.estimatedCost += item2.estimatedCost || 0;
+    item1.estimatedSaving += item2.estimatedSaving || 0;
+  }
 
   onClusterSelect = (event: any) => {
     this.selectedCluster = event.value;
@@ -87,10 +94,36 @@ export class DtReportComponent {
       return reco;
     })
 
-    console.log(this.availableRecommendations);
-
     // Go through recommendations are collate similar named ones
+    const fuseOptions = {
+      threshold: 0.3,
+      includeScore: true,
+      keys: ['recommendation']
+    }
 
+    const fuse = new Fuse(this.availableRecommendations, fuseOptions);
+
+    this.availableRecommendations.forEach((reco: any) => {
+      const foundDuplicates = fuse.search(reco.recommendation)
+        .filter(result => result.item !== reco)
+        .map(result => result.item);
+
+      if (foundDuplicates.length > 0) {
+        foundDuplicates.forEach(duplicate => {
+          this.sumProperties(reco, duplicate);
+
+          // Remove duplicate from recommendations
+          const indexToRemove = this.availableRecommendations.indexOf(duplicate);
+          if (indexToRemove !== -1) {
+            this.availableRecommendations.splice(indexToRemove, 1);
+          }
+
+          // Add counter to current Reco
+          if (reco.counter) reco.counter++;
+          else reco.counter = 1;
+        })
+      }
+    })
 
 
     // Select Surplus/Deficit recommendations from report page
@@ -120,7 +153,6 @@ export class DtReportComponent {
         }, {})
 
         this.energyData.push(reducedData)
-        console.log(this.energyData)
       },
       error: (error: any) => {
         console.log(error)
@@ -235,7 +267,8 @@ export class DtReportComponent {
 
   calculateEnergyImpact() {
     const energySavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedEnergySaving, 0);
-    return this.totalEnergyUsed - energySavings;
+    const energySavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.total, 0)
+    return this.totalEnergyUsed - (energySavings + energySavingsFromTwin);
   }
 
   calculateC02Impact() {
@@ -250,9 +283,10 @@ export class DtReportComponent {
 
   getEnergyDifference() {
     const energySavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedEnergySaving, 0);
+    const energySavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.total, 0)
 
     // Calculate percentage change
-    const percentageSavings = (energySavings / this.totalEnergyUsed) * 100;
+    const percentageSavings = ((energySavings + energySavingsFromTwin) / this.totalEnergyUsed) * 100;
 
     return `-${percentageSavings.toFixed(1)}%`;
   }
