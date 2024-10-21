@@ -167,7 +167,7 @@ export class DtService {
   // Get all available envirotrack data and group together to get total consumption etc.
   processData = (res: any[]): any[] => {
     if (!res || res.length === 0) return []
-    console.log(res)
+
 
     const groupedData = new Map();
 
@@ -201,61 +201,10 @@ export class DtService {
       envirotrackSummary.push(envirotrackData)
     });
 
-    console.log(envirotrackSummary)
+
 
     return envirotrackSummary
   }
 
-  // getHHData = (ids: number[]) => {
-  //   if (!ids.length) return
-  //
-  //   console.log(ids)
-  //
-  //   let envirotrackSummary: any[] = []
-  //
-  //   ids.forEach((id: number) => {
-  //     this.track.getData(id).subscribe({
-  //         next: (res: any) => {
-  //           if (res) {
-  //             const groupedData = new Map();
-  //
-  //             // Group by mpan
-  //             res.forEach((row: any) => {
-  //               row.hhd = JSON.parse(row.hhd.replaceAll('"', '').replaceAll("'", '')).map((x: number) => x ? x : 0);
-  //
-  //               // Group by mpan
-  //               if (!groupedData.has(row.mpan)) {
-  //                 groupedData.set(row.mpan, []);
-  //               }
-  //               groupedData.get(row.mpan).push(row);
-  //             });
-  //
-  //             // Calculate totals for each group by mpan
-  //             groupedData.forEach((rows, mpan) => {
-  //               let grandTotal = 0;
-  //
-  //               // Calculate total consumption for the current mpan
-  //               rows.forEach((row: any) => {
-  //                 grandTotal += row.hhd.reduce((acc: number, curr: number) => acc + curr, 0);
-  //               });
-  //
-  //               // Store the result for the current mpan
-  //               const envirotrackData = {
-  //                 type: `Electricity HH - ${mpan}`,
-  //                 consumption: grandTotal,
-  //                 cost: 0,
-  //                 emissions: (grandTotal * 0.22499) / 1000
-  //               };
-  //               return envirotrackData
-  //             });
-  //             envirotrackSummary.push(groupedData)
-  //           }
-  //         },
-  //       }
-  //     )
-  //   })
-  //
-  //   console.log(envirotrackSummary)
-  //
-  // }
+
 }

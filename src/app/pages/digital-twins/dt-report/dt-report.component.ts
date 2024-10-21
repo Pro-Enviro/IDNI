@@ -77,9 +77,7 @@ export class DtReportComponent {
       this.selectedCluster.companies = matchedCompanies;
     }
 
-
-    console.log(this.selectedCluster)
-
+    // Select recommendations for drag and drop
     this.availableRecommendations = matchedCompanies
       .flatMap((company: any) => company.recommendations || [])
       .flatMap((recommendationObj: any) => recommendationObj.recommendations || []);
@@ -89,16 +87,40 @@ export class DtReportComponent {
       return reco;
     })
 
+    console.log(this.availableRecommendations);
 
+    // Go through recommendations are collate similar named ones
+
+
+
+    // Select Surplus/Deficit recommendations from report page
     this.availableDigitalTwinData = matchedCompanies.flatMap((company: any) => company.digital_twin_data || [])
+
+    // Get Non-HH energy data
     const energyData = calculateEnergyData(matchedCompanies);
     this.energyData.push(...energyData);
 
+
     const matchedCompanyIds = matchedCompanies.map((company: any) => company.id);
 
+    // Get HH energy data
     this.dt.getHHData(matchedCompanyIds).subscribe({
       next: (res: any) => {
-        console.log(res);
+        const reducedData = res.reduce((acc: any, curr: any) => {
+          const baseType = curr.type.split(' - ')[0]
+
+          return {
+            type: baseType,
+            totalValue: (acc.totalValue || 0) + curr.consumption,
+            totalCost: (acc.totalCost || 0) + curr.cost,
+            emissions: (acc.emissions || 0) + curr.emissions,
+            unit: baseType === 'Electricity HH' ? 'kWh' : '',
+            customConversionFactor: baseType === 'Electricity HH' ? 'Electricity' : '',
+          }
+        }, {})
+
+        this.energyData.push(reducedData)
+        console.log(this.energyData)
       },
       error: (error: any) => {
         console.log(error)
