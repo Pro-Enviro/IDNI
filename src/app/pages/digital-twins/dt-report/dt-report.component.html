@@ -59,7 +59,7 @@
             <h3 class="m-0 text-center text-primary my-3">Applied Recommendations</h3>
           </ng-template>
 
-          <div class="applied-recommendations" *ngIf="appliedRecommendations && appliedRecommendations.length > 0">
+          <div class="applied-recommendations" *ngIf="appliedRecommendations && appliedRecommendations.length > 0 || appliedDigitalTwinData && appliedDigitalTwinData.length > 0">
             <div class="grid font-bold mb-2 text-xs">
               <div class="col-3">Recommendation</div>
               <div class="col-3 text-right">Energy Saving (kWh)</div>
@@ -70,7 +70,7 @@
             <ul class="list-none p-0 m-0">
               <li *ngFor="let reco of appliedRecommendations"
                   class="grid align-items-center mb-2 p-2 border-round-sm surface-hover cursor-pointer hover:bg-gray-100"
-                  (click)="removeRecommendation(reco)">
+                  (click)="removeItem(reco, 'recommendations')">
                 <div class="col-3 text-xs font-medium ">{{ reco.recommendation }}</div>
                 <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': reco.estimatedEnergySaving > 0}">
                   {{ reco.estimatedEnergySaving }}
@@ -83,6 +83,17 @@
                   {{ reco.estimatedCarbonSaving }}
                 </div>
                 <!--                <div class="col-2 text-xs text-right">{{ reco.paybackPeriod }}</div>-->
+              </li>
+              <li *ngFor="let data of appliedDigitalTwinData" class="grid align-items-center mb-2 p-2 border-round-sm surface-hover cursor-pointer hover:bg-gray-100"
+                  (click)="removeItem(data, 'digitalTwinData')">
+                <div class="col-3 text-xs font-medium ">{{ data.type }}({{data.deficit ? 'Deficit' : 'Surplus'}})</div>
+                <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': data.total > 0}">
+                  {{ data.deficit ? -data.total : data.total }}
+                </div>
+                <div class="col-3 text-xs text-right"></div>
+                <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': data.estimatedCarbonSaving > 0}">
+                  {{ data.estimatedCarbonSaving || 0}}
+                </div>
               </li>
             </ul>
           </div>
@@ -167,7 +178,40 @@
           </div>
         </div>
         <div *ngIf="!availableRecommendations.length">
-          <p>No Recommendations have been added</p>
+          <p>No more recommendations</p>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <h3 class="text-md">Surplus & Defecits</h3>
+      <div class="flex flex-wrap gap-3 justify-content-center">
+        <div
+          *ngFor="let data of availableDigitalTwinData"
+          pDraggable
+          (onDragStart)="dragStart(data)"
+          (onDragEnd)="dragEnd()"
+          class="digital-twin-card p-3 border-round-xl shadow-1 bg-white"
+          style="width: 250px; height: 250px;">
+          <div class="flex flex-column h-full text-md">
+            <div class="text-center font-semibold text-lg mb-3 text-gray-800">{{ data.type }}</div>
+            <div class="grid flex-grow-1">
+              <div class="col-6 flex flex-column justify-content-center align-items-center">
+                <span class="font-semibold mb-2 text-sm">Total</span>
+                <span [ngClass]="{'text-green-500': !data.deficit, 'text-red-500': data.deficit}">
+              {{ data.total }} {{ data.unit }}
+            </span>
+              </div>
+              <div class="col-6 flex flex-column justify-content-center align-items-center">
+                <span class="font-semibold mb-2 text-sm">Deficit</span>
+                <span [ngClass]="{'text-green-500': !data.deficit, 'text-red-500': data.deficit}">
+              {{ data.deficit ? 'Yes' : 'No' }}
+            </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!availableDigitalTwinData.length">
+          <p>No digital twin data available</p>
         </div>
       </div>
     </div>

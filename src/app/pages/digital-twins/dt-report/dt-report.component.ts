@@ -35,13 +35,15 @@ export class DtReportComponent {
   filteredClusters: any[] = [];
   selectedCluster!: any;
   availableRecommendations: any[] = [];
+  availableDigitalTwinData: any[] = []
   selectedRecommendation: any | null = null;
   appliedRecommendations: any[] = [];
+  appliedDigitalTwinData: any[] = [];
   energyData: any[] = []
-  draggedRecommendation: any;
+  draggedItem: any;
   totalEnergyUsed: number = 0;
   totalCost: number = 0;
-  totalC02Used: number = 0 ;
+  totalC02Used: number = 0;
 
   constructor(private dt: DtService) {
     this.dt.companies.subscribe({
@@ -51,6 +53,7 @@ export class DtReportComponent {
       next: (cluster) => this.clusters = cluster
     })
 
+    // this.dt.getDigitalTwinData(this.selectedCluster);
   }
 
   // Cluster Selection
@@ -66,9 +69,6 @@ export class DtReportComponent {
     this.selectedCluster = event.value;
     this.clusterCompanies = event.value.companies || [];
 
-    this.dt.getDigitalTwinData(this.selectedCluster);
-
-
     const matchedCompanies = this.companies.filter((company: any) =>
       this.clusterCompanies?.some((clusterCompany: any) => clusterCompany.id === company.id)
     );
@@ -78,54 +78,111 @@ export class DtReportComponent {
     }
 
 
+    console.log(this.selectedCluster)
+
     this.availableRecommendations = matchedCompanies
       .flatMap((company: any) => company.recommendations || [])
       .flatMap((recommendationObj: any) => recommendationObj.recommendations || []);
 
     this.availableRecommendations = this.availableRecommendations.map((reco: any, index: number) => {
-        reco.generated_id = index;
-        return reco;
+      reco.generated_id = index;
+      return reco;
     })
 
+
+    this.availableDigitalTwinData = matchedCompanies.flatMap((company: any) => company.digital_twin_data || [])
     const energyData = calculateEnergyData(matchedCompanies);
     this.energyData.push(...energyData);
 
+    const matchedCompanyIds = matchedCompanies.map((company: any) => company.id);
+
+    this.dt.getHHData(matchedCompanyIds).subscribe({
+      next: (res: any) => {
+        console.log(res);
+      },
+      error: (error: any) => {
+        console.log(error)
+      }
+    })
   }
 
 
   // Drag functions
   dragStart(recommendation: any) {
-    this.draggedRecommendation = recommendation;
+    this.draggedItem = recommendation;
   }
 
   dragEnd() {
-    this.draggedRecommendation = null;
+    this.draggedItem = null;
   }
 
   drop() {
-    if (this.draggedRecommendation) {
-      let draggedRecommendationIndex = this.findIndex(this.draggedRecommendation);
-      this.appliedRecommendations = [...(this.appliedRecommendations as any[]), this.draggedRecommendation];
-      this.availableRecommendations = this.availableRecommendations?.filter((val, i) => i != draggedRecommendationIndex);
-      this.draggedRecommendation = null;
+
+    let targetArray = ''
+    if (this.draggedItem?.recommendation) {
+      targetArray = 'recommendations'
+    } else if (this.draggedItem?.type) {
+      targetArray = 'digitalTwinData'
+    } else {
+      return;
+    }
+
+    if (this.draggedItem) {
+      if (targetArray === 'recommendations' && this.draggedItem) {
+        this.dropRecommendation();
+      } else if (targetArray === 'digitalTwinData' && this.draggedItem) {
+        this.dropDigitalTwinReco();
+      }
+      this.draggedItem = null;
     }
   }
 
-  findIndex(recomendation: any) {
-    let index = -1;
-    for (let i = 0; i < (this.availableRecommendations as any[]).length; i++) {
-      if (recomendation.generated_id === (this.availableRecommendations as any[])[i].generated_id) {
-        index = i;
-        break;
-      }
+  dropRecommendation() {
+    const index = this.findIndex(this.draggedItem, this.availableRecommendations);
+    if (index !== -1) {
+      this.appliedRecommendations.push(this.draggedItem);
+      this.availableRecommendations.splice(index, 1);
     }
-    return index;
+  }
+
+  dropDigitalTwinReco() {
+    const index = this.findIndex(this.draggedItem, this.availableDigitalTwinData);
+    if (index !== -1) {
+      this.appliedDigitalTwinData.push(this.draggedItem);
+      this.availableDigitalTwinData.splice(index, 1);
+      console.log(this.appliedDigitalTwinData)
+    }
+  }
+
+  findIndex(item: any, array: any[]) {
+    return array.findIndex(arrayItem =>
+      ('generated_id' in item && item.generated_id === arrayItem.generated_id) ||
+      ('generatedId' in item && item.generatedId === arrayItem.generatedId)
+    );
+  }
+
+  removeItem(item: any, targetArray: 'recommendations' | 'digitalTwinData') {
+    if (targetArray === 'recommendations') {
+      this.removeRecommendation(item);
+    } else if (targetArray === 'digitalTwinData') {
+      this.removeDigitalTwinReco(item);
+    }
   }
 
   removeRecommendation(reco: any) {
-    this.appliedRecommendations = this.appliedRecommendations.filter(rec => rec.generated_id !== reco.generated_id);
+      const index = this.findIndex(reco, this.appliedRecommendations);
+      if (index !== -1) {
+        const [removedReco] = this.appliedRecommendations.splice(index, 1);
+        this.availableRecommendations.push(removedReco);
+      }
+  }
 
-    this.availableRecommendations = [...this.availableRecommendations, reco];
+  removeDigitalTwinReco(reco: any) {
+    const index = this.findIndex(reco, this.appliedDigitalTwinData)
+    if (index !== -1) {
+      const [removedReco] = this.appliedDigitalTwinData.splice(index, 1);
+      this.availableDigitalTwinData.push(removedReco);
+    }
   }
 
   // Calculate Totals
@@ -140,14 +197,14 @@ export class DtReportComponent {
 
     return total;
   }
+
   getTotalCost() {
-    let total =0 ;
+    let total = 0;
     if (this.energyData.length) {
       const totalCost = this.energyData.reduce((sum, fuelType) => sum + (fuelType.totalCost || 0), 0);
       this.totalCost = totalCost;
       return totalCost
     }
-
   }
 
   getTotalCO2e() {
@@ -170,12 +227,12 @@ export class DtReportComponent {
   }
 
   getEnergyDifference() {
-      const energySavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedEnergySaving, 0);
+    const energySavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedEnergySaving, 0);
 
     // Calculate percentage change
     const percentageSavings = (energySavings / this.totalEnergyUsed) * 100;
 
-      return `-${percentageSavings.toFixed(1)}%` ;
+    return `-${percentageSavings.toFixed(1)}%`;
   }
 
   getCostDifference() {
@@ -184,7 +241,7 @@ export class DtReportComponent {
     // Calculate percentage change
     const percentageSavings = (costSavings / this.totalCost) * 100;
 
-    return `-${percentageSavings.toFixed(1)}%` ;
+    return `-${percentageSavings.toFixed(1)}%`;
   }
 
 
