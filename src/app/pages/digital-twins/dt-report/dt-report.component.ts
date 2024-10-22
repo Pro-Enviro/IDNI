@@ -159,7 +159,7 @@ export class DtReportComponent {
     })
 
 
-    // Select Surplus/Deficit recommendations from report page
+    // Select solution recommendations from report page
     this.availableDigitalTwinData = matchedCompanies.flatMap((company: any) => company.digital_twin_data || [])
 
     // Filter if not text is available
@@ -167,37 +167,37 @@ export class DtReportComponent {
 
 
     // SOLUTIONS - Commented code will hide similar solutions
-    // const fuseTwinsOptions = {
-    //   threshold: 0.3,
-    //   includeScore: true,
-    //   keys: ['solutionText']
-    // }
-    //
-    // const fuseTwins = new Fuse(this.availableDigitalTwinData, fuseTwinsOptions);
-    //
-    // this.availableDigitalTwinData.forEach((reco: any) => {
-    //
-    //   const foundDuplicates = fuseTwins.search(reco.solutionText)
-    //     .filter(result => result.item !== reco)
-    //     .map(result => result.item);
-    //
-    //   if (foundDuplicates.length > 0) {
-    //     foundDuplicates.forEach(duplicate => {
-    //       // TODO: Sum up
-    //       // this.sumProperties(reco, duplicate);
-    //
-    //       // Remove duplicate from recommendations
-    //       const indexToRemove = this.availableDigitalTwinData.indexOf(duplicate);
-    //       if (indexToRemove !== -1) {
-    //         this.availableDigitalTwinData.splice(indexToRemove, 1);
-    //       }
-    //
-    //       // Add counter to current Reco
-    //       if (reco.counter) reco.counter++;
-    //       else reco.counter = 1;
-    //     })
-    //   }
-    // })
+    const fuseTwinsOptions = {
+      threshold: 0.0,
+      includeScore: true,
+      keys: ['solutionText']
+    }
+
+    const fuseTwins = new Fuse(this.availableDigitalTwinData, fuseTwinsOptions);
+
+    this.availableDigitalTwinData.forEach((reco: any) => {
+
+      const foundDuplicates = fuseTwins.search(reco.solutionText)
+        .filter(result => result.item !== reco)
+        .map(result => result.item);
+
+      if (foundDuplicates.length > 0) {
+        foundDuplicates.forEach(duplicate => {
+          // TODO: Sum up
+          // this.sumProperties(reco, duplicate);
+
+          // Remove duplicate from recommendations
+          const indexToRemove = this.availableDigitalTwinData.indexOf(duplicate);
+          if (indexToRemove !== -1) {
+            this.availableDigitalTwinData.splice(indexToRemove, 1);
+          }
+
+          // Add counter to current Reco
+          if (reco.counter) reco.counter++;
+          else reco.counter = 1;
+        })
+      }
+    })
 
 
     // Get Non-HH energy data
