@@ -77,12 +77,12 @@
                                  class="p-inputtext-sm"></p-inputNumber>
                 </td>
                 <td>
-                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.paybackPeriod"
+                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.paybackPeriod" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2"
                                  class="p-inputtext-sm"></p-inputNumber>
                 </td>
                 <td>
                   <p-inputNumber [inputStyle]="{'width':'100px'}"
-                                 [(ngModel)]="rec.estimatedCarbonSaving" class="p-inputtext-sm"></p-inputNumber>
+                                 [(ngModel)]="rec.estimatedCarbonSaving" class="p-inputtext-sm" ></p-inputNumber>
                 </td>
                 <td>
                   <p-dropdown [options]="percentOptions" class="p-inputtext-sm" [(ngModel)]="rec.marginOfErrorSavings" [editable]="true"
@@ -334,11 +334,11 @@
                                  class="p-inputtext-sm"></p-inputNumber>
                 </td>
                 <td>
-                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.paybackPeriod"
+                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.paybackPeriod" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2"
                                  class="p-inputtext-sm"></p-inputNumber>
                 </td>
                 <td>
-                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.estimatedCarbonSaving" class="p-inputtext-sm"></p-inputNumber>
+                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.estimatedCarbonSaving" class="p-inputtext-sm" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2"></p-inputNumber>
                 </td>
                 <td>
                   <button pButton class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-trash"

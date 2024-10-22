@@ -665,12 +665,14 @@ export class GenerateReportComponent implements OnInit {
 
     this.energySolution.forEach((solution: DigitalTwinRows) => {
       if (!solution.id) {
+
         if (!solution.company) return;
 
         this.db.saveDigitalTwinRow(solution).subscribe({
           next: (res: any) => {},
           error: (error: any) => console.log(error)
         })
+
       } else {
         this.db.patchDigitalTwinRow(solution.id, solution).subscribe({
           next: (res: any) => {},
