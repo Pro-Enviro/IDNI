@@ -173,6 +173,8 @@ export class DtReportComponent {
         ...d,
         companyName: company.name
       }))
+
+      // return company.digital_twin_data
     })
 
     // Filter if not text is available
