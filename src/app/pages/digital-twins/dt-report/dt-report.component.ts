@@ -120,7 +120,7 @@ export class DtReportComponent {
 
           // Add counter to current Reco
           if (reco.counter) reco.counter++;
-          else reco.counter = 1;
+          else reco.counter = 2;
         })
       }
     })

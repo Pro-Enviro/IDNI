@@ -141,7 +141,7 @@
       </div>
     </div>
     <div class="mt-3">
-      <h3 class="text-md">Available Recommendations</h3>
+      <h3 class="text-md">Individual Company Solutions</h3>
       <div class="flex flex-wrap gap-3 justify-content-center">
         <div
           *ngFor="let reco of availableRecommendations"
@@ -152,7 +152,7 @@
           (onDragEnd)="dragEnd()">
           <div class="flex flex-column h-full text-md">
             <div class="text-center font-semibold text-lg mb-3 text-gray-800">{{ reco.recommendation }}</div>
-            <span *ngIf="reco.counter" class="mb-1">{{ reco.counter }} duplicate </span>
+            <span *ngIf="reco.counter" class="mb-1 text-xs text-gray-700">{{ reco.counter }} companies with this recommendation </span>
             <div class="grid flex-grow-1">
               <div class="col-6 flex flex-column justify-content-center align-items-center">
                 <span class="font-semibold mb-2 text-sm">Energy Saving</span>
@@ -190,7 +190,7 @@
       </div>
     </div>
     <div class="mt-3">
-      <h3 class="text-md">Surplus & Deficits</h3>
+      <h3 class="text-md">Cluster Solutions</h3>
       <div class="flex flex-wrap gap-3 justify-content-center">
         <div
           *ngFor="let data of availableDigitalTwinData"
