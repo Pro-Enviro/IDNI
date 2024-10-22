@@ -149,7 +149,7 @@ export class DtService {
   getHHData = (ids: number[]): Observable<any[]> => {
     if (!ids.length) return of([]);
 
-    // Create an array of observables (to handle multiple ids) - [ob1, ob2, ob3, ...] - This is to return all at the same time once all async is complete
+    // Create an array of observables (to handle multiple company ids) - [ob1, ob2, ob3, ...] - This is to return all at the same time once all async is complete
     const observables = ids.map(id =>
       this.track.getData(id).pipe(
         map(res => this.processData(res)),

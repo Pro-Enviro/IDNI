@@ -29,7 +29,7 @@
       </ul>
     </div>
 
-    <h3 class="text-center">Scenarios</h3>
+<!--    <h3 class="">Digital Twin</h3>-->
     <div class="flex align-items-stretch justify-content-between mt-2">
       <div class="w-full h-full mr-2 flex-shrink-1">
         <p-card styleClass="mb-3 p-3 h-full">
@@ -88,7 +88,7 @@
               <li *ngFor="let data of appliedDigitalTwinData"
                   class="grid align-items-center mb-2 p-2 border-round-sm surface-hover cursor-pointer hover:bg-gray-100"
                   (click)="removeItem(data, 'digitalTwinData')">
-                <div class="col-3 text-xs font-medium ">{{ data.solutionText }})
+                <div class="col-3 text-xs font-medium ">{{ data.solutionText }}
                 </div>
                 <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': data.estimatedEnergySaving > 0}">
                   {{ data.estimatedEnergySaving  | number: '1.0-2' }}
@@ -220,7 +220,7 @@
           style="width: 250px; height: 300px;">
           <div class="flex flex-column  h-full text-md">
             <div class="text-center font-semibold text-lg mb-2 text-gray-800">{{ data.solutionText }}</div>
-            <!--            <span class="mb-1 text-xs text-gray-700">Source: {{ data.companyName }}</span>-->
+                        <span class="mb-1 text-xs text-gray-700">Source: {{ data.companyName }}</span>
             <div class="grid flex-grow-1">
               <div class="col-6 flex flex-column justify-content-center align-items-center">
                 <span class="font-semibold mb-2 text-sm">Energy Saving</span>

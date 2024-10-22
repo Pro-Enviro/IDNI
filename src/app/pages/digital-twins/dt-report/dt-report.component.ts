@@ -82,8 +82,6 @@ export class DtReportComponent {
   }
 
   onClusterSelect = (event: any) => {
-    this.selectedCluster = event.value;
-    this.clusterCompanies = event.value.companies || [];
     this.availableRecommendations = []
     this.availableDigitalTwinData = []
     this.appliedRecommendations = []
@@ -92,6 +90,11 @@ export class DtReportComponent {
     this.totalCost = 0;
     this.totalEnergyUsed = 0;
     this.draggedItem = null;
+    this.energyData = []
+
+
+    this.selectedCluster = event.value;
+    this.clusterCompanies = event.value.companies || [];
 
 
     const matchedCompanies = this.companies.filter((company: any) =>
@@ -163,7 +166,14 @@ export class DtReportComponent {
 
 
     // Select solution recommendations from report page
-    this.availableDigitalTwinData = matchedCompanies.flatMap((company: any) => company.digital_twin_data || [])
+    this.availableDigitalTwinData = matchedCompanies.flatMap((company: any) => {
+      const data = company.digital_twin_data || []
+
+      return data.map((d: any) => ({
+        ...d,
+        companyName: company.name
+      }))
+    })
 
     // Filter if not text is available
     this.availableDigitalTwinData = this.availableDigitalTwinData.filter((company: any) => company?.solutionText)
