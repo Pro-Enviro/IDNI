@@ -678,7 +678,7 @@ export class GenerateReportComponent implements OnInit {
         this.db.saveDigitalTwinRow(solution).subscribe({
           next: (res: any) => {
             if (res.data) {
-              const index = this.energySolution.findIndex((solutions: any) => solutions.generatedId === res.data.generatedId)
+              const index = this.energySolution.findIndex((solutions: DigitalTwinRows) => solutions.generatedId === res.data.generatedId)
               if (index !== -1) {
                 this.energySolution[index] = res.data
               }
@@ -692,7 +692,7 @@ export class GenerateReportComponent implements OnInit {
           next: (res: any) => {
             if (res?.data) {
               const index = this.energySolution.findIndex(
-                (s: DigitalTwinRows) => s.id === solution.id
+                (solutions: DigitalTwinRows) => solutions.id === solution.id
               );
               if (index !== -1) {
                 this.energySolution[index] = res.data;

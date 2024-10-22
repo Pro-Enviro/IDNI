@@ -82,7 +82,7 @@
                 </td>
                 <td>
                   <p-inputNumber [inputStyle]="{'width':'100px'}"
-                                 [(ngModel)]="rec.estimatedCarbonSaving" class="p-inputtext-sm" ></p-inputNumber>
+                                 [(ngModel)]="rec.estimatedCarbonSaving" class="p-inputtext-sm" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2"></p-inputNumber>
                 </td>
                 <td>
                   <p-dropdown [options]="percentOptions" class="p-inputtext-sm" [(ngModel)]="rec.marginOfErrorSavings" [editable]="true"
