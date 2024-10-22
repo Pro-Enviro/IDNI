@@ -145,7 +145,6 @@ export class DtReportComponent {
     // TODO:
     // 1. Prevent duplicate solutions
     // 2. Add conversion calculations
-    // 3. Add emissions calculated for non-hh
 
     // Go through recommendations are collate similar named ones
 
