@@ -6,6 +6,8 @@ import {uploadFiles} from "@directus/sdk";
 import {ASCProps} from "../pages/envirotrack/import/supply/supply.component";
 import {DigitalTwinRows} from "../pages/reports/generate-report/generate-report.component";
 
+import {Cluster, ClusterObject} from "./dt.service";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +23,18 @@ export class DbService {
     return this.http.get(`${this.url}/items/page/${id}${args ? args : ''}`).pipe(
       map((x: any) => x.data)
     )
+  }
+
+  fnAddCluster = (cluster: ClusterObject) => {
+    return this.http.post(`${this.url}/items/digital_twin_cluster`, cluster)
+  }
+  fnEditCluster = (cluster: ClusterObject, id:number) => {
+    return this.http.patch(`${this.url}/items/digital_twin_cluster/${id}`, cluster)
+  }
+
+
+  fnGetClusters = () => {
+    return this.http.get(`${this.url}/items/digital_twin_cluster?fields=id,name,companies.id,companies.name,companies.address,companies.postcode,companies.sector,companies.sic`)
   }
 
   getContentFromCollection(collection: string, args?: any) {

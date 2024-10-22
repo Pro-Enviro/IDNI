@@ -1,0 +1,267 @@
+<p-panel header="Digital Twin Scenarios">
+  <div class="mb-p">
+    <p-card #panel>
+      <div class="grid">
+        <div class="col-10">
+          <!--          <pre>{{clusters | json}}</pre>-->
+          <p-autoComplete
+            [suggestions]="filteredClusters"
+            [(ngModel)]="selectedCluster"
+            [dropdown]="true"
+            placeholder="Cluster Name"
+            optionLabel="name"
+            optionValue="name"
+            (completeMethod)="onSelect($event)"
+            (onSelect)="onClusterSelect($event)"
+          ></p-autoComplete>
+        </div>
+
+      </div>
+    </p-card>
+  </div>
+
+
+  @if (clusterCompanies) {
+    <div class="bg-white shadow-1 p-5 mt-2">
+      <p class="font-semibold">Companies included in this cluster: </p>
+      <ul class="pl-0">
+        <li class="mt-1" *ngFor="let comp of clusterCompanies">{{ comp.name }}</li>
+      </ul>
+    </div>
+
+<!--    <h3 class="">Digital Twin</h3>-->
+    <div class="flex align-items-stretch justify-content-between mt-2">
+      <div class="w-full h-full mr-2 flex-shrink-1">
+        <p-card styleClass="mb-3 p-3 h-full">
+          <ng-template pTemplate="header">
+            <h3 class="m-0 text-center">{{ selectedCluster.name }} Cluster - Current</h3>
+          </ng-template>
+          <div class="flex flex-column">
+            <div class="w-full">
+              <p class="font-semibold">Total Energy Use:</p>
+              <p class="">{{ getTotalEnergy() | number:'1.0-2' }} kWh</p>
+            </div>
+            <div class="w-full mt-1">
+              <p class="font-semibold">Total Cost:</p>
+              <p>{{ getTotalCost() | currency: '£' }}</p>
+            </div>
+            <div class="w-full mt-1">
+              <p class="font-semibold">Total CO2e Emissions:</p>
+              <p>{{ getTotalCO2e() | number:'1.0-2' }} tons</p>
+            </div>
+          </div>
+        </p-card>
+      </div>
+
+      <div class="w-full h-full min-h-full flex-grow-1">
+        <p-card styleClass="mb-3 p-1 h-full" pDroppable (onDrop)="drop()">
+          <ng-template pTemplate="header">
+            <h3 class="m-0 text-center text-primary my-3">Applied Recommendations</h3>
+          </ng-template>
+
+          <div class="applied-recommendations"
+               *ngIf="appliedRecommendations && appliedRecommendations.length > 0 || appliedDigitalTwinData && appliedDigitalTwinData.length > 0">
+            <div class="grid font-bold mb-2 text-xs">
+              <div class="col-3">Recommendation</div>
+              <div class="col-3 text-right">Energy Saving (kWh)</div>
+              <div class="col-3 text-right">Cost Saving (£)</div>
+              <div class="col-3 text-right">Carbon Saving (tCO2e)</div>
+              <!--              <div class="col-2 text-right">Payback (years)</div>-->
+            </div>
+            <ul class="list-none p-0 m-0">
+              <li *ngFor="let reco of appliedRecommendations"
+                  class="grid align-items-center mb-2 p-2 border-round-xs surface-hover cursor-pointer hover:bg-gray-100"
+                  (click)="removeItem(reco, 'recommendations')">
+                <div class="col-3 text-xs font-medium ">{{ reco.recommendation }}</div>
+                <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': reco.estimatedEnergySaving > 0}">
+                  {{ reco.estimatedEnergySaving  | number: '1.0-2' }}
+                </div>
+                <div class="col-3 text-xs text-right"
+                     [ngClass]="{'text-green-500': reco.estimatedSaving > 0, 'text-red-500': reco.estimatedSaving < 0}">
+                  {{ reco.estimatedSaving  | number: '1.0-2' }}
+                </div>
+                <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': reco.estimatedCarbonSaving > 0}">
+                  {{ reco.estimatedCarbonSaving  | number: '1.0-2' }}
+                </div>
+                <!--                <div class="col-2 text-xs text-right">{{ reco.paybackPeriod }}</div>-->
+              </li>
+              <li *ngFor="let data of appliedDigitalTwinData"
+                  class="grid align-items-center mb-2 p-2 border-round-sm surface-hover cursor-pointer hover:bg-gray-100"
+                  (click)="removeItem(data, 'digitalTwinData')">
+                <div class="col-3 text-xs font-medium ">{{ data.solutionText }}
+                </div>
+                <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': data.estimatedEnergySaving > 0}">
+                  {{ data.estimatedEnergySaving  | number: '1.0-2' }}
+                </div>
+                <div class="col-3 text-xs text-right"
+                     [ngClass]="{'text-green-500': data.estimatedSaving > 0, 'text-red-500': data.estimatedSaving < 0}">
+                  {{ data.estimatedSaving  | number: '1.0-2' }}
+                </div>
+                <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': data.estimatedCarbonSaving > 0}">
+                  {{ data.estimatedCarbonSaving  | number: '1.0-2' }}
+                </div>
+              </li>
+
+              <li class="grid align-items-center mb-2 p-2 border-round-sm bg-gray-200 border-top-1 border-gray-300">
+                <div class="col-3 text-xs font-bold">Totals:</div>
+                <div class="col-3 text-xs text-right">{{ getEnergySavingsTotal() | number: '1.0-2' }}</div>
+                <div class="col-3 text-xs text-right">{{ getEstimatedCostSavings() | number: '1.0-2' }}</div>
+                <div class="col-3 text-xs text-right">{{ getEstimatedCarbonSaving() | number: '1.0-2' }}</div>
+
+              </li>
+            </ul>
+          </div>
+
+
+          <div *ngIf="!appliedRecommendations || appliedRecommendations.length === 0"
+               class="text-center text-500 p-4">
+            Drag and drop recommendations here
+          </div>
+
+        </p-card>
+      </div>
+
+      <div class="w-full ml-2 flex-shrink-1">
+        <p-card styleClass="mb-3 p-3 ">
+          <ng-template pTemplate="header">
+            <h3 class="m-0 text-center">After Recommendations</h3>
+          </ng-template>
+          <div class="flex flex-column">
+            <div class="w-full">
+              <p class="font-semibold">Total Energy Use:</p>
+              <p>{{ calculateEnergyImpact() | number:'1.0-2' }} kWh <span
+                *ngIf="appliedRecommendations.length || appliedDigitalTwinData.length"
+                class="text-green-500">({{ getEnergyDifference() }}
+                )</span></p>
+            </div>
+            <div class="w-full mt-1">
+              <p class="font-semibold">Total Cost:</p>
+              <p>{{ calculateCostImpact() | currency: '£' }} <span
+                *ngIf="appliedRecommendations.length || appliedDigitalTwinData.length"
+                class="text-green-500">({{ getCostDifference() }}
+                )</span></p>
+            </div>
+            <div class="w-full mt-1">
+              <p class="font-semibold">Total C02e Emissions:</p>
+              <p>{{ calculateC02Impact() | number:'1.0-2' }} tons <span
+                *ngIf="appliedRecommendations.length || appliedDigitalTwinData.length"
+                class="text-green-500">({{ getEmissionsDifference() }}
+                )</span></p>
+            </div>
+            <div class="w-full mt-1">
+              <p class="font-bold">Implementation Cost:</p>
+              <p>{{ calculateImplementationCost() | currency:'£' }} </p>
+            </div>
+
+          </div>
+        </p-card>
+      </div>
+    </div>
+    <div class="mt-3">
+      <h3 class="text-md">Individual Company Solutions</h3>
+      <div class="flex flex-wrap gap-3 justify-content-center">
+        <div
+          *ngFor="let reco of availableRecommendations"
+          class="recommendation-card p-3 border-round-sm shadow-2 bg-white cursor-pointer"
+          style="width: 250px; min-height: 280px;"
+          pDraggable
+          (onDragStart)="dragStart(reco)"
+          (onDragEnd)="dragEnd()">
+          <div class="flex flex-column h-full text-md">
+            <div class="text-center font-semibold text-lg mb-3 text-gray-800">{{ reco.recommendation }}</div>
+<!--            <span class="mb-1 text-xs text-gray-700">Source: {{ reco.companyName }}</span>-->
+            <div class="grid flex-grow-1">
+              <div class="col-6 flex flex-column justify-content-center align-items-center">
+                <span class="font-semibold mb-2 text-sm">Energy Saving</span>
+                <span [ngClass]="{'text-green-500': reco.estimatedEnergySaving > 0}">
+              {{ reco.estimatedEnergySaving | number: '1.0-2' }} kWh
+            </span>
+              </div>
+              <div class="col-6 flex flex-column justify-content-center align-items-center">
+                <span class="font-semibold mb-2 text-sm">Cost Saving</span>
+                <span
+                  [ngClass]="{'text-green-500': reco.estimatedSaving > 0, 'text-red-500': reco.estimatedSaving < 0}">
+              {{ reco.estimatedSaving | currency: '£' }}
+            </span>
+              </div>
+              <div class="col-6 flex flex-column justify-content-center align-items-center">
+                <span class="font-semibold mb-2 text-sm">Implementation Cost</span>
+                <span class="text-red-500">{{ reco.estimatedCost | currency: '£' }}</span>
+              </div>
+              <div class="col-6 flex flex-column justify-content-center align-items-center">
+                <span class="font-semibold mb-2 text-sm">Carbon Saving</span>
+                <span [ngClass]="{'text-green-500': reco.estimatedCarbonSaving > 0}">
+              {{ reco.estimatedCarbonSaving | number: '1.0-2' }} tCO2e
+            </span>
+              </div>
+            </div>
+            <div class="text-center mt-2">
+              <span class="font-semibold text-sm">Payback Period: </span>
+              <span>{{ reco.paybackPeriod }} years</span>
+            </div>
+            <span *ngIf="reco.counter" class="mb-1 text-xs text-gray-700 mt-1 text-center"><span class="font-bold">{{ reco.counter }}</span> other compan{{ reco.counter > 1 ? 'ies' : 'y' }}
+              with this recommendation </span>
+          </div>
+        </div>
+        <div *ngIf="!availableRecommendations.length">
+          <p>No more recommendations</p>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <h3 class="text-md">Cluster Solutions</h3>
+      <div class="flex flex-wrap gap-3 justify-content-center">
+        <div
+          *ngFor="let data of availableDigitalTwinData"
+          pDraggable
+          (onDragStart)="dragStart(data)"
+          (onDragEnd)="dragEnd()"
+          class="p-3 border-round-sm shadow-2 bg-white"
+          style="width: 250px; height: 300px;">
+          <div class="flex flex-column  h-full text-md">
+            <div class="text-center font-semibold text-lg mb-2 text-gray-800">{{ data.solutionText }}</div>
+<!--                        <span class="mb-1 text-xs text-gray-700">Source: {{ data.companyName }}</span>-->
+            <div class="grid flex-grow-1">
+              <div class="col-6 flex flex-column justify-content-center align-items-center">
+                <span class="font-semibold mb-2 text-sm">Energy Saving</span>
+                <span [ngClass]="{'text-green-500': data.estimatedEnergySaving > 0}">
+              {{ data.estimatedEnergySaving | number: '1.0-2' }} kWh
+            </span>
+              </div>
+              <div class="col-6 flex flex-column justify-content-center align-items-center">
+                <span class="font-semibold mb-2 text-sm">Cost Saving</span>
+                <span
+                  [ngClass]="{'text-green-500': data.estimatedSaving > 0, 'text-red-500': data.estimatedSaving < 0}">
+              {{ data.estimatedSaving | currency: '£' }}
+            </span>
+              </div>
+              <div class="col-6 flex flex-column justify-content-center align-items-center">
+                <span class="font-semibold mb-2 text-sm">Implementation Cost</span>
+                <span class="text-red-500">{{ data.estimatedCost | currency: '£' }}</span>
+              </div>
+              <div class="col-6 flex flex-column justify-content-center align-items-center">
+                <span class="font-semibold mb-2 text-sm">Carbon Saving</span>
+                <span [ngClass]="{'text-green-500': data.estimatedCarbonSaving > 0}">
+              {{ data.estimatedCarbonSaving | number: '1.0-2' }} tCO2e
+            </span>
+              </div>
+            </div>
+            <div class="text-center mt-1">
+              <span class="font-semibold text-sm">Payback Period: </span>
+              <span>{{ data.paybackPeriod }} years</span>
+            </div>
+            <span *ngIf="data.counter" class="my-1 text-xs text-gray-700 text-center"><span class="font-bold">{{ data.counter }}</span>
+              other compan{{ data.counter > 1 ? 'ies' : 'y' }} with this solution </span>
+          </div>
+
+        </div>
+        <div *ngIf="!availableDigitalTwinData.length">
+          <p>No digital twin data available</p>
+        </div>
+      </div>
+    </div>
+  }
+</p-panel>
+
+
+

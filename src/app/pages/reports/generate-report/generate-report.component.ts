@@ -17,10 +17,10 @@ import {UnitsUom} from "../../pet-login-protected/pet-tool-types";
 export interface DigitalTwinRows {
   id?: number
   generatedId: string
-  type: string
-  unit: string
-  total: number
   company: number
+  type?: string
+  unit?: string
+  total?: number
   deficit?: boolean
   solution?: boolean
   solutionText?: string
@@ -43,7 +43,7 @@ export class GenerateReportComponent implements OnInit {
   recommendations: any[] = []
   chartData: any[] = []
   changeOptions: any[] = ['Behavioural', 'Upgrades', 'Changes to existing technology', 'Improvements to building fabric', 'Resource efficiency', 'Other']
-  percentOptions: any[] = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10]
+  percentOptions: any[] = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 15, 20, 25, 30, 35, 40]
   isConsultant: boolean = false;
   typeTotals: any[] = []
   strOptions =  {
@@ -134,6 +134,12 @@ export class GenerateReportComponent implements OnInit {
     return this.recommendations.map((rec: any) => !isNaN(rec[propertyToTotal]) ? parseFloat(rec[propertyToTotal]) : 0)
       .reduce((previousValue: number, currentValue: number) => previousValue + currentValue, 0)
   }
+
+  getClusterTotal = (propertyToTotal: string) => {
+    return this.energySolution.map((rec: any) => !isNaN(rec[propertyToTotal]) ? parseFloat(rec[propertyToTotal]) : 0)
+      .reduce((previousValue: number, currentValue: number) => previousValue + currentValue, 0)
+  }
+
   addNewRecommendation = (assessment?: any, answerField?: any) => {
     let recommendation = new Recommendations()
     recommendation.recommendationId = this.recommendations.length >= 1 ? this.recommendations.length + 1 : 1;
@@ -240,13 +246,13 @@ export class GenerateReportComponent implements OnInit {
   addNewSolution = () => {
     let solution = {
       generatedId: "id" + Math.random().toString(16).slice(2),
-      type: '',
-      unit: '',
-      total: 0,
-      deficit: false,
-      solution: true,
-      solutionText: '',
-      company: this.selectedCompany
+      company: this.selectedCompany,
+      solutionText: 'Add your solution',
+      estimatedEnergySaving:0,
+      estimatedSaving: 0,
+      estimatedCost: 0,
+      estimatedCarbonSaving:0,
+      paybackPeriod: 0
     }
 
     this.energySolution.push(solution)
@@ -328,14 +334,18 @@ export class GenerateReportComponent implements OnInit {
     this.db.getDigitalTwinData(selectedCompany).subscribe({
       next:(res: any) => {
         if (res.data) {
+          // res.data.forEach((data: any) => {
+          //   if (data.deficit) {
+          //     this.energyDeficit.push(data)
+          // } else if (data.solution){
+          //     this.energySolution.push(data)
+          // } else {
+          //     console.log(data)
+          //   this.energySurplus.push(data)
+          // }
+          // })
           res.data.forEach((data: any) => {
-            if (data.deficit) {
-              this.energyDeficit.push(data)
-          } else if (data.solution){
-              this.energySolution.push(data)
-          } else {
-            this.energySurplus.push(data)
-          }
+            this.energySolution.push(data)
           })
         }
       }
@@ -658,29 +668,42 @@ export class GenerateReportComponent implements OnInit {
   saveSolutionData = () => {
     if (!this.selectedCompany) return;
 
+    console.log(this.energySolution)
 
     this.energySolution.forEach((solution: DigitalTwinRows) => {
       if (!solution.id) {
-        let row = {
-          type: solution.type,
-          generatedId: solution.generatedId,
-          company: solution.company,
-          solution: true,
-          solutionText: solution.solutionText
-        }
 
-        if (!row.company) return;
+        if (!solution.company) return;
 
-        this.db.saveDigitalTwinRow(row).subscribe({
-          next: (res: any) => {},
-          error: (error: any) => console.log(error)
+        this.db.saveDigitalTwinRow(solution).subscribe({
+          next: (res: any) => {
+            if (res.data) {
+              const index = this.energySolution.findIndex((solutions: DigitalTwinRows) => solutions.generatedId === res.data.generatedId)
+              if (index !== -1) {
+                this.energySolution[index] = res.data
+              }
+            }
+          },
+          error: (error: any) => console.log(error),
         })
+
       } else {
         this.db.patchDigitalTwinRow(solution.id, solution).subscribe({
-          next: (res: any) => {},
+          next: (res: any) => {
+            if (res?.data) {
+              const index = this.energySolution.findIndex(
+                (solutions: DigitalTwinRows) => solutions.id === solution.id
+              );
+              if (index !== -1) {
+                this.energySolution[index] = res.data;
+              }
+            }
+          },
           error: (error: any) => console.log(error),
         })
       }
+
+      console.log(this.energySolution)
 
     })
     this.msg.add({

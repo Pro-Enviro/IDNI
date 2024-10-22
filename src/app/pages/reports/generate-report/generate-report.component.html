@@ -77,15 +77,15 @@
                                  class="p-inputtext-sm"></p-inputNumber>
                 </td>
                 <td>
-                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.paybackPeriod"
+                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.paybackPeriod" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2"
                                  class="p-inputtext-sm"></p-inputNumber>
                 </td>
                 <td>
                   <p-inputNumber [inputStyle]="{'width':'100px'}"
-                                 [(ngModel)]="rec.estimatedCarbonSaving" class="p-inputtext-sm"></p-inputNumber>
+                                 [(ngModel)]="rec.estimatedCarbonSaving" class="p-inputtext-sm" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2"></p-inputNumber>
                 </td>
                 <td>
-                  <p-dropdown [options]="percentOptions" class="p-inputtext-sm" [(ngModel)]="rec.marginOfErrorSavings"
+                  <p-dropdown [options]="percentOptions" class="p-inputtext-sm" [(ngModel)]="rec.marginOfErrorSavings" [editable]="true"
                               appendTo="body" [style]="{width: '120px'}"></p-dropdown>
                 </td>
                 <td>
@@ -200,142 +200,169 @@
 
           </p-table>
         </p-tabPanel>
-        <p-tabPanel header="Current Energy Excess">
-          <p-table [value]="energySurplus" styleClass="p-datatable-sm" [columns]="cols">
-            <ng-template pTemplate="caption">
-              <h3 class="p-3">Excess Energy</h3>
-            </ng-template>
-            <ng-template pTemplate="header">
-              <tr>
-                <th class="font-semibold text-sm">Energy Type</th>
-                <th class="font-semibold text-sm">UoM</th>
-                <th class="font-semibold text-sm">Total</th>
-                <th></th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-surplus let-i="rowIndex">
-              <tr class="breakdownRow" *ngIf="surplus">
-                <td class="font-normal text-sm"><input pInputText rows="2" cols="30" pInputTextarea
-                                                       [(ngModel)]="surplus.type" style="resize: none"
-                                                       class="p-inputtext-sm w-full mr-2"/></td>
-                <td class="font-normal text-sm">
-                  <p-dropdown [options]="unitTypes" class="p-inputtext-sm" [(ngModel)]="surplus.unit" appendTo="body"
-                              [style]="{width: '120px'}"></p-dropdown>
-                </td>
-                <td class="font-normal text-sm">
-                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="surplus.total"
-                                 class="p-inputtext-sm"></p-inputNumber>
-                </td>
-                <td>
-                  <button pButton class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-trash"
-                          (click)="deleteSurplus(surplus)"></button>
-                </td>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="footer">
-              <tr>
-                <td class="w-3 p-2"></td>
-                <td colspan="2"></td>
-                <td class="w-3 p-2">
-                  <button label="Add New Row" pButton
-                          class="p-button p-button-outlined btn btn-dark w-full mr-2 text-sm" icon="pi pi-plus"
-                          (click)="addNewSurplus()"></button>
-                </td>
-              </tr>
-              <div class="mt-2">
-                <button type="button" icon="pi pi-save" label="Save" pButton class="btn-style text-sm"
-                        (click)="saveSurplusData()"></button>
-              </div>
-            </ng-template>
-          </p-table>
-        </p-tabPanel>
-        <p-tabPanel header="Current Energy Deficit">
-          <p-table [value]="energyDeficit" styleClass="p-datatable-sm" [columns]="cols">
-            <ng-template pTemplate="caption">
-              <h3 class="p-3">Energy Deficit</h3>
-            </ng-template>
-            <ng-template pTemplate="header">
-              <tr>
-                <th class="font-semibold text-sm">Energy Type</th>
-                <th class="font-semibold text-sm">UoM</th>
-                <th class="font-semibold text-sm">Total</th>
-                <th></th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-deficit let-i="rowIndex">
-              <tr class="breakdownRow" *ngIf="deficit">
-                <td class="font-normal text-sm"><input pInputText rows="2" cols="30" pInputTextarea
-                                                       [(ngModel)]="deficit.type" style="resize: none"
-                                                       class="p-inputtext-sm w-full mr-2"/></td>
-                <td class="font-normal text-sm">
-                  <p-dropdown [options]="unitTypes" class="p-inputtext-sm" [(ngModel)]="deficit.unit" appendTo="body"
-                              [style]="{width: '120px'}"></p-dropdown>
-                </td>
-                <td class="font-normal text-sm">
-                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="deficit.total"
-                                 class="p-inputtext-sm"></p-inputNumber>
-                </td>
-                <td>
-                  <button pButton class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-trash"
-                          (click)="deleteDeficit(deficit)"></button>
-                </td>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="footer">
-              <tr>
-                <td class="w-3 p-2"></td>
-                <td colspan="2"></td>
-                <td class="w-3 p-2">
-                  <button label="Add New Energy surplus" pButton
-                          class="p-button p-button-outlined btn btn-dark w-full mr-2 text-sm" icon="pi pi-plus"
-                          (click)="addNewDeficit()"></button>
-                </td>
-              </tr>
-              <div class="mt-2">
-                <button type="button" icon="pi pi-save" label="Save" pButton class="btn-style text-sm"
-                        (click)="saveSurplusData(true)"></button>
-              </div>
+<!--        <p-tabPanel header="Current Energy Excess">-->
+<!--          <p-table [value]="energySurplus" styleClass="p-datatable-sm" [columns]="cols">-->
+<!--            <ng-template pTemplate="caption">-->
+<!--              <h3 class="p-3">Excess Energy</h3>-->
+<!--            </ng-template>-->
+<!--            <ng-template pTemplate="header">-->
+<!--              <tr>-->
+<!--                <th class="font-semibold text-sm">Energy Type</th>-->
+<!--                <th class="font-semibold text-sm">UoM</th>-->
+<!--                <th class="font-semibold text-sm">Total</th>-->
+<!--                <th></th>-->
+<!--              </tr>-->
+<!--            </ng-template>-->
+<!--            <ng-template pTemplate="body" let-surplus let-i="rowIndex">-->
+<!--              <tr class="breakdownRow" *ngIf="surplus">-->
+<!--                <td class="font-normal text-sm"><input pInputText rows="2" cols="30" pInputTextarea-->
+<!--                                                       [(ngModel)]="surplus.type" style="resize: none"-->
+<!--                                                       class="p-inputtext-sm w-full mr-2"/></td>-->
+<!--                <td class="font-normal text-sm">-->
+<!--                  <p-dropdown [options]="unitTypes" class="p-inputtext-sm" [(ngModel)]="surplus.unit" appendTo="body"-->
+<!--                              [style]="{width: '120px'}"></p-dropdown>-->
+<!--                </td>-->
+<!--                <td class="font-normal text-sm">-->
+<!--                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="surplus.total"-->
+<!--                                 class="p-inputtext-sm"></p-inputNumber>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <button pButton class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-trash"-->
+<!--                          (click)="deleteSurplus(surplus)"></button>-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--            </ng-template>-->
+<!--            <ng-template pTemplate="footer">-->
+<!--              <tr>-->
+<!--                <td class="w-3 p-2"></td>-->
+<!--                <td colspan="2"></td>-->
+<!--                <td class="w-3 p-2">-->
+<!--                  <button label="Add New Row" pButton-->
+<!--                          class="p-button p-button-outlined btn btn-dark w-full mr-2 text-sm" icon="pi pi-plus"-->
+<!--                          (click)="addNewSurplus()"></button>-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--              <div class="mt-2">-->
+<!--                <button type="button" icon="pi pi-save" label="Save" pButton class="btn-style text-sm"-->
+<!--                        (click)="saveSurplusData()"></button>-->
+<!--              </div>-->
+<!--            </ng-template>-->
+<!--          </p-table>-->
+<!--        </p-tabPanel>-->
+<!--        <p-tabPanel header="Current Energy Deficit">-->
+<!--          <p-table [value]="energyDeficit" styleClass="p-datatable-sm" [columns]="cols">-->
+<!--            <ng-template pTemplate="caption">-->
+<!--              <h3 class="p-3">Energy Deficit</h3>-->
+<!--            </ng-template>-->
+<!--            <ng-template pTemplate="header">-->
+<!--              <tr>-->
+<!--                <th class="font-semibold text-sm">Energy Type</th>-->
+<!--                <th class="font-semibold text-sm">UoM</th>-->
+<!--                <th class="font-semibold text-sm">Total</th>-->
+<!--                <th></th>-->
+<!--              </tr>-->
+<!--            </ng-template>-->
+<!--            <ng-template pTemplate="body" let-deficit let-i="rowIndex">-->
+<!--              <tr class="breakdownRow" *ngIf="deficit">-->
+<!--                <td class="font-normal text-sm"><input pInputText rows="2" cols="30" pInputTextarea-->
+<!--                                                       [(ngModel)]="deficit.type" style="resize: none"-->
+<!--                                                       class="p-inputtext-sm w-full mr-2"/></td>-->
+<!--                <td class="font-normal text-sm">-->
+<!--                  <p-dropdown [options]="unitTypes" class="p-inputtext-sm" [(ngModel)]="deficit.unit" appendTo="body"-->
+<!--                              [style]="{width: '120px'}"></p-dropdown>-->
+<!--                </td>-->
+<!--                <td class="font-normal text-sm">-->
+<!--                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="deficit.total"-->
+<!--                                 class="p-inputtext-sm"></p-inputNumber>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <button pButton class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-trash"-->
+<!--                          (click)="deleteDeficit(deficit)"></button>-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--            </ng-template>-->
+<!--            <ng-template pTemplate="footer">-->
+<!--              <tr>-->
+<!--                <td class="w-3 p-2"></td>-->
+<!--                <td colspan="2"></td>-->
+<!--                <td class="w-3 p-2">-->
+<!--                  <button label="Add New Energy surplus" pButton-->
+<!--                          class="p-button p-button-outlined btn btn-dark w-full mr-2 text-sm" icon="pi pi-plus"-->
+<!--                          (click)="addNewDeficit()"></button>-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--              <div class="mt-2">-->
+<!--                <button type="button" icon="pi pi-save" label="Save" pButton class="btn-style text-sm"-->
+<!--                        (click)="saveSurplusData(true)"></button>-->
+<!--              </div>-->
 
-            </ng-template>
-          </p-table>
-        </p-tabPanel>
-        <p-tabPanel header="Solutions">
+<!--            </ng-template>-->
+<!--          </p-table>-->
+<!--        </p-tabPanel>-->
+        <p-tabPanel header="Cluster Solutions">
           <p-table [value]="energySolution" styleClass="p-datatable-sm" [columns]="cols">
             <ng-template pTemplate="caption">
               <h3 class="p-3">Solutions</h3>
             </ng-template>
             <ng-template pTemplate="header">
               <tr>
-                <th class="font-semibold text-sm">Energy Type</th>
-                <th class="font-semibold text-sm">Solution description</th>
-                <th></th>
+                <th class="font-semibold text-sm">Recommendation</th>
+                <th class="font-semibold text-sm">Estimated Annual Energy Saving (kWh/ yr)</th>
+                <th class="font-semibold text-sm">Estimated Annual Saving (£ exc. VAT/yr)</th>
+                <th class="font-semibold text-sm">Estimated Cost to implement (£ excl. VAT)</th>
+                <th class="font-semibold text-sm">Payback Period</th>
+                <th class="font-semibold text-sm">Estimated Annual carbon saving (tCo2e/ yr)</th>
                 <th></th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-solution let-i="rowIndex">
-              <tr class="breakdownRow" *ngIf="solution">
-                <td class="font-normal text-sm">
-                  <input pInputText rows="2" cols="30" pInputTextarea
-                                                       [(ngModel)]="solution.type" style="resize: none"
-                                                       class="p-inputtext-sm w-full mr-2"/></td>
-
-                <td class="font-normal text-sm"><input pInputText rows="2" cols="30" pInputTextarea
-                                                       [(ngModel)]="solution.solutionText" style="resize: none"
-                                                       class="p-inputtext-sm w-full mr-2"/></td>
-
-                <td></td>
+            <ng-template pTemplate="body" let-rec let-i="rowIndex">
+              <tr>
+                <td>
+                  <textarea rows="2" cols="30" pInputTextarea [(ngModel)]="rec.solutionText" style="resize: none"
+                            class="p-inputtext-sm w-full mr-2"></textarea>
+                </td>
+                <td>
+                  <p-inputNumber [inputStyle]="{'width':'100px'}" class="p-inputtext-sm"
+                                 [(ngModel)]="rec.estimatedEnergySaving"></p-inputNumber>
+                </td>
+                <td>
+                  <p-inputNumber [inputStyle]="{'width':'100px'}" class="p-inputtext-sm"
+                                 [(ngModel)]="rec.estimatedSaving"></p-inputNumber>
+                </td>
+                <td>
+                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.estimatedCost"
+                                 class="p-inputtext-sm"></p-inputNumber>
+                </td>
+                <td>
+                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.paybackPeriod" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2"
+                                 class="p-inputtext-sm"></p-inputNumber>
+                </td>
+                <td>
+                  <p-inputNumber [inputStyle]="{'width':'100px'}" [(ngModel)]="rec.estimatedCarbonSaving" class="p-inputtext-sm" mode="decimal" [minFractionDigits]="0" [maxFractionDigits]="2"></p-inputNumber>
+                </td>
                 <td>
                   <button pButton class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-trash"
-                          (click)="deleteSolution(solution)"></button>
+                          (click)="deleteSolution(rec)"></button>
                 </td>
               </tr>
             </ng-template>
             <ng-template pTemplate="footer">
               <tr>
+                <td>Totals</td>
+                <td>{{ getClusterTotal('estimatedEnergySaving')  | number: '1.0-2'}} kWh/ yr</td>
+                <td>£ {{ getClusterTotal('estimatedSaving')| number: '1.0-2' }}</td>
+                <td>£ {{ getClusterTotal('estimatedCost') | number: '1.0-2' }}</td>
+                <td></td>
+                <td>{{ getClusterTotal('estimatedCarbonSaving')  | number: '1.0-2'}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
                 <td class="w-3 p-2"></td>
-                <td colspan="2"></td>
+                <td colspan="4"></td>
                 <td class="w-3 p-2">
-                  <button label="Add New Energy surplus" pButton
+                  <button label="Add New Cluster Solution" pButton
                           class="p-button p-button-outlined btn btn-dark w-full mr-2 text-sm" icon="pi pi-plus"
                           (click)="addNewSolution()"></button>
                 </td>
