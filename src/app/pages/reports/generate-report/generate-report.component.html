@@ -318,7 +318,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-rec let-i="rowIndex">
               <tr>
-                <td>
+                <td class="p-3">
                   <textarea rows="2" cols="30" pInputTextarea [(ngModel)]="rec.solutionText" style="resize: none"
                             class="p-inputtext-sm w-full mr-2"></textarea>
                 </td>
@@ -349,7 +349,7 @@
             </ng-template>
             <ng-template pTemplate="footer">
               <tr>
-                <td>Totals</td>
+                <td class="p-3">Totals</td>
                 <td>{{ getClusterTotal('estimatedEnergySaving')  | number: '1.0-2'}} kWh/ yr</td>
                 <td>£ {{ getClusterTotal('estimatedSaving')| number: '1.0-2' }}</td>
                 <td>£ {{ getClusterTotal('estimatedCost') | number: '1.0-2' }}</td>
@@ -358,7 +358,7 @@
                 <td></td>
               </tr>
               <tr>
-                <td class="w-3 p-2">
+                <td class="w-3 p-3">
                   <button label="Add New Cluster Solution" pButton class="p-button btn-dark w-full mr-2 text-sm" icon="pi pi-plus"  (click)="addNewSolution()"></button>
                 </td>
                 <td colspan="8"></td>
