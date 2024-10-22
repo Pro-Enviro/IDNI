@@ -345,7 +345,6 @@ export class GenerateReportComponent implements OnInit {
           // }
           // })
           res.data.forEach((data: any) => {
-            console.log(data)
             this.energySolution.push(data)
           })
         }
@@ -677,16 +676,34 @@ export class GenerateReportComponent implements OnInit {
         if (!solution.company) return;
 
         this.db.saveDigitalTwinRow(solution).subscribe({
-          next: (res: any) => {},
-          error: (error: any) => console.log(error)
+          next: (res: any) => {
+            if (res.data) {
+              const index = this.energySolution.findIndex((solutions: any) => solutions.generatedId === res.data.generatedId)
+              if (index !== -1) {
+                this.energySolution[index] = res.data
+              }
+            }
+          },
+          error: (error: any) => console.log(error),
         })
 
       } else {
         this.db.patchDigitalTwinRow(solution.id, solution).subscribe({
-          next: (res: any) => {},
+          next: (res: any) => {
+            if (res?.data) {
+              const index = this.energySolution.findIndex(
+                (s: DigitalTwinRows) => s.id === solution.id
+              );
+              if (index !== -1) {
+                this.energySolution[index] = res.data;
+              }
+            }
+          },
           error: (error: any) => console.log(error),
         })
       }
+
+      console.log(this.energySolution)
 
     })
     this.msg.add({
