@@ -301,7 +301,7 @@
 <!--          </p-table>-->
 <!--        </p-tabPanel>-->
         <p-tabPanel header="Cluster Solutions">
-          <p-table [value]="energySolution" styleClass="p-datatable-sm" [columns]="cols">
+          <p-table [value]="energySolution" styleClass="p-datatable-sm" [columns]="cols" [tableStyle]="{'min-width': '60rem'}">
             <ng-template pTemplate="caption">
               <h3 class="p-3">Solutions</h3>
             </ng-template>
@@ -356,22 +356,16 @@
                 <td></td>
                 <td>{{ getClusterTotal('estimatedCarbonSaving')  | number: '1.0-2'}}</td>
                 <td></td>
-                <td></td>
-                <td></td>
               </tr>
               <tr>
-                <td class="w-3 p-2"></td>
-                <td colspan="4"></td>
                 <td class="w-3 p-2">
-                  <button label="Add New Cluster Solution" pButton
-                          class="p-button p-button-outlined btn btn-dark w-full mr-2 text-sm" icon="pi pi-plus"
-                          (click)="addNewSolution()"></button>
+                  <button label="Add New Cluster Solution" pButton class="p-button btn-dark w-full mr-2 text-sm" icon="pi pi-plus"  (click)="addNewSolution()"></button>
                 </td>
+                <td colspan="8"></td>
               </tr>
               <div class="mt-2">
                 <button type="button" icon="pi pi-save" label="Save" pButton class="btn-style text-sm" (click)="saveSolutionData()"></button>
               </div>
-
             </ng-template>
           </p-table>
         </p-tabPanel>
