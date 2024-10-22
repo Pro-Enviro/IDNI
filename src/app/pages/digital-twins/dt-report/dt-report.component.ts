@@ -110,10 +110,13 @@ export class DtReportComponent {
           company: company.name
         }
 
+
         return obj;
       })
       .flatMap((recommendationObj: any) => {
-        const data = recommendationObj.recommendations || []
+        const data = recommendationObj?.recommendations || []
+
+        if (!data.recommendations?.length) return []
 
         return data.recommendations.map((rec: any) => ({
           ...rec,
