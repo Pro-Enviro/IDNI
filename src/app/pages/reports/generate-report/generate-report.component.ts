@@ -663,6 +663,8 @@ export class GenerateReportComponent implements OnInit {
   saveSolutionData = () => {
     if (!this.selectedCompany) return;
 
+    console.log(this.energySolution)
+
     this.energySolution.forEach((solution: DigitalTwinRows) => {
       if (!solution.id) {
 

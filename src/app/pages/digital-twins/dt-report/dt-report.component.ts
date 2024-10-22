@@ -75,10 +75,10 @@ export class DtReportComponent {
   }
 
   sumProperties = (item1: any, item2: any) => {
-    item1.estimatedEnergySaving += item2.estimatedEnergySaving || 0;
-    item1.estimatedCarbonSaving += item2.estimatedCarbonSaving || 0;
-    item1.estimatedCost += item2.estimatedCost || 0;
-    item1.estimatedSaving += item2.estimatedSaving || 0;
+    item1.estimatedEnergySaving += item2?.estimatedEnergySaving || 0;
+    item1.estimatedCarbonSaving += item2?.estimatedCarbonSaving || 0;
+    item1.estimatedCost += item2?.estimatedCost || 0;
+    item1.estimatedSaving += item2?.estimatedSaving || 0;
   }
 
   onClusterSelect = (event: any) => {
