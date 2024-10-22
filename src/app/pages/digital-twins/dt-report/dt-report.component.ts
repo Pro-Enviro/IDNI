@@ -37,7 +37,6 @@ export class DtReportComponent {
   selectedCluster!: any;
   availableRecommendations: any[] = [];
   availableDigitalTwinData: any[] = []
-  selectedRecommendation: any | null = null;
   appliedRecommendations: any[] = [];
   appliedDigitalTwinData: any[] = [];
   energyData: any[] = []
@@ -76,6 +75,15 @@ export class DtReportComponent {
   onClusterSelect = (event: any) => {
     this.selectedCluster = event.value;
     this.clusterCompanies = event.value.companies || [];
+    this.availableRecommendations = []
+    this.availableDigitalTwinData = []
+    this.appliedRecommendations = []
+    this.appliedDigitalTwinData = []
+    this.totalC02Used = 0;
+    this.totalCost = 0;
+    this.totalEnergyUsed = 0;
+    this.draggedItem = null;
+
 
     const matchedCompanies = this.companies.filter((company: any) =>
       this.clusterCompanies?.some((clusterCompany: any) => clusterCompany.id === company.id)
@@ -134,6 +142,11 @@ export class DtReportComponent {
     this.availableDigitalTwinData = this.availableDigitalTwinData.filter((company: any) => company?.solutionText)
 
 
+    // TODO:
+    // 1. Prevent duplicate solutions
+    // 2. Add conversion calculations
+    // 3. Add emissions calculated for non-hh
+
     // Go through recommendations are collate similar named ones
 
     // const fuseTwins = new Fuse(this.availableDigitalTwinData, fuseOptions);
@@ -168,8 +181,10 @@ export class DtReportComponent {
     // Get Non-HH energy data
     const energyData = calculateEnergyData(matchedCompanies);
 
+
     this.energyData.push(...energyData);
 
+    console.log(this.energyData)
 
     const matchedCompanyIds = matchedCompanies.map((company: any) => company.id);
 
@@ -295,45 +310,69 @@ export class DtReportComponent {
       this.totalCost = totalCost;
       return totalCost
     }
+    return total;
   }
 
   getTotalCO2e() {
-    return 0;
+    let total = 0;
+    if (this.energyData.length) {
+      const totalCost = this.energyData.reduce((sum, fuelType) => sum + (fuelType.emissions || 0), 0);
+      this.totalC02Used = totalCost;
+      return totalCost
+    }
+
+    return total;
   }
+
+  getEnergySavingsTotal = () => {
+    const energySavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedEnergySaving, 0);
+    const energySavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedEnergySaving, 0)
+
+    return energySavings + energySavingsFromTwin
+  }
+
+  getEstimatedCostSavings = ()  => {
+    const costSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedSaving, 0);
+    const costSavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedSaving, 0)
+
+    return costSavings + costSavingsFromTwin
+  }
+
+  getEstimatedCarbonSaving = () => {
+    const co2eSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedCarbonSaving, 0);
+    const co2eSavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedCarbonSaving, 0)
+    return co2eSavings + co2eSavingsFromTwin;
+  }
+
 
   calculateEnergyImpact() {
     if (!this.totalEnergyUsed) return 0
-
-    const energySavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedEnergySaving, 0);
-    const energySavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedEnergySaving, 0)
-    return this.totalEnergyUsed - (energySavings + energySavingsFromTwin);
-  }
-
-  calculateC02Impact() {
-    if (!this.totalC02Used) return 0
-
-    const co2eSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedCarbonSaving, 0);
-    const co2eSavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedCarbonSaving, 0)
-    return this.totalC02Used - (co2eSavings + co2eSavingsFromTwin);
+    const energySavings = this.getEnergySavingsTotal()
+    return this.totalEnergyUsed - energySavings;
   }
 
   calculateCostImpact() {
     if (!this.totalCost) return 0
-
-    const costSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedSaving, 0);
-    const costSavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedSaving, 0)
-
-    return this.totalCost - (costSavings + costSavingsFromTwin);
+    const costSavings = this.getEstimatedCostSavings()
+    return this.totalCost - costSavings;
   }
+
+  calculateC02Impact() {
+    if (!this.totalC02Used) return 0
+    const costSaving = this.getEstimatedCarbonSaving()
+    return this.totalC02Used - costSaving;
+  }
+
+
+  // Percentage Calculations
 
   getEnergyDifference() {
     if (!this.totalEnergyUsed) return 0
 
-    const energySavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedEnergySaving, 0);
-    const energySavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedEnergySaving, 0)
+    const energySavings = this.getEnergySavingsTotal()
 
     // Calculate percentage change
-    const percentageSavings = ((energySavings + energySavingsFromTwin) / this.totalEnergyUsed) * 100;
+    const percentageSavings = (energySavings / this.totalEnergyUsed) * 100;
 
     return `-${percentageSavings.toFixed(1)}%`;
   }
@@ -341,11 +380,10 @@ export class DtReportComponent {
   getCostDifference() {
     if (!this.totalCost) return 0;
 
-    const costSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedSaving, 0);
-    const costSavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedSaving, 0)
+    const costSavings = this.getEstimatedCostSavings()
 
     // Calculate percentage change
-    const percentageSavings = ((costSavings + costSavingsFromTwin) / this.totalCost) * 100;
+    const percentageSavings = (costSavings / this.totalCost) * 100;
 
     return `-${percentageSavings.toFixed(1)}%`;
   }
@@ -354,11 +392,10 @@ export class DtReportComponent {
   getEmissionsDifference() {
     if (!this.totalC02Used) return 0;
 
-    const emissionSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedCarbonSaving, 0);
-    const emissionSavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedCarbonSaving, 0)
+    const carbonSavings = this.getEstimatedCarbonSaving()
 
     // Calculate percentage change
-    const percentageSavings = ((emissionSavings + emissionSavingsFromTwin) / this.totalC02Used) * 100;
+    const percentageSavings = (carbonSavings / this.totalC02Used) * 100;
 
     return `-${percentageSavings.toFixed(1)}%`;
   }
@@ -370,4 +407,6 @@ export class DtReportComponent {
 
     return implementationCost + implementationCostFromTwin;
   }
+
+
 }
