@@ -134,6 +134,12 @@ export class GenerateReportComponent implements OnInit {
     return this.recommendations.map((rec: any) => !isNaN(rec[propertyToTotal]) ? parseFloat(rec[propertyToTotal]) : 0)
       .reduce((previousValue: number, currentValue: number) => previousValue + currentValue, 0)
   }
+
+  getClusterTotal = (propertyToTotal: string) => {
+    return this.energySolution.map((rec: any) => !isNaN(rec[propertyToTotal]) ? parseFloat(rec[propertyToTotal]) : 0)
+      .reduce((previousValue: number, currentValue: number) => previousValue + currentValue, 0)
+  }
+
   addNewRecommendation = (assessment?: any, answerField?: any) => {
     let recommendation = new Recommendations()
     recommendation.recommendationId = this.recommendations.length >= 1 ? this.recommendations.length + 1 : 1;

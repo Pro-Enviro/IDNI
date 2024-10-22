@@ -348,6 +348,17 @@
             </ng-template>
             <ng-template pTemplate="footer">
               <tr>
+                <td>Totals</td>
+                <td>{{ getClusterTotal('estimatedEnergySaving')  | number: '1.0-2'}} kWh/ yr</td>
+                <td>£ {{ getClusterTotal('estimatedSaving')| number: '1.0-2' }}</td>
+                <td>£ {{ getClusterTotal('estimatedCost') | number: '1.0-2' }}</td>
+                <td></td>
+                <td>{{ getClusterTotal('estimatedCarbonSaving')  | number: '1.0-2'}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
                 <td class="w-3 p-2"></td>
                 <td colspan="4"></td>
                 <td class="w-3 p-2">
