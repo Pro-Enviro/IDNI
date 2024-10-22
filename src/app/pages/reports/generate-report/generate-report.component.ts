@@ -17,10 +17,10 @@ import {UnitsUom} from "../../pet-login-protected/pet-tool-types";
 export interface DigitalTwinRows {
   id?: number
   generatedId: string
-  type: string
-  unit: string
-  total: number
   company: number
+  type?: string
+  unit?: string
+  total?: number
   deficit?: boolean
   solution?: boolean
   solutionText?: string
@@ -240,13 +240,13 @@ export class GenerateReportComponent implements OnInit {
   addNewSolution = () => {
     let solution = {
       generatedId: "id" + Math.random().toString(16).slice(2),
-      type: '',
-      unit: '',
-      total: 0,
-      deficit: false,
-      solution: true,
-      solutionText: '',
-      company: this.selectedCompany
+      company: this.selectedCompany,
+      solutionText: 'Add your solution',
+      estimatedEnergySaving:0,
+      estimatedSaving: 0,
+      estimatedCost: 0,
+      estimatedCarbonSaving:0,
+      paybackPeriod: 0
     }
 
     this.energySolution.push(solution)
@@ -328,14 +328,19 @@ export class GenerateReportComponent implements OnInit {
     this.db.getDigitalTwinData(selectedCompany).subscribe({
       next:(res: any) => {
         if (res.data) {
+          // res.data.forEach((data: any) => {
+          //   if (data.deficit) {
+          //     this.energyDeficit.push(data)
+          // } else if (data.solution){
+          //     this.energySolution.push(data)
+          // } else {
+          //     console.log(data)
+          //   this.energySurplus.push(data)
+          // }
+          // })
           res.data.forEach((data: any) => {
-            if (data.deficit) {
-              this.energyDeficit.push(data)
-          } else if (data.solution){
-              this.energySolution.push(data)
-          } else {
-            this.energySurplus.push(data)
-          }
+            console.log(data)
+            this.energySolution.push(data)
           })
         }
       }
@@ -658,20 +663,11 @@ export class GenerateReportComponent implements OnInit {
   saveSolutionData = () => {
     if (!this.selectedCompany) return;
 
-
     this.energySolution.forEach((solution: DigitalTwinRows) => {
       if (!solution.id) {
-        let row = {
-          type: solution.type,
-          generatedId: solution.generatedId,
-          company: solution.company,
-          solution: true,
-          solutionText: solution.solutionText
-        }
+        if (!solution.company) return;
 
-        if (!row.company) return;
-
-        this.db.saveDigitalTwinRow(row).subscribe({
+        this.db.saveDigitalTwinRow(solution).subscribe({
           next: (res: any) => {},
           error: (error: any) => console.log(error)
         })

@@ -64,7 +64,7 @@
             <div class="grid font-bold mb-2 text-xs">
               <div class="col-3">Recommendation</div>
               <div class="col-3 text-right">Energy Saving (kWh)</div>
-              <div class="col-3 text-right">Cost Saving ($)</div>
+              <div class="col-3 text-right">Cost Saving (£)</div>
               <div class="col-3 text-right">Carbon Saving (tCO2e)</div>
               <!--              <div class="col-2 text-right">Payback (years)</div>-->
             </div>
@@ -88,14 +88,17 @@
               <li *ngFor="let data of appliedDigitalTwinData"
                   class="grid align-items-center mb-2 p-2 border-round-sm surface-hover cursor-pointer hover:bg-gray-100"
                   (click)="removeItem(data, 'digitalTwinData')">
-                <div class="col-3 text-xs font-medium ">{{ data.type }}({{ data.deficit ? 'Deficit' : 'Surplus' }})
+                <div class="col-3 text-xs font-medium ">{{ data.solutionText }})
                 </div>
-                <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': data.total > 0}">
-                  {{ data.deficit ? -data.total : data.total }}
+                <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': data.estimatedEnergySaving > 0}">
+                  {{ data.estimatedEnergySaving }}
                 </div>
-                <div class="col-3 text-xs text-right"></div>
+                <div class="col-3 text-xs text-right"
+                     [ngClass]="{'text-green-500': data.estimatedSaving > 0, 'text-red-500': data.estimatedSaving < 0}">
+                  {{ data.estimatedSaving }}
+                </div>
                 <div class="col-3 text-xs text-right" [ngClass]="{'text-green-500': data.estimatedCarbonSaving > 0}">
-                  {{ data.estimatedCarbonSaving || 0 }}
+                  {{ data.estimatedCarbonSaving }}
                 </div>
               </li>
             </ul>
@@ -136,6 +139,11 @@
                 class="text-green-500">({{ getEmissionsDifference() }}
                 )</span></p>
             </div>
+            <div class="w-full mt-1">
+              <p class="font-bold">Implementation Cost:</p>
+              <p>{{ calculateImplementationCost() | currency:'£'}} </p>
+            </div>
+
           </div>
         </p-card>
       </div>
@@ -164,12 +172,12 @@
                 <span class="font-semibold mb-2 text-sm">Cost Saving</span>
                 <span
                   [ngClass]="{'text-green-500': reco.estimatedSaving > 0, 'text-red-500': reco.estimatedSaving < 0}">
-              ${{ reco.estimatedSaving }}
+              {{ reco.estimatedSaving | currency: '£' }}
             </span>
               </div>
               <div class="col-6 flex flex-column justify-content-center align-items-center">
                 <span class="font-semibold mb-2 text-sm">Implementation Cost</span>
-                <span class="text-red-500">${{ reco.estimatedCost }}</span>
+                <span class="text-red-500">{{ reco.estimatedCost | currency: '£'}}</span>
               </div>
               <div class="col-6 flex flex-column justify-content-center align-items-center">
                 <span class="font-semibold mb-2 text-sm">Carbon Saving</span>
@@ -198,22 +206,37 @@
           (onDragStart)="dragStart(data)"
           (onDragEnd)="dragEnd()"
           class="digital-twin-card p-3 border-round-sm shadow-2 bg-white"
-          style="width: 200px; height: 200px;">
+          style="width: 250px; height: 250px;">
           <div class="flex flex-column h-full text-md">
-            <div class="text-center font-semibold text-lg mb-3 text-gray-800">{{ data.type }}</div>
+            <div class="text-center font-semibold text-lg mb-3 text-gray-800">{{ data.solutionText }}</div>
             <div class="grid flex-grow-1">
               <div class="col-6 flex flex-column justify-content-center align-items-center">
-                <span class="font-semibold mb-2 text-sm">Total</span>
-                <span [ngClass]="{'text-green-500': !data.deficit, 'text-red-500': data.deficit}">
-              {{ data.total }} {{ data.unit }}
+                <span class="font-semibold mb-2 text-sm">Energy Saving</span>
+                <span [ngClass]="{'text-green-500': data.estimatedEnergySaving > 0}">
+              {{ data.estimatedEnergySaving }} kWh
             </span>
               </div>
               <div class="col-6 flex flex-column justify-content-center align-items-center">
-                <span class="font-semibold mb-2 text-sm">Deficit</span>
-                <span [ngClass]="{'text-green-500': !data.deficit, 'text-red-500': data.deficit}">
-              {{ data.deficit ? 'Yes' : 'No' }}
+                <span class="font-semibold mb-2 text-sm">Cost Saving</span>
+                <span
+                  [ngClass]="{'text-green-500': data.estimatedSaving > 0, 'text-red-500': data.estimatedSaving < 0}">
+              {{ data.estimatedSaving | currency: '£'}}
             </span>
               </div>
+              <div class="col-6 flex flex-column justify-content-center align-items-center">
+                <span class="font-semibold mb-2 text-sm">Implementation Cost</span>
+                <span class="text-red-500">{{ data.estimatedCost | currency: '£'}}</span>
+              </div>
+              <div class="col-6 flex flex-column justify-content-center align-items-center">
+                <span class="font-semibold mb-2 text-sm">Carbon Saving</span>
+                <span [ngClass]="{'text-green-500': data.estimatedCarbonSaving > 0}">
+              {{ data.estimatedCarbonSaving }} tCO2e
+            </span>
+              </div>
+            </div>
+            <div class="text-center mt-2">
+              <span class="font-semibold text-sm">Payback Period: </span>
+              <span>{{ data.paybackPeriod }} years</span>
             </div>
           </div>
         </div>
@@ -228,9 +251,6 @@
 <div class="mt-2">
   <p>TODO:</p>
   <ul class="list-disc">
-    <li><s>Get HH to pull through</s></li>
-    <li><s>Get recommendation to pull through (Surplus/deficit)</s></li>
-    <li><s>Prevent duplicate recommendations</s> (Needs further testing)</li>
     <li>Prevent duplicate surplus/deficits?</li>
     <li>Add conversion calculation if units are not kWh</li>
     <li>Check all calculations (Emissions not coming through correctly)</li>

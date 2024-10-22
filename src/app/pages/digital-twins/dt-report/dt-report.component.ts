@@ -45,6 +45,7 @@ export class DtReportComponent {
   totalEnergyUsed: number = 0;
   totalCost: number = 0;
   totalC02Used: number = 0;
+  implementationCost: number = 0;
 
   constructor(private dt: DtService) {
     this.dt.companies.subscribe({
@@ -120,7 +121,7 @@ export class DtReportComponent {
 
           // Add counter to current Reco
           if (reco.counter) reco.counter++;
-          else reco.counter = 2;
+          else reco.counter = 1;
         })
       }
     })
@@ -129,38 +130,44 @@ export class DtReportComponent {
     // Select Surplus/Deficit recommendations from report page
     this.availableDigitalTwinData = matchedCompanies.flatMap((company: any) => company.digital_twin_data || [])
 
+    // Filter if not text is available
+    this.availableDigitalTwinData = this.availableDigitalTwinData.filter((company: any) => company?.solutionText)
+
 
     // Go through recommendations are collate similar named ones
 
-    const fuseTwins = new Fuse(this.availableDigitalTwinData, fuseOptions);
+    // const fuseTwins = new Fuse(this.availableDigitalTwinData, fuseOptions);
+    //
+    // this.availableDigitalTwinData.forEach((reco: any) => {
+    //
+    //   const foundDuplicates = fuseTwins.search(reco.type)
+    //     .filter(result => result.item !== reco)
+    //     .map(result => result.item);
+    //
+    //   if (foundDuplicates.length > 0) {
+    //     foundDuplicates.forEach(duplicate => {
+    //       // TODO: Sum up
+    //       // this.sumProperties(reco, duplicate);
+    //
+    //       // Remove duplicate from recommendations
+    //       const indexToRemove = this.availableDigitalTwinData.indexOf(duplicate);
+    //       if (indexToRemove !== -1) {
+    //         this.availableDigitalTwinData.splice(indexToRemove, 1);
+    //       }
+    //
+    //       // Add counter to current Reco
+    //       if (reco.counter) reco.counter++;
+    //       else reco.counter = 1;
+    //     })
+    //   }
+    // })
 
-    this.availableDigitalTwinData.forEach((reco: any) => {
-      const foundDuplicates = fuseTwins.search(reco.type)
-        .filter(result => result.item !== reco)
-        .map(result => result.item);
-
-      if (foundDuplicates.length > 0) {
-        foundDuplicates.forEach(duplicate => {
-          // TODO: Sum up
-          // this.sumProperties(reco, duplicate);
-
-          // Remove duplicate from recommendations
-          const indexToRemove = this.availableDigitalTwinData.indexOf(duplicate);
-          if (indexToRemove !== -1) {
-            this.availableDigitalTwinData.splice(indexToRemove, 1);
-          }
-
-          // Add counter to current Reco
-          if (reco.counter) reco.counter++;
-          else reco.counter = 1;
-        })
-      }
-    })
 
 
 
     // Get Non-HH energy data
     const energyData = calculateEnergyData(matchedCompanies);
+
     this.energyData.push(...energyData);
 
 
@@ -205,7 +212,7 @@ export class DtReportComponent {
     let targetArray = ''
     if (this.draggedItem?.recommendation) {
       targetArray = 'recommendations'
-    } else if (this.draggedItem?.type) {
+    } else if (this.draggedItem?.solutionText) {
       targetArray = 'digitalTwinData'
     } else {
       return;
@@ -234,7 +241,6 @@ export class DtReportComponent {
     if (index !== -1) {
       this.appliedDigitalTwinData.push(this.draggedItem);
       this.availableDigitalTwinData.splice(index, 1);
-      console.log(this.appliedDigitalTwinData)
     }
   }
 
@@ -296,24 +302,35 @@ export class DtReportComponent {
   }
 
   calculateEnergyImpact() {
+    if (!this.totalEnergyUsed) return 0
+
     const energySavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedEnergySaving, 0);
-    const energySavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.total, 0)
+    const energySavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedEnergySaving, 0)
     return this.totalEnergyUsed - (energySavings + energySavingsFromTwin);
   }
 
   calculateC02Impact() {
+    if (!this.totalC02Used) return 0
+
     const co2eSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedCarbonSaving, 0);
-    return this.totalC02Used - co2eSavings;
+    const co2eSavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedCarbonSaving, 0)
+    return this.totalC02Used - (co2eSavings + co2eSavingsFromTwin);
   }
 
   calculateCostImpact() {
-    const costSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedCost, 0);
-    return this.totalCost - costSavings;
+    if (!this.totalCost) return 0
+
+    const costSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedSaving, 0);
+    const costSavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedSaving, 0)
+
+    return this.totalCost - (costSavings + costSavingsFromTwin);
   }
 
   getEnergyDifference() {
+    if (!this.totalEnergyUsed) return 0
+
     const energySavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedEnergySaving, 0);
-    const energySavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.total, 0)
+    const energySavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedEnergySaving, 0)
 
     // Calculate percentage change
     const percentageSavings = ((energySavings + energySavingsFromTwin) / this.totalEnergyUsed) * 100;
@@ -322,16 +339,35 @@ export class DtReportComponent {
   }
 
   getCostDifference() {
-    const costSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedCost, 0);
+    if (!this.totalCost) return 0;
+
+    const costSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedSaving, 0);
+    const costSavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedSaving, 0)
 
     // Calculate percentage change
-    const percentageSavings = (costSavings / this.totalCost) * 100;
+    const percentageSavings = ((costSavings + costSavingsFromTwin) / this.totalCost) * 100;
 
     return `-${percentageSavings.toFixed(1)}%`;
   }
 
 
   getEmissionsDifference() {
-    return 0;
+    if (!this.totalC02Used) return 0;
+
+    const emissionSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedCarbonSaving, 0);
+    const emissionSavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedCarbonSaving, 0)
+
+    // Calculate percentage change
+    const percentageSavings = ((emissionSavings + emissionSavingsFromTwin) / this.totalC02Used) * 100;
+
+    return `-${percentageSavings.toFixed(1)}%`;
+  }
+
+  calculateImplementationCost() {
+
+    const implementationCost = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedCost, 0);
+    const implementationCostFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedCost, 0)
+
+    return implementationCost + implementationCostFromTwin;
   }
 }

@@ -149,7 +149,7 @@ export class DtService {
   getHHData = (ids: number[]): Observable<any[]> => {
     if (!ids.length) return of([]);
 
-    // Create an array of observables (to handle multiple ids)
+    // Create an array of observables (to handle multiple ids) - [ob1, ob2, ob3, ...] - This is to return all at the same time once all async is complete
     const observables = ids.map(id =>
       this.track.getData(id).pipe(
         map(res => this.processData(res)),
@@ -157,14 +157,14 @@ export class DtService {
       )
     );
 
-    // Combine all observables into 1 to subscribe to
+    // Combine all observables into 1 to subscribe to from the frontend and return observables all at once from above.
     return forkJoin(observables).pipe(
       map(results => results.filter(Boolean).flat())
     );
   }
 
 
-  // Get all available envirotrack data and group together to get total consumption etc.
+  // Get all available envirotrack data and group together to get total consumption etc. (this is the same function as in generate report / and simplified from ecp)
   processData = (res: any[]): any[] => {
     if (!res || res.length === 0) return []
 
