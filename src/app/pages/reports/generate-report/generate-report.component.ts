@@ -43,7 +43,7 @@ export class GenerateReportComponent implements OnInit {
   recommendations: any[] = []
   chartData: any[] = []
   changeOptions: any[] = ['Behavioural', 'Upgrades', 'Changes to existing technology', 'Improvements to building fabric', 'Resource efficiency', 'Other']
-  percentOptions: any[] = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 15, 20, 25, 30, 35, 40]
+  percentOptions: any[] = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 15, 20, 25, 30, 35, 40,45,50]
   isConsultant: boolean = false;
   typeTotals: any[] = []
   strOptions =  {
