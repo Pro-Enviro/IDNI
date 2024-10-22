@@ -163,13 +163,13 @@
         <div
           *ngFor="let reco of availableRecommendations"
           class="recommendation-card p-3 border-round-sm shadow-2 bg-white cursor-pointer"
-          style="width: 250px; height: 250px;"
+          style="width: 250px; height: 280px;"
           pDraggable
           (onDragStart)="dragStart(reco)"
           (onDragEnd)="dragEnd()">
           <div class="flex flex-column h-full text-md">
             <div class="text-center font-semibold text-lg mb-3 text-gray-800">{{ reco.recommendation }}</div>
-            <span *ngIf="reco.counter" class="mb-1 text-xs text-gray-700">{{ reco.counter }} companies with this recommendation </span>
+            <span class="mb-1 text-xs text-gray-700">Source: {{ reco.companyName}}</span>
             <div class="grid flex-grow-1">
               <div class="col-6 flex flex-column justify-content-center align-items-center">
                 <span class="font-semibold mb-2 text-sm">Energy Saving</span>
@@ -199,6 +199,7 @@
               <span class="font-semibold text-sm">Payback Period: </span>
               <span>{{ reco.paybackPeriod }} years</span>
             </div>
+            <span *ngIf="reco.counter" class="mb-1 text-xs text-gray-700 mt-1">{{ reco.counter }} other compan{{reco.counter > 1 ? 'ies' : 'y'}} with this recommendation </span>
           </div>
         </div>
         <div *ngIf="!availableRecommendations.length">
@@ -219,6 +220,7 @@
           <div class="flex flex-column h-full text-md">
             <div class="text-center font-semibold text-lg mb-3 text-gray-800">{{ data.solutionText }}</div>
             <div class="grid flex-grow-1">
+              <span *ngIf="data.counter" class="mb-1 text-xs text-gray-700">{{ data.counter }} other compan{{data.counter > 1 ? 'ies' : 'y'}} with this recommendation </span>
               <div class="col-6 flex flex-column justify-content-center align-items-center">
                 <span class="font-semibold mb-2 text-sm">Energy Saving</span>
                 <span [ngClass]="{'text-green-500': data.estimatedEnergySaving > 0}">

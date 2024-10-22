@@ -65,6 +65,15 @@ export class DtReportComponent {
     );
   }
 
+  getCompanyName = (companyId: number) => {
+    console.log(companyId)
+    if (!companyId) return;
+    if (!this.clusterCompanies?.length) return;
+
+    const hello = this.clusterCompanies.filter((company: any) => company.id === companyId);
+    console.log(hello)
+  }
+
   sumProperties = (item1: any, item2: any) => {
     item1.estimatedEnergySaving += item2.estimatedEnergySaving || 0;
     item1.estimatedCarbonSaving += item2.estimatedCarbonSaving || 0;
@@ -95,8 +104,23 @@ export class DtReportComponent {
 
     // Select recommendations for drag and drop
     this.availableRecommendations = matchedCompanies
-      .flatMap((company: any) => company.recommendations || [])
-      .flatMap((recommendationObj: any) => recommendationObj.recommendations || []);
+      .flatMap((company: any) => {
+        const obj = {
+          recommendations: company.recommendations,
+          company: company.name
+        }
+
+        return obj;
+      })
+      .flatMap((recommendationObj: any) => {
+        const data = recommendationObj.recommendations || []
+
+        return data.recommendations.map((rec: any) => ({
+          ...rec,
+          companyName: recommendationObj.company
+        }))
+      });
+
 
     this.availableRecommendations = this.availableRecommendations.map((reco: any, index: number) => {
       reco.generated_id = index;
@@ -107,7 +131,7 @@ export class DtReportComponent {
     const fuseOptions = {
       threshold: 0.3,
       includeScore: true,
-      keys: ['recommendation', 'type']
+      keys: ['recommendation']
     }
 
     const fuse = new Fuse(this.availableRecommendations, fuseOptions);
@@ -142,17 +166,18 @@ export class DtReportComponent {
     this.availableDigitalTwinData = this.availableDigitalTwinData.filter((company: any) => company?.solutionText)
 
 
-    // TODO:
-    // 1. Prevent duplicate solutions
-    // 2. Add conversion calculations
-
-    // Go through recommendations are collate similar named ones
-
-    // const fuseTwins = new Fuse(this.availableDigitalTwinData, fuseOptions);
+    // SOLUTIONS - Commented code will hide similar solutions
+    // const fuseTwinsOptions = {
+    //   threshold: 0.3,
+    //   includeScore: true,
+    //   keys: ['solutionText']
+    // }
+    //
+    // const fuseTwins = new Fuse(this.availableDigitalTwinData, fuseTwinsOptions);
     //
     // this.availableDigitalTwinData.forEach((reco: any) => {
     //
-    //   const foundDuplicates = fuseTwins.search(reco.type)
+    //   const foundDuplicates = fuseTwins.search(reco.solutionText)
     //     .filter(result => result.item !== reco)
     //     .map(result => result.item);
     //
@@ -175,15 +200,9 @@ export class DtReportComponent {
     // })
 
 
-
-
     // Get Non-HH energy data
     const energyData = calculateEnergyData(matchedCompanies);
-
-
     this.energyData.push(...energyData);
-
-    console.log(this.energyData)
 
     const matchedCompanyIds = matchedCompanies.map((company: any) => company.id);
 
@@ -274,11 +293,11 @@ export class DtReportComponent {
   }
 
   removeRecommendation(reco: any) {
-      const index = this.findIndex(reco, this.appliedRecommendations);
-      if (index !== -1) {
-        const [removedReco] = this.appliedRecommendations.splice(index, 1);
-        this.availableRecommendations.push(removedReco);
-      }
+    const index = this.findIndex(reco, this.appliedRecommendations);
+    if (index !== -1) {
+      const [removedReco] = this.appliedRecommendations.splice(index, 1);
+      this.availableRecommendations.push(removedReco);
+    }
   }
 
   removeDigitalTwinReco(reco: any) {
@@ -288,6 +307,7 @@ export class DtReportComponent {
       this.availableDigitalTwinData.push(removedReco);
     }
   }
+
 
   // Calculate Totals
 
@@ -330,7 +350,7 @@ export class DtReportComponent {
     return energySavings + energySavingsFromTwin
   }
 
-  getEstimatedCostSavings = ()  => {
+  getEstimatedCostSavings = () => {
     const costSavings = this.appliedRecommendations.reduce((total, rec) => total + rec.estimatedSaving, 0);
     const costSavingsFromTwin = this.appliedDigitalTwinData.reduce((total, rec) => total + rec.estimatedSaving, 0)
 
