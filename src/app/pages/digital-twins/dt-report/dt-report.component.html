@@ -163,7 +163,7 @@
         <div
           *ngFor="let reco of availableRecommendations"
           class="recommendation-card p-3 border-round-sm shadow-2 bg-white cursor-pointer"
-          style="width: 250px; height: 280px;"
+          style="width: 250px; min-height: 280px;"
           pDraggable
           (onDragStart)="dragStart(reco)"
           (onDragEnd)="dragEnd()">
@@ -174,7 +174,7 @@
               <div class="col-6 flex flex-column justify-content-center align-items-center">
                 <span class="font-semibold mb-2 text-sm">Energy Saving</span>
                 <span [ngClass]="{'text-green-500': reco.estimatedEnergySaving > 0}">
-              {{ reco.estimatedEnergySaving }} kWh
+              {{ reco.estimatedEnergySaving | number: '1.0-2' }} kWh
             </span>
               </div>
               <div class="col-6 flex flex-column justify-content-center align-items-center">
@@ -191,7 +191,7 @@
               <div class="col-6 flex flex-column justify-content-center align-items-center">
                 <span class="font-semibold mb-2 text-sm">Carbon Saving</span>
                 <span [ngClass]="{'text-green-500': reco.estimatedCarbonSaving > 0}">
-              {{ reco.estimatedCarbonSaving }} tCO2e
+              {{ reco.estimatedCarbonSaving | number: '1.0-2' }} tCO2e
             </span>
               </div>
             </div>
@@ -225,7 +225,7 @@
               <div class="col-6 flex flex-column justify-content-center align-items-center">
                 <span class="font-semibold mb-2 text-sm">Energy Saving</span>
                 <span [ngClass]="{'text-green-500': data.estimatedEnergySaving > 0}">
-              {{ data.estimatedEnergySaving }} kWh
+              {{ data.estimatedEnergySaving | number: '1.0-2' }} kWh
             </span>
               </div>
               <div class="col-6 flex flex-column justify-content-center align-items-center">
@@ -242,7 +242,7 @@
               <div class="col-6 flex flex-column justify-content-center align-items-center">
                 <span class="font-semibold mb-2 text-sm">Carbon Saving</span>
                 <span [ngClass]="{'text-green-500': data.estimatedCarbonSaving > 0}">
-              {{ data.estimatedCarbonSaving }} tCO2e
+              {{ data.estimatedCarbonSaving | number: '1.0-2' }} tCO2e
             </span>
               </div>
             </div>
