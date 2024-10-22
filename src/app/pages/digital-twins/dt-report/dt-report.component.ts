@@ -181,7 +181,6 @@ export class DtReportComponent {
     this.availableDigitalTwinData = this.availableDigitalTwinData.filter((company: any) => company?.solutionText)
 
 
-    // SOLUTIONS - Commented code will hide similar solutions
     const fuseTwinsOptions = {
       threshold: 0.0,
       includeScore: true,
@@ -189,6 +188,9 @@ export class DtReportComponent {
     }
 
     const fuseTwins = new Fuse(this.availableDigitalTwinData, fuseTwinsOptions);
+
+
+    console.log(JSON.parse(JSON.stringify(this.availableDigitalTwinData)))
 
     this.availableDigitalTwinData.forEach((reco: any) => {
 
@@ -198,8 +200,7 @@ export class DtReportComponent {
 
       if (foundDuplicates.length > 0) {
         foundDuplicates.forEach(duplicate => {
-          // TODO: Sum up
-          // this.sumProperties(reco, duplicate);
+          this.sumProperties(reco, duplicate);
 
           // Remove duplicate from recommendations
           const indexToRemove = this.availableDigitalTwinData.indexOf(duplicate);
