@@ -65,14 +65,6 @@ export class DtReportComponent {
     );
   }
 
-  getCompanyName = (companyId: number) => {
-    console.log(companyId)
-    if (!companyId) return;
-    if (!this.clusterCompanies?.length) return;
-
-    const hello = this.clusterCompanies.filter((company: any) => company.id === companyId);
-    console.log(hello)
-  }
 
   sumProperties = (item1: any, item2: any) => {
     item1.estimatedEnergySaving += item2?.estimatedEnergySaving || 0;
@@ -189,8 +181,6 @@ export class DtReportComponent {
 
     const fuseTwins = new Fuse(this.availableDigitalTwinData, fuseTwinsOptions);
 
-
-    console.log(JSON.parse(JSON.stringify(this.availableDigitalTwinData)))
 
     this.availableDigitalTwinData.forEach((reco: any) => {
 
