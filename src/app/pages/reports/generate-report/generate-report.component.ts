@@ -803,6 +803,7 @@ export class GenerateReportComponent implements OnInit {
     const conversionFactors: { [key: string]: number } = {
       'Electricity': 0.22499,
       'Natural Gas (Grid)': 0.18293,
+      'Gas':0.18293,
       'Kerosene': 0.24677,
       'Diesel (avg biofuel blend)': 0.23908,
       'Petrol (avg biofuel blend)': 0.22166,
@@ -819,16 +820,9 @@ export class GenerateReportComponent implements OnInit {
       'Bio fuels': 0.03558, // biodiesel
       'Bio Mass': 0.01074,
       'Coal for Industrial use': 0.05629,
+      'Burning oil (Kerosene)': 0.24677,
     };
 
-    //scopeTable is array with objects
-    // i need to target the objects which are halfhourlyData objects
-    //probably to target the types which are electricity hh-number
-    // i need to take the consumpition * conversionFactor / 1000 = tCO2e
-
-    //in one situation we have the conversion factor from the table and the other one is coming from the type HH
-    //conversionFactors[fuelType.type] is giving me only the types in the table
-    // TO DO : add the conversion factor for electricity hh
 
     this.scopeTable = this.scopeTable.map((fuelType: any) => {
       // scope based on type
@@ -838,6 +832,7 @@ export class GenerateReportComponent implements OnInit {
         fuelType.scope = 'Scope 1';
       }
 
+      //conversion factor based on the object above - conversionFactors
       let selectedConversionFactor = conversionFactors[fuelType.type];
 
       // If the type is a half-hourly data (starts with 'Electricity HH -') the conversion factor is set here
