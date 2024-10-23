@@ -52,7 +52,7 @@ export function mergeDuplicateSolutions(items: any, type = 'recommendation') {
 
     // Build a merged item array, duplicates become one object with a counter.
     if (duplicates.length > 0) {
-      const mergedItem = mergeDuplicateItem(item, duplicates.map(d => d.item));
+      const mergedItem = mergeDuplicateItem(item, duplicates.map(d => d.item), type);
       duplicates.forEach(duplicate => processedIds.add(duplicate.index));
       mergedItems.push(mergedItem);
     } else if (!processedIds.has(index)) {
@@ -66,13 +66,14 @@ export function mergeDuplicateSolutions(items: any, type = 'recommendation') {
 }
 
 
-function mergeDuplicateItem(original: any, duplicates: any) {
+function mergeDuplicateItem(original: any, duplicates: any, type: string) {
   const merged = {...original}
   let paybackSum = merged.paybackPeriod || 0;
   let paybackCount = merged.paybackPeriod ? 1 : 0;
   merged.counter = 1;
 
   duplicates.forEach((duplicate: any) => {
+    console.log(duplicate)
     merged.counter = (merged.counter || 1) + 1;
 
     // Handle payback
@@ -81,12 +82,14 @@ function mergeDuplicateItem(original: any, duplicates: any) {
       paybackCount++;
     }
 
-    // Sum all required properties
-    PROPERTIES_TO_MERGE.forEach((prop: any) => {
-      if (duplicate[prop] != null) {
-        merged[prop] = (merged[prop] || 0) + duplicate[prop];
-      }
-    })
+    // Sum all required properties if recommendations
+    if (type === 'recommendation') {
+      PROPERTIES_TO_MERGE.forEach((prop: any) => {
+        if (duplicate[prop] != null) {
+          merged[prop] = (merged[prop] || 0) + duplicate[prop];
+        }
+      })
+    }
   })
   // Calculate average payback
   if (paybackCount > 0) {
