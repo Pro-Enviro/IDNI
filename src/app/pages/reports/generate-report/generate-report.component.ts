@@ -447,9 +447,6 @@ export class GenerateReportComponent implements OnInit {
                 emissions: (grandTotal * 0.22499) / 1000
               };
 
-              //console.log(envirotrackData)
-              //console.log(grandTotal.toFixed(2))
-
               // Add the result to your tables
               this.scopeTable.push(envirotrackData);
               this.typeTotals.push(envirotrackData);
@@ -706,8 +703,6 @@ export class GenerateReportComponent implements OnInit {
         })
       }
 
-      //console.log(this.energySolution)
-
     })
     this.msg.add({
       severity:'success',
@@ -834,8 +829,6 @@ export class GenerateReportComponent implements OnInit {
         fuelType.scope = 'Scope 1';
       }
 
-      console.log(this.scopeTable)
-
       //conversion factor based on the object above - conversionFactors
       let selectedConversionFactor = conversionFactors[fuelType.type];
 
@@ -880,14 +873,11 @@ export class GenerateReportComponent implements OnInit {
           selectedConversionFactor = conversionFactors['Coal for Industrial use']
         }else if(fuelType.type.includes('Burning oil ')){
           selectedConversionFactor = conversionFactors['Burning oil (Kerosene)']
-        } else if(fuelType.type.includes('kerosene')){
-          selectedConversionFactor = conversionFactors['Burning oil (Kerosene)']
-        }else {
+        } else {
           selectedConversionFactor = defaultConversionFactor;
         }
       }
 
-      //selectedConversionFactor = selectedConversionFactor || 0;
 
       // Calculate CO2e based on the conversion factor
       const calculatedCO2e = (fuelType.consumption * selectedConversionFactor) / 1000;
@@ -912,9 +902,6 @@ export class GenerateReportComponent implements OnInit {
 
   calculateCo2ePercent(typeTotal: any) {
     const calculatedPercent = ( typeTotal.co2e / this.totalCo2e) * 100
-    //console.log(calculatedPercent)
-    //console.log(typeTotal)
-    //console.log(this.totalCo2e)
     if (calculatedPercent > 0 ) {
       return calculatedPercent.toFixed(2);
     }

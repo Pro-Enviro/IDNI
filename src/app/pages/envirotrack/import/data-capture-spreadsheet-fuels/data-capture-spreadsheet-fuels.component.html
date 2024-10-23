@@ -31,7 +31,7 @@
                          [(ngModel)]="nameChange" [placeholder]="fuel.type" [style]="{padding: '0.35rem 0.75rem', cursor: 'pointer'}"
                          (keydown)="onKeyDown($event)" (keydown.enter)="saveName(nameChange, fuel)">
                   <button pButton type="button" icon="pi pi-save" *ngIf="display && selectedItem === fuel"
-                          class="btn h-2rem w-2rem ml-2"
+                          class="btn-style h-2rem w-2rem ml-2"
                           (click)="saveName(nameChange, fuel)"></button>
                   <button pButton type="button" icon="pi pi-times" *ngIf="display && selectedItem === fuel"
                           class="btn-dark h-2rem w-2rem ml-2"
