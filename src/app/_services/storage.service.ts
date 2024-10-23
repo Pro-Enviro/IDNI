@@ -52,4 +52,12 @@ export class StorageService {
     return item
   }
 
+  clear =(name: string) => {
+    localStorage.removeItem(name);
+  }
+
+  clearAll = () => {
+    localStorage.clear();
+  }
+
 }

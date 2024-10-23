@@ -917,7 +917,11 @@ export class PetLoginProtected implements OnInit {
                 value: Number((total).toFixed(2))
               })
             );
+
+            console.log(aggregatedHHData)
           }
+
+
 
           this.breakDownChartData.forEach((extracted: any) => {
 
@@ -929,7 +933,6 @@ export class PetLoginProtected implements OnInit {
             this.data[foundType].cost = 0
             this.data[foundType].unitsUom = 'kWh'
           })
-
         },
         complete: () => {
           this.initCo2eScope()
