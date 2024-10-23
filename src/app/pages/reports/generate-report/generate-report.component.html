@@ -98,6 +98,7 @@
               <tr>
                 <td></td>
                 <td>Totals</td>
+                <td></td>
                 <td>{{ getTotal('estimatedEnergySaving') }} kWh/ yr</td>
                 <td>£ {{ getTotal('estimatedSaving').toFixed(2) }}</td>
                 <td>£ {{ getTotal('estimatedCost').toFixed(2) }}</td>
@@ -105,7 +106,7 @@
                 <td>{{ getTotal('estimatedCarbonSaving').toFixed(2) }}</td>
                 <td></td>
                 <td></td>
-                <td></td>
+
               </tr>
               <tr>
                 <td></td>
@@ -300,7 +301,7 @@
 <!--          </p-table>-->
 <!--        </p-tabPanel>-->
         <p-tabPanel header="Cluster Solutions">
-          <p-table [value]="energySolution" styleClass="p-datatable-sm" [columns]="cols">
+          <p-table [value]="energySolution" styleClass="p-datatable-sm" [columns]="cols" [tableStyle]="{'min-width': '60rem'}">
             <ng-template pTemplate="caption">
               <h3 class="p-3">Solutions</h3>
             </ng-template>
@@ -317,7 +318,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-rec let-i="rowIndex">
               <tr>
-                <td>
+                <td class="p-3">
                   <textarea rows="2" cols="30" pInputTextarea [(ngModel)]="rec.solutionText" style="resize: none"
                             class="p-inputtext-sm w-full mr-2"></textarea>
                 </td>
@@ -348,29 +349,23 @@
             </ng-template>
             <ng-template pTemplate="footer">
               <tr>
-                <td>Totals</td>
+                <td class="p-3">Totals</td>
                 <td>{{ getClusterTotal('estimatedEnergySaving')  | number: '1.0-2'}} kWh/ yr</td>
                 <td>£ {{ getClusterTotal('estimatedSaving')| number: '1.0-2' }}</td>
                 <td>£ {{ getClusterTotal('estimatedCost') | number: '1.0-2' }}</td>
                 <td></td>
                 <td>{{ getClusterTotal('estimatedCarbonSaving')  | number: '1.0-2'}}</td>
                 <td></td>
-                <td></td>
-                <td></td>
               </tr>
               <tr>
-                <td class="w-3 p-2"></td>
-                <td colspan="4"></td>
-                <td class="w-3 p-2">
-                  <button label="Add New Cluster Solution" pButton
-                          class="p-button p-button-outlined btn btn-dark w-full mr-2 text-sm" icon="pi pi-plus"
-                          (click)="addNewSolution()"></button>
+                <td class="w-3 p-3">
+                  <button label="Add New Cluster Solution" pButton class="p-button btn-dark w-full mr-2 text-sm" icon="pi pi-plus"  (click)="addNewSolution()"></button>
                 </td>
+                <td colspan="8"></td>
               </tr>
               <div class="mt-2">
                 <button type="button" icon="pi pi-save" label="Save" pButton class="btn-style text-sm" (click)="saveSolutionData()"></button>
               </div>
-
             </ng-template>
           </p-table>
         </p-tabPanel>
