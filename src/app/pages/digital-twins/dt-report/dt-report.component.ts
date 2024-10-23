@@ -11,6 +11,7 @@ import {SharedComponents} from "../../envirotrack/shared-components";
 import {CarouselModule} from "primeng/carousel";
 import {calculateEnergyData} from "./calculateEnergyData";
 import Fuse from "fuse.js";
+import {mergeDuplicateSolutions} from "./mergeDuplicateSolutions";
 
 @Component({
   selector: 'app-dt-report',
@@ -66,12 +67,7 @@ export class DtReportComponent {
   }
 
 
-  sumProperties = (item1: any, item2: any) => {
-    item1.estimatedEnergySaving += item2?.estimatedEnergySaving || 0;
-    item1.estimatedCarbonSaving += item2?.estimatedCarbonSaving || 0;
-    item1.estimatedCost += item2?.estimatedCost || 0;
-    item1.estimatedSaving += item2?.estimatedSaving || 0;
-  }
+
 
   onClusterSelect = (event: any) => {
     this.availableRecommendations = []
@@ -125,61 +121,9 @@ export class DtReportComponent {
       return reco;
     })
 
-    // Go through recommendations are collate similar named ones
-    const fuseOptions = {
-      threshold: 0.2,
-      ignoreLocation: true,
-      includeScore: true,
-      keys: ['recommendation']
-    }
 
-    const fuse = new Fuse(this.availableRecommendations, fuseOptions);
-
-
-    this.availableRecommendations.forEach((reco: any) => {
-      const foundDuplicates = fuse.search(reco.recommendation)
-        .filter(result => result.item !== reco)
-        .map(result => result.item);
-
-      let paybackSum = reco.paybackPeriod || 0;
-      let paybackCount = reco.counter || 1;
-
-      if (foundDuplicates.length > 0) {
-        foundDuplicates.forEach(duplicate => {
-          this.sumProperties(reco, duplicate);
-
-          // Get payback period
-          if (duplicate.paybackPeriod) {
-            paybackSum += duplicate.paybackPeriod;
-            paybackCount++;
-          }
-
-          // Remove duplicate from recommendations
-          const indexToRemove = this.availableRecommendations.indexOf(duplicate);
-          if (indexToRemove !== -1) {
-            this.availableRecommendations.splice(indexToRemove, 1);
-          }
-
-          // Average of Payback periods
-
-          // Add counter to current Reco
-          if (reco.counter) reco.counter++;
-          else reco.counter = 1;
-        })
-        reco.paybackPeriod = paybackSum / paybackCount;
-      }
-    })
-
-    // BMI Trailers
-    // Axon Power & Control Ltd
-    // McCloskey International- Granville
-    // Linergy LTD
-    // ABP Linden
-    // Linden Foods
-    // Dunbia (UK)
-    // Westland Horticulture Ltd
-    // Dunbia - Hides
-    // Dunbia - Retail
+    const mergedRecommendations = mergeDuplicateSolutions(this.availableRecommendations)
+    this.availableRecommendations = mergedRecommendations
 
 
     // Select solution recommendations from report page
@@ -197,51 +141,9 @@ export class DtReportComponent {
     // Filter if not text is available
     this.availableDigitalTwinData = this.availableDigitalTwinData.filter((company: any) => company?.solutionText)
 
+    const mergedDigitalTwinData = mergeDuplicateSolutions(this.availableDigitalTwinData, 'digitalTwin')
+    this.availableDigitalTwinData = mergedDigitalTwinData
 
-    const fuseTwinsOptions = {
-      threshold: 0.2,
-      ignoreLocation: true,
-      includeScore: true,
-      keys: ['solutionText']
-    }
-
-    const fuseTwins = new Fuse(this.availableDigitalTwinData, fuseTwinsOptions);
-
-
-    this.availableDigitalTwinData.forEach((reco: any) => {
-
-      const foundDuplicates = fuseTwins.search(reco.solutionText)
-        .filter(result => result.item !== reco)
-        .map(result => result.item);
-
-      let paybackSum = reco.paybackPeriod || 0;
-      let paybackCount = reco.counter || 1;
-
-      if (foundDuplicates.length > 0) {
-
-        foundDuplicates.forEach(duplicate => {
-          this.sumProperties(reco, duplicate);
-
-          // Get payback period
-          if (duplicate.paybackPeriod) {
-            paybackSum += duplicate.paybackPeriod;
-            paybackCount++;
-          }
-
-          // Remove duplicate from recommendations
-          const indexToRemove = this.availableDigitalTwinData.indexOf(duplicate);
-          if (indexToRemove !== -1) {
-            this.availableDigitalTwinData.splice(indexToRemove, 1);
-          }
-
-          // Add counter to current Reco
-          if (reco.counter) reco.counter++;
-          else reco.counter = 1;
-        })
-
-        reco.paybackPeriod = paybackSum / paybackCount;
-      }
-    })
 
 
     // Get Non-HH energy data
