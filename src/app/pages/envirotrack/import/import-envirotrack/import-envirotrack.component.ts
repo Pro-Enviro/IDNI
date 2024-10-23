@@ -413,17 +413,14 @@ export class ImportEnvirotrackComponent {
         } else {
           date = moment(row[this.selectedStartDate.col], 'DD/MM/YYYY')
         }
-        //the mpan needs to be equal to customMpan or to parseInt(this.selectedMpan.name)
         if (date.isValid()) {
           this.hhd.push({
             company_id: this.selectedCompany,
-            //mpan: this.selectedMpan = this.customMpanNumber.length ? this.customMpanNumber : parseInt(this.selectedMpan.name).toString(),
             mpan: this.customMpanNumber && this.customMpanNumber.length ? this.customMpanNumber : parseInt(this.selectedMpan.name).toString(),
             date: date,
             hhd: row.slice(this.selectedDataStart.col, (this.selectedDataStart.col + 1 + 47)).map((x: number | string) => typeof x === 'string' ? parseFloat(x) : x),
             reactive_data: this.reactiveData
           })
-          console.log(parseInt(this.selectedMpan.name).toString())
         }
       }
     }
