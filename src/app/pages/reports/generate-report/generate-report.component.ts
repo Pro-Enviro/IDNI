@@ -816,7 +816,6 @@ export class GenerateReportComponent implements OnInit {
       'Wood Chips': 0.01074,
       'Natural Gas off Grid': 0.03021,
       'Bio Gas Off Grid': 0.00020,
-      'Oil': 0.24557, // burning oil
       'Bio fuels': 0.03558, // biodiesel
       'Bio Mass': 0.01074,
       'Coal for Industrial use': 0.05629,
@@ -825,6 +824,9 @@ export class GenerateReportComponent implements OnInit {
 
 
     this.scopeTable = this.scopeTable.map((fuelType: any) => {
+      //default conversion factor
+      const defaultConversionFactor = 0.22;
+
       // scope based on type
       if (fuelType.type === 'Electricity' || fuelType.type.startsWith('Electricity HH')) {
         fuelType.scope = 'Scope 2';
@@ -832,6 +834,7 @@ export class GenerateReportComponent implements OnInit {
         fuelType.scope = 'Scope 1';
       }
 
+      console.log(this.scopeTable)
 
       //conversion factor based on the object above - conversionFactors
       let selectedConversionFactor = conversionFactors[fuelType.type];
@@ -841,7 +844,50 @@ export class GenerateReportComponent implements OnInit {
         selectedConversionFactor = 0.22499;
       }
 
-      selectedConversionFactor = selectedConversionFactor || 0;
+      // if the conversion factor is missing because the type name was changed
+      if (!selectedConversionFactor) {
+        if (fuelType.type.includes('Gas')) {
+          selectedConversionFactor = conversionFactors['Gas']
+        }  else if (fuelType.type.includes('Kerosene')){
+          selectedConversionFactor = conversionFactors['Kerosene']
+        } else if (fuelType.type.includes('Diesel')){
+          selectedConversionFactor = conversionFactors['Diesel (avg biofuel blend)']
+        } else if (fuelType.type.includes('Petrol')){
+          selectedConversionFactor = conversionFactors['Petrol (avg biofuel blend)']
+        } else if (fuelType.type.includes('Gas oil')){
+          selectedConversionFactor = conversionFactors['Gas oil (Red diesel)']
+        } else if (fuelType.type.includes('LPG')){
+          selectedConversionFactor = conversionFactors['LPG']
+        } else if(fuelType.type.includes('Propane')) {
+          selectedConversionFactor = conversionFactors['Propane']
+        } else if (fuelType.type.includes('Butane')){
+          selectedConversionFactor = conversionFactors['Butane']
+        } else if(fuelType.type.includes('Biogas')){
+          selectedConversionFactor = conversionFactors['Biogas']
+        } else if(fuelType.type.includes('Biomethane')){
+          selectedConversionFactor = conversionFactors['Biomethane (compressed)']
+        } else if(fuelType.type.includes('Wood')){
+          selectedConversionFactor = conversionFactors['Wood Chips']
+        } else if(fuelType.type.includes('Natural Gas')){
+          selectedConversionFactor = conversionFactors['Natural Gas off Grid']
+        } else if(fuelType.type.includes('Bio Gas')){
+          selectedConversionFactor = conversionFactors['Bio Gas Off Grid']
+        }else if (fuelType.type.includes('Bio fuels')){
+          selectedConversionFactor = conversionFactors['Bio fuels']
+        } else if(fuelType.type.includes('Bio Mass')){
+          selectedConversionFactor = conversionFactors['Bio Mass']
+        }else if(fuelType.type.includes('Coal')){
+          selectedConversionFactor = conversionFactors['Coal for Industrial use']
+        }else if(fuelType.type.includes('Burning oil ')){
+          selectedConversionFactor = conversionFactors['Burning oil (Kerosene)']
+        } else if(fuelType.type.includes('kerosene')){
+          selectedConversionFactor = conversionFactors['Burning oil (Kerosene)']
+        }else {
+          selectedConversionFactor = defaultConversionFactor;
+        }
+      }
+
+      //selectedConversionFactor = selectedConversionFactor || 0;
 
       // Calculate CO2e based on the conversion factor
       const calculatedCO2e = (fuelType.consumption * selectedConversionFactor) / 1000;
