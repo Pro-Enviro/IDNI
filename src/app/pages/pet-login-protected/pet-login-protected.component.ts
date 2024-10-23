@@ -81,9 +81,9 @@ export class PetLoginProtected implements OnInit {
   innovationPercent: number = 0;
   staffTrainingPercent: number = 0;
   exportPercent: number = 0;
-  breakDownChartData:any[] = [];
-  envirotrackData?:{name:string,value:number | string}
-  breakDownScope:any[]=[]
+  breakDownChartData: any[] = [];
+  envirotrackData?: { name: string, value: number | string }
+  breakDownScope: any[] = []
 
   consultancyRow = {
     name: 'Consultancy Cost',
@@ -112,7 +112,7 @@ export class PetLoginProtected implements OnInit {
   companyModesOfTransport: CompanyModesOfTransport[] = ['Select', 'Rail', 'Sea', 'Air', 'Company Car', 'Public Transport']
   staffCommute: StaffCommuteModes[] = ['Select', 'On foot', 'Cycle', 'Public Transport', 'Car', 'Motorbike']
   unitsOfCost: UnitsOfCost[] = ['Cost/unit', 'Total Cost', 'Select']
-  materialTypes: MaterialTypes[] = ['Steel', 'Other Metals', 'Plastics', 'Food And Drink', 'Gasses', 'Other Materials', ]
+  materialTypes: MaterialTypes[] = ['Steel', 'Other Metals', 'Plastics', 'Food And Drink', 'Gasses', 'Other Materials',]
   steelMaterials: SteelMaterials[] = ['Mild Steel', 'Carbon Steel', 'Tool Steel D2', 'Tool Steel H13', 'Tool Steel M2', 'Tool Steel S275', 'Tool Steel S325', 'Alloy Steel 4340', 'Alloy Steel 4140', 'Alloy Steel 4150', 'Alloy Steel 9310', 'Alloy Steel 52100', 'Stainless Steel 304', 'Stainless Steel 316', 'Duplex Steel', 'Hardox series 400', 'Hardox series 500', 'Hardox series 600', 'Inconel series 600', 'Inconel series 700']
   otherMetals: OtherMetals[] = ['Aluminium 1000', 'Aluminium 2000', 'Aluminium 6000', 'Aluminium 7000', 'Duralumin', 'Aluminium Lithium', 'Copper', 'Bronze', 'Titanium', 'Lithium', 'Magnesium']
   plastics: Plastics[] = ['ABS', 'PA', 'PET', 'PP', 'PU', 'POM', 'PEEK', 'PE', 'PVC', 'PPS', 'Elastomers', 'Composites', 'Textiles']
@@ -169,12 +169,12 @@ export class PetLoginProtected implements OnInit {
     "Acids",
     "Alkalis"
   ];
-  gasMaterials: string [] = ['test',' test2']
+  gasMaterials: string [] = ['test', ' test2']
   years = years
   selectedYear: string = years[0] || '2024'
   data: any = []
   twoDecimalPlaces = {minimumFractionDigits: 0, maximumFractionDigits: 2,}
-  noDecimals = {minimumFractionDigits: 0, maximumFractionDigits: 0} ;
+  noDecimals = {minimumFractionDigits: 0, maximumFractionDigits: 0};
   productivityData!: any// Excel spreadsheet
   sicCodeData!: any // Excel Spreadsheet
   sicCode: any = {}
@@ -308,9 +308,8 @@ export class PetLoginProtected implements OnInit {
     this.externalCost = Number(petData.total_external_costs) || 0
 
 
-
     if (this.outputUnit !== null) {
-    // Check if exists in output choices first
+      // Check if exists in output choices first
       if (!this.outputChoices.find((choice: any) => choice === this.outputUnit)) {
         this.outputChoices.unshift(this.outputUnit)
       }
@@ -697,7 +696,7 @@ export class PetLoginProtected implements OnInit {
 
         item.parent.subtotal = total;
 
-        if (item.parent.totalCost < total){
+        if (item.parent.totalCost < total) {
           item.parent.totalCost = total;
         }
 
@@ -720,21 +719,21 @@ export class PetLoginProtected implements OnInit {
   }
 
   calculateEnergyCostPerUnit = (group: any) => {
-      // if (group.cost === 0) return;
+    // if (group.cost === 0) return;
 
-      if (group.parent.name !== 'Cost of Energy') return;
+    if (group.parent.name !== 'Cost of Energy') return;
 
-      const total = this.data
-        .filter((item: any) => item.parent.name === 'Cost of Energy' )
-        .reduce((acc: number, curr: any) => {
+    const total = this.data
+      .filter((item: any) => item.parent.name === 'Cost of Energy')
+      .reduce((acc: number, curr: any) => {
 
-          if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined && curr.unitOfCost === 'Cost/unit') {
-            return acc + (parseFloat(curr.cost) * parseFloat(curr.totalUnits))
-          } else if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined) {
-            return acc + parseFloat(curr.cost)
-          } else {
-            return acc;
-          }
+        if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined && curr.unitOfCost === 'Cost/unit') {
+          return acc + (parseFloat(curr.cost) * parseFloat(curr.totalUnits))
+        } else if (curr.cost !== undefined && curr.cost !== null && curr.totalUnits !== undefined && curr.totalUnits !== undefined) {
+          return acc + parseFloat(curr.cost)
+        } else {
+          return acc;
+        }
 
       }, 0)
 
@@ -790,7 +789,7 @@ export class PetLoginProtected implements OnInit {
           }
         },
         error: (err) => console.log(err),
-        complete: () =>{
+        complete: () => {
           this.assignFuelDataToCorrectCost()
         }
       })
@@ -831,10 +830,15 @@ export class PetLoginProtected implements OnInit {
     extractedData.forEach((extracted: any) => {
 
       if (extracted.type === 'Gas') extracted.type = 'Natural Gas (Grid)'
+      if (extracted.type.includes('Burning oil')) extracted.type = "Kerosene"
+      if (extracted.type.includes('Propane')) extracted.type = "LPG"
+
 
       let foundType = this.data.findIndex((tableRow: any) => tableRow.name === extracted.type)
 
+
       if (foundType === -1) return;
+
 
       this.data[foundType].totalUnits = extracted.totalValue
       this.data[foundType].cost = extracted.totalCost
@@ -844,66 +848,103 @@ export class PetLoginProtected implements OnInit {
   }
 
 
- calculatePieCharts = (extractedData:any) => {
-   const conversionFactors: { [key: string]: number } = {
-     'Electricity': 0.22499,
-     'Natural Gas (Grid)': 0.18293,
-     'Kerosene': 0.24677,
-     'Diesel (avg biofuel blend)': 0.23908,
-     'Petrol (avg biofuel blend)': 0.22166,
-     "Gas oil (Red diesel)": 0.25650,
-     'LPG': 0.21449,
-     'Propane': 0.21410,
-     'Butane': 0.22241,
-     'Biogas': 0.00022,
-     'Biomethane (compressed)': 0.00038,
-     'Wood Chips': 0.01074,
-     'Natural Gas off Grid': 0.03021,
-     'Bio Gas Off Grid':   0.00020,
-     'Oil': 0.24557, //burning oil
-     'Bio fuels': 0.03558,//bio diesel
-     'Bio Mass': 0.01074,
-     'Coal for Industrial use': 0.05629,
-   }
+  calculatePieCharts = (extractedData: any) => {
+    const conversionFactors: { [key: string]: number } = {
+      'Electricity': 0.22499,
+      'Natural Gas (Grid)': 0.18293,
+      'Kerosene': 0.24677,
+      'Diesel (avg biofuel blend)': 0.23908,
+      'Petrol (avg biofuel blend)': 0.22166,
+      "Gas oil (Red diesel)": 0.25650,
+      'LPG': 0.21449,
+      'Propane': 0.21410,
+      'Butane': 0.22241,
+      'Biogas': 0.00022,
+      'Biomethane (compressed)': 0.00038,
+      'Wood Chips': 0.01074,
+      'Natural Gas off Grid': 0.03021,
+      'Bio Gas Off Grid': 0.00020,
+      'Oil': 0.24557, //burning oil
+      'Bio fuels': 0.03558,//bio diesel
+      'Bio Mass': 0.01074,
+      'Coal for Industrial use': 0.05629,
+    }
 
-   this.breakDownChartData = extractedData.map((fuelType :any) => {
-     const selectedConversionFactor = conversionFactors[fuelType.type] ? conversionFactors[fuelType.type] : 0
-     const calculatedCO2e = (fuelType.totalValue * selectedConversionFactor) / 1000
+    this.breakDownChartData = extractedData.map((fuelType: any) => {
+      const selectedConversionFactor = conversionFactors[fuelType.type] ? conversionFactors[fuelType.type] : 0
+      const calculatedCO2e = (fuelType.totalValue * selectedConversionFactor) / 1000
       return {
-      name : fuelType.type,
-        value : calculatedCO2e
+        name: fuelType.type,
+        value: calculatedCO2e
 
       }
-   })
+    })
 
- }
+  }
 
 
   getData = (id: number) => {
-   if(!id){
-     return
-   }
+    if (!id) {
+      return
+    }
+
+    console.log('Getting envirotrack data for ', id)
     this.track.getData(id).subscribe({
         next: (res) => {
-          if (res){
-            let grandTotal = 0;
-            res.forEach((row: any) => {
-              row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
-              // Sort the envirotrack data
-              grandTotal += row.hhd.reduce((acc: number, curr: number) => acc + curr, 0)
-            })
-            this.envirotrackData = {
-              name: 'Electricity',
-              value:( grandTotal/1000).toFixed(2)
+          if (res) {
+
+            if (!res.length) return;
+
+            let aggregatedHHData: any = {
+              'Gas': 0,
+              'Electricity': 0
             }
-            this.breakDownChartData.push(this.envirotrackData)
+
+
+            res.forEach((row: any) => {
+              row.hhd = JSON.parse(row.hhd.replaceAll('"', '').replaceAll("'", '')).map((x: number) => x ? x : 0)
+              // Sort the envirotrack data
+              // grandTotal += row.hhd.reduce((acc: number, curr: number) => acc + curr, 0)
+              const rowTotal = row.hhd.reduce((acc: any, curr: any) => acc + curr, 0);
+
+              // If gas is in the name use that, otherwise count it as electricity for HH formats
+              const category = row.mpan.toLowerCase().includes('gas') ? 'Natural Gas (Grid)' : 'Electricity';
+
+              aggregatedHHData[category] += rowTotal;
+            })
+
+
+
+            this.breakDownChartData = Object.entries(aggregatedHHData).map(([name, total]: any) =>
+              ({
+                name,
+                value: Number((total).toFixed(2))
+              })
+            );
           }
 
+          console.log(this.breakDownChartData)
+
+
+          this.breakDownChartData.forEach((extracted: any) => {
+
+            let foundType = this.data.findIndex((tableRow: any) => tableRow.name === extracted.name)
+
+            if (foundType === -1) return;
+
+            this.data[foundType].totalUnits += extracted.value
+            this.data[foundType].cost = 0
+            this.data[foundType].unitsUom = 'kWh'
+
+
+            console.log(JSON.parse(JSON.stringify(this.data[foundType])))
+          })
+
         },
-         complete:()=> {
+        complete: () => {
           this.initCo2eScope()
           this.initCo2eBreakdown()
-         }
+        }
       }
     )
   }
@@ -1171,7 +1212,7 @@ export class PetLoginProtected implements OnInit {
     if (allOtherFuelTypes.length) {
       finalData = [...mappedScope2, mappedScope1]
     } else {
-     finalData = [ ...mappedScope2]
+      finalData = [...mappedScope2]
     }
 
     this.co2eScope = {
@@ -1325,7 +1366,7 @@ export class PetLoginProtected implements OnInit {
 
 
   handleEnergyOrRawMaterials = (groups: any) => {
-    if (groups.parent.name === 'Cost of Energy'){
+    if (groups.parent.name === 'Cost of Energy') {
       this.calculateCo2e(groups)
       this.calculateEnergyCostPerUnit(groups)
       return;
