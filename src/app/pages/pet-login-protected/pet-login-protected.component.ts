@@ -888,7 +888,6 @@ export class PetLoginProtected implements OnInit {
       return
     }
 
-    console.log('Getting envirotrack data for ', id)
     this.track.getData(id).subscribe({
         next: (res) => {
           if (res) {
@@ -904,7 +903,6 @@ export class PetLoginProtected implements OnInit {
             res.forEach((row: any) => {
               row.hhd = JSON.parse(row.hhd.replaceAll('"', '').replaceAll("'", '')).map((x: number) => x ? x : 0)
               // Sort the envirotrack data
-              // grandTotal += row.hhd.reduce((acc: number, curr: number) => acc + curr, 0)
               const rowTotal = row.hhd.reduce((acc: any, curr: any) => acc + curr, 0);
 
               // If gas is in the name use that, otherwise count it as electricity for HH formats
@@ -913,8 +911,6 @@ export class PetLoginProtected implements OnInit {
               aggregatedHHData[category] += rowTotal;
             })
 
-
-
             this.breakDownChartData = Object.entries(aggregatedHHData).map(([name, total]: any) =>
               ({
                 name,
@@ -922,9 +918,6 @@ export class PetLoginProtected implements OnInit {
               })
             );
           }
-
-          console.log(this.breakDownChartData)
-
 
           this.breakDownChartData.forEach((extracted: any) => {
 
@@ -935,9 +928,6 @@ export class PetLoginProtected implements OnInit {
             this.data[foundType].totalUnits += extracted.value
             this.data[foundType].cost = 0
             this.data[foundType].unitsUom = 'kWh'
-
-
-            console.log(JSON.parse(JSON.stringify(this.data[foundType])))
           })
 
         },

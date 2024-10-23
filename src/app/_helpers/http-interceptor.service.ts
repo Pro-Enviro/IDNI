@@ -34,25 +34,42 @@ export const HttpInterceptorService: HttpInterceptorFn = (
 
     return next(authRequest).pipe(
       catchError((error: HttpErrorResponse) => {
-        if ([401, 403].includes(error.status)) {
-          if (error.status === 401) {
-            console.log('401 - getting refresh token')
-            return from(auth.refreshToken()).pipe(
-              switchMap((token: any) => {
-                const newRequest = addTokenHeader(req, token)
-                console.log('New token request', newRequest)
-                window.location.reload()
-                console.log('NEXT REQUEST')
-                return next(newRequest)
-              })
-            )
-          } else if (error.status === 403) {
-            localStorage.clear()
-            router.navigate(['login'])
-          } else {
-            router.navigate(['login'])
-          }
+        if (error.status === 401) {
+          console.log('401 - Access token expired, attempting refresh.');
+
+          // Attempt to refresh the token
+          return from(auth.refreshToken()).pipe(
+            switchMap((newToken: any) => {
+              if (newToken) {
+                console.log('Refresh token successful, retrying request with new token.');
+                const newRequest = addTokenHeader(req, newToken);
+                return next(newRequest);
+              } else {
+                // If refresh token is invalid or fails, navigate to login
+                console.log('Refresh token failed, redirecting to login.');
+
+                // localStorage.clear();
+                // router.navigate(['login']);
+                return throwError(() => error);
+              }
+            }),
+            catchError(refreshError => {
+              console.log('Refresh token error:', refreshError);
+              // If refresh token also fails (e.g., expired), logout and redirect
+              localStorage.clear();
+              router.navigate(['login']);
+              return throwError(() => refreshError);
+            })
+          );
+        } else if (error.status === 403) {
+          console.log('403 - Forbidden. Logging out.');
+          localStorage.clear();
+          router.navigate(['login']);
+        } else {
+          console.log('Other error', error);
+          router.navigate(['login']);
         }
+
         msg.add({
           severity: 'warning',
           detail: 'You are unauthorized.'
