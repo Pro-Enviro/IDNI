@@ -143,8 +143,6 @@ export class DtReportComponent {
     this.availableDigitalTwinData = this.availableDigitalTwinData.filter((company: any) => company?.solutionText)
 
 
-    console.log(JSON.parse(JSON.stringify(this.availableDigitalTwinData)))
-
     const mergedDigitalTwinData = mergeDuplicateSolutions(this.availableDigitalTwinData, 'digitalTwin')
     this.availableDigitalTwinData = mergedDigitalTwinData
 
