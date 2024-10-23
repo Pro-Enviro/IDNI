@@ -447,6 +447,9 @@ export class GenerateReportComponent implements OnInit {
                 emissions: (grandTotal * 0.22499) / 1000
               };
 
+              //console.log(envirotrackData)
+              //console.log(grandTotal.toFixed(2))
+
               // Add the result to your tables
               this.scopeTable.push(envirotrackData);
               this.typeTotals.push(envirotrackData);
@@ -668,7 +671,7 @@ export class GenerateReportComponent implements OnInit {
   saveSolutionData = () => {
     if (!this.selectedCompany) return;
 
-    console.log(this.energySolution)
+    //console.log(this.energySolution)
 
     this.energySolution.forEach((solution: DigitalTwinRows) => {
       if (!solution.id) {
@@ -703,7 +706,7 @@ export class GenerateReportComponent implements OnInit {
         })
       }
 
-      console.log(this.energySolution)
+      //console.log(this.energySolution)
 
     })
     this.msg.add({
@@ -796,7 +799,6 @@ export class GenerateReportComponent implements OnInit {
     });
   }
 
-
   calculateScopeTable = () => {
     const conversionFactors: { [key: string]: number } = {
       'Electricity': 0.22499,
@@ -804,7 +806,7 @@ export class GenerateReportComponent implements OnInit {
       'Kerosene': 0.24677,
       'Diesel (avg biofuel blend)': 0.23908,
       'Petrol (avg biofuel blend)': 0.22166,
-      "Gas oil (Red diesel)": 0.25650,
+      'Gas oil (Red diesel)': 0.25650,
       'LPG': 0.21449,
       'Propane': 0.21410,
       'Butane': 0.22241,
@@ -812,40 +814,65 @@ export class GenerateReportComponent implements OnInit {
       'Biomethane (compressed)': 0.00038,
       'Wood Chips': 0.01074,
       'Natural Gas off Grid': 0.03021,
-      'Bio Gas Off Grid':   0.00020,
-      'Oil': 0.24557, //burning oil
-      'Bio fuels': 0.03558, //biodiesel
+      'Bio Gas Off Grid': 0.00020,
+      'Oil': 0.24557, // burning oil
+      'Bio fuels': 0.03558, // biodiesel
       'Bio Mass': 0.01074,
       'Coal for Industrial use': 0.05629,
-    }
+    };
 
+    //scopeTable is array with objects
+    // i need to target the objects which are halfhourlyData objects
+    //probably to target the types which are electricity hh-number
+    // i need to take the consumpition * conversionFactor / 1000 = tCO2e
 
+    //in one situation we have the conversion factor from the table and the other one is coming from the type HH
+    //conversionFactors[fuelType.type] is giving me only the types in the table
+    // TO DO : add the conversion factor for electricity hh
 
     this.scopeTable = this.scopeTable.map((fuelType: any) => {
-      fuelType.scope = fuelType.type === 'Electricity' ? 'Scope 2' : 'Scope 1'
+      // scope based on type
+      if (fuelType.type === 'Electricity' || fuelType.type.startsWith('Electricity HH')) {
+        fuelType.scope = 'Scope 2';
+      } else {
+        fuelType.scope = 'Scope 1';
+      }
 
-      const selectedConversionFactor = conversionFactors[fuelType.type] ? conversionFactors[fuelType.type] : 0
-      const calculatedCO2e = (fuelType.consumption * selectedConversionFactor) / 1000
-      fuelType.co2e = Number(calculatedCO2e)
+      let selectedConversionFactor = conversionFactors[fuelType.type];
 
-      return fuelType
-    })
+      // If the type is a half-hourly data (starts with 'Electricity HH -') the conversion factor is set here
+      if (!selectedConversionFactor && fuelType.type.startsWith('Electricity HH')) {
+        selectedConversionFactor = 0.22499;
+      }
 
+      selectedConversionFactor = selectedConversionFactor || 0;
+
+      // Calculate CO2e based on the conversion factor
+      const calculatedCO2e = (fuelType.consumption * selectedConversionFactor) / 1000;
+      fuelType.co2e = Number(calculatedCO2e);
+      fuelType.conversionFactor = selectedConversionFactor;
+
+      return fuelType;
+    });
 
     // Update Co2e totals
     this.totalCo2e = this.typeTotals.reduce((acc: any, curr: any) => {
-      if (curr.co2e > 0 ){
-        return acc + curr.co2e
+      if (curr.co2e > 0) {
+        return acc + curr.co2e;
       }
       return acc;
-    }, 0)
+    }, 0);
 
-    this.typeTotals.sort((a: any, b: any) => b.consumption - a.consumption)
-    this.scopeTable.sort((a: any, b: any) => b.co2e - a.co2e)
-  }
+    this.typeTotals.sort((a: any, b: any) => b.consumption - a.consumption);
+    this.scopeTable.sort((a: any, b: any) => b.co2e - a.co2e);
+  };
+
 
   calculateCo2ePercent(typeTotal: any) {
     const calculatedPercent = ( typeTotal.co2e / this.totalCo2e) * 100
+    //console.log(calculatedPercent)
+    //console.log(typeTotal)
+    //console.log(this.totalCo2e)
     if (calculatedPercent > 0 ) {
       return calculatedPercent.toFixed(2);
     }
