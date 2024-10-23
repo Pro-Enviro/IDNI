@@ -832,6 +832,7 @@ export class GenerateReportComponent implements OnInit {
         fuelType.scope = 'Scope 1';
       }
 
+
       //conversion factor based on the object above - conversionFactors
       let selectedConversionFactor = conversionFactors[fuelType.type];
 
