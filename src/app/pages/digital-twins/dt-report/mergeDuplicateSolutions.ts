@@ -25,8 +25,11 @@ export function mergeDuplicateSolutions(items: any, type = 'recommendation') {
   if (!items?.length) return []
 
   const workingSet = [...items];
+  // Select the correct fuse options from above depending on recommendation/digital twin
   const fuseOptions = type === 'digitalTwin' ? FUSE_OPTIONS.digitalTwin : FUSE_OPTIONS.recommendation
   const fuse = new Fuse(workingSet, fuseOptions);
+
+  // Using a set to prevent skipping over duplicates
   const processedIds = new Set();
   const mergedItems: any[] = [];
 
@@ -38,6 +41,7 @@ export function mergeDuplicateSolutions(items: any, type = 'recommendation') {
 
     const searchResults = fuse.search(searchKey);
 
+    //
     const duplicates = searchResults.filter((result: any) => {
       const resultIndex = workingSet.indexOf(result.item);
       return resultIndex !== index && !processedIds.has(resultIndex)
@@ -46,7 +50,7 @@ export function mergeDuplicateSolutions(items: any, type = 'recommendation') {
       index: workingSet.indexOf(result.item)
     }))
 
-
+    // Build a merged item array, duplicates become one object with a counter.
     if (duplicates.length > 0) {
       const mergedItem = mergeDuplicateItem(item, duplicates.map(d => d.item));
       duplicates.forEach(duplicate => processedIds.add(duplicate.index));
