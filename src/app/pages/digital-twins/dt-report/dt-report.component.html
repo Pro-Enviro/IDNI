@@ -197,7 +197,7 @@
             </div>
             <div class="text-center mt-2">
               <span class="font-semibold text-sm">Payback Period: </span>
-              <span>{{ reco.paybackPeriod }} years</span>
+              <span>{{ reco.paybackPeriod | number: '1.0-2'}} years</span>
             </div>
             <span *ngIf="reco.counter" class="mb-1 text-xs text-gray-700 mt-1 text-center"><span class="font-bold">{{ reco.counter }}</span> other compan{{ reco.counter > 1 ? 'ies' : 'y' }}
               with this recommendation </span>
@@ -248,7 +248,7 @@
             </div>
             <div class="text-center mt-1">
               <span class="font-semibold text-sm">Payback Period: </span>
-              <span>{{ data.paybackPeriod }} years</span>
+              <span>{{ data.paybackPeriod | number: '1.0-2' }} years</span>
             </div>
             <span *ngIf="data.counter" class="my-1 text-xs text-gray-700 text-center"><span class="font-bold">{{ data.counter }}</span>
               other compan{{ data.counter > 1 ? 'ies' : 'y' }} with this solution </span>

@@ -127,21 +127,32 @@ export class DtReportComponent {
 
     // Go through recommendations are collate similar named ones
     const fuseOptions = {
-      threshold: 0.3,
+      threshold: 0.2,
+      ignoreLocation: true,
       includeScore: true,
       keys: ['recommendation']
     }
 
     const fuse = new Fuse(this.availableRecommendations, fuseOptions);
 
+
     this.availableRecommendations.forEach((reco: any) => {
       const foundDuplicates = fuse.search(reco.recommendation)
         .filter(result => result.item !== reco)
         .map(result => result.item);
 
+      let paybackSum = reco.paybackPeriod || 0;
+      let paybackCount = reco.counter || 1;
+
       if (foundDuplicates.length > 0) {
         foundDuplicates.forEach(duplicate => {
           this.sumProperties(reco, duplicate);
+
+          // Get payback period
+          if (duplicate.paybackPeriod) {
+            paybackSum += duplicate.paybackPeriod;
+            paybackCount++;
+          }
 
           // Remove duplicate from recommendations
           const indexToRemove = this.availableRecommendations.indexOf(duplicate);
@@ -149,12 +160,26 @@ export class DtReportComponent {
             this.availableRecommendations.splice(indexToRemove, 1);
           }
 
+          // Average of Payback periods
+
           // Add counter to current Reco
           if (reco.counter) reco.counter++;
           else reco.counter = 1;
         })
+        reco.paybackPeriod = paybackSum / paybackCount;
       }
     })
+
+    // BMI Trailers
+    // Axon Power & Control Ltd
+    // McCloskey International- Granville
+    // Linergy LTD
+    // ABP Linden
+    // Linden Foods
+    // Dunbia (UK)
+    // Westland Horticulture Ltd
+    // Dunbia - Hides
+    // Dunbia - Retail
 
 
     // Select solution recommendations from report page
@@ -174,7 +199,8 @@ export class DtReportComponent {
 
 
     const fuseTwinsOptions = {
-      threshold: 0.0,
+      threshold: 0.2,
+      ignoreLocation: true,
       includeScore: true,
       keys: ['solutionText']
     }
@@ -188,9 +214,19 @@ export class DtReportComponent {
         .filter(result => result.item !== reco)
         .map(result => result.item);
 
+      let paybackSum = reco.paybackPeriod || 0;
+      let paybackCount = reco.counter || 1;
+
       if (foundDuplicates.length > 0) {
+
         foundDuplicates.forEach(duplicate => {
           this.sumProperties(reco, duplicate);
+
+          // Get payback period
+          if (duplicate.paybackPeriod) {
+            paybackSum += duplicate.paybackPeriod;
+            paybackCount++;
+          }
 
           // Remove duplicate from recommendations
           const indexToRemove = this.availableDigitalTwinData.indexOf(duplicate);
@@ -202,6 +238,8 @@ export class DtReportComponent {
           if (reco.counter) reco.counter++;
           else reco.counter = 1;
         })
+
+        reco.paybackPeriod = paybackSum / paybackCount;
       }
     })
 
