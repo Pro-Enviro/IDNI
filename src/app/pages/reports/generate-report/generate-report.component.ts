@@ -668,7 +668,7 @@ export class GenerateReportComponent implements OnInit {
   saveSolutionData = () => {
     if (!this.selectedCompany) return;
 
-    console.log(this.energySolution)
+    //console.log(this.energySolution)
 
     this.energySolution.forEach((solution: DigitalTwinRows) => {
       if (!solution.id) {
@@ -702,8 +702,6 @@ export class GenerateReportComponent implements OnInit {
           error: (error: any) => console.log(error),
         })
       }
-
-      console.log(this.energySolution)
 
     })
     this.msg.add({
@@ -796,15 +794,15 @@ export class GenerateReportComponent implements OnInit {
     });
   }
 
-
   calculateScopeTable = () => {
     const conversionFactors: { [key: string]: number } = {
       'Electricity': 0.22499,
       'Natural Gas (Grid)': 0.18293,
+      'Gas':0.18293,
       'Kerosene': 0.24677,
       'Diesel (avg biofuel blend)': 0.23908,
       'Petrol (avg biofuel blend)': 0.22166,
-      "Gas oil (Red diesel)": 0.25650,
+      'Gas oil (Red diesel)': 0.25650,
       'LPG': 0.21449,
       'Propane': 0.21410,
       'Butane': 0.22241,
@@ -812,37 +810,95 @@ export class GenerateReportComponent implements OnInit {
       'Biomethane (compressed)': 0.00038,
       'Wood Chips': 0.01074,
       'Natural Gas off Grid': 0.03021,
-      'Bio Gas Off Grid':   0.00020,
-      'Oil': 0.24557, //burning oil
-      'Bio fuels': 0.03558, //biodiesel
+      'Bio Gas Off Grid': 0.00020,
+      'Bio fuels': 0.03558, // biodiesel
       'Bio Mass': 0.01074,
       'Coal for Industrial use': 0.05629,
-    }
-
+      'Burning oil (Kerosene)': 0.24677,
+    };
 
 
     this.scopeTable = this.scopeTable.map((fuelType: any) => {
-      fuelType.scope = fuelType.type === 'Electricity' ? 'Scope 2' : 'Scope 1'
+      //default conversion factor
+      const defaultConversionFactor = 0.22;
 
-      const selectedConversionFactor = conversionFactors[fuelType.type] ? conversionFactors[fuelType.type] : 0
-      const calculatedCO2e = (fuelType.consumption * selectedConversionFactor) / 1000
-      fuelType.co2e = Number(calculatedCO2e)
+      // scope based on type
+      if (fuelType.type === 'Electricity' || fuelType.type.startsWith('Electricity HH')) {
+        fuelType.scope = 'Scope 2';
+      } else {
+        fuelType.scope = 'Scope 1';
+      }
 
-      return fuelType
-    })
+      //conversion factor based on the object above - conversionFactors
+      let selectedConversionFactor = conversionFactors[fuelType.type];
 
+      // If the type is a half-hourly data (starts with 'Electricity HH -') the conversion factor is set here
+      if (!selectedConversionFactor && fuelType.type.startsWith('Electricity HH')) {
+        selectedConversionFactor = 0.22499;
+      }
+
+      // if the conversion factor is missing because the type name was changed
+      if (!selectedConversionFactor) {
+        if (fuelType.type.includes('Gas')) {
+          selectedConversionFactor = conversionFactors['Gas']
+        }  else if (fuelType.type.includes('Kerosene')){
+          selectedConversionFactor = conversionFactors['Kerosene']
+        } else if (fuelType.type.includes('Diesel')){
+          selectedConversionFactor = conversionFactors['Diesel (avg biofuel blend)']
+        } else if (fuelType.type.includes('Petrol')){
+          selectedConversionFactor = conversionFactors['Petrol (avg biofuel blend)']
+        } else if (fuelType.type.includes('Gas oil')){
+          selectedConversionFactor = conversionFactors['Gas oil (Red diesel)']
+        } else if (fuelType.type.includes('LPG')){
+          selectedConversionFactor = conversionFactors['LPG']
+        } else if(fuelType.type.includes('Propane')) {
+          selectedConversionFactor = conversionFactors['Propane']
+        } else if (fuelType.type.includes('Butane')){
+          selectedConversionFactor = conversionFactors['Butane']
+        } else if(fuelType.type.includes('Biogas')){
+          selectedConversionFactor = conversionFactors['Biogas']
+        } else if(fuelType.type.includes('Biomethane')){
+          selectedConversionFactor = conversionFactors['Biomethane (compressed)']
+        } else if(fuelType.type.includes('Wood')){
+          selectedConversionFactor = conversionFactors['Wood Chips']
+        } else if(fuelType.type.includes('Natural Gas')){
+          selectedConversionFactor = conversionFactors['Natural Gas off Grid']
+        } else if(fuelType.type.includes('Bio Gas')){
+          selectedConversionFactor = conversionFactors['Bio Gas Off Grid']
+        }else if (fuelType.type.includes('Bio fuels')){
+          selectedConversionFactor = conversionFactors['Bio fuels']
+        } else if(fuelType.type.includes('Bio Mass')){
+          selectedConversionFactor = conversionFactors['Bio Mass']
+        }else if(fuelType.type.includes('Coal')){
+          selectedConversionFactor = conversionFactors['Coal for Industrial use']
+        }else if(fuelType.type.includes('Burning oil ')){
+          selectedConversionFactor = conversionFactors['Burning oil (Kerosene)']
+        } else {
+          selectedConversionFactor = defaultConversionFactor;
+        }
+      }
+
+
+      // Calculate CO2e based on the conversion factor
+      const calculatedCO2e = (fuelType.consumption * selectedConversionFactor) / 1000;
+      fuelType.co2e = Number(calculatedCO2e);
+      fuelType.conversionFactor = selectedConversionFactor;
+
+      return fuelType;
+    });
 
     // Update Co2e totals
     this.totalCo2e = this.typeTotals.reduce((acc: any, curr: any) => {
-      if (curr.co2e > 0 ){
-        return acc + curr.co2e
+      if (curr.co2e > 0) {
+        return acc + curr.co2e;
       }
       return acc;
-    }, 0)
+    }, 0);
 
-    this.typeTotals.sort((a: any, b: any) => b.consumption - a.consumption)
-    this.scopeTable.sort((a: any, b: any) => b.co2e - a.co2e)
-  }
+    this.typeTotals.sort((a: any, b: any) => b.consumption - a.consumption);
+    this.scopeTable.sort((a: any, b: any) => b.co2e - a.co2e);
+  };
+
 
   calculateCo2ePercent(typeTotal: any) {
     const calculatedPercent = ( typeTotal.co2e / this.totalCo2e) * 100

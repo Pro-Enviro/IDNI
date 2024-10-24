@@ -18,6 +18,8 @@ import {GlobalService} from "../../../../_services/global.service";
 import {SidebarModule} from "primeng/sidebar";
 import {DividerModule} from "primeng/divider";
 import {DropdownChangeEvent} from "primeng/dropdown";
+import {MessagesModule} from "primeng/messages";
+import {Message} from "primeng/api";
 
 export class Fields {
   type: string = '';
@@ -37,6 +39,7 @@ export class Fields {
     SharedComponents,
     SidebarModule,
     DividerModule,
+    MessagesModule
   ]
 })
 export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
@@ -52,7 +55,9 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
   nameChange: string = ''
   fuelGuide:boolean = false;
   isConsultantLevel = false
+  displayFuelMsg: Message[] = []
 
+  showMessage:boolean = false
   constructor(
     private dialog: DialogService,
     private msg: MessageService,
@@ -91,6 +96,15 @@ export class DataCaptureSpreadsheetFuelsComponent implements OnInit {
   }
 
   onKeyDown = (event: KeyboardEvent) => event.stopPropagation()
+
+  onInputMessageShow() {
+    this.showMessage = true
+    this.displayFuelMsg = [
+      { severity: 'info',
+        detail: 'To change the fuel type name, please include the fuel type, followed by a dash, and then the new name that you\'d like to use.'
+      }
+    ]
+  }
 
   getCompanies = () => {
 
