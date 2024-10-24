@@ -12,6 +12,7 @@ import {CarouselModule} from "primeng/carousel";
 import {calculateEnergyData} from "./calculateEnergyData";
 import Fuse from "fuse.js";
 import {mergeDuplicateSolutions} from "./mergeDuplicateSolutions";
+import {match} from "node:assert";
 
 @Component({
   selector: 'app-dt-report',
@@ -54,12 +55,9 @@ export class DtReportComponent {
     this.dt.clusters.subscribe({
       next: (cluster) => this.clusters = cluster
     })
-
-    // this.dt.getDigitalTwinData(this.selectedCluster);
   }
 
   // Cluster Selection
-
   onSelect = (event: AutoCompleteCompleteEvent) => {
     this.filteredClusters = this.clusters.filter(
       (cluster: ClusterObject) => cluster.name.toLowerCase().includes(event.query.toLowerCase())
@@ -176,8 +174,47 @@ export class DtReportComponent {
         console.log(error)
       }
     })
+
+    this.dt.getPETCostingData(matchedCompanyIds).subscribe({
+      next: (res: any) => {
+        this.addPETCostToTotal(res)
+      }
+    })
   }
 
+  addPETCostToTotal = (petData: any[]) => {
+    console.log(this.energyData, petData);
+
+    petData.forEach((fuelType: any) => {
+      // if (fuelType.name === 'Electricity') {
+        const cost = fuelType.cost;
+
+        // const elecIndex =  this.energyData.findIndex((fuel: any) => fuel.type === 'Electricity');
+        // if (elecIndex !== -1 && this.energyData[elecIndex]?.totalCost !== Number(cost)){
+        //   this.energyData[elecIndex].totalCost += Number(cost);
+        // }
+
+        const findOtherTypes = this.energyData.findIndex((f: any) => f.customConversionFactor === fuelType.name);
+
+        if (findOtherTypes !== -1) {
+          if (this.energyData[findOtherTypes].totalCost === 0) {
+            this.energyData[findOtherTypes].totalCost = Number(cost);
+          }
+
+          // TODO: Decide to add or replace?
+          // this.energyData[findOtherTypes].totalCost = Number(cost);
+
+          // TODO: Take the highest number?
+          // if (this.energyData[findOtherTypes].totalCost <= Number(cost)){
+          //   this.energyData[findOtherTypes].totalCost = Number(cost);
+          // }
+        } else {
+          // TODO: Create a new energyData row to include PET data?
+        }
+
+      // }
+    })
+  }
 
   // Drag functions
   dragStart(recommendation: any) {
