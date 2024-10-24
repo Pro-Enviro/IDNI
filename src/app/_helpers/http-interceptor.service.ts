@@ -49,7 +49,27 @@ export const HttpInterceptorService: HttpInterceptorFn = (
     });
   };
 
+  const validateTokens = () => {
+    const accessToken = storage.get('access_token');
+    const refreshToken = storage.get('refresh_token');
+
+    if (!accessToken || !refreshToken) {
+      handleLogout()
+      return false;
+    }
+
+    return true;
+
+  }
+
   const handleRequest = (token: string | null): Observable<any> => {
+
+
+    if (!validateTokens()) {
+      return throwError(() => new Error('Unauthorized'))
+    }
+
+
     const authRequest = token ? addTokenHeader(req, token) : req;
 
     // If the token is not refreshing, start the refresh
