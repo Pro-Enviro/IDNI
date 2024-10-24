@@ -9,7 +9,7 @@ import {CardModule} from "primeng/card";
 import {SharedModules} from "../../../shared-module";
 import {SharedComponents} from "../../envirotrack/shared-components";
 import {CarouselModule} from "primeng/carousel";
-import {calculateEnergyData} from "./calculateEnergyData";
+import {calculateEnergyData, conversionFactors} from "./calculateEnergyData";
 import Fuse from "fuse.js";
 import {mergeDuplicateSolutions} from "./mergeDuplicateSolutions";
 import {match} from "node:assert";
@@ -65,8 +65,6 @@ export class DtReportComponent {
   }
 
 
-
-
   onClusterSelect = (event: any) => {
     this.availableRecommendations = []
     this.availableDigitalTwinData = []
@@ -120,7 +118,6 @@ export class DtReportComponent {
     })
 
 
-
     const mergedRecommendations = mergeDuplicateSolutions(this.availableRecommendations)
     this.availableRecommendations = mergedRecommendations
 
@@ -143,7 +140,6 @@ export class DtReportComponent {
 
     const mergedDigitalTwinData = mergeDuplicateSolutions(this.availableDigitalTwinData, 'digitalTwin')
     this.availableDigitalTwinData = mergedDigitalTwinData
-
 
 
     // Get Non-HH energy data
@@ -183,36 +179,39 @@ export class DtReportComponent {
   }
 
   addPETCostToTotal = (petData: any[]) => {
-    console.log(this.energyData, petData);
 
     petData.forEach((fuelType: any) => {
-      // if (fuelType.name === 'Electricity') {
-        const cost = fuelType.cost;
+      const cost = fuelType.cost;
 
-        // const elecIndex =  this.energyData.findIndex((fuel: any) => fuel.type === 'Electricity');
-        // if (elecIndex !== -1 && this.energyData[elecIndex]?.totalCost !== Number(cost)){
-        //   this.energyData[elecIndex].totalCost += Number(cost);
-        // }
+      console.log(this.energyData, petData)
 
-        const findOtherTypes = this.energyData.findIndex((f: any) => f.customConversionFactor === fuelType.name);
+      const findOtherTypes = this.energyData.findIndex((f: any) => f.customConversionFactor === fuelType.name);
 
-        if (findOtherTypes !== -1) {
-          if (this.energyData[findOtherTypes].totalCost === 0) {
-            this.energyData[findOtherTypes].totalCost = Number(cost);
-          }
-
-          // TODO: Decide to add or replace?
-          // this.energyData[findOtherTypes].totalCost = Number(cost);
-
-          // TODO: Take the highest number?
-          // if (this.energyData[findOtherTypes].totalCost <= Number(cost)){
-          //   this.energyData[findOtherTypes].totalCost = Number(cost);
-          // }
-        } else {
-          // TODO: Create a new energyData row to include PET data?
+      // If the PET has data and energyData does not, take that. Otherwise take the highest number
+      if (findOtherTypes !== -1) {
+        if (this.energyData[findOtherTypes].name === 'Electricity HH') {
+          this.energyData[findOtherTypes].totalCost += Number(cost);
+        } else if (this.energyData[findOtherTypes].totalCost === 0) {
+          this.energyData[findOtherTypes].totalCost = Number(cost);
+        } else if (this.energyData[findOtherTypes].totalCost <= Number(cost)) {
+          this.energyData[findOtherTypes].totalCost = Number(cost);
         }
+      } else {
 
-      // }
+        if (cost === 0) return;
+
+        const newType = {
+          type: fuelType.type,
+          customConversionFactor: fuelType.type,
+          totalValue: fuelType.totalUnits,
+          totalCost: cost,
+          emissions: fuelType.co2e,
+          unit: fuelType.unitsUom,
+        };
+
+        this.energyData.push(newType);
+      }
+
     })
   }
 
@@ -366,7 +365,6 @@ export class DtReportComponent {
     const costSaving = this.getEstimatedCarbonSaving()
     return this.totalC02Used - costSaving;
   }
-
 
   // Percentage Calculations
 
