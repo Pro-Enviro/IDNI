@@ -26,17 +26,25 @@ export class DtClusterComponent implements AfterViewInit {
   @ViewChild('panel') panel: any;
   @Output() returnCluster: EventEmitter<Cluster> = new EventEmitter<Cluster>()
 
-  clusterName!: string;
+  clusterName: string = '';
   selectedCluster: ClusterObject | undefined;
   clusterCompanies: Companies[] = [];
   filteredClusters: any[] = [];
   targetHeight: number | undefined = 1000;
 
   onSave = () => {
-     if (this.selectedCluster) {
+
+    const clusterNameFromStringOrObject = typeof this.clusterName === 'string' ? this.clusterName.toLowerCase() : (this.clusterName as any)?.name?.toLowerCase()
+
+    const existingCluster = this.clusters?.find(
+      (cluster: ClusterObject) => cluster.name.toLowerCase() === clusterNameFromStringOrObject
+    );
+
+
+     if (existingCluster) {
         this.returnCluster.emit({
-          id: this.selectedCluster?.id,
-          name: this.selectedCluster?.name,
+          id: existingCluster.id,
+          name: existingCluster.name,
           companies: this.clusterCompanies
         });
       } else {
@@ -49,25 +57,49 @@ export class DtClusterComponent implements AfterViewInit {
 
   onSelect = (event: AutoCompleteCompleteEvent) => {
 
-    this.filteredClusters = this.clusters.filter(
+    this.filteredClusters = this.clusters?.filter(
       (cluster: ClusterObject) => cluster.name.toLowerCase().includes(event.query.toLowerCase())
+    ) || [];
+
+    const exactMatch = this.clusters.find(
+      (cluster: ClusterObject) => cluster.name.toLowerCase() === event.query.toLowerCase()
     );
+
+    if (exactMatch) {
+      this.selectedCluster = exactMatch;
+      this.clusterCompanies = exactMatch.companies || []
+    } else {
+      this.selectedCluster = undefined;
+      this.clusterName = event.query;
+      this.clusterCompanies = []
+    }
   }
 
   onClusterSelect = (event: any) => {
-    this.selectedCluster = event.value;
-    this.clusterCompanies = event.value.companies || [];
-    console.log('Selected Cluster:', event);
-    console.log('Cluster Companies:', this.clusterCompanies);
+    if (event && event.value) {
+      this.selectedCluster = event.value;
+      this.clusterName = event.value.name;
+      this.clusterCompanies = event.value.companies || [];
+    }
   }
 
   getTargetHeader = () => {
-    return this.selectedCluster ? `${this.selectedCluster.name} Cluster` : 'New Cluster';
+    const name = typeof this.clusterName === 'string'
+      ? this.clusterName
+      : (this.clusterName as any)?.name;
+
+    if (!name) {
+      return 'No Cluster Selected'
+    }
+
+    return this.selectedCluster ? `${this.selectedCluster.name} Cluster` : `New Cluster: ${name || ''}`
+
   }
 
   onClearSelection = () => {
     this.selectedCluster = undefined;
     this.clusterCompanies = [];
+    this.clusterName = ''
   }
 
   ngAfterViewInit() {

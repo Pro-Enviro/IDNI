@@ -7,6 +7,7 @@
           <p-autoComplete
             [suggestions]="filteredClusters"
             [(ngModel)]="clusterName"
+            [forceSelection]="false"
             [dropdown]="true"
             placeholder="Cluster Name"
             optionLabel="name"
