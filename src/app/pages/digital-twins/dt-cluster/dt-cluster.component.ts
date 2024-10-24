@@ -26,7 +26,7 @@ export class DtClusterComponent implements AfterViewInit {
   @ViewChild('panel') panel: any;
   @Output() returnCluster: EventEmitter<Cluster> = new EventEmitter<Cluster>()
 
-  clusterName: string = '';
+  clusterName: any = '';
   selectedCluster: ClusterObject | undefined;
   clusterCompanies: Companies[] = [];
   filteredClusters: any[] = [];
@@ -34,8 +34,10 @@ export class DtClusterComponent implements AfterViewInit {
 
   onSave = () => {
 
+    // Picklist ngModel will either be a string if its a new cluster OR could be an object from the already created clusters
     const clusterNameFromStringOrObject = typeof this.clusterName === 'string' ? this.clusterName.toLowerCase() : (this.clusterName as any)?.name?.toLowerCase()
 
+    // Check if the cluster already exists as string or object
     const existingCluster = this.clusters?.find(
       (cluster: ClusterObject) => cluster.name.toLowerCase() === clusterNameFromStringOrObject
     );
@@ -61,6 +63,7 @@ export class DtClusterComponent implements AfterViewInit {
       (cluster: ClusterObject) => cluster.name.toLowerCase().includes(event.query.toLowerCase())
     ) || [];
 
+    // When typing in a name, it should match instantly if found. IF not found, reset all companies to prevent saving companies on another cluster
     const exactMatch = this.clusters.find(
       (cluster: ClusterObject) => cluster.name.toLowerCase() === event.query.toLowerCase()
     );
@@ -84,6 +87,8 @@ export class DtClusterComponent implements AfterViewInit {
   }
 
   getTargetHeader = () => {
+
+    // Update Picklist selection name, if cluster exists, use that name. Otherwise take the newly typed in name
     const name = typeof this.clusterName === 'string'
       ? this.clusterName
       : (this.clusterName as any)?.name;
