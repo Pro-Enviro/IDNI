@@ -27,7 +27,7 @@ export const HttpInterceptorService: HttpInterceptorFn = (
 
 
   // If refresh is happening just continue on
-  if (req.url.includes('refresh')) {
+  if (req.url.includes('refresh') ||req.url.includes('login') ) {
     return next(req);
   }
 

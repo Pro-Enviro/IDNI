@@ -73,7 +73,6 @@ function mergeDuplicateItem(original: any, duplicates: any, type: string) {
   merged.counter = 1;
 
   duplicates.forEach((duplicate: any) => {
-    console.log(duplicate)
     merged.counter = (merged.counter || 1) + 1;
 
     // Handle payback
