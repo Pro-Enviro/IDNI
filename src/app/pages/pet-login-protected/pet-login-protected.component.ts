@@ -54,6 +54,7 @@ import {DividerModule} from "primeng/divider";
 import {TypeChartComponent} from "../envirotrack/report/type-chart/type-chart.component";
 import {json} from "node:stream/consumers";
 import {ScopeChartComponent} from "../envirotrack/report/scope-chart/scope-chart.component";
+import moment from "moment";
 
 
 @Component({
@@ -901,6 +902,7 @@ export class PetLoginProtected implements OnInit {
 
 
             res.forEach((row: any) => {
+              console.log(row)
               row.hhd = JSON.parse(row.hhd.replaceAll('"', '').replaceAll("'", '')).map((x: number) => x ? x : 0)
               // Sort the envirotrack data
               const rowTotal = row.hhd.reduce((acc: any, curr: any) => acc + curr, 0);
@@ -911,16 +913,18 @@ export class PetLoginProtected implements OnInit {
               aggregatedHHData[category] += rowTotal;
             })
 
+
             this.breakDownChartData = Object.entries(aggregatedHHData).map(([name, total]: any) =>
               ({
                 name,
-                value: Number((total).toFixed(2))
+                value: Number((total).toFixed(2)),
+                date: moment(res[res.length-1].date).format('yyyy')
               })
             );
 
-            console.log(aggregatedHHData)
           }
 
+          // console.log(this.breakDownChartData)
 
 
           this.breakDownChartData.forEach((extracted: any) => {
