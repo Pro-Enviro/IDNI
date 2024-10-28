@@ -207,7 +207,7 @@ export class PetLoginProtected implements OnInit {
 
     // Get sites report or generate new rows
     this.getPETReport(this.selectedCompany)
-    this.getFuelData()
+    // this.getFuelData()
     // this.getData(this.selectedCompany)
   }
 
@@ -252,11 +252,12 @@ export class PetLoginProtected implements OnInit {
 
 
   onSelectYear = () => {
-
+    this.breakDownChartData = []
 
     if (!this.allPetData?.length) {
       this.generateNewTable()
       this.selectedPetId = undefined
+      this.getFuelData()
       this.getData(this.selectedCompany)
       return
     }
@@ -266,10 +267,10 @@ export class PetLoginProtected implements OnInit {
     if (selectedYear) {
       this.fillTable(selectedYear)
       this.selectedPetId = selectedYear.id
-      // this.getData(this.selectedCompany)
     } else {
       this.generateNewTable()
       this.selectedPetId = undefined
+      this.getFuelData()
       this.getData(this.selectedCompany)
     }
   }
@@ -404,7 +405,6 @@ export class PetLoginProtected implements OnInit {
 
             })
           })
-
 
           this.fillTable(this.allPetData[0])
           this.calculateProductivityComparison()
@@ -847,10 +847,11 @@ export class PetLoginProtected implements OnInit {
 
       if (foundType === -1) return;
 
-      this.data[foundType].totalUnits = extracted.totalValue
-      this.data[foundType].cost = extracted.totalCost
+      this.data[foundType].totalUnits += extracted.totalValue
+      this.data[foundType].cost += extracted.totalCost
       this.data[foundType].unitsUom = extracted.unit ? extracted.unit : 'kWh'
     })
+
 
     this.calculatePieCharts(extractedData)
   }
@@ -894,8 +895,6 @@ export class PetLoginProtected implements OnInit {
   getData = (id: number) => {
     if (!id) return
 
-    console.log(this.selectedYear)
-
     this.track.getData(id).subscribe({
         next: (res) => {
           if (res) {
@@ -923,7 +922,7 @@ export class PetLoginProtected implements OnInit {
               ({
                 name,
                 value: Number((total).toFixed(2)),
-                date: moment(res[res.length-1].date).format('yyyy')
+                date: moment(res[res.length - 1].date).format('yyyy')
               })
             );
           }
@@ -939,8 +938,6 @@ export class PetLoginProtected implements OnInit {
             this.data[foundType].cost = 0
             this.data[foundType].unitsUom = 'kWh'
           })
-
-          console.log(this.breakDownChartData)
 
         },
         complete: () => {
