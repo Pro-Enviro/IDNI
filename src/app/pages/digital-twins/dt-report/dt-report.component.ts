@@ -183,7 +183,6 @@ export class DtReportComponent {
     petData.forEach((fuelType: any) => {
       const cost = fuelType.cost;
 
-      console.log(this.energyData, petData)
 
       const findOtherTypes = this.energyData.findIndex((f: any) => f.customConversionFactor === fuelType.name);
 
