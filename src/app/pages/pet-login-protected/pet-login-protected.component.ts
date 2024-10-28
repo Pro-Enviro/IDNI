@@ -208,8 +208,7 @@ export class PetLoginProtected implements OnInit {
     // Get sites report or generate new rows
     this.getPETReport(this.selectedCompany)
     this.getFuelData()
-    this.getData(this.selectedCompany)
-
+    // this.getData(this.selectedCompany)
   }
 
 
@@ -253,15 +252,25 @@ export class PetLoginProtected implements OnInit {
 
 
   onSelectYear = () => {
-    if (!this.allPetData.length) return
+
+
+    if (!this.allPetData?.length) {
+      this.generateNewTable()
+      this.selectedPetId = undefined
+      this.getData(this.selectedCompany)
+      return
+    }
+
     const selectedYear = this.allPetData.find((petDataRow: PetToolData) => petDataRow.year === this.selectedYear)
 
     if (selectedYear) {
       this.fillTable(selectedYear)
       this.selectedPetId = selectedYear.id
+      // this.getData(this.selectedCompany)
     } else {
       this.generateNewTable()
       this.selectedPetId = undefined
+      this.getData(this.selectedCompany)
     }
   }
 
@@ -827,24 +836,22 @@ export class PetLoginProtected implements OnInit {
     })
 
 
-    // Add to the data in the table
+    // Add to the data to the table
     extractedData.forEach((extracted: any) => {
 
       if (extracted.type === 'Gas') extracted.type = 'Natural Gas (Grid)'
       if (extracted.type.includes('Burning oil')) extracted.type = "Kerosene"
       if (extracted.type.includes('Propane')) extracted.type = "LPG"
 
-
       let foundType = this.data.findIndex((tableRow: any) => tableRow.name === extracted.type)
 
-
       if (foundType === -1) return;
-
 
       this.data[foundType].totalUnits = extracted.totalValue
       this.data[foundType].cost = extracted.totalCost
       this.data[foundType].unitsUom = extracted.unit ? extracted.unit : 'kWh'
     })
+
     this.calculatePieCharts(extractedData)
   }
 
@@ -885,14 +892,13 @@ export class PetLoginProtected implements OnInit {
 
 
   getData = (id: number) => {
-    if (!id) {
-      return
-    }
+    if (!id) return
+
+    console.log(this.selectedYear)
 
     this.track.getData(id).subscribe({
         next: (res) => {
           if (res) {
-
             if (!res.length) return;
 
             let aggregatedHHData: any = {
@@ -902,7 +908,6 @@ export class PetLoginProtected implements OnInit {
 
 
             res.forEach((row: any) => {
-              console.log(row)
               row.hhd = JSON.parse(row.hhd.replaceAll('"', '').replaceAll("'", '')).map((x: number) => x ? x : 0)
               // Sort the envirotrack data
               const rowTotal = row.hhd.reduce((acc: any, curr: any) => acc + curr, 0);
@@ -921,22 +926,22 @@ export class PetLoginProtected implements OnInit {
                 date: moment(res[res.length-1].date).format('yyyy')
               })
             );
-
           }
 
-          // console.log(this.breakDownChartData)
-
+          this.breakDownChartData = this.breakDownChartData.filter((extracted: any) => extracted.date === this.selectedYear);
 
           this.breakDownChartData.forEach((extracted: any) => {
-
             let foundType = this.data.findIndex((tableRow: any) => tableRow.name === extracted.name)
 
             if (foundType === -1) return;
 
-            this.data[foundType].totalUnits += extracted.value
+            this.data[foundType].totalUnits += isNaN(extracted.value) ? 0 : extracted.value
             this.data[foundType].cost = 0
             this.data[foundType].unitsUom = 'kWh'
           })
+
+          console.log(this.breakDownChartData)
+
         },
         complete: () => {
           this.initCo2eScope()
