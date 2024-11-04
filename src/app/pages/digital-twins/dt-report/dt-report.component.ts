@@ -9,9 +9,10 @@ import {CardModule} from "primeng/card";
 import {SharedModules} from "../../../shared-module";
 import {SharedComponents} from "../../envirotrack/shared-components";
 import {CarouselModule} from "primeng/carousel";
-import {calculateEnergyData} from "./calculateEnergyData";
+import {calculateEnergyData, conversionFactors} from "./calculateEnergyData";
 import Fuse from "fuse.js";
 import {mergeDuplicateSolutions} from "./mergeDuplicateSolutions";
+import {match} from "node:assert";
 
 @Component({
   selector: 'app-dt-report',
@@ -54,19 +55,14 @@ export class DtReportComponent {
     this.dt.clusters.subscribe({
       next: (cluster) => this.clusters = cluster
     })
-
-    // this.dt.getDigitalTwinData(this.selectedCluster);
   }
 
   // Cluster Selection
-
   onSelect = (event: AutoCompleteCompleteEvent) => {
     this.filteredClusters = this.clusters.filter(
       (cluster: ClusterObject) => cluster.name.toLowerCase().includes(event.query.toLowerCase())
     );
   }
-
-
 
 
   onClusterSelect = (event: any) => {
@@ -122,7 +118,6 @@ export class DtReportComponent {
     })
 
 
-
     const mergedRecommendations = mergeDuplicateSolutions(this.availableRecommendations)
     this.availableRecommendations = mergedRecommendations
 
@@ -145,7 +140,6 @@ export class DtReportComponent {
 
     const mergedDigitalTwinData = mergeDuplicateSolutions(this.availableDigitalTwinData, 'digitalTwin')
     this.availableDigitalTwinData = mergedDigitalTwinData
-
 
 
     // Get Non-HH energy data
@@ -176,8 +170,49 @@ export class DtReportComponent {
         console.log(error)
       }
     })
+
+    this.dt.getPETCostingData(matchedCompanyIds).subscribe({
+      next: (res: any) => {
+        this.addPETCostToTotal(res)
+      }
+    })
   }
 
+  addPETCostToTotal = (petData: any[]) => {
+
+    petData.forEach((fuelType: any) => {
+      const cost = fuelType.cost;
+
+
+      const findOtherTypes = this.energyData.findIndex((f: any) => f.customConversionFactor === fuelType.name);
+
+      // If the PET has data and energyData does not, take that. Otherwise take the highest number
+      if (findOtherTypes !== -1) {
+        if (this.energyData[findOtherTypes].name === 'Electricity HH') {
+          this.energyData[findOtherTypes].totalCost += Number(cost);
+        } else if (this.energyData[findOtherTypes].totalCost === 0) {
+          this.energyData[findOtherTypes].totalCost = Number(cost);
+        } else if (this.energyData[findOtherTypes].totalCost <= Number(cost)) {
+          this.energyData[findOtherTypes].totalCost = Number(cost);
+        }
+      } else {
+
+        if (cost === 0) return;
+
+        const newType = {
+          type: fuelType.type,
+          customConversionFactor: fuelType.type,
+          totalValue: fuelType.totalUnits,
+          totalCost: cost,
+          emissions: fuelType.co2e,
+          unit: fuelType.unitsUom,
+        };
+
+        this.energyData.push(newType);
+      }
+
+    })
+  }
 
   // Drag functions
   dragStart(recommendation: any) {
@@ -329,7 +364,6 @@ export class DtReportComponent {
     const costSaving = this.getEstimatedCarbonSaving()
     return this.totalC02Used - costSaving;
   }
-
 
   // Percentage Calculations
 

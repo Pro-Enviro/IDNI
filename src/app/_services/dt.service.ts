@@ -201,9 +201,33 @@ export class DtService {
       envirotrackSummary.push(envirotrackData)
     });
 
-
-
     return envirotrackSummary
+  }
+
+  getPETCostingData = (ids: number[]) => {
+    if (!ids.length) return of([]);
+
+    const observables = ids.map(id =>
+      this.db.getPetData(id).pipe(
+        map((res:any) => this.handlePETData(res)),
+        catchError(() => of(null))
+      )
+    );
+
+    return forkJoin(observables).pipe(
+      map(results => results.filter(Boolean).flat())
+    )
+  }
+
+  handlePETData = (res: any) => {
+    if (res.data?.length) {
+      try {
+        const parsedCost = JSON.parse(res.data[0].cost_of_energy)
+        return parsedCost
+      } catch(e){
+        console.error(e)
+      }
+    }
   }
 
 
