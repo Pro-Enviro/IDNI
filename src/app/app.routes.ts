@@ -35,6 +35,7 @@ import {
 } from "./pages/envirotrack/report/envirotrack-report-fields/envirotrack-report-fields.component";
 import {DigitalTwinsComponent} from "./pages/digital-twins/digital-twins.component";
 import {DtReportComponent} from "./pages/digital-twins/dt-report/dt-report.component";
+import {FilesComponent} from "./pages/files/files.component";
 
 
 export const routes: Routes = [
@@ -89,7 +90,8 @@ export const routes: Routes = [
       {path:'bug-report',component:BugReportComponent},
       {path:'faqs',component:FaqsComponent},
       {path: 'digital-twin', component: DigitalTwinsComponent},
-      {path: 'digital-twin-report', component: DtReportComponent}
+      {path: 'digital-twin-report', component: DtReportComponent},
+      {path: 'files', component: FilesComponent},
       // {path:'contact-us',component:ContactUsComponent}
     ]},
   {path: '**', redirectTo: 'dashboard'},

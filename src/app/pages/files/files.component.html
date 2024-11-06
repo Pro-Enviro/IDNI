@@ -1,0 +1,25 @@
+<p-card
+  header="{{isConsultant ? 'Select Company' : ''}}"
+  styleClass="flex justify-content-center card-charts p-2">
+
+  <div class="p-1">
+    <p-dropdown
+      [options]="companies"
+      [(ngModel)]="selectedCompany"
+      optionLabel="name"
+      optionValue="id"
+      (ngModelChange)="onSelectCompany()"
+      [style]="{ width: '15rem', marginBottom: '2rem'}" scrollHeight="300px"
+      [filter]="true" filterBy="name" [showClear]="true"></p-dropdown>
+  </div>
+</p-card>
+<p-card header="Reports">
+  @for (file of reportFiles; track file){
+    <a pButton icon="pi pi-download" [label]="file.title" href="https://app.idni.eco/assets/{{file.id}}?download"></a>
+  }
+</p-card>
+<p-card header="Data">
+  @for (file of dataFiles; track file){
+    <a pButton icon="pi pi-download" [label]="file.title" href="https://app.idni.eco/assets/{{file.id}}?download"></a>
+  }
+</p-card>

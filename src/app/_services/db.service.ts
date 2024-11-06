@@ -94,6 +94,11 @@ export class DbService {
   deleteDigitalTwinRow = (id: number) => {
     return this.http.delete(`${this.url}/items/company_digital_twin_data/${id}`)
   }
+  getFiles = (id:number) => {
+    return this.http.get(`${this.url}/items/companies/${id}?fields=uploaded_files.directus_files_id.id,uploaded_files.directus_files_id.title,uploaded_reports.directus_files_id.id,uploaded_reports.directus_files_id.title`).pipe(
+      map((x: any) => x.data)
+    )
+  }
 
 
   addCompany(
