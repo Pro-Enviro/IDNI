@@ -195,7 +195,7 @@ export class DashboardComponent {
             routerLink: '/dashboard/fields'
           },
           {
-            label:'<span class="material-symbols-outlined">folder</span>Files',
+            label:'<span class="material-symbols-outlined">folder</span>Reports and Files',
             escape:false,
             routerLink:'/dashboard/files'
           },
