@@ -195,6 +195,11 @@ export class DashboardComponent {
             routerLink: '/dashboard/fields'
           },
           {
+            label:'<span class="material-symbols-outlined">folder</span>Files',
+            escape:false,
+            routerLink:'/dashboard/files'
+          },
+          {
             label: '<span class="material-symbols-outlined">data_thresholding</span> Data',
             escape: false,
             items:[
@@ -296,6 +301,11 @@ export class DashboardComponent {
             label: '<span class="material-symbols-outlined material-icon">bar_chart</span>',
             escape: false,
             routerLink: '/dashboard/fields'
+          },
+          {
+            label:'<span class="material-symbols-outlined">folder</span>',
+            escape:false,
+            routerLink:'/dashboard/files'
           },
           {
             label: '<span class="material-symbols-outlined">data_thresholding</span>',
