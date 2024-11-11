@@ -95,7 +95,7 @@ export class DbService {
     return this.http.delete(`${this.url}/items/company_digital_twin_data/${id}`)
   }
   getFiles = (id:number) => {
-    return this.http.get(`${this.url}/items/companies/${id}?fields=uploaded_files.directus_files_id.id,uploaded_files.directus_files_id.title,uploaded_reports.directus_files_id.id,uploaded_reports.directus_files_id.title`).pipe(
+    return this.http.get(`${this.url}/items/companies/${id}?fields=uploaded_files.directus_files_id.id,uploaded_files.directus_files_id.title,uploaded_files.directus_files_id.type,uploaded_files.directus_files_id.uploaded_on, uploaded_reports.directus_files_id.id,uploaded_reports.directus_files_id.type,uploaded_reports.directus_files_id.title, uploaded_reports.directus_files_id.uploaded_on`).pipe(
       map((x: any) => x.data)
     )
   }
