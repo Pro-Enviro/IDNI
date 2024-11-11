@@ -113,18 +113,18 @@
     <div class="flex align-items-center justify-content-between w-full gap-3">
       <h2 class="m-0">{{pdfTitle}}</h2>
 
-<!--      <div class="flex align-items-center gap-3">-->
-<!--        <a href="{{downloadUrl}}/assets/{{pdfId}}?download&access_token={{token}}">-->
-<!--          <button pButton icon="pi pi-download" class="p-button-success p-button-rounded"></button>-->
-<!--        </a>-->
-<!--        <button pButton icon="pi pi-search-plus"-->
-<!--                class="p-button-success p-button-rounded"-->
-<!--                (click)="pdfZoom = 100">-->
-<!--        </button>-->
-<!--        <div class="w-12rem">-->
-<!--          <p-slider [(ngModel)]="pdfZoom" [min]="0" [max]="200"></p-slider>-->
-<!--        </div>-->
-<!--      </div>-->
+      <div class="flex align-items-center gap-3">
+        <a href="{{downloadUrl}}/assets/{{pdfId}}?download&access_token={{token}}">
+          <button pButton icon="pi pi-download" class="p-button-success p-button-rounded"></button>
+        </a>
+        <button pButton icon="pi pi-search-plus"
+                class="p-button-success p-button-rounded"
+                (click)="pdfZoom = 100">
+        </button>
+        <div class="w-12rem">
+          <p-slider [(ngModel)]="pdfZoom" [min]="0" [max]="200"></p-slider>
+        </div>
+      </div>
     </div>
   </ng-template>
 
@@ -135,7 +135,7 @@
       [original-size]="false"
       [zoom-scale]="'page-fit'"
       [zoom]="pdfZoom/100"
-      style="width: 100%; height: calc(100% - 1rem)">
+      style="width: 100%; height: 100%">
     </pdf-viewer>
   </ng-template>
 </p-dialog>
