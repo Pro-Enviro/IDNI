@@ -39,8 +39,8 @@ export interface Files {
     InplaceModule,
     ConfirmPopupModule,
     DialogModule,
-    SliderModule,
-    PdfViewerModule
+    PdfViewerModule,
+    SliderModule
   ],
   templateUrl: './files.component.html',
   styleUrl: './files.component.scss'
