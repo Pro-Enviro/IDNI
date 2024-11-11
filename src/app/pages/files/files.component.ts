@@ -79,6 +79,7 @@ export class FilesComponent {
   ) {
     this.getCompanies()
     this.token = this.store.get('access_token');
+
   }
 
   onSelectCompany = () => {
