@@ -40,8 +40,8 @@
 
 
 <div class="w-full" *ngIf="isConsultant">
-  <p-panel header="File List" *ngIf="dataFiles">
-    <p-table #dt1 [value]="dataFiles" [autoLayout]="true" [globalFilterFields]="['title','uploaded_on']"
+  <p-panel header="File List" *ngIf="reportFiles">
+    <p-table #dt1 [value]="reportFiles" [autoLayout]="true" [globalFilterFields]="['title','uploaded_on']"
              sortField="uploaded_on" [sortOrder]="-1">
 
       <ng-template pTemplate="header">
