@@ -53,11 +53,12 @@ export class FilesComponent {
   isConsultant: boolean = true;
   dataFiles: Files[] | undefined;
   reportFiles: Files[] | undefined;
-
   files: any = [];
   items!: MenuItem[];
   menuLinks: MenuItem[]
   selectedMenu: string = 'report'
+  reportFileCount: number = 0;
+  dataFileCount: number = 0;
   docs!: any;
   downloadUrl: string = 'https://app.idni.eco';
   token?: null | string;
@@ -168,7 +169,11 @@ export class FilesComponent {
       next: (res: any) => {
         this.dataFiles = res.uploaded_files.map((x: any) => x.directus_files_id)
         this.reportFiles = res.uploaded_reports.map((x: any) => x.directus_files_id)
-        console.log(this.dataFiles, this.reportFiles)
+        this.reportFileCount = this.reportFiles?.length ?? 0;
+        this.dataFileCount = this.dataFiles?.length ?? 0;
+        this.updateMenuBadges();
+        console.log(this.reportFileCount)
+        console.log(this.dataFileCount)
       },
       error: (err: any) => {
         this.msg.add({
@@ -178,7 +183,27 @@ export class FilesComponent {
         })
       }
     })
+  }
 
+  updateMenuBadges() {
+    this.menuLinks = [
+      {
+        label: `Reports`,
+        icon: 'pi pi-file',
+        badge: `${this.reportFileCount}`,
+        command: () => {
+          this.selectedMenu = 'reports'
+        },
+      },
+      {
+        label: `Data`,
+        icon: 'pi pi-database',
+        badge: `${this.dataFileCount}`,
+        command: () => {
+          this.selectedMenu = 'data'
+        },
+      },
+    ]
   }
 
   onDelete(id: string, title: string, event: any) {
@@ -211,19 +236,6 @@ export class FilesComponent {
         return type
     }
   }
-
-  // this.menuLinks = [
-  //   {
-  //     label:'<span class="material-symbols-outlined">dashboard</span> Dashboard',
-  //     routerLink:'/dashboard',
-  //     escape: false
-  //   },
-  //   {
-  //     label: '<span class="material-symbols-outlined">timeline</span> PET',
-  //     routerLink: '/dashboard/pet',
-  //     escape: false
-  //   }
-  //   ]
 }
 
 
