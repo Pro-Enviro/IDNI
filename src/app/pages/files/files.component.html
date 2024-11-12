@@ -1,7 +1,8 @@
 <section class="pr-5">
   <p-card styleClass="card-charts">
     <div>
-      <p-card styleClass="card-select-panel" header="{{isConsultant ? 'Select Company' : ''}}" [style]="{ width: '30%' }">
+      <p-card styleClass="card-select-panel" header="{{isConsultant ? 'Select Company' : ''}}"
+              [style]="{ width: '30%' }">
         <div class="p-1">
           <p-dropdown
             [options]="companies"
@@ -17,20 +18,122 @@
     <div class="grid mt-3">
       <div class="lg:col-6 sm:col-12 md:col-12">
         <p-card header="Reports">
-          @for (file of reportFiles; track file){
-            <a pButton icon="pi pi-download" [label]="file.title" href="https://app.idni.eco/assets/{{file.id}}?download" class="btn-style"></a>
+          @for (file of reportFiles; track file) {
+            <a pButton icon="pi pi-download" [label]="file.title"
+               href="https://app.idni.eco/assets/{{file.id}}?download" class="btn-style"></a>
           }
         </p-card>
       </div>
       <div class="lg:col-6 sm:col-12 md:col-12">
         <p-card header="Data">
-          @for (file of dataFiles; track file){
-              <div class="p-2">
-                <a pButton icon="pi pi-download" [label]="file.title" href="https://app.idni.eco/assets/{{file.id}}?download" class="btn-dark"></a>
-              </div>
+          @for (file of dataFiles; track file) {
+            <div class="p-2">
+              <a pButton icon="pi pi-download" [label]="file.title"
+                 href="https://app.idni.eco/assets/{{file.id}}?download" class="btn-dark"></a>
+            </div>
           }
         </p-card>
+      </div>
+
+      <div class="col-12 mt-3" *ngIf="isConsultant">
+        <p-panel header="File List" *ngIf="reportFiles">
+          <p-table #dt1 [value]="reportFiles" [autoLayout]="true" [globalFilterFields]="['title','uploaded_on']"
+                   sortField="uploaded_on" [sortOrder]="-1">
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th colspan="2">
+                  <label>File Name</label>
+                  <p-columnFilter type="text" field="title" matchMode="contains"></p-columnFilter>
+                </th>
+                <th *ngIf="isAdmin" colspan="4">
+                  <label>Upload Date</label>
+                  <p-columnFilter type="text" field="uploaded_on" matchMode="contains"></p-columnFilter>
+                </th>
+                <th *ngIf="!isAdmin" colspan="3">
+                  <label>Upload Date</label>
+                  <p-columnFilter type="text" field="uploaded_on" matchMode="contains"></p-columnFilter>
+                </th>
+              </tr>
+              <tr>
+                <th pSortableColumn="title">Name
+                  <p-sortIcon field="title"></p-sortIcon>
+                </th>
+                <th>File Type</th>
+                <th pSortableColumn="uploaded_on">Date Uploaded
+                  <p-sortIcon field="uploaded_on"></p-sortIcon>
+                </th>
+                <th>View</th>
+                <th>Download</th>
+                <!--          <th *ngIf="isAdmin"><span class="pi pi-trash"></span></th>-->
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-doc>
+              <tr #context>
+                <td>{{ doc.title }}</td>
+                <td>{{ docName(doc.type) }}</td>
+                <td>{{ doc.uploaded_on.substring(0, 10) }}</td>
+                <td>
+                  <button type="button" pButton class="p-button-rounded p-button-outlined p-button-success" icon="pi pi-eye"
+                          (click)="viewPdf(doc.id,doc.title)"
+                          [disabled]="doc.type.split('/')[1] === 'pdf'? false : true"></button>
+                </td>
+                <td><a href="{{downloadUrl}}/assets/{{doc.id}}?download&access_token={{token}}" target="_blank"
+                       [download]="doc.title">
+                  <button pButton icon="pi pi-download" class="p-button-rounded p-button-outlined p-button-info"></button>
+                </a></td>
+                <!--          <td *ngIf="isAdmin"><button [disabled]="true" pButton icon="pi pi-trash" class="p-button-raised p-button-rounded p-button-outlined p-button-danger" (click)="onDelete(doc.id,doc.title, $event)"></button><p-confirmPopup></p-confirmPopup></td>-->
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td>No records found!</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-panel>
       </div>
     </div>
   </p-card>
 </section>
+
+
+<p-dialog [(visible)]="showPdf"
+          [style]="{width: '80vw', height: '90vh'}"
+          [breakpoints]="{'1440px': '95vw', '1280px': '100vw'}"
+          [modal]="true"
+          [dismissableMask]="true"
+          [resizable]="false"
+          [draggable]="false"
+          [maximizable]="true">
+
+  <ng-template pTemplate="header">
+    <div class="flex align-items-center justify-content-between w-full gap-3">
+      <h2 class="m-0">{{pdfTitle}}</h2>
+
+      <div class="flex align-items-center gap-3">
+        <a href="{{downloadUrl}}/assets/{{pdfId}}?download&access_token={{token}}">
+          <button pButton icon="pi pi-download" class="btn-style p-button-rounded" style="border-radius: 23px !important"></button>
+        </a>
+        <button pButton icon="pi pi-search-plus" class="btn-dark p-button-rounded"
+                (click)="pdfZoom = 100">
+        </button>
+        <div class="w-12rem">
+          <p-slider [(ngModel)]="pdfZoom" [min]="0" [max]="200"></p-slider>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="content">
+    <pdf-viewer
+      src="{{downloadUrl}}/assets/{{pdfId}}?download&access_token={{token}}"
+      [render-text]="true"
+      [original-size]="false"
+      [zoom-scale]="'page-fit'"
+      [zoom]="pdfZoom/100"
+      style="width: 100%; height: 100%">
+    </pdf-viewer>
+  </ng-template>
+</p-dialog>
