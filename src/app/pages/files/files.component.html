@@ -16,7 +16,7 @@
       </p-card>
     </div>
     <div class="grid mt-3">
-      <div class="lg:col-6 sm:col-12 md:col-12">
+      <div class="lg:col-2 sm:col-12 md:col-12">
         <p-card header="File System">
           <p-slideMenu [model]="menuLinks" class="files-nav slide-menu"></p-slideMenu>
         </p-card>
@@ -27,19 +27,57 @@
 <!--          }-->
 <!--        </p-card>-->
       </div>
-      <div class="lg:col-6 sm:col-12 md:col-12" *ngIf="selectedMenu === 'data'">
+      <div class="lg:col-10 sm:col-12 md:col-12" *ngIf="selectedMenu === 'data' && dataFiles">
         <p-card header="Data">
-          @for (file of dataFiles; track file) {
-            <div class="p-2">
-              <a pButton icon="pi pi-download" [label]="file.title"
-                 href="https://app.idni.eco/assets/{{file.id}}?download" class="btn-dark"></a>
-            </div>
-          }
+<!--          @for (file of dataFiles; track file) {-->
+<!--            <div class="p-2">-->
+<!--              <a pButton icon="pi pi-download" [label]="file.title"-->
+<!--                 href="https://app.idni.eco/assets/{{file.id}}?download" class="btn-dark"></a>-->
+<!--            </div>-->
+<!--          }-->
+          <p-table [value]="dataFiles" [autoLayout]="true" [globalFilterFields]="['title','uploaded_on']" sortField="uploaded_on" [sortOrder]="-1">
+            <ng-template pTemplate="header">
+              <tr>
+                <th colspan="2">
+                  <label>File Name</label>
+                  <p-columnFilter type="text" field="title" matchMode="contains"></p-columnFilter>
+                </th>
+                <th *ngIf="isAdmin" colspan="4">
+                  <label>Upload Date</label>
+                  <p-columnFilter type="text" field="uploaded_on" matchMode="contains"></p-columnFilter>
+                </th>
+                <th *ngIf="!isAdmin" colspan="3">
+                  <label>Upload Date</label>
+                  <p-columnFilter type="text" field="uploaded_on" matchMode="contains"></p-columnFilter>
+                </th>
+              </tr>
+              <tr>
+                <th pSortableColumn="title">Name
+                  <p-sortIcon field="title"></p-sortIcon>
+                </th>
+                <th>File Type</th>
+                <th pSortableColumn="uploaded_on">Date Uploaded
+                  <p-sortIcon field="uploaded_on"></p-sortIcon>
+                </th>
+                <th>Download</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-doc>
+              <tr #context>
+                <td>{{ doc.title }}</td>
+                <td>{{ docName(doc.type) }}</td>
+                <td>{{ doc.uploaded_on.substring(0, 10) }}</td>
+                <td><a pButton icon="pi pi-download"
+                       href="https://app.idni.eco/assets/{{doc.id}}?download" class="btn-dark"></a></td>
+              </tr>
+            </ng-template>
+
+          </p-table>
         </p-card>
       </div>
 
-      <div class="col-12 mt-3" *ngIf="isConsultant && selectedMenu === 'reports'">
-        <p-panel header="File List" *ngIf="reportFiles">
+      <div class="lg:col-10 sm:col-12 md:col-12" *ngIf="isConsultant && selectedMenu === 'reports'">
+        <p-card header="File List" *ngIf="reportFiles">
           <p-table #dt1 [value]="reportFiles" [autoLayout]="true" [globalFilterFields]="['title','uploaded_on']"
                    sortField="uploaded_on" [sortOrder]="-1">
 
@@ -95,7 +133,7 @@
               </tr>
             </ng-template>
           </p-table>
-        </p-panel>
+        </p-card>
       </div>
     </div>
   </p-card>
