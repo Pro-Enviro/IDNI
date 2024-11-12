@@ -17,14 +17,17 @@
     </div>
     <div class="grid mt-3">
       <div class="lg:col-6 sm:col-12 md:col-12">
-        <p-card header="Reports">
-          @for (file of reportFiles; track file) {
-            <a pButton icon="pi pi-download" [label]="file.title"
-               href="https://app.idni.eco/assets/{{file.id}}?download" class="btn-style"></a>
-          }
+        <p-card header="File System">
+          <p-slideMenu [model]="menuLinks" class="files-nav slide-menu"></p-slideMenu>
         </p-card>
+<!--        <p-card header="Reports">-->
+<!--          @for (file of reportFiles; track file) {-->
+<!--            <a pButton icon="pi pi-download" [label]="file.title"-->
+<!--               href="https://app.idni.eco/assets/{{file.id}}?download" class="btn-style"></a>-->
+<!--          }-->
+<!--        </p-card>-->
       </div>
-      <div class="lg:col-6 sm:col-12 md:col-12">
+      <div class="lg:col-6 sm:col-12 md:col-12" *ngIf="selectedMenu === 'data'">
         <p-card header="Data">
           @for (file of dataFiles; track file) {
             <div class="p-2">
@@ -35,7 +38,7 @@
         </p-card>
       </div>
 
-      <div class="col-12 mt-3" *ngIf="isConsultant">
+      <div class="col-12 mt-3" *ngIf="isConsultant && selectedMenu === 'reports'">
         <p-panel header="File List" *ngIf="reportFiles">
           <p-table #dt1 [value]="reportFiles" [autoLayout]="true" [globalFilterFields]="['title','uploaded_on']"
                    sortField="uploaded_on" [sortOrder]="-1">

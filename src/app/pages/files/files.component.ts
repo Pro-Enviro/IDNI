@@ -17,6 +17,7 @@ import {DialogModule} from "primeng/dialog";
 import {SliderModule} from "primeng/slider";
 import {PdfViewerModule} from "ng2-pdf-viewer";
 import {StorageService} from "../../_services/storage.service";
+import {SlideMenuModule} from "primeng/slidemenu";
 
 export interface Files {
   id: number;
@@ -40,7 +41,8 @@ export interface Files {
     ConfirmPopupModule,
     DialogModule,
     PdfViewerModule,
-    SliderModule
+    SliderModule,
+    SlideMenuModule
   ],
   templateUrl: './files.component.html',
   styleUrl: './files.component.scss'
@@ -54,6 +56,8 @@ export class FilesComponent {
 
   files: any = [];
   items!: MenuItem[];
+  menuLinks: MenuItem[]
+  selectedMenu: string = 'report'
   docs!: any;
   downloadUrl: string = 'https://app.idni.eco';
   token?: null | string;
@@ -80,7 +84,24 @@ export class FilesComponent {
     this.getCompanies()
     this.token = this.store.get('access_token');
 
+    this.menuLinks = [
+      {
+        label: 'Reports',
+        icon: 'pi pi-file',
+        command: () => {
+          this.selectedMenu = 'reports';
+        }
+      },
+      {
+        label: 'Data',
+        icon: 'pi pi-database',
+        command: () => {
+          this.selectedMenu = 'data';
+        }
+      },
+    ];
   }
+
 
   onSelectCompany = () => {
     if (!this.selectedCompany) this.selectedCompany = this.companies[0].id
@@ -190,4 +211,19 @@ export class FilesComponent {
         return type
     }
   }
+
+  // this.menuLinks = [
+  //   {
+  //     label:'<span class="material-symbols-outlined">dashboard</span> Dashboard',
+  //     routerLink:'/dashboard',
+  //     escape: false
+  //   },
+  //   {
+  //     label: '<span class="material-symbols-outlined">timeline</span> PET',
+  //     routerLink: '/dashboard/pet',
+  //     escape: false
+  //   }
+  //   ]
 }
+
+
