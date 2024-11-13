@@ -20,21 +20,9 @@
         <p-card header="File System">
           <p-slideMenu [model]="menuLinks" class="file-badge"></p-slideMenu>
         </p-card>
-<!--        <p-card header="Reports">-->
-<!--          @for (file of reportFiles; track file) {-->
-<!--            <a pButton icon="pi pi-download" [label]="file.title"-->
-<!--               href="https://app.idni.eco/assets/{{file.id}}?download" class="btn-style"></a>-->
-<!--          }-->
-<!--        </p-card>-->
       </div>
       <div class="lg:col-9 sm:col-12 md:col-12" *ngIf="selectedMenu === 'data' && dataFiles">
         <p-card header="Data">
-<!--          @for (file of dataFiles; track file) {-->
-<!--            <div class="p-2">-->
-<!--              <a pButton icon="pi pi-download" [label]="file.title"-->
-<!--                 href="https://app.idni.eco/assets/{{file.id}}?download" class="btn-dark"></a>-->
-<!--            </div>-->
-<!--          }-->
           <p-table [value]="dataFiles" [autoLayout]="true" [globalFilterFields]="['title','uploaded_on']" sortField="uploaded_on" [sortOrder]="-1">
             <ng-template pTemplate="header">
               <tr>

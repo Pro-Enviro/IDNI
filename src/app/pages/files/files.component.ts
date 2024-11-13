@@ -105,7 +105,11 @@ export class FilesComponent {
 
 
   onSelectCompany = () => {
-    if (!this.selectedCompany) this.selectedCompany = this.companies[0].id
+    if (!this.selectedCompany) {
+      this.selectedCompany = this.companies[0].id;
+    }
+
+    this.selectedMenu = 'reports';
     delete this.dataFiles;
     delete this.reportFiles;
 
@@ -172,8 +176,6 @@ export class FilesComponent {
         this.reportFileCount = this.reportFiles?.length ?? 0;
         this.dataFileCount = this.dataFiles?.length ?? 0;
         this.updateMenuBadges();
-        console.log(this.reportFileCount)
-        console.log(this.dataFileCount)
       },
       error: (err: any) => {
         this.msg.add({
