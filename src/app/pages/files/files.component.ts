@@ -103,6 +103,9 @@ export class FilesComponent {
     ];
   }
 
+  isPdf(fileType: string): boolean {
+    return fileType.toLowerCase().includes('pdf');
+  }
 
   onSelectCompany = () => {
     if (!this.selectedCompany) {

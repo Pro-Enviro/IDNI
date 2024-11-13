@@ -47,6 +47,7 @@
                 <th pSortableColumn="uploaded_on">Date Uploaded
                   <p-sortIcon field="uploaded_on"></p-sortIcon>
                 </th>
+                <th>View</th>
                 <th>Download</th>
               </tr>
             </ng-template>
@@ -55,6 +56,12 @@
                 <td>{{ doc.title }}</td>
                 <td>{{ docName(doc.type) }}</td>
                 <td>{{ doc.uploaded_on.substring(0, 10) }}</td>
+                <td *ngIf="isPdf(doc.type)">
+                  <button type="button" pButton class="p-button-rounded p-button-outlined p-button-success" icon="pi pi-eye"
+                          (click)="viewPdf(doc.id,doc.title)"
+                          [disabled]="doc.type.split('/')[1] === 'pdf'? false : true"></button>
+                </td>
+                <td *ngIf="!isPdf(doc.type)"></td>
                 <td>
                   <a pButton icon="pi pi-download"
                        href="https://app.idni.eco/assets/{{doc.id}}?download" class="btn-dark"></a>
