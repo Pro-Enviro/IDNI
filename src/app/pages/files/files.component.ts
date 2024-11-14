@@ -20,6 +20,7 @@ import {StorageService} from "../../_services/storage.service";
 import {SlideMenuModule} from "primeng/slidemenu";
 import {FileUploadModule,FileUpload} from "primeng/fileupload";
 import {from} from "rxjs";
+import {SelectButtonModule} from "primeng/selectbutton";
 
 export interface Files {
   id: number;
@@ -46,7 +47,8 @@ export interface Files {
     SliderModule,
     SlideMenuModule,
     FileUploadModule,
-    NgForOf
+    NgForOf,
+    SelectButtonModule
   ],
   templateUrl: './files.component.html',
   styleUrl: './files.component.scss'
@@ -79,6 +81,13 @@ export class FilesComponent {
   pdfZoom: number = 100;
   uploadedFiles: any[] = [];
   fileIds: string[] = []
+  fileTypeUpload:any;
+
+
+  fileTypeUploadOptions = [
+    {label:'Report',value:'report'},
+    {label:'Data',value:'data'}
+  ]
 
   constructor(
     private db: DbService,
@@ -112,6 +121,7 @@ export class FilesComponent {
   isPdf(fileType: string): boolean {
     return fileType.toLowerCase().includes('pdf');
   }
+
 
   onSelectCompany = () => {
     if (!this.selectedCompany) {

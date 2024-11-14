@@ -24,18 +24,24 @@
          </div>
         <div class="mt-3" *ngIf="isAdmin || isConsultant">
           <p-card header="Upload Files">
-           <p-fileUpload #fileUpload [multiple]="true" [maxFileSize]="1000000" [fileLimit]="3" [customUpload]="true"
-           (uploadHandler)="uploadHandler($event,fileUpload)"
-                         chooseStyleClass="btn-style"
-                         cancelStyleClass="btn-dark"
-                         uploadStyleClass="btn-outline">
+            <div class="flex flex-column p-2">
+              <label>Select the type of files you want to upload</label>
+              <p-selectButton [options]="fileTypeUploadOptions" [(ngModel)]="fileTypeUpload" optionValue="value" optionLabel="label" class="btn-select mt-3"></p-selectButton>
+            </div>
+             <div *ngIf="fileTypeUpload" class="mt-3">
+               <p-fileUpload #fileUpload [multiple]="true" [maxFileSize]="1000000" [fileLimit]="3" [customUpload]="true"
+                             (uploadHandler)="uploadHandler($event,fileUpload)"
+                             chooseStyleClass="btn-style"
+                             cancelStyleClass="btn-dark"
+                             uploadStyleClass="btn-outline">
 
-             <ng-template pTemplate="content">
-               <ul *ngIf="uploadedFiles.length" >
-                 <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
-               </ul>
-             </ng-template>
-           </p-fileUpload>
+                 <ng-template pTemplate="content">
+                   <ul *ngIf="uploadedFiles.length" >
+                     <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+                   </ul>
+                 </ng-template>
+               </p-fileUpload>
+             </div>
 
           </p-card>
         </div>
