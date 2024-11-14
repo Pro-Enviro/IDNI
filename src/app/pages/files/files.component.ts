@@ -255,8 +255,10 @@ export class FilesComponent {
     if(this.uploadedFiles.length > 0) {
       const formData = new FormData();
       this.uploadedFiles.forEach((file:any) => {
-        formData.append('folder', '1367f1b6-f680-4cb9-8eb9-8352f0e715fb')
+        formData.append('folder', '839154be-d71f-43ff-88c9-7fdf2a8c3aad')
         formData.append('file[]', file)
+
+        console.log(file)
       })
 
       from(this.global.uploadReportDataForCompany(formData)).subscribe({

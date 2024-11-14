@@ -25,7 +25,10 @@
         <div class="mt-3">
           <p-card header="Upload Files">
            <p-fileUpload #fileUpload [multiple]="true" [maxFileSize]="1000000" [fileLimit]="3" [customUpload]="true"
-           (uploadHandler)="uploadHandler($event,fileUpload)">
+           (uploadHandler)="uploadHandler($event,fileUpload)"
+                         chooseStyleClass="btn-style"
+                         cancelStyleClass="btn-dark"
+                         uploadStyleClass="btn-outline">
 
              <ng-template pTemplate="content">
                <ul *ngIf="uploadedFiles.length" >
