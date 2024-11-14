@@ -7,7 +7,7 @@ import {CardModule} from "primeng/card";
 import {DropdownModule} from "primeng/dropdown";
 import {FormsModule} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
-import {JsonPipe, NgIf} from "@angular/common";
+import {JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {PanelModule} from "primeng/panel";
 import {TableModule} from "primeng/table";
 import {InplaceModule} from "primeng/inplace";
@@ -18,6 +18,8 @@ import {SliderModule} from "primeng/slider";
 import {PdfViewerModule} from "ng2-pdf-viewer";
 import {StorageService} from "../../_services/storage.service";
 import {SlideMenuModule} from "primeng/slidemenu";
+import {FileUploadModule,FileUpload} from "primeng/fileupload";
+import {from} from "rxjs";
 
 export interface Files {
   id: number;
@@ -42,7 +44,9 @@ export interface Files {
     DialogModule,
     PdfViewerModule,
     SliderModule,
-    SlideMenuModule
+    SlideMenuModule,
+    FileUploadModule,
+    NgForOf
   ],
   templateUrl: './files.component.html',
   styleUrl: './files.component.scss'
@@ -73,6 +77,8 @@ export class FilesComponent {
   reviewPdf: boolean = false;
   previewFile: any;
   pdfZoom: number = 100;
+  uploadedFiles: any[] = [];
+  fileIds: string[] = []
 
   constructor(
     private db: DbService,
@@ -241,6 +247,31 @@ export class FilesComponent {
         return type
     }
   }
+
+  uploadHandler = (event:any, fileUpload:FileUpload) => {
+    this.uploadedFiles = []
+    event.files.forEach((file:any) => this.uploadedFiles.push(file))
+
+    if(this.uploadedFiles.length > 0) {
+      const formData = new FormData();
+      this.uploadedFiles.forEach((file:any) => {
+        formData.append('folder', '1367f1b6-f680-4cb9-8eb9-8352f0e715fb')
+        formData.append('file[]', file)
+      })
+
+      from(this.global.uploadReportDataForCompany(formData)).subscribe({
+        next:(res:any) => {
+          if(res.length > 1){
+            this.fileIds = res.map((file:any) => file.id)
+          } else if (res.id){
+            this.fileIds = res.id
+          }
+          fileUpload.clear()
+        }
+      })
+    }
+  }
+
 }
 
 

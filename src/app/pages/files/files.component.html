@@ -17,9 +17,25 @@
     </div>
     <div class="grid mt-3">
       <div class="lg:col-3 sm:col-12 md:col-12">
-        <p-card header="File System">
-          <p-slideMenu [model]="menuLinks" class="file-badge"></p-slideMenu>
-        </p-card>
+         <div>
+           <p-card header="File System">
+             <p-slideMenu [model]="menuLinks" class="file-badge"></p-slideMenu>
+           </p-card>
+         </div>
+        <div class="mt-3">
+          <p-card header="Upload Files">
+           <p-fileUpload #fileUpload [multiple]="true" [maxFileSize]="1000000" [fileLimit]="3" [customUpload]="true"
+           (uploadHandler)="uploadHandler($event,fileUpload)">
+
+             <ng-template pTemplate="content">
+               <ul *ngIf="uploadedFiles.length" >
+                 <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+               </ul>
+             </ng-template>
+           </p-fileUpload>
+
+          </p-card>
+        </div>
       </div>
       <div class="lg:col-9 sm:col-12 md:col-12" *ngIf="selectedMenu === 'data' && dataFiles">
         <p-card header="Data">
