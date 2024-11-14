@@ -130,6 +130,13 @@ export class DbService {
     return this.http.post(`${this.url}/items/bug_reports`, bugReport)
   }
 
+  uploadReportDataForCompany = (id:number) => {
+    return this.http.get(`${this.url}/items/companies/${id}?fields=uploaded_reports.*`)
+  }
 
+  saveReportDataFiles = (id: number, data: string[]) => {
+    return this.http.patch(`${this.url}/items/companies/${id}?fields=uploaded_reports`, {'uploaded_reports': [{directus_file_id: data}]})
+    
+  }
 
 }

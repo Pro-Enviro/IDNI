@@ -5,7 +5,7 @@ import {GlobalService} from "../../_services/global.service";
 import {EnvirotrackService} from "../envirotrack/envirotrack.service";
 import {CardModule} from "primeng/card";
 import {DropdownModule} from "primeng/dropdown";
-import {FormsModule} from "@angular/forms";
+import {FormGroup, FormsModule, FormBuilder, ReactiveFormsModule} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
 import {JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {PanelModule} from "primeng/panel";
@@ -21,6 +21,7 @@ import {SlideMenuModule} from "primeng/slidemenu";
 import {FileUploadModule,FileUpload} from "primeng/fileupload";
 import {from} from "rxjs";
 import {SelectButtonModule} from "primeng/selectbutton";
+
 
 export interface Files {
   id: number;
@@ -48,7 +49,8 @@ export interface Files {
     SlideMenuModule,
     FileUploadModule,
     NgForOf,
-    SelectButtonModule
+    SelectButtonModule,
+    ReactiveFormsModule
   ],
   templateUrl: './files.component.html',
   styleUrl: './files.component.scss'
@@ -82,7 +84,6 @@ export class FilesComponent {
   uploadedFiles: any[] = [];
   fileIds: string[] = []
   fileTypeUpload: any;
-
 
   fileTypeUploadOptions = [
     {label: 'Report', value: 'report'},
@@ -269,26 +270,46 @@ export class FilesComponent {
         if(this.fileTypeUpload === 'report'){
           formData.append('folder', '839154be-d71f-43ff-88c9-7fdf2a8c3aad')
           formData.append('file[]', file)
-          console.log(file)
         } else if (this.fileTypeUpload === 'data'){
           formData.append('folder', '0956c625-8a2c-4a0e-8567-c1de4ac2258b')
           formData.append('file[]', file)
         }
-
       })
 
       from(this.global.uploadReportDataForCompany(formData)).subscribe({
         next:(res:any) => {
           if(res.length > 1){
             this.fileIds = res.map((file:any) => file.id)
+              //patch here
+            this.db.saveReportDataFiles(this.selectedCompany!, this.fileIds).subscribe({
+              next: (res: any) => {
+                this.msg.add({
+                  severity: 'success',
+                  detail: 'Report uploaded'
+                })
+              }
+            })
           } else if (res.id){
+            console.log(res)
+
             this.fileIds = res.id
+
+            this.db.saveReportDataFiles(this.selectedCompany!, this.fileIds).subscribe({
+              next: (res: any) => {
+                console.log(res)
+                this.msg.add({
+                  severity: 'success',
+                  detail: 'Report uploaded'
+                })
+              }
+            })
           }
           fileUpload.clear()
         }
       })
     }
   }
+
 }
 
 
