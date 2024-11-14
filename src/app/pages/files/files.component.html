@@ -29,7 +29,7 @@
               <p-selectButton [options]="fileTypeUploadOptions" [(ngModel)]="fileTypeUpload" optionValue="value" optionLabel="label" class="btn-select mt-3"></p-selectButton>
             </div>
              <div *ngIf="fileTypeUpload" class="mt-3">
-               <p-fileUpload #fileUpload [multiple]="true" [maxFileSize]="1000000" [fileLimit]="3" [customUpload]="true"
+               <p-fileUpload #fileUpload [multiple]="true" [maxFileSize]="10000000" [fileLimit]="3" [customUpload]="true"
                              (uploadHandler)="uploadHandler($event,fileUpload)"
                              chooseStyleClass="btn-style"
                              cancelStyleClass="btn-dark"

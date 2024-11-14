@@ -265,10 +265,17 @@ export class FilesComponent {
     if(this.uploadedFiles.length > 0) {
       const formData = new FormData();
       this.uploadedFiles.forEach((file:any) => {
-        formData.append('folder', '839154be-d71f-43ff-88c9-7fdf2a8c3aad')
-        formData.append('file[]', file)
+        // if statement here for report and data file , change the value of the folder
+        if(this.fileTypeUpload === 'report'){
+          formData.append('folder', '839154be-d71f-43ff-88c9-7fdf2a8c3aad')
+          formData.append('file[]', file)
+          console.log(file)
+        } else if (this.fileTypeUpload === 'data'){
+          formData.append('folder', '0956c625-8a2c-4a0e-8567-c1de4ac2258b')
+          formData.append('file[]', file)
+          console.log(file)
+        }
 
-        console.log(file)
       })
 
       from(this.global.uploadReportDataForCompany(formData)).subscribe({
