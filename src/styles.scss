@@ -109,6 +109,13 @@ a{
 }
   //----------------------------------------------------BUTTON----------------------------------------------------------
 
+.file-badge{
+  .p-slidemenu .p-menuitem-badge {
+    background: $darkColor;
+    color: #ffffff;
+  }
+}
+
 .btn-style-none{
   background: none;
   border: 0px;

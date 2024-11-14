@@ -17,6 +17,7 @@ import {DialogModule} from "primeng/dialog";
 import {SliderModule} from "primeng/slider";
 import {PdfViewerModule} from "ng2-pdf-viewer";
 import {StorageService} from "../../_services/storage.service";
+import {SlideMenuModule} from "primeng/slidemenu";
 
 export interface Files {
   id: number;
@@ -40,7 +41,8 @@ export interface Files {
     ConfirmPopupModule,
     DialogModule,
     PdfViewerModule,
-    SliderModule
+    SliderModule,
+    SlideMenuModule
   ],
   templateUrl: './files.component.html',
   styleUrl: './files.component.scss'
@@ -51,9 +53,12 @@ export class FilesComponent {
   isConsultant: boolean = true;
   dataFiles: Files[] | undefined;
   reportFiles: Files[] | undefined;
-
   files: any = [];
   items!: MenuItem[];
+  menuLinks: MenuItem[]
+  selectedMenu: string = 'report'
+  reportFileCount: number = 0;
+  dataFileCount: number = 0;
   docs!: any;
   downloadUrl: string = 'https://app.idni.eco';
   token?: null | string;
@@ -80,10 +85,34 @@ export class FilesComponent {
     this.getCompanies()
     this.token = this.store.get('access_token');
 
+    this.menuLinks = [
+      {
+        label: 'Reports',
+        icon: 'pi pi-file',
+        command: () => {
+          this.selectedMenu = 'reports';
+        }
+      },
+      {
+        label: 'Data',
+        icon: 'pi pi-database',
+        command: () => {
+          this.selectedMenu = 'data';
+        }
+      },
+    ];
+  }
+
+  isPdf(fileType: string): boolean {
+    return fileType.toLowerCase().includes('pdf');
   }
 
   onSelectCompany = () => {
-    if (!this.selectedCompany) this.selectedCompany = this.companies[0].id
+    if (!this.selectedCompany) {
+      this.selectedCompany = this.companies[0].id;
+    }
+
+    this.selectedMenu = 'reports';
     delete this.dataFiles;
     delete this.reportFiles;
 
@@ -147,7 +176,9 @@ export class FilesComponent {
       next: (res: any) => {
         this.dataFiles = res.uploaded_files.map((x: any) => x.directus_files_id)
         this.reportFiles = res.uploaded_reports.map((x: any) => x.directus_files_id)
-        console.log(this.dataFiles, this.reportFiles)
+        this.reportFileCount = this.reportFiles?.length ?? 0;
+        this.dataFileCount = this.dataFiles?.length ?? 0;
+        this.updateMenuBadges();
       },
       error: (err: any) => {
         this.msg.add({
@@ -157,7 +188,27 @@ export class FilesComponent {
         })
       }
     })
+  }
 
+  updateMenuBadges() {
+    this.menuLinks = [
+      {
+        label: `Reports`,
+        icon: 'pi pi-file',
+        badge: `${this.reportFileCount}`,
+        command: () => {
+          this.selectedMenu = 'reports'
+        },
+      },
+      {
+        label: `Data`,
+        icon: 'pi pi-database',
+        badge: `${this.dataFileCount}`,
+        command: () => {
+          this.selectedMenu = 'data'
+        },
+      },
+    ]
   }
 
   onDelete(id: string, title: string, event: any) {
@@ -191,3 +242,5 @@ export class FilesComponent {
     }
   }
 }
+
+
