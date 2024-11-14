@@ -81,12 +81,12 @@ export class FilesComponent {
   pdfZoom: number = 100;
   uploadedFiles: any[] = [];
   fileIds: string[] = []
-  fileTypeUpload:any;
+  fileTypeUpload: any;
 
 
   fileTypeUploadOptions = [
-    {label:'Report',value:'report'},
-    {label:'Data',value:'data'}
+    {label: 'Report', value: 'report'},
+    {label: 'Data', value: 'data'}
   ]
 
   constructor(
@@ -273,7 +273,6 @@ export class FilesComponent {
         } else if (this.fileTypeUpload === 'data'){
           formData.append('folder', '0956c625-8a2c-4a0e-8567-c1de4ac2258b')
           formData.append('file[]', file)
-          console.log(file)
         }
 
       })
@@ -290,7 +289,6 @@ export class FilesComponent {
       })
     }
   }
-
 }
 
 
