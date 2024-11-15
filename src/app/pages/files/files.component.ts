@@ -335,6 +335,7 @@ export class FilesComponent {
             });
             this.reportFileCount = this.reportFiles?.length ?? 0;
             this.updateMenuBadges();
+            this.uploadedFiles = [];
           } else if (this.fileTypeUpload === 'data'){
             this.dataFiles = [...(this.dataFiles || []), ...newFiles];
             const allFileIds = this.dataFiles.map((dataFile) => dataFile.id)
@@ -356,6 +357,7 @@ export class FilesComponent {
             })
             this.dataFileCount = this.dataFiles?.length ?? 0;
             this.updateMenuBadges();
+            this.uploadedFiles = [];
           }
           fileUpload.clear();
         },
