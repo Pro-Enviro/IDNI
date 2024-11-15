@@ -24,8 +24,10 @@ import {SelectButtonModule} from "primeng/selectbutton";
 
 
 export interface Files {
-  id: number;
+  id: string;
   title: string;
+  type: string;
+  uploaded_on: string;
 }
 
 @Component({
@@ -268,54 +270,6 @@ export class FilesComponent {
     }
   }
 
-  // uploadHandler = (event:any, fileUpload:FileUpload) => {
-  //   this.uploadedFiles = []
-  //   event.files.forEach((file:any) => this.uploadedFiles.push(file))
-  //
-  //   if(this.uploadedFiles.length > 0) {
-  //     const formData = new FormData();
-  //     this.uploadedFiles.forEach((file:any) => {
-  //       // if statement here for report and data file , change the value of the folder
-  //       if(this.fileTypeUpload === 'report'){
-  //         formData.append('folder', '839154be-d71f-43ff-88c9-7fdf2a8c3aad')
-  //         formData.append('file[]', file)
-  //       } else if (this.fileTypeUpload === 'data'){
-  //         formData.append('folder', '0956c625-8a2c-4a0e-8567-c1de4ac2258b')
-  //         formData.append('file[]', file)
-  //       }
-  //     })
-  //
-  //     from(this.global.uploadReportDataForCompany(formData)).subscribe({
-  //       next:(res:any) => {
-  //         if(res.length > 1){
-  //           // this.fileIds = res.map((file:any) => file.id)
-  //           // this.db.saveReportDataFiles(this.selectedCompany!, this.fileIds).subscribe({
-  //           //   next: (res: any) => {
-  //           //     this.msg.add({
-  //           //       severity: 'success',
-  //           //       detail: 'Report uploaded'
-  //           //     })
-  //           //   }
-  //           // })
-  //         } else if (res.id){
-  //           this.fileIds = [res.id]
-  //
-  //           this.db.saveReportDataFiles(this.selectedCompany!, this.fileIds).subscribe({
-  //             next: (res: any) => {
-  //               console.log("Files successfully saved:", res);
-  //               this.msg.add({
-  //                 severity: 'success',
-  //                 detail: 'Report uploaded'
-  //               })
-  //             }
-  //           })
-  //         }
-  //         fileUpload.clear()
-  //       }
-  //     })
-  //   }
-  // }
-
   uploadHandler = (event: any, fileUpload: FileUpload) => {
     this.uploadedFiles = [];
     event.files.forEach((file: any) => this.uploadedFiles.push(file));
@@ -325,44 +279,50 @@ export class FilesComponent {
       this.uploadedFiles.forEach((file: any) => {
         if (this.fileTypeUpload === 'report') {
           formData.append('folder', '839154be-d71f-43ff-88c9-7fdf2a8c3aad');
-          formData.append('file[]', file);
         } else if (this.fileTypeUpload === 'data') {
           formData.append('folder', '0956c625-8a2c-4a0e-8567-c1de4ac2258b');
-          formData.append('file[]', file);
         }
+        formData.append('file[]', file);
       });
 
       from(this.global.uploadReportDataForCompany(formData)).subscribe({
         next: (res: any) => {
-          const newFileIds = res.length > 1 ? res.map((file: any) => file.id) : [res.id];
+          let newFiles: Files[] = [];
 
-          this.db.getFiles(this.selectedCompany!).subscribe({
-            next: (existingFilesRes: any) => {
-              const existingFileIds = existingFilesRes.uploaded_reports.map((x: any) => x.directus_files_id).filter((id: any) => id);
-              const allFileIds = [...existingFileIds, ...newFileIds];
+          //uploading multiple files
+          if (Array.isArray(res) && res.length > 0) {
+            newFiles = res.map((file: any) => ({
+              id: file.id,
+              title: file.filename_download,
+              type: file.type,
+              uploaded_on: file.uploaded_on || new Date().toISOString(),
+            }));
+          } else if (res.id) {
+            // uploading single file
+            newFiles = [{
+              id: res.id,
+              title: res.filename_download,
+              type: res.type,
+              uploaded_on: res.uploaded_on || new Date().toISOString(),
+            }];
+          }
 
-              this.db.saveReportDataFiles(this.selectedCompany!, allFileIds).subscribe({
-                next: () => {
-                  this.msg.add({
-                    severity: 'success',
-                    detail: 'Report uploaded and saved successfully',
-                  });
-                },
-                error: (err: any) => {
-                  console.error("Error while saving files:", err);
-                  this.msg.add({
-                    severity: 'error',
-                    summary: 'Upload failed',
-                    detail: err.message || 'An error occurred',
-                  });
-                }
+          //attaching the new files to the reportFiles
+          this.reportFiles = [...(this.reportFiles || []), ...newFiles];
+
+          const allFileIds = this.reportFiles.map((file) => file.id);
+          this.db.saveReportDataFiles(this.selectedCompany!, allFileIds).subscribe({
+            next: (res) => {
+              this.msg.add({
+                severity: 'success',
+                detail: 'Report uploaded and displayed successfully',
               });
             },
             error: (err: any) => {
-              console.error("Error fetching existing files:", err);
+              console.error("Error while saving files:", err);
               this.msg.add({
                 severity: 'error',
-                summary: 'Failed to fetch existing files',
+                summary: 'Upload failed',
                 detail: err.message || 'An error occurred',
               });
             }
@@ -380,8 +340,6 @@ export class FilesComponent {
       });
     }
   };
-
-
 }
 
 

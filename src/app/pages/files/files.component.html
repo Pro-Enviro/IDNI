@@ -106,10 +106,10 @@
         <p-card header="File List" *ngIf="reportFiles">
           <p-table #dt1 [value]="reportFiles" [autoLayout]="true" [globalFilterFields]="['title','uploaded_on']"
                    sortField="uploaded_on" [sortOrder]="-1">
-
             <ng-template pTemplate="header">
               <tr>
                 <th colspan="2">
+                  {{reportFiles | json}}
                   <label>File Name</label>
                   <p-columnFilter type="text" field="title" matchMode="contains"></p-columnFilter>
                 </th>
