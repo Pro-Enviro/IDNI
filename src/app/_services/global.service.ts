@@ -63,7 +63,6 @@ export class GlobalService {
     return result;
   }
 
-
   // Helper function to show folders UUID's
   listDirectusFolders = async () => {
     const result = await this.client.request(readFolders())

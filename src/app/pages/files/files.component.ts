@@ -292,7 +292,6 @@ export class FilesComponent {
 
       from(this.global.uploadReportDataForCompany(formData)).subscribe({
         next: (res: any) => {
-          console.log(res)
           let newFiles: Files[] = [];
 
           //uploading multiple files
