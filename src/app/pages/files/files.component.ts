@@ -21,6 +21,7 @@ import {SlideMenuModule} from "primeng/slidemenu";
 import {FileUploadModule,FileUpload} from "primeng/fileupload";
 import {from} from "rxjs";
 import {SelectButtonModule} from "primeng/selectbutton";
+import {SidebarModule} from "primeng/sidebar";
 
 
 export interface Files {
@@ -52,7 +53,8 @@ export interface Files {
     FileUploadModule,
     NgForOf,
     SelectButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SidebarModule
   ],
   templateUrl: './files.component.html',
   styleUrl: './files.component.scss'
@@ -86,6 +88,7 @@ export class FilesComponent {
   uploadedFiles: any[] = [];
   fileIds: string[] = []
   fileTypeUpload: any;
+  uploadFilesGuide:boolean = false;
 
   fileTypeUploadOptions = [
     {label: 'Report', value: 'report'},
