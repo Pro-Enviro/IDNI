@@ -268,53 +268,119 @@ export class FilesComponent {
     }
   }
 
-  uploadHandler = (event:any, fileUpload:FileUpload) => {
-    this.uploadedFiles = []
-    event.files.forEach((file:any) => this.uploadedFiles.push(file))
+  // uploadHandler = (event:any, fileUpload:FileUpload) => {
+  //   this.uploadedFiles = []
+  //   event.files.forEach((file:any) => this.uploadedFiles.push(file))
+  //
+  //   if(this.uploadedFiles.length > 0) {
+  //     const formData = new FormData();
+  //     this.uploadedFiles.forEach((file:any) => {
+  //       // if statement here for report and data file , change the value of the folder
+  //       if(this.fileTypeUpload === 'report'){
+  //         formData.append('folder', '839154be-d71f-43ff-88c9-7fdf2a8c3aad')
+  //         formData.append('file[]', file)
+  //       } else if (this.fileTypeUpload === 'data'){
+  //         formData.append('folder', '0956c625-8a2c-4a0e-8567-c1de4ac2258b')
+  //         formData.append('file[]', file)
+  //       }
+  //     })
+  //
+  //     from(this.global.uploadReportDataForCompany(formData)).subscribe({
+  //       next:(res:any) => {
+  //         if(res.length > 1){
+  //           // this.fileIds = res.map((file:any) => file.id)
+  //           // this.db.saveReportDataFiles(this.selectedCompany!, this.fileIds).subscribe({
+  //           //   next: (res: any) => {
+  //           //     this.msg.add({
+  //           //       severity: 'success',
+  //           //       detail: 'Report uploaded'
+  //           //     })
+  //           //   }
+  //           // })
+  //         } else if (res.id){
+  //           this.fileIds = [res.id]
+  //
+  //           this.db.saveReportDataFiles(this.selectedCompany!, this.fileIds).subscribe({
+  //             next: (res: any) => {
+  //               console.log("Files successfully saved:", res);
+  //               this.msg.add({
+  //                 severity: 'success',
+  //                 detail: 'Report uploaded'
+  //               })
+  //             }
+  //           })
+  //         }
+  //         fileUpload.clear()
+  //       }
+  //     })
+  //   }
+  // }
 
-    if(this.uploadedFiles.length > 0) {
+  uploadHandler = (event: any, fileUpload: FileUpload) => {
+    this.uploadedFiles = [];
+    event.files.forEach((file: any) => this.uploadedFiles.push(file));
+
+    if (this.uploadedFiles.length > 0) {
       const formData = new FormData();
-      this.uploadedFiles.forEach((file:any) => {
-        // if statement here for report and data file , change the value of the folder
-        if(this.fileTypeUpload === 'report'){
-          formData.append('folder', '839154be-d71f-43ff-88c9-7fdf2a8c3aad')
-          formData.append('file[]', file)
-        } else if (this.fileTypeUpload === 'data'){
-          formData.append('folder', '0956c625-8a2c-4a0e-8567-c1de4ac2258b')
-          formData.append('file[]', file)
+      this.uploadedFiles.forEach((file: any) => {
+        if (this.fileTypeUpload === 'report') {
+          formData.append('folder', '839154be-d71f-43ff-88c9-7fdf2a8c3aad');
+          formData.append('file[]', file);
+        } else if (this.fileTypeUpload === 'data') {
+          formData.append('folder', '0956c625-8a2c-4a0e-8567-c1de4ac2258b');
+          formData.append('file[]', file);
         }
-      })
+      });
 
       from(this.global.uploadReportDataForCompany(formData)).subscribe({
-        next:(res:any) => {
-          if(res.length > 1){
-            // this.fileIds = res.map((file:any) => file.id)
-            // this.db.saveReportDataFiles(this.selectedCompany!, this.fileIds).subscribe({
-            //   next: (res: any) => {
-            //     this.msg.add({
-            //       severity: 'success',
-            //       detail: 'Report uploaded'
-            //     })
-            //   }
-            // })
-          } else if (res.id){
-            this.fileIds = [res.id]
+        next: (res: any) => {
+          const newFileIds = res.length > 1 ? res.map((file: any) => file.id) : [res.id];
 
-            this.db.saveReportDataFiles(this.selectedCompany!, this.fileIds).subscribe({
-              next: (res: any) => {
-                console.log("Files successfully saved:", res);
-                this.msg.add({
-                  severity: 'success',
-                  detail: 'Report uploaded'
-                })
-              }
-            })
-          }
-          fileUpload.clear()
+          this.db.getFiles(this.selectedCompany!).subscribe({
+            next: (existingFilesRes: any) => {
+              const existingFileIds = existingFilesRes.uploaded_reports.map((x: any) => x.directus_files_id).filter((id: any) => id);
+              const allFileIds = [...existingFileIds, ...newFileIds];
+
+              this.db.saveReportDataFiles(this.selectedCompany!, allFileIds).subscribe({
+                next: () => {
+                  this.msg.add({
+                    severity: 'success',
+                    detail: 'Report uploaded and saved successfully',
+                  });
+                },
+                error: (err: any) => {
+                  console.error("Error while saving files:", err);
+                  this.msg.add({
+                    severity: 'error',
+                    summary: 'Upload failed',
+                    detail: err.message || 'An error occurred',
+                  });
+                }
+              });
+            },
+            error: (err: any) => {
+              console.error("Error fetching existing files:", err);
+              this.msg.add({
+                severity: 'error',
+                summary: 'Failed to fetch existing files',
+                detail: err.message || 'An error occurred',
+              });
+            }
+          });
+          fileUpload.clear();
+        },
+        error: (err: any) => {
+          console.error("Error uploading file:", err);
+          this.msg.add({
+            severity: 'error',
+            summary: 'Upload Error',
+            detail: err.message || 'An error occurred while uploading',
+          });
         }
-      })
+      });
     }
-  }
+  };
+
 
 }
 
