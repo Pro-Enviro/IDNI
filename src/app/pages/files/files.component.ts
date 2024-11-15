@@ -292,6 +292,7 @@ export class FilesComponent {
 
       from(this.global.uploadReportDataForCompany(formData)).subscribe({
         next: (res: any) => {
+          console.log(res)
           let newFiles: Files[] = [];
 
           //uploading multiple files
@@ -312,28 +313,49 @@ export class FilesComponent {
             }];
           }
 
-          //attaching the new files to the reportFiles
-          this.reportFiles = [...(this.reportFiles || []), ...newFiles];
-          this.dataFiles = [...(this.dataFiles || []), ...newFiles];
+          if(this.fileTypeUpload === 'report'){
+            this.reportFiles = [...(this.reportFiles || []), ...newFiles];
+            const allFileIds = this.reportFiles.map((file) => file.id);
 
-          const allFileIds = this.reportFiles.map((file) => file.id);
+            this.db.saveReportFiles(this.selectedCompany!, allFileIds).subscribe({
+              next: (res) => {
+                this.msg.add({
+                  severity: 'success',
+                  detail: 'Report uploaded!',
+                });
+              },
+              error: (err: any) => {
+                console.error("Error while saving files:", err);
+                this.msg.add({
+                  severity: 'error',
+                  summary: 'Upload failed',
+                  detail: err.message || 'An error occurred',
+                });
+              }
+            });
+          } else if (this.fileTypeUpload === 'data'){
+            this.dataFiles = [...(this.dataFiles || []), ...newFiles];
+            const allFileIds = this.dataFiles.map((dataFile) => dataFile.id)
 
-          this.db.saveReportFiles(this.selectedCompany!, allFileIds).subscribe({
-            next: (res) => {
-              this.msg.add({
-                severity: 'success',
-                detail: 'Report uploaded and displayed successfully',
-              });
-            },
-            error: (err: any) => {
-              console.error("Error while saving files:", err);
-              this.msg.add({
-                severity: 'error',
-                summary: 'Upload failed',
-                detail: err.message || 'An error occurred',
-              });
-            }
-          });
+            this.db.saveDataFiles(this.selectedCompany!,allFileIds).subscribe({
+              next:() => {
+                this.msg.add({
+                  severity:'success',
+                  detail:'Data uploaded !'
+                })
+              },
+              error:(err:any) => {
+                this.msg.add({
+                  severity:'error',
+                  summary:'Upload failed',
+                  detail: err.message || 'An error occurred',
+                })
+              }
+            })
+
+          }
+
+
           fileUpload.clear();
         },
         error: (err: any) => {
