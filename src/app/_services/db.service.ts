@@ -134,9 +134,19 @@ export class DbService {
     return this.http.get(`${this.url}/items/companies/${id}?fields=uploaded_reports.*`)
   }
 
-  saveReportDataFiles = (id: number, data: string[]) => {
-    return this.http.patch(`${this.url}/items/companies/${id}?fields=uploaded_reports`, {'uploaded_reports': [{directus_file_id: data}]})
-    
-  }
 
+  // saveReportDataFiles = (id: number, data: string[]) => {
+  //   return this.http.patch(`${this.url}/items/companies/${id}?fields=uploaded_reports`, {uploaded_reports: [{directus_file_id: data}]})
+  // }
+
+  saveReportDataFiles = (id: number, data: string[]) => {
+    const formattedData = data.map(fileId => ({ directus_files_id: fileId }));
+    return this.http.patch(`${this.url}/items/companies/${id}?fields=uploaded_reports`, {uploaded_reports: formattedData});
+  };
+
+
+
+  // saveFilesData = (id: number, data: {uploaded_files: any}) => {
+  //   return this.http.patch(`${this.url}/items/companies/${id}?fields=uploaded_files`, data)
+  // }
 }

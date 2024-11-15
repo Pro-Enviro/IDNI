@@ -191,8 +191,17 @@ export class FilesComponent {
     }
     this.db.getFiles(id).subscribe({
       next: (res: any) => {
+        console.log(res)
+        console.log(this.reportFiles)
+        console.log(this.dataFiles = res.uploaded_files.map((x: any) => x.directus_files_id))
         this.dataFiles = res.uploaded_files.map((x: any) => x.directus_files_id)
-        this.reportFiles = res.uploaded_reports.map((x: any) => x.directus_files_id)
+        //this.reportFiles = res.uploaded_reports.map((x: any) => x.directus_files_id)
+        this.reportFiles = res.uploaded_reports.map((x: any) => ({
+          id: x.directus_files_id?.id || null,
+          title: x.directus_files_id?.title || 'Untitled',
+          uploaded_on: x.directus_files_id?.uploaded_on || 'N/A',
+          type: x.directus_files_id?.type || 'unknown'
+        }));
         this.reportFileCount = this.reportFiles?.length ?? 0;
         this.dataFileCount = this.dataFiles?.length ?? 0;
         this.updateMenuBadges();
@@ -279,24 +288,21 @@ export class FilesComponent {
       from(this.global.uploadReportDataForCompany(formData)).subscribe({
         next:(res:any) => {
           if(res.length > 1){
-            this.fileIds = res.map((file:any) => file.id)
-              //patch here
-            this.db.saveReportDataFiles(this.selectedCompany!, this.fileIds).subscribe({
-              next: (res: any) => {
-                this.msg.add({
-                  severity: 'success',
-                  detail: 'Report uploaded'
-                })
-              }
-            })
+            // this.fileIds = res.map((file:any) => file.id)
+            // this.db.saveReportDataFiles(this.selectedCompany!, this.fileIds).subscribe({
+            //   next: (res: any) => {
+            //     this.msg.add({
+            //       severity: 'success',
+            //       detail: 'Report uploaded'
+            //     })
+            //   }
+            // })
           } else if (res.id){
-            console.log(res)
-
-            this.fileIds = res.id
+            this.fileIds = [res.id]
 
             this.db.saveReportDataFiles(this.selectedCompany!, this.fileIds).subscribe({
               next: (res: any) => {
-                console.log(res)
+                console.log("Files successfully saved:", res);
                 this.msg.add({
                   severity: 'success',
                   detail: 'Report uploaded'
