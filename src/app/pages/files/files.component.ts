@@ -193,17 +193,22 @@ export class FilesComponent {
     }
     this.db.getFiles(id).subscribe({
       next: (res: any) => {
-        console.log(res)
-        console.log(this.reportFiles)
-        console.log(this.dataFiles = res.uploaded_files.map((x: any) => x.directus_files_id))
-        this.dataFiles = res.uploaded_files.map((x: any) => x.directus_files_id)
+        //this.dataFiles = res.uploaded_files.map((x: any) => x.directus_files_id)
         //this.reportFiles = res.uploaded_reports.map((x: any) => x.directus_files_id)
+
+        this.dataFiles = res.uploaded_files.map((dataFile:any) => ({
+          id:dataFile.directus_files_id?.id || null,
+          title:dataFile.directus_files_id?.title || 'Untitled',
+          uploaded_on: dataFile.directus_files_id.uploaded_on || 'N/A',
+          type:dataFile.directus_files_id?.type || 'Unknown'
+        }));
         this.reportFiles = res.uploaded_reports.map((x: any) => ({
           id: x.directus_files_id?.id || null,
           title: x.directus_files_id?.title || 'Untitled',
           uploaded_on: x.directus_files_id?.uploaded_on || 'N/A',
           type: x.directus_files_id?.type || 'unknown'
         }));
+
         this.reportFileCount = this.reportFiles?.length ?? 0;
         this.dataFileCount = this.dataFiles?.length ?? 0;
         this.updateMenuBadges();
@@ -309,9 +314,11 @@ export class FilesComponent {
 
           //attaching the new files to the reportFiles
           this.reportFiles = [...(this.reportFiles || []), ...newFiles];
+          this.dataFiles = [...(this.dataFiles || []), ...newFiles];
 
           const allFileIds = this.reportFiles.map((file) => file.id);
-          this.db.saveReportDataFiles(this.selectedCompany!, allFileIds).subscribe({
+
+          this.db.saveReportFiles(this.selectedCompany!, allFileIds).subscribe({
             next: (res) => {
               this.msg.add({
                 severity: 'success',
