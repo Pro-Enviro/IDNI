@@ -47,7 +47,7 @@
         </div>
       </div>
       <div class="lg:col-9 sm:col-12 md:col-12" *ngIf="selectedMenu === 'data' && dataFiles">
-        <p-card header="Data">
+        <p-card header="Data File List">
           <p-table [value]="dataFiles" [autoLayout]="true" [globalFilterFields]="['title','uploaded_on']" sortField="uploaded_on" [sortOrder]="-1">
             <ng-template pTemplate="header">
               <tr>
@@ -103,13 +103,12 @@
       </div>
 
       <div class="lg:col-9 sm:col-12 md:col-12" *ngIf="isConsultant && selectedMenu === 'reports'">
-        <p-card header="File List" *ngIf="reportFiles">
+        <p-card header="Report File List" *ngIf="reportFiles">
           <p-table #dt1 [value]="reportFiles" [autoLayout]="true" [globalFilterFields]="['title','uploaded_on']"
                    sortField="uploaded_on" [sortOrder]="-1">
             <ng-template pTemplate="header">
               <tr>
                 <th colspan="2">
-                  {{reportFiles | json}}
                   <label>File Name</label>
                   <p-columnFilter type="text" field="title" matchMode="contains"></p-columnFilter>
                 </th>
