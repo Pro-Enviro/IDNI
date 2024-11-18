@@ -130,6 +130,18 @@ export class DbService {
     return this.http.post(`${this.url}/items/bug_reports`, bugReport)
   }
 
+  uploadReportDataForCompany = (id:number) => {
+    return this.http.get(`${this.url}/items/companies/${id}?fields=uploaded_reports.*`)
+  }
 
+  saveReportFiles = (id: number, data: string[]) => {
+    const formattedData = data.map(fileId => ({ directus_files_id: fileId }));
+    return this.http.patch(`${this.url}/items/companies/${id}?fields=uploaded_reports`, {uploaded_reports: formattedData});
+  };
+
+  saveDataFiles = (id: number, data: string[]) => {
+    const formattedData = data.map(fileId => ({ directus_files_id: fileId }));
+    return this.http.patch(`${this.url}/items/companies/${id}?fields=uploaded_files`, {uploaded_files: formattedData});
+  };
 
 }

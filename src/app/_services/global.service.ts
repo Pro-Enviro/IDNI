@@ -58,6 +58,10 @@ export class GlobalService {
     return result
   }
 
+  uploadReportDataForCompany = async (files: any) => {
+    const result = await this.client.request(uploadFiles(files))
+    return result;
+  }
 
   // Helper function to show folders UUID's
   listDirectusFolders = async () => {

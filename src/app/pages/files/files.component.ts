@@ -5,9 +5,9 @@ import {GlobalService} from "../../_services/global.service";
 import {EnvirotrackService} from "../envirotrack/envirotrack.service";
 import {CardModule} from "primeng/card";
 import {DropdownModule} from "primeng/dropdown";
-import {FormsModule} from "@angular/forms";
+import {FormGroup, FormsModule, FormBuilder, ReactiveFormsModule} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
-import {JsonPipe, NgIf} from "@angular/common";
+import {JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {PanelModule} from "primeng/panel";
 import {TableModule} from "primeng/table";
 import {InplaceModule} from "primeng/inplace";
@@ -18,10 +18,17 @@ import {SliderModule} from "primeng/slider";
 import {PdfViewerModule} from "ng2-pdf-viewer";
 import {StorageService} from "../../_services/storage.service";
 import {SlideMenuModule} from "primeng/slidemenu";
+import {FileUploadModule,FileUpload} from "primeng/fileupload";
+import {from} from "rxjs";
+import {SelectButtonModule} from "primeng/selectbutton";
+import {SidebarModule} from "primeng/sidebar";
+
 
 export interface Files {
-  id: number;
+  id: string;
   title: string;
+  type: string;
+  uploaded_on: string;
 }
 
 @Component({
@@ -42,7 +49,12 @@ export interface Files {
     DialogModule,
     PdfViewerModule,
     SliderModule,
-    SlideMenuModule
+    SlideMenuModule,
+    FileUploadModule,
+    NgForOf,
+    SelectButtonModule,
+    ReactiveFormsModule,
+    SidebarModule
   ],
   templateUrl: './files.component.html',
   styleUrl: './files.component.scss'
@@ -73,6 +85,15 @@ export class FilesComponent {
   reviewPdf: boolean = false;
   previewFile: any;
   pdfZoom: number = 100;
+  uploadedFiles: any[] = [];
+  fileIds: string[] = []
+  fileTypeUpload: any;
+  uploadFilesGuide:boolean = false;
+
+  fileTypeUploadOptions = [
+    {label: 'Report', value: 'report'},
+    {label: 'Data', value: 'data'}
+  ]
 
   constructor(
     private db: DbService,
@@ -106,6 +127,7 @@ export class FilesComponent {
   isPdf(fileType: string): boolean {
     return fileType.toLowerCase().includes('pdf');
   }
+
 
   onSelectCompany = () => {
     if (!this.selectedCompany) {
@@ -174,8 +196,22 @@ export class FilesComponent {
     }
     this.db.getFiles(id).subscribe({
       next: (res: any) => {
-        this.dataFiles = res.uploaded_files.map((x: any) => x.directus_files_id)
-        this.reportFiles = res.uploaded_reports.map((x: any) => x.directus_files_id)
+        //this.dataFiles = res.uploaded_files.map((x: any) => x.directus_files_id)
+        //this.reportFiles = res.uploaded_reports.map((x: any) => x.directus_files_id)
+
+        this.dataFiles = res.uploaded_files.map((dataFile:any) => ({
+          id:dataFile.directus_files_id?.id || null,
+          title:dataFile.directus_files_id?.title || 'Untitled',
+          uploaded_on: dataFile.directus_files_id.uploaded_on || 'N/A',
+          type:dataFile.directus_files_id?.type || 'Unknown'
+        }));
+        this.reportFiles = res.uploaded_reports.map((x: any) => ({
+          id: x.directus_files_id?.id || null,
+          title: x.directus_files_id?.title || 'Untitled',
+          uploaded_on: x.directus_files_id?.uploaded_on || 'N/A',
+          type: x.directus_files_id?.type || 'unknown'
+        }));
+
         this.reportFileCount = this.reportFiles?.length ?? 0;
         this.dataFileCount = this.dataFiles?.length ?? 0;
         this.updateMenuBadges();
@@ -241,6 +277,103 @@ export class FilesComponent {
         return type
     }
   }
+
+  uploadHandler = (event: any, fileUpload: FileUpload) => {
+    this.uploadedFiles = [];
+    event.files.forEach((file: any) => this.uploadedFiles.push(file));
+
+    if (this.uploadedFiles.length > 0) {
+      const formData = new FormData();
+      this.uploadedFiles.forEach((file: any) => {
+        if (this.fileTypeUpload === 'report') {
+          formData.append('folder', '839154be-d71f-43ff-88c9-7fdf2a8c3aad');
+        } else if (this.fileTypeUpload === 'data') {
+          formData.append('folder', '0956c625-8a2c-4a0e-8567-c1de4ac2258b');
+        }
+        formData.append('file[]', file);
+      });
+
+      from(this.global.uploadReportDataForCompany(formData)).subscribe({
+        next: (res: any) => {
+          let newFiles: Files[] = [];
+
+          //uploading multiple files
+          if (Array.isArray(res) && res.length > 0) {
+            newFiles = res.map((file: any) => ({
+              id: file.id,
+              title: file.filename_download,
+              type: file.type,
+              uploaded_on: file.uploaded_on || new Date().toISOString(),
+            }));
+          } else if (res.id) {
+            // uploading single file
+            newFiles = [{
+              id: res.id,
+              title: res.filename_download,
+              type: res.type,
+              uploaded_on: res.uploaded_on || new Date().toISOString(),
+            }];
+          }
+
+          if(this.fileTypeUpload === 'report'){
+            this.reportFiles = [...(this.reportFiles || []), ...newFiles];
+            const allFileIds = this.reportFiles.map((file) => file.id);
+
+            this.db.saveReportFiles(this.selectedCompany!, allFileIds).subscribe({
+              next: (res) => {
+                this.msg.add({
+                  severity: 'success',
+                  detail: 'Report uploaded!',
+                });
+              },
+              error: (err: any) => {
+                console.error("Error while saving files:", err);
+                this.msg.add({
+                  severity: 'error',
+                  summary: 'Upload failed',
+                  detail: err.message || 'An error occurred',
+                });
+              }
+            });
+            this.reportFileCount = this.reportFiles?.length ?? 0;
+            this.updateMenuBadges();
+            this.uploadedFiles = [];
+          } else if (this.fileTypeUpload === 'data'){
+            this.dataFiles = [...(this.dataFiles || []), ...newFiles];
+            const allFileIds = this.dataFiles.map((dataFile) => dataFile.id)
+
+            this.db.saveDataFiles(this.selectedCompany!,allFileIds).subscribe({
+              next:() => {
+                this.msg.add({
+                  severity:'success',
+                  detail:'Data uploaded !'
+                })
+              },
+              error:(err:any) => {
+                this.msg.add({
+                  severity:'error',
+                  summary:'Upload failed',
+                  detail: err.message || 'An error occurred',
+                })
+              }
+            })
+            this.dataFileCount = this.dataFiles?.length ?? 0;
+            this.updateMenuBadges();
+            this.uploadedFiles = [];
+          }
+          fileUpload.clear();
+        },
+        error: (err: any) => {
+          console.error("Error uploading file:", err);
+          this.msg.add({
+            severity: 'error',
+            summary: 'Upload Error',
+            detail: err.message || 'An error occurred while uploading',
+          });
+        }
+      });
+    }
+  };
 }
 
 
