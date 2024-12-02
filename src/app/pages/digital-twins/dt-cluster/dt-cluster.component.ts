@@ -19,11 +19,13 @@ import {ButtonModule} from "primeng/button";
 import {AnimateOnScrollModule} from "primeng/animateonscroll";
 import {DropdownChangeEvent, DropdownModule} from "primeng/dropdown";
 import {AutoCompleteCompleteEvent, AutoCompleteModule} from "primeng/autocomplete";
+import {SharedModule} from "primeng/api";
+import {ToastModule} from "primeng/toast";
 
 @Component({
   selector: 'app-dt-cluster',
   standalone: true,
-  imports: [PickListModule, PanelModule, InputTextModule, FormsModule, JsonPipe, CardModule, ButtonModule, NgClass, AnimateOnScrollModule, DropdownModule, AutoCompleteModule],
+  imports: [PickListModule, PanelModule, InputTextModule, FormsModule, JsonPipe, CardModule, ButtonModule, NgClass, AnimateOnScrollModule, DropdownModule, AutoCompleteModule, ToastModule],
   templateUrl: './dt-cluster.component.html',
   styleUrl: './dt-cluster.component.scss'
 })
@@ -39,27 +41,29 @@ export class DtClusterComponent implements AfterViewInit, OnChanges {
   selectedCluster: ClusterObject | undefined;
   clusterCompanies: Companies[] = [];
   filteredClusters: any[] = [];
-  targetHeight: number | undefined = 1000;
-
 
 
   onSave = () => {
-     if (this.selectedCluster) {
-        this.returnCluster.emit({
-          id: this.selectedCluster?.id,
-          name: this.selectedCluster?.name,
-          companies: this.clusterCompanies
-        });
-      } else {
-        this.returnCluster.emit({
-          name: this.clusterName,
-          companies: this.clusterCompanies
-        });
-      }
+    if (this.selectedCluster) {
+      this.returnCluster.emit({
+        id: this.selectedCluster?.id,
+        name: this.selectedCluster?.name,
+        companies: this.clusterCompanies
+      });
+    } else {
+      this.returnCluster.emit({
+        name: this.clusterName,
+        companies: this.clusterCompanies
+      });
+    }
+
+
   }
 
-  onSelect = (event: AutoCompleteCompleteEvent) => {
+  targetHeight: number | undefined = 1000;
 
+
+  onSelect = (event: AutoCompleteCompleteEvent) => {
     this.filteredClusters = this.clusters.filter(
       (cluster: ClusterObject) => cluster.name.toLowerCase().includes(event.query.toLowerCase())
     );
@@ -68,7 +72,7 @@ export class DtClusterComponent implements AfterViewInit, OnChanges {
   onClusterSelect = (event: any) => {
     this.selectedCluster = event.value;
     this.clusterCompanies = event.value.companies || [];
-    console.log('Selected Cluster:', event);
+    console.log('Selected Cluster:', this.selectedCluster);
     console.log('Cluster Companies:', this.clusterCompanies);
   }
 
@@ -82,7 +86,6 @@ export class DtClusterComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes)
     if (changes['clusters']) {
       this.filteredClusters = this.clusters || [];
     }

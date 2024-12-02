@@ -6,6 +6,8 @@ import {DtReportComponent} from "./dt-report/dt-report.component";
 import {NgIf} from "@angular/common";
 import {GlobalService} from "../../_services/global.service";
 import {Router} from "@angular/router";
+import {ToastModule} from "primeng/toast";
+import {MessagesModule} from "primeng/messages";
 
 
 @Component({
@@ -14,7 +16,9 @@ import {Router} from "@angular/router";
   imports: [
     DtClusterComponent,
     DtReportComponent,
-    NgIf
+    NgIf,
+    ToastModule,
+    MessagesModule
   ],
   templateUrl: './digital-twins.component.html',
   styleUrl: './digital-twins.component.scss'
@@ -32,7 +36,7 @@ export class DigitalTwinsComponent {
 
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {
-        if (res.role.name !== 'Administrator'){
+        if (res.role.name !== 'Administrator') {
           this.router.navigate(['/dashboard']);
         }
       }
@@ -57,7 +61,14 @@ export class DigitalTwinsComponent {
       })
       return;
     }
-    this.dt.saveCluster({id: cluster.id, name: cluster.name, companies: cluster.companies.map(({id}) => id)})
+
+    this.dt.saveCluster({
+      id: cluster.id,
+      name: cluster.name,
+      companies: cluster.companies.map(({id}) => id)
+    })
+
+
   }
 
 }

@@ -85,11 +85,10 @@ export class DtService {
   }
 
   saveCluster = (cluster: ClusterObject) => {
-    console.log(cluster)
+
     if (cluster.id) {
-      console.log('edit')
       this.db.fnEditCluster(cluster, cluster.id).subscribe({
-        next: () => {
+        next: (res) => {
           this.msg.add({
             severity: 'success',
             detail: 'Cluster Saved'
@@ -104,13 +103,25 @@ export class DtService {
         })
       })
     } else {
-      console.log('save')
+
+      // Check if name already exists  in clusters
+      const nameExists = this.clusters.value.find((cluster: ClusterObject) => cluster.name === cluster.name)
+
+      if (nameExists) {
+        return this.msg.add({
+          severity: 'warn',
+          detail: 'Cluster with this name already exists'
+        })
+      }
+
+
       this.db.fnAddCluster(cluster).subscribe({
-        next: () => {
+        next: (res) => {
           this.msg.add({
             severity: 'success',
             detail: 'Cluster Saved'
           })
+
           this.getClusters()
         },
         error: (err: any) => this.msg.add({
@@ -120,7 +131,6 @@ export class DtService {
         })
       })
     }
-
   }
 
   getClusters = () => {
@@ -216,7 +226,7 @@ export class DtService {
 
     const observables = ids.map(id =>
       this.db.getPetData(id).pipe(
-        map((res:any) => this.handlePETData(res)),
+        map((res: any) => this.handlePETData(res)),
         catchError(() => of(null))
       )
     );
@@ -231,7 +241,7 @@ export class DtService {
       try {
         const parsedCost = JSON.parse(res.data[0].cost_of_energy)
         return parsedCost
-      } catch(e){
+      } catch (e) {
         console.error(e)
       }
     }
