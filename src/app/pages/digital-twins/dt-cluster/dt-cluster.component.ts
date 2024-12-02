@@ -8,7 +8,7 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import {Cluster, ClusterObject, Companies} from "../../../_services/dt.service";
+import {Cluster, ClusterObject, Companies, DtService} from "../../../_services/dt.service";
 import {PickListModule} from "primeng/picklist";
 import {PanelModule} from "primeng/panel";
 import {InputTextModule} from "primeng/inputtext";
@@ -42,8 +42,17 @@ export class DtClusterComponent implements AfterViewInit, OnChanges {
   clusterCompanies: Companies[] = [];
   filteredClusters: any[] = [];
 
+  constructor(private dtService: DtService) {
+    this.dtService.selectedCluster$.subscribe(selectedCluster => {
+      this.selectedCluster = selectedCluster
+    })
+  }
+
 
   onSave = () => {
+    console.log(this.selectedCluster);
+
+
     if (this.selectedCluster) {
       this.returnCluster.emit({
         id: this.selectedCluster?.id,

@@ -40,7 +40,10 @@ export class DtService {
   companies: BehaviorSubject<Companies[]> = new BehaviorSubject<Companies[]>([]);
   recommendations: BehaviorSubject<Solutions[]> = new BehaviorSubject<Solutions[]>([]);
   clusters: BehaviorSubject<any[]> = new BehaviorSubject<any>(null)
+  selectedCluster: BehaviorSubject<any> = new BehaviorSubject<ClusterObject | null>(null)
   digitalTwinRecommendations: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([])
+
+  selectedCluster$ = this.selectedCluster.asObservable()
 
   constructor(
     private db: DbService,
@@ -88,12 +91,13 @@ export class DtService {
 
     if (cluster.id) {
       this.db.fnEditCluster(cluster, cluster.id).subscribe({
-        next: (res) => {
+        next: (res:any) => {
           this.msg.add({
             severity: 'success',
             detail: 'Cluster Saved'
           })
 
+          this.selectedCluster.next(res.data)
           this.getClusters()
         },
         error: (err: any) => this.msg.add({
@@ -105,7 +109,8 @@ export class DtService {
     } else {
 
       // Check if name already exists  in clusters
-      const nameExists = this.clusters.value.find((cluster: ClusterObject) => cluster.name === cluster.name)
+      const nameExists = this.clusters.value.find((c: ClusterObject) => c.name === cluster.name)
+      console.log(nameExists);
 
       if (nameExists) {
         return this.msg.add({
@@ -116,12 +121,13 @@ export class DtService {
 
 
       this.db.fnAddCluster(cluster).subscribe({
-        next: (res) => {
+        next: (res:any) => {
           this.msg.add({
             severity: 'success',
             detail: 'Cluster Saved'
           })
 
+          this.selectedCluster.next(res.data)
           this.getClusters()
         },
         error: (err: any) => this.msg.add({
