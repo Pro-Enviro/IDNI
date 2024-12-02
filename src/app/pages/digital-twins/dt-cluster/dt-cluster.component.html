@@ -16,10 +16,11 @@
             (onClear)="onClearSelection()"
             (onUnselect)="onClearSelection()"
             (onKeyUp)="onClusterNameChange($event)"
+            class="btn-dropdown"
           ></p-autoComplete>
         </div>
         <div class="col-2">
-          <button pButton label="Save" icon="pi pi-save" [disabled]="clusterCompanies.length < 2" (click)="onSave()"></button>
+          <button pButton label="Save" icon="pi pi-save" [disabled]="clusterCompanies.length < 2" (click)="onSave()" class="btn-dark"></button>
         </div>
       </div>
     </p-card>
@@ -39,6 +40,7 @@
         sourceFilterPlaceholder="Search by name"
         targetFilterPlaceholder="Search by name"
         [targetStyle]="{height: targetHeight ? targetHeight + 'px' :  + 'px'}"
+        styleClass="drop-column orderlist-style"
       >
 
         <ng-template let-company pTemplate="item" >
