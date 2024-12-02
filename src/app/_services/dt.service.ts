@@ -89,10 +89,14 @@ export class DtService {
     if (cluster.id) {
       console.log('edit')
       this.db.fnEditCluster(cluster, cluster.id).subscribe({
-        next: () => this.msg.add({
-          severity: 'success',
-          detail: 'Cluster Saved'
-        }),
+        next: () => {
+          this.msg.add({
+            severity: 'success',
+            detail: 'Cluster Saved'
+          })
+
+          this.getClusters()
+        },
         error: (err: any) => this.msg.add({
           severity: 'error',
           summary: 'Something went wrong',
@@ -102,10 +106,13 @@ export class DtService {
     } else {
       console.log('save')
       this.db.fnAddCluster(cluster).subscribe({
-        next: () => this.msg.add({
-          severity: 'success',
-          detail: 'Cluster Saved'
-        }),
+        next: () => {
+          this.msg.add({
+            severity: 'success',
+            detail: 'Cluster Saved'
+          })
+          this.getClusters()
+        },
         error: (err: any) => this.msg.add({
           severity: 'error',
           summary: 'Something went wrong',

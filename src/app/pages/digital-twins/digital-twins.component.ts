@@ -29,7 +29,9 @@ export class DigitalTwinsComponent {
       next: (res: any) => this.companies = res
     })
     this.dt.clusters.subscribe({
-      next: (cluster) => this.clusters = cluster
+      next: (cluster) => {
+        this.clusters = cluster
+      }
     })
   }
 

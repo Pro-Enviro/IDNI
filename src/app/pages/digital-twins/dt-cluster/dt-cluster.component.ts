@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {Cluster, ClusterObject, Companies} from "../../../_services/dt.service";
 import {PickListModule} from "primeng/picklist";
 import {PanelModule} from "primeng/panel";
@@ -19,7 +28,7 @@ import {AutoCompleteCompleteEvent, AutoCompleteModule} from "primeng/autocomplet
   styleUrl: './dt-cluster.component.scss'
 })
 
-export class DtClusterComponent implements AfterViewInit {
+export class DtClusterComponent implements AfterViewInit, OnChanges {
   @Input('cmp') companies: Companies[] | undefined;
   @Input('clusters') clusters: any | undefined;
   @ViewChild('picklist') picklist: any;
@@ -70,6 +79,13 @@ export class DtClusterComponent implements AfterViewInit {
   onClearSelection = () => {
     this.selectedCluster = undefined;
     this.clusterCompanies = [];
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes)
+    if (changes['clusters']) {
+      this.filteredClusters = this.clusters || [];
+    }
   }
 
   ngAfterViewInit() {
