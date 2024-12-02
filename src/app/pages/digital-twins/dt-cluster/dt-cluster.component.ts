@@ -85,6 +85,14 @@ export class DtClusterComponent implements AfterViewInit, OnChanges {
     this.clusterCompanies = [];
   }
 
+  onClusterNameChange = (event: any) => {
+    const matchingCluster = this.clusters.find((cluster: ClusterObject) => cluster.name.toLowerCase() === event.target.value.toLowerCase())
+
+    if (!matchingCluster) {
+      this.onClearSelection()
+    }
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['clusters']) {
       this.filteredClusters = this.clusters || [];
