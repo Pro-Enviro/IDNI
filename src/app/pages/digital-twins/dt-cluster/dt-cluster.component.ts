@@ -50,8 +50,7 @@ export class DtClusterComponent implements AfterViewInit, OnChanges {
 
 
   onSave = () => {
-    console.log(this.selectedCluster);
-
+    // console.log(this.selectedCluster);
 
     if (this.selectedCluster) {
       this.returnCluster.emit({

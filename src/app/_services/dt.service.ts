@@ -90,11 +90,14 @@ export class DtService {
   saveCluster = (cluster: ClusterObject) => {
 
     if (cluster.id) {
+
+      console.log('Editing')
+
       this.db.fnEditCluster(cluster, cluster.id).subscribe({
         next: (res:any) => {
           this.msg.add({
             severity: 'success',
-            detail: 'Cluster Saved'
+            detail: 'Existing Cluster Saved'
           })
 
           this.selectedCluster.next(res.data)
@@ -107,10 +110,11 @@ export class DtService {
         })
       })
     } else {
-
+      console.log('Adding new cluster')
       // Check if name already exists  in clusters
-      const nameExists = this.clusters.value.find((c: ClusterObject) => c.name === cluster.name)
+      const nameExists = this.clusters.value.find((c: ClusterObject) => c.name.toLowerCase() === cluster.name.toLowerCase());
       console.log(nameExists);
+
 
       if (nameExists) {
         return this.msg.add({
@@ -124,7 +128,7 @@ export class DtService {
         next: (res:any) => {
           this.msg.add({
             severity: 'success',
-            detail: 'Cluster Saved'
+            detail: 'New Cluster Saved'
           })
 
           this.selectedCluster.next(res.data)
