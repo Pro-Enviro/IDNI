@@ -48,6 +48,9 @@ export class DtReportComponent {
   totalC02Used: number = 0;
   implementationCost: number = 0;
 
+  // Charts
+  chartOptionsCarbon: any;
+
   constructor(private dt: DtService) {
     this.dt.companies.subscribe({
       next: (res: any) => this.companies = res
