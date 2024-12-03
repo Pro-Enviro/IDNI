@@ -20,7 +20,7 @@
           ></p-autoComplete>
         </div>
         <div class="col-2">
-          <button pButton label="Save" icon="pi pi-save" [disabled]="clusterCompanies.length < 2" (click)="onSave()" class="btn-dark"></button>
+          <button pButton label="Save" icon="pi pi-save" [disabled]="clusterCompanies.length < 2 || isLoading" (click)="onSave()" class="btn-dark"></button>
         </div>
       </div>
     </p-card>

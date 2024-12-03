@@ -41,6 +41,7 @@ export class DtClusterComponent implements AfterViewInit, OnChanges {
   selectedCluster: ClusterObject | undefined;
   clusterCompanies: Companies[] = [];
   filteredClusters: any[] = [];
+  isLoading: boolean = false;
 
   constructor(private dtService: DtService) {
     this.dtService.selectedCluster$.subscribe(selectedCluster => {
@@ -51,6 +52,7 @@ export class DtClusterComponent implements AfterViewInit, OnChanges {
 
   onSave = () => {
     // console.log(this.selectedCluster);
+    this.isLoading = true;
 
     if (this.selectedCluster) {
       this.returnCluster.emit({
@@ -65,7 +67,9 @@ export class DtClusterComponent implements AfterViewInit, OnChanges {
       });
     }
 
-
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1500)
   }
 
   targetHeight: number | undefined = 1000;
