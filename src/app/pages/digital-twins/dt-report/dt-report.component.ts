@@ -9,10 +9,10 @@ import {CardModule} from "primeng/card";
 import {SharedModules} from "../../../shared-module";
 import {SharedComponents} from "../../envirotrack/shared-components";
 import {CarouselModule} from "primeng/carousel";
-import {calculateEnergyData, conversionFactors} from "./calculateEnergyData";
-import Fuse from "fuse.js";
+import {calculateEnergyData} from "./calculateEnergyData";
+
 import {mergeDuplicateSolutions} from "./mergeDuplicateSolutions";
-import {match} from "node:assert";
+
 
 @Component({
   selector: 'app-dt-report',
@@ -176,6 +176,8 @@ export class DtReportComponent {
         this.addPETCostToTotal(res)
       }
     })
+
+    this.generateCharts()
   }
 
   addPETCostToTotal = (petData: any[]) => {
@@ -410,4 +412,7 @@ export class DtReportComponent {
   }
 
 
+  generateCharts() {
+    console.log('Generating Charts')
+  }
 }
