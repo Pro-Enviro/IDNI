@@ -2,8 +2,6 @@ import {Component} from '@angular/core';
 import {Cluster, Companies, DtService} from "../../_services/dt.service";
 import {DtClusterComponent} from "./dt-cluster/dt-cluster.component";
 import {MessageService} from "primeng/api";
-import {DtReportComponent} from "./dt-report/dt-report.component";
-import {NgIf} from "@angular/common";
 import {GlobalService} from "../../_services/global.service";
 import {Router} from "@angular/router";
 import {ToastModule} from "primeng/toast";
@@ -15,8 +13,6 @@ import {MessagesModule} from "primeng/messages";
   standalone: true,
   imports: [
     DtClusterComponent,
-    DtReportComponent,
-    NgIf,
     ToastModule,
     MessagesModule
   ],
