@@ -268,13 +268,13 @@
   <p-panel header="Charts">
     <p-tabView>
       <p-tabPanel header="Carbon Usage">
-        <div echarts [options]="chartOptionsCarbon" style="max-height: 60vh; height: 800px;"></div>
+        <div echarts *ngIf="chartOptionsCarbon" [options]="chartOptionsCarbon" style="max-height: 60vh; height: 800px;"></div>
       </p-tabPanel>
       <p-tabPanel header="Energy Usage">
-
+        <div echarts [options]="chartOptionsEnergy" style="max-height: 60vh; height: 800px;"></div>
       </p-tabPanel>
       <p-tabPanel header="Cost Saving">
-
+        <div echarts [options]="chartOptionsCost" style="max-height: 60vh; height: 800px;"></div>
       </p-tabPanel>
     </p-tabView>
   </p-panel>

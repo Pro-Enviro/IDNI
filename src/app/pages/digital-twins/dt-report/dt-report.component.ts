@@ -12,6 +12,7 @@ import {CarouselModule} from "primeng/carousel";
 import {calculateEnergyData} from "./calculateEnergyData";
 
 import {mergeDuplicateSolutions} from "./mergeDuplicateSolutions";
+import moment from "moment/moment";
 
 
 @Component({
@@ -50,6 +51,14 @@ export class DtReportComponent {
 
   // Charts
   chartOptionsCarbon: any;
+  chartDataCarbon: any = [];
+  chartOptionsEnergy: any;
+  chartDataEnergy: any = [];
+  chartOptionsCost: any;
+  chartDataCost: any = [];
+  chartX: any;
+  chartData: any;
+
 
   constructor(private dt: DtService) {
     this.dt.companies.subscribe({
@@ -247,6 +256,8 @@ export class DtReportComponent {
       }
       this.draggedItem = null;
     }
+
+    this.generateCharts()
   }
 
   dropRecommendation() {
@@ -372,6 +383,7 @@ export class DtReportComponent {
 
   // Percentage Calculations
 
+
   getEnergyDifference() {
     if (!this.totalEnergyUsed) return 0
 
@@ -417,5 +429,122 @@ export class DtReportComponent {
 
   generateCharts() {
     console.log('Generating Charts')
+
+    const years = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
+    const initialCO2 = this.getTotalCO2e();
+    const maxHeight = Math.ceil(initialCO2 * 1.1);
+    const minHeight = Math.floor(initialCO2 * 0.5);
+
+
+    // Calculate baseline case with 5.35% annual reduction
+    const baselineProjection = years.map((year, index) => {
+      return initialCO2 * Math.pow((1 - 0.0535), index);
+    });
+
+    const allAppliedRecommendations = [...this.appliedRecommendations, ...this.appliedDigitalTwinData]
+
+    let cumulativeSavings = 0;
+    const withRecommendationsLine = years.map((_, index) => {
+      const baselineForYear = baselineProjection[index];
+
+      if (index > 0 && index <= allAppliedRecommendations.length) {
+        cumulativeSavings += allAppliedRecommendations[index - 1].estimatedCarbonSaving;
+      }
+      return baselineForYear - cumulativeSavings;
+    });
+
+
+    // Create bar series - one for each recommendation
+    const barSeries = allAppliedRecommendations.map((rec, index) => ({
+      name: rec.recommendation || 'Unnamed Recommendation',
+      type: 'bar',
+      barWidth: '50%',
+      barGap: '0%',
+      barCategoryGap: '50%',
+      data: years.map((_, yearIndex) => {
+        return yearIndex === index ? withRecommendationsLine[yearIndex] : 0;
+      }),
+    }));
+
+
+
+    this.chartOptionsCarbon = {
+      title: {
+        text: 'Carbon Reduction Projection',
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross'
+        },
+        formatter: (params: any) => {
+          let tooltip = `Year: ${params[0].name}<br/>`;
+          params.forEach((param: any) => {
+            if (param.seriesType === 'line') {
+              tooltip += `${param.seriesName}: ${Math.round(param.value).toLocaleString()} tCO2e<br/>`;
+            } else if (param.value > 0) {
+              tooltip += `${param.seriesName}: ${Math.round(param.value).toLocaleString()} tCO2e<br/>`;
+            }
+          });
+          return tooltip;
+        }
+      },
+      legend: {
+        data: ['No Action', 'With Recommendations', ...this.appliedRecommendations.map(r => r.recommendation)],
+        top: 30
+      },
+      grid: {
+        left: '5%',
+        right: '5%',
+        bottom: '10%',
+        top: '20%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'category',
+        data: years,
+        axisTick: {
+          alignWithLabel: true
+        },
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      yAxis: {
+        type: 'value',
+        min: minHeight,
+        max: maxHeight,
+        axisLabel: {
+          formatter: (value: number) => Math.round(value).toLocaleString()
+        }
+      },
+      series: [
+        {
+          name: 'No Action',
+          type: 'line',
+          data: baselineProjection,
+          lineStyle: { type: 'dashed', width: 2 },
+          color: '#ff7043',
+          symbol: 'circle',
+          symbolSize: 8,
+          z: 2,
+          showSymbol: true
+        },
+        {
+          name: 'With Recommendations',
+          type: 'line',
+          data: withRecommendationsLine,
+          lineStyle: { width: 2 },
+          color: '#2e7d32',
+          symbol: 'circle',
+          symbolSize: 8,
+          z: 2,
+          showSymbol: true
+        },
+        ...barSeries
+      ]
+    };
+
   }
 }
