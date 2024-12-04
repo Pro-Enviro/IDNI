@@ -909,6 +909,25 @@ export class PetLoginProtected implements OnInit {
     )
   }
 
+  // assignEnvirotrackDataToCorrectCost = () => {
+  //   if (!this.breakDownChartData.length) return;
+  //
+  //   console.log(this.breakDownChartData)
+  //   this.breakDownChartData.forEach((data: any) => {
+  //     let foundType = this.data.findIndex(
+  //       (tableRow: any) => tableRow.name === data.name
+  //     );
+  //
+  //     if (foundType === -1) return;
+  //
+  //     this.data[foundType].totalUnits = parseFloat(data.value);
+  //     this.data[foundType].cost = 0;
+  //     this.data[foundType].unitsUom = 'kWh';
+  //   });
+  //
+  //
+  // };
+
   initChart = () => {
     this.chartOptions = {
       legend: {
