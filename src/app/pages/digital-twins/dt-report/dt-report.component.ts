@@ -297,6 +297,7 @@ export class DtReportComponent {
       const [removedReco] = this.appliedRecommendations.splice(index, 1);
       this.availableRecommendations.push(removedReco);
     }
+    this.generateCharts()
   }
 
   removeDigitalTwinReco(reco: any) {
@@ -305,6 +306,7 @@ export class DtReportComponent {
       const [removedReco] = this.appliedDigitalTwinData.splice(index, 1);
       this.availableDigitalTwinData.push(removedReco);
     }
+    this.generateCharts()
   }
 
 
@@ -453,20 +455,40 @@ export class DtReportComponent {
       return baselineForYear - cumulativeSavings;
     });
 
+    const barsData = years.map((_, yearIndex) => {
+      const recommendation = allAppliedRecommendations[yearIndex];
+      if (recommendation) {
+        console.log(recommendation)
+        return {
+          value: withRecommendationsLine[yearIndex],
+          name: recommendation.recommendation || recommendation.solutionText || 'Unnamed Recommendation'
+        };
+      }
+      return null;
+    });
 
-    // Create bar series - one for each recommendation
-    const barSeries = allAppliedRecommendations.map((rec, index) => ({
-      name: rec.recommendation || 'Unnamed Recommendation',
+    const barSeries = [{
       type: 'bar',
-      barWidth: '50%',
-      barGap: '0%',
-      barCategoryGap: '50%',
-      data: years.map((_, yearIndex) => {
-        return yearIndex === index ? withRecommendationsLine[yearIndex] : 0;
-      }),
-    }));
-
-
+      barWidth: '70%',
+      color: 'rgba(204,204,204,0.74)',
+      data: barsData.map(data => ({
+        value: data?.value || 0,
+        name: data?.name || '',
+        label: {
+          show: !!data,
+          position: 'inside',
+          fontSize: 8,
+          fontWeight: 'bold',
+          color: '#000',
+          align: 'center',
+          verticalAlign: 'middle',
+          formatter: function(params: any) {
+            return params.data.name;
+          }
+        }
+      })),
+      name: 'Recommendations'
+    }];
 
     this.chartOptionsCarbon = {
       title: {
