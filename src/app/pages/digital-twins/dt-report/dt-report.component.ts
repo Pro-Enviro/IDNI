@@ -448,8 +448,8 @@ export class DtReportComponent {
 
     // Calculate baseline projections with 5.35% reduction per year
     const baselineProjectionCO2 = years.map((_, index) => initialCO2 * Math.pow((1 - 0.0535), index));
-    const baselineProjectionEnergy = years.map((_, index) => initialEnergy );
-    const baselineProjectionCost = years.map((_, index) => initialCost );
+    const baselineProjectionEnergy = years.map((_, index) => initialEnergy);
+    const baselineProjectionCost = years.map((_, index) => initialCost);
 
     const allAppliedRecommendations = [...this.appliedRecommendations, ...this.appliedDigitalTwinData];
 
@@ -510,7 +510,7 @@ export class DtReportComponent {
           color: '#000',
           align: 'center',
           verticalAlign: 'middle',
-          formatter: function(params: any) {
+          formatter: function (params: any) {
             return params.data.name;
           }
         }
@@ -526,7 +526,7 @@ export class DtReportComponent {
       },
       tooltip: {
         trigger: 'axis',
-        axisPointer: { type: 'cross' },
+        axisPointer: {type: 'cross'},
         formatter: (params: any) => {
           let tooltip = `Year: ${params[0].name}<br/>`;
           params.forEach((param: any) => {
@@ -561,8 +561,8 @@ export class DtReportComponent {
       xAxis: {
         type: 'category',
         data: years,
-        axisTick: { alignWithLabel: true },
-        axisPointer: { type: 'shadow' },
+        axisTick: {alignWithLabel: true},
+        axisPointer: {type: 'shadow'},
         name: 'Year',
         nameLocation: 'middle',
         nameGap: 60,
@@ -583,7 +583,7 @@ export class DtReportComponent {
           name: 'No Action',
           type: 'line',
           data: baselineProjection,
-          lineStyle: { type: 'dashed', width: 2 },
+          lineStyle: {type: 'dashed', width: 2},
           color: '#ff7043',
           symbol: 'circle',
           symbolSize: 8,
@@ -594,7 +594,7 @@ export class DtReportComponent {
           name: 'Cluster Action',
           type: 'line',
           data: withRecommendationsLine,
-          lineStyle: { width: 2 },
+          lineStyle: {width: 2},
           color: '#2e7d32',
           symbol: 'circle',
           symbolSize: 8,
@@ -625,7 +625,6 @@ export class DtReportComponent {
     const costCaption = "Both scenarios assume constant energy price."
 
 
-    // Set chart options for all three metrics
     this.chartOptionsCarbon = createChartOptions(
       `${this.selectedCluster.name} Cluster Annual Carbon Footprint`,
       baselineProjectionCO2,
