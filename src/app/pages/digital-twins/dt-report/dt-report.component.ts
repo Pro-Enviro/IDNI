@@ -448,8 +448,8 @@ export class DtReportComponent {
 
     // Calculate baseline projections with 5.35% reduction per year
     const baselineProjectionCO2 = years.map((_, index) => initialCO2 * Math.pow((1 - 0.0535), index));
-    const baselineProjectionEnergy = years.map((_, index) => initialEnergy * Math.pow((1 - 0.0535), index));
-    const baselineProjectionCost = years.map((_, index) => initialCost * Math.pow((1 - 0.0535), index));
+    const baselineProjectionEnergy = years.map((_, index) => initialEnergy );
+    const baselineProjectionCost = years.map((_, index) => initialCost );
 
     const allAppliedRecommendations = [...this.appliedRecommendations, ...this.appliedDigitalTwinData];
 
