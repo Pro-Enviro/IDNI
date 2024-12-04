@@ -265,7 +265,7 @@
 </p-panel>
 
 @if (clusterCompanies) {
-  <p-panel header="Charts">
+  <p-panel header="Charts" styleClass="mt-5">
     <p-tabView>
       <p-tabPanel header="Carbon Usage">
         <div echarts *ngIf="chartOptionsCarbon" [options]="chartOptionsCarbon" style="max-height: 60vh; height: 800px;"></div>

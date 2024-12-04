@@ -51,11 +51,8 @@ export class DtReportComponent {
 
   // Charts
   chartOptionsCarbon: any;
-  chartDataCarbon: any = [];
   chartOptionsEnergy: any;
-  chartDataEnergy: any = [];
   chartOptionsCost: any;
-  chartDataCost: any = [];
   chartX: any;
   chartData: any;
 
@@ -433,41 +430,75 @@ export class DtReportComponent {
     console.log('Generating Charts')
 
     const years = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
+    // Generate Carbon Chart
     const initialCO2 = this.getTotalCO2e();
-    const maxHeight = Math.ceil(initialCO2 * 1.1);
-    const minHeight = Math.floor(initialCO2 * 0.5);
+    const maxHeightCO2 = Math.ceil(initialCO2 * 1.1);
+    const minHeightCO2 = Math.floor(initialCO2 * 0.5);
+
+    // Generate Energy Chart
+    const initialEnergy = this.getTotalEnergy();
+    const maxHeightEnergy = Math.ceil(initialEnergy * 1.1);
+    const minHeightEnergy = Math.floor(initialEnergy * 0.5);
+
+    // Generate Cost Chart
+    const initialCost = this.getTotalCost();
+    const maxHeightCost = Math.ceil(initialCost * 1.1);
+    const minHeightCost = Math.floor(initialCost * 0.5);
 
 
-    // Calculate baseline case with 5.35% annual reduction
-    const baselineProjection = years.map((year, index) => {
-      return initialCO2 * Math.pow((1 - 0.0535), index);
-    });
+    const allAppliedRecommendations = [...this.appliedRecommendations, ...this.appliedDigitalTwinData];
 
-    const allAppliedRecommendations = [...this.appliedRecommendations, ...this.appliedDigitalTwinData]
 
-    let cumulativeSavings = 0;
-    const withRecommendationsLine = years.map((_, index) => {
-      const baselineForYear = baselineProjection[index];
+// Calculate baseline projections
+    const baselineProjectionCO2 = years.map((_, index) => initialCO2 * Math.pow((1 - 0.0535), index));
+    const baselineProjectionEnergy = years.map((_, index) => initialEnergy * Math.pow((1 - 0.0535), index));
+    const baselineProjectionCost = years.map((_, index) => initialCost * Math.pow((1 - 0.0535), index));
 
+    // Calculate with recommendations lines
+    let cumulativeSavingsCO2 = 0;
+    let cumulativeSavingsEnergy = 0;
+    let cumulativeSavingsCost = 0;
+
+
+
+    const withRecommendationsLineCO2 = years.map((_, index) => {
       if (index > 0 && index <= allAppliedRecommendations.length) {
-        cumulativeSavings += allAppliedRecommendations[index - 1].estimatedCarbonSaving;
+        cumulativeSavingsCO2 += allAppliedRecommendations[index - 1].estimatedCarbonSaving;
       }
-      return baselineForYear - cumulativeSavings;
+      return baselineProjectionCO2[index] - cumulativeSavingsCO2;
     });
 
-    const barsData = years.map((_, yearIndex) => {
-      const recommendation = allAppliedRecommendations[yearIndex];
-      if (recommendation) {
-        console.log(recommendation)
-        return {
-          value: withRecommendationsLine[yearIndex],
-          name: recommendation.recommendation || recommendation.solutionText || 'Unnamed Recommendation'
-        };
+    const withRecommendationsLineEnergy = years.map((_, index) => {
+      if (index > 0 && index <= allAppliedRecommendations.length) {
+        cumulativeSavingsEnergy += allAppliedRecommendations[index - 1].estimatedEnergySaving || 0;
       }
-      return null;
+      return baselineProjectionEnergy[index] - cumulativeSavingsEnergy;
     });
 
-    const barSeries = [{
+    const withRecommendationsLineCost = years.map((_, index) => {
+      if (index > 0 && index <= allAppliedRecommendations.length) {
+        cumulativeSavingsCost += allAppliedRecommendations[index - 1].estimatedSaving || 0;
+      }
+      return baselineProjectionCost[index] - cumulativeSavingsCost;
+    });
+
+
+
+    // Generate bars data
+    const generateBarsData = (lineData: number[]) => {
+      return years.map((_, yearIndex) => {
+        const recommendation = allAppliedRecommendations[yearIndex];
+        if (recommendation) {
+          return {
+            value: lineData[yearIndex],
+            name: recommendation.recommendation || recommendation.solutionText || 'Unnamed Recommendation'
+          };
+        }
+        return null;
+      });
+    };
+
+    const barSeriesTemplate = (barsData: any[]) => [{
       type: 'bar',
       barWidth: '70%',
       color: 'rgba(204,204,204,0.74)',
@@ -490,23 +521,22 @@ export class DtReportComponent {
       name: 'Recommendations'
     }];
 
-    this.chartOptionsCarbon = {
+    const createChartOptions = (title: string, baselineProjection: number[], withRecommendationsLine: number[],
+                                minHeight: number, maxHeight: number, yAxisName: string, tooltipUnit: string) => ({
       title: {
-        text: 'Carbon Reduction Projection',
+        text: title,
         left: 'center'
       },
       tooltip: {
         trigger: 'axis',
-        axisPointer: {
-          type: 'cross'
-        },
+        axisPointer: { type: 'cross' },
         formatter: (params: any) => {
           let tooltip = `Year: ${params[0].name}<br/>`;
           params.forEach((param: any) => {
             if (param.seriesType === 'line') {
-              tooltip += `${param.seriesName}: ${Math.round(param.value).toLocaleString()} tCO2e<br/>`;
+              tooltip += `${param.seriesName}: ${Math.round(param.value).toLocaleString()} ${tooltipUnit}<br/>`;
             } else if (param.value > 0) {
-              tooltip += `${param.seriesName}: ${Math.round(param.value).toLocaleString()} tCO2e<br/>`;
+              tooltip += `${param.seriesName}: ${Math.round(param.value).toLocaleString()} ${tooltipUnit}<br/>`;
             }
           });
           return tooltip;
@@ -526,17 +556,19 @@ export class DtReportComponent {
       xAxis: {
         type: 'category',
         data: years,
-        axisTick: {
-          alignWithLabel: true
-        },
-        axisPointer: {
-          type: 'shadow'
-        }
+        axisTick: { alignWithLabel: true },
+        axisPointer: { type: 'shadow' },
+        name: 'Year',
+        nameLocation: 'middle',
+        nameGap: 35
       },
       yAxis: {
         type: 'value',
         min: minHeight,
         max: maxHeight,
+        name: yAxisName,
+        nameLocation: 'middle',
+        nameGap: 50,
         axisLabel: {
           formatter: (value: number) => Math.round(value).toLocaleString()
         }
@@ -564,9 +596,153 @@ export class DtReportComponent {
           z: 2,
           showSymbol: true
         },
-        ...barSeries
+        ...barSeriesTemplate(generateBarsData(withRecommendationsLine))
       ]
-    };
+    });
+
+    // Set chart options for all three metrics
+    this.chartOptionsCarbon = createChartOptions(
+      'Carbon Reduction Projection',
+      baselineProjectionCO2,
+      withRecommendationsLineCO2,
+      minHeightCO2,
+      maxHeightCO2,
+      'Tonnes of CO2 equivalent per annum',
+      'tCO2e'
+    );
+
+    this.chartOptionsEnergy = createChartOptions(
+      'Energy Reduction Projection',
+      baselineProjectionEnergy,
+      withRecommendationsLineEnergy,
+      minHeightEnergy,
+      maxHeightEnergy,
+      'kWh of energy consumption per annum',
+      'kWh'
+    );
+
+    this.chartOptionsCost = createChartOptions(
+      'Cost Reduction Projection',
+      baselineProjectionCost,
+      withRecommendationsLineCost,
+      minHeightCost,
+      maxHeightCost,
+      'Cost (£) of energy consumption per annum',
+      '£'
+    );
+
+    // const barsData = years.map((_, yearIndex) => {
+    //   const recommendation = allAppliedRecommendations[yearIndex];
+    //   if (recommendation) {
+    //     console.log(recommendation)
+    //     return {
+    //       value: withRecommendationsLine[yearIndex],
+    //       name: recommendation.recommendation || recommendation.solutionText || 'Unnamed Recommendation'
+    //     };
+    //   }
+    //   return null;
+    // });
+
+    // const barSeries = [{
+    //   type: 'bar',
+    //   barWidth: '70%',
+    //   color: 'rgba(204,204,204,0.74)',
+    //   data: barsData.map(data => ({
+    //     value: data?.value || 0,
+    //     name: data?.name || '',
+    //     label: {
+    //       show: !!data,
+    //       position: 'inside',
+    //       fontSize: 8,
+    //       fontWeight: 'bold',
+    //       color: '#000',
+    //       align: 'center',
+    //       verticalAlign: 'middle',
+    //       formatter: function(params: any) {
+    //         return params.data.name;
+    //       }
+    //     }
+    //   })),
+    //   name: 'Recommendations'
+    // }];
+
+    // this.chartOptionsCarbon = {
+    //   title: {
+    //     text: 'Carbon Reduction Projection',
+    //     left: 'center'
+    //   },
+    //   tooltip: {
+    //     trigger: 'axis',
+    //     axisPointer: {
+    //       type: 'cross'
+    //     },
+    //     formatter: (params: any) => {
+    //       let tooltip = `Year: ${params[0].name}<br/>`;
+    //       params.forEach((param: any) => {
+    //         if (param.seriesType === 'line') {
+    //           tooltip += `${param.seriesName}: ${Math.round(param.value).toLocaleString()} tCO2e<br/>`;
+    //         } else if (param.value > 0) {
+    //           tooltip += `${param.seriesName}: ${Math.round(param.value).toLocaleString()} tCO2e<br/>`;
+    //         }
+    //       });
+    //       return tooltip;
+    //     }
+    //   },
+    //   legend: {
+    //     data: ['No Action', 'With Recommendations', ...this.appliedRecommendations.map(r => r.recommendation)],
+    //     top: 30
+    //   },
+    //   grid: {
+    //     left: '5%',
+    //     right: '5%',
+    //     bottom: '10%',
+    //     top: '20%',
+    //     containLabel: true
+    //   },
+    //   xAxis: {
+    //     type: 'category',
+    //     data: years,
+    //     axisTick: {
+    //       alignWithLabel: true
+    //     },
+    //     axisPointer: {
+    //       type: 'shadow'
+    //     }
+    //   },
+    //   yAxis: {
+    //     type: 'value',
+    //     min: minHeight,
+    //     max: maxHeight,
+    //     axisLabel: {
+    //       formatter: (value: number) => Math.round(value).toLocaleString()
+    //     }
+    //   },
+    //   series: [
+    //     {
+    //       name: 'No Action',
+    //       type: 'line',
+    //       data: baselineProjection,
+    //       lineStyle: { type: 'dashed', width: 2 },
+    //       color: '#ff7043',
+    //       symbol: 'circle',
+    //       symbolSize: 8,
+    //       z: 2,
+    //       showSymbol: true
+    //     },
+    //     {
+    //       name: 'With Recommendations',
+    //       type: 'line',
+    //       data: withRecommendationsLine,
+    //       lineStyle: { width: 2 },
+    //       color: '#2e7d32',
+    //       symbol: 'circle',
+    //       symbolSize: 8,
+    //       z: 2,
+    //       showSymbol: true
+    //     },
+    //     ...barSeries
+    //   ]
+    // };
 
   }
 }
