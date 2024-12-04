@@ -250,7 +250,6 @@ export class PetLoginProtected implements OnInit {
     })
   }
 
-
   onSelectYear = () => {
     if (!this.allPetData.length) return
     const selectedYear = this.allPetData.find((petDataRow: PetToolData) => petDataRow.year === this.selectedYear)
@@ -559,7 +558,7 @@ export class PetLoginProtected implements OnInit {
 
   }
 
-  calculateProductivityScore = () => {
+   calculateProductivityScore = () => {
     // (Turnover - Total external costs) / no. of employees
     if (!this.employees || !this.turnover) return;
     const totalExternalCost: number = this.externalCost as number
@@ -885,6 +884,7 @@ export class PetLoginProtected implements OnInit {
    }
     this.track.getData(id).subscribe({
         next: (res) => {
+          console.log(res)
           if (res){
             let grandTotal = 0;
             res.forEach((row: any) => {
@@ -897,6 +897,7 @@ export class PetLoginProtected implements OnInit {
               value:( grandTotal/1000).toFixed(2)
             }
             this.breakDownChartData.push(this.envirotrackData)
+            console.log(this.breakDownChartData)
           }
 
         },

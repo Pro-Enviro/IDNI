@@ -120,9 +120,6 @@ export class ScopeChartComponent implements OnInit {
   }
 
   getData = () => {
-    //if there is pet data do this
-    // else merge fuel data and hh data
-    console.log(this.selectedCompany)
     this.db.getPetData(this.selectedCompany).subscribe({
       next: (res:any) => {
         let data = res.data.map(({cost_of_energy}:any) => JSON.parse(cost_of_energy))
@@ -180,7 +177,6 @@ export class ScopeChartComponent implements OnInit {
 
 
   initChart(){
-    // console.log(this.dataArray[0])
     this.chartOption = {
       title: {
         text: 'Breakdown of CO2e (tonnes) by emissions source',
