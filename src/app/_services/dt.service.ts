@@ -40,7 +40,10 @@ export class DtService {
   companies: BehaviorSubject<Companies[]> = new BehaviorSubject<Companies[]>([]);
   recommendations: BehaviorSubject<Solutions[]> = new BehaviorSubject<Solutions[]>([]);
   clusters: BehaviorSubject<any[]> = new BehaviorSubject<any>(null)
+  selectedCluster: BehaviorSubject<any> = new BehaviorSubject<ClusterObject | null>(null)
   digitalTwinRecommendations: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([])
+
+  selectedCluster$ = this.selectedCluster.asObservable()
 
   constructor(
     private db: DbService,
@@ -85,14 +88,21 @@ export class DtService {
   }
 
   saveCluster = (cluster: ClusterObject) => {
-    console.log(cluster)
+
     if (cluster.id) {
-      console.log('edit')
+
+      console.log('Editing')
+
       this.db.fnEditCluster(cluster, cluster.id).subscribe({
-        next: () => this.msg.add({
-          severity: 'success',
-          detail: 'Cluster Saved'
-        }),
+        next: (res:any) => {
+          this.msg.add({
+            severity: 'success',
+            detail: 'Existing Cluster Saved'
+          })
+
+          this.selectedCluster.next(res.data)
+          this.getClusters()
+        },
         error: (err: any) => this.msg.add({
           severity: 'error',
           summary: 'Something went wrong',
@@ -100,12 +110,30 @@ export class DtService {
         })
       })
     } else {
-      console.log('save')
+      console.log('Adding new cluster')
+      // Check if name already exists  in clusters
+      const nameExists = this.clusters.value.find((c: ClusterObject) => c.name.toLowerCase() === cluster.name.toLowerCase());
+      console.log(nameExists);
+
+
+      if (nameExists) {
+        return this.msg.add({
+          severity: 'warn',
+          detail: 'Cluster with this name already exists'
+        })
+      }
+
+
       this.db.fnAddCluster(cluster).subscribe({
-        next: () => this.msg.add({
-          severity: 'success',
-          detail: 'Cluster Saved'
-        }),
+        next: (res:any) => {
+          this.msg.add({
+            severity: 'success',
+            detail: 'New Cluster Saved'
+          })
+
+          this.selectedCluster.next(res.data)
+          this.getClusters()
+        },
         error: (err: any) => this.msg.add({
           severity: 'error',
           summary: 'Something went wrong',
@@ -113,7 +141,6 @@ export class DtService {
         })
       })
     }
-
   }
 
   getClusters = () => {
@@ -209,7 +236,7 @@ export class DtService {
 
     const observables = ids.map(id =>
       this.db.getPetData(id).pipe(
-        map((res:any) => this.handlePETData(res)),
+        map((res: any) => this.handlePETData(res)),
         catchError(() => of(null))
       )
     );
@@ -224,7 +251,7 @@ export class DtService {
       try {
         const parsedCost = JSON.parse(res.data[0].cost_of_energy)
         return parsedCost
-      } catch(e){
+      } catch (e) {
         console.error(e)
       }
     }

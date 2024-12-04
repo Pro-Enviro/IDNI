@@ -12,7 +12,8 @@ import {CarouselModule} from "primeng/carousel";
 import {calculateEnergyData, conversionFactors} from "./calculateEnergyData";
 import Fuse from "fuse.js";
 import {mergeDuplicateSolutions} from "./mergeDuplicateSolutions";
-import {match} from "node:assert";
+import {GlobalService} from "../../../_services/global.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dt-report',
@@ -48,7 +49,16 @@ export class DtReportComponent {
   totalC02Used: number = 0;
   implementationCost: number = 0;
 
-  constructor(private dt: DtService) {
+  constructor(private dt: DtService, private global: GlobalService, private router: Router) {
+
+    this.global.getCurrentUser().subscribe({
+      next: (res: any) => {
+        if (res.role.name !== 'Administrator'){
+          this.router.navigate(['/dashboard']);
+        }
+      }
+    })
+
     this.dt.companies.subscribe({
       next: (res: any) => this.companies = res
     })
