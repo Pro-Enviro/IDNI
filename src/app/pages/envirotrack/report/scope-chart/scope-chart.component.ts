@@ -120,6 +120,9 @@ export class ScopeChartComponent implements OnInit {
   }
 
   getData = () => {
+    //if there is pet data do this
+    // else merge fuel data and hh data
+    console.log(this.selectedCompany)
     this.db.getPetData(this.selectedCompany).subscribe({
       next: (res:any) => {
         let data = res.data.map(({cost_of_energy}:any) => JSON.parse(cost_of_energy))
