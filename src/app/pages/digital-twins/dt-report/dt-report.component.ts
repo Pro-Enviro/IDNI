@@ -565,7 +565,7 @@ export class DtReportComponent {
         axisPointer: { type: 'shadow' },
         name: 'Year',
         nameLocation: 'middle',
-        nameGap: 35
+        nameGap: 60,
       },
       yAxis: {
         type: 'value',
@@ -573,7 +573,7 @@ export class DtReportComponent {
         max: maxHeight,
         name: yAxisName,
         nameLocation: 'middle',
-        nameGap: 50,
+        nameGap: 80,
         axisLabel: {
           formatter: (value: number) => Math.round(value).toLocaleString()
         }
