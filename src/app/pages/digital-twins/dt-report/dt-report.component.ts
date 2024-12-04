@@ -427,40 +427,38 @@ export class DtReportComponent {
 
 
   generateCharts() {
-    console.log('Generating Charts')
-
     const years = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
-    // Generate Carbon Chart
+
+
+    // Generate Carbon Chart settings
     const initialCO2 = this.getTotalCO2e();
     const maxHeightCO2 = Math.ceil(initialCO2 * 1.1);
     const minHeightCO2 = Math.floor(initialCO2 * 0.5);
 
-    // Generate Energy Chart
+    // Generate Energy Chart settings
     const initialEnergy = this.getTotalEnergy();
     const maxHeightEnergy = Math.ceil(initialEnergy * 1.1);
     const minHeightEnergy = Math.floor(initialEnergy * 0.5);
 
-    // Generate Cost Chart
+    // Generate Cost Chart settings
     const initialCost = this.getTotalCost();
     const maxHeightCost = Math.ceil(initialCost * 1.1);
     const minHeightCost = Math.floor(initialCost * 0.5);
 
 
-    const allAppliedRecommendations = [...this.appliedRecommendations, ...this.appliedDigitalTwinData];
-
-
-// Calculate baseline projections
+    // Calculate baseline projections with 5.35% reduction per year
     const baselineProjectionCO2 = years.map((_, index) => initialCO2 * Math.pow((1 - 0.0535), index));
     const baselineProjectionEnergy = years.map((_, index) => initialEnergy * Math.pow((1 - 0.0535), index));
     const baselineProjectionCost = years.map((_, index) => initialCost * Math.pow((1 - 0.0535), index));
 
-    // Calculate with recommendations lines
+    const allAppliedRecommendations = [...this.appliedRecommendations, ...this.appliedDigitalTwinData];
+
     let cumulativeSavingsCO2 = 0;
     let cumulativeSavingsEnergy = 0;
     let cumulativeSavingsCost = 0;
 
 
-
+    // Calculate recommendation lines based on each recommendations saving, cost, co2 etc.
     const withRecommendationsLineCO2 = years.map((_, index) => {
       if (index > 0 && index <= allAppliedRecommendations.length) {
         cumulativeSavingsCO2 += allAppliedRecommendations[index - 1].estimatedCarbonSaving;
@@ -481,7 +479,6 @@ export class DtReportComponent {
       }
       return baselineProjectionCost[index] - cumulativeSavingsCost;
     });
-
 
 
     // Generate bars data
@@ -522,7 +519,7 @@ export class DtReportComponent {
     }];
 
     const createChartOptions = (title: string, baselineProjection: number[], withRecommendationsLine: number[],
-                                minHeight: number, maxHeight: number, yAxisName: string, tooltipUnit: string) => ({
+                                minHeight: number, maxHeight: number, yAxisName: string, tooltipUnit: string, caption: string) => ({
       title: {
         text: title,
         left: 'center'
@@ -542,8 +539,16 @@ export class DtReportComponent {
           return tooltip;
         }
       },
+      toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {
+            show: true
+          }
+        }
+      },
       legend: {
-        data: ['No Action', 'With Recommendations', ...this.appliedRecommendations.map(r => r.recommendation)],
+        data: ['No Action', 'Cluster Action', ...this.appliedRecommendations.map(r => r.recommendation)],
         top: 30
       },
       grid: {
@@ -586,7 +591,7 @@ export class DtReportComponent {
           showSymbol: true
         },
         {
-          name: 'With Recommendations',
+          name: 'Cluster Action',
           type: 'line',
           data: withRecommendationsLine,
           lineStyle: { width: 2 },
@@ -597,38 +602,61 @@ export class DtReportComponent {
           showSymbol: true
         },
         ...barSeriesTemplate(generateBarsData(withRecommendationsLine))
-      ]
+      ],
+      graphic: caption ? [
+        {
+          type: 'text',
+          left: 'center',
+          bottom: '0%',
+          style: {
+            text: caption,
+            fontSize: 12,
+            fill: '#666',
+            width: '80%',
+            overflow: 'break'
+          }
+        }
+      ] : undefined
     });
+
+    const carbonCaption = "No action scenario assumes 5.35% reduction in grid carbon intensity (mean average for previous 5 years).\n" +
+      "A carbon conversion factor of 0.2499 kgCO2e/kWh electricity including transmission & distribution, UK greenhouse gas reporting";
+    const energyCaption = "No action scenario assumes constant energy consumption. "
+    const costCaption = "Both scenarios assume constant energy price."
+
 
     // Set chart options for all three metrics
     this.chartOptionsCarbon = createChartOptions(
-      'Carbon Reduction Projection',
+      `${this.selectedCluster.name} Cluster Annual Carbon Footprint`,
       baselineProjectionCO2,
       withRecommendationsLineCO2,
       minHeightCO2,
       maxHeightCO2,
       'Tonnes of CO2 equivalent per annum',
-      'tCO2e'
+      'tCO2e',
+      carbonCaption
     );
 
     this.chartOptionsEnergy = createChartOptions(
-      'Energy Reduction Projection',
+      `${this.selectedCluster.name} Cluster Annual Energy Consumption`,
       baselineProjectionEnergy,
       withRecommendationsLineEnergy,
       minHeightEnergy,
       maxHeightEnergy,
       'kWh of energy consumption per annum',
-      'kWh'
+      'kWh',
+      energyCaption
     );
 
     this.chartOptionsCost = createChartOptions(
-      'Cost Reduction Projection',
+      `${this.selectedCluster.name} Cluster Annual Energy Cost`,
       baselineProjectionCost,
       withRecommendationsLineCost,
       minHeightCost,
       maxHeightCost,
       'Cost (£) of energy consumption per annum',
-      '£'
+      '£',
+      costCaption
     );
 
     // const barsData = years.map((_, yearIndex) => {
