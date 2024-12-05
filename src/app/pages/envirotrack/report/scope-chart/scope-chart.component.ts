@@ -190,8 +190,6 @@ export class ScopeChartComponent implements OnInit {
         } else {
           this.getFuelData(this.selectedCompany);
           this.getHHData(this.selectedCompany);
-          console.log(this.dataArray)
-          this.initChart();
         }
 
       },
@@ -225,7 +223,10 @@ export class ScopeChartComponent implements OnInit {
         complete: () =>  {
           const scopes = this.transformToScopes(this.calculateTotals(this.fuels.slice(0)));
           this.dataArray = [this.setFuelData(scopes)];
-          this.initChart();
+          if (this.dataArray.length) {
+            console.log(this.dataArray)
+            this.initChart();
+          }
         }
       })
     }
@@ -350,7 +351,10 @@ export class ScopeChartComponent implements OnInit {
           })
           const hhData = this.filterData(res);
           this.dataArray = [this.setHHData(hhData)]
-          this.initChart();
+          if (this.dataArray.length) {
+            console.log(this.dataArray)
+            this.initChart();
+          }
         }
       }
     )
