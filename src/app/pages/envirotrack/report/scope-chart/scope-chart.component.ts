@@ -11,6 +11,13 @@ import {SidebarModule} from "primeng/sidebar";
 import {DbService} from "../../../../_services/db.service";
 import _ from "lodash";
 import {FuelDataType, TableTotals} from "../envirotrack-report-fields/envirotrack-report-fields.component";
+import {type} from "node:os";
+
+
+interface ScopeData {
+  name: string;
+  value: number;
+}
 
 @Component({
   selector: 'app-scope-chart',
@@ -24,6 +31,9 @@ import {FuelDataType, TableTotals} from "../envirotrack-report-fields/envirotrac
     SidebarModule
   ]
 })
+
+
+
 export class ScopeChartComponent implements OnInit {
 
   @Input() data: any;
@@ -44,6 +54,8 @@ export class ScopeChartComponent implements OnInit {
   chartData: boolean = false;
   dataArray: any;
   isConsultant: boolean = false;
+  fuelData: ScopeData[] | null = null;
+  hhData: ScopeData | null = null;
 
   constructor(
     private db: DbService,
@@ -114,6 +126,7 @@ export class ScopeChartComponent implements OnInit {
   }
 
   onSelectCompany = () => {
+    this.clear();
     this.dataArray = []
     this.envirotrackData = {}
     this.chartData = false;
@@ -127,7 +140,6 @@ export class ScopeChartComponent implements OnInit {
     this.db.getPetData(this.selectedCompany).subscribe({
       next: (res: any) => {
         let data = res.data.map(({cost_of_energy}: any) => JSON.parse(cost_of_energy))
-        console.log(data)
         this.dataArray = data.map((data: any) => {
           let values: any[] = [{
             value: (data.filter(({name}: any) => name === 'Electricity')[0].totalUnits * 0.20705 / 1000).toFixed(2),
@@ -177,6 +189,9 @@ export class ScopeChartComponent implements OnInit {
           this.initChart()
         } else {
           this.getFuelData(this.selectedCompany);
+          this.getHHData(this.selectedCompany);
+          console.log(this.dataArray)
+          this.initChart();
         }
 
       },
@@ -205,24 +220,23 @@ export class ScopeChartComponent implements OnInit {
 
           }
 
-          console.log(res)
         },
         error: (err) => console.log(err),
-        complete: () => this.organiseData()
+        complete: () =>  {
+          const scopes = this.transformToScopes(this.calculateTotals(this.fuels.slice(0)));
+          this.dataArray = [this.setFuelData(scopes)];
+          this.initChart();
+        }
       })
     }
   }
 
-  organiseData = () => {
-    this.calculateTotals(this.fuels.slice(0));
-  }
 
   calculateTotals = (data: FuelDataType[], dateFilter?: number) => {
 
     // Reset totals
     let typeTotals: any[] = []
     let totalConsumption = 0;
-    let totalEmissions = 0
 
 
     let reducedData: any[] = []
@@ -301,9 +315,9 @@ export class ScopeChartComponent implements OnInit {
       typeTotals.push(reduced)
     })
 
-    const scopes = this.transformToScopes(typeTotals)
-    this.dataArray = [scopes];
-    this.initChart();
+    return typeTotals
+
+
   }
 
    transformToScopes = (energyData:any[]) => {
@@ -326,6 +340,43 @@ export class ScopeChartComponent implements OnInit {
       }
     ];
   };
+
+  // Get HH data
+  getHHData = (id: number) => {
+    this.track.getData(id).subscribe({
+        next: (res) => {
+          res.forEach((row: any) => {
+            row.hhd = JSON.parse(row.hhd.replaceAll('"','').replaceAll("'",'')).map((x:number) => x ? x : 0)
+          })
+          const hhData = this.filterData(res);
+          this.dataArray = [this.setHHData(hhData)]
+          this.initChart();
+        }
+      }
+    )
+  }
+
+  filterData = (res:any) =>{
+    let chartData: any[] = [];
+
+    res.forEach((row: any) => {
+      row.hhd.forEach((hh: any, i:number) => {
+        hh = hh ? hh : 0;
+        row.hhd[i] = !isNaN(parseInt(hh.toString())) ? hh : 0
+      })
+      if(row.hhd.length){
+        chartData.push([row.date, row.hhd.reduce((x:number, y:number) => (x ? x : 0) + (y ? y : 0) )])
+      }
+
+    })
+    const totalValue = chartData.reduce((sum, [_, value]) => sum + Number(value), 0);
+
+    return {
+      name: 'Scope 1',
+      value: Number(totalValue)
+    };
+
+  }
 
   initChart() {
     this.chartOption = {
@@ -409,6 +460,36 @@ export class ScopeChartComponent implements OnInit {
       ]
     };
   }
+
+  mergeScopeData(): ScopeData[] {
+    if (!this.fuelData && !this.hhData) {
+      return [];
+    }
+
+    const scope1Value = (this.fuelData?.[0]?.value || 0) + (this.hhData?.value || 0);
+    const scope2Value = this.fuelData?.[1]?.value || 0;
+
+    return [
+      { name: 'Scope 1', value: scope1Value },
+      { name: 'Scope 2', value: scope2Value }
+    ];
+  }
+
+  setFuelData(data: ScopeData[]) {
+    this.fuelData = data;
+    return this.mergeScopeData();
+  }
+
+  setHHData(data: ScopeData) {
+    this.hhData = data;
+    return this.mergeScopeData();
+  }
+
+  clear() {
+    this.fuelData = null;
+    this.hhData = null;
+  }
+
 
   ngOnInit(): void {
     this.companySelected ? this.selectedCompany = this.companySelected : null;
