@@ -28,7 +28,7 @@ interface RowOrCol extends Record<string, any> {
   value: any
 }
 
-interface FuelDataType {
+export interface FuelDataType {
   cols: RowOrCol[][]
   rows: RowOrCol[][]
   customConversionFactor: string

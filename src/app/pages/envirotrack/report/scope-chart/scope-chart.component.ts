@@ -1,5 +1,5 @@
-import { Component, Input, OnInit} from '@angular/core';
-import { EChartsOption } from 'echarts';
+import {Component, Input, OnInit} from '@angular/core';
+import {EChartsOption} from 'echarts';
 import {FilterService, MessageService} from 'primeng/api';
 import moment from "moment";
 import {SharedComponents} from "../../shared-components";
@@ -9,6 +9,8 @@ import {EnvirotrackService} from "../../envirotrack.service";
 import {GlobalService} from "../../../../_services/global.service";
 import {SidebarModule} from "primeng/sidebar";
 import {DbService} from "../../../../_services/db.service";
+import _ from "lodash";
+import {FuelDataType, TableTotals} from "../envirotrack-report-fields/envirotrack-report-fields.component";
 
 @Component({
   selector: 'app-scope-chart',
@@ -48,9 +50,10 @@ export class ScopeChartComponent implements OnInit {
     private global: GlobalService,
     private msg: MessageService,
     private track: EnvirotrackService
-  ) { }
+  ) {
+  }
 
-  getCompanies = () =>{
+  getCompanies = () => {
 
     this.global.getCurrentUser().subscribe({
       next: (res: any) => {
@@ -117,66 +120,214 @@ export class ScopeChartComponent implements OnInit {
     this.track.updateSelectedCompany(this.selectedCompany)
     this.global.updateCompanyId(this.selectedCompany)
     this.getData();
+
   }
 
   getData = () => {
     this.db.getPetData(this.selectedCompany).subscribe({
-      next: (res:any) => {
-        let data = res.data.map(({cost_of_energy}:any) => JSON.parse(cost_of_energy))
-        this.dataArray = data.map((data:any) => {
-          let values: any[] =   [{
-            value:  (data.filter(({name}:any) => name === 'Electricity')[0].totalUnits * 0.20705 / 1000).toFixed(2),
+      next: (res: any) => {
+        let data = res.data.map(({cost_of_energy}: any) => JSON.parse(cost_of_energy))
+        console.log(data)
+        this.dataArray = data.map((data: any) => {
+          let values: any[] = [{
+            value: (data.filter(({name}: any) => name === 'Electricity')[0].totalUnits * 0.20705 / 1000).toFixed(2),
             name: 'Electricity'
-          },{
-            value:  (data.filter(({name}:any) => name === 'Natural Gas (Grid)')[0].totalUnits * 0.18290 / 1000).toFixed(2),
+          }, {
+            value: (data.filter(({name}: any) => name === 'Natural Gas (Grid)')[0].totalUnits * 0.18290 / 1000).toFixed(2),
             name: 'Natural Gas (Grid)'
-          },{
-            value:  (data.filter(({name}:any) => name === 'Natural Gas off Grid')[0].totalUnits * 0.18290 / 1000).toFixed(2),
+          }, {
+            value: (data.filter(({name}: any) => name === 'Natural Gas off Grid')[0].totalUnits * 0.18290 / 1000).toFixed(2),
             name: 'Natural Gas off Grid'
-          },{
-            value:  (data.filter(({name}:any) => name === 'Bio Gas Off Grid')[0].totalUnits * 0.18449 / 1000).toFixed(2),
+          }, {
+            value: (data.filter(({name}: any) => name === 'Bio Gas Off Grid')[0].totalUnits * 0.18449 / 1000).toFixed(2),
             name: 'Bio Gas Off Grid'
-          },{
-            value:  (data.filter(({name}:any) => name === 'LPG')[0].totalUnits * 0.21450 / 1000).toFixed(2),
+          }, {
+            value: (data.filter(({name}: any) => name === 'LPG')[0].totalUnits * 0.21450 / 1000).toFixed(2),
             name: 'LPG'
-          },{
-            value:  (data.filter(({name}:any) => name === 'Oil')[0].totalUnits * 0.24677 / 1000).toFixed(2),
+          }, {
+            value: (data.filter(({name}: any) => name === 'Oil')[0].totalUnits * 0.24677 / 1000).toFixed(2),
             name: 'Oil'
-          },{
-            value:  (data.filter(({name}:any) => name === 'Kerosene')[0].totalUnits * 0.25 / 1000).toFixed(2),
+          }, {
+            value: (data.filter(({name}: any) => name === 'Kerosene')[0].totalUnits * 0.25 / 1000).toFixed(2),
             name: 'Kerosene'
-          },{
-            value:  (data.filter(({name}:any) => name === 'Bio Fuels')[0].totalUnits * 0.04562 / 1000).toFixed(2),
+          }, {
+            value: (data.filter(({name}: any) => name === 'Bio Fuels')[0].totalUnits * 0.04562 / 1000).toFixed(2),
             name: 'Bio Fuels'
-          },{
-            value:  (data.filter(({name}:any) => name === 'Bio Mass')[0].totalUnits * 0.01132 / 1000).toFixed(2),
+          }, {
+            value: (data.filter(({name}: any) => name === 'Bio Mass')[0].totalUnits * 0.01132 / 1000).toFixed(2),
             name: 'Bio Mass'
-          },{
-            value:  (data.filter(({name}:any) => name === 'Coal for Industrial use')[0].totalUnits * 0.32302 / 1000).toFixed(2),
+          }, {
+            value: (data.filter(({name}: any) => name === 'Coal for Industrial use')[0].totalUnits * 0.32302 / 1000).toFixed(2),
             name: 'Coal for Industrial use'
           }]
 
-          let scope2 = values.filter(({name}: any) => name != 'Electricity').map(({value}:any) => value).reduce((x:any,y:any) => parseFloat(x) + parseFloat(y) )
+          let scope2 = values.filter(({name}: any) => name != 'Electricity').map(({value}: any) => value).reduce((x: any, y: any) => parseFloat(x) + parseFloat(y))
 
           return [{
             name: 'Scope 1',
             value: scope2
-          },{
+          }, {
             name: 'Scope 2',
-            value: values.filter(({name}:any) => name === 'Electricity')[0].value
+            value: values.filter(({name}: any) => name === 'Electricity')[0].value
           }]
         })
-        this.initChart()
+
+        // If no data from PET tool then try find in fuel Data
+        if (this.dataArray.length) {
+          this.initChart()
+        } else {
+          this.getFuelData(this.selectedCompany);
+        }
+
       },
-      error: (err: any)=> this.msg.add({
+      error: (err: any) => this.msg.add({
         severity: 'error',
         detail: err.error.errors[0].message
       })
     })
   }
 
+  getFuelData = (selectedCompany: number) => {
+    this.fuels = []
+    this.dataArray = []
 
-  initChart(){
+
+    if (selectedCompany) {
+      this.track.getFuelData(selectedCompany).subscribe({
+        next: (res: any) => {
+
+          if (res?.data?.fuel_data) {
+            this.fuels = JSON.parse(res.data?.fuel_data)
+
+          } else {
+            this.fuels = []
+            this.dataArray = []
+
+          }
+
+          console.log(res)
+        },
+        error: (err) => console.log(err),
+        complete: () => this.organiseData()
+      })
+    }
+  }
+
+  organiseData = () => {
+    this.calculateTotals(this.fuels.slice(0));
+  }
+
+  calculateTotals = (data: FuelDataType[], dateFilter?: number) => {
+
+    // Reset totals
+    let typeTotals: any[] = []
+    let totalConsumption = 0;
+    let totalEmissions = 0
+
+
+    let reducedData: any[] = []
+
+    data.forEach((fuelType: FuelDataType) => {
+
+      fuelType.rows.forEach((row: any) => {
+        const endDateRaw = row.findIndex((c: any) => c.name.toLowerCase() === 'start date')
+        const findTotal = row.findIndex((c: any) => c.name.toLowerCase() === 'total')
+        const findUOM = row.findIndex((c: any) => c.name.toLowerCase() === 'unit')
+        let findValue = row.findIndex((c: any) => c.name.toLowerCase() === 'value')
+
+        if (findValue === -1) {
+          findValue = row.findIndex((c: any) => c.name.toLowerCase() === 'kwh')
+        }
+
+        const endDateValue = row[endDateRaw].value ? row[endDateRaw].value : 0;
+
+        const endDate = moment(endDateValue).startOf('month');
+
+        if (dateFilter && !isNaN(dateFilter)) {
+          const monthsAgo = moment(new Date()).subtract(dateFilter, 'months')
+          if (endDate.isBefore(monthsAgo)) return;
+        }
+
+
+        // If no value found, use anything that includes name value
+        if (findValue === -1) {
+          findValue = row.findIndex((c: any) => c.name.toLowerCase().includes('total value'))
+        }
+
+
+        const total = row[findTotal]?.value ? row[findTotal].value : 0
+        // const cost = row[findCost].value ? row[findCost].value : 0
+        let consumption = row[findValue]?.value ? row[findValue].value : 0
+
+
+        let uom = row[findUOM]?.value ? row[findUOM].value : 'kWh'
+
+        if (typeof uom !== 'string') uom = 'kWh'
+
+        // If not in kWh - convert (Numbers above taken from Bill data Template - Bianca)
+        if (uom !== 'kWh') {
+          // const newValue = this.convertToKwh(fuelType, uom, consumption)
+          row.converted = true;
+          // consumption = newValue;
+        }
+
+        totalConsumption += parseFloat(consumption);
+
+        reducedData.push({
+          type: fuelType.type,
+          cost: total,
+          converted: row.converted,
+          consumption,
+        })
+      })
+    })
+
+
+    const grouped = _.groupBy(reducedData, 'type')
+    const groupedKeys = Object.keys(grouped);
+
+    groupedKeys.map((fuelType: any) => {
+
+      const reduced = _.reduce(grouped[fuelType], (result, value, key) => {
+        return {
+          type: result.type,
+          converted: result.converted,
+          consumption: Number(result.consumption) + Number(value.consumption),
+          cost: Number(result.cost) + Number(value.cost),
+          conversionFactor: result.conversionFactor
+        }
+      })
+
+      typeTotals.push(reduced)
+    })
+
+    const scopes = this.transformToScopes(typeTotals)
+    this.dataArray = [scopes];
+    this.initChart();
+  }
+
+   transformToScopes = (energyData:any[]) => {
+    const electricityValue = energyData
+      .filter(data => data.type === 'Electricity')
+      .reduce((sum, data) => sum + data.consumption, 0);
+
+    const nonElectricityValue = energyData
+      .filter(data => data.type !== 'Electricity')
+      .reduce((sum, data) => sum + data.consumption, 0);
+
+    return [
+      {
+        name: 'Scope 1',
+        value: electricityValue
+      },
+      {
+        name: 'Scope 2',
+        value: nonElectricityValue
+      }
+    ];
+  };
+
+  initChart() {
     this.chartOption = {
       title: {
         text: 'Breakdown of CO2e (tonnes) by emissions source',
@@ -208,7 +359,7 @@ export class ScopeChartComponent implements OnInit {
           name: 'tCO2e By emissions source',
           data: this.dataArray[0],
           type: 'pie',
-          radius: [20,180],
+          radius: [20, 180],
           itemStyle: {
             borderRadius: 5
           },
@@ -260,7 +411,7 @@ export class ScopeChartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.companySelected ? this.selectedCompany = this.companySelected: null;
+    this.companySelected ? this.selectedCompany = this.companySelected : null;
     this.getCompanies()
     this.selectedCompany ? this.getData() : null;
   }
