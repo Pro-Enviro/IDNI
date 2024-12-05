@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {authentication, createDirectus, graphql, rest, readMe, uploadFiles, readFolders} from "@directus/sdk";
 import {BehaviorSubject, from} from "rxjs";
 
@@ -17,6 +17,7 @@ export class Storage {
     }
     return ret
   }
+
   set(data: any) {
     localStorage.setItem("directus-data", JSON.stringify(data));
   }
@@ -30,11 +31,15 @@ export class GlobalService {
 
   selectedMpan: BehaviorSubject<any> = new BehaviorSubject<any>(null)
 
-  client: any;
+  public _client: any;
   url: any = `https://app.idni.eco`
 
   constructor() {
     this.initSession();
+  }
+
+  get client() {
+    return this._client;
   }
 
   getCurrentUser = () => {
@@ -71,7 +76,10 @@ export class GlobalService {
 
   initSession = () => {
     const storage: Storage = new Storage()
-    this.client = createDirectus('https://app.idni.eco').with(authentication('json', {storage})).with(rest()).with(graphql())
+    this._client = createDirectus('https://app.idni.eco')
+      .with(authentication('json', {storage}))
+      .with(rest())
+      .with(graphql());
 
   }
 }

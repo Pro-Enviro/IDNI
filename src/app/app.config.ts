@@ -1,6 +1,6 @@
 
-import {APP_INITIALIZER, ApplicationConfig, importProvidersFrom} from '@angular/core';
-import {provideRouter, ROUTES} from '@angular/router';
+import {APP_INITIALIZER, ApplicationConfig, importProvidersFrom, inject} from '@angular/core';
+import {provideRouter, Router, ROUTES} from '@angular/router';
 import {provideAnimations} from "@angular/platform-browser/animations";
 import {
   HttpClient,
@@ -15,6 +15,8 @@ import {AuthService} from "./_services/users/auth.service";
 import {GlobalService} from "./_services/global.service";
 import {HttpInterceptorService} from "./_helpers/http-interceptor.service";
 import {NgxEchartsModule} from "ngx-echarts";
+import {readMe} from "@directus/sdk";
+
 
 
 /*function initializeAppFactory(httpClient: HttpClient, storage: StorageService): () => Observable<any> {
@@ -28,6 +30,39 @@ import {NgxEchartsModule} from "ngx-echarts";
     );
 }*/
 
+// function initializeAppFactory() {
+//   const router = inject(Router);
+//   const globalService = inject(GlobalService);
+//
+//   return () => new Promise((resolve) => {
+//     try {
+//       // Small delay to ensure GlobalService is properly initialized
+//       setTimeout(() => {
+//         if (globalService.client) {
+//           globalService.client.request(readMe())
+//             .then(() => {
+//               resolve(true);
+//             })
+//             .catch((error: any) => {
+//               console.log('Auth error:', error);
+//               if (error.response?.status === 401 || error.response?.status === 403) {
+//                 void router.navigate(['/login']);
+//               }
+//               resolve(false);
+//             });
+//         } else {
+//           console.error('Client not initialized');
+//           void router.navigate(['/login']);
+//           resolve(false);
+//         }
+//       }, 100);
+//     } catch (err) {
+//       console.error('Initialization error:', err);
+//       void router.navigate(['/login']);
+//       resolve(false);
+//     }
+//   });
+// }
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -39,14 +74,14 @@ export const appConfig: ApplicationConfig = {
         echarts: () => import('echarts')
       })
     ),
-/*    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeAppFactory,
-      multi: true,
-      deps: [HttpClient,StorageService]
-    },*/
+    GlobalService,
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: initializeAppFactory,
+    //   multi: true,
+    //   deps: [HttpClient,StorageService, GlobalService]
+    // },
     MessageService,
     AuthService,
-    GlobalService,
   ],
 };
