@@ -511,7 +511,10 @@ export class DtReportComponent {
           align: 'center',
           verticalAlign: 'middle',
           formatter: function (params: any) {
-            return params.data.name;
+            const name = params.data.name || '';
+            const maxCharsPerLine = 29;
+            const lines = name.match(new RegExp(`.{1,${maxCharsPerLine}}`, 'g')) || [];
+            return lines.join('\n');
           }
         }
       })),
