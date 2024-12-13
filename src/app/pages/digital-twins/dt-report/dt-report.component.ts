@@ -549,7 +549,7 @@ export class DtReportComponent {
       },
       legend: {
         data: ['No Action', 'Cluster Action', ...this.appliedRecommendations.map(r => r.recommendation)],
-        top: 30
+        top: 30,
       },
       grid: {
         left: '5%',
@@ -606,7 +606,7 @@ export class DtReportComponent {
       graphic: caption ? [
         {
           type: 'text',
-          left: 'center',
+          left: '5%',
           bottom: '0%',
           style: {
             text: caption,
