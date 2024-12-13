@@ -505,7 +505,7 @@ export class DtReportComponent {
         label: {
           show: !!data,
           position: 'inside',
-          fontSize: 8,
+          fontSize: 10,
           fontWeight: 'bold',
           color: '#000',
           align: 'center',
@@ -513,7 +513,24 @@ export class DtReportComponent {
           formatter: function (params: any) {
             const name = params.data.name || '';
             const maxCharsPerLine = 29;
-            const lines = name.match(new RegExp(`.{1,${maxCharsPerLine}}`, 'g')) || [];
+
+            const words = name.split(' ');
+            let lines = [];
+            let currentLine = '';
+
+            for (const word of words) {
+              if ((currentLine + word).length > maxCharsPerLine) {
+                lines.push(currentLine.trim());
+                currentLine = word;
+              } else {
+                currentLine += ` ${word}`;
+              }
+            }
+
+            if (currentLine) {
+              lines.push(currentLine.trim());
+            }
+
             return lines.join('\n');
           }
         }
