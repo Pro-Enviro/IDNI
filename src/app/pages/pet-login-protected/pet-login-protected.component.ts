@@ -72,12 +72,14 @@ export class PetLoginProtected implements OnInit {
   companies: any;
   // Table Constants
   turnover: number = 0;
+  totalSales: number = 0;
   template!: any
   employees: number = 0;
   output: number = 0;
   outputChoices: string[] = ['Litres', 'Tonnes', 'Parts', 'Products', 'Licenses'];
   outputUnit: string = ''
   productivityScore: number = 0;
+  psr: number = 0;
   innovationPercent: number = 0;
   staffTrainingPercent: number = 0;
   exportPercent: number = 0;
@@ -269,10 +271,12 @@ export class PetLoginProtected implements OnInit {
     this.employees = 0
     this.output = 0;
     this.turnover = 0
+    this.totalSales = 0;
     this.innovationPercent = 0
     this.staffTrainingPercent = 0
     this.exportPercent = 0
     this.productivityScore = 0
+    this.psr = 0;
     this.productivityPercentile = ''
     this.sicCode = ''
     this.sicCodeLetter = ''
@@ -295,6 +299,7 @@ export class PetLoginProtected implements OnInit {
     this.output = Number(petData.annual_output || 0)
     this.outputUnit = petData?.output_unit
     this.turnover = Number(petData.turnover || 0)
+    this.totalSales = Number(petData.totalSales || 0)
     this.staffTrainingPercent = Number(petData.training_percent || 0)
     this.sicCode = petData?.sic_code !== '' ? JSON.parse(petData?.sic_code) : ''
     this.sicCodeLetter = petData.sic_letter || ''
@@ -333,6 +338,7 @@ export class PetLoginProtected implements OnInit {
     // console.log(this.data)
 
     this.calculateProductivityScore()
+    this.calculatePSR()
 
   }
 
@@ -1321,6 +1327,10 @@ export class PetLoginProtected implements OnInit {
       return item
     })
     return this.data;
+  }
+
+  calculatePSR = () => {
+    console.log('Calculating PSR:' , this.totalSales)
   }
 
 

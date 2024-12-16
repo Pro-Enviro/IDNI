@@ -30,6 +30,7 @@ export interface PetToolData {
   sic_code: string
   training_percent: number
   turnover: number,
+  totalSales?: number,
   innovation_percent: number
   year: string
   total_external_costs: number | undefined
