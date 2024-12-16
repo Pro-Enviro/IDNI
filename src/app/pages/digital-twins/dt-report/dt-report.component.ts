@@ -512,7 +512,8 @@ export class DtReportComponent {
           verticalAlign: 'middle',
           formatter: function (params: any) {
             const name = params.data.name || '';
-            const maxCharsPerLine = 29;
+            const screenWidth = window.innerWidth;
+            const maxCharsPerLine = screenWidth <= 1440 ? 15 : 29;
 
             const words = name.split(' ');
             let lines = [];
