@@ -505,7 +505,7 @@ export class DtReportComponent {
         label: {
           show: !!data,
           position: 'inside',
-          fontSize: 10,
+          fontSize: Math.max(9, window.innerWidth / 180),
           fontWeight: 'bold',
           color: '#000',
           align: 'center',
@@ -513,7 +513,7 @@ export class DtReportComponent {
           formatter: function (params: any) {
             const name = params.data.name || '';
             const screenWidth = window.innerWidth;
-            const maxCharsPerLine = screenWidth <= 1440 ? 15 : 29;
+            const maxCharsPerLine = screenWidth <= 1470 ? 15 : 29;
 
             const words = name.split(' ');
             let lines = [];
