@@ -13,6 +13,8 @@ import {calculateEnergyData} from "./calculateEnergyData";
 
 import {mergeDuplicateSolutions} from "./mergeDuplicateSolutions";
 import moment from "moment/moment";
+import {GlobalService} from "../../../_services/global.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -49,6 +51,7 @@ export class DtReportComponent {
   totalC02Used: number = 0;
   implementationCost: number = 0;
 
+
   // Charts
   chartOptionsCarbon: any;
   chartOptionsEnergy: any;
@@ -57,7 +60,16 @@ export class DtReportComponent {
   chartData: any;
 
 
-  constructor(private dt: DtService) {
+  constructor(private dt: DtService, private global: GlobalService, private router: Router) {
+
+    this.global.getCurrentUser().subscribe({
+      next: (res: any) => {
+        if (res.role.name !== 'Administrator'){
+          this.router.navigate(['/dashboard']);
+        }
+      }
+    })
+
     this.dt.companies.subscribe({
       next: (res: any) => this.companies = res
     })

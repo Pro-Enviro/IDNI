@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Cluster, Companies, DtService} from "../../_services/dt.service";
 import {DtClusterComponent} from "./dt-cluster/dt-cluster.component";
 import {MessageService} from "primeng/api";
-import {DtReportComponent} from "./dt-report/dt-report.component";
-import {NgIf} from "@angular/common";
-
+import {GlobalService} from "../../_services/global.service";
+import {Router} from "@angular/router";
+import {ToastModule} from "primeng/toast";
+import {MessagesModule} from "primeng/messages";
 
 
 @Component({
@@ -12,8 +13,8 @@ import {NgIf} from "@angular/common";
   standalone: true,
   imports: [
     DtClusterComponent,
-    DtReportComponent,
-    NgIf
+    ToastModule,
+    MessagesModule
   ],
   templateUrl: './digital-twins.component.html',
   styleUrl: './digital-twins.component.scss'
@@ -21,27 +22,49 @@ import {NgIf} from "@angular/common";
 export class DigitalTwinsComponent {
   companies: Companies[] | undefined
   clusters: any;
+
   constructor(
     private dt: DtService,
-    private msg: MessageService
+    private msg: MessageService,
+    private global: GlobalService,
+    private router: Router
   ) {
+
+    this.global.getCurrentUser().subscribe({
+      next: (res: any) => {
+        if (res.role.name !== 'Administrator') {
+          this.router.navigate(['/dashboard']);
+        }
+      }
+    })
+
+
     this.dt.companies.subscribe({
       next: (res: any) => this.companies = res
     })
     this.dt.clusters.subscribe({
-      next: (cluster) => this.clusters = cluster
+      next: (cluster) => {
+        this.clusters = cluster
+      }
     })
   }
 
   saveCluster = (cluster: Cluster) => {
-    if(!cluster.name){
+    if (!cluster.name) {
       this.msg.add({
         severity: 'warn',
         detail: 'Please enter cluster name'
       })
       return;
     }
-    this.dt.saveCluster({id: cluster.id, name: cluster.name, companies: cluster.companies.map(({id}) => id)})
+
+    this.dt.saveCluster({
+      id: cluster.id,
+      name: cluster.name,
+      companies: cluster.companies.map(({id}) => id)
+    })
+
+
   }
 
 }
