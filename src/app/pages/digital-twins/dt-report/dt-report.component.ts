@@ -9,11 +9,13 @@ import {CardModule} from "primeng/card";
 import {SharedModules} from "../../../shared-module";
 import {SharedComponents} from "../../envirotrack/shared-components";
 import {CarouselModule} from "primeng/carousel";
-import {calculateEnergyData, conversionFactors} from "./calculateEnergyData";
-import Fuse from "fuse.js";
+import {calculateEnergyData} from "./calculateEnergyData";
+
 import {mergeDuplicateSolutions} from "./mergeDuplicateSolutions";
+import moment from "moment/moment";
 import {GlobalService} from "../../../_services/global.service";
 import {Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-dt-report',
@@ -48,6 +50,15 @@ export class DtReportComponent {
   totalCost: number = 0;
   totalC02Used: number = 0;
   implementationCost: number = 0;
+
+
+  // Charts
+  chartOptionsCarbon: any;
+  chartOptionsEnergy: any;
+  chartOptionsCost: any;
+  chartX: any;
+  chartData: any;
+
 
   constructor(private dt: DtService, private global: GlobalService, private router: Router) {
 
@@ -186,6 +197,8 @@ export class DtReportComponent {
         this.addPETCostToTotal(res)
       }
     })
+
+    this.generateCharts()
   }
 
   addPETCostToTotal = (petData: any[]) => {
@@ -252,6 +265,8 @@ export class DtReportComponent {
       }
       this.draggedItem = null;
     }
+
+    this.generateCharts()
   }
 
   dropRecommendation() {
@@ -291,6 +306,7 @@ export class DtReportComponent {
       const [removedReco] = this.appliedRecommendations.splice(index, 1);
       this.availableRecommendations.push(removedReco);
     }
+    this.generateCharts()
   }
 
   removeDigitalTwinReco(reco: any) {
@@ -299,6 +315,7 @@ export class DtReportComponent {
       const [removedReco] = this.appliedDigitalTwinData.splice(index, 1);
       this.availableDigitalTwinData.push(removedReco);
     }
+    this.generateCharts()
   }
 
 
@@ -377,6 +394,7 @@ export class DtReportComponent {
 
   // Percentage Calculations
 
+
   getEnergyDifference() {
     if (!this.totalEnergyUsed) return 0
 
@@ -420,4 +438,258 @@ export class DtReportComponent {
   }
 
 
+  generateCharts() {
+    const years = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
+
+
+    // Generate Carbon Chart settings
+    const initialCO2 = this.getTotalCO2e();
+    const maxHeightCO2 = Math.ceil(initialCO2 * 1.1);
+    const minHeightCO2 = Math.floor(initialCO2 * 0.5);
+
+    // Generate Energy Chart settings
+    const initialEnergy = this.getTotalEnergy();
+    const maxHeightEnergy = Math.ceil(initialEnergy * 1.1);
+    const minHeightEnergy = Math.floor(initialEnergy * 0.5);
+
+    // Generate Cost Chart settings
+    const initialCost = this.getTotalCost();
+    const maxHeightCost = Math.ceil(initialCost * 1.1);
+    const minHeightCost = Math.floor(initialCost * 0.5);
+
+
+    // Calculate baseline projections with 5.35% reduction per year
+    const baselineProjectionCO2 = years.map((_, index) => initialCO2 * Math.pow((1 - 0.0535), index));
+    const baselineProjectionEnergy = years.map((_, index) => initialEnergy);
+    const baselineProjectionCost = years.map((_, index) => initialCost);
+
+    const allAppliedRecommendations = [...this.appliedRecommendations, ...this.appliedDigitalTwinData];
+
+    let cumulativeSavingsCO2 = 0;
+    let cumulativeSavingsEnergy = 0;
+    let cumulativeSavingsCost = 0;
+
+
+    // Calculate recommendation lines based on each recommendations saving, cost, co2 etc.
+    const withRecommendationsLineCO2 = years.map((_, index) => {
+      if (index > 0 && index <= allAppliedRecommendations.length) {
+        cumulativeSavingsCO2 += allAppliedRecommendations[index - 1].estimatedCarbonSaving;
+      }
+      return baselineProjectionCO2[index] - cumulativeSavingsCO2;
+    });
+
+    const withRecommendationsLineEnergy = years.map((_, index) => {
+      if (index > 0 && index <= allAppliedRecommendations.length) {
+        cumulativeSavingsEnergy += allAppliedRecommendations[index - 1].estimatedEnergySaving || 0;
+      }
+      return baselineProjectionEnergy[index] - cumulativeSavingsEnergy;
+    });
+
+    const withRecommendationsLineCost = years.map((_, index) => {
+      if (index > 0 && index <= allAppliedRecommendations.length) {
+        cumulativeSavingsCost += allAppliedRecommendations[index - 1].estimatedSaving || 0;
+      }
+      return baselineProjectionCost[index] - cumulativeSavingsCost;
+    });
+
+
+    // Generate bars data
+    const generateBarsData = (lineData: number[]) => {
+      return years.map((_, yearIndex) => {
+        const recommendation = allAppliedRecommendations[yearIndex];
+        if (recommendation) {
+          return {
+            value: lineData[yearIndex],
+            name: recommendation.recommendation || recommendation.solutionText || 'Unnamed Recommendation'
+          };
+        }
+        return null;
+      });
+    };
+
+    const barSeriesTemplate = (barsData: any[]) => [{
+      type: 'bar',
+      barWidth: '70%',
+      color: 'rgba(204,204,204,0.74)',
+      data: barsData.map(data => ({
+        value: data?.value || 0,
+        name: data?.name || '',
+        label: {
+          show: !!data,
+          position: 'inside',
+          fontSize: Math.max(9, window.innerWidth / 180),
+          fontWeight: 'bold',
+          color: '#000',
+          align: 'center',
+          verticalAlign: 'middle',
+          formatter: function (params: any) {
+            const name = params.data.name || '';
+            const screenWidth = window.innerWidth;
+            const maxCharsPerLine = screenWidth <= 1470 ? 15 : 29;
+
+            const words = name.split(' ');
+            let lines = [];
+            let currentLine = '';
+
+            for (const word of words) {
+              if ((currentLine + word).length > maxCharsPerLine) {
+                lines.push(currentLine.trim());
+                currentLine = word;
+              } else {
+                currentLine += ` ${word}`;
+              }
+            }
+
+            if (currentLine) {
+              lines.push(currentLine.trim());
+            }
+
+            return lines.join('\n');
+          }
+        }
+      })),
+      name: 'Recommendations'
+    }];
+
+    const createChartOptions = (title: string, baselineProjection: number[], withRecommendationsLine: number[],
+                                minHeight: number, maxHeight: number, yAxisName: string, tooltipUnit: string, caption: string) => ({
+      title: {
+        text: title,
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {type: 'cross'},
+        formatter: (params: any) => {
+          let tooltip = `Year: ${params[0].name}<br/>`;
+          params.forEach((param: any) => {
+            if (param.seriesType === 'line') {
+              tooltip += `${param.seriesName}: ${Math.round(param.value).toLocaleString()} ${tooltipUnit}<br/>`;
+            } else if (param.value > 0) {
+              tooltip += `${param.seriesName}: ${Math.round(param.value).toLocaleString()} ${tooltipUnit}<br/>`;
+            }
+          });
+          return tooltip;
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {
+            show: true
+          }
+        }
+      },
+      legend: {
+        data: ['No Action', 'Cluster Action', ...this.appliedRecommendations.map(r => r.recommendation)],
+        top: 30,
+      },
+      grid: {
+        left: '5%',
+        right: '5%',
+        bottom: '10%',
+        top: '20%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'category',
+        data: years,
+        axisTick: {alignWithLabel: true},
+        axisPointer: {type: 'shadow'},
+        name: 'Year',
+        nameLocation: 'middle',
+        nameGap: 60,
+      },
+      yAxis: {
+        type: 'value',
+        min: minHeight,
+        max: maxHeight,
+        name: yAxisName,
+        nameLocation: 'middle',
+        nameGap: 80,
+        axisLabel: {
+          formatter: (value: number) => Math.round(value).toLocaleString()
+        }
+      },
+      series: [
+        {
+          name: 'No Action',
+          type: 'line',
+          data: baselineProjection,
+          lineStyle: {type: 'dashed', width: 2},
+          color: '#ff7043',
+          symbol: 'circle',
+          symbolSize: 8,
+          z: 2,
+          showSymbol: true
+        },
+        {
+          name: 'Cluster Action',
+          type: 'line',
+          data: withRecommendationsLine,
+          lineStyle: {width: 2},
+          color: '#2e7d32',
+          symbol: 'circle',
+          symbolSize: 8,
+          z: 2,
+          showSymbol: true
+        },
+        ...barSeriesTemplate(generateBarsData(withRecommendationsLine))
+      ],
+      graphic: caption ? [
+        {
+          type: 'text',
+          left: '5%',
+          bottom: '0%',
+          style: {
+            text: caption,
+            fontSize: 12,
+            fill: '#666',
+            width: '80%',
+            overflow: 'break'
+          }
+        }
+      ] : undefined
+    });
+
+    const carbonCaption = "No action scenario assumes 5.35% reduction in grid carbon intensity (mean average for previous 5 years).\n" +
+      "A carbon conversion factor of 0.2499 kgCO2e/kWh electricity including transmission & distribution, UK greenhouse gas reporting";
+    const energyCaption = "No action scenario assumes constant energy consumption. "
+    const costCaption = "Both scenarios assume constant energy price."
+
+
+    this.chartOptionsCarbon = createChartOptions(
+      `${this.selectedCluster.name} Cluster Annual Carbon Footprint`,
+      baselineProjectionCO2,
+      withRecommendationsLineCO2,
+      minHeightCO2,
+      maxHeightCO2,
+      'Tonnes of CO2 equivalent per annum',
+      'tCO2e',
+      carbonCaption
+    );
+
+    this.chartOptionsEnergy = createChartOptions(
+      `${this.selectedCluster.name} Cluster Annual Energy Consumption`,
+      baselineProjectionEnergy,
+      withRecommendationsLineEnergy,
+      minHeightEnergy,
+      maxHeightEnergy,
+      'kWh of energy consumption per annum',
+      'kWh',
+      energyCaption
+    );
+
+    this.chartOptionsCost = createChartOptions(
+      `${this.selectedCluster.name} Cluster Annual Energy Cost`,
+      baselineProjectionCost,
+      withRecommendationsLineCost,
+      minHeightCost,
+      maxHeightCost,
+      'Cost (£) of energy consumption per annum',
+      '£',
+      costCaption
+    );
+
+  }
 }

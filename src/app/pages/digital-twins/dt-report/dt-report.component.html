@@ -13,6 +13,7 @@
             optionValue="name"
             (completeMethod)="onSelect($event)"
             (onSelect)="onClusterSelect($event)"
+            class="btn-dropdown"
           ></p-autoComplete>
         </div>
 
@@ -29,7 +30,7 @@
       </ul>
     </div>
 
-<!--    <h3 class="">Digital Twin</h3>-->
+    <!--    <h3 class="">Digital Twin</h3>-->
     <div class="flex align-items-stretch justify-content-between mt-2">
       <div class="w-full h-full mr-2 flex-shrink-1">
         <p-card styleClass="mb-3 p-3 h-full">
@@ -56,7 +57,7 @@
       <div class="w-full h-full min-h-full flex-grow-1">
         <p-card styleClass="mb-3 p-1 h-full" pDroppable (onDrop)="drop()">
           <ng-template pTemplate="header">
-            <h3 class="m-0 text-center text-primary my-3">Applied Recommendations</h3>
+            <h3 class="m-0 text-center my-3" style="color:#85bfba">Applied Recommendations</h3>
           </ng-template>
 
           <div class="applied-recommendations"
@@ -169,7 +170,7 @@
           (onDragEnd)="dragEnd()">
           <div class="flex flex-column h-full text-md">
             <div class="text-center font-semibold text-lg mb-3 text-gray-800">{{ reco.recommendation }}</div>
-<!--            <span class="mb-1 text-xs text-gray-700">Source: {{ reco.companyName }}</span>-->
+            <!--            <span class="mb-1 text-xs text-gray-700">Source: {{ reco.companyName }}</span>-->
             <div class="grid flex-grow-1">
               <div class="col-6 flex flex-column justify-content-center align-items-center">
                 <span class="font-semibold mb-2 text-sm">Energy Saving</span>
@@ -197,9 +198,10 @@
             </div>
             <div class="text-center mt-2">
               <span class="font-semibold text-sm">Payback Period: </span>
-              <span>{{ reco.paybackPeriod | number: '1.0-2'}} years</span>
+              <span>{{ reco.paybackPeriod | number: '1.0-2' }} years</span>
             </div>
-            <span *ngIf="reco.counter" class="mb-1 text-xs text-gray-700 mt-1 text-center"><span class="font-bold">{{ reco.counter -1 }}</span> other compan{{ reco.counter-1 > 1 ? 'ies' : 'y' }}
+            <span *ngIf="reco.counter" class="mb-1 text-xs text-gray-700 mt-1 text-center"><span
+              class="font-bold">{{ reco.counter - 1 }}</span> other compan{{ reco.counter - 1 > 1 ? 'ies' : 'y' }}
               with this recommendation </span>
           </div>
         </div>
@@ -220,7 +222,7 @@
           style="width: 250px; height: 300px;">
           <div class="flex flex-column  h-full text-md">
             <div class="text-center font-semibold text-lg mb-2 text-gray-800">{{ data.solutionText }}</div>
-<!--                        <span class="mb-1 text-xs text-gray-700">Source: {{ data.companyName }}</span>-->
+            <!--                        <span class="mb-1 text-xs text-gray-700">Source: {{ data.companyName }}</span>-->
             <div class="grid flex-grow-1">
               <div class="col-6 flex flex-column justify-content-center align-items-center">
                 <span class="font-semibold mb-2 text-sm">Energy Saving</span>
@@ -250,8 +252,8 @@
               <span class="font-semibold text-sm">Payback Period: </span>
               <span>{{ data.paybackPeriod | number: '1.0-2' }} years</span>
             </div>
-<!--            <span *ngIf="data.counter" class="my-1 text-xs text-gray-700 text-center"><span class="font-bold">{{ data.counter -1 }}</span>-->
-<!--              other compan{{ data.counter -1 > 1 ? 'ies' : 'y' }} with this solution </span>-->
+            <!--            <span *ngIf="data.counter" class="my-1 text-xs text-gray-700 text-center"><span class="font-bold">{{ data.counter -1 }}</span>-->
+            <!--              other compan{{ data.counter -1 > 1 ? 'ies' : 'y' }} with this solution </span>-->
           </div>
 
         </div>
@@ -262,5 +264,21 @@
     </div>
   }
 </p-panel>
+
+@if (clusterCompanies) {
+  <p-panel header="Charts" styleClass="mt-5">
+    <p-tabView>
+      <p-tabPanel header="Carbon Usage">
+        <div echarts *ngIf="chartOptionsCarbon" [options]="chartOptionsCarbon" style="max-height: 60vh; height: 800px;"></div>
+      </p-tabPanel>
+      <p-tabPanel header="Energy Usage">
+        <div echarts [options]="chartOptionsEnergy" style="max-height: 60vh; height: 800px;"></div>
+      </p-tabPanel>
+      <p-tabPanel header="Cost Saving">
+        <div echarts [options]="chartOptionsCost" style="max-height: 60vh; height: 800px;"></div>
+      </p-tabPanel>
+    </p-tabView>
+  </p-panel>
+}
 
 
